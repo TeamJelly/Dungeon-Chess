@@ -73,3 +73,5 @@ crashlytics-build.properties
 # bolt
 Assets/Install Bolt/**/*
 Assets/Ludiq/**/*
+Assets/Install Bolt.meta
+Assets/Ludiq.meta
