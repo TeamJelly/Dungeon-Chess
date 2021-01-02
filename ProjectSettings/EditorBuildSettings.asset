@@ -4,8 +4,5 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes:
-  - enabled: 1
-    path: Assets/Scenes/Console Program/Console HUD.unity
-    guid: a2eb40a6fa0df114ba965e5cb69c6dbd
+  m_Scenes: []
   m_configObjects: {}
