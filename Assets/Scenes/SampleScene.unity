@@ -491,7 +491,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f1ebbb0e34186a49963d03a214bb594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitName: No Name
+  unitName: Eiguk
   category: 0
   unitClass: 0
   level: 0
