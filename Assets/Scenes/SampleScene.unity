@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 58554027}
   - component: {fileID: 58554026}
   - component: {fileID: 58554025}
+  - component: {fileID: 58554028}
   m_Layer: 0
   m_Name: Scene Variables
   m_TagString: Untagged
@@ -180,6 +181,47 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &58554028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 58554024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f1ebbb0e34186a49963d03a214bb594, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitName: No Name
+  category: 0
+  unitClass: 0
+  level: 0
+  money: 0
+  currentHP: 0
+  maxHP: 0
+  currentEXP: 0
+  maxEXP: 0
+  position:
+    LowerLeft: {x: 0, y: 0}
+    UpperRight: {x: 0, y: 0}
+  size: {x: 0, y: 0}
+  vitality: 0
+  strength: 0
+  defense: 0
+  agility: 0
+  move: 0
+  critical: 0
+  actionRate: 0
+  currentAct: 0
+  defenseRate: 0
+  moveCount: 0
+  skillCount: 0
+  itemCount: 0
+  skills: []
+  antiques: []
+  items: []
+  stateEffects: []
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -418,3 +460,109 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1495762510
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1495762512}
+  - component: {fileID: 1495762511}
+  - component: {fileID: 1495762514}
+  - component: {fileID: 1495762513}
+  m_Layer: 0
+  m_Name: TestUnit
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1495762511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495762510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f1ebbb0e34186a49963d03a214bb594, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitName: No Name
+  category: 0
+  unitClass: 0
+  level: 0
+  money: 0
+  currentHP: 0
+  maxHP: 0
+  currentEXP: 0
+  maxEXP: 0
+  position:
+    LowerLeft: {x: 0, y: 0}
+    UpperRight: {x: 0, y: 0}
+  size: {x: 0, y: 0}
+  vitality: 0
+  strength: 0
+  defense: 0
+  agility: 0
+  move: 0
+  critical: 0
+  actionRate: 0
+  currentAct: 0
+  defenseRate: 0
+  moveCount: 0
+  skillCount: 0
+  itemCount: 0
+  skills: []
+  antiques: []
+  items: []
+  stateEffects: []
+--- !u!4 &1495762512
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495762510}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1495762513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495762510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -57143145, guid: a040fb66244a7f54289914d98ea4ef7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _data:
+    _json: '{"nest":{"source":"Embed","macro":null,"embed":{"variables":{"collection":{"$content":[],"$version":"A"},"$version":"A"},"controlInputDefinitions":[],"controlOutputDefinitions":[],"valueInputDefinitions":[],"valueOutputDefinitions":[],"title":"TestUnitFlow","summary":"\uc720\ub2db
+      \uc774\ub984\uc744 \ucd9c\ub825\ud55c\ub2e4.","pan":{"x":364.0889,"y":-141.3936},"zoom":0.8,"elements":[{"coroutine":false,"defaultValues":{},"position":{"x":57.0,"y":-135.0},"guid":"ccfff10d-e454-4e74-a426-611715395e67","$version":"A","$type":"Bolt.Update","$id":"10"},{"chainable":false,"member":{"name":"Log","parameterTypes":["System.Object"],"targetType":"UnityEngine.Debug","targetTypeName":"UnityEngine.Debug","$version":"A"},"defaultValues":{},"position":{"x":413.0,"y":-132.0},"guid":"abb99cdf-835e-41a1-8e12-0a0812c14f88","$version":"A","$type":"Bolt.InvokeMember","$id":"12"},{"defaultValues":{},"position":{"x":254.0,"y":-2.0},"guid":"04976abc-da58-4556-8068-0888976c672a","$version":"A","$type":"Bolt.GenericAdd","$id":"15"},{"type":"System.String","value":{"$content":"hello,
+      My name is","$type":"System.String"},"defaultValues":{},"position":{"x":30.0,"y":-32.0},"guid":"6468d9ee-b0df-49ec-a69a-988e73e61946","$version":"A","$type":"Bolt.Literal","$id":"17"},{"member":{"name":"name","parameterTypes":null,"targetType":"Unit","targetTypeName":"Unit","$version":"A"},"defaultValues":{"target":null},"position":{"x":54.0,"y":83.0},"guid":"a820958b-ac1a-4e2b-94a0-ceab50ed3d99","$version":"A","$type":"Bolt.GetMember","$id":"19"},{"coroutine":false,"defaultValues":{},"position":{"x":66.0,"y":-238.0},"guid":"83837cbf-0a45-421a-9e84-f6c54a6eba17","$version":"A","$type":"Bolt.Start","$id":"22"},{"chainable":false,"member":{"name":"GetEXP","parameterTypes":["System.Int32"],"targetType":"Unit","targetTypeName":"Unit","$version":"A"},"defaultValues":{"target":null,"%getEXP":{"$content":1000,"$type":"System.Int32"}},"position":{"x":262.0,"y":-284.0},"guid":"2d594436-5fe3-4b05-9fdb-4583cfb36e92","$version":"A","$type":"Bolt.InvokeMember","$id":"24"},{"sourceUnit":{"$ref":"10"},"sourceKey":"trigger","destinationUnit":{"$ref":"12"},"destinationKey":"enter","guid":"2da745b0-b76f-4801-8d8c-a286a185212d","$type":"Bolt.ControlConnection"},{"sourceUnit":{"$ref":"22"},"sourceKey":"trigger","destinationUnit":{"$ref":"24"},"destinationKey":"enter","guid":"4ab70a23-c361-455a-85ae-51d56c2b92b0","$type":"Bolt.ControlConnection"},{"sourceUnit":{"$ref":"15"},"sourceKey":"sum","destinationUnit":{"$ref":"12"},"destinationKey":"%message","guid":"2c0253f4-800d-4aa4-ba9b-3e962ceaf1cb","$type":"Bolt.ValueConnection"},{"sourceUnit":{"$ref":"17"},"sourceKey":"output","destinationUnit":{"$ref":"15"},"destinationKey":"a","guid":"fa199a43-880f-4ea4-b641-54f75341fe26","$type":"Bolt.ValueConnection"},{"sourceUnit":{"$ref":"19"},"sourceKey":"value","destinationUnit":{"$ref":"15"},"destinationKey":"b","guid":"077a9b8e-126d-42e7-9460-9cf7894fe6be","$type":"Bolt.ValueConnection"}],"$version":"A"}}}'
+    _objectReferences: []
+--- !u!114 &1495762514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495762510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1465209106, guid: c8d0ad23af520fe46aabe2b1fecf6462, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _data:
+    _json: '{"declarations":{"collection":{"$content":[],"$version":"A"},"$version":"A"}}'
+    _objectReferences: []
