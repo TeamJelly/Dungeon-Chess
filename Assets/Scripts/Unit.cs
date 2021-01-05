@@ -7,15 +7,15 @@ public enum Category { NULL, Party, Neutral, Friendly, EnemyAI1, EnemyAI2, BossA
 public enum UnitClass { NULL, Monster, Warrior, Wizard, Priest, Archer };
 
 [System.Serializable]
-public class Position
+public class UnitPosition
 {
-    public Vector2Int LowerLeft, UpperRight;
+    public Vector2Int lowerLeft, upperRight;
 }
 
 public class Unit : MonoBehaviour
 {
     [Header("Normal Status")]
-    public string unitName = "No Name";
+    public new string name = "NoName";
 
     public Category category = Category.NULL;
     public UnitClass unitClass = UnitClass.NULL;
@@ -55,12 +55,20 @@ public class Unit : MonoBehaviour
         level += 1;
         currentEXP = 0;
         maxEXP += 10;
-        Debug.Log(unitName + " level Up!");
+        Debug.Log(name + " level Up!");
     }
 
     [Header("Position & Size Status")]
-    public Position position;
+    public UnitPosition unitPosition;
     public Vector2Int size;
+
+    public bool isContainPostion(Vector2Int position)
+    {
+        if (unitPosition.lowerLeft.x <= position.x && unitPosition.lowerLeft.y <= position.y && unitPosition.upperRight.x >= position.x && unitPosition.upperRight.y >= position.y)
+            return true;
+        else
+            return false;
+    }
 
     [Header("Basic Status")]
     public int vitality;
@@ -73,7 +81,7 @@ public class Unit : MonoBehaviour
     public int critical;
 
     [Header("Hidden Status")]
-    public int actionRate;
+    public float actionRate;
     public int currentAct;
     public int defenseRate;
 
@@ -83,9 +91,46 @@ public class Unit : MonoBehaviour
     public int itemCount;
 
     [Header("Having")]
-    public List<GameObject> skills;
-    public List<GameObject> antiques;
-    public List<GameObject> items;
-    public List<GameObject> stateEffects;
+    public List<Skill> skills;
+    public List<Antique> antiques;
+    public List<Item> items;
+    public List<Effect> stateEffects;
 
+    public void BeforeMove()
+    {
+        foreach (var stateEffect in stateEffects)
+        {
+            stateEffect.BeforeMove();
+        }
+    }
+    public void AfterMove()
+    {
+        foreach (var stateEffect in stateEffects)
+        {
+            stateEffect.AfterMove();
+        }
+
+        for (int i = unitPosition.lowerLeft.x; i < unitPosition.upperRight.x; i++)
+            for (int j = unitPosition.lowerLeft.y; j < unitPosition.upperRight.y; j++)
+                BattleManager.instance.GetTile(i, j).tileEffect.AfterMove();
+    }
+
+    public void Move(UnitPosition movePosition)
+    {
+        BeforeMove();
+
+        unitPosition = movePosition;
+
+        AfterMove();
+    }
+
+    public void GetDamage()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void GetStateEffects(int StateEffect)
+    {
+        throw new NotImplementedException();
+    }
 }
