@@ -81,7 +81,7 @@ public class Unit : MonoBehaviour
     public int critical;
 
     [Header("Hidden Status")]
-    public float actionRate;
+    public float actionRate; // 행동 퍼센테이지
     public int currentAct;
     public int defenseRate;
 
@@ -115,6 +115,35 @@ public class Unit : MonoBehaviour
                 BattleManager.instance.GetTile(i, j).tileEffect.AfterMove();
     }
 
+    public List<UnitPosition> GetMovablePosition(){
+
+        List<Vector2Int> movableVector2s = new List<Vector2Int>();
+
+
+        for (int i = -move; i < move; i++)
+        {
+            for (int j = -(move-Math.Abs(i)); j <= (move - Math.Abs(i)); j++)
+            {
+                if (i == 0 && j == 0)
+                    continue;
+                movableVector2s.Add(new Vector2Int(i, j));
+            }
+        }
+
+        List<UnitPosition> movableUnitPositions = new List<UnitPosition>();
+        foreach (var movableVector2 in movableVector2s)
+        {
+            UnitPosition tempPosition = new UnitPosition();
+            tempPosition.lowerLeft.x = unitPosition.lowerLeft.x + movableVector2.x;
+            tempPosition.lowerLeft.y = unitPosition.lowerLeft.y + movableVector2.y;
+            tempPosition.upperRight.x = unitPosition.upperRight.x + movableVector2.x;
+            tempPosition.upperRight.y = unitPosition.upperRight.y + movableVector2.y;
+            movableUnitPositions.Add(tempPosition);
+        }
+
+        return movableUnitPositions;
+    }
+
     public void Move(UnitPosition movePosition)
     {
         BeforeMove();
@@ -133,4 +162,11 @@ public class Unit : MonoBehaviour
     {
         throw new NotImplementedException();
     }
+
+    public void HelloUnit()
+    {
+        Debug.LogError("i'm");
+    }
+
 }
+
