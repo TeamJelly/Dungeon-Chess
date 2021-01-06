@@ -10,12 +10,15 @@ public class BattleManager : MonoBehaviour
     Tile[,] AllTiles; //10x10일때 0,0 ~ 9,9으로
     Unit thisTurnUnit;
 
-    void Start()
+    void Awake()
     {
         instance = this;
     }
 
-
+    private void Start()
+    {
+        BattleUI.instance.Init();
+    }
     public Tile GetTile(Vector2Int position)
     {
         return AllTiles[position.x, position.y];
@@ -55,6 +58,8 @@ public class BattleManager : MonoBehaviour
         thisTurnUnit = unit;
         thisTurnUnit.actionRate = 0;
 
+        //턴 상태 갱신(이동 가능한 타일 보여주기)
+        BattleUI.instance.UpdateTurnStatus(unit);
 //        thisTurnUnit.getMovableT
   //      BattleUI
     }
