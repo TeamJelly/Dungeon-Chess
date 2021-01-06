@@ -41,6 +41,16 @@ public class BattleUI : MonoBehaviour
                 tileSelectorList[i, j].transform.SetParent(tileSelectorParent);
                 tileSelectorList[i, j].transform.position = new Vector3(i, j,-2);
                 tileSelectorList[i, j].gameObject.SetActive(false);
+                int x = i; int y = j;
+
+                EventTrigger.Entry entry_PointerClick = new EventTrigger.Entry();
+                entry_PointerClick.eventID = EventTriggerType.PointerClick;
+                entry_PointerClick.callback.AddListener((data) =>
+                {
+                    Debug.Log("!!");
+                    BattleManager.instance.thisTurnUnit.Move(new Vector2Int(x, y));
+                });
+                tileSelectorList[i, j].triggers.Add(entry_PointerClick);
             }
     }
 
@@ -61,6 +71,7 @@ public class BattleUI : MonoBehaviour
     }
     public void UpdateTurnStatus(Unit unit)
     {
+        Debug.Log("현재 턴:" +  unit.name);
         showTileSelector(unit.GetMovablePosition());
     }
     public void showTileSelector(List<UnitPosition> positions)
@@ -73,6 +84,7 @@ public class BattleUI : MonoBehaviour
         {
             for (int j = unitPosition.lowerLeft.y; j <= unitPosition.upperRight.y; j++)
             {
+                   // Debug.Log(i + "," + j);
                     //tileSelectorList[i, j].
                     tileSelectorList[i, j].gameObject.SetActive(true);
             }

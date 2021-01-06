@@ -130,7 +130,7 @@ public class Unit : MonoBehaviour
 
         List<Vector2Int> movableVector2s = new List<Vector2Int>();
 
-        for (int i = -move; i < move; i++)
+        for (int i = -move; i <= move; i++)
         {
             for (int j = -(move-Math.Abs(i)); j <= (move - Math.Abs(i)); j++)
             {
@@ -154,14 +154,23 @@ public class Unit : MonoBehaviour
         return movableUnitPositions;
     }
 
-    public void Move(UnitPosition movePosition)
+    public void Move(Vector2Int distance)
     {
         BeforeMove();
 
-        unitPosition = movePosition;
+        /*unitPosition.lowerLeft.x += distance.x;
+        unitPosition.upperRight.x += distance.x;
 
+        unitPosition.lowerLeft.y += distance.y;
+        unitPosition.upperRight.y += distance.y;
+        */
+        unitPosition.lowerLeft.x = distance.x;
+        unitPosition.upperRight.x = distance.x;
+
+        unitPosition.lowerLeft.y = distance.y;
+        unitPosition.upperRight.y = distance.y;
         //화면상 위치 갱신.
-        Vector2 screenPosition = movePosition.lowerLeft + (movePosition.upperRight - movePosition.lowerLeft) / 2;
+        Vector2 screenPosition = unitPosition.lowerLeft + (unitPosition.upperRight - unitPosition.lowerLeft) / 2;
         transform.position = screenPosition;
 
         AfterMove();

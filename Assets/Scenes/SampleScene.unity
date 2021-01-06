@@ -670,7 +670,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f1ebbb0e34186a49963d03a214bb594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: "\uC7A5\uC774\uAD6D"
+  name: "\uC7A5\uC774\uAD6D5"
   category: 0
   unitClass: 0
   unitAI: 0
@@ -680,8 +680,8 @@ MonoBehaviour:
   currentEXP: 0
   nextEXP: 0
   unitPosition:
-    lowerLeft: {x: 0, y: 0}
-    upperRight: {x: 0, y: 0}
+    lowerLeft: {x: 5, y: 5}
+    upperRight: {x: 5, y: 5}
   size: {x: 2, y: 2}
   strength: 0
   defense: 0
@@ -1038,7 +1038,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f1ebbb0e34186a49963d03a214bb594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: "\uC7A5\uC774\uAD6D"
+  name: "\uC7A5\uC774\uAD6D3"
   category: 0
   unitClass: 0
   unitAI: 0
@@ -1048,8 +1048,8 @@ MonoBehaviour:
   currentEXP: 0
   nextEXP: 0
   unitPosition:
-    lowerLeft: {x: 0, y: 0}
-    upperRight: {x: 0, y: 0}
+    lowerLeft: {x: 2, y: 2}
+    upperRight: {x: 2, y: 2}
   size: {x: 2, y: 2}
   strength: 0
   defense: 0
@@ -1417,7 +1417,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f1ebbb0e34186a49963d03a214bb594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: "\uC7A5\uC774\uAD6D"
+  name: "\uC7A5\uC774\uAD6D4"
   category: 0
   unitClass: 0
   unitAI: 0
@@ -1427,8 +1427,8 @@ MonoBehaviour:
   currentEXP: 0
   nextEXP: 0
   unitPosition:
-    lowerLeft: {x: 0, y: 0}
-    upperRight: {x: 0, y: 0}
+    lowerLeft: {x: 3, y: 3}
+    upperRight: {x: 3, y: 3}
   size: {x: 2, y: 2}
   strength: 0
   defense: 0
@@ -2296,7 +2296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f1ebbb0e34186a49963d03a214bb594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: "\uC7A5\uC774\uAD6D"
+  name: "\uC7A5\uC774\uAD6D2"
   category: 0
   unitClass: 0
   unitAI: 0
@@ -2999,7 +2999,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f1ebbb0e34186a49963d03a214bb594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: "\uC7A5\uC774\uAD6D"
+  name: "\uC7A5\uC774\uAD6D1"
   category: 0
   unitClass: 0
   unitAI: 0

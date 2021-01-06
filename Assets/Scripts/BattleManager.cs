@@ -8,7 +8,7 @@ public class BattleManager : MonoBehaviour
     public static BattleManager instance;
     public List<Unit> AllUnits;
     Tile[,] AllTiles; //10x10일때 0,0 ~ 9,9으로
-    Unit thisTurnUnit;
+    public Unit thisTurnUnit;
 
     void Awake()
     {
@@ -18,6 +18,10 @@ public class BattleManager : MonoBehaviour
     private void Start()
     {
         BattleUI.instance.Init();
+
+
+        //테스트 목적. 시작 시 바로 턴 계산. 
+        SetNextTurn();
     }
     public Tile GetTile(Vector2Int position)
     {
