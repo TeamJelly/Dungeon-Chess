@@ -18,7 +18,7 @@ public class BattleUI : MonoBehaviour
         instance = this;
     }
 
-    public void showTileButton(List<Vector2Int> positions)
+    public void ShowTileButton(List<Vector2Int> positions)
     {
 
     }
