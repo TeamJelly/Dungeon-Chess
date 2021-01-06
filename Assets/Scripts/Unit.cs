@@ -122,49 +122,43 @@ public class Unit : MonoBehaviour
 
     public List<UnitPosition> GetMovablePosition(){ // 현재 유닛의 이동가능한 위치들을 리턴해준다.
 
-        List<Vector2Int> movableVector2s = new List<Vector2Int>();
+        List<UnitPosition> explored = new List<UnitPosition>();
+        List<UnitPosition> frontier = new List<UnitPosition>();
 
-        for (int i = -move; i <= move; i++)
+        frontier.Add(unitPosition);
+
+        for (int i = 0; i < move; i++)
         {
-            for (int j = -(move-Math.Abs(i)); j <= (move - Math.Abs(i)); j++)
+            List<UnitPosition> nextFrontier = new List<UnitPosition>();
+            foreach (var f in frontier)
             {
-                if (i == 0 && j == 0)
-                    continue;
-                movableVector2s.Add(new Vector2Int(i, j));
+                foreach (var neighborPosition in UnitPosition.GetNeighborPosition(f))
+                {
+                    bool isExplored = false;
+
+                    foreach (var e in explored)
+                        if (neighborPosition.Equals(e))
+                            isExplored = true;
+
+                    if (isExplored.Equals(false)) // 아이템이 이미 탐색한곳이 아니라면
+                        nextFrontier.Add(neighborPosition); // 프론티어에 추가
+                }
+                explored.Add(f);
             }
+            frontier = nextFrontier;
         }
 
-        List<UnitPosition> movableUnitPositions = new List<UnitPosition>();
-        foreach (var movableVector2 in movableVector2s)
-        {
-            UnitPosition tempPosition = new UnitPosition();
-            tempPosition.lowerLeft.x = unitPosition.lowerLeft.x + movableVector2.x;
-            tempPosition.lowerLeft.y = unitPosition.lowerLeft.y + movableVector2.y;
-            tempPosition.upperRight.x = unitPosition.upperRight.x + movableVector2.x;
-            tempPosition.upperRight.y = unitPosition.upperRight.y + movableVector2.y;
-
-
-            movableUnitPositions.Add(tempPosition);
-        }
-
-        return movableUnitPositions;
+        return explored;
     }
 
     public void Move(Vector2Int position)
     {
-        foreach (var item in BattleManager.PathFindAlgorithm(unitPosition, new UnitPosition(position, position)))
+/*        foreach (var item in BattleManager.PathFindAlgorithm(unitPosition, new UnitPosition(position, position)))
         {
             item.ShowUnitPosition();
-        }
+        }*/
 
         BeforeMove();
-
-        /*unitPosition.lowerLeft.x += distance.x;
-        unitPosition.upperRight.x += distance.x;
-
-        unitPosition.lowerLeft.y += distance.y;
-        unitPosition.upperRight.y += distance.y;
-        */
 
         //기존 타일 유닛 초기화
         for (int i = unitPosition.lowerLeft.x; i <= unitPosition.upperRight.x; i++)

@@ -82,10 +82,10 @@ public class BattleUI : MonoBehaviour
     {
         UpdateInfoList();
         Debug.Log("현재 턴:" +  unit.name);
-        showTileSelector(unit.GetMovablePosition());
+        ShowTileSelector(unit.GetMovablePosition());
     }
 
-    public void showTileSelector(List<UnitPosition> positions)
+    public void ShowTileSelector(List<UnitPosition> positions)
     {
         HideTileSelector();
         foreach (UnitPosition unitPosition in positions)

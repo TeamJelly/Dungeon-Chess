@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 [System.Serializable]
 public class UnitPosition
@@ -76,6 +78,22 @@ public class UnitPosition
     public void ShowUnitPosition()
     {
         Debug.LogError("LowerLeft : " + lowerLeft + ", UpperRight : " + upperRight);
+    }
+
+    public static List<UnitPosition> GetNeighborPosition(UnitPosition unitPosition)
+    {
+        List<UnitPosition> temp = new List<UnitPosition>();
+
+        if (UpPosition(unitPosition, 1).IsMovableUnitPosition())
+            temp.Add(UpPosition(unitPosition, 1));
+        if (DownPosition(unitPosition, 1).IsMovableUnitPosition())
+            temp.Add(DownPosition(unitPosition, 1));
+        if (RightPosition(unitPosition, 1).IsMovableUnitPosition())
+            temp.Add(RightPosition(unitPosition, 1));
+        if (LeftPosition(unitPosition, 1).IsMovableUnitPosition())
+            temp.Add(LeftPosition(unitPosition, 1));
+
+        return temp;
     }
 
     public bool IsMovableUnitPosition() // 사용 가능한 UnitPosition인가?
