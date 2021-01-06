@@ -78,18 +78,23 @@ public class BattleManager : MonoBehaviour
             unit.actionRate += velocity * minTime;
         }
 
+        //유닛들 ActionRate 기준 오름차순 정렬
+        AllUnits.Sort(delegate (Unit A, Unit B)
+        {
+            if (A.actionRate < B.actionRate) return 1;
+            else if (A.actionRate > B.actionRate) return -1;
+            return 0;
+        });
+
         TurnStart(nextUnit);
     }
 
     public void TurnStart(Unit unit)
     {
         thisTurnUnit = unit;
-        thisTurnUnit.actionRate = 0;
-
         //턴 상태 갱신(이동 가능한 타일 보여주기)
         BattleUI.instance.UpdateTurnStatus(unit);
-//        thisTurnUnit.getMovableT
-  //      BattleUI
+        thisTurnUnit.actionRate = 0;
     }
 
     public void OnBattleStart()
