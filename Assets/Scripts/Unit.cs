@@ -7,12 +7,6 @@ public enum Category { NULL, Party, Neutral, Friendly, Enemy, Boss};
 public enum UnitClass { NULL, Monster, Warrior, Wizard, Priest, Archer };
 public enum UnitAI {NULL, AI1, AI2, AI3, AI4 };
 
-[System.Serializable]
-public class UnitPosition
-{
-    public Vector2Int lowerLeft, upperRight;
-}
-
 public class Unit : MonoBehaviour
 {
     [Header("Normal Status")]
@@ -148,6 +142,8 @@ public class Unit : MonoBehaviour
             tempPosition.lowerLeft.y = unitPosition.lowerLeft.y + movableVector2.y;
             tempPosition.upperRight.x = unitPosition.upperRight.x + movableVector2.x;
             tempPosition.upperRight.y = unitPosition.upperRight.y + movableVector2.y;
+
+
             movableUnitPositions.Add(tempPosition);
         }
 
@@ -156,6 +152,11 @@ public class Unit : MonoBehaviour
 
     public void Move(Vector2Int position)
     {
+        foreach (var item in BattleManager.PathFindAlgorithm(unitPosition, new UnitPosition(position, position)))
+        {
+            item.ShowUnitPosition();
+        }
+
         BeforeMove();
 
         /*unitPosition.lowerLeft.x += distance.x;
@@ -195,6 +196,42 @@ public class Unit : MonoBehaviour
         transform.position = screenPosition;
 
         AfterMove();
+    }
+
+    public void Move(List<UnitPosition> position) // 거인 & 1x1 통합본
+    {
+/*        BeforeMove();
+
+        //기존 타일 유닛 초기화
+        for (int i = unitPosition.lowerLeft.x; i <= unitPosition.upperRight.x; i++)
+        {
+            for (int j = unitPosition.lowerLeft.y; j <= unitPosition.upperRight.y; j++)
+            {
+                BattleManager.instance.AllTiles[i, j].unit = null;
+            }
+        }
+
+        //일단 유닛 크기 1x1만 이동 가능하도록 설정
+        unitPosition.lowerLeft = position.lowerLeft;
+        unitPosition.upperRight.x = position.x;
+
+        unitPosition.lowerLeft.y = position.y;
+        unitPosition.upperRight.y = position.y;
+
+
+        //새로 이동한 타일에 유닛 할당
+        for (int i = unitPosition.lowerLeft.x; i <= unitPosition.upperRight.x; i++)
+        {
+            for (int j = unitPosition.lowerLeft.y; j <= unitPosition.upperRight.y; j++)
+            {
+                BattleManager.instance.AllTiles[i, j].unit = this;
+            }
+        }
+        //화면상 위치 갱신.
+        Vector2 screenPosition = unitPosition.lowerLeft + (unitPosition.upperRight - unitPosition.lowerLeft) / 2;
+        transform.position = screenPosition;
+
+        AfterMove();*/
     }
 
     public void GetDamage(int number)

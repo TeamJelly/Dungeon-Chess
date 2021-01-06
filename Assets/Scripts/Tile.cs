@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Tile
 {
     public int number;
-    public new string name;
+    public string name;
 
     public Vector2Int position;
 
