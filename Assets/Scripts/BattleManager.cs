@@ -28,7 +28,6 @@ public class BattleManager : MonoBehaviour
         return GetTile(new Vector2Int(x, y));
     }
 
-
     public void SetNextTurn()
     {
         float max = 100; // 주기의 최댓값
@@ -37,7 +36,8 @@ public class BattleManager : MonoBehaviour
 
         foreach (var unit in AllUnits)
         {
-            float time = (max - unit.actionRate) / (unit.agility*10 + 100); // 거리 = 시간 * 속력 > 시간 = 거리 / 속력
+            float velocity = unit.agility * 10 + 100;
+            float time = (max - unit.actionRate) / velocity; // 거리 = 시간 * 속력 > 시간 = 거리 / 속력
             if (minTime >= time) // 시간이 가장 적게 걸리는애가 먼저된다.
             {
                 minTime = time;
@@ -47,7 +47,8 @@ public class BattleManager : MonoBehaviour
 
         foreach (var unit in AllUnits)
         {
-            unit.actionRate += (unit.agility * 10 + 100) * minTime;
+            float velocity = unit.agility * 10 + 100;
+            unit.actionRate += velocity * minTime;
         }
 
         TurnStart(nextUnit);

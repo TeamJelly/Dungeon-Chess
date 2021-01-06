@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 705507994}
+  m_Sun: {fileID: 0}
   m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
@@ -146,7 +146,7 @@ PrefabInstance:
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
@@ -265,7 +265,7 @@ PrefabInstance:
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
       propertyPath: m_RootOrder
-      value: 22
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
@@ -417,7 +417,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &58554028
 MonoBehaviour:
@@ -434,24 +434,22 @@ MonoBehaviour:
   name: NoName
   category: 0
   unitClass: 0
+  unitAI: 0
   level: 0
-  money: 0
   currentHP: 0
   maxHP: 0
   currentEXP: 0
-  maxEXP: 0
+  nextEXP: 0
   unitPosition:
     lowerLeft: {x: 0, y: 0}
     upperRight: {x: 0, y: 0}
   size: {x: 0, y: 0}
-  vitality: 0
   strength: 0
   defense: 0
   agility: 0
   move: 0
   critical: 0
   actionRate: 0
-  currentAct: 0
   defenseRate: 0
   moveCount: 0
   skillCount: 0
@@ -483,7 +481,7 @@ PrefabInstance:
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
@@ -587,8 +585,6 @@ GameObject:
   m_Component:
   - component: {fileID: 106205295}
   - component: {fileID: 106205299}
-  - component: {fileID: 106205298}
-  - component: {fileID: 106205297}
   - component: {fileID: 106205296}
   m_Layer: 0
   m_Name: TestUnit (4)
@@ -662,38 +658,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &106205297
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 106205294}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -57143145, guid: a040fb66244a7f54289914d98ea4ef7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _data:
-    _json: '{"nest":{"source":"Embed","macro":null,"embed":{"variables":{"collection":{"$content":[],"$version":"A"},"$version":"A"},"controlInputDefinitions":[],"controlOutputDefinitions":[],"valueInputDefinitions":[],"valueOutputDefinitions":[],"title":"TestUnitFlow","summary":"\uc720\ub2db
-      \uc774\ub984\uc744 \ucd9c\ub825\ud55c\ub2e4.","pan":{"x":541.8178,"y":-57.72299},"zoom":0.8,"elements":[{"coroutine":false,"defaultValues":{},"position":{"x":57.0,"y":-135.0},"guid":"ccfff10d-e454-4e74-a426-611715395e67","$version":"A","$type":"Bolt.Update","$id":"10"},{"chainable":false,"member":{"name":"Log","parameterTypes":["System.Object"],"targetType":"UnityEngine.Debug","targetTypeName":"UnityEngine.Debug","$version":"A"},"defaultValues":{},"position":{"x":413.0,"y":-132.0},"guid":"abb99cdf-835e-41a1-8e12-0a0812c14f88","$version":"A","$type":"Bolt.InvokeMember","$id":"12"},{"defaultValues":{},"position":{"x":254.0,"y":-2.0},"guid":"04976abc-da58-4556-8068-0888976c672a","$version":"A","$type":"Bolt.GenericAdd","$id":"15"},{"type":"System.String","value":{"$content":"hello,
-      My name is","$type":"System.String"},"defaultValues":{},"position":{"x":41.0,"y":-22.0},"guid":"6468d9ee-b0df-49ec-a69a-988e73e61946","$version":"A","$type":"Bolt.Literal","$id":"17"},{"member":{"name":"name","parameterTypes":null,"targetType":"Unit","targetTypeName":"Unit","$version":"A"},"defaultValues":{"target":null},"position":{"x":54.0,"y":83.0},"guid":"a820958b-ac1a-4e2b-94a0-ceab50ed3d99","$version":"A","$type":"Bolt.GetMember","$id":"19"},{"coroutine":false,"defaultValues":{},"position":{"x":66.0,"y":-238.0},"guid":"83837cbf-0a45-421a-9e84-f6c54a6eba17","$version":"A","$type":"Bolt.Start","$id":"22"},{"chainable":false,"member":{"name":"GetEXP","parameterTypes":["System.Int32"],"targetType":"Unit","targetTypeName":"Unit","$version":"A"},"defaultValues":{"target":null,"%getEXP":{"$content":1000,"$type":"System.Int32"}},"position":{"x":237.0,"y":-236.0},"guid":"2d594436-5fe3-4b05-9fdb-4583cfb36e92","$version":"A","$type":"Bolt.InvokeMember","$id":"24"},{"sourceUnit":{"$ref":"10"},"sourceKey":"trigger","destinationUnit":{"$ref":"12"},"destinationKey":"enter","guid":"2da745b0-b76f-4801-8d8c-a286a185212d","$type":"Bolt.ControlConnection"},{"sourceUnit":{"$ref":"22"},"sourceKey":"trigger","destinationUnit":{"$ref":"24"},"destinationKey":"enter","guid":"4ab70a23-c361-455a-85ae-51d56c2b92b0","$type":"Bolt.ControlConnection"},{"sourceUnit":{"$ref":"15"},"sourceKey":"sum","destinationUnit":{"$ref":"12"},"destinationKey":"%message","guid":"2c0253f4-800d-4aa4-ba9b-3e962ceaf1cb","$type":"Bolt.ValueConnection"},{"sourceUnit":{"$ref":"17"},"sourceKey":"output","destinationUnit":{"$ref":"15"},"destinationKey":"a","guid":"fa199a43-880f-4ea4-b641-54f75341fe26","$type":"Bolt.ValueConnection"},{"sourceUnit":{"$ref":"19"},"sourceKey":"value","destinationUnit":{"$ref":"15"},"destinationKey":"b","guid":"077a9b8e-126d-42e7-9460-9cf7894fe6be","$type":"Bolt.ValueConnection"}],"$version":"A"}}}'
-    _objectReferences: []
---- !u!114 &106205298
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 106205294}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1465209106, guid: c8d0ad23af520fe46aabe2b1fecf6462, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _data:
-    _json: '{"declarations":{"collection":{"$content":[],"$version":"A"},"$version":"A"}}'
-    _objectReferences: []
 --- !u!114 &106205299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -709,24 +673,22 @@ MonoBehaviour:
   name: "\uC7A5\uC774\uAD6D"
   category: 0
   unitClass: 0
+  unitAI: 0
   level: 0
-  money: 0
   currentHP: 0
   maxHP: 0
   currentEXP: 0
-  maxEXP: 0
+  nextEXP: 0
   unitPosition:
     lowerLeft: {x: 0, y: 0}
     upperRight: {x: 0, y: 0}
   size: {x: 2, y: 2}
-  vitality: 0
   strength: 0
   defense: 0
   agility: 5
   move: 2
   critical: 0
   actionRate: 0
-  currentAct: 0
   defenseRate: 0
   moveCount: 0
   skillCount: 0
@@ -768,7 +730,7 @@ PrefabInstance:
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
       propertyPath: m_RootOrder
-      value: 20
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
@@ -887,7 +849,7 @@ PrefabInstance:
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
       propertyPath: m_RootOrder
-      value: 16
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
@@ -991,8 +953,6 @@ GameObject:
   m_Component:
   - component: {fileID: 251066078}
   - component: {fileID: 251066082}
-  - component: {fileID: 251066081}
-  - component: {fileID: 251066080}
   - component: {fileID: 251066079}
   m_Layer: 0
   m_Name: TestUnit (2)
@@ -1066,38 +1026,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &251066080
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 251066077}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -57143145, guid: a040fb66244a7f54289914d98ea4ef7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _data:
-    _json: '{"nest":{"source":"Embed","macro":null,"embed":{"variables":{"collection":{"$content":[],"$version":"A"},"$version":"A"},"controlInputDefinitions":[],"controlOutputDefinitions":[],"valueInputDefinitions":[],"valueOutputDefinitions":[],"title":"TestUnitFlow","summary":"\uc720\ub2db
-      \uc774\ub984\uc744 \ucd9c\ub825\ud55c\ub2e4.","pan":{"x":529.3178,"y":21.027},"zoom":0.8,"elements":[{"coroutine":false,"defaultValues":{},"position":{"x":57.0,"y":-135.0},"guid":"ccfff10d-e454-4e74-a426-611715395e67","$version":"A","$type":"Bolt.Update","$id":"10"},{"chainable":false,"member":{"name":"Log","parameterTypes":["System.Object"],"targetType":"UnityEngine.Debug","targetTypeName":"UnityEngine.Debug","$version":"A"},"defaultValues":{},"position":{"x":413.0,"y":-132.0},"guid":"abb99cdf-835e-41a1-8e12-0a0812c14f88","$version":"A","$type":"Bolt.InvokeMember","$id":"12"},{"defaultValues":{},"position":{"x":254.0,"y":-2.0},"guid":"04976abc-da58-4556-8068-0888976c672a","$version":"A","$type":"Bolt.GenericAdd","$id":"15"},{"type":"System.String","value":{"$content":"hello,
-      My name is","$type":"System.String"},"defaultValues":{},"position":{"x":41.0,"y":-22.0},"guid":"6468d9ee-b0df-49ec-a69a-988e73e61946","$version":"A","$type":"Bolt.Literal","$id":"17"},{"member":{"name":"name","parameterTypes":null,"targetType":"Unit","targetTypeName":"Unit","$version":"A"},"defaultValues":{"target":null},"position":{"x":54.0,"y":83.0},"guid":"a820958b-ac1a-4e2b-94a0-ceab50ed3d99","$version":"A","$type":"Bolt.GetMember","$id":"19"},{"coroutine":false,"defaultValues":{},"position":{"x":66.0,"y":-238.0},"guid":"83837cbf-0a45-421a-9e84-f6c54a6eba17","$version":"A","$type":"Bolt.Start","$id":"22"},{"chainable":false,"member":{"name":"GetEXP","parameterTypes":["System.Int32"],"targetType":"Unit","targetTypeName":"Unit","$version":"A"},"defaultValues":{"target":null,"%getEXP":{"$content":1000,"$type":"System.Int32"}},"position":{"x":237.0,"y":-236.0},"guid":"2d594436-5fe3-4b05-9fdb-4583cfb36e92","$version":"A","$type":"Bolt.InvokeMember","$id":"24"},{"sourceUnit":{"$ref":"10"},"sourceKey":"trigger","destinationUnit":{"$ref":"12"},"destinationKey":"enter","guid":"2da745b0-b76f-4801-8d8c-a286a185212d","$type":"Bolt.ControlConnection"},{"sourceUnit":{"$ref":"22"},"sourceKey":"trigger","destinationUnit":{"$ref":"24"},"destinationKey":"enter","guid":"4ab70a23-c361-455a-85ae-51d56c2b92b0","$type":"Bolt.ControlConnection"},{"sourceUnit":{"$ref":"15"},"sourceKey":"sum","destinationUnit":{"$ref":"12"},"destinationKey":"%message","guid":"2c0253f4-800d-4aa4-ba9b-3e962ceaf1cb","$type":"Bolt.ValueConnection"},{"sourceUnit":{"$ref":"17"},"sourceKey":"output","destinationUnit":{"$ref":"15"},"destinationKey":"a","guid":"fa199a43-880f-4ea4-b641-54f75341fe26","$type":"Bolt.ValueConnection"},{"sourceUnit":{"$ref":"19"},"sourceKey":"value","destinationUnit":{"$ref":"15"},"destinationKey":"b","guid":"077a9b8e-126d-42e7-9460-9cf7894fe6be","$type":"Bolt.ValueConnection"}],"$version":"A"}}}'
-    _objectReferences: []
---- !u!114 &251066081
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 251066077}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1465209106, guid: c8d0ad23af520fe46aabe2b1fecf6462, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _data:
-    _json: '{"declarations":{"collection":{"$content":[],"$version":"A"},"$version":"A"}}'
-    _objectReferences: []
 --- !u!114 &251066082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1113,24 +1041,22 @@ MonoBehaviour:
   name: "\uC7A5\uC774\uAD6D"
   category: 0
   unitClass: 0
+  unitAI: 0
   level: 0
-  money: 0
   currentHP: 0
   maxHP: 0
   currentEXP: 0
-  maxEXP: 0
+  nextEXP: 0
   unitPosition:
     lowerLeft: {x: 0, y: 0}
     upperRight: {x: 0, y: 0}
   size: {x: 2, y: 2}
-  vitality: 0
   strength: 0
   defense: 0
   agility: 3
   move: 2
   critical: 0
   actionRate: 0
-  currentAct: 0
   defenseRate: 0
   moveCount: 0
   skillCount: 0
@@ -1172,7 +1098,7 @@ PrefabInstance:
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
       propertyPath: m_RootOrder
-      value: 26
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
@@ -1394,7 +1320,7 @@ Transform:
   - {fileID: 566507860}
   - {fileID: 106205295}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &566507859
 GameObject:
@@ -1406,8 +1332,6 @@ GameObject:
   m_Component:
   - component: {fileID: 566507860}
   - component: {fileID: 566507864}
-  - component: {fileID: 566507863}
-  - component: {fileID: 566507862}
   - component: {fileID: 566507861}
   m_Layer: 0
   m_Name: TestUnit (3)
@@ -1481,38 +1405,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &566507862
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 566507859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -57143145, guid: a040fb66244a7f54289914d98ea4ef7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _data:
-    _json: '{"nest":{"source":"Embed","macro":null,"embed":{"variables":{"collection":{"$content":[],"$version":"A"},"$version":"A"},"controlInputDefinitions":[],"controlOutputDefinitions":[],"valueInputDefinitions":[],"valueOutputDefinitions":[],"title":"TestUnitFlow","summary":"\uc720\ub2db
-      \uc774\ub984\uc744 \ucd9c\ub825\ud55c\ub2e4.","pan":{"x":529.3178,"y":21.027},"zoom":0.8,"elements":[{"coroutine":false,"defaultValues":{},"position":{"x":57.0,"y":-135.0},"guid":"ccfff10d-e454-4e74-a426-611715395e67","$version":"A","$type":"Bolt.Update","$id":"10"},{"chainable":false,"member":{"name":"Log","parameterTypes":["System.Object"],"targetType":"UnityEngine.Debug","targetTypeName":"UnityEngine.Debug","$version":"A"},"defaultValues":{},"position":{"x":413.0,"y":-132.0},"guid":"abb99cdf-835e-41a1-8e12-0a0812c14f88","$version":"A","$type":"Bolt.InvokeMember","$id":"12"},{"defaultValues":{},"position":{"x":254.0,"y":-2.0},"guid":"04976abc-da58-4556-8068-0888976c672a","$version":"A","$type":"Bolt.GenericAdd","$id":"15"},{"type":"System.String","value":{"$content":"hello,
-      My name is","$type":"System.String"},"defaultValues":{},"position":{"x":41.0,"y":-22.0},"guid":"6468d9ee-b0df-49ec-a69a-988e73e61946","$version":"A","$type":"Bolt.Literal","$id":"17"},{"member":{"name":"name","parameterTypes":null,"targetType":"Unit","targetTypeName":"Unit","$version":"A"},"defaultValues":{"target":null},"position":{"x":54.0,"y":83.0},"guid":"a820958b-ac1a-4e2b-94a0-ceab50ed3d99","$version":"A","$type":"Bolt.GetMember","$id":"19"},{"coroutine":false,"defaultValues":{},"position":{"x":66.0,"y":-238.0},"guid":"83837cbf-0a45-421a-9e84-f6c54a6eba17","$version":"A","$type":"Bolt.Start","$id":"22"},{"chainable":false,"member":{"name":"GetEXP","parameterTypes":["System.Int32"],"targetType":"Unit","targetTypeName":"Unit","$version":"A"},"defaultValues":{"target":null,"%getEXP":{"$content":1000,"$type":"System.Int32"}},"position":{"x":237.0,"y":-236.0},"guid":"2d594436-5fe3-4b05-9fdb-4583cfb36e92","$version":"A","$type":"Bolt.InvokeMember","$id":"24"},{"sourceUnit":{"$ref":"10"},"sourceKey":"trigger","destinationUnit":{"$ref":"12"},"destinationKey":"enter","guid":"2da745b0-b76f-4801-8d8c-a286a185212d","$type":"Bolt.ControlConnection"},{"sourceUnit":{"$ref":"22"},"sourceKey":"trigger","destinationUnit":{"$ref":"24"},"destinationKey":"enter","guid":"4ab70a23-c361-455a-85ae-51d56c2b92b0","$type":"Bolt.ControlConnection"},{"sourceUnit":{"$ref":"15"},"sourceKey":"sum","destinationUnit":{"$ref":"12"},"destinationKey":"%message","guid":"2c0253f4-800d-4aa4-ba9b-3e962ceaf1cb","$type":"Bolt.ValueConnection"},{"sourceUnit":{"$ref":"17"},"sourceKey":"output","destinationUnit":{"$ref":"15"},"destinationKey":"a","guid":"fa199a43-880f-4ea4-b641-54f75341fe26","$type":"Bolt.ValueConnection"},{"sourceUnit":{"$ref":"19"},"sourceKey":"value","destinationUnit":{"$ref":"15"},"destinationKey":"b","guid":"077a9b8e-126d-42e7-9460-9cf7894fe6be","$type":"Bolt.ValueConnection"}],"$version":"A"}}}'
-    _objectReferences: []
---- !u!114 &566507863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 566507859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1465209106, guid: c8d0ad23af520fe46aabe2b1fecf6462, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _data:
-    _json: '{"declarations":{"collection":{"$content":[],"$version":"A"},"$version":"A"}}'
-    _objectReferences: []
 --- !u!114 &566507864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1528,24 +1420,22 @@ MonoBehaviour:
   name: "\uC7A5\uC774\uAD6D"
   category: 0
   unitClass: 0
+  unitAI: 0
   level: 0
-  money: 0
   currentHP: 0
   maxHP: 0
   currentEXP: 0
-  maxEXP: 0
+  nextEXP: 0
   unitPosition:
     lowerLeft: {x: 0, y: 0}
     upperRight: {x: 0, y: 0}
   size: {x: 2, y: 2}
-  vitality: 0
   strength: 0
   defense: 0
   agility: 4
   move: 2
   critical: 0
   actionRate: 0
-  currentAct: 0
   defenseRate: 0
   moveCount: 0
   skillCount: 0
@@ -1604,7 +1494,7 @@ Transform:
   m_Children:
   - {fileID: 1828962412}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &630387157
 PrefabInstance:
@@ -1631,7 +1521,7 @@ PrefabInstance:
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
@@ -1750,7 +1640,7 @@ PrefabInstance:
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
       propertyPath: m_RootOrder
-      value: 19
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
@@ -1844,98 +1734,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c0e1c27f9d58aef458a694d7e4f8eefe, type: 3}
---- !u!1 &705507993
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 705507995}
-  - component: {fileID: 705507994}
-  m_Layer: 0
-  m_Name: Directional Light
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!108 &705507994
-Light:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 705507993}
-  m_Enabled: 1
-  serializedVersion: 10
-  m_Type: 1
-  m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
-  m_Range: 10
-  m_SpotAngle: 30
-  m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
-  m_Shadows:
-    m_Type: 2
-    m_Resolution: -1
-    m_CustomResolution: -1
-    m_Strength: 1
-    m_Bias: 0.05
-    m_NormalBias: 0.4
-    m_NearPlane: 0.2
-    m_CullingMatrixOverride:
-      e00: 1
-      e01: 0
-      e02: 0
-      e03: 0
-      e10: 0
-      e11: 1
-      e12: 0
-      e13: 0
-      e20: 0
-      e21: 0
-      e22: 1
-      e23: 0
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    m_UseCullingMatrixOverride: 0
-  m_Cookie: {fileID: 0}
-  m_DrawHalo: 0
-  m_Flare: {fileID: 0}
-  m_RenderMode: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingLayerMask: 1
-  m_Lightmapping: 1
-  m_LightShadowCasterMode: 0
-  m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
-  m_ColorTemperature: 6570
-  m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
-  m_UseBoundingSphereOverride: 0
-  m_ShadowRadius: 0
-  m_ShadowAngle: 0
---- !u!4 &705507995
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 705507993}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1001 &748196943
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1961,7 +1759,7 @@ PrefabInstance:
     - target: {fileID: 4462922396805816723, guid: 2394cc8ef5fb41f4f9a99880d6f5b9dd,
         type: 3}
       propertyPath: m_RootOrder
-      value: 29
+      value: 27
       objectReference: {fileID: 0}
     - target: {fileID: 4462922396805816723, guid: 2394cc8ef5fb41f4f9a99880d6f5b9dd,
         type: 3}
@@ -2065,69 +1863,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2394cc8ef5fb41f4f9a99880d6f5b9dd, type: 3}
---- !u!1 &841326876
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 841326879}
-  - component: {fileID: 841326878}
-  - component: {fileID: 841326877}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &841326877
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 841326876}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -57143145, guid: a040fb66244a7f54289914d98ea4ef7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _data:
-    _json: '{"nest":{"source":"Macro","macro":0,"embed":null}}'
-    _objectReferences:
-    - {fileID: 11400000, guid: f8cf6b84dc0f65443887ed49d7c95aa8, type: 2}
---- !u!114 &841326878
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 841326876}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1465209106, guid: c8d0ad23af520fe46aabe2b1fecf6462, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _data:
-    _json: '{"declarations":{"collection":{"$content":[],"$version":"A"},"$version":"A"}}'
-    _objectReferences: []
---- !u!4 &841326879
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 841326876}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -2253,7 +1988,7 @@ PrefabInstance:
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
@@ -2372,7 +2107,7 @@ PrefabInstance:
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
       propertyPath: m_RootOrder
-      value: 23
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
@@ -2476,8 +2211,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1164420695}
   - component: {fileID: 1164420699}
-  - component: {fileID: 1164420698}
-  - component: {fileID: 1164420697}
   - component: {fileID: 1164420696}
   m_Layer: 0
   m_Name: TestUnit (1)
@@ -2551,38 +2284,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1164420697
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1164420694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -57143145, guid: a040fb66244a7f54289914d98ea4ef7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _data:
-    _json: '{"nest":{"source":"Embed","macro":null,"embed":{"variables":{"collection":{"$content":[],"$version":"A"},"$version":"A"},"controlInputDefinitions":[],"controlOutputDefinitions":[],"valueInputDefinitions":[],"valueOutputDefinitions":[],"title":"TestUnitFlow","summary":"\uc720\ub2db
-      \uc774\ub984\uc744 \ucd9c\ub825\ud55c\ub2e4.","pan":{"x":519.3178,"y":-73.973},"zoom":0.8,"elements":[{"coroutine":false,"defaultValues":{},"position":{"x":57.0,"y":-135.0},"guid":"ccfff10d-e454-4e74-a426-611715395e67","$version":"A","$type":"Bolt.Update","$id":"10"},{"chainable":false,"member":{"name":"Log","parameterTypes":["System.Object"],"targetType":"UnityEngine.Debug","targetTypeName":"UnityEngine.Debug","$version":"A"},"defaultValues":{},"position":{"x":413.0,"y":-132.0},"guid":"abb99cdf-835e-41a1-8e12-0a0812c14f88","$version":"A","$type":"Bolt.InvokeMember","$id":"12"},{"defaultValues":{},"position":{"x":254.0,"y":-2.0},"guid":"04976abc-da58-4556-8068-0888976c672a","$version":"A","$type":"Bolt.GenericAdd","$id":"15"},{"type":"System.String","value":{"$content":"hello,
-      My name is","$type":"System.String"},"defaultValues":{},"position":{"x":41.0,"y":-22.0},"guid":"6468d9ee-b0df-49ec-a69a-988e73e61946","$version":"A","$type":"Bolt.Literal","$id":"17"},{"member":{"name":"name","parameterTypes":null,"targetType":"Unit","targetTypeName":"Unit","$version":"A"},"defaultValues":{"target":null},"position":{"x":54.0,"y":83.0},"guid":"a820958b-ac1a-4e2b-94a0-ceab50ed3d99","$version":"A","$type":"Bolt.GetMember","$id":"19"},{"coroutine":false,"defaultValues":{},"position":{"x":66.0,"y":-238.0},"guid":"83837cbf-0a45-421a-9e84-f6c54a6eba17","$version":"A","$type":"Bolt.Start","$id":"22"},{"chainable":false,"member":{"name":"GetEXP","parameterTypes":["System.Int32"],"targetType":"Unit","targetTypeName":"Unit","$version":"A"},"defaultValues":{"target":null,"%getEXP":{"$content":1000,"$type":"System.Int32"}},"position":{"x":237.0,"y":-236.0},"guid":"2d594436-5fe3-4b05-9fdb-4583cfb36e92","$version":"A","$type":"Bolt.InvokeMember","$id":"24"},{"sourceUnit":{"$ref":"10"},"sourceKey":"trigger","destinationUnit":{"$ref":"12"},"destinationKey":"enter","guid":"2da745b0-b76f-4801-8d8c-a286a185212d","$type":"Bolt.ControlConnection"},{"sourceUnit":{"$ref":"22"},"sourceKey":"trigger","destinationUnit":{"$ref":"24"},"destinationKey":"enter","guid":"4ab70a23-c361-455a-85ae-51d56c2b92b0","$type":"Bolt.ControlConnection"},{"sourceUnit":{"$ref":"15"},"sourceKey":"sum","destinationUnit":{"$ref":"12"},"destinationKey":"%message","guid":"2c0253f4-800d-4aa4-ba9b-3e962ceaf1cb","$type":"Bolt.ValueConnection"},{"sourceUnit":{"$ref":"17"},"sourceKey":"output","destinationUnit":{"$ref":"15"},"destinationKey":"a","guid":"fa199a43-880f-4ea4-b641-54f75341fe26","$type":"Bolt.ValueConnection"},{"sourceUnit":{"$ref":"19"},"sourceKey":"value","destinationUnit":{"$ref":"15"},"destinationKey":"b","guid":"077a9b8e-126d-42e7-9460-9cf7894fe6be","$type":"Bolt.ValueConnection"}],"$version":"A"}}}'
-    _objectReferences: []
---- !u!114 &1164420698
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1164420694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1465209106, guid: c8d0ad23af520fe46aabe2b1fecf6462, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _data:
-    _json: '{"declarations":{"collection":{"$content":[],"$version":"A"},"$version":"A"}}'
-    _objectReferences: []
 --- !u!114 &1164420699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2598,24 +2299,22 @@ MonoBehaviour:
   name: "\uC7A5\uC774\uAD6D"
   category: 0
   unitClass: 0
+  unitAI: 0
   level: 0
-  money: 0
   currentHP: 0
   maxHP: 0
   currentEXP: 0
-  maxEXP: 0
+  nextEXP: 0
   unitPosition:
     lowerLeft: {x: 7, y: 1}
     upperRight: {x: 8, y: 2}
   size: {x: 2, y: 2}
-  vitality: 0
   strength: 0
   defense: 0
   agility: 2
   move: 2
   critical: 0
   actionRate: 0
-  currentAct: 0
   defenseRate: 0
   moveCount: 0
   skillCount: 0
@@ -2657,7 +2356,7 @@ PrefabInstance:
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
       propertyPath: m_RootOrder
-      value: 24
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
@@ -2776,7 +2475,7 @@ PrefabInstance:
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
       propertyPath: m_RootOrder
-      value: 18
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
@@ -3050,7 +2749,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1470030332
 PrefabInstance:
@@ -3077,7 +2776,7 @@ PrefabInstance:
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
       propertyPath: m_RootOrder
-      value: 28
+      value: 26
       objectReference: {fileID: 0}
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
@@ -3263,7 +2962,7 @@ RectTransform:
   m_Children:
   - {fileID: 400687458}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3280,8 +2979,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1495762515}
   - component: {fileID: 1495762511}
-  - component: {fileID: 1495762514}
-  - component: {fileID: 1495762513}
   - component: {fileID: 1495762512}
   m_Layer: 0
   m_Name: TestUnit
@@ -3305,24 +3002,22 @@ MonoBehaviour:
   name: "\uC7A5\uC774\uAD6D"
   category: 0
   unitClass: 0
-  level: 0
-  money: 0
+  unitAI: 0
+  level: 1
   currentHP: 0
   maxHP: 0
   currentEXP: 0
-  maxEXP: 0
+  nextEXP: 0
   unitPosition:
     lowerLeft: {x: 0, y: 0}
     upperRight: {x: 0, y: 0}
   size: {x: 2, y: 2}
-  vitality: 0
   strength: 0
   defense: 0
   agility: 1
   move: 2
   critical: 0
   actionRate: 0
-  currentAct: 0
   defenseRate: 0
   moveCount: 0
   skillCount: 0
@@ -3338,7 +3033,9 @@ MonoBehaviour:
     AvailablePosition: []
     MultipleRange: []
     SelectedPosition: []
-  stateEffects: []
+  stateEffects:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!212 &1495762512
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3390,38 +3087,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1495762513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1495762510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -57143145, guid: a040fb66244a7f54289914d98ea4ef7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _data:
-    _json: '{"nest":{"source":"Embed","macro":null,"embed":{"variables":{"collection":{"$content":[],"$version":"A"},"$version":"A"},"controlInputDefinitions":[],"controlOutputDefinitions":[],"valueInputDefinitions":[],"valueOutputDefinitions":[],"title":"TestUnitFlow","summary":"\uc720\ub2db
-      \uc774\ub984\uc744 \ucd9c\ub825\ud55c\ub2e4.","pan":{"x":483.0678,"y":-55.223},"zoom":0.8,"elements":[{"coroutine":false,"defaultValues":{},"position":{"x":57.0,"y":-135.0},"guid":"ccfff10d-e454-4e74-a426-611715395e67","$version":"A","$type":"Bolt.Update","$id":"10"},{"chainable":false,"member":{"name":"Log","parameterTypes":["System.Object"],"targetType":"UnityEngine.Debug","targetTypeName":"UnityEngine.Debug","$version":"A"},"defaultValues":{},"position":{"x":413.0,"y":-132.0},"guid":"abb99cdf-835e-41a1-8e12-0a0812c14f88","$version":"A","$type":"Bolt.InvokeMember","$id":"12"},{"defaultValues":{},"position":{"x":254.0,"y":-2.0},"guid":"04976abc-da58-4556-8068-0888976c672a","$version":"A","$type":"Bolt.GenericAdd","$id":"15"},{"type":"System.String","value":{"$content":"hello,
-      My name is","$type":"System.String"},"defaultValues":{},"position":{"x":41.0,"y":-22.0},"guid":"6468d9ee-b0df-49ec-a69a-988e73e61946","$version":"A","$type":"Bolt.Literal","$id":"17"},{"member":{"name":"name","parameterTypes":null,"targetType":"Unit","targetTypeName":"Unit","$version":"A"},"defaultValues":{"target":null},"position":{"x":54.0,"y":83.0},"guid":"a820958b-ac1a-4e2b-94a0-ceab50ed3d99","$version":"A","$type":"Bolt.GetMember","$id":"19"},{"coroutine":false,"defaultValues":{},"position":{"x":66.0,"y":-238.0},"guid":"83837cbf-0a45-421a-9e84-f6c54a6eba17","$version":"A","$type":"Bolt.Start","$id":"22"},{"chainable":false,"member":{"name":"GetEXP","parameterTypes":["System.Int32"],"targetType":"Unit","targetTypeName":"Unit","$version":"A"},"defaultValues":{"target":null,"%getEXP":{"$content":1000,"$type":"System.Int32"}},"position":{"x":237.0,"y":-236.0},"guid":"2d594436-5fe3-4b05-9fdb-4583cfb36e92","$version":"A","$type":"Bolt.InvokeMember","$id":"24"},{"sourceUnit":{"$ref":"10"},"sourceKey":"trigger","destinationUnit":{"$ref":"12"},"destinationKey":"enter","guid":"2da745b0-b76f-4801-8d8c-a286a185212d","$type":"Bolt.ControlConnection"},{"sourceUnit":{"$ref":"22"},"sourceKey":"trigger","destinationUnit":{"$ref":"24"},"destinationKey":"enter","guid":"4ab70a23-c361-455a-85ae-51d56c2b92b0","$type":"Bolt.ControlConnection"},{"sourceUnit":{"$ref":"15"},"sourceKey":"sum","destinationUnit":{"$ref":"12"},"destinationKey":"%message","guid":"2c0253f4-800d-4aa4-ba9b-3e962ceaf1cb","$type":"Bolt.ValueConnection"},{"sourceUnit":{"$ref":"17"},"sourceKey":"output","destinationUnit":{"$ref":"15"},"destinationKey":"a","guid":"fa199a43-880f-4ea4-b641-54f75341fe26","$type":"Bolt.ValueConnection"},{"sourceUnit":{"$ref":"19"},"sourceKey":"value","destinationUnit":{"$ref":"15"},"destinationKey":"b","guid":"077a9b8e-126d-42e7-9460-9cf7894fe6be","$type":"Bolt.ValueConnection"}],"$version":"A"}}}'
-    _objectReferences: []
---- !u!114 &1495762514
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1495762510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1465209106, guid: c8d0ad23af520fe46aabe2b1fecf6462, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _data:
-    _json: '{"declarations":{"collection":{"$content":[],"$version":"A"},"$version":"A"}}'
-    _objectReferences: []
 --- !u!4 &1495762515
 Transform:
   m_ObjectHideFlags: 0
@@ -3461,7 +3126,7 @@ PrefabInstance:
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
@@ -3580,7 +3245,7 @@ PrefabInstance:
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
       propertyPath: m_RootOrder
-      value: 21
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
@@ -3699,7 +3364,7 @@ PrefabInstance:
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
@@ -3818,7 +3483,7 @@ PrefabInstance:
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
       propertyPath: m_RootOrder
-      value: 27
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
@@ -3976,7 +3641,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1759236352
 PrefabInstance:
@@ -4003,7 +3668,7 @@ PrefabInstance:
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
       propertyPath: m_RootOrder
-      value: 17
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
@@ -4122,7 +3787,7 @@ PrefabInstance:
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
       propertyPath: m_RootOrder
-      value: 25
+      value: 23
       objectReference: {fileID: 0}
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
@@ -5808,7 +5473,7 @@ PrefabInstance:
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4462922396805816723, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
         type: 3}

@@ -43,7 +43,7 @@ public class Skill
 
         foreach (var unit in tempUnit)
             foreach (var position in SelectedPosition)
-                if (unit.isContainPostion(position)) // 있으면
+                if (unit.IsContainPostion(position)) // 있으면
                     Use(unit);
     }
 }
