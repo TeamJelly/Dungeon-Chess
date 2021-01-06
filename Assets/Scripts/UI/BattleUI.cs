@@ -84,6 +84,7 @@ public class BattleUI : MonoBehaviour
     public void showTileSelector(List<UnitPosition> positions)
     {
         foreach (var tileSelector in tileSelectorList)
+            if(tileSelector.gameObject.activeSelf)
             tileSelector.gameObject.SetActive(false);
 
         foreach(UnitPosition unitPosition in positions)
@@ -93,10 +94,14 @@ public class BattleUI : MonoBehaviour
             {
                    // Debug.Log(i + "," + j);
                     //tileSelectorList[i, j].
-                    if(i >= 0 && i < 10 && j >= 0 && j < 10)
-                    tileSelectorList[i, j].gameObject.SetActive(true);
+                    if(i >= 0 && i < 10 && j >= 0 && j < 10 && BattleManager.instance.AllTiles[i,j].IsUsable())
+                    {
+                        tileSelectorList[i, j].gameObject.SetActive(true);
+                    }
+                    
             }
         }
+
     }
 
     public void HideTileSelector()

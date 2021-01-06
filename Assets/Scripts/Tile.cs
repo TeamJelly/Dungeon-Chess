@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tile : MonoBehaviour
+public class Tile
 {
     public int number;
     public new string name;
@@ -11,4 +11,10 @@ public class Tile : MonoBehaviour
 
     public Effect tileEffect;
 
+    public Unit unit = null;
+
+    public bool IsUsable()
+    {
+        return unit == null;
+    }
 }
