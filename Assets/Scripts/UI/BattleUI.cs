@@ -10,15 +10,17 @@ public class BattleUI : MonoBehaviour
 {
     public static BattleUI instance;
 
-    public GameObject moveTileButton;
     public GameObject unitsInfoPanel;
-    public TMP_FontAsset TMP_FontAsset;
-    public List<TextMeshProUGUI> unitsInfoText = new List<TextMeshProUGUI>();
-
+   
     public GameObject TileSelectorPrefab;
+    List<TextMeshProUGUI> unitsInfoText = new List<TextMeshProUGUI>();
+
     public EventTrigger[,] tileSelectorList = new EventTrigger[10,10];
 
     public Button endTurn;
+    
+    
+    
     private void Awake()
     {
         instance = this;
@@ -33,7 +35,11 @@ public class BattleUI : MonoBehaviour
             t.transform.SetParent(unitsInfoPanel.transform);
             unitsInfoText.Add(t.AddComponent<TextMeshProUGUI>());
         }
-
+        foreach(TextMeshProUGUI text in unitsInfoText)
+        {
+            text.font = UIManager.instance.TMP_FontAsset;
+            //text.UpdateFontAsset();
+        }
         UpdateInfoList();
 
         //이동시 선택하는 타일 전부 생성.
@@ -57,6 +63,7 @@ public class BattleUI : MonoBehaviour
             }
         endTurn.onClick.AddListener(() =>
         {
+            UpdateInfoList();
             BattleManager.instance.SetNextTurn();
         });
     }
@@ -76,18 +83,17 @@ public class BattleUI : MonoBehaviour
         unitsInfoText[index].text = unit.name +
             "\nHP:" + unit.currentHP + "/" + unit.maxHP;
     }
+
     public void UpdateTurnStatus(Unit unit)
     {
         Debug.Log("현재 턴:" +  unit.name);
         showTileSelector(unit.GetMovablePosition());
     }
+
     public void showTileSelector(List<UnitPosition> positions)
     {
-        foreach (var tileSelector in tileSelectorList)
-            if(tileSelector.gameObject.activeSelf)
-            tileSelector.gameObject.SetActive(false);
-
-        foreach(UnitPosition unitPosition in positions)
+        HideTileSelector();
+        foreach (UnitPosition unitPosition in positions)
         for (int i = unitPosition.lowerLeft.x; i <= unitPosition.upperRight.x; i++)
         {
             for (int j = unitPosition.lowerLeft.y; j <= unitPosition.upperRight.y; j++)
@@ -106,7 +112,9 @@ public class BattleUI : MonoBehaviour
 
     public void HideTileSelector()
     {
-
+        foreach (var tileSelector in tileSelectorList)
+            if (tileSelector.gameObject.activeSelf)
+                tileSelector.gameObject.SetActive(false);
     }
 
 

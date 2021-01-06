@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Bolt;
 
 public class BattleManager : MonoBehaviour
 {
@@ -17,25 +18,33 @@ public class BattleManager : MonoBehaviour
 
     private void Start()
     {
+        //UI세팅
         BattleUI.instance.Init();
 
+        //정보 저장용 타일 생성 
         AllTiles = new Tile[10, 10];
         for (int i = 0; i < 10; i++)
             for (int j = 0; j < 10; j++)
                 AllTiles[i, j] = new Tile();
 
+        //유닛들 타일 할당
         foreach (Unit unit in AllUnits)
-        {
             for (int i = unit.unitPosition.lowerLeft.x; i <= unit.unitPosition.upperRight.x; i++)
-            {
                 for (int j = unit.unitPosition.lowerLeft.y; j <= unit.unitPosition.upperRight.y; j++)
                 {
                     AllTiles[i, j].unit = unit;
                 }
-            }
-        }
-        //테스트 목적. 시작 시 바로 턴 계산. 
+        StartBattle();
+    }
+
+    public void StartBattle()
+    {
+        OnBattleStart();
         SetNextTurn();
+    }
+    public void EndBattle()
+    {
+        OnBattleEnd();
     }
     public Tile GetTile(Vector2Int position)
     {
@@ -43,7 +52,7 @@ public class BattleManager : MonoBehaviour
     }
     public Tile GetTile(int x, int y)
     {
-        return GetTile(new Vector2Int(x, y));
+        return AllTiles[x,y];
     }
 
     public void SetNextTurn()

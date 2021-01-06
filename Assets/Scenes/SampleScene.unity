@@ -1285,7 +1285,6 @@ MonoBehaviour:
     type: 3}
   unitsInfoPanel: {fileID: 1808196951}
   TMP_FontAsset: {fileID: 11400000, guid: 20370e39f78bb714fa53b6e899a9935d, type: 2}
-  unitsInfoText: []
   TileSelectorPrefab: {fileID: 4462922396805816717, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
     type: 3}
   endTurn: {fileID: 2098351046}
@@ -2715,6 +2714,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1309214667}
   - component: {fileID: 1309214666}
+  - component: {fileID: 1309214665}
   m_Layer: 0
   m_Name: Scripts
   m_TagString: Untagged
@@ -2722,6 +2722,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1309214665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1309214664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cf7c7f8380189b449a6ccbb4ddc48fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TMP_FontAsset: {fileID: 11400000, guid: 77e11889d29a86949b7df6560cd3c13c, type: 2}
 --- !u!114 &1309214666
 MonoBehaviour:
   m_ObjectHideFlags: 0
