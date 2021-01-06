@@ -1284,9 +1284,11 @@ MonoBehaviour:
   moveTileButton: {fileID: 4462922396805816717, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
     type: 3}
   unitsInfoPanel: {fileID: 1808196951}
+  TMP_FontAsset: {fileID: 11400000, guid: 20370e39f78bb714fa53b6e899a9935d, type: 2}
   unitsInfoText: []
   TileSelectorPrefab: {fileID: 4462922396805816717, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
     type: 3}
+  endTurn: {fileID: 2098351046}
 --- !u!1 &486258548
 GameObject:
   m_ObjectHideFlags: 0
@@ -2625,7 +2627,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC774\uB3D9"
+  m_text: "\uD134 \uC885\uB8CC"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 77e11889d29a86949b7df6560cd3c13c, type: 2}
   m_sharedMaterial: {fileID: 432226005134907966, guid: 77e11889d29a86949b7df6560cd3c13c,
@@ -2734,10 +2736,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AllUnits:
   - {fileID: 1495762511}
-  - {fileID: 1164420699}
+  - {fileID: 106205299}
   - {fileID: 251066082}
   - {fileID: 566507864}
-  - {fileID: 106205299}
   thisTurnUnit: {fileID: 0}
 --- !u!4 &1309214667
 Transform:
@@ -3035,9 +3036,7 @@ MonoBehaviour:
     AvailablePosition: []
     MultipleRange: []
     SelectedPosition: []
-  stateEffects:
-  - {fileID: 0}
-  - {fileID: 0}
+  stateEffects: []
 --- !u!212 &1495762512
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5582,7 +5581,7 @@ GameObject:
   - component: {fileID: 2098351047}
   - component: {fileID: 2098351046}
   m_Layer: 5
-  m_Name: MoveButton
+  m_Name: EndTurn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5650,18 +5649,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2098351047}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1495762511}
-        m_MethodName: GetMovablePosition
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &2098351047
 MonoBehaviour:
   m_ObjectHideFlags: 0
