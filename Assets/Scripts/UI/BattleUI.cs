@@ -13,14 +13,14 @@ public class BattleUI : MonoBehaviour
     public GameObject unitsInfoPanel;
    
     public GameObject TileSelectorPrefab;
-    List<TextMeshProUGUI> unitsInfoText = new List<TextMeshProUGUI>();
+    public GameObject UnitInfoUIPrefab;
+
+    public List<UnitInfoUI> UnitsInfoList = new List<UnitInfoUI>();
 
     public EventTrigger[,] tileSelectorList = new EventTrigger[10,10];
 
     public Button endTurn;
-    
-    
-    
+
     private void Awake()
     {
         instance = this;
@@ -28,19 +28,20 @@ public class BattleUI : MonoBehaviour
 
     public void Init()
     {
-        //유닛과 대응하는 UI 생성
-        foreach(Unit unit in BattleManager.instance.AllUnits)
+        //유닛과 대응하는 UI 생성. AllUnit에서 아군유닛 수로 수정 해야 함.
+        //1을 빼는 이유는 선택 유닛 UI는 미리 생성되어있기 때문.
+        for(int i = 0; i < BattleManager.instance.AllUnits.Count - 1; i++)
         {
-            RectTransform t = new GameObject("Info_" + unit.name).AddComponent<RectTransform>(); ;
-            t.transform.SetParent(unitsInfoPanel.transform);
-            unitsInfoText.Add(t.AddComponent<TextMeshProUGUI>());
+            GameObject g = GameObject.Instantiate(UnitInfoUIPrefab);
+          
+            g.transform.SetParent(unitsInfoPanel.transform);
+            g.transform.SetAsFirstSibling();
+            g.transform.localScale = Vector3.one;
+            UnitsInfoList.Add(g.GetComponent<UnitInfoUI>());
         }
-        foreach(TextMeshProUGUI text in unitsInfoText)
-        {
-            text.font = UIManager.instance.TMP_FontAsset;
-            //text.UpdateFontAsset();
-        }
-        UpdateInfoList();
+
+        //해당 ui 초기화
+        foreach (UnitInfoUI unitInfoUI in UnitsInfoList) unitInfoUI.Init();
 
         //이동시 선택하는 타일 전부 생성.
         Transform tileSelectorParent = new GameObject("TileSelector").transform;
@@ -63,29 +64,23 @@ public class BattleUI : MonoBehaviour
             }
         endTurn.onClick.AddListener(() =>
         {
-            UpdateInfoList();
             BattleManager.instance.SetNextTurn();
         });
     }
 
-    //유닛들 정보 갱신.
+    //유닛 정보창 갱신.
     public void UpdateInfoList()
     {
         for (int i = 0; i < BattleManager.instance.AllUnits.Count; i++)
         {
-            UpdateInfo(i);
+            Unit unit = BattleManager.instance.AllUnits[i];
+            UnitsInfoList[i].Set(unit);
         }
-    }
-
-    public void UpdateInfo(int index)
-    {
-        Unit unit = BattleManager.instance.AllUnits[index];
-        unitsInfoText[index].text = unit.name +
-            "\nHP:" + unit.currentHP + "/" + unit.maxHP;
     }
 
     public void UpdateTurnStatus(Unit unit)
     {
+        UpdateInfoList();
         Debug.Log("현재 턴:" +  unit.name);
         showTileSelector(unit.GetMovablePosition());
     }
