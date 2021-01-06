@@ -150,6 +150,10 @@ public class Unit : MonoBehaviour
 
         unitPosition = movePosition;
 
+        //화면상 위치 갱신.
+        Vector2 screenPosition = movePosition.lowerLeft + (movePosition.upperRight - movePosition.lowerLeft) / 2;
+        transform.position = screenPosition;
+
         AfterMove();
     }
 
