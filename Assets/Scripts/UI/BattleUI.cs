@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class BattleUI : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class BattleUI : MonoBehaviour
 
     public GameObject TileSelectorPrefab;
     public EventTrigger[,] tileSelectorList = new EventTrigger[10,10];
+
+    public Button endTurn;
     private void Awake()
     {
         instance = this;
@@ -40,7 +43,7 @@ public class BattleUI : MonoBehaviour
             {
                 tileSelectorList[i, j] = GameObject.Instantiate(TileSelectorPrefab).GetComponent<EventTrigger>();
                 tileSelectorList[i, j].transform.SetParent(tileSelectorParent);
-                tileSelectorList[i, j].transform.position = new Vector3(i, j,-2);
+                tileSelectorList[i, j].transform.position = new Vector3(i, j,-1);
                 tileSelectorList[i, j].gameObject.SetActive(false);
                 int x = i; int y = j;
 
@@ -48,11 +51,14 @@ public class BattleUI : MonoBehaviour
                 entry_PointerClick.eventID = EventTriggerType.PointerClick;
                 entry_PointerClick.callback.AddListener((data) =>
                 {
-                    Debug.Log("!!");
                     BattleManager.instance.thisTurnUnit.Move(new Vector2Int(x, y));
                 });
                 tileSelectorList[i, j].triggers.Add(entry_PointerClick);
             }
+        endTurn.onClick.AddListener(() =>
+        {
+            BattleManager.instance.SetNextTurn();
+        });
     }
 
     //유닛들 정보 갱신.
@@ -87,6 +93,7 @@ public class BattleUI : MonoBehaviour
             {
                    // Debug.Log(i + "," + j);
                     //tileSelectorList[i, j].
+                    if(i >= 0 && i < 10 && j >= 0 && j < 10)
                     tileSelectorList[i, j].gameObject.SetActive(true);
             }
         }
