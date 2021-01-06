@@ -10,8 +10,8 @@ public class BattleUI : MonoBehaviour
     public static BattleUI instance;
 
     public GameObject moveTileButton;
-
     public GameObject unitsInfoPanel;
+    public TMP_FontAsset TMP_FontAsset;
     public List<TextMeshProUGUI> unitsInfoText = new List<TextMeshProUGUI>();
 
     public GameObject TileSelectorPrefab;
@@ -30,6 +30,7 @@ public class BattleUI : MonoBehaviour
             t.transform.SetParent(unitsInfoPanel.transform);
             unitsInfoText.Add(t.AddComponent<TextMeshProUGUI>());
         }
+
         UpdateInfoList();
 
         //이동시 선택하는 타일 전부 생성.
