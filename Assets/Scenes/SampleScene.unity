@@ -459,7 +459,7 @@ MonoBehaviour:
   strength: 0
   defense: 0
   agility: 3
-  move: 2
+  move: 5
   critical: 0
   actionRate: 0
   defenseRate: 0
@@ -624,7 +624,7 @@ MonoBehaviour:
   strength: 0
   defense: 0
   agility: 4
-  move: 2
+  move: 5
   critical: 0
   actionRate: 0
   defenseRate: 0
@@ -1950,7 +1950,7 @@ MonoBehaviour:
   strength: 0
   defense: 0
   agility: 1
-  move: 2
+  move: 5
   critical: 0
   actionRate: 0
   defenseRate: 0

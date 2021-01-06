@@ -153,7 +153,7 @@ public class Unit : MonoBehaviour
 
     public void Move(Vector2Int position)
     {
-/*        foreach (var item in BattleManager.PathFindAlgorithm(unitPosition, new UnitPosition(position, position)))
+/*      foreach (var item in BattleManager.PathFindAlgorithm(unitPosition, new UnitPosition(position, position)))
         {
             item.ShowUnitPosition();
         }*/
