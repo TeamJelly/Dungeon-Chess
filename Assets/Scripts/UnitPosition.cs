@@ -87,23 +87,23 @@ public class UnitPosition
         Debug.LogError("LowerLeft : " + lowerLeft + ", UpperRight : " + upperRight);
     }
 
-    public static List<UnitPosition> GetNeighborPosition(UnitPosition unitPosition)
+    public static List<UnitPosition> GetNeighborPosition(UnitPosition unitPosition, Unit unit)
     {
         List<UnitPosition> temp = new List<UnitPosition>();
 
-        if (UpPosition(unitPosition, 1).IsMovableUnitPosition())
+        if (UpPosition(unitPosition, 1).IsMovableUnitPosition(unit))
             temp.Add(UpPosition(unitPosition, 1));
-        if (DownPosition(unitPosition, 1).IsMovableUnitPosition())
+        if (DownPosition(unitPosition, 1).IsMovableUnitPosition(unit))
             temp.Add(DownPosition(unitPosition, 1));
-        if (RightPosition(unitPosition, 1).IsMovableUnitPosition())
+        if (RightPosition(unitPosition, 1).IsMovableUnitPosition(unit))
             temp.Add(RightPosition(unitPosition, 1));
-        if (LeftPosition(unitPosition, 1).IsMovableUnitPosition())
+        if (LeftPosition(unitPosition, 1).IsMovableUnitPosition(unit))
             temp.Add(LeftPosition(unitPosition, 1));
 
         return temp;
     }
 
-    public bool IsMovableUnitPosition() // 사용 가능한 UnitPosition인가?
+    /*public bool IsMovableUnitPosition() // 사용 가능한 UnitPosition인가?
     {
         if (lowerLeft.x < 0 || lowerLeft.y < 0) // 맵 크기 안인가?
             return false;
@@ -113,6 +113,21 @@ public class UnitPosition
         for (int i = lowerLeft.x; i <= upperRight.x; i++)
             for (int j = lowerLeft.y; j <= upperRight.y; j++)
                 if (!BattleManager.instance.AllTiles[i, j].IsUsable()) // 사용 가능한 타일인가?
+                    return false;
+
+        return true;
+    }*/
+
+    public bool IsMovableUnitPosition(Unit unit) // 사용 가능한 UnitPosition인가?
+    {
+        if (lowerLeft.x < 0 || lowerLeft.y < 0) // 맵 크기 안인가?
+            return false;
+        if (upperRight.x >= BattleManager.instance.AllTiles.GetLength(0) || upperRight.y >= BattleManager.instance.AllTiles.GetLength(1)) // 맵 크기 안인가?
+            return false;
+
+        for (int i = lowerLeft.x; i <= upperRight.x; i++)
+            for (int j = lowerLeft.y; j <= upperRight.y; j++)
+                if (!BattleManager.instance.AllTiles[i, j].IsUsable(unit)) // 사용 가능한 타일인가?
                     return false;
 
         return true;

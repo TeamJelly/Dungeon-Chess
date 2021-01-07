@@ -153,17 +153,17 @@ public class BattleManager : MonoBehaviour
             return temp;
         }
 
-        public static List<Node> GetAvilableNeighbor(Node node)
+        public static List<Node> GetAvilableNeighbor(Unit unit, Node node)
         {
             List<Node> neighbor = new List<Node>();
 
-            if (UnitPosition.UpPosition(node.unitPosition, 1).IsMovableUnitPosition())
+            if (UnitPosition.UpPosition(node.unitPosition, 1).IsMovableUnitPosition(unit))
                 neighbor.Add(new Node(UnitPosition.UpPosition(node.unitPosition, 1), node));
-            if (UnitPosition.DownPosition(node.unitPosition, 1).IsMovableUnitPosition())
+            if (UnitPosition.DownPosition(node.unitPosition, 1).IsMovableUnitPosition(unit))
                 neighbor.Add(new Node(UnitPosition.DownPosition(node.unitPosition, 1), node));
-            if (UnitPosition.RightPosition(node.unitPosition, 1).IsMovableUnitPosition())
+            if (UnitPosition.RightPosition(node.unitPosition, 1).IsMovableUnitPosition(unit))
                 neighbor.Add(new Node(UnitPosition.RightPosition(node.unitPosition, 1), node));
-            if (UnitPosition.LeftPosition(node.unitPosition, 1).IsMovableUnitPosition())
+            if (UnitPosition.LeftPosition(node.unitPosition, 1).IsMovableUnitPosition(unit))
                 neighbor.Add(new Node(UnitPosition.LeftPosition(node.unitPosition, 1), node));
 
             return neighbor;
@@ -186,7 +186,7 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    public static List<UnitPosition> PathFindAlgorithm(UnitPosition from, UnitPosition to)
+    public static List<UnitPosition> PathFindAlgorithm(Unit unit, UnitPosition from, UnitPosition to)
     {
         Node node = new Node(from, to);
         List<Node> frontier = new List<Node>(); // priority queue ordered by Path-Cost, with node as the only element
@@ -211,7 +211,7 @@ public class BattleManager : MonoBehaviour
 
             explored.Add(node); // add node.State to explored
 
-            foreach (var child in Node.GetAvilableNeighbor(node))
+            foreach (var child in Node.GetAvilableNeighbor(unit, node))
             {
                 bool isExplored = false;
                 foreach (var item in explored)

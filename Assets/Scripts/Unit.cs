@@ -116,9 +116,9 @@ public class Unit : MonoBehaviour
             stateEffect.AfterMove();
         }
 
-        for (int i = unitPosition.lowerLeft.x; i < unitPosition.upperRight.x; i++)
-            for (int j = unitPosition.lowerLeft.y; j < unitPosition.upperRight.y; j++)
-                BattleManager.instance.GetTile(i, j).tileEffect.AfterMove();
+//        for (int i = unitPosition.lowerLeft.x; i < unitPosition.upperRight.x; i++)
+//            for (int j = unitPosition.lowerLeft.y; j < unitPosition.upperRight.y; j++)
+//                BattleManager.instance.GetTile(i, j).tileEffect.AfterMove();
     }
 
     public List<UnitPosition> GetMovablePosition(){ // 현재 유닛의 이동가능한 위치들을 리턴해준다.
@@ -133,7 +133,7 @@ public class Unit : MonoBehaviour
             List<UnitPosition> nextFrontier = new List<UnitPosition>();
             foreach (var f in frontier)
             {
-                foreach (var neighborPosition in UnitPosition.GetNeighborPosition(f))
+                foreach (var neighborPosition in UnitPosition.GetNeighborPosition(f, this))
                 {
                     bool isExplored = false;
 
@@ -152,7 +152,7 @@ public class Unit : MonoBehaviour
         return explored;
     }
     
-    public void Move(Vector2Int position)
+    /*public void Move(Vector2Int position)
     {
 
         BeforeMove();
@@ -187,7 +187,7 @@ public class Unit : MonoBehaviour
         transform.localPosition = screenPosition;
 
         AfterMove();
-    }
+    }*/
 
     public void Move(UnitPosition destination) // 거인 & 1x1 통합본
     {
@@ -207,7 +207,7 @@ public class Unit : MonoBehaviour
                 BattleManager.instance.AllTiles[i, j].unit = this;
 
         //화면상 위치 갱신.
-        Vector2 screenPosition = unitPosition.lowerLeft + (unitPosition.upperRight - unitPosition.lowerLeft) / 2;
+        Vector2 screenPosition = unitPosition.lowerLeft + (Vector2)(unitPosition.upperRight - unitPosition.lowerLeft) / 2;
         transform.localPosition = screenPosition;
 
         AfterMove();
