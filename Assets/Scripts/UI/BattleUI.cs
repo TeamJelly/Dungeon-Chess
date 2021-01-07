@@ -58,7 +58,7 @@ public class BattleUI : MonoBehaviour
                 entry_PointerClick.eventID = EventTriggerType.PointerClick;
                 entry_PointerClick.callback.AddListener((data) =>
                 {
-//                    BattleManager.instance.thisTurnUnit.Move(new Vector2Int(x, y));
+                    BattleManager.instance.thisTurnUnit.Move(new Vector2Int(x, y));
                 });
                 tileSelectorList[i, j].triggers.Add(entry_PointerClick);
             }
