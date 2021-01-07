@@ -125,7 +125,7 @@ public class BattleUI : MonoBehaviour
 
     public void SetTileIndicator(UnitPosition position)
     {
-        tileIndicatorPosition = position;
+        tileIndicatorPosition.Set(position);//깊은복사
         tileIndicator.localScale =
     new Vector3(position.upperRight.x - position.lowerLeft.x + 1,
                 position.upperRight.y - position.lowerLeft.y + 1,
