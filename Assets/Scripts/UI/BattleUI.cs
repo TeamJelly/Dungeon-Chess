@@ -82,6 +82,14 @@ public class BattleUI : MonoBehaviour
                         distance.y = y - tileIndicatorPosition.lowerLeft.y;
                     }
                     tileIndicatorPosition.Add(distance);
+
+                    for(int k = tileIndicatorPosition.lowerLeft.x; k < tileIndicatorPosition.upperRight.x; k++)
+                    {
+                        for(int l = tileIndicatorPosition.lowerLeft.y; l < tileIndicatorPosition.upperRight.y; l++)
+                        {
+                            if (!tileSelectorList[k + distance.x, l + distance.y].gameObject.activeSelf) return;
+                        }
+                    }
                     SetTileIndicator(tileIndicatorPosition);
 
                 });
