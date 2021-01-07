@@ -143,10 +143,10 @@ public class BattleUI : MonoBehaviour
             {
                 for (int j = unitPosition.lowerLeft.y; j <= unitPosition.upperRight.y; j++)
                 {
-                    if(i >= 0 && i < tileSelectorList.GetLength(0) && j >= 0 && j < tileSelectorList.GetLength(1)/* && BattleManager.instance.AllTiles[i,j].IsUsable()*/)
-                    {
+//                    if(i >= 0 && i < tileSelectorList.GetLength(0) && j >= 0 && j < tileSelectorList.GetLength(1)/* && BattleManager.instance.AllTiles[i,j].IsUsable()*/)
+//                    {
                         tileSelectorList[i, j].gameObject.SetActive(true);
-                    }
+//                    }
                     
                 }
             }
