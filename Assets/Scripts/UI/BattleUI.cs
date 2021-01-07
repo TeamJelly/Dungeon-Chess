@@ -71,25 +71,31 @@ public class BattleUI : MonoBehaviour
                 entry_PointerEnter.callback.AddListener((data) =>
                 {
                     Vector2Int distance = new Vector2Int();
-                    if(tileIndicatorPosition.lowerLeft.x > x ||
-                       tileIndicatorPosition.upperRight.x < x)
+                    if(tileIndicatorPosition.lowerLeft.x > x)
                     {
                         distance.x = x - tileIndicatorPosition.lowerLeft.x;
                     }
-                    if (tileIndicatorPosition.lowerLeft.y > y ||
-                        tileIndicatorPosition.upperRight.y < y)
+                    else if(tileIndicatorPosition.upperRight.x < x)
+                    {
+                        distance.x = x - tileIndicatorPosition.upperRight.x;
+                    }
+                    if (tileIndicatorPosition.lowerLeft.y > y)
                     {
                         distance.y = y - tileIndicatorPosition.lowerLeft.y;
                     }
-                    tileIndicatorPosition.Add(distance);
-
-                    for(int k = tileIndicatorPosition.lowerLeft.x; k < tileIndicatorPosition.upperRight.x; k++)
+                    else if(tileIndicatorPosition.upperRight.y < y)
                     {
-                        for(int l = tileIndicatorPosition.lowerLeft.y; l < tileIndicatorPosition.upperRight.y; l++)
+                        distance.y = y - tileIndicatorPosition.upperRight.y;
+                    }
+
+                    for(int k = tileIndicatorPosition.lowerLeft.x; k <= tileIndicatorPosition.upperRight.x; k++)
+                    {
+                        for(int l = tileIndicatorPosition.lowerLeft.y; l <= tileIndicatorPosition.upperRight.y; l++)
                         {
                             if (!tileSelectorList[k + distance.x, l + distance.y].gameObject.activeSelf) return;
                         }
                     }
+                    tileIndicatorPosition.Add(distance);
                     SetTileIndicator(tileIndicatorPosition);
 
                 });
