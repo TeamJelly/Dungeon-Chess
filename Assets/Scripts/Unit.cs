@@ -150,13 +150,9 @@ public class Unit : MonoBehaviour
 
         return explored;
     }
-
-    public void Move(Vector2Int position)
+    
+    /*public void Move(Vector2Int position)
     {
-/*      foreach (var item in BattleManager.PathFindAlgorithm(unitPosition, new UnitPosition(position, position)))
-        {
-            item.ShowUnitPosition();
-        }*/
 
         BeforeMove();
 
@@ -187,45 +183,32 @@ public class Unit : MonoBehaviour
         }
         //화면상 위치 갱신.
         Vector2 screenPosition = unitPosition.lowerLeft + (unitPosition.upperRight - unitPosition.lowerLeft) / 2;
-        transform.position = screenPosition;
+        transform.localPosition = screenPosition;
 
         AfterMove();
-    }
+    }*/
 
-    public void Move(List<UnitPosition> position) // 거인 & 1x1 통합본
+    public void Move(UnitPosition destination) // 거인 & 1x1 통합본
     {
-/*        BeforeMove();
+        BeforeMove();
 
-        //기존 타일 유닛 초기화
+        //기존 타일 유닛 초기화 Tile.cs로 옮기면 좋을듯
         for (int i = unitPosition.lowerLeft.x; i <= unitPosition.upperRight.x; i++)
-        {
             for (int j = unitPosition.lowerLeft.y; j <= unitPosition.upperRight.y; j++)
-            {
                 BattleManager.instance.AllTiles[i, j].unit = null;
-            }
-        }
 
-        //일단 유닛 크기 1x1만 이동 가능하도록 설정
-        unitPosition.lowerLeft = position.lowerLeft;
-        unitPosition.upperRight.x = position.x;
-
-        unitPosition.lowerLeft.y = position.y;
-        unitPosition.upperRight.y = position.y;
-
+        unitPosition = destination;
 
         //새로 이동한 타일에 유닛 할당
         for (int i = unitPosition.lowerLeft.x; i <= unitPosition.upperRight.x; i++)
-        {
             for (int j = unitPosition.lowerLeft.y; j <= unitPosition.upperRight.y; j++)
-            {
                 BattleManager.instance.AllTiles[i, j].unit = this;
-            }
-        }
+
         //화면상 위치 갱신.
         Vector2 screenPosition = unitPosition.lowerLeft + (unitPosition.upperRight - unitPosition.lowerLeft) / 2;
-        transform.position = screenPosition;
+        transform.localPosition = screenPosition;
 
-        AfterMove();*/
+        AfterMove();
     }
 
     public void GetDamage(int number)

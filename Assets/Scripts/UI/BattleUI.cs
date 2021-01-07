@@ -58,7 +58,7 @@ public class BattleUI : MonoBehaviour
                 entry_PointerClick.eventID = EventTriggerType.PointerClick;
                 entry_PointerClick.callback.AddListener((data) =>
                 {
-                    BattleManager.instance.thisTurnUnit.Move(new Vector2Int(x, y));
+//                    BattleManager.instance.thisTurnUnit.Move(new Vector2Int(x, y));
                 });
                 tileSelectorList[i, j].triggers.Add(entry_PointerClick);
             }
@@ -93,8 +93,6 @@ public class BattleUI : MonoBehaviour
             {
                 for (int j = unitPosition.lowerLeft.y; j <= unitPosition.upperRight.y; j++)
                 {
-                    //Debug.Log(i + "," + j);
-                    //tileSelectorList[i, j].
                     if(i >= 0 && i < tileSelectorList.GetLength(0) && j >= 0 && j < tileSelectorList.GetLength(1)/* && BattleManager.instance.AllTiles[i,j].IsUsable()*/)
                     {
                         tileSelectorList[i, j].gameObject.SetActive(true);
