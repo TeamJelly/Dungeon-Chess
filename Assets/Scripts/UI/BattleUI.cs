@@ -71,25 +71,17 @@ public class BattleUI : MonoBehaviour
                 entry_PointerEnter.callback.AddListener((data) =>
                 {
                     Vector2Int distance = new Vector2Int();
-                    if(tileIndicatorPosition.lowerLeft.x > x)
+                    if(tileIndicatorPosition.lowerLeft.x > x ||
+                       tileIndicatorPosition.upperRight.x < x)
                     {
                         distance.x = x - tileIndicatorPosition.lowerLeft.x;
                     }
-                    else if (tileIndicatorPosition.upperRight.x < x)
-                    {
-                        distance.x = x - tileIndicatorPosition.upperRight.x;
-                    }
-                    if (tileIndicatorPosition.lowerLeft.y > y)
+                    if (tileIndicatorPosition.lowerLeft.y > y ||
+                        tileIndicatorPosition.upperRight.y < y)
                     {
                         distance.y = y - tileIndicatorPosition.lowerLeft.y;
                     }
-
-                    else if (tileIndicatorPosition.upperRight.y < y)
-                    {
-                        distance.y = y - tileIndicatorPosition.upperRight.y;
-                    }
-                    tileIndicatorPosition.lowerLeft += distance;
-                    tileIndicatorPosition.upperRight += distance;
+                    tileIndicatorPosition.Add(distance);
                     SetTileIndicator(tileIndicatorPosition);
 
                 });

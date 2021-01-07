@@ -26,6 +26,17 @@ public class UnitPosition
         upperRight.x = newPosition.upperRight.x;
         upperRight.y = newPosition.upperRight.y;
     }
+
+    public void Add(UnitPosition value)
+    {
+        lowerLeft += value.lowerLeft;
+        upperRight += value.upperRight;
+    }
+    public void Add(Vector2Int value)
+    {
+        lowerLeft += value;
+        upperRight += value;
+    }
     public void Up(int number)
     {
         lowerLeft.y += number;

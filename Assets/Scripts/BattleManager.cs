@@ -78,6 +78,14 @@ public class BattleManager : MonoBehaviour
             unit.actionRate += velocity * minTime;
         }
 
+        //누적 행동력(actionRate) 기준 정렬
+        AllUnits.Sort(delegate(Unit A, Unit B)
+        {
+            if (A.actionRate < B.actionRate) return 1;
+            else if (A.actionRate > B.actionRate) return -1;
+            return 0;
+        });
+
         TurnStart(nextUnit);
     }
 
