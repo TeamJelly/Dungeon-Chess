@@ -58,14 +58,18 @@ public class BattleUI : MonoBehaviour
                 tileSelectorList[i, j].gameObject.SetActive(false);
                 int x = i; int y = j;
 
+                //타일 클릭시 이벤트 추가
                 EventTrigger.Entry entry_PointerClick = new EventTrigger.Entry();
                 entry_PointerClick.eventID = EventTriggerType.PointerClick;
                 entry_PointerClick.callback.AddListener((data) =>
                 {
-                    BattleManager.instance.thisTurnUnit.Move(tileIndicatorPosition);
+                    StartCoroutine(ShowMoveAnimation());
+                    //BattleManager.instance.thisTurnUnit.Move(tileIndicatorPosition);
                 });
                 tileSelectorList[i, j].triggers.Add(entry_PointerClick);
 
+
+                //타일 위로 마우스 지나갈 때 이벤트 추가 
                 EventTrigger.Entry entry_PointerEnter = new EventTrigger.Entry();
                 entry_PointerEnter.eventID = EventTriggerType.PointerEnter;
                 entry_PointerEnter.callback.AddListener((data) =>
@@ -107,6 +111,19 @@ public class BattleUI : MonoBehaviour
         {
             BattleManager.instance.SetNextTurn();
         });
+    }
+
+    IEnumerator ShowMoveAnimation()
+    {
+        Unit unit = BattleManager.instance.thisTurnUnit;
+        List<UnitPosition> path = BattleManager.PathFindAlgorithm(unit, unit.unitPosition, tileIndicatorPosition);
+
+        var waitForSeconds = new WaitForSeconds(0.1f);
+        foreach (UnitPosition position in path)
+        {
+            unit.Move(position);
+            yield return waitForSeconds;
+        }
     }
 
     //유닛 정보창 갱신.
