@@ -217,6 +217,8 @@ MonoBehaviour:
   skillCount: 0
   itemCount: 0
   skills: []
+  antiques: []
+  items: []
   stateEffects: []
 --- !u!1 &106205294
 GameObject:
@@ -289,8 +291,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1486771939780576131, guid: f19e0c71272325d469e347e810c85ac6,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0c5eac1ba9737c14eb210af92120e801, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -347,6 +348,8 @@ MonoBehaviour:
     AvailablePosition: []
     MultipleRange: []
     SelectedPosition: []
+  antiques: []
+  items: []
   stateEffects: []
 --- !u!1 &251066077
 GameObject:
@@ -419,8 +422,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -256319028896179214, guid: f19e0c71272325d469e347e810c85ac6,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: b3424d8a78c4eed4681dfa51490939ea, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -477,6 +479,8 @@ MonoBehaviour:
     AvailablePosition: []
     MultipleRange: []
     SelectedPosition: []
+  antiques: []
+  items: []
   stateEffects: []
 --- !u!1 &486258548
 GameObject:
@@ -642,6 +646,8 @@ MonoBehaviour:
     AvailablePosition: []
     MultipleRange: []
     SelectedPosition: []
+  antiques: []
+  items: []
   stateEffects: []
 --- !u!1 &588486488
 GameObject:
@@ -699,6 +705,7 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
+  - component: {fileID: 963194230}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -724,7 +731,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.1792453, g: 0.13443397, b: 0.16028666, a: 1}
+  m_BackGroundColor: {r: 0.2784314, g: 0.1764706, b: 0.23529413, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -735,14 +742,14 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1
-    height: 1
+    width: 0.99914163
+    height: 0.9984733
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 7.5
-  m_Depth: -1
+  orthographic size: 6.8125
+  m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -765,7 +772,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.5, y: 3.5, z: -10}
+  m_LocalPosition: {x: 4.5, y: 4.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -787,6 +794,26 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_MaxRayIntersections: 0
+--- !u!114 &963194230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a160d838ff8b4b4693ac20007e008c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AssetsPPU: 16
+  m_RefResolutionX: 388
+  m_RefResolutionY: 218
+  m_UpscaleRT: 0
+  m_PixelSnapping: 0
+  m_CropFrameX: 1
+  m_CropFrameY: 1
+  m_StretchFill: 0
 --- !u!1 &1164420694
 GameObject:
   m_ObjectHideFlags: 0
@@ -858,9 +885,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7080587864300181571, guid: f19e0c71272325d469e347e810c85ac6,
-    type: 3}
-  m_Color: {r: 1, g: 0.5518868, b: 0.5518868, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 0c5eac1ba9737c14eb210af92120e801, type: 3}
+  m_Color: {r: 0.6901961, g: 0.6901961, b: 0.6901961, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -916,6 +942,8 @@ MonoBehaviour:
     AvailablePosition: []
     MultipleRange: []
     SelectedPosition: []
+  antiques: []
+  items: []
   stateEffects: []
 --- !u!1 &1309214664
 GameObject:
@@ -1985,6 +2013,8 @@ MonoBehaviour:
     AvailablePosition: []
     MultipleRange: []
     SelectedPosition: []
+  antiques: []
+  items: []
   stateEffects: []
 --- !u!212 &1495762512
 SpriteRenderer:
@@ -2025,8 +2055,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 2105536246359451209, guid: f19e0c71272325d469e347e810c85ac6,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: b3424d8a78c4eed4681dfa51490939ea, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
