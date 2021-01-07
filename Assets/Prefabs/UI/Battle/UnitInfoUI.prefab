@@ -69,8 +69,8 @@ MonoBehaviour:
 
     SPEED 10'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 20370e39f78bb714fa53b6e899a9935d, type: 2}
-  m_sharedMaterial: {fileID: 8795876365433470118, guid: 20370e39f78bb714fa53b6e899a9935d,
+  m_fontAsset: {fileID: 11400000, guid: bae35463c64b8a34cbb40224635730ff, type: 2}
+  m_sharedMaterial: {fileID: 3962364315288529594, guid: bae35463c64b8a34cbb40224635730ff,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}

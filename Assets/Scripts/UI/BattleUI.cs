@@ -50,7 +50,7 @@ public class BattleUI : MonoBehaviour
             {
                 tileSelectorList[i, j] = GameObject.Instantiate(TileSelectorPrefab).GetComponent<EventTrigger>();
                 tileSelectorList[i, j].transform.SetParent(tileSelectorParent);
-                tileSelectorList[i, j].transform.position = new Vector3(i, j,-1);
+                tileSelectorList[i, j].transform.position = new Vector3(i, j,-2);
                 tileSelectorList[i, j].gameObject.SetActive(false);
                 int x = i; int y = j;
 
@@ -89,20 +89,19 @@ public class BattleUI : MonoBehaviour
     {
         HideTileSelector();
         foreach (UnitPosition unitPosition in positions)
-        for (int i = unitPosition.lowerLeft.x; i <= unitPosition.upperRight.x; i++)
-        {
-            for (int j = unitPosition.lowerLeft.y; j <= unitPosition.upperRight.y; j++)
+            for (int i = unitPosition.lowerLeft.x; i <= unitPosition.upperRight.x; i++)
             {
-                   // Debug.Log(i + "," + j);
+                for (int j = unitPosition.lowerLeft.y; j <= unitPosition.upperRight.y; j++)
+                {
+                    //Debug.Log(i + "," + j);
                     //tileSelectorList[i, j].
-                    if(i >= 0 && i < 10 && j >= 0 && j < 10 && BattleManager.instance.AllTiles[i,j].IsUsable())
+                    if(i >= 0 && i < tileSelectorList.GetLength(0) && j >= 0 && j < tileSelectorList.GetLength(1)/* && BattleManager.instance.AllTiles[i,j].IsUsable()*/)
                     {
                         tileSelectorList[i, j].gameObject.SetActive(true);
                     }
                     
+                }
             }
-        }
-
     }
 
     public void HideTileSelector()
