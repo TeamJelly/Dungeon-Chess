@@ -18,4 +18,12 @@ public class Tile
     {
         return unit == null;
     }
+
+    public bool IsUsable(Unit unit)
+    {
+        if (this.unit == unit || this.unit == null)
+            return true;
+        else
+            return false;
+    }
 }
