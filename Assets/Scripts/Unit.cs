@@ -152,7 +152,7 @@ public class Unit : MonoBehaviour
         return explored;
     }
     
-    /*public void Move(Vector2Int position)
+    public void Move(Vector2Int position)
     {
 
         BeforeMove();
@@ -187,7 +187,7 @@ public class Unit : MonoBehaviour
         transform.localPosition = screenPosition;
 
         AfterMove();
-    }*/
+    }
 
     public void Move(UnitPosition destination) // 거인 & 1x1 통합본
     {
