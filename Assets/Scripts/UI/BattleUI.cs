@@ -13,6 +13,7 @@ public class BattleUI : MonoBehaviour
     public GameObject unitsInfoPanel;
    
     public GameObject TileSelectorPrefab;
+    public GameObject TileIndicatorPrefab;
     public GameObject UnitInfoUIPrefab;
 
     public List<UnitInfoUI> UnitsInfoList = new List<UnitInfoUI>();
@@ -20,6 +21,9 @@ public class BattleUI : MonoBehaviour
     public EventTrigger[,] tileSelectorList = new EventTrigger[10,10];
 
     public Button endTurn;
+
+    public Transform tileIndicator;
+    UnitPosition tileIndicatorPosition = new UnitPosition();
 
     private void Awake()
     {
@@ -48,7 +52,7 @@ public class BattleUI : MonoBehaviour
         for(int i = 0; i < 10; i++)
             for(int j = 0; j < 10; j++)
             {
-                tileSelectorList[i, j] = GameObject.Instantiate(TileSelectorPrefab).GetComponent<EventTrigger>();
+                tileSelectorList[i, j] = Instantiate(TileSelectorPrefab).GetComponent<EventTrigger>();
                 tileSelectorList[i, j].transform.SetParent(tileSelectorParent);
                 tileSelectorList[i, j].transform.position = new Vector3(i, j,-2);
                 tileSelectorList[i, j].gameObject.SetActive(false);
@@ -58,10 +62,41 @@ public class BattleUI : MonoBehaviour
                 entry_PointerClick.eventID = EventTriggerType.PointerClick;
                 entry_PointerClick.callback.AddListener((data) =>
                 {
-                    BattleManager.instance.thisTurnUnit.Move(new Vector2Int(x, y));
+                    BattleManager.instance.thisTurnUnit.Move(tileIndicatorPosition);
                 });
                 tileSelectorList[i, j].triggers.Add(entry_PointerClick);
+
+                EventTrigger.Entry entry_PointerEnter = new EventTrigger.Entry();
+                entry_PointerEnter.eventID = EventTriggerType.PointerEnter;
+                entry_PointerEnter.callback.AddListener((data) =>
+                {
+                    Vector2Int distance = new Vector2Int();
+                    if(tileIndicatorPosition.lowerLeft.x > x)
+                    {
+                        distance.x = x - tileIndicatorPosition.lowerLeft.x;
+                    }
+                    else if (tileIndicatorPosition.upperRight.x < x)
+                    {
+                        distance.x = x - tileIndicatorPosition.upperRight.x;
+                    }
+                    if (tileIndicatorPosition.lowerLeft.y > y)
+                    {
+                        distance.y = y - tileIndicatorPosition.lowerLeft.y;
+                    }
+
+                    else if (tileIndicatorPosition.upperRight.y < y)
+                    {
+                        distance.y = y - tileIndicatorPosition.upperRight.y;
+                    }
+                    tileIndicatorPosition.lowerLeft += distance;
+                    tileIndicatorPosition.upperRight += distance;
+                    SetTileIndicator(tileIndicatorPosition);
+
+                });
+                tileSelectorList[i, j].triggers.Add(entry_PointerEnter);
             }
+
+        tileIndicator = Instantiate(TileIndicatorPrefab).transform;
         endTurn.onClick.AddListener(() =>
         {
             BattleManager.instance.SetNextTurn();
@@ -82,7 +117,22 @@ public class BattleUI : MonoBehaviour
     {
         UpdateInfoList();
         Debug.Log("현재 턴:" +  unit.name);
+
+        SetTileIndicator(unit.unitPosition);
+
         ShowTileSelector(unit.GetMovablePosition());
+    }
+
+    public void SetTileIndicator(UnitPosition position)
+    {
+        tileIndicatorPosition = position;
+        tileIndicator.localScale =
+    new Vector3(position.upperRight.x - position.lowerLeft.x + 1,
+                position.upperRight.y - position.lowerLeft.y + 1,
+                1);
+        Vector3 screenPosition = position.lowerLeft + (Vector2)(position.upperRight - position.lowerLeft) / 2;
+        screenPosition.z = -4;
+        tileIndicator.localPosition = screenPosition;
     }
 
     public void ShowTileSelector(List<UnitPosition> positions)

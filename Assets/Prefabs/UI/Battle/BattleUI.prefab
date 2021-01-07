@@ -4318,11 +4318,14 @@ MonoBehaviour:
   unitsInfoPanel: {fileID: 5384038421732458712}
   TileSelectorPrefab: {fileID: 4462922396805816717, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
     type: 3}
+  TileIndicatorPrefab: {fileID: 4462922396805816717, guid: 2394cc8ef5fb41f4f9a99880d6f5b9dd,
+    type: 3}
   UnitInfoUIPrefab: {fileID: 8318358189355216722, guid: 1732e33becc7edb4b8a73b9aff95319e,
     type: 3}
   UnitsInfoList:
   - {fileID: 7181283911937842946}
   endTurn: {fileID: 5384038421354337317}
+  tileIndicator: {fileID: 0}
 --- !u!114 &7077558489722639307
 MonoBehaviour:
   m_ObjectHideFlags: 0

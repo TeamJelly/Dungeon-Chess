@@ -18,7 +18,13 @@ public class UnitPosition
         this.lowerLeft = lowerLeft;
         this.upperRight = upperRight;
     }
-
+    public void Set(UnitPosition newPosition)
+    {
+        lowerLeft.x = newPosition.lowerLeft.x;
+        lowerLeft.y = newPosition.lowerLeft.y;
+        upperRight.x = newPosition.upperRight.x;
+        upperRight.y = newPosition.upperRight.y;
+    }
     public void Up(int number)
     {
         lowerLeft.y += number;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public enum Category { NULL, Party, Neutral, Friendly, Enemy, Boss};
@@ -197,7 +198,8 @@ public class Unit : MonoBehaviour
             for (int j = unitPosition.lowerLeft.y; j <= unitPosition.upperRight.y; j++)
                 BattleManager.instance.AllTiles[i, j].unit = null;
 
-        unitPosition = destination;
+        //unitPosition = destination;
+        unitPosition.Set(destination); // 얕은복사가 아닌 깊은복사로 오류 해결
 
         //새로 이동한 타일에 유닛 할당
         for (int i = unitPosition.lowerLeft.x; i <= unitPosition.upperRight.x; i++)
