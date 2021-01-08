@@ -28,6 +28,8 @@ public class BattleUI : MonoBehaviour
     Transform tileIndicator;
     UnitPosition tileIndicatorPosition = new UnitPosition();
 
+    RectTransform unitTurnIndicator;
+
     private void Awake()
     {
         instance = this;
@@ -35,7 +37,21 @@ public class BattleUI : MonoBehaviour
 
     public void Init()
     {
-        //유닛과 대응하는 UI 생성.
+        //전체 유닛들 클릭시 유닛 설명창 활성화 기능 추가
+        foreach(Unit unit in BattleManager.instance.AllUnits)
+        {
+            unit.gameObject.AddComponent<BoxCollider2D>();
+            EventTrigger eventTrigger = unit.gameObject.AddComponent<EventTrigger>();
+            EventTrigger.Entry entry_PointerClick = new EventTrigger.Entry();
+            entry_PointerClick.eventID = EventTriggerType.PointerClick;
+            entry_PointerClick.callback.AddListener((data) =>
+            {
+                UnitDescriptionUI.instance.Enable(unit);
+            });
+            eventTrigger.triggers.Add(entry_PointerClick);
+        }
+
+        //파티원 유닛과 대응하는 UI 생성.
         for(int i = 0; i < PartyManager.instance.AllUnits.Count; i++)
         {
             GameObject g = Instantiate(UnitInfoUIPrefab);
@@ -43,7 +59,9 @@ public class BattleUI : MonoBehaviour
             g.transform.SetParent(unitsInfoPanel.transform);
             g.transform.SetAsFirstSibling();
             g.transform.localScale = Vector3.one;
+
             UnitsInfoList.Add(g.GetComponent<UnitInfoUI>());
+
         }
 
         //해당 ui 초기화
@@ -108,7 +126,20 @@ public class BattleUI : MonoBehaviour
                 AllTiles[i, j].triggers.Add(entry_PointerEnter);
             }
 
+        //타일 선택기 생성
         tileIndicator = Instantiate(TileIndicatorPrefab).transform;
+
+
+
+        //유닛 턴 표시기 생성
+        unitTurnIndicator = new GameObject().AddComponent<RectTransform>();
+        unitTurnIndicator.SetParent(this.transform);
+        unitTurnIndicator.sizeDelta = new Vector2(245, 120);
+        unitTurnIndicator.gameObject.AddComponent<Image>().color = Color.yellow;
+        unitTurnIndicator.localScale = Vector3.one;
+        unitTurnIndicator.gameObject.SetActive(false);
+
+        //턴종료 버튼 이벤트 추가
         endTurn.onClick.AddListener(() =>
         {
             BattleManager.instance.SetNextTurn();
@@ -139,6 +170,13 @@ public class BattleUI : MonoBehaviour
         {
             Unit unit = PartyManager.instance.AllUnits[i];
             UnitsInfoList[i].Set(unit);
+
+            if(unit == BattleManager.instance.thisTurnUnit)
+            {
+                unitTurnIndicator.SetParent(UnitsInfoList[i].transform);
+                unitTurnIndicator.SetAsFirstSibling();
+                unitTurnIndicator.anchoredPosition = Vector2.zero;
+            }
         }
     }
 
@@ -150,11 +188,13 @@ public class BattleUI : MonoBehaviour
         {
             selectedUnitInfo.Set(unit);
             selectedUnitInfo.gameObject.SetActive(true);
+            unitTurnIndicator.gameObject.SetActive(true);
             endTurn_enemy.gameObject.SetActive(false);
         }
         else
         {
             selectedUnitInfo.gameObject.SetActive(false);
+            unitTurnIndicator.gameObject.SetActive(false);
             endTurn_enemy.gameObject.SetActive(true);
         }
         Debug.Log("현재 턴:" +  unit.name);

@@ -18,6 +18,8 @@ public class UnitInfoUI : MonoBehaviour
         SetText( unit.name +
            "\nHP:" + unit.currentHP + "/" + unit.maxHP +
             "\nSPEED: " + unit.agility);
+        
+        unitImage.sprite = unit.GetComponent<SpriteRenderer>().sprite;
     }
 
     void SetText(string text)
