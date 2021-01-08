@@ -18,9 +18,6 @@ public class BattleManager : MonoBehaviour
 
     private void Start()
     {
-        //UI세팅
-        BattleUI.instance.Init();
-
         //정보 저장용 타일 생성 
         AllTiles = new Tile[10, 10];
         for (int i = 0; i < AllTiles.GetLength(0); i++)
@@ -34,6 +31,9 @@ public class BattleManager : MonoBehaviour
         //유닛들 타일 할당
         foreach (Unit unit in AllUnits)
             AllocateUnitTiles(unit,unit.unitPosition);
+
+        //UI세팅
+        BattleUI.instance.Init();
 
         StartBattle();
     }
