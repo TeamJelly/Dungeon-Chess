@@ -27,6 +27,10 @@ public class BattleManager : MonoBehaviour
             for (int j = 0; j < AllTiles.GetLength(1); j++)
                 AllTiles[i, j] = new Tile();
 
+        //파티 유닛들 AllUnits에 추가
+        foreach (Unit unit in PartyManager.instance.AllUnits)
+            AllUnits.Add(unit);
+
         //유닛들 타일 할당
         foreach (Unit unit in AllUnits)
             AllocateUnitTiles(unit,unit.unitPosition);
@@ -86,12 +90,12 @@ public class BattleManager : MonoBehaviour
         }
 
         //누적 행동력(actionRate) 기준 정렬
-        AllUnits.Sort(delegate(Unit A, Unit B)
+       /* AllUnits.Sort(delegate(Unit A, Unit B)
         {
             if (A.actionRate < B.actionRate) return 1;
             else if (A.actionRate > B.actionRate) return -1;
             return 0;
-        });
+        });*/
 
         TurnStart(nextUnit);
     }
