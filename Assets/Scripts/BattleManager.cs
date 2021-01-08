@@ -18,18 +18,22 @@ public class BattleManager : MonoBehaviour
 
     private void Start()
     {
-        //UI세팅
-        BattleUI.instance.Init();
-
         //정보 저장용 타일 생성 
         AllTiles = new Tile[10, 10];
-        for (int i = 0; i < 10; i++)
-            for (int j = 0; j < 10; j++)
+        for (int i = 0; i < AllTiles.GetLength(0); i++)
+            for (int j = 0; j < AllTiles.GetLength(1); j++)
                 AllTiles[i, j] = new Tile();
+
+        //파티 유닛들 AllUnits에 추가
+        foreach (Unit unit in PartyManager.instance.AllUnits)
+            AllUnits.Add(unit);
 
         //유닛들 타일 할당
         foreach (Unit unit in AllUnits)
             AllocateUnitTiles(unit,unit.unitPosition);
+
+        //UI세팅
+        BattleUI.instance.Init();
 
         StartBattle();
     }
@@ -78,6 +82,7 @@ public class BattleManager : MonoBehaviour
             }
         }
 
+        //나머지 유닛들도 해당 시간만큼 이동.
         foreach (var unit in AllUnits)
         {
             float velocity = unit.agility * 10 + 100;
@@ -85,12 +90,12 @@ public class BattleManager : MonoBehaviour
         }
 
         //누적 행동력(actionRate) 기준 정렬
-        AllUnits.Sort(delegate(Unit A, Unit B)
+       /* AllUnits.Sort(delegate(Unit A, Unit B)
         {
             if (A.actionRate < B.actionRate) return 1;
             else if (A.actionRate > B.actionRate) return -1;
             return 0;
-        });
+        });*/
 
         TurnStart(nextUnit);
     }
@@ -102,8 +107,6 @@ public class BattleManager : MonoBehaviour
 
         //턴 상태 갱신(이동 가능한 타일 보여주기)
         BattleUI.instance.UpdateTurnStatus(unit);
-//        thisTurnUnit.getMovableT
-  //      BattleUI
     }
 
     public void OnBattleStart()

@@ -12,18 +12,23 @@ public class BattleUI : MonoBehaviour
 
     public GameObject unitsInfoPanel;
    
-    public GameObject TileSelectorPrefab;
+    public GameObject TilePrefab;
     public GameObject TileIndicatorPrefab;
     public GameObject UnitInfoUIPrefab;
 
-    public List<UnitInfoUI> UnitsInfoList = new List<UnitInfoUI>();
+    List<UnitInfoUI> UnitsInfoList = new List<UnitInfoUI>();
 
-    public EventTrigger[,] tileSelectorList = new EventTrigger[10,10];
+    public UnitInfoUI selectedUnitInfo;
+
+    public EventTrigger[,] AllTiles = new EventTrigger[10,10];
 
     public Button endTurn;
+    public Button endTurn_enemy; //임시로 배치한 몬스터 전용 턴 종료 버튼.
 
-    public Transform tileIndicator;
+    Transform tileIndicator;
     UnitPosition tileIndicatorPosition = new UnitPosition();
+
+    RectTransform unitTurnIndicator;
 
     private void Awake()
     {
@@ -32,30 +37,45 @@ public class BattleUI : MonoBehaviour
 
     public void Init()
     {
-        //유닛과 대응하는 UI 생성. AllUnit에서 아군유닛 수로 수정 해야 함.
-        //1을 빼는 이유는 선택 유닛 UI는 미리 생성되어있기 때문.
-        for(int i = 0; i < BattleManager.instance.AllUnits.Count - 1; i++)
+        //전체 유닛들 클릭시 유닛 설명창 활성화 기능 추가
+        foreach(Unit unit in BattleManager.instance.AllUnits)
         {
-            GameObject g = GameObject.Instantiate(UnitInfoUIPrefab);
+            unit.gameObject.AddComponent<BoxCollider2D>();
+            EventTrigger eventTrigger = unit.gameObject.AddComponent<EventTrigger>();
+            EventTrigger.Entry entry_PointerClick = new EventTrigger.Entry();
+            entry_PointerClick.eventID = EventTriggerType.PointerClick;
+            entry_PointerClick.callback.AddListener((data) =>
+            {
+                UnitDescriptionUI.instance.Enable(unit);
+            });
+            eventTrigger.triggers.Add(entry_PointerClick);
+        }
+
+        //파티원 유닛과 대응하는 UI 생성.
+        for(int i = 0; i < PartyManager.instance.AllUnits.Count; i++)
+        {
+            GameObject g = Instantiate(UnitInfoUIPrefab);
           
             g.transform.SetParent(unitsInfoPanel.transform);
             g.transform.SetAsFirstSibling();
             g.transform.localScale = Vector3.one;
+
             UnitsInfoList.Add(g.GetComponent<UnitInfoUI>());
+
         }
 
         //해당 ui 초기화
         foreach (UnitInfoUI unitInfoUI in UnitsInfoList) unitInfoUI.Init();
 
         //이동시 선택하는 타일 전부 생성.
-        Transform tileSelectorParent = new GameObject("TileSelector").transform;
+        Transform allTilesParent = new GameObject("TileSelector").transform;
         for(int i = 0; i < 10; i++)
             for(int j = 0; j < 10; j++)
             {
-                tileSelectorList[i, j] = Instantiate(TileSelectorPrefab).GetComponent<EventTrigger>();
-                tileSelectorList[i, j].transform.SetParent(tileSelectorParent);
-                tileSelectorList[i, j].transform.position = new Vector3(i, j,-2);
-                tileSelectorList[i, j].gameObject.SetActive(false);
+                AllTiles[i, j] = Instantiate(TilePrefab).GetComponent<EventTrigger>();
+                AllTiles[i, j].transform.SetParent(allTilesParent);
+                AllTiles[i, j].transform.position = new Vector3(i, j,-2);
+                AllTiles[i, j].gameObject.SetActive(false);
                 int x = i; int y = j;
 
                 //타일 클릭시 이벤트 추가
@@ -66,7 +86,7 @@ public class BattleUI : MonoBehaviour
                     StartCoroutine(ShowMoveAnimation());
                     //BattleManager.instance.thisTurnUnit.Move(tileIndicatorPosition);
                 });
-                tileSelectorList[i, j].triggers.Add(entry_PointerClick);
+                AllTiles[i, j].triggers.Add(entry_PointerClick);
 
 
                 //타일 위로 마우스 지나갈 때 이벤트 추가 
@@ -96,18 +116,35 @@ public class BattleUI : MonoBehaviour
                     {
                         for(int l = tileIndicatorPosition.lowerLeft.y; l <= tileIndicatorPosition.upperRight.y; l++)
                         {
-                            if (!tileSelectorList[k + distance.x, l + distance.y].gameObject.activeSelf) return;
+                            if (!AllTiles[k + distance.x, l + distance.y].gameObject.activeSelf) return;
                         }
                     }
                     tileIndicatorPosition.Add(distance);
                     SetTileIndicator(tileIndicatorPosition);
 
                 });
-                tileSelectorList[i, j].triggers.Add(entry_PointerEnter);
+                AllTiles[i, j].triggers.Add(entry_PointerEnter);
             }
 
+        //타일 선택기 생성
         tileIndicator = Instantiate(TileIndicatorPrefab).transform;
+
+
+
+        //유닛 턴 표시기 생성
+        unitTurnIndicator = new GameObject().AddComponent<RectTransform>();
+        unitTurnIndicator.SetParent(this.transform);
+        unitTurnIndicator.sizeDelta = new Vector2(245, 120);
+        unitTurnIndicator.gameObject.AddComponent<Image>().color = Color.yellow;
+        unitTurnIndicator.localScale = Vector3.one;
+        unitTurnIndicator.gameObject.SetActive(false);
+
+        //턴종료 버튼 이벤트 추가
         endTurn.onClick.AddListener(() =>
+        {
+            BattleManager.instance.SetNextTurn();
+        });
+        endTurn_enemy.onClick.AddListener(() =>
         {
             BattleManager.instance.SetNextTurn();
         });
@@ -129,57 +166,74 @@ public class BattleUI : MonoBehaviour
     //유닛 정보창 갱신.
     public void UpdateInfoList()
     {
-        for (int i = 0; i < BattleManager.instance.AllUnits.Count; i++)
+        for (int i = 0; i < PartyManager.instance.AllUnits.Count; i++)
         {
-            Unit unit = BattleManager.instance.AllUnits[i];
+            Unit unit = PartyManager.instance.AllUnits[i];
             UnitsInfoList[i].Set(unit);
+
+            if(unit == BattleManager.instance.thisTurnUnit)
+            {
+                unitTurnIndicator.SetParent(UnitsInfoList[i].transform);
+                unitTurnIndicator.SetAsFirstSibling();
+                unitTurnIndicator.anchoredPosition = Vector2.zero;
+            }
         }
     }
 
     public void UpdateTurnStatus(Unit unit)
     {
         UpdateInfoList();
+
+        if (PartyManager.instance.AllUnits.Contains(unit))
+        {
+            selectedUnitInfo.Set(unit);
+            selectedUnitInfo.gameObject.SetActive(true);
+            unitTurnIndicator.gameObject.SetActive(true);
+            endTurn_enemy.gameObject.SetActive(false);
+        }
+        else
+        {
+            selectedUnitInfo.gameObject.SetActive(false);
+            unitTurnIndicator.gameObject.SetActive(false);
+            endTurn_enemy.gameObject.SetActive(true);
+        }
         Debug.Log("현재 턴:" +  unit.name);
 
         SetTileIndicator(unit.unitPosition);
 
-        ShowTileSelector(unit.GetMovablePosition());
+        ShowTile(unit.GetMovablePosition());
     }
 
     public void SetTileIndicator(UnitPosition position)
     {
         tileIndicatorPosition.Set(position);//깊은복사
         tileIndicator.localScale =
-    new Vector3(position.upperRight.x - position.lowerLeft.x + 1,
-                position.upperRight.y - position.lowerLeft.y + 1,
-                1);
+                new Vector3(position.upperRight.x - position.lowerLeft.x + 1,
+                            position.upperRight.y - position.lowerLeft.y + 1,
+                            1);
         Vector3 screenPosition = position.lowerLeft + (Vector2)(position.upperRight - position.lowerLeft) / 2;
         screenPosition.z = -4;
         tileIndicator.localPosition = screenPosition;
     }
 
-    public void ShowTileSelector(List<UnitPosition> positions)
+    public void ShowTile(List<UnitPosition> positions)
     {
-        HideTileSelector();
+        HideTile();
         foreach (UnitPosition unitPosition in positions)
             for (int i = unitPosition.lowerLeft.x; i <= unitPosition.upperRight.x; i++)
             {
                 for (int j = unitPosition.lowerLeft.y; j <= unitPosition.upperRight.y; j++)
                 {
-//                    if(i >= 0 && i < tileSelectorList.GetLength(0) && j >= 0 && j < tileSelectorList.GetLength(1)/* && BattleManager.instance.AllTiles[i,j].IsUsable()*/)
-//                    {
-                        tileSelectorList[i, j].gameObject.SetActive(true);
-//                    }
-                    
+                    AllTiles[i, j].gameObject.SetActive(true);
                 }
             }
     }
 
-    public void HideTileSelector()
+    public void HideTile()
     {
-        foreach (var tileSelector in tileSelectorList)
-            if (tileSelector.gameObject.activeSelf)
-                tileSelector.gameObject.SetActive(false);
+        foreach (var tile in AllTiles)
+            if (tile.gameObject.activeSelf)
+                tile.gameObject.SetActive(false);
     }
 
 
