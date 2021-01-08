@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public enum Category { NULL, Party, Neutral, Friendly, Enemy, Boss};
 public enum UnitClass { NULL, Monster, Warrior, Wizard, Priest, Archer };
@@ -53,6 +54,19 @@ public class Unit : MonoBehaviour
     public List<Antique> antiques;
     public List<Item> items;
     public List<Effect> stateEffects;
+
+    private void Start()
+    {
+        EventTrigger eventTrigger = gameObject.AddComponent<EventTrigger>();
+        EventTrigger.Entry entry_PointerClick = new EventTrigger.Entry();
+        entry_PointerClick.eventID = EventTriggerType.PointerClick;
+        entry_PointerClick.callback.AddListener((data) =>
+        {
+            UnitDescriptionUI.instance.Enable(this);
+            //BattleManager.instance.thisTurnUnit.Move(tileIndicatorPosition);
+        });
+        eventTrigger.triggers.Add(entry_PointerClick);
+    }
 
     public void GetEXP(int getEXP)
     {
