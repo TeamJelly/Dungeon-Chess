@@ -12,13 +12,13 @@ public class BattleUI : MonoBehaviour
 
     public GameObject unitsInfoPanel;
    
-    public GameObject TileSelectorPrefab;
+    public GameObject TilePrefab;
     public GameObject TileIndicatorPrefab;
     public GameObject UnitInfoUIPrefab;
 
     public List<UnitInfoUI> UnitsInfoList = new List<UnitInfoUI>();
 
-    public EventTrigger[,] tileSelectorList = new EventTrigger[10,10];
+    public EventTrigger[,] AllTiles = new EventTrigger[10,10];
 
     public Button endTurn;
 
@@ -48,14 +48,14 @@ public class BattleUI : MonoBehaviour
         foreach (UnitInfoUI unitInfoUI in UnitsInfoList) unitInfoUI.Init();
 
         //이동시 선택하는 타일 전부 생성.
-        Transform tileSelectorParent = new GameObject("TileSelector").transform;
+        Transform allTilesParent = new GameObject("TileSelector").transform;
         for(int i = 0; i < 10; i++)
             for(int j = 0; j < 10; j++)
             {
-                tileSelectorList[i, j] = Instantiate(TileSelectorPrefab).GetComponent<EventTrigger>();
-                tileSelectorList[i, j].transform.SetParent(tileSelectorParent);
-                tileSelectorList[i, j].transform.position = new Vector3(i, j,-2);
-                tileSelectorList[i, j].gameObject.SetActive(false);
+                AllTiles[i, j] = Instantiate(TilePrefab).GetComponent<EventTrigger>();
+                AllTiles[i, j].transform.SetParent(allTilesParent);
+                AllTiles[i, j].transform.position = new Vector3(i, j,-2);
+                AllTiles[i, j].gameObject.SetActive(false);
                 int x = i; int y = j;
 
                 //타일 클릭시 이벤트 추가
@@ -66,7 +66,7 @@ public class BattleUI : MonoBehaviour
                     StartCoroutine(ShowMoveAnimation());
                     //BattleManager.instance.thisTurnUnit.Move(tileIndicatorPosition);
                 });
-                tileSelectorList[i, j].triggers.Add(entry_PointerClick);
+                AllTiles[i, j].triggers.Add(entry_PointerClick);
 
 
                 //타일 위로 마우스 지나갈 때 이벤트 추가 
@@ -96,14 +96,14 @@ public class BattleUI : MonoBehaviour
                     {
                         for(int l = tileIndicatorPosition.lowerLeft.y; l <= tileIndicatorPosition.upperRight.y; l++)
                         {
-                            if (!tileSelectorList[k + distance.x, l + distance.y].gameObject.activeSelf) return;
+                            if (!AllTiles[k + distance.x, l + distance.y].gameObject.activeSelf) return;
                         }
                     }
                     tileIndicatorPosition.Add(distance);
                     SetTileIndicator(tileIndicatorPosition);
 
                 });
-                tileSelectorList[i, j].triggers.Add(entry_PointerEnter);
+                AllTiles[i, j].triggers.Add(entry_PointerEnter);
             }
 
         tileIndicator = Instantiate(TileIndicatorPrefab).transform;
@@ -143,43 +143,39 @@ public class BattleUI : MonoBehaviour
 
         SetTileIndicator(unit.unitPosition);
 
-        ShowTileSelector(unit.GetMovablePosition());
+        ShowTile(unit.GetMovablePosition());
     }
 
     public void SetTileIndicator(UnitPosition position)
     {
         tileIndicatorPosition.Set(position);//깊은복사
         tileIndicator.localScale =
-    new Vector3(position.upperRight.x - position.lowerLeft.x + 1,
-                position.upperRight.y - position.lowerLeft.y + 1,
-                1);
+                new Vector3(position.upperRight.x - position.lowerLeft.x + 1,
+                            position.upperRight.y - position.lowerLeft.y + 1,
+                            1);
         Vector3 screenPosition = position.lowerLeft + (Vector2)(position.upperRight - position.lowerLeft) / 2;
         screenPosition.z = -4;
         tileIndicator.localPosition = screenPosition;
     }
 
-    public void ShowTileSelector(List<UnitPosition> positions)
+    public void ShowTile(List<UnitPosition> positions)
     {
-        HideTileSelector();
+        HideTile();
         foreach (UnitPosition unitPosition in positions)
             for (int i = unitPosition.lowerLeft.x; i <= unitPosition.upperRight.x; i++)
             {
                 for (int j = unitPosition.lowerLeft.y; j <= unitPosition.upperRight.y; j++)
                 {
-//                    if(i >= 0 && i < tileSelectorList.GetLength(0) && j >= 0 && j < tileSelectorList.GetLength(1)/* && BattleManager.instance.AllTiles[i,j].IsUsable()*/)
-//                    {
-                        tileSelectorList[i, j].gameObject.SetActive(true);
-//                    }
-                    
+                    AllTiles[i, j].gameObject.SetActive(true);
                 }
             }
     }
 
-    public void HideTileSelector()
+    public void HideTile()
     {
-        foreach (var tileSelector in tileSelectorList)
-            if (tileSelector.gameObject.activeSelf)
-                tileSelector.gameObject.SetActive(false);
+        foreach (var tile in AllTiles)
+            if (tile.gameObject.activeSelf)
+                tile.gameObject.SetActive(false);
     }
 
 

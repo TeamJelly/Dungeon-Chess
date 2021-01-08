@@ -23,8 +23,8 @@ public class BattleManager : MonoBehaviour
 
         //정보 저장용 타일 생성 
         AllTiles = new Tile[10, 10];
-        for (int i = 0; i < 10; i++)
-            for (int j = 0; j < 10; j++)
+        for (int i = 0; i < AllTiles.GetLength(0); i++)
+            for (int j = 0; j < AllTiles.GetLength(1); j++)
                 AllTiles[i, j] = new Tile();
 
         //유닛들 타일 할당
@@ -78,6 +78,7 @@ public class BattleManager : MonoBehaviour
             }
         }
 
+        //나머지 유닛들도 해당 시간만큼 이동.
         foreach (var unit in AllUnits)
         {
             float velocity = unit.agility * 10 + 100;
@@ -102,8 +103,6 @@ public class BattleManager : MonoBehaviour
 
         //턴 상태 갱신(이동 가능한 타일 보여주기)
         BattleUI.instance.UpdateTurnStatus(unit);
-//        thisTurnUnit.getMovableT
-  //      BattleUI
     }
 
     public void OnBattleStart()

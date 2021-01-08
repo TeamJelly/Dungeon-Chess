@@ -4372,7 +4372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitsInfoPanel: {fileID: 5384038421732458712}
-  TileSelectorPrefab: {fileID: 4462922396805816717, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
+  TilePrefab: {fileID: 4462922396805816717, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
     type: 3}
   TileIndicatorPrefab: {fileID: 4462922396805816717, guid: 2394cc8ef5fb41f4f9a99880d6f5b9dd,
     type: 3}
