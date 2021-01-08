@@ -10,6 +10,9 @@ public class Tile
 
     public Vector2Int position;
 
+    public enum Category {NULL};
+
+
     public Effect tileEffect;
 
     Unit unit = null;

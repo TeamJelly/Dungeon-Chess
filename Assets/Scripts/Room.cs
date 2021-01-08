@@ -10,10 +10,32 @@ public class Room
         NULL, Boss, Monster, Elite, Treasure, Shop, Tavern, Event
     }
 
-    public bool isCleared = false;
+    public Category category = Category.NULL;
+
+    public bool isActivate = false;
+//    public bool isCleared = false;
     public bool isSelectable = false;
 
-    Category category = Category.NULL;
+    public Vector2Int position; // x = 층, y = 번째 방
 
-    Room right, left, center;
+    public Room right = null;
+    public Room left = null;
+    public Room center = null;
+
+    public Room(int floor, int number)
+    {
+        position = new Vector2Int(floor, number);
+    }
+
+    public Room(Vector2Int position)
+    {
+        this.position = position;
+    }
+
+    public void SetRoomCategory(Category category)
+    {
+        this.category = category;
+    }
+
+
 }
