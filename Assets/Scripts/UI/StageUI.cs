@@ -8,37 +8,51 @@ public class StageUI : MonoBehaviour
     public static StageUI instance;
 
     public GameObject contentPanel;
+    public GameObject viewport;
+    public GameObject floorPrefab;
+    public GameObject roomPrefab;
     public GameObject linePrefab;
-    public GameObject RoomPrefab;
     public GameObject[] startPosition;
+
+    public GameObject[,] AllRoomButtons;
+
     public List<GameObject> floors;
+    public List<GameObject> lines;
 
     private void Awake()
     {
         instance = this;
     }
 
-    public void InitStage()
+    public void InitStageUI()
     {
+        AllRoomButtons = new GameObject[StageManager.instance.AllRooms.GetLength(0), StageManager.instance.AllRooms.GetLength(1)];
+
         for (int i = 0; i < StageManager.instance.AllRooms.GetLength(0); i++)
         {
-            GameObject floor = Instantiate(new GameObject(), contentPanel.transform);
-
+            GameObject floor = Instantiate(floorPrefab, contentPanel.transform);
             floor.name = "floor " + i;
-            VerticalLayoutGroup verticalLayoutGroup =  floor.AddComponent<VerticalLayoutGroup>();
-
-            verticalLayoutGroup.childAlignment = TextAnchor.MiddleCenter;
-            verticalLayoutGroup.childControlHeight = false;
-            verticalLayoutGroup.childControlWidth = false;
-            verticalLayoutGroup.childForceExpandHeight = true;
-            verticalLayoutGroup.childForceExpandWidth = true;
 
             floors.Add(floor);
 
             for (int j = 0; j < StageManager.instance.AllRooms.GetLength(1); j++)
+            {
                 if (StageManager.instance.AllRooms[i, j].isActivate)
-                    Instantiate(RoomPrefab, floor.transform);
+                    AllRoomButtons[i,j] = Instantiate(roomPrefab, floor.transform);
+            }
         }
+
+        for (int i = 0; i < StageManager.instance.AllRooms.GetLength(1); i++)
+        {
+            lines.Add(Instantiate(linePrefab));
+        }
+
+
+    }
+
+    private void Update()
+    {
+        UpdateLines();
     }
 
     public void UpdateStage()
@@ -47,14 +61,23 @@ public class StageUI : MonoBehaviour
 
     }
 
-    private void DrawLine()
+    public void UpdateLines()
     {
-        LineRenderer lineRenderer = Instantiate(linePrefab).GetComponent<LineRenderer>();
+        for (int j = 0; j < StageManager.instance.pathList.Length; j++)
+        {
+            List<Vector2Int> path = StageManager.instance.pathList[j];
 
-        int numberOfFloor = StageManager.instance.AllRooms.GetLength(0);
+            LineRenderer lineRenderer = lines[j].GetComponent<LineRenderer>();
+            lineRenderer.positionCount = path.Count;
 
+            for (int i = 0; i < path.Count; i++)
+            {
+                Vector3 roomPosition = AllRoomButtons[path[i].x, path[i].y].transform.position;
 
-
+                Debug.LogError(path[i] + " " + roomPosition);
+                lineRenderer.SetPosition(i, roomPosition);
+            }
+        }
     }
 
 }

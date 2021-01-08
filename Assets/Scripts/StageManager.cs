@@ -17,6 +17,8 @@ public class StageManager : MonoBehaviour
     public int numberOfElite;
     public int numberOfMonster;
 
+    public List<Vector2Int>[] pathList;
+
     private void Awake()
     {
         instance = this;
@@ -42,6 +44,8 @@ public class StageManager : MonoBehaviour
 
         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 2단계 : 방을 연결한다.
 
+        pathList = new List<Vector2Int>[AllRooms.GetLength(1)];
+
         for (int i = 0; i < AllRooms.GetLength(1); i++) // 5개의 길
             AllRooms[0, i].isActivate = true;
 
@@ -49,10 +53,12 @@ public class StageManager : MonoBehaviour
         {
             int rand;
             Room currentRoom = AllRooms[0, i];
+            pathList[i] = new List<Vector2Int>();
 
             while (currentRoom.position.x != AllRooms.GetLength(0) - 1) // 층수가 13층이 될때까지 반복
             {
-//                Debug.LogError(currentRoom.position);
+                //                Debug.LogError(currentRoom.position);
+                pathList[i].Add(currentRoom.position);
 
                 if (currentRoom.position.y == 0)
                     rand = Random.Range(0, 2);
@@ -61,23 +67,35 @@ public class StageManager : MonoBehaviour
                 else // 그 사이라면
                     rand = Random.Range(-1, 2);
 
-                if (rand == 0 && currentRoom.center == null)
+                if (rand == 0)
                 {
-                    currentRoom.center = AllRooms[currentRoom.position.x + 1, currentRoom.position.y];
+                    if (currentRoom.center == null)
+                    {
+                        currentRoom.center = AllRooms[currentRoom.position.x + 1, currentRoom.position.y];
+                        currentRoom.center.isActivate = true;
+                    }
+
                     currentRoom = currentRoom.center;
-                    currentRoom.isActivate = true;
                 }
-                else if (rand == 1 && currentRoom.right == null)
+                else if (rand == 1)
                 {
-                    currentRoom.right = AllRooms[currentRoom.position.x + 1, currentRoom.position.y + 1];
+                    if (currentRoom.right == null)
+                    {
+                        currentRoom.right = AllRooms[currentRoom.position.x + 1, currentRoom.position.y + 1];
+                        currentRoom.right.isActivate = true;
+                    }
+
                     currentRoom = currentRoom.right;
-                    currentRoom.isActivate = true;
                 }
-                else if (rand == -1 && currentRoom.left == null)
+                else //if (rand == -1)
                 {
-                    currentRoom.left = AllRooms[currentRoom.position.x + 1, currentRoom.position.y - 1];
+                    if (currentRoom.left == null)
+                    {
+                        currentRoom.left = AllRooms[currentRoom.position.x + 1, currentRoom.position.y - 1];
+                        currentRoom.left.isActivate = true;
+                    }
+
                     currentRoom = currentRoom.left;
-                    currentRoom.isActivate = true;
                 }
             }
         }
@@ -132,7 +150,7 @@ public class StageManager : MonoBehaviour
         Debug.LogError("numberOfElite : " + numberOfElite);
         Debug.LogError("numberOfMonster : " + numberOfMonster);
 
-        StageUI.instance.InitStage();
+        StageUI.instance.InitStageUI();
     }
 
 
