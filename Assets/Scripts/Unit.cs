@@ -55,19 +55,6 @@ public class Unit : MonoBehaviour
     public List<Item> items;
     public List<Effect> stateEffects;
 
-    private void Start()
-    {
-        EventTrigger eventTrigger = gameObject.AddComponent<EventTrigger>();
-        EventTrigger.Entry entry_PointerClick = new EventTrigger.Entry();
-        entry_PointerClick.eventID = EventTriggerType.PointerClick;
-        entry_PointerClick.callback.AddListener((data) =>
-        {
-            UnitDescriptionUI.instance.Enable(this);
-            //BattleManager.instance.thisTurnUnit.Move(tileIndicatorPosition);
-        });
-        eventTrigger.triggers.Add(entry_PointerClick);
-    }
-
     public void GetEXP(int getEXP)
     {
         while (getEXP != 0)
