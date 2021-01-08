@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UnitInfoUI : MonoBehaviour
@@ -26,7 +27,7 @@ public class UnitInfoUI : MonoBehaviour
 
     public void Init()
     {
-        GetComponent<Button>().onClick.AddListener(() =>
+        gameObject.AddComponent<Button>().onClick.AddListener(() =>
         {
             UnitDescriptionUI.instance.Enable(allocatedUnit);
         });

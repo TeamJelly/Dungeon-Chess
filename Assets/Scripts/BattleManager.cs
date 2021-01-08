@@ -29,11 +29,8 @@ public class BattleManager : MonoBehaviour
 
         //유닛들 타일 할당
         foreach (Unit unit in AllUnits)
-            for (int i = unit.unitPosition.lowerLeft.x; i <= unit.unitPosition.upperRight.x; i++)
-                for (int j = unit.unitPosition.lowerLeft.y; j <= unit.unitPosition.upperRight.y; j++)
-                {
-                    AllTiles[i, j].unit = unit;
-                }
+            AllocateUnitTiles(unit,unit.unitPosition);
+
         StartBattle();
     }
 
@@ -53,6 +50,15 @@ public class BattleManager : MonoBehaviour
     public Tile GetTile(int x, int y)
     {
         return AllTiles[x,y];
+    }
+
+    public void AllocateUnitTiles(Unit unit, UnitPosition position)
+    {
+        for (int i = position.lowerLeft.x; i <= position.upperRight.x; i++)
+            for (int j = position.lowerLeft.y; j <= position.upperRight.y; j++)
+            {
+                AllTiles[i, j].SetUnit(unit);
+            }
     }
 
     public void SetNextTurn()

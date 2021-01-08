@@ -12,7 +12,7 @@ public class Tile
 
     public Effect tileEffect;
 
-    public Unit unit = null;
+    Unit unit = null;
 
     public bool IsUsable()
     {
@@ -25,5 +25,10 @@ public class Tile
             return true;
         else
             return false;
+    }
+
+    public void SetUnit(Unit newUnit)
+    {
+        unit = newUnit;
     }
 }

@@ -116,9 +116,9 @@ public class Unit : MonoBehaviour
             stateEffect.AfterMove();
         }
 
-//        for (int i = unitPosition.lowerLeft.x; i < unitPosition.upperRight.x; i++)
-//            for (int j = unitPosition.lowerLeft.y; j < unitPosition.upperRight.y; j++)
-//                BattleManager.instance.GetTile(i, j).tileEffect.AfterMove();
+        for (int i = unitPosition.lowerLeft.x; i < unitPosition.upperRight.x; i++)
+            for (int j = unitPosition.lowerLeft.y; j < unitPosition.upperRight.y; j++)
+                BattleManager.instance.GetTile(i, j).tileEffect?.AfterMove();
     }
 
     public List<UnitPosition> GetMovablePosition(){ // 현재 유닛의 이동가능한 위치들을 리턴해준다.
@@ -151,60 +151,19 @@ public class Unit : MonoBehaviour
 
         return explored;
     }
-    
-    /*public void Move(Vector2Int position)
-    {
-
-        BeforeMove();
-
-        //기존 타일 유닛 초기화
-        for (int i = unitPosition.lowerLeft.x; i <= unitPosition.upperRight.x; i++)
-        {
-            for (int j = unitPosition.lowerLeft.y; j <= unitPosition.upperRight.y; j++)
-            {
-                BattleManager.instance.AllTiles[i, j].unit = null;
-            }
-        }
-
-        //일단 유닛 크기 1x1만 이동 가능하도록 설정
-        unitPosition.lowerLeft.x = position.x;
-        unitPosition.upperRight.x = position.x;
-
-        unitPosition.lowerLeft.y = position.y;
-        unitPosition.upperRight.y = position.y;
-
-
-        //새로 이동한 타일에 유닛 할당
-        for (int i = unitPosition.lowerLeft.x; i <= unitPosition.upperRight.x; i++)
-        {
-            for (int j = unitPosition.lowerLeft.y; j <= unitPosition.upperRight.y; j++)
-            {
-                BattleManager.instance.AllTiles[i, j].unit = this;
-            }
-        }
-        //화면상 위치 갱신.
-        Vector2 screenPosition = unitPosition.lowerLeft + (unitPosition.upperRight - unitPosition.lowerLeft) / 2;
-        transform.localPosition = screenPosition;
-
-        AfterMove();
-    }*/
 
     public void Move(UnitPosition destination) // 거인 & 1x1 통합본
     {
         BeforeMove();
 
         //기존 타일 유닛 초기화 Tile.cs로 옮기면 좋을듯
-        for (int i = unitPosition.lowerLeft.x; i <= unitPosition.upperRight.x; i++)
-            for (int j = unitPosition.lowerLeft.y; j <= unitPosition.upperRight.y; j++)
-                BattleManager.instance.AllTiles[i, j].unit = null;
+        BattleManager.instance.AllocateUnitTiles(null,unitPosition);
 
         //unitPosition = destination;
         unitPosition.Set(destination); // 얕은복사가 아닌 깊은복사로 오류 해결
 
         //새로 이동한 타일에 유닛 할당
-        for (int i = unitPosition.lowerLeft.x; i <= unitPosition.upperRight.x; i++)
-            for (int j = unitPosition.lowerLeft.y; j <= unitPosition.upperRight.y; j++)
-                BattleManager.instance.AllTiles[i, j].unit = this;
+        BattleManager.instance.AllocateUnitTiles(this, unitPosition);
 
         //화면상 위치 갱신.
         Vector2 screenPosition = unitPosition.lowerLeft + (Vector2)(unitPosition.upperRight - unitPosition.lowerLeft) / 2;
