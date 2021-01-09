@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using Bolt;
 
 public class BattleManager : MonoBehaviour
 {
