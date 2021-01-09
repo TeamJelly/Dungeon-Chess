@@ -19,6 +19,8 @@ public class StageUI : MonoBehaviour
     public List<GameObject> floors;
     public List<GameObject> lines;
 
+    public List<Sprite> roomImages;
+
     private void Awake()
     {
         instance = this;
@@ -38,15 +40,22 @@ public class StageUI : MonoBehaviour
             for (int j = 0; j < StageManager.instance.AllRooms.GetLength(1); j++)
             {
                 if (StageManager.instance.AllRooms[i, j].isActivate)
-                    AllRoomButtons[i,j] = Instantiate(roomPrefab, floor.transform);
+                {
+                    GameObject roomButton = Instantiate(roomPrefab, floor.transform);
+                    roomButton.GetComponent<Image>().sprite = roomImages[StageManager.instance.AllRooms[i,j].category.GetHashCode()];
+                    AllRoomButtons[i, j] = roomButton;
+                }
             }
         }
+
+/*        GameObject floor = Instantiate(floorPrefab, contentPanel.transform); // 보스 층
+        floors.Add(floor);
+        AllRoomButtons[, j] = Instantiate(roomPrefab, floor.transform);*/
 
         for (int i = 0; i < StageManager.instance.AllRooms.GetLength(1); i++)
         {
             lines.Add(Instantiate(linePrefab));
         }
-
 
     }
 
@@ -73,8 +82,6 @@ public class StageUI : MonoBehaviour
             for (int i = 0; i < path.Count; i++)
             {
                 Vector3 roomPosition = AllRoomButtons[path[i].x, path[i].y].transform.position;
-
-                Debug.LogError(path[i] + " " + roomPosition);
                 lineRenderer.SetPosition(i, roomPosition);
             }
         }

@@ -206,11 +206,8 @@ MonoBehaviour:
     isActivate: 0
     isSelectable: 0
     position: {x: 0, y: 0}
-  finalRoom:
-    category: 0
-    isActivate: 0
-    isSelectable: 0
-    position: {x: 0, y: 0}
+  numberOfFloors: 14
+  numberOfRoomsPerOneFloor: 5
   numberOfShop: 0
   numberOfTavern: 0
   numberOfEvent: 0
@@ -229,6 +226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   contentPanel: {fileID: 1378862224}
+  viewport: {fileID: 0}
   floorPrefab: {fileID: 6903638791167561107, guid: 62d4219a3fd01f249869391f94982e63,
     type: 3}
   roomPrefab: {fileID: 3833849723751400645, guid: db86f808dde83e649afa2febc9850904,
@@ -238,6 +236,15 @@ MonoBehaviour:
   startPosition: []
   floors: []
   lines: []
+  roomImages:
+  - {fileID: -3714409817710726143, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
+  - {fileID: 3279467473711108629, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
+  - {fileID: -6404053778309610593, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
+  - {fileID: -5986936575811970920, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
+  - {fileID: -2784276677790117873, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
+  - {fileID: 3360335357785681208, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
+  - {fileID: 8011179097440696663, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
+  - {fileID: 2412317363535826626, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
 --- !u!1 &261949722
 GameObject:
   m_ObjectHideFlags: 0
@@ -681,8 +688,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1426256920}
   m_HandleRect: {fileID: 1426256919}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 0.30115384
+  m_Value: -0.000000074706435
+  m_Size: 0.489375
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -967,7 +974,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 2600, y: 0}
+  m_SizeDelta: {x: 1600, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1378862226
 MonoBehaviour:
