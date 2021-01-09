@@ -184,45 +184,90 @@ public class StageManager : MonoBehaviour
                 maxRandNumber += numberOfMonster;
 
                 List<Room> nextRooms = new List<Room>();
-                nextRooms.Add(currentRoom.left);
-                nextRooms.Add(currentRoom.center);
-                nextRooms.Add(currentRoom.right);
 
-                foreach (var nextRoom in nextRooms)
+                if (currentRoom.left != null)
                 {
-                    if (nextRoom != null && nextRoom.category == Room.Category.NULL)
+                    Debug.LogError("-2 add left" + currentRoom.position);
+                    nextRooms.Add(currentRoom.left);
+                }
+                if (currentRoom.center != null)
+                {
+                    Debug.LogError("-2 add center" + currentRoom.position);
+                    nextRooms.Add(currentRoom.center);
+                }
+                if (currentRoom.right != null)
+                {
+                    Debug.LogError("-2 add right" + currentRoom.position);
+                    nextRooms.Add(currentRoom.right);
+                }
+
+                Debug.LogError("-1 : 자식이 " + nextRooms.Count + currentRoom.position);
+
+                for (int l = 0; l < nextRooms.Count; l++)
+                {
+                    if (nextRooms[l].category == Room.Category.NULL)
                     {
                         int rand = Random.Range(0, maxRandNumber);
                         int temp = 0;
 
+                        Debug.LogError("-- : rand and temp" + rand + " " + temp + " " +  nextRooms[l].position + " " + possibleRooms.Count);
+
+                        for (int k = 0; k < possibleRooms.Count; k++)
+                        {
+                            Debug.LogError(possibleRooms[k] + " ,"  + numberOfPossibleRooms[k]);
+                        }
+
                         for (int k = 0; k < possibleRooms.Count; k++)
                         {
                             temp += numberOfPossibleRooms[k];
+
                             if (rand < temp)
                             {
-                                nextRoom.category = possibleRooms[k];
-                                numberOfPossibleRooms[k]--;
+                                nextRooms[l].category = possibleRooms[k];
+                                //numberOfPossibleRooms[k]--;
 
-                                if (nextRoom.category == Room.Category.Monster)
+                                maxRandNumber -= numberOfPossibleRooms[k];
+
+                                if (nextRooms[l].category == Room.Category.Monster)
+                                {
                                     numberOfMonster--;
-                                else if (nextRoom.category == Room.Category.Event)
+                                }
+                                else if (nextRooms[l].category == Room.Category.Event)
+                                {
                                     numberOfEvent--;
-                                else if (nextRoom.category == Room.Category.Elite)
+                                }
+                                else if (nextRooms[l].category == Room.Category.Elite)
+                                {
                                     numberOfElite--;
-                                else if (nextRoom.category == Room.Category.Tavern)
+                                }
+                                else if (nextRooms[l].category == Room.Category.Tavern)
+                                {
                                     numberOfTavern--;
-                                else if (nextRoom.category == Room.Category.Shop)
+                                }
+                                else if (nextRooms[l].category == Room.Category.Shop)
+                                {
                                     numberOfShop--;
+                                }
                                 else
+                                {
                                     Debug.LogError("error ??");
-
-                                Debug.LogError("number : " + numberOfPossibleRooms[k]);
+                                }
+                                Debug.LogError("0 : " + currentRoom.position + possibleRooms.Count);
+                                Debug.LogError("1 : " + nextRooms[l].position + " " + nextRooms[l].category);
 
                                 possibleRooms.RemoveAt(k);
                                 numberOfPossibleRooms.RemoveAt(k);
+
+                                Debug.LogError("2 : " + possibleRooms.Count);
+                                if (possibleRooms.Count == 0 || numberOfPossibleRooms.Count == 0)
+                                    Debug.LogError("??");
+
                                 break;
                             }
                         }
+                    } else
+                    {
+                        Debug.LogError(";;" + nextRooms[l].position);
                     }
                 }
             }

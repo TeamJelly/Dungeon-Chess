@@ -8,11 +8,9 @@ public class StageUI : MonoBehaviour
     public static StageUI instance;
 
     public GameObject contentPanel;
-    public GameObject viewport;
     public GameObject floorPrefab;
     public GameObject roomPrefab;
     public GameObject linePrefab;
-    public GameObject[] startPosition;
 
     public GameObject[,] AllRoomButtons;
 
