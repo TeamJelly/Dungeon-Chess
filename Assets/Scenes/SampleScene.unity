@@ -164,9 +164,6 @@ MonoBehaviour:
   m_Script: {fileID: -1465209106, guid: c8d0ad23af520fe46aabe2b1fecf6462, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _data:
-    _json: '{"declarations":{"collection":{"$content":[],"$version":"A"},"$version":"A"}}'
-    _objectReferences: []
 --- !u!4 &58554027
 Transform:
   m_ObjectHideFlags: 0
@@ -826,7 +823,7 @@ MonoBehaviour:
   m_PixelSnapping: 0
   m_CropFrameX: 1
   m_CropFrameY: 1
-  m_StretchFill: 0
+  m_StretchFill: 1
 --- !u!1 &1164420694
 GameObject:
   m_ObjectHideFlags: 0
@@ -1392,6 +1389,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BattleUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 5384038421715361631, guid: da7c4bf4c3b9748458c8c6016a9233a7,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5384038421715361631, guid: da7c4bf4c3b9748458c8c6016a9233a7,
+        type: 3}
+      propertyPath: m_RenderMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5384038421715361631, guid: da7c4bf4c3b9748458c8c6016a9233a7,
+        type: 3}
+      propertyPath: m_PixelPerfect
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5384038421715361632, guid: da7c4bf4c3b9748458c8c6016a9233a7,
         type: 3}

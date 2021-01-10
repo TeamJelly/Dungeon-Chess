@@ -132,6 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26515f2ff0aeacc46a2fe67e4cc51fd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  image: {fileID: 1578257259233403}
   size: 0
   isButton: 1
   usableButton: 1
