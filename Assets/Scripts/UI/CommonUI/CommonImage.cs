@@ -8,6 +8,8 @@ using TMPro;
 public class CommonImage : MonoBehaviour
 {
     private TMP_Text textMesh;
+
+    [SerializeField]
     private Image image;
     private Button button;
 
@@ -32,6 +34,11 @@ public class CommonImage : MonoBehaviour
         new CommonData.SizeField { width = 1920, height = 1080 },
     };
 
+    public Sprite Sprite
+    {
+        get => image.sprite;
+        set => image.sprite = value;
+    }
     public float ImageAlpha
     {
         get => image.color.a;

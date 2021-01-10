@@ -7,6 +7,7 @@ using TMPro;
 
 public class CommonText : MonoBehaviour
 {
+    [SerializeField]
     private TMP_Text textMesh;
     private Image image;
     private Button button;
@@ -111,7 +112,7 @@ public class CommonText : MonoBehaviour
     {
         image = GetComponent<Image>();
         button = GetComponent<Button>();
-        textMesh = transform.GetChild(0).GetComponent<TMP_Text>();
+        textMesh = transform.GetComponentInChildren<TMP_Text>();
         Size = size;
         IsButton = isButton;
         UsableButton = usableButton;
