@@ -21,9 +21,6 @@ public class BattleUI : MonoBehaviour
 
     public EventTrigger[,] AllTiles = new EventTrigger[10,10];
 
-    public Button endTurn;
-    public Button endTurn_enemy; //임시로 배치한 몬스터 전용 턴 종료 버튼.
-
     Transform tileIndicator;
     UnitPosition tileIndicatorPosition = new UnitPosition();
 
@@ -138,15 +135,12 @@ public class BattleUI : MonoBehaviour
         unitTurnIndicator.localScale = Vector3.one;
         unitTurnIndicator.gameObject.SetActive(false);
 
-        //턴종료 버튼 이벤트 추가
-        endTurn.onClick.AddListener(() =>
-        {
-            BattleManager.instance.SetNextTurn();
-        });
-        endTurn_enemy.onClick.AddListener(() =>
-        {
-            BattleManager.instance.SetNextTurn();
-        });
+        
+    }
+    //턴종료 버튼 이벤트
+    public void SetNextTurn()
+    {
+        BattleManager.instance.SetNextTurn();
     }
 
     IEnumerator ShowMoveAnimation()
@@ -188,13 +182,11 @@ public class BattleUI : MonoBehaviour
             selectedUnitInfo.Set(unit);
             selectedUnitInfo.gameObject.SetActive(true);
             unitTurnIndicator.gameObject.SetActive(true);
-            endTurn_enemy.gameObject.SetActive(false);
         }
         else
         {
             selectedUnitInfo.gameObject.SetActive(false);
             unitTurnIndicator.gameObject.SetActive(false);
-            endTurn_enemy.gameObject.SetActive(true);
         }
         Debug.Log("현재 턴:" +  unit.name);
 
