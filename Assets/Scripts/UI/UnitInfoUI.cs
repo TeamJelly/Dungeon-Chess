@@ -7,9 +7,9 @@ using UnityEngine.UI;
 
 public class UnitInfoUI : MonoBehaviour
 {
-    public Image unitImage;
+    public CommonImage unitImage;
 
-    public TextMeshProUGUI description;
+    public CommonText description;
 
     Unit allocatedUnit;
     public void Set(Unit unit)
@@ -19,12 +19,13 @@ public class UnitInfoUI : MonoBehaviour
            "\nHP:" + unit.currentHP + "/" + unit.maxHP +
             "\nSPEED: " + unit.agility);
         
-        unitImage.sprite = unit.GetComponent<SpriteRenderer>().sprite;
+        unitImage.Sprite = unit.GetComponent<SpriteRenderer>().sprite;
     }
 
     void SetText(string text)
     {
-        description.text = text;
+        //Debug.Log(description.Text);
+        description.Text = text;
     }
 
     public void Init()
