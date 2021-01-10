@@ -14,6 +14,9 @@ public class BattleUI : MonoBehaviour
     public GameObject TilePrefab;
     public GameObject TileIndicatorPrefab;
     public GameObject UnitInfoUIPrefab;
+    public GameObject[] SkillButton;
+    public GameObject[] ItemButton;
+    public GameObject MoveButton;
 
     List<UnitInfoUI> UnitsInfoList = new List<UnitInfoUI>();
 
@@ -191,20 +194,33 @@ public class BattleUI : MonoBehaviour
         Debug.Log("현재 턴:" +  unit.name);
 
         SetTileIndicator(unit.unitPosition);
-
         ShowTile(unit.GetMovablePosition());
+    }
+
+    public void SetTileIndicator(List<Vector2Int> position) // 스킬용 인디케이터 보여주기
+    {
+
     }
 
     public void SetTileIndicator(UnitPosition position)
     {
         tileIndicatorPosition.Set(position);//깊은복사
+
         tileIndicator.localScale =
-                new Vector3(position.upperRight.x - position.lowerLeft.x + 1,
-                            position.upperRight.y - position.lowerLeft.y + 1,
-                            1);
+                new Vector3(
+                    position.upperRight.x - position.lowerLeft.x + 1,
+                    position.upperRight.y - position.lowerLeft.y + 1,
+                    1
+                );
+
         Vector3 screenPosition = position.lowerLeft + (Vector2)(position.upperRight - position.lowerLeft) / 2;
         screenPosition.z = -4;
         tileIndicator.localPosition = screenPosition;
+    }
+
+    public void ShowTile(List<Vector2Int> positions)
+    {
+        HideTile();
     }
 
     public void ShowTile(List<UnitPosition> positions)

@@ -144,6 +144,17 @@ public class UnitPosition
         return true;
     }
 
+    public static List<Vector2Int> UnitPositionToVector2IntList(UnitPosition unitPositon)
+    {
+        List<Vector2Int> positions = new List<Vector2Int>();
+
+        for (int i = unitPositon.lowerLeft.x; i <= unitPositon.upperRight.x; i++)
+            for (int j = unitPositon.lowerLeft.y; j < unitPositon.upperRight.y; j++)
+                positions.Add(new Vector2Int(i,j));
+
+        return positions;
+    }
+
     public override bool Equals(object obj)
     {
         if (obj == null || GetType() != obj.GetType())
