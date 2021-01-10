@@ -8,16 +8,16 @@ public class StageUI : MonoBehaviour
     public static StageUI instance;
 
     public GameObject contentPanel;
-    public GameObject viewport;
     public GameObject floorPrefab;
     public GameObject roomPrefab;
     public GameObject linePrefab;
-    public GameObject[] startPosition;
 
     public GameObject[,] AllRoomButtons;
 
     public List<GameObject> floors;
     public List<GameObject> lines;
+
+    public List<Sprite> roomImages;
 
     private void Awake()
     {
@@ -38,7 +38,11 @@ public class StageUI : MonoBehaviour
             for (int j = 0; j < StageManager.instance.AllRooms.GetLength(1); j++)
             {
                 if (StageManager.instance.AllRooms[i, j].isActivate)
-                    AllRoomButtons[i,j] = Instantiate(roomPrefab, floor.transform);
+                {
+                    GameObject roomButton = Instantiate(roomPrefab, floor.transform);
+                    roomButton.GetComponent<Image>().sprite = roomImages[StageManager.instance.AllRooms[i,j].category.GetHashCode()];
+                    AllRoomButtons[i, j] = roomButton;
+                }
             }
         }
 
@@ -46,7 +50,6 @@ public class StageUI : MonoBehaviour
         {
             lines.Add(Instantiate(linePrefab));
         }
-
 
     }
 
@@ -73,8 +76,6 @@ public class StageUI : MonoBehaviour
             for (int i = 0; i < path.Count; i++)
             {
                 Vector3 roomPosition = AllRoomButtons[path[i].x, path[i].y].transform.position;
-
-                Debug.LogError(path[i] + " " + roomPosition);
                 lineRenderer.SetPosition(i, roomPosition);
             }
         }

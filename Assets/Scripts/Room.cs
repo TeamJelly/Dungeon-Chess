@@ -7,7 +7,7 @@ public class Room
 {
     public enum Category
     {
-        NULL, Boss, Monster, Elite, Treasure, Shop, Tavern, Event
+        NULL = 0, Boss = 1, Monster = 2, Elite = 3, Treasure = 4, Shop = 5, Tavern = 6, Event = 7
     }
 
     public Category category = Category.NULL;
