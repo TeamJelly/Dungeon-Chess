@@ -22,7 +22,13 @@ public class StageManager : MonoBehaviour
 
     public void Start()
     {
-        InitStage(1, 0);
+//        for (int i = 0; i < 100; i++)
+//        {
+            InitStage(1, 0);
+            foreach (var item in AllRooms)
+                if (item.isActivate == true && item.category == Room.Category.NULL)
+                    Debug.LogError("error"); // 없는 방 존재
+//        }
 
         StageUI.instance.InitStageUI();
     }
@@ -53,7 +59,6 @@ public class StageManager : MonoBehaviour
 
             while (currentRoom.position.x != numberOfFloors - 2) // 층수가 12층이 될때까지 반복
             {
-                //                Debug.LogError(currentRoom.position);
 
                 if (currentRoom.position.y == 0)
                     rand = Random.Range(0, 2);
@@ -186,36 +191,18 @@ public class StageManager : MonoBehaviour
                 List<Room> nextRooms = new List<Room>();
 
                 if (currentRoom.left != null)
-                {
-                    Debug.LogError("-2 add left" + currentRoom.position);
                     nextRooms.Add(currentRoom.left);
-                }
                 if (currentRoom.center != null)
-                {
-                    Debug.LogError("-2 add center" + currentRoom.position);
                     nextRooms.Add(currentRoom.center);
-                }
                 if (currentRoom.right != null)
-                {
-                    Debug.LogError("-2 add right" + currentRoom.position);
                     nextRooms.Add(currentRoom.right);
-                }
 
-                Debug.LogError("-1 : 자식이 " + nextRooms.Count + currentRoom.position);
-
-                for (int l = 0; l < nextRooms.Count; l++)
+                foreach (var nextRoom in nextRooms)
                 {
-                    if (nextRooms[l].category == Room.Category.NULL)
+                    if (nextRoom.category == Room.Category.NULL)
                     {
                         int rand = Random.Range(0, maxRandNumber);
                         int temp = 0;
-
-                        Debug.LogError("-- : rand and temp" + rand + " " + temp + " " +  nextRooms[l].position + " " + possibleRooms.Count);
-
-                        for (int k = 0; k < possibleRooms.Count; k++)
-                        {
-                            Debug.LogError(possibleRooms[k] + " ,"  + numberOfPossibleRooms[k]);
-                        }
 
                         for (int k = 0; k < possibleRooms.Count; k++)
                         {
@@ -223,62 +210,66 @@ public class StageManager : MonoBehaviour
 
                             if (rand < temp)
                             {
-                                nextRooms[l].category = possibleRooms[k];
+                                nextRoom.category = possibleRooms[k];
                                 //numberOfPossibleRooms[k]--;
 
                                 maxRandNumber -= numberOfPossibleRooms[k];
 
-                                if (nextRooms[l].category == Room.Category.Monster)
-                                {
+                                if (nextRoom.category == Room.Category.Monster)
                                     numberOfMonster--;
-                                }
-                                else if (nextRooms[l].category == Room.Category.Event)
-                                {
+                                else if (nextRoom.category == Room.Category.Event)
                                     numberOfEvent--;
-                                }
-                                else if (nextRooms[l].category == Room.Category.Elite)
-                                {
+                                else if (nextRoom.category == Room.Category.Elite)
                                     numberOfElite--;
-                                }
-                                else if (nextRooms[l].category == Room.Category.Tavern)
-                                {
+                                else if (nextRoom.category == Room.Category.Tavern)
                                     numberOfTavern--;
-                                }
-                                else if (nextRooms[l].category == Room.Category.Shop)
-                                {
+                                else if (nextRoom.category == Room.Category.Shop)
                                     numberOfShop--;
-                                }
-                                else
-                                {
-                                    Debug.LogError("error ??");
-                                }
-                                Debug.LogError("0 : " + currentRoom.position + possibleRooms.Count);
-                                Debug.LogError("1 : " + nextRooms[l].position + " " + nextRooms[l].category);
 
                                 possibleRooms.RemoveAt(k);
                                 numberOfPossibleRooms.RemoveAt(k);
 
-                                Debug.LogError("2 : " + possibleRooms.Count);
-                                if (possibleRooms.Count == 0 || numberOfPossibleRooms.Count == 0)
-                                    Debug.LogError("??");
-
                                 break;
                             }
                         }
-                    } else
-                    {
-                        Debug.LogError(";;" + nextRooms[l].position);
                     }
                 }
             }
         }
 
-        Debug.LogError("numberOfRooms : " + numberOfRooms);
-        Debug.LogError("numberOfShop : " + numberOfShop);
-        Debug.LogError("numberOfTavern : " + numberOfTavern);
-        Debug.LogError("numberOfEvent : " + numberOfEvent);
-        Debug.LogError("numberOfElite : " + numberOfElite);
-        Debug.LogError("numberOfMonster : " + numberOfMonster);
+//        Debug.LogError("numberOfRooms : " + numberOfRooms);
+//        Debug.LogError("numberOfShop : " + numberOfShop);
+//        Debug.LogError("numberOfTavern : " + numberOfTavern);
+//        Debug.LogError("numberOfEvent : " + numberOfEvent);
+//        Debug.LogError("numberOfElite : " + numberOfElite);
+//        Debug.LogError("numberOfMonster : " + numberOfMonster);
 
+        foreach (var item in AllRooms)
+            if (item.isActivate == true && item.category == Room.Category.NULL)
+                if (numberOfShop != 0)
+                {
+                    item.category = Room.Category.Shop;
+                    numberOfShop--;
+                }
+                else if (numberOfTavern != 0)
+                {
+                    item.category = Room.Category.Tavern;
+                    numberOfTavern--;
+                }
+                else if (numberOfElite != 0)
+                {
+                    item.category = Room.Category.Elite;
+                    numberOfElite--;
+                }
+                else if (numberOfEvent != 0)
+                {
+                    item.category = Room.Category.Event;
+                    numberOfEvent--;
+                }
+                else if (numberOfMonster != 0)
+                {
+                    item.category = Room.Category.Monster;
+                    numberOfMonster--;
+                }
     }
 }

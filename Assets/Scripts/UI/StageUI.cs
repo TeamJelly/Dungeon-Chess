@@ -46,10 +46,6 @@ public class StageUI : MonoBehaviour
             }
         }
 
-/*        GameObject floor = Instantiate(floorPrefab, contentPanel.transform); // 보스 층
-        floors.Add(floor);
-        AllRoomButtons[, j] = Instantiate(roomPrefab, floor.transform);*/
-
         for (int i = 0; i < StageManager.instance.AllRooms.GetLength(1); i++)
         {
             lines.Add(Instantiate(linePrefab));
