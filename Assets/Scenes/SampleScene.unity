@@ -1104,6 +1104,61 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1653472360512118740, guid: da7c4bf4c3b9748458c8c6016a9233a7,
+        type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1653472360512118740, guid: da7c4bf4c3b9748458c8c6016a9233a7,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 1653472360512118740, guid: da7c4bf4c3b9748458c8c6016a9233a7,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1653472360512118741, guid: da7c4bf4c3b9748458c8c6016a9233a7,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 1653472360512118741, guid: da7c4bf4c3b9748458c8c6016a9233a7,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1653472360512118745, guid: da7c4bf4c3b9748458c8c6016a9233a7,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1653472360512118746, guid: da7c4bf4c3b9748458c8c6016a9233a7,
+        type: 3}
+      propertyPath: size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1653472360512118746, guid: da7c4bf4c3b9748458c8c6016a9233a7,
+        type: 3}
+      propertyPath: hasText
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1653472360512118746, guid: da7c4bf4c3b9748458c8c6016a9233a7,
+        type: 3}
+      propertyPath: hasFrame
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1653472360512118746, guid: da7c4bf4c3b9748458c8c6016a9233a7,
+        type: 3}
+      propertyPath: isButton
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1653472360512118746, guid: da7c4bf4c3b9748458c8c6016a9233a7,
+        type: 3}
+      propertyPath: usableButton
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3599305583976488913, guid: da7c4bf4c3b9748458c8c6016a9233a7,
         type: 3}
       propertyPath: m_AnchorMax.y
