@@ -6,7 +6,7 @@ public class StageManager : MonoBehaviour
 {
     public static StageManager instance;
 
-    public Room currentRoom;
+    public Room currentRoom = null;
 
     public Room[,] AllRooms; // 10층, 각층에는 5개
 
@@ -15,8 +15,12 @@ public class StageManager : MonoBehaviour
 
     public List<Vector2Int>[] pathList;
 
+
+    public List<Vector2Int> roomHistory = new List<Vector2Int>();
+
     private void Awake()
     {
+        DontDestroyOnLoad(gameObject);
         instance = this;
     }
 
@@ -28,8 +32,9 @@ public class StageManager : MonoBehaviour
             foreach (var item in AllRooms)
                 if (item.isActivate == true && item.category == Room.Category.NULL)
                     Debug.LogError("error"); // 없는 방 존재
-//        }
+                                             //        }
 
+        currentRoom = null;
         StageUI.instance.InitStageUI();
     }
 

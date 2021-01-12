@@ -11,4 +11,14 @@ public class PartyManager : MonoBehaviour
     {
         instance = this;
     }
+
+    public void AddUnit(Unit unit)
+    {
+        AllUnits.Add(unit);
+    }
+
+    public void SubUnit(Unit unit)
+    {
+        AllUnits.Remove(unit);
+    }
 }
