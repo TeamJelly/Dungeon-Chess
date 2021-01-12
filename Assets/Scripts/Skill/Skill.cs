@@ -21,19 +21,33 @@ public class Skill : MonoBehaviour
     [Range(0, 100)]
     public float criticalRate;                                      // 크리티컬율
 
-    public enum Target {
+    public enum Domain                                              // 스킬 사용가능 범위의 종류
+    {
         NULL,
-        Me, 
-        Single, 
-        MultipleFixed,
-        MultipleRotate
+        Me,             // 나에게 사용, Unit
+        RandomOne,      // 범위 내 대상에서 랜덤한 하나를 뽑는다.
+        SelectOne,      // 범위 내 대상중에서 하나를 선택한다.
+        Fixed,          // 복수 대상일 경우 범위가 고정된다.
+        Rotate,         // 복수 대상일 경우 범위가 회전한다.
     }
 
-    public Target target = Target.NULL;                             // 대상
+    public enum Target                                              // 스킬의 대상
+    {
+        NULL,
+        AnyTile,               // 타일을 대상으로 사용가능
+        NoUnitTile,         // 유닛이 없는 곳에만 사용가능, 소환류 스킬에 사용
+        AnyUnit,            // 적, 아군 구별 없이 사용가능
+        PartyUnit,          // 내 파티에게만 사용가능
+        FriendlyUnit,       // 아군에게만 사용가능
+        EnemyUnit,          // 적에게만 사용가능
+    }
 
-    public List<Vector2Int> AvailablePosition;                      // 사용가능한 위치
-    public List<Vector2Int> MultipleRange;                          // 다중 범위
+    public Domain domain = Domain.NULL;
+    public Target target = Target.NULL;
 
+    public List<Vector2Int> AvailablePositions;                      // 사용가능한 위치
+    public List<Vector2Int> RangePositions;                          // 다중 범위
+    
     public void UseSkillToUnit(Unit unit)
     {
         // 스킬당 구현 필요
@@ -45,52 +59,58 @@ public class Skill : MonoBehaviour
             UseSkillToUnit(unit);
     }
 
-    public void FindUnit(List<Vector2Int> SelectedPosition)
+    public List<Unit> GetUnitsInDomain(Unit skillUser) //
     {
-        List<Unit> tempUnit = null; //= RoomManager.Units; // 있는애만 남김
+        List<Unit> units = new List<Unit>();
 
-        foreach (var unit in tempUnit)
-            foreach (var position in SelectedPosition)
-                if (unit.IsContainPostion(position)) // 있으면
-                    UseSkillToUnit(unit);
+        if (domain == Domain.Me)
+            units.Add(skillUser);
+        else if (domain == Domain.RandomOne)
+        {
+            List<Unit> tempUnits = GetUnitsInSelectOne(skillUser);
+
+            int rand = Random.Range(0, units.Count);
+            units.Add(tempUnits[rand]);
+        }
+        else if (domain == Domain.SelectOne)
+            units = GetUnitsInSelectOne(skillUser);
+
+        return units;
     }
 
-    public void ShowSkillChoices(Unit user)
+    public List<Unit> GetUnitsInSelectOne(Unit skillUser) 
     {
-        if(target == Target.Me) // 선택지 없음 바로 실행
-        {
-            UseSkillToUnit(user);
-        }
-        else if(target == Target.Single)
-        {
-            BattleUI.instance.ShowTile(AvailablePosition);
-        }
-        else if(target == Target.MultipleFixed)
-        {
+        List<Unit> units = new List<Unit>();
+        List<Unit> tempUnits = BattleManager.GetUnitsInPositions(GetPositionsInDomain(skillUser)); // 스킬 도메인을 받고 그위의 유닛들을 반환
 
+        foreach (var unit in tempUnits)
+        {
+            if (target == Target.AnyUnit)
+                units.Add(unit);
+            else if (target == Target.EnemyUnit && unit.category == Category.Enemy)
+                units.Add(unit);
+            else if (target == Target.FriendlyUnit && (unit.category == Category.Friendly || unit.category == Category.Party))
+                units.Add(unit);
+            else if (target == Target.PartyUnit && unit.category == Category.Party)
+                units.Add(unit);
         }
+
+        return units;
     }
-    /*
-    public List<Vector2Int> GetSkillablePosition(Unit skillUser)
-    {
-        List<Vector2Int> tiles;
 
-        if (target == Target.Me)
-        {
-            tiles = UnitPosition.UnitPositionToVector2IntList(skillUser.unitPosition);
-        }
-        else if (target == Target.Single)
-        {
-            foreach (var item in AvailablePosition)
+    public List<Vector2Int> GetPositionsInDomain(Unit skillUser) // 스킬 범위를 절대 위치로 바꾼다.
+    {
+        List<Vector2Int> positions = new List<Vector2Int>();
+
+        foreach (var item in AvailablePositions)
+            foreach (var position in UnitPosition.VectoredPosition(skillUser.unitPosition, item).UnitPositionToVector2IntList())
             {
-//                UnitPosition = skillUser.unitPosition;
-                for (int i = 0; i < item.x; i++)
-                {
-                }
-            } 
-        }
-        
-//        return tiles;
-    }*/
+                if (target == Target.NoUnitTile && !BattleManager.instance.AllTiles[position.x, position.y].IsUsable())
+                    continue;
+                positions.Add(position);
+            }
+
+        return positions;
+    }
 
 }

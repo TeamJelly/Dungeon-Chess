@@ -126,6 +126,44 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+    public static List<Unit> GetUnitsInPositions(List<Vector2Int> positions)
+    {
+        List<Unit> unitList = new List<Unit>();
+
+        foreach (var item in positions)
+            unitList.Add(instance.AllTiles[item.x, item.y].GetUnit());
+
+        return unitList;
+    }
+
+    public static List<Unit> GetRandomUnitsInPositions(List<Vector2Int> positions, int number)
+    {
+        List<Unit> unitPool = GetUnitsInPositions(positions);
+        List<Unit> unitList = new List<Unit>();
+
+        for (int i = 0; i < number; i++)
+        {
+            int rand = UnityEngine.Random.Range(0, unitPool.Count);
+            unitList.Add(unitPool[rand]);
+            unitPool.RemoveAt(rand);
+        }
+        return unitList;
+    }
+
+    public static List<Vector2Int> GetRandomTilesInPositions(List<Vector2Int> positions, int number)
+    {
+        List<Vector2Int> tilePool = positions;
+        List<Vector2Int> tileList = new List<Vector2Int>();
+
+        for (int i = 0; i < number; i++)
+        {
+            int rand = UnityEngine.Random.Range(0, tilePool.Count);
+            tileList.Add(tilePool[rand]);
+            tilePool.RemoveAt(rand);
+        }
+        return tileList;
+    }
+
     class Node
     {
         public UnitPosition unitPosition;

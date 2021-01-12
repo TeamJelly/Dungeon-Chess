@@ -12,7 +12,6 @@ public class Tile
 
     public enum Category {NULL};
 
-
     public Effect tileEffect;
 
     Unit unit = null;
@@ -33,5 +32,10 @@ public class Tile
     public void SetUnit(Unit newUnit)
     {
         unit = newUnit;
+    }
+
+    public Unit GetUnit()
+    {
+        return unit;
     }
 }

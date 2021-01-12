@@ -92,6 +92,14 @@ public class UnitPosition
         newPosition.upperRight.x -= number;
         return newPosition;
     }
+    public static UnitPosition VectoredPosition(UnitPosition unitPosition, Vector2Int vector)
+    {
+        UnitPosition newPosition = new UnitPosition(unitPosition.lowerLeft, unitPosition.upperRight);
+        newPosition = UpPosition(newPosition, vector.x);
+        newPosition = RightPosition(newPosition, vector.y);
+
+        return newPosition;
+    }
 
     public void ShowUnitPosition()
     {
@@ -153,6 +161,11 @@ public class UnitPosition
                 positions.Add(new Vector2Int(i,j));
 
         return positions;
+    }
+
+    public List<Vector2Int> UnitPositionToVector2IntList()
+    {
+        return UnitPositionToVector2IntList(this);
     }
 
     public override bool Equals(object obj)
