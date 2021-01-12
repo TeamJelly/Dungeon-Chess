@@ -12,7 +12,7 @@ public class GamePrepareManager : MonoBehaviour
 
     private void Awake()
     {
-        UpdateCurrentUnit();
+        //UpdateCurrentUnit();
     }
     public void StartGame()
     {
