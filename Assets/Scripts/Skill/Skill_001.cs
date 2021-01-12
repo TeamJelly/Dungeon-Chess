@@ -17,10 +17,22 @@ public class Skill_001 : Skill
         reuseTime = 0;
 
         criticalRate = 5;
+
+/*        AvailablePositions = new List<Vector2Int>();
+        AvailablePositions.Add(new Vector2Int(1, 0));
+        AvailablePositions.Add(new Vector2Int(0, 0));
+        AvailablePositions.Add(new Vector2Int(2, 0));
+        AvailablePositions.Add(new Vector2Int(3, 0));
+        AvailablePositions.Add(new Vector2Int(4, 0));
+        AvailablePositions.Add(new Vector2Int(5, 0));
+        RangePositions = new List<Vector2Int>();
+        RangePositions.Add(new Vector2Int(1, 1));
+        RangePositions.Add(new Vector2Int(2, 1));*/
     }
 
     public new void UseSkillToUnit(Unit unit)
     {
         unit.currentHP -= 10;
+        base.UseSkillToUnit(unit);
     }
 }

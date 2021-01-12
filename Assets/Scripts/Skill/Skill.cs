@@ -17,6 +17,7 @@ public class Skill : MonoBehaviour
     public string description;                                      // 스킬 설명
     public int enhancedLevel;                                       // 강화도
     public int reuseTime;                                           // 재사용 대기시간
+    public int currentReuseTime;
 
     [Range(0, 100)]
     public float criticalRate;                                      // 크리티컬율
@@ -51,6 +52,7 @@ public class Skill : MonoBehaviour
     public void UseSkillToUnit(Unit unit)
     {
         // 스킬당 구현 필요
+        currentReuseTime = reuseTime;
     }
 
     public void UseSkillToUnit(List<Unit> units)
@@ -103,14 +105,32 @@ public class Skill : MonoBehaviour
         List<Vector2Int> positions = new List<Vector2Int>();
 
         foreach (var item in AvailablePositions)
-            foreach (var position in UnitPosition.VectoredPosition(skillUser.unitPosition, item).UnitPositionToVector2IntList())
+        {
+            List<Vector2Int> temp = UnitPosition.VectoredPosition(skillUser.unitPosition, item).UnitPositionToVector2IntList();
+            Debug.LogError(temp);
+            foreach (var position in temp)
             {
                 if (target == Target.NoUnitTile && !BattleManager.instance.AllTiles[position.x, position.y].IsUsable())
                     continue;
                 positions.Add(position);
+                Debug.LogError(position);
             }
 
+        }
         return positions;
     }
+
+    public bool IsUsable()
+    {
+        if (currentReuseTime == 0)
+            return true;
+        else
+            return false;
+    }
+
+/*    public List<Vector2Int> RangeToPositions(int range)
+    {
+        
+    }*/
 
 }

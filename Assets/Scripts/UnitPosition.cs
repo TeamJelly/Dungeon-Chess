@@ -157,7 +157,7 @@ public class UnitPosition
         List<Vector2Int> positions = new List<Vector2Int>();
 
         for (int i = unitPositon.lowerLeft.x; i <= unitPositon.upperRight.x; i++)
-            for (int j = unitPositon.lowerLeft.y; j < unitPositon.upperRight.y; j++)
+            for (int j = unitPositon.lowerLeft.y; j <= unitPositon.upperRight.y; j++)
                 positions.Add(new Vector2Int(i,j));
 
         return positions;

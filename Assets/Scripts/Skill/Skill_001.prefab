@@ -46,7 +46,7 @@ MonoBehaviour:
   number: 1
   name: "\uBCA0\uAE30"
   unitClass: 2
-  grade: 0
+  grade: 1
   skillImage: {fileID: 3370473235798598634, guid: cceda1ad674f7a14fa9495327f91e76c,
     type: 3}
   description: "\uD55C\uCE78 \uC548\uC5D0 \uC788\uB294 \uB2E8\uC77C \uC801\uC5D0\uAC8C
@@ -54,7 +54,16 @@ MonoBehaviour:
   enhancedLevel: 0
   reuseTime: 0
   criticalRate: 5
-  domain: 0
-  target: 0
-  AvailablePositions: []
-  RangePositions: []
+  domain: 4
+  target: 1
+  AvailablePositions:
+  - {x: 0, y: 0}
+  - {x: 1, y: 0}
+  - {x: 2, y: 0}
+  - {x: 3, y: 0}
+  - {x: 4, y: 0}
+  - {x: 5, y: 0}
+  RangePositions:
+  - {x: 1, y: 1}
+  - {x: 1, y: 2}
+  - {x: 2, y: 2}
