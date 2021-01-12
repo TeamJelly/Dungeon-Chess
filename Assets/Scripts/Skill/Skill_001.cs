@@ -18,4 +18,9 @@ public class Skill_001 : Skill
 
         criticalRate = 5;
     }
+
+    public new void UseSkillToUnit(Unit unit)
+    {
+        unit.currentHP -= 10;
+    }
 }
