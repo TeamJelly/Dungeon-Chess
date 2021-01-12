@@ -309,17 +309,7 @@ MonoBehaviour:
   skillCount: 0
   itemCount: 0
   skills:
-  - number: 10
-    name: "\uB584\uB9AC\uAE30"
-    unitClass: 2
-    grade: 0
-    description: "\u3147\u3141\u3134\u3139\u3134\u3147\u3139"
-    enhancedLevel: 0
-    reuseTime: 1
-    criticalRate: 0
-    target: 3
-    AvailablePosition: []
-    MultipleRange: []
+  - {fileID: 0}
   antiques: []
   items: []
   stateEffects: []
@@ -442,17 +432,7 @@ MonoBehaviour:
   skillCount: 0
   itemCount: 0
   skills:
-  - number: 10
-    name: "\uB584\uB9AC\uAE30"
-    unitClass: 2
-    grade: 0
-    description: "\u3147\u3141\u3134\u3139\u3134\u3147\u3139"
-    enhancedLevel: 0
-    reuseTime: 1
-    criticalRate: 0
-    target: 3
-    AvailablePosition: []
-    MultipleRange: []
+  - {fileID: 5096750378147797336, guid: 0a4b405da0e35944ea19171b2917d0f0, type: 3}
   antiques: []
   items: []
   stateEffects: []
@@ -610,17 +590,7 @@ MonoBehaviour:
   skillCount: 0
   itemCount: 0
   skills:
-  - number: 10
-    name: "\uB584\uB9AC\uAE30"
-    unitClass: 2
-    grade: 0
-    description: "\u3147\u3141\u3134\u3139\u3134\u3147\u3139"
-    enhancedLevel: 0
-    reuseTime: 1
-    criticalRate: 0
-    target: 3
-    AvailablePosition: []
-    MultipleRange: []
+  - {fileID: 0}
   antiques: []
   items: []
   stateEffects: []
@@ -920,17 +890,7 @@ MonoBehaviour:
   skillCount: 0
   itemCount: 0
   skills:
-  - number: 10
-    name: "\uB584\uB9AC\uAE30"
-    unitClass: 2
-    grade: 0
-    description: "\u3147\u3141\u3134\u3139\u3134\u3147\u3139"
-    enhancedLevel: 0
-    reuseTime: 1
-    criticalRate: 0
-    target: 3
-    AvailablePosition: []
-    MultipleRange: []
+  - {fileID: 0}
   antiques: []
   items: []
   stateEffects: []
@@ -1815,17 +1775,7 @@ MonoBehaviour:
   skillCount: 0
   itemCount: 0
   skills:
-  - number: 10
-    name: "\uB584\uB9AC\uAE30"
-    unitClass: 2
-    grade: 0
-    description: "\u3147\u3141\u3134\u3139\u3134\u3147\u3139"
-    enhancedLevel: 0
-    reuseTime: 1
-    criticalRate: 0
-    target: 3
-    AvailablePosition: []
-    MultipleRange: []
+  - {fileID: 5096750378147797336, guid: 0a4b405da0e35944ea19171b2917d0f0, type: 3}
   antiques: []
   items: []
   stateEffects: []
