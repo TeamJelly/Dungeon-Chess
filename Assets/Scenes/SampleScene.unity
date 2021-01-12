@@ -1369,6 +1369,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BattleUI
       objectReference: {fileID: 0}
+    - target: {fileID: 5384038421715361631, guid: da7c4bf4c3b9748458c8c6016a9233a7,
+        type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 5384038421715361632, guid: da7c4bf4c3b9748458c8c6016a9233a7,
         type: 3}
       propertyPath: m_Pivot.x

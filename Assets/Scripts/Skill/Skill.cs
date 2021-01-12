@@ -11,7 +11,7 @@ public class Skill : MonoBehaviour
     public new string name = "No Skill Name";                       // 스킬 이름
     public UnitClass unitClass = UnitClass.NULL;                    // 스킬 클래스
     public Grade grade = Grade.NULL;                                // 스킬 등급
-//    public enum skillImage; 
+    public Sprite skillImage; 
 
     [TextArea(1, 10)]
     public string description;                                      // 스킬 설명
