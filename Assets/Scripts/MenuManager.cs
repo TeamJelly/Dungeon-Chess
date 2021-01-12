@@ -7,6 +7,6 @@ public class MenuManager : MonoBehaviour
 {
     public void StartGame()
     {
-        SceneLoader.MoveScene("CharacterSelect");
+        SceneLoader.MoveScene("Game Preparation");
     }
 }
