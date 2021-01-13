@@ -49,13 +49,24 @@ public class Skill : MonoBehaviour
     public List<Vector2Int> AvailablePositions;                      // 사용가능한 위치
     public List<Vector2Int> RangePositions;                          // 다중 범위
     
-    public void UseSkillToUnit(Unit unit)
+    public virtual void UseSkillToTile(Vector2Int position)
+    {
+        currentReuseTime = reuseTime;
+    }
+
+    public virtual void UseSkillToTile(List<Vector2Int> positions)
+    {
+        foreach (var position in positions)
+            UseSkillToTile(position);
+    }
+
+    public virtual void UseSkillToUnit(Unit unit)
     {
         // 스킬당 구현 필요
         currentReuseTime = reuseTime;
     }
 
-    public void UseSkillToUnit(List<Unit> units)
+    public virtual void UseSkillToUnit(List<Unit> units)
     {
         foreach (var unit in units)
             UseSkillToUnit(unit);
@@ -107,13 +118,13 @@ public class Skill : MonoBehaviour
         foreach (var item in AvailablePositions)
         {
             List<Vector2Int> temp = UnitPosition.VectoredPosition(skillUser.unitPosition, item).UnitPositionToVector2IntList();
-            Debug.LogError(temp);
+//            Debug.LogError(temp);
             foreach (var position in temp)
             {
                 if (target == Target.NoUnitTile && !BattleManager.instance.AllTiles[position.x, position.y].IsUsable())
                     continue;
                 positions.Add(position);
-                Debug.LogError(position);
+//                Debug.LogError(position);
             }
 
         }

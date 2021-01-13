@@ -103,6 +103,9 @@ public class BattleManager : MonoBehaviour
     {
         thisTurnUnit = unit;
         thisTurnUnit.actionRate = 0;
+        unit.moveCount = 1;
+        unit.skillCount = 1;
+        unit.itemCount = 1;
 
         //턴 상태 갱신(이동 가능한 타일 보여주기)
         BattleUI.instance.UpdateTurnStatus(unit);

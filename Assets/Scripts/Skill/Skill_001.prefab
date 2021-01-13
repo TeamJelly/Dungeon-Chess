@@ -53,17 +53,26 @@ MonoBehaviour:
     \uB370\uBBF8\uC9C0\uB97C \uC785\uD78C\uB2E4."
   enhancedLevel: 0
   reuseTime: 0
+  currentReuseTime: 0
   criticalRate: 5
   domain: 4
   target: 1
   AvailablePositions:
   - {x: 0, y: 0}
   - {x: 1, y: 0}
+  - {x: -1, y: 0}
+  - {x: 0, y: 1}
+  - {x: 0, y: -1}
   - {x: 2, y: 0}
-  - {x: 3, y: 0}
-  - {x: 4, y: 0}
-  - {x: 5, y: 0}
-  RangePositions:
   - {x: 1, y: 1}
-  - {x: 1, y: 2}
-  - {x: 2, y: 2}
+  - {x: 0, y: 2}
+  - {x: -1, y: 1}
+  - {x: -2, y: 0}
+  - {x: -1, y: -1}
+  - {x: 0, y: -2}
+  - {x: 1, y: -1}
+  RangePositions:
+  - {x: 0, y: 0}
+  - {x: 1, y: 0}
+  - {x: 0, y: 1}
+  - {x: 1, y: 1}

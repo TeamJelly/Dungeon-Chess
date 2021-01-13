@@ -17,21 +17,23 @@ public class BattleUI : MonoBehaviour
 
     public GameObject UnitInfoUIPrefab;
     public GameObject[] SkillButton;
+    public Skill currentSkill;
+
 //    public GameObject[] SkillCancelButton;
     public GameObject[] ItemButton;
 //    public GameObject[] ItemCancelButton;
     public GameObject MoveButton;
     public GameObject MoveCancelButton;
 
+    public GameObject CurrentButton;
+
     List<UnitInfoUI> UnitsInfoList = new List<UnitInfoUI>();
 
     public UnitInfoUI selectedUnitInfo;
-
     public EventTrigger[,] AllTiles = new EventTrigger[10,10];
 
     Transform tileIndicator;
-    UnitPosition moveIndicatorPosition = new UnitPosition();
-    List<Vector2Int> skillIndicatorPosition = new List<Vector2Int>();
+    UnitPosition indicatorUnitPosition = new UnitPosition();
 
     RectTransform unitTurnIndicator;
 
@@ -108,7 +110,7 @@ public class BattleUI : MonoBehaviour
     IEnumerator ShowMoveAnimation()
     {
         Unit unit = BattleManager.instance.thisTurnUnit;
-        List<UnitPosition> path = BattleManager.PathFindAlgorithm(unit, unit.unitPosition, moveIndicatorPosition);
+        List<UnitPosition> path = BattleManager.PathFindAlgorithm(unit, unit.unitPosition, indicatorUnitPosition);
 
         var waitForSeconds = new WaitForSeconds(0.1f);
         foreach (UnitPosition position in path)
@@ -135,6 +137,11 @@ public class BattleUI : MonoBehaviour
         }
     }
 
+    public void UpdateTurnStatus()
+    {
+        UpdateTurnStatus(BattleManager.instance.thisTurnUnit);
+    }
+
     public void UpdateTurnStatus(Unit unit)
     {
         UpdateInfoList();
@@ -143,24 +150,32 @@ public class BattleUI : MonoBehaviour
         {
             selectedUnitInfo.Set(unit);
 
-            foreach (GameObject skillButton in SkillButton)
-            {
-                skillButton.SetActive(false);
-            }
+            MoveButton.GetComponent<Button>().interactable = false; // 이동 버튼 초기화
+            if (unit.moveCount > 0)
+                MoveButton.GetComponent<Button>().interactable = true;
+
+            foreach (GameObject skillButton in SkillButton) // 스킬 버튼 초기화
+                skillButton.GetComponent<Button>().interactable = false;
+
             for (int i = 0; i < unit.skills.Count; i++)
             {
                 SkillButton[i].GetComponent<Image>().sprite = unit.skills[i].skillImage;
                 Skill skill = unit.skills[i];
-                SkillButton[i].GetComponent<Button>().onClick.RemoveAllListeners();
-                SkillButton[i].GetComponent<Button>().onClick.AddListener(() =>
+
+                if (skill.currentReuseTime == 0 && unit.skillCount > 0) // 스킬이 사용가능한 조건
                 {
-                    Debug.LogError("click!");
-                    ShowSkillableTile(skill.GetPositionsInDomain(unit));
-                    SetSkillIndicator(skill.RangePositions, skill);
-                });
-                SkillButton[i].SetActive(true);
-            }
-               
+                    SkillButton[i].GetComponent<Button>().onClick.RemoveAllListeners();
+
+                    SkillButton[i].GetComponent<Button>().onClick.AddListener(() =>
+                    {
+                        ShowSkillableTile(skill.GetPositionsInDomain(unit), skill);
+                        SetSkillIndicator(skill.RangePositions, skill);
+                    });
+
+                    SkillButton[i].GetComponent<Button>().interactable = true;
+                }
+            }               
+
             selectedUnitInfo.gameObject.SetActive(true);
             unitTurnIndicator.gameObject.SetActive(true);
         }
@@ -169,9 +184,7 @@ public class BattleUI : MonoBehaviour
             selectedUnitInfo.gameObject.SetActive(false);
             unitTurnIndicator.gameObject.SetActive(false);
         }
-        Debug.Log("현재 턴:" +  unit.name);
 
-        MoveButton.SetActive(true);
     }
 
     public void SetSkillIndicator(List<Vector2Int> position, Skill skill) // 스킬용 인디케이터 보여주기
@@ -182,7 +195,9 @@ public class BattleUI : MonoBehaviour
             tileIndicator.localScale = new Vector3(1, 1, 1);
 
             foreach (var item in position)
-                Instantiate(OrangeTile, new Vector3(item.x, item.y, 0), Quaternion.identity, tileIndicator);
+            {
+                Instantiate(OrangeTile, tileIndicator).transform.localPosition = new Vector3(item.x, item.y, 0);
+            }
 
         } else if (skill.target == Skill.Target.AnyUnit || skill.target == Skill.Target.EnemyUnit 
             || skill.target == Skill.Target.FriendlyUnit || skill.target == Skill.Target.PartyUnit)
@@ -191,9 +206,16 @@ public class BattleUI : MonoBehaviour
         }
     }
 
-    public void SetMoveIndicator(UnitPosition position)
+    public void SetIndicatorPosition(Vector2Int position)
     {
-        moveIndicatorPosition.Set(position);//깊은복사
+        indicatorUnitPosition = new UnitPosition(position, position);//깊은복사
+
+        SetIndicatorPosition(position);
+    }
+
+    public void SetIndicatorPosition(UnitPosition position)
+    {
+        indicatorUnitPosition.Set(position);//깊은복사
 
         tileIndicator.localScale =
                 new Vector3(
@@ -208,16 +230,16 @@ public class BattleUI : MonoBehaviour
         tileIndicator.gameObject.SetActive(true);
     }
 
-    public void ShowSkillableTile(List<Vector2Int> positions)
+    public void ShowSkillableTile(List<Vector2Int> positions, Skill skill)
     {
         foreach (Vector2Int position in positions)
         {
-            SetSkillTile(position.x, position.y);
+            SetSkillTile(position.x, position.y, skill);
             AllTiles[position.x, position.y].gameObject.SetActive(true);
         }
     }
 
-    public void SetSkillTile(int x, int y)
+    public void SetSkillTile(int x, int y, Skill skill)
     {
         AllTiles[x, y].triggers.Clear();
         //타일 클릭시 이벤트 추가
@@ -227,10 +249,33 @@ public class BattleUI : MonoBehaviour
         {
             HideTile();
 
+            if (skill.target == Skill.Target.AnyTile || skill.target == Skill.Target.NoUnitTile)
+            {
+                List<Vector2Int> temp = new List<Vector2Int>();
+                foreach (var item in skill.RangePositions)
+                    temp.Add(new Vector2Int(x, y) + item);
+
+                skill.UseSkillToTile(temp);
+            }
+            /*else if (skill.target == Skill.Target.AnyUnit || skill.target == Skill.Target.EnemyUnit
+              || skill.target == Skill.Target.FriendlyUnit || skill.target == Skill.Target.PartyUnit)
+            {
+                List<Unit> temp = new List<Unit>();
+                foreach (var item in skill.RangePositions)
+                {
+                    Vector2Int vector = new Vector2Int(x, y) + item;
+                    temp.Add(BattleManager.instance.AllTiles[vector.x, vector.y].GetUnit());
+                }
+
+                skill.UseSkillToUnit(temp);
+            }*/
+
             // UI 업데이트
-//            SetActive(false);
+            BattleManager.instance.thisTurnUnit.skillCount--;
+            UpdateTurnStatus();
+
             // BattleManager.instance.AllTiles[x,y]. 좌표 받아서 하던가 해야함
-//            StartCoroutine(ShowSkillAnimation());
+            // StartCoroutine(ShowSkillAnimation());
         });
         AllTiles[x, y].triggers.Add(entry_PointerClick);
 
@@ -240,32 +285,35 @@ public class BattleUI : MonoBehaviour
         entry_PointerEnter.callback.AddListener((data) =>
         {
             Vector2Int distance = new Vector2Int();
-            if (moveIndicatorPosition.lowerLeft.x > x)
+            if (indicatorUnitPosition.lowerLeft.x > x)
             {
-                distance.x = x - moveIndicatorPosition.lowerLeft.x;
+                distance.x = x - indicatorUnitPosition.lowerLeft.x;
             }
-            else if (moveIndicatorPosition.upperRight.x < x)
+            else if (indicatorUnitPosition.upperRight.x < x)
             {
-                distance.x = x - moveIndicatorPosition.upperRight.x;
+                distance.x = x - indicatorUnitPosition.upperRight.x;
             }
-            if (moveIndicatorPosition.lowerLeft.y > y)
+            if (indicatorUnitPosition.lowerLeft.y > y)
             {
-                distance.y = y - moveIndicatorPosition.lowerLeft.y;
+                distance.y = y - indicatorUnitPosition.lowerLeft.y;
             }
-            else if (moveIndicatorPosition.upperRight.y < y)
+            else if (indicatorUnitPosition.upperRight.y < y)
             {
-                distance.y = y - moveIndicatorPosition.upperRight.y;
+                distance.y = y - indicatorUnitPosition.upperRight.y;
             }
 
-            for (int k = moveIndicatorPosition.lowerLeft.x; k <= moveIndicatorPosition.upperRight.x; k++)
+            for (int k = indicatorUnitPosition.lowerLeft.x; k <= indicatorUnitPosition.upperRight.x; k++)
             {
-                for (int l = moveIndicatorPosition.lowerLeft.y; l <= moveIndicatorPosition.upperRight.y; l++)
+                for (int l = indicatorUnitPosition.lowerLeft.y; l <= indicatorUnitPosition.upperRight.y; l++)
                 {
                     if (!AllTiles[k + distance.x, l + distance.y].gameObject.activeSelf) return;
                 }
             }
-            moveIndicatorPosition.Add(distance);
-            SetMoveIndicator(moveIndicatorPosition);
+
+            indicatorUnitPosition.Add(distance);
+
+            SetIndicatorPosition(indicatorUnitPosition);
+//            SetSkillIndicator(indicatorPosition);
 
         });
         AllTiles[x, y].triggers.Add(entry_PointerEnter);
@@ -274,7 +322,7 @@ public class BattleUI : MonoBehaviour
     public void ShowMovableTile()
     {
         //HideTile();
-        SetMoveIndicator(BattleManager.instance.thisTurnUnit.unitPosition);
+        SetIndicatorPosition(BattleManager.instance.thisTurnUnit.unitPosition);
         List<UnitPosition> positions = BattleManager.instance.thisTurnUnit.GetMovablePosition();
       
         foreach (UnitPosition unitPosition in positions)
@@ -300,10 +348,10 @@ public class BattleUI : MonoBehaviour
             
             HideTile();
             MoveCancelButton.SetActive(false);
+            MoveButton.SetActive(true);
 
             BattleManager.instance.thisTurnUnit.moveCount--;
-            if (BattleManager.instance.thisTurnUnit.moveCount > 0)
-                MoveButton.SetActive(true);
+            UpdateTurnStatus();
 
             StartCoroutine(ShowMoveAnimation());
             //BattleManager.instance.thisTurnUnit.Move(tileIndicatorPosition);
@@ -316,33 +364,33 @@ public class BattleUI : MonoBehaviour
         entry_PointerEnter.callback.AddListener((data) =>
         {
             Vector2Int distance = new Vector2Int();
-            if (moveIndicatorPosition.lowerLeft.x > x)
+            if (indicatorUnitPosition.lowerLeft.x > x)
             {
-                distance.x = x - moveIndicatorPosition.lowerLeft.x;
+                distance.x = x - indicatorUnitPosition.lowerLeft.x;
             }
-            else if (moveIndicatorPosition.upperRight.x < x)
+            else if (indicatorUnitPosition.upperRight.x < x)
             {
-                distance.x = x - moveIndicatorPosition.upperRight.x;
+                distance.x = x - indicatorUnitPosition.upperRight.x;
             }
-            if (moveIndicatorPosition.lowerLeft.y > y)
+            if (indicatorUnitPosition.lowerLeft.y > y)
             {
-                distance.y = y - moveIndicatorPosition.lowerLeft.y;
+                distance.y = y - indicatorUnitPosition.lowerLeft.y;
             }
-            else if (moveIndicatorPosition.upperRight.y < y)
+            else if (indicatorUnitPosition.upperRight.y < y)
             {
-                distance.y = y - moveIndicatorPosition.upperRight.y;
+                distance.y = y - indicatorUnitPosition.upperRight.y;
             }
 
-            for (int k = moveIndicatorPosition.lowerLeft.x; k <= moveIndicatorPosition.upperRight.x; k++)
+            for (int k = indicatorUnitPosition.lowerLeft.x; k <= indicatorUnitPosition.upperRight.x; k++)
             {
-                for (int l = moveIndicatorPosition.lowerLeft.y; l <= moveIndicatorPosition.upperRight.y; l++)
+                for (int l = indicatorUnitPosition.lowerLeft.y; l <= indicatorUnitPosition.upperRight.y; l++)
                 {
                     if (!AllTiles[k + distance.x, l + distance.y].gameObject.activeSelf) return;
                 }
             }
-            moveIndicatorPosition.Add(distance);
-            SetMoveIndicator(moveIndicatorPosition);
+            indicatorUnitPosition.Add(distance);
 
+            SetIndicatorPosition(indicatorUnitPosition);
         });
         AllTiles[x, y].triggers.Add(entry_PointerEnter);
     }
@@ -350,6 +398,10 @@ public class BattleUI : MonoBehaviour
     public void HideTile()
     {
         tileIndicator.gameObject.SetActive(false);
+
+        for (int i = 0; i < tileIndicator.childCount; i++)
+            Destroy(tileIndicator.GetChild(i).gameObject);
+
         foreach (var tile in AllTiles)
             if (tile.gameObject.activeSelf)
                 tile.gameObject.SetActive(false);

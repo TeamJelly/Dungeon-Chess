@@ -30,9 +30,17 @@ public class Skill_001 : Skill
         RangePositions.Add(new Vector2Int(2, 1));*/
     }
 
-    public new void UseSkillToUnit(Unit unit)
+    public override void UseSkillToUnit(Unit unit)
     {
         unit.currentHP -= 10;
         base.UseSkillToUnit(unit);
+    }
+
+    public override void UseSkillToTile(Vector2Int position)
+    {
+        Debug.LogError(name + "스킬을" + position + "에 사용!");
+        if (BattleManager.instance.AllTiles[position.x, position.y].GetUnit())
+            BattleManager.instance.AllTiles[position.x, position.y].GetUnit().currentHP -= 10;
+        base.UseSkillToTile(position);
     }
 }
