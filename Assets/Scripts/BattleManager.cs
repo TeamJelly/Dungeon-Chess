@@ -107,8 +107,7 @@ public class BattleManager : MonoBehaviour
         unit.skillCount = 1;
         unit.itemCount = 1;
 
-        //턴 상태 갱신(이동 가능한 타일 보여주기)
-        BattleUI.instance.UpdateTurnStatus(unit);
+        BattleUI.instance.InitThisTurnPanel(unit);
     }
 
     public void OnBattleStart()

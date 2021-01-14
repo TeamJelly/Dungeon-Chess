@@ -16,19 +16,14 @@ public class BattleUI : MonoBehaviour
     public GameObject OrangeTile; // 스킬 추가 위치 타일에 사용한다.
 
     public GameObject UnitInfoUIPrefab;
-    public GameObject[] SkillButton;
-    public Skill currentSkill;
 
-//    public GameObject[] SkillCancelButton;
-    public GameObject[] ItemButton;
-//    public GameObject[] ItemCancelButton;
-    public GameObject MoveButton;
-    public GameObject MoveCancelButton;
-
-    public GameObject CurrentButton;
+    [Header("Buttons")]
+    public Button currentPushedButton;
+    public Button moveButton;
+    public List<Button> skillButtons;
+    public List<Button> itemButtons;
 
     List<UnitInfoUI> UnitsInfoList = new List<UnitInfoUI>();
-
     public UnitInfoUI selectedUnitInfo;
     public EventTrigger[,] AllTiles = new EventTrigger[10,10];
 
@@ -136,45 +131,26 @@ public class BattleUI : MonoBehaviour
             }
         }
     }
-
-    public void UpdateTurnStatus()
-    {
-        UpdateTurnStatus(BattleManager.instance.thisTurnUnit);
-    }
-
-    public void UpdateTurnStatus(Unit unit)
+    public void InitThisTurnPanel(Unit unit)
     {
         UpdateInfoList();
 
-        if (PartyManager.instance.AllUnits.Contains(unit))
+        if (PartyManager.instance.AllUnits.Contains(unit)) // 파티원인가?
         {
-            selectedUnitInfo.Set(unit);
+            Debug.LogError("init this turn panel" + unit.name);
 
-            MoveButton.GetComponent<Button>().interactable = false; // 이동 버튼 초기화
-            if (unit.moveCount > 0)
-                MoveButton.GetComponent<Button>().interactable = true;
-
-            foreach (GameObject skillButton in SkillButton) // 스킬 버튼 초기화
-                skillButton.GetComponent<Button>().interactable = false;
+            foreach (var item in skillButtons)
+            {
+                item.interactable = false;
+                item.GetComponent<Image>().sprite = null;
+            }
 
             for (int i = 0; i < unit.skills.Count; i++)
             {
-                SkillButton[i].GetComponent<Image>().sprite = unit.skills[i].skillImage;
-                Skill skill = unit.skills[i];
+                skillButtons[i].GetComponent<Image>().sprite = unit.skills[i].skillImage;
+            }
 
-                if (skill.currentReuseTime == 0 && unit.skillCount > 0) // 스킬이 사용가능한 조건
-                {
-                    SkillButton[i].GetComponent<Button>().onClick.RemoveAllListeners();
-
-                    SkillButton[i].GetComponent<Button>().onClick.AddListener(() =>
-                    {
-                        ShowSkillableTile(skill.GetPositionsInDomain(unit), skill);
-                        SetSkillIndicator(skill.RangePositions, skill);
-                    });
-
-                    SkillButton[i].GetComponent<Button>().interactable = true;
-                }
-            }               
+            UpdateThisTurnPanel(unit);
 
             selectedUnitInfo.gameObject.SetActive(true);
             unitTurnIndicator.gameObject.SetActive(true);
@@ -184,17 +160,86 @@ public class BattleUI : MonoBehaviour
             selectedUnitInfo.gameObject.SetActive(false);
             unitTurnIndicator.gameObject.SetActive(false);
         }
-
     }
 
-    public void SetSkillIndicator(List<Vector2Int> position, Skill skill) // 스킬용 인디케이터 보여주기
+    public void UpdateThisTurnPanel()
+    {
+        UpdateThisTurnPanel(BattleManager.instance.thisTurnUnit);
+    }
+
+    public void UpdateThisTurnPanel(Unit unit)
+    {
+        selectedUnitInfo.Set(unit);
+
+        moveButton.interactable = false; // 이동 버튼 비활성화
+        foreach (Button skillButton in skillButtons) // 스킬 버튼 비활성화
+            skillButton.interactable = false;
+        foreach (Button itemButton in itemButtons) // 스킬 버튼 비활성화
+            itemButton.interactable = false;
+
+        if (currentPushedButton == null) // 아무 버튼도 안눌린 기본 상태
+        {
+            if (unit.moveCount > 0) // 이동 가능한가?
+            {
+                moveButton.interactable = true;
+                moveButton.onClick.RemoveAllListeners();
+
+                moveButton.onClick.AddListener(() =>
+                {
+                    currentPushedButton = moveButton;
+                    ShowMovableTile();
+                    UpdateThisTurnPanel();
+                });
+            }
+
+            for (int i = 0; i < unit.skills.Count; i++)
+            {
+                Skill skill = unit.skills[i];
+
+                if (skill.currentReuseTime == 0 && unit.skillCount > 0) // 스킬이 사용가능한 조건
+                {
+                    skillButtons[i].onClick.RemoveAllListeners();
+
+                    int temp = i;
+                    skillButtons[i].onClick.AddListener(() =>
+                    {
+                        currentPushedButton = skillButtons[temp];
+                        ShowSkillableTile(skill.GetPositionsInDomain(unit), skill);
+                        SetSkillIndicator(skill); // 스킬 사용시 추가 범위 표시기 (오렌지 타일) 추가 
+                        UpdateThisTurnPanel();
+                    });
+
+                    skillButtons[i].interactable = true;
+                }
+            }
+
+            for (int i = 0; i < unit.items.Count; i++)
+            {
+                //아이템 버튼
+            }
+        }
+        else // 버튼 눌린 상태, 타 버튼 비활성화, 다시 누르면 타일 표시기들 제거
+        {
+            currentPushedButton.interactable = true;
+
+            currentPushedButton.onClick.RemoveAllListeners();
+            currentPushedButton.onClick.AddListener(() =>
+            {
+                HideTile();
+                currentPushedButton = null;
+                UpdateThisTurnPanel();
+            });
+        }
+    }
+
+    public void SetSkillIndicator(Skill skill) // 스킬용 인디케이터 보여주기
     {
         if (skill.target == Skill.Target.AnyTile || skill.target == Skill.Target.NoUnitTile)
         {
             //스킬 종류마다 다름 유닛용 인디케이터, 타일용 인티케이터 구분 필요.
             tileIndicator.localScale = new Vector3(1, 1, 1);
 
-            foreach (var item in position)
+            foreach (var item in skill.RangePositions)
             {
                 Instantiate(OrangeTile, tileIndicator).transform.localPosition = new Vector3(item.x, item.y, 0);
             }
@@ -206,14 +251,12 @@ public class BattleUI : MonoBehaviour
         }
     }
 
-    public void SetIndicatorPosition(Vector2Int position)
+    public void SetIndicatorUnitPosition(Vector2Int position)
     {
-        indicatorUnitPosition = new UnitPosition(position, position);//깊은복사
-
-        SetIndicatorPosition(position);
+        SetIndicatorUnitPosition(new UnitPosition(position, position));
     }
 
-    public void SetIndicatorPosition(UnitPosition position)
+    public void SetIndicatorUnitPosition(UnitPosition position)
     {
         indicatorUnitPosition.Set(position);//깊은복사
 
@@ -237,6 +280,7 @@ public class BattleUI : MonoBehaviour
             SetSkillTile(position.x, position.y, skill);
             AllTiles[position.x, position.y].gameObject.SetActive(true);
         }
+        SetIndicatorUnitPosition(BattleManager.instance.thisTurnUnit.unitPosition.upperRight);
     }
 
     public void SetSkillTile(int x, int y, Skill skill)
@@ -271,11 +315,10 @@ public class BattleUI : MonoBehaviour
             }*/
 
             // UI 업데이트
+            BattleManager.instance.thisTurnUnit.moveCount--;
             BattleManager.instance.thisTurnUnit.skillCount--;
-            UpdateTurnStatus();
-
-            // BattleManager.instance.AllTiles[x,y]. 좌표 받아서 하던가 해야함
-            // StartCoroutine(ShowSkillAnimation());
+            currentPushedButton = null;
+            UpdateThisTurnPanel();
         });
         AllTiles[x, y].triggers.Add(entry_PointerClick);
 
@@ -312,17 +355,15 @@ public class BattleUI : MonoBehaviour
 
             indicatorUnitPosition.Add(distance);
 
-            SetIndicatorPosition(indicatorUnitPosition);
-//            SetSkillIndicator(indicatorPosition);
-
+            SetIndicatorUnitPosition(indicatorUnitPosition);
         });
         AllTiles[x, y].triggers.Add(entry_PointerEnter);
     }
 
     public void ShowMovableTile()
     {
-        //HideTile();
-        SetIndicatorPosition(BattleManager.instance.thisTurnUnit.unitPosition);
+        HideTile();
+        SetIndicatorUnitPosition(BattleManager.instance.thisTurnUnit.unitPosition);
         List<UnitPosition> positions = BattleManager.instance.thisTurnUnit.GetMovablePosition();
       
         foreach (UnitPosition unitPosition in positions)
@@ -344,17 +385,12 @@ public class BattleUI : MonoBehaviour
         entry_PointerClick.eventID = EventTriggerType.PointerClick;
         entry_PointerClick.callback.AddListener((data) =>
         {
-            //BattleManager.instance.thisTurnUnit.Move(tileIndicatorPosition);
-            
             HideTile();
-            MoveCancelButton.SetActive(false);
-            MoveButton.SetActive(true);
+            StartCoroutine(ShowMoveAnimation());
 
             BattleManager.instance.thisTurnUnit.moveCount--;
-            UpdateTurnStatus();
-
-            StartCoroutine(ShowMoveAnimation());
-            //BattleManager.instance.thisTurnUnit.Move(tileIndicatorPosition);
+            currentPushedButton = null;
+            UpdateThisTurnPanel();
         });
         AllTiles[x, y].triggers.Add(entry_PointerClick);
 
@@ -390,7 +426,7 @@ public class BattleUI : MonoBehaviour
             }
             indicatorUnitPosition.Add(distance);
 
-            SetIndicatorPosition(indicatorUnitPosition);
+            SetIndicatorUnitPosition(indicatorUnitPosition);
         });
         AllTiles[x, y].triggers.Add(entry_PointerEnter);
     }

@@ -121,6 +121,10 @@ public class Skill : MonoBehaviour
 //            Debug.LogError(temp);
             foreach (var position in temp)
             {
+                if (position.x < 0 || position.y < 0) // 범위 제한
+                    continue;
+                if (position.x > BattleManager.instance.AllTiles.GetLength(1) || position.y > BattleManager.instance.AllTiles.GetLength(0)) // 범위 제한
+                    continue;
                 if (target == Target.NoUnitTile && !BattleManager.instance.AllTiles[position.x, position.y].IsUsable())
                     continue;
                 positions.Add(position);

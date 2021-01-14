@@ -19,6 +19,12 @@ public class UnitPosition
         this.upperRight = upperRight;
     }
 
+    public void Set(Vector2Int lowerLeft, Vector2Int upperRight)
+    {
+        this.lowerLeft = lowerLeft;
+        this.upperRight = upperRight;
+    }
+
     public void Set(UnitPosition newPosition)
     {
         lowerLeft.x = newPosition.lowerLeft.x;
