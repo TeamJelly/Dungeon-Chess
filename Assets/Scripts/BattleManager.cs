@@ -133,7 +133,12 @@ public class BattleManager : MonoBehaviour
         List<Unit> unitList = new List<Unit>();
 
         foreach (var item in positions)
-            unitList.Add(instance.AllTiles[item.x, item.y].GetUnit());
+        {
+            Unit unit = instance.AllTiles[item.x, item.y].GetUnit();
+            if(unit != null)
+            unitList.Add(unit);
+
+        }
 
         return unitList;
     }
