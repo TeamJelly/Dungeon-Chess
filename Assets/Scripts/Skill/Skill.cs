@@ -35,7 +35,7 @@ public class Skill : MonoBehaviour
     public enum Target                                              // 스킬의 대상
     {
         NULL,
-        AnyTile,               // 타일을 대상으로 사용가능
+        AnyTile,            // 타일을 대상으로 사용가능
         NoUnitTile,         // 유닛이 없는 곳에만 사용가능, 소환류 스킬에 사용
         AnyUnit,            // 적, 아군 구별 없이 사용가능
         PartyUnit,          // 내 파티에게만 사용가능
@@ -78,14 +78,7 @@ public class Skill : MonoBehaviour
 
         if (domain == Domain.Me)
             units.Add(skillUser);
-        else if (domain == Domain.RandomOne)
-        {
-            List<Unit> tempUnits = GetUnitsInSelectOne(skillUser);
-
-            int rand = Random.Range(0, units.Count);
-            units.Add(tempUnits[rand]);
-        }
-        else if (domain == Domain.SelectOne)
+        else if (domain == Domain.SelectOne || domain == Domain.RandomOne)
             units = GetUnitsInSelectOne(skillUser);
 
         return units;
@@ -118,7 +111,7 @@ public class Skill : MonoBehaviour
         foreach (var item in AvailablePositions)
         {
             List<Vector2Int> temp = UnitPosition.VectoredPosition(skillUser.unitPosition, item).UnitPositionToVector2IntList();
-//            Debug.LogError(temp);
+            // Debug.LogError(temp);
             foreach (var position in temp)
             {
                 if (position.x < 0 || position.y < 0) // 범위 제한
@@ -128,7 +121,7 @@ public class Skill : MonoBehaviour
                 if (target == Target.NoUnitTile && !BattleManager.instance.AllTiles[position.x, position.y].IsUsable())
                     continue;
                 positions.Add(position);
-//                Debug.LogError(position);
+                // Debug.LogError(position);
             }
 
         }

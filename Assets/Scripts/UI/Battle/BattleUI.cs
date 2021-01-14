@@ -92,9 +92,7 @@ public class BattleUI : MonoBehaviour
         unitTurnIndicator.gameObject.AddComponent<Image>().color = Color.yellow;
         unitTurnIndicator.localScale = Vector3.one;
         unitTurnIndicator.gameObject.SetActive(false);
-        
     }
-      
 
     //턴종료 버튼 이벤트
     public void SetNextTurn()
@@ -131,6 +129,7 @@ public class BattleUI : MonoBehaviour
             }
         }
     }
+
     public void InitThisTurnPanel(Unit unit)
     {
         currentPushedButton = null;
