@@ -27,39 +27,42 @@ public class StageUI : MonoBehaviour
         instance = this;
     }
 
-    public void SelectRoom(int x, int y)
+    public void SelectRoom(Room room)
     {
         //이전에 방문했던 방이 있다면 방문했음을 표시.
         if (StageManager.instance.currentRoom != null)
         {
             Vector2Int pos = StageManager.instance.currentRoom.position;
-            Image image = AllRoomButtons[pos.x, pos.y].GetComponent<Image>();
-            Color color = image.color / 4; color.a = 1;
-            image.color = color;
-
-            Transform t = Instantiate(clearSignPrefab, AllRoomButtons[pos.x, pos.y].transform).transform;
-            t.position = AllRoomButtons[pos.x, pos.y].transform.position;
+            SetVisitedRoom(pos.x, pos.y);
         }
-
         DisableRoomButtons();//일단 모든 방 비활성화
 
         //현재 방 갱신 및 기록 추가
-        StageManager.instance.currentRoom = StageManager.instance.AllRooms[x, y];
-        StageManager.instance.roomHistory.Add(new Vector2Int(x,y));
+        StageManager.instance.currentRoom = room;
+        StageManager.instance.roomHistory.Add(new Vector2Int(room.position.x, room.position.y));
        
         //현재 방 위치 표시기 갱신
-        selector.SetParent(AllRoomButtons[x, y].transform);
-        selector.position = AllRoomButtons[x, y].transform.position;
+        selector.SetParent(AllRoomButtons[room.position.x, room.position.y].transform);
+        selector.position = AllRoomButtons[room.position.x, room.position.y].transform.position;
 
-        AllRoomButtons[x, y].enabled = false; // 현재 방 버튼 비활성화
+        AllRoomButtons[room.position.x, room.position.y].enabled = false; // 현재 방 버튼 비활성화
 
         //이동 가능한 방 활성화
-        Room roomChecker = StageManager.instance.AllRooms[x, y].left;
+        Room roomChecker = room.left;
         if (roomChecker != null) AllRoomButtons[roomChecker.position.x, roomChecker.position.y].interactable = true;
-        roomChecker = StageManager.instance.AllRooms[x, y].center;
+        roomChecker = room.center;
         if (roomChecker != null) AllRoomButtons[roomChecker.position.x, roomChecker.position.y].interactable = true;
-        roomChecker = StageManager.instance.AllRooms[x, y].right;
+        roomChecker = room.right;
         if (roomChecker != null) AllRoomButtons[roomChecker.position.x, roomChecker.position.y].interactable = true;
+    }
+    void SetVisitedRoom(int x, int y)
+    {
+        Image image = AllRoomButtons[x, y].GetComponent<Image>();
+        Color color = image.color / 4; color.a = 1;
+        image.color = color;
+
+        Transform t = Instantiate(clearSignPrefab, AllRoomButtons[x, y].transform).transform;
+        t.position = AllRoomButtons[x, y].transform.position;
     }
 
     void DisableRoomButtons()
@@ -72,47 +75,53 @@ public class StageUI : MonoBehaviour
                 AllRoomButtons[i, j].interactable = false;
             }
     }
-    public void InitStageUI()
+    public void InitStageUI(Room[,] AllRooms)
     {
-        AllRoomButtons = new Button[StageManager.instance.AllRooms.GetLength(0), StageManager.instance.AllRooms.GetLength(1)];
+        AllRoomButtons = new Button[AllRooms.GetLength(0), AllRooms.GetLength(1)];
 
-        for (int i = 0; i < StageManager.instance.AllRooms.GetLength(0); i++)
+        for (int i = 0; i < AllRooms.GetLength(0); i++)
         {
             GameObject floor = Instantiate(floorPrefab, contentPanel.transform);
             floor.name = "floor " + i;
 
             floors.Add(floor);
 
-            for (int j = 0; j < StageManager.instance.AllRooms.GetLength(1); j++)
+            for (int j = 0; j < AllRooms.GetLength(1); j++)
             {
-                if (StageManager.instance.AllRooms[i, j].isActivate)
+                Room room = AllRooms[i, j];
+                if (room.isActivate)
                 {
                     Button roomButton = Instantiate(roomPrefab, floor.transform).GetComponent<Button>();
-                    roomButton.GetComponent<Image>().sprite = roomImages[StageManager.instance.AllRooms[i, j].category.GetHashCode()];
+                    roomButton.GetComponent<Image>().sprite = roomImages[room.category.GetHashCode()];
 
                     //각 방의 버튼마다 이벤트 부여
-                    int x = i, y = j;
-                    roomButton.GetComponent<Button>().onClick.AddListener(() => SelectRoom(x, y));
+                    roomButton.GetComponent<Button>().onClick.AddListener(() =>
+                    {
+                        if(room.category == Room.Category.Monster)
+                             SceneLoader.MoveScene("SampleScene");
+                        SelectRoom(room);
+                    });
+                   
+                    if (i != 0 || StageManager.instance.currentRoom != null) roomButton.interactable = false; //첫 시작 방.
                     AllRoomButtons[i, j] = roomButton;
-                    if (i != 0) AllRoomButtons[i, j].interactable = false;
                 }
             }
         }
-
-        for (int i = 0; i < StageManager.instance.AllRooms.GetLength(1); i++)
+        for (int i = 0; i < AllRooms.GetLength(1); i++)
         {
             lines.Add(Instantiate(linePrefab));
         }
+        foreach(Vector2Int roomPos in StageManager.instance.roomHistory)
+        {
+            SetVisitedRoom(roomPos.x, roomPos.y);
+        }
+        if (StageManager.instance.currentRoom != null)
+            SelectRoom(StageManager.instance.currentRoom);
     }
 
     private void Update()
     {
         UpdateLines();
-    }
-
-    public void UpdateStage()
-    {
-        StageManager.instance.AllRooms.GetLength(0);
     }
 
     public void UpdateLines()

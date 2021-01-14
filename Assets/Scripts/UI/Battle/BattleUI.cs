@@ -506,6 +506,10 @@ public class BattleUI : MonoBehaviour
 
     }
 
+    public void MoveToStageScene()
+    {
+        SceneLoader.MoveScene("StageScene");
+    }
 
 
 }
