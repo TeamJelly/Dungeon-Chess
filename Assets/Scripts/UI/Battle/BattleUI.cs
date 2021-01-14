@@ -18,7 +18,7 @@ public class BattleUI : MonoBehaviour
     public GameObject UnitInfoUIPrefab;
 
     [Header("Buttons")]
-    public Button currentPushedButton;
+    public Button currentPushedButton; // 현재 누르고 있는 버튼
     public Button moveButton;
     public List<Button> skillButtons;
     public List<Button> itemButtons;
@@ -133,11 +133,14 @@ public class BattleUI : MonoBehaviour
     }
     public void InitThisTurnPanel(Unit unit)
     {
+        currentPushedButton = null;
+        HideTile();
+
         UpdateInfoList();
 
         if (PartyManager.instance.AllUnits.Contains(unit)) // 파티원인가?
         {
-            Debug.LogError("init this turn panel" + unit.name);
+            // Debug.LogError("init this turn panel" + unit.name);
 
             foreach (var item in skillButtons)
             {
@@ -150,7 +153,7 @@ public class BattleUI : MonoBehaviour
                 skillButtons[i].GetComponent<Image>().sprite = unit.skills[i].skillImage;
             }
 
-            UpdateThisTurnPanel(unit);
+            UpdateThisTurnPanel();
 
             selectedUnitInfo.gameObject.SetActive(true);
             unitTurnIndicator.gameObject.SetActive(true);
@@ -184,11 +187,13 @@ public class BattleUI : MonoBehaviour
                 moveButton.interactable = true;
                 moveButton.onClick.RemoveAllListeners();
 
-                moveButton.onClick.AddListener(() =>
+                moveButton.onClick.AddListener(() => // 이동 버튼을 눌렀을 때 작동하는 코드
                 {
                     currentPushedButton = moveButton;
+
                     ShowMovableTile();
-                    UpdateThisTurnPanel();
+
+                    UpdateThisTurnPanel(); // 다시 UI 업데이트 호출
                 });
             }
 
@@ -198,18 +203,21 @@ public class BattleUI : MonoBehaviour
 
                 if (skill.currentReuseTime == 0 && unit.skillCount > 0) // 스킬이 사용가능한 조건
                 {
+                    skillButtons[i].interactable = true;
                     skillButtons[i].onClick.RemoveAllListeners();
 
                     int temp = i;
-                    skillButtons[i].onClick.AddListener(() =>
+
+                    skillButtons[i].onClick.AddListener(() => // 스킬 버튼을 눌렀을 때 작동하는 코드
                     {
                         currentPushedButton = skillButtons[temp];
-                        ShowSkillableTile(skill.GetPositionsInDomain(unit), skill);
+
+                        ShowSkillableTile(skill.GetPositionsInDomain(unit), skill); // 파란, 노란 타일 추가
                         SetSkillIndicator(skill); // 스킬 사용시 추가 범위 표시기 (오렌지 타일) 추가 
+
                         UpdateThisTurnPanel();
                     });
 
-                    skillButtons[i].interactable = true;
                 }
             }
 
@@ -220,14 +228,16 @@ public class BattleUI : MonoBehaviour
         }
         else // 버튼 눌린 상태, 타 버튼 비활성화, 다시 누르면 타일 표시기들 제거
         {
-            currentPushedButton.interactable = true;
+            currentPushedButton.interactable = true; // 취소버튼만 활성화
 
             currentPushedButton.onClick.RemoveAllListeners();
             currentPushedButton.onClick.AddListener(() =>
             {
                 HideTile();
+
                 currentPushedButton = null;
                 UpdateThisTurnPanel();
+
             });
         }
     }
