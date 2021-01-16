@@ -49,8 +49,10 @@ public class Unit : MonoBehaviour
     public int skillCount;
     public int itemCount;
 
+    private List<Skill> _skills = new List<Skill>();
+    public List<Skill> skills { get => _skills; }
     [Header("Having")]
-    public List<Skill> skills;
+    public List<string> havingSkills;
     public List<Antique> antiques;
     public List<Item> items;
     public List<Effect> stateEffects;
@@ -66,11 +68,11 @@ public class Unit : MonoBehaviour
     /// </summary>
     private void AwakeSkills()
     {
-        for (int i = 0; i < skills.Count; i++)
+        for (int i = 0; i < havingSkills.Count; i++)
         {
-            if (skills[i] != null)
+            if (havingSkills[i] != null)
             {
-                skills[i] = InstantiateSkill(skills[i]);
+                addSkillComponent(havingSkills[i]);
             }
         }
     }
@@ -78,41 +80,41 @@ public class Unit : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="prefab">원본 스킬 프리펩</param>
-    /// <returns>고유의 스킬 인스턴스를 리턴한다.</returns>
-    private Skill InstantiateSkill(Skill prefab)
+    /// <param name="skillName">스킬 이름</param>
+    private void addSkillComponent(string skillName)
     {
-        var g = prefab.gameObject;
-        var inst = Instantiate(g, Vector3.zero, Quaternion.identity);
-        inst.name = "(" + name + ") skill::" + prefab.name;
-        inst.transform.SetParent(transform);
-        return inst.GetComponent<Skill>();
+        var skill = (Skill)gameObject.AddComponent(Type.GetType(skillName));
+        skills.Add(skill);
     }
 
     /// <summary>
     /// (public) 스킬 등록
     /// </summary>
-    /// <param name="newSkill">등록하려는 스킬 프리펩</param>
+    /// <param name="newSkill">등록하려는 스킬 이름</param>
     /// <param name="index">슬롯 위치</param>
-    public void setSkill(Skill newSkill, int index)
+    public void setSkill(string newSkill, int index)
     {
         if (index >= skills.Count)
         {
             //TODO UI Error Message
             return;
         }
-        skills[index] = InstantiateSkill(newSkill);
+        havingSkills[index] = newSkill;
+        addSkillComponent(newSkill);
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="index">slot 위치</param>
     public void removeSkill(int index)
     {
-        if (index >= skills.Count || skills[index] == null)
+        if (index >= skills.Count || havingSkills[index] == null || skills[index] == null)
         {
             //TODO UI Error Message
             return;
         }
+        havingSkills[index] = "";
         Destroy(skills[index]);
-        skills[index] = null;
     }
 
     public void GetEXP(int getEXP)

@@ -7,9 +7,6 @@ public enum Grade { NULL, Normal, Rare, Legend, Boss }
 [System.Serializable]
 public class Skill : MonoBehaviour
 {
-    protected Unit owner;
-    public Unit Owner { get; }
-
     public int number;                                              // 스킬 번호
     public new string name = "No Skill Name";                       // 스킬 이름
     public UnitClass unitClass = UnitClass.NULL;                    // 스킬 클래스
@@ -61,11 +58,6 @@ public class Skill : MonoBehaviour
 
         // PRSchema 파싱
         Common.Range.ParseRangeSchema(APSchema, RangePositions);
-    }
-
-    private void Start()
-    {
-        owner = transform.parent.GetComponent<Unit>();
     }
 
     public virtual List<Vector2Int> GetAvailablePositions()
