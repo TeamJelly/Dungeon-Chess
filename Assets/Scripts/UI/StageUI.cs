@@ -98,7 +98,7 @@ public class StageUI : MonoBehaviour
                     roomButton.GetComponent<Button>().onClick.AddListener(() =>
                     {
                         if(room.category == Room.Category.Monster)
-                             SceneLoader.MoveScene("SampleScene");
+                             SceneLoader.LoadScene("SampleScene");
                         SelectRoom(room);
                     });
                    

@@ -7,6 +7,16 @@ public class MenuManager : MonoBehaviour
 {
     public void StartGame()
     {
-        SceneLoader.MoveScene("Game Preparation");
+        SceneLoader.LoadScene("Game Preparation");
+    }
+
+    public void GotoMainMenu()
+    {
+        SceneLoader.LoadScene("MainMenu");
+    }
+
+    public void GotoStageScene()
+    {
+        SceneLoader.LoadScene("StageScene");
     }
 }

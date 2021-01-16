@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 //추후 수정 예정
 public class SceneLoader : MonoBehaviour
 {
-    public static void MoveScene(string sceneName)
+    public static void LoadScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
     }
