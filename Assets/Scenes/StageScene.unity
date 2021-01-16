@@ -131,6 +131,7 @@ GameObject:
   m_Component:
   - component: {fileID: 238243819}
   - component: {fileID: 238243820}
+  - component: {fileID: 238243821}
   m_Layer: 0
   m_Name: Scripts
   m_TagString: Untagged
@@ -164,14 +165,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dac63cef7544314b96ea14b501bcc97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentRoom:
-    category: 0
-    isActivate: 0
-    isSelectable: 0
-    position: {x: 0, y: 0}
   numberOfFloors: 14
   numberOfRoomsPerOneFloor: 5
-  roomHistory: []
+--- !u!114 &238243821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238243818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2abc93aafead1e54ead5248dfeeb03e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &261949722
 GameObject:
   m_ObjectHideFlags: 0
