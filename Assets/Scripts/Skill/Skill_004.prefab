@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5096750378147797343
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5096750378147797337}
+  - component: {fileID: -7356790601224114358}
+  m_Layer: 0
+  m_Name: Skill_004
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5096750378147797337
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5096750378147797343}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-7356790601224114358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5096750378147797343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 386658d0ddb2fb74bb0acb14ce9fab88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  number: 0
+  name: "\uAC15\uD0C0"
+  unitClass: 2
+  grade: 1
+  skillImage: {fileID: -3319407501553180031, guid: cceda1ad674f7a14fa9495327f91e76c,
+    type: 3}
+  description: "\uD55C\uCE78 \uC548\uC5D0 \uC788\uB294 \uB2E8\uC77C \uC801\uC5D0\uAC8C
+    \uB370\uBBF8\uC9C0\uB97C \uC785\uD78C\uACE0, \uAE30\uC808 \uC0C1\uD0DC\uC774\uC0C1\uC744
+    \uAC74\uB2E4."
+  enhancedLevel: 0
+  reuseTime: 2
+  currentReuseTime: 0
+  criticalRate: 0
+  domain: 3
+  target: 6
+  APSchema: 3;010;111;010
+  RPSchema: 1;0
+  damage: 10
