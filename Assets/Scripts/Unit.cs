@@ -58,23 +58,63 @@ public class Unit : MonoBehaviour
     // 초기화 함수
     private void Awake()
     {
-        InitSkills();
+        AwakeSkills();
     }
 
-    // skill 초기화
-    private void InitSkills()
+    /// <summary>
+    /// 처음에 스킬 가지고 있는 것을 초기화
+    /// </summary>
+    private void AwakeSkills()
     {
-        
-        skills.ForEach(skill =>
+        for (int i = 0; i < skills.Count; i++)
         {
-            var g = skill.gameObject;
-            var inst = Instantiate(g, Vector3.zero, Quaternion.identity);
-            inst.name = "(" + name + ") skill::" + skill.name;
-            inst.transform.SetParent(transform);
-            skill = inst.GetComponent<Skill>();
-        });
+            if (skills[i] != null)
+            {
+                skills[i] = InstantiateSkill(skills[i]);
+            }
+        }
     }
-        
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="prefab">원본 스킬 프리펩</param>
+    /// <returns>고유의 스킬 인스턴스를 리턴한다.</returns>
+    private Skill InstantiateSkill(Skill prefab)
+    {
+        var g = prefab.gameObject;
+        var inst = Instantiate(g, Vector3.zero, Quaternion.identity);
+        inst.name = "(" + name + ") skill::" + prefab.name;
+        inst.transform.SetParent(transform);
+        return inst.GetComponent<Skill>();
+    }
+
+    /// <summary>
+    /// (public) 스킬 등록
+    /// </summary>
+    /// <param name="newSkill">등록하려는 스킬 프리펩</param>
+    /// <param name="index">슬롯 위치</param>
+    public void setSkill(Skill newSkill, int index)
+    {
+        if (index >= skills.Count)
+        {
+            //TODO UI Error Message
+            return;
+        }
+        skills[index] = InstantiateSkill(newSkill);
+    }
+
+    public void removeSkill(int index)
+    {
+        if (index >= skills.Count || skills[index] == null)
+        {
+            //TODO UI Error Message
+            return;
+        }
+        Destroy(skills[index]);
+        skills[index] = null;
+    }
+
     public void GetEXP(int getEXP)
     {
         while (getEXP != 0)

@@ -310,6 +310,9 @@ MonoBehaviour:
   itemCount: 0
   skills:
   - {fileID: 5096750378147797336, guid: 0a4b405da0e35944ea19171b2917d0f0, type: 3}
+  - {fileID: 5096750378147797336, guid: 0a4b405da0e35944ea19171b2917d0f0, type: 3}
+  - {fileID: 5096750378147797336, guid: 0a4b405da0e35944ea19171b2917d0f0, type: 3}
+  - {fileID: 5096750378147797336, guid: 0a4b405da0e35944ea19171b2917d0f0, type: 3}
   antiques: []
   items: []
   stateEffects: []
@@ -469,6 +472,9 @@ MonoBehaviour:
   itemCount: 0
   skills:
   - {fileID: 5096750378147797336, guid: 0a4b405da0e35944ea19171b2917d0f0, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   antiques: []
   items: []
   stateEffects: []
@@ -910,9 +916,9 @@ MonoBehaviour:
   itemCount: 0
   skills:
   - {fileID: 5096750378147797336, guid: 0a4b405da0e35944ea19171b2917d0f0, type: 3}
-  - {fileID: 5096750378147797336, guid: 0a4b405da0e35944ea19171b2917d0f0, type: 3}
-  - {fileID: 5096750378147797336, guid: 0a4b405da0e35944ea19171b2917d0f0, type: 3}
-  - {fileID: 5096750378147797336, guid: 0a4b405da0e35944ea19171b2917d0f0, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   antiques: []
   items: []
   stateEffects: []
@@ -1378,6 +1384,9 @@ MonoBehaviour:
   itemCount: 0
   skills:
   - {fileID: 5096750378147797336, guid: 0a4b405da0e35944ea19171b2917d0f0, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   antiques: []
   items: []
   stateEffects: []
