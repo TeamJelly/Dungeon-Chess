@@ -55,6 +55,26 @@ public class Unit : MonoBehaviour
     public List<Item> items;
     public List<Effect> stateEffects;
 
+    // 초기화 함수
+    private void Awake()
+    {
+        InitSkills();
+    }
+
+    // skill 초기화
+    private void InitSkills()
+    {
+        
+        skills.ForEach(skill =>
+        {
+            var g = skill.gameObject;
+            var inst = Instantiate(g, Vector3.zero, Quaternion.identity);
+            inst.name = "(" + name + ") skill::" + skill.name;
+            inst.transform.SetParent(transform);
+            skill = inst.GetComponent<Skill>();
+        });
+    }
+        
     public void GetEXP(int getEXP)
     {
         while (getEXP != 0)
