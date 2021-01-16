@@ -11,7 +11,7 @@ public class GameManager
     public Room currentRoom = null;
     public Room[,] AllRooms = null;
     public List<Vector2Int>[] pathList = null;
-
+    public PartyManager party = null;
     public static GameManager Instance
     {
         get

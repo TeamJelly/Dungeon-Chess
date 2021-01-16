@@ -10,6 +10,7 @@ public class PartyManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        if (GameManager.Instance.party != null) instance = GameManager.Instance.party;
     }
 
     public void AddUnit(Unit unit)
