@@ -12,7 +12,7 @@ public class Skill_002 : Skill
     public override void UseSkillToUnit(Unit unit)
     {
         Debug.LogError(name + " 스킬을 " + unit.name + "에 사용!");
-        unit.GetDamage(owner.strength * damage + enhancedLevel);
+       //  unit.GetDamage(owner.strength * damage + enhancedLevel);
         base.UseSkillToUnit(unit);
     }
 }
