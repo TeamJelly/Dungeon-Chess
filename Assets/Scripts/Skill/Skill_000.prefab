@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5096750378147797337}
   - component: {fileID: 5096750378147797336}
   m_Layer: 0
-  m_Name: Skill_001
+  m_Name: Skill_000
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84dcc704255e8db47bf27e32fecddeb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  number: 1
+  number: 0
   name: "\uBCA0\uAE30"
   unitClass: 2
   grade: 1
@@ -58,21 +58,9 @@ MonoBehaviour:
   domain: 3
   target: 3
   AvailablePositions:
-  - {x: 0, y: 0}
   - {x: 1, y: 0}
   - {x: -1, y: 0}
   - {x: 0, y: 1}
   - {x: 0, y: -1}
-  - {x: 2, y: 0}
-  - {x: 1, y: 1}
-  - {x: 0, y: 2}
-  - {x: -1, y: 1}
-  - {x: -2, y: 0}
-  - {x: -1, y: -1}
-  - {x: 0, y: -2}
-  - {x: 1, y: -1}
   RangePositions:
   - {x: 0, y: 0}
-  - {x: 1, y: 0}
-  - {x: 0, y: 1}
-  - {x: 1, y: 1}

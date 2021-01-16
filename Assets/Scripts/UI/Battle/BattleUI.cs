@@ -165,7 +165,8 @@ public class BattleUI : MonoBehaviour
 
             for (int i = 0; i < unit.skills.Count; i++)
             {
-                skillButtons[i].GetComponent<Image>().sprite = unit.skills[i].skillImage;
+                if (unit.skills[i] != null)
+                    skillButtons[i].GetComponent<Image>().sprite = unit.skills[i].skillImage;
             }
 
             UpdateThisTurnPanel();
@@ -215,6 +216,8 @@ public class BattleUI : MonoBehaviour
             for (int i = 0; i < unit.skills.Count; i++)
             {
                 Skill skill = unit.skills[i];
+
+                if (skill == null) continue;
 
                 if (skill.currentReuseTime == 0 && unit.skillCount > 0) // 스킬이 사용가능한 조건
                 {
