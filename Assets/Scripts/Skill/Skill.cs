@@ -7,6 +7,9 @@ public enum Grade { NULL, Normal, Rare, Legend, Boss }
 [System.Serializable]
 public class Skill : MonoBehaviour
 {
+    protected Unit owner;
+    public Unit Owner { get; }
+
     public int number;                                              // 스킬 번호
     public new string name = "No Skill Name";                       // 스킬 이름
     public UnitClass unitClass = UnitClass.NULL;                    // 스킬 클래스
@@ -48,7 +51,12 @@ public class Skill : MonoBehaviour
 
     public List<Vector2Int> AvailablePositions;                      // 사용가능한 위치
     public List<Vector2Int> RangePositions;                          // 다중 범위
-    
+
+    private void Start()
+    {
+        owner = transform.parent.GetComponent<Unit>();
+    }
+
     public virtual void UseSkillToTile(Vector2Int position)
     {
         currentReuseTime = reuseTime;
