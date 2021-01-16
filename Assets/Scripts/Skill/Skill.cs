@@ -49,8 +49,19 @@ public class Skill : MonoBehaviour
     public Domain domain = Domain.NULL;
     public Target target = Target.NULL;
 
-    public List<Vector2Int> AvailablePositions;                      // 사용가능한 위치
-    public List<Vector2Int> RangePositions;                          // 다중 범위
+    private List<Vector2Int> AvailablePositions = new List<Vector2Int>(); // 사용가능한 위치
+    private List<Vector2Int> RangePositions = new List<Vector2Int>(); // 다중 범위
+    public string APSchema;
+    public string RPSchema;
+
+    private void Awake()
+    {
+        // APSchema 파싱
+        Common.Range.ParseRangeSchema(APSchema, AvailablePositions);
+
+        // PRSchema 파싱
+        Common.Range.ParseRangeSchema(APSchema, RangePositions);
+    }
 
     private void Start()
     {

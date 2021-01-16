@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5096750378147797343
+--- !u!1 &1469344839156827434
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,57 +8,53 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5096750378147797337}
-  - component: {fileID: 5096750378147797336}
+  - component: {fileID: 7731449093272608948}
+  - component: {fileID: 3506407764554263627}
   m_Layer: 0
-  m_Name: Skill_000
+  m_Name: Skill_003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5096750378147797337
+--- !u!4 &7731449093272608948
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5096750378147797343}
+  m_GameObject: {fileID: 1469344839156827434}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 8.052138, y: -0.23680314, z: -3.0315175}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5096750378147797336
+--- !u!114 &3506407764554263627
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5096750378147797343}
+  m_GameObject: {fileID: 1469344839156827434}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84dcc704255e8db47bf27e32fecddeb5, type: 3}
+  m_Script: {fileID: 11500000, guid: 8704971ce360b004ab85763d130f687b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  number: 0
-  name: "\uBCA0\uAE30"
-  unitClass: 2
-  grade: 1
-  skillImage: {fileID: 4229757488442878118, guid: cceda1ad674f7a14fa9495327f91e76c,
-    type: 3}
-  description: "\uD55C\uCE78 \uC548\uC5D0 \uC788\uB294 \uB2E8\uC77C \uC801\uC5D0\uAC8C
-    \uB370\uBBF8\uC9C0\uB97C \uC785\uD78C\uB2E4."
+  number: 3
+  name: No Skill Name
+  unitClass: 0
+  grade: 0
+  skillImage: {fileID: 0}
+  description: 
   enhancedLevel: 0
   reuseTime: 0
   currentReuseTime: 0
-  criticalRate: 5
-  domain: 3
-  target: 3
+  criticalRate: 0
+  domain: 0
+  target: 0
   AvailablePositions: []
   RangePositions: []
-  APSchema: 3;010;111;010
-  RPSchema: 1;0
-  damage: 1
+  damage: 0
