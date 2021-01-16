@@ -904,7 +904,7 @@ MonoBehaviour:
     lowerLeft: {x: 3, y: 3}
     upperRight: {x: 3, y: 3}
   size: {x: 2, y: 2}
-  strength: 0
+  strength: 10
   defense: 0
   agility: 4
   move: 3

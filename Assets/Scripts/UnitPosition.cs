@@ -13,10 +13,36 @@ public class UnitPosition
         this.upperRight = new Vector2Int();
     }
 
+    public UnitPosition(Vector2Int position)
+    {
+        this.lowerLeft = position;
+        this.upperRight = position;
+    }
+
     public UnitPosition(Vector2Int lowerLeft, Vector2Int upperRight)
     {
         this.lowerLeft = lowerLeft;
         this.upperRight = upperRight;
+    }
+
+    public List<Vector2Int> GetPositions()
+    {
+        List<Vector2Int> positions = new List<Vector2Int>();
+
+        for (int i = lowerLeft.y; i <= upperRight.y; i++)
+        {
+            for (int j = lowerLeft.x; j <= upperRight.x; j++)
+            {
+                positions.Add(new Vector2Int(i, j));
+            }
+        }
+
+        return positions;
+    }
+
+    public Vector2Int GetSize()
+    {
+        return upperRight - lowerLeft;
     }
 
     public void Set(Vector2Int lowerLeft, Vector2Int upperRight)
@@ -38,11 +64,13 @@ public class UnitPosition
         lowerLeft += value.lowerLeft;
         upperRight += value.upperRight;
     }
+
     public void Add(Vector2Int value)
     {
         lowerLeft += value;
         upperRight += value;
     }
+
     public void Up(int number)
     {
         lowerLeft.y += number;

@@ -235,7 +235,7 @@ public class Unit : MonoBehaviour
 
     public void GetDamage(int number)
     {
-        currentHP -= number * (100 - defenseRate);
+        currentHP -= number;
 
 //        if (currentHP < 0)
 //            Die();
