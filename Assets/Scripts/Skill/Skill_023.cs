@@ -1,27 +1,24 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// 스킬 이름: 베기
-/// </summary>
-public class Skill_000 : Skill
+
+public class Skill_023 : Skill
 {
     private int strengthToDamageRatio;
 
-    private Skill_000()
+    private Skill_023()
     {
-        number = 0;
-        name = "베기";
-        unitClass = UnitClass.Warrior;
+        number = 23;
+        name = "화염구";
+        unitClass = UnitClass.Wizard;
         grade = Grade.Normal;
-        description = "한칸 안에 있는 단일 적에게 데미지를 입힌다.";
-        criticalRate = 5;
-        reuseTime = 0;
+        description = "범위 안에 있는 모든 유닛에게 데미지를 입힌다.";
+        criticalRate = 0;
+        reuseTime = 1;
         domain = Domain.SelectOne;
         target = Target.AnyUnit;
-        APSchema = "3;010;111;010";
-        RPSchema = "1;1";
+        APSchema = "5;10101;00000;10101;00000;10101";
+        RPSchema = "3;111;111;111";
         strengthToDamageRatio = 1;
     }
 
