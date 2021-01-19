@@ -3,31 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 스킬 이름: 마법 화살(Colored_280)
+/// 스킬 이름: 
 /// </summary>
-public class Skill_002 : Skill
+public class Skill_018 : Skill
 {
     [Header("스킬 고유 특성")]
     private int strengthToDamageRatio;
-
-    Skill_002()
+    Skill_018()
     {
-        number = 2;
-        name = "마법 화살";
-        unitClass = UnitClass.Wizard;
-        grade = Grade.Normal;
-        description = "세칸 안에 있는 단일 적에게 데미지를 입힌다.";
+        number = 18;
+        name = "사냥준비";
+        unitClass = UnitClass.Archer;
+        grade = Grade.Rare;
+        description = "지정 대상에게 데미지를 주고 속박을 부여하고, 자신에게 심안 버프를 건다.";
         criticalRate = 0;
-        reuseTime = 0;
+        reuseTime = 4;
         domain = Domain.SelectOne;
-        target = Target.EnemyUnit;
-        APSchema = "7;0001000;0011100;0111110;1111111;0111110;0011100;0001000";
-        RPSchema = "1;0";
+        target = Target.AnyUnit;
+         APSchema = "5;00100;00100;11111;00100;00100";
+         RPSchema = "1;0";
         strengthToDamageRatio = 1;
     }
     public override void UseSkillToUnit(Unit unit)
     {
         Debug.LogError(name + " 스킬을 " + unit.name + "에 사용!");
+        //적에게 속박, 자신에게 심안버프 필요
         unit.GetDamage(GetComponent<Unit>().strength * strengthToDamageRatio + enhancedLevel);
         base.UseSkillToUnit(unit);
     }
