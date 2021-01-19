@@ -3,28 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 스킬 이름: 마법 화살(Colored_280)
+/// 스킬 이름: 
 /// </summary>
-public class Skill_002 : Skill
+public class Skill_008 : Skill
 {
     [Header("스킬 고유 특성")]
     private int strengthToDamageRatio;
-
-    Skill_002()
+    Skill_008()
     {
-        number = 2;
-        name = "마법 화살";
-        unitClass = UnitClass.Wizard;
-        grade = Grade.Normal;
-        description = "세칸 안에 있는 단일 적에게 데미지를 입힌다.";
+        number = 8;
+        name = "힘의 파동";
+        unitClass = UnitClass.Warrior;
+        grade = Grade.Rare;
+        description = "범위 안에 있는 모든 적군에게 데미지를 입히고 기절 시킨다.";
         criticalRate = 0;
-        reuseTime = 0;
-        domain = Domain.SelectOne;
+        reuseTime = 5;
+        domain = Domain.Fixed;
         target = Target.EnemyUnit;
-        APSchema = "7;0001000;0011100;0111110;1111111;0111110;0011100;0001000";
-        RPSchema = "1;1";
-        strengthToDamageRatio = 1;
-    }
+        APSchema = "3;010;111;010";
+        RPSchema = "1;1";//회전 들어감. 추후 수정.
+        strengthToDamageRatio = 2;
+     }
     public override void UseSkillToUnit(Unit unit)
     {
         Debug.LogError(name + " 스킬을 " + unit.name + "에 사용!");

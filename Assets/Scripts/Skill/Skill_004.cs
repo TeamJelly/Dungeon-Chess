@@ -7,12 +7,24 @@ using UnityEngine;
 /// </summary>
 public class Skill_004 : Skill
 {
-    [Header("스킬 고유 특성")]
-    public int damage;
+    Skill_004()
+    {
+        number = 4;
+        name = "강타";
+        unitClass = UnitClass.Warrior;
+        grade = Grade.Normal;
+        description = "한칸 안에 있는 단일 적에게 데미지를 입힌고, 기절 상태이상을 건다.";
+        criticalRate = 0;
+        reuseTime = 3;
+        domain = Domain.SelectOne;
+        target = Target.EnemyUnit;
+        APSchema = "3;010;111;010";
+        RPSchema = "1;1";
+    }
     public override void UseSkillToUnit(Unit unit)
     {
         Debug.LogError(name + " 스킬을 " + unit.name + "에 사용!");
-      //  unit.GetDamage(owner.strength * damage + enhancedLevel);
+        unit.GetDamage(10 + enhancedLevel);
         base.UseSkillToUnit(unit);
     }
 }
