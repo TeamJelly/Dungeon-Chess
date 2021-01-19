@@ -21,7 +21,7 @@ public class Skill_000 : Skill
         domain = Domain.SelectOne;
         target = Target.AnyUnit;
         APSchema = "3;010;111;010";
-        RPSchema = "1;0";
+        RPSchema = "1;1";
         strengthToDamageRatio = 1;
     }
 

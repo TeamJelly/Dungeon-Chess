@@ -21,7 +21,7 @@ public class Skill_008 : Skill
         domain = Domain.Fixed;
         target = Target.EnemyUnit;
         APSchema = "3;010;111;010";
-        RPSchema = "1:0";//회전 들어감. 추후 수정.
+        RPSchema = "1;1";//회전 들어감. 추후 수정.
         strengthToDamageRatio = 2;
      }
     public override void UseSkillToUnit(Unit unit)

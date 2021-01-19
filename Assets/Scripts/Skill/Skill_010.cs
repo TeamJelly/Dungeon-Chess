@@ -18,8 +18,8 @@ public class Skill_010 : Skill
         reuseTime = 6;
         domain = Domain.Fixed;
         target = Target.EnemyUnit;
-        APSchema = "1;0";
-        RPSchema = "1;0";
+        APSchema = "1;1";
+        RPSchema = "1;1";
      }
     public override void UseSkillToUnit(Unit unit)
     {

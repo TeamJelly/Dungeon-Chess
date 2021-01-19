@@ -21,7 +21,7 @@ public class Skill_018 : Skill
         domain = Domain.SelectOne;
         target = Target.AnyUnit;
          APSchema = "5;00100;00100;11111;00100;00100";
-         RPSchema = "1;0";
+         RPSchema = "1;1";
         strengthToDamageRatio = 1;
     }
     public override void UseSkillToUnit(Unit unit)
