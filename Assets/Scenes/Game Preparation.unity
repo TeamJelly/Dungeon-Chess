@@ -905,7 +905,7 @@ PrefabInstance:
     - target: {fileID: 244154134704501698, guid: ee225d207c6e7b04a962c64f314e307c,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: GotoStageScene
+      value: GotoStage
       objectReference: {fileID: 0}
     - target: {fileID: 244154134704501698, guid: ee225d207c6e7b04a962c64f314e307c,
         type: 3}

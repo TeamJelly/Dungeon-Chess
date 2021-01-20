@@ -1497,7 +1497,7 @@ PrefabInstance:
     - target: {fileID: 244154134704501709, guid: ee225d207c6e7b04a962c64f314e307c,
         type: 3}
       propertyPath: m_Name
-      value: EndTurn _temp (1)
+      value: GotoStage
       objectReference: {fileID: 0}
     - target: {fileID: 244154134704501710, guid: ee225d207c6e7b04a962c64f314e307c,
         type: 3}
