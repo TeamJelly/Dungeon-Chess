@@ -35,7 +35,7 @@ public class Skill : MonoBehaviour
     public enum Target                                              // 스킬의 대상
     {
         NULL,
-        AnyTile,               // 타일을 대상으로 사용가능
+        AnyTile,            // 타일을 대상으로 사용가능
         NoUnitTile,         // 유닛이 없는 곳에만 사용가능, 소환류 스킬에 사용
         AnyUnit,            // 적, 아군 구별 없이 사용가능
         PartyUnit,          // 내 파티에게만 사용가능
@@ -46,9 +46,36 @@ public class Skill : MonoBehaviour
     public Domain domain = Domain.NULL;
     public Target target = Target.NULL;
 
-    public List<Vector2Int> AvailablePositions;                      // 사용가능한 위치
-    public List<Vector2Int> RangePositions;                          // 다중 범위
-    
+    private List<Vector2Int> AvailablePositions = new List<Vector2Int>(); // 사용가능한 위치
+    private List<Vector2Int> RangePositions = new List<Vector2Int>(); // 다중 범위
+    public string APSchema;
+    public string RPSchema;
+
+    private void Awake()
+    {
+        // APSchema 파싱
+        Common.Range.ParseRangeSchema(APSchema, AvailablePositions);
+
+        // PRSchema 파싱
+        Common.Range.ParseRangeSchema(APSchema, RangePositions);
+    }
+
+    public virtual List<Vector2Int> GetAvailablePositions()
+    {
+        return AvailablePositions;
+    }
+
+    public virtual List<Vector2Int> GetRangePositions()
+    {
+        // 스킬 레벨에 따라 달라지는 다중 범위면 변경 필요.
+        return RangePositions;
+    }
+
+    public virtual void EnhanceSkill(int level) // 강화할때마다 호출해서 스팩을 업데이트한다.
+    {
+        enhancedLevel = level;
+    }
+
     public virtual void UseSkillToTile(Vector2Int position)
     {
         currentReuseTime = reuseTime;
@@ -78,14 +105,7 @@ public class Skill : MonoBehaviour
 
         if (domain == Domain.Me)
             units.Add(skillUser);
-        else if (domain == Domain.RandomOne)
-        {
-            List<Unit> tempUnits = GetUnitsInSelectOne(skillUser);
-
-            int rand = Random.Range(0, units.Count);
-            units.Add(tempUnits[rand]);
-        }
-        else if (domain == Domain.SelectOne)
+        else if (domain == Domain.SelectOne || domain == Domain.RandomOne)
             units = GetUnitsInSelectOne(skillUser);
 
         return units;
@@ -118,17 +138,16 @@ public class Skill : MonoBehaviour
         foreach (var item in AvailablePositions)
         {
             List<Vector2Int> temp = UnitPosition.VectoredPosition(skillUser.unitPosition, item).UnitPositionToVector2IntList();
-//            Debug.LogError(temp);
+
             foreach (var position in temp)
             {
                 if (position.x < 0 || position.y < 0) // 범위 제한
                     continue;
-                if (position.x > BattleManager.instance.AllTiles.GetLength(1) || position.y > BattleManager.instance.AllTiles.GetLength(0)) // 범위 제한
+                if (position.x >= BattleManager.instance.AllTiles.GetLength(1) || position.y >= BattleManager.instance.AllTiles.GetLength(0)) // 범위 제한
                     continue;
                 if (target == Target.NoUnitTile && !BattleManager.instance.AllTiles[position.x, position.y].IsUsable())
                     continue;
                 positions.Add(position);
-//                Debug.LogError(position);
             }
 
         }
@@ -142,10 +161,5 @@ public class Skill : MonoBehaviour
         else
             return false;
     }
-
-/*    public List<Vector2Int> RangeToPositions(int range)
-    {
-        
-    }*/
 
 }

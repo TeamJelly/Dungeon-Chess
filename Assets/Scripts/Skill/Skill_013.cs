@@ -1,23 +1,23 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Skill_001 : Skill
+public class Skill_013 : Skill
 {
     private int strengthToDamageRatio;
 
     // Use this for initialization
-    private Skill_001()
+    private Skill_013()
     {
-        number = 1;
-        name = "속사";
+        number = 13;
+        name = "독화살";
         unitClass = UnitClass.Archer;
         grade = Grade.Normal;
-        description = "세칸 안에 있는 단일 적에게 데미지를 입힌다.";
-        criticalRate = 10;
-        reuseTime = 0;
+        description = "특정 범위에 있는 단일 적에게 데미지를 입히고, 독 상태이상을 부여한다.";
+        criticalRate = 5;
+        reuseTime = 4;
         domain = Domain.SelectOne;
         target = Target.AnyUnit;
-        APSchema = "7;0001000;0011100;0111110;1111111;0111110;0011100;0001000";
+        APSchema = "7;0001000;0001000;0011100;1111111;0011100;0001000;0001000";
         RPSchema = "1;1";
         strengthToDamageRatio = 1;
     }

@@ -310,6 +310,9 @@ MonoBehaviour:
   itemCount: 0
   skills:
   - {fileID: 5096750378147797336, guid: 0a4b405da0e35944ea19171b2917d0f0, type: 3}
+  - {fileID: 5096750378147797336, guid: 0a4b405da0e35944ea19171b2917d0f0, type: 3}
+  - {fileID: 5096750378147797336, guid: 0a4b405da0e35944ea19171b2917d0f0, type: 3}
+  - {fileID: 5096750378147797336, guid: 0a4b405da0e35944ea19171b2917d0f0, type: 3}
   antiques: []
   items: []
   stateEffects: []
@@ -469,6 +472,9 @@ MonoBehaviour:
   itemCount: 0
   skills:
   - {fileID: 5096750378147797336, guid: 0a4b405da0e35944ea19171b2917d0f0, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   antiques: []
   items: []
   stateEffects: []
@@ -898,7 +904,7 @@ MonoBehaviour:
     lowerLeft: {x: 3, y: 3}
     upperRight: {x: 3, y: 3}
   size: {x: 2, y: 2}
-  strength: 0
+  strength: 10
   defense: 0
   agility: 4
   move: 3
@@ -910,9 +916,9 @@ MonoBehaviour:
   itemCount: 0
   skills:
   - {fileID: 5096750378147797336, guid: 0a4b405da0e35944ea19171b2917d0f0, type: 3}
-  - {fileID: 5096750378147797336, guid: 0a4b405da0e35944ea19171b2917d0f0, type: 3}
-  - {fileID: 5096750378147797336, guid: 0a4b405da0e35944ea19171b2917d0f0, type: 3}
-  - {fileID: 5096750378147797336, guid: 0a4b405da0e35944ea19171b2917d0f0, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   antiques: []
   items: []
   stateEffects: []
@@ -1364,6 +1370,9 @@ MonoBehaviour:
   itemCount: 0
   skills:
   - {fileID: 5096750378147797336, guid: 0a4b405da0e35944ea19171b2917d0f0, type: 3}
+  - {fileID: 4257804430510249537, guid: ad6d80d466447d04b80f2e334be54571, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
   antiques: []
   items: []
   stateEffects: []

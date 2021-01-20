@@ -49,11 +49,73 @@ public class Unit : MonoBehaviour
     public int skillCount;
     public int itemCount;
 
+    private List<Skill> _skills = new List<Skill>();
+    public List<Skill> skills { get => _skills; }
     [Header("Having")]
-    public List<Skill> skills;
+    public List<string> havingSkills;
     public List<Antique> antiques;
     public List<Item> items;
     public List<Effect> stateEffects;
+
+    // 초기화 함수
+    private void Awake()
+    {
+        AwakeSkills();
+    }
+
+    /// <summary>
+    /// 처음에 스킬 가지고 있는 것을 초기화
+    /// </summary>
+    private void AwakeSkills()
+    {
+        for (int i = 0; i < havingSkills.Count; i++)
+        {
+            if (havingSkills[i] != null)
+            {
+                addSkillComponent(havingSkills[i]);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="skillName">스킬 이름</param>
+    private void addSkillComponent(string skillName)
+    {
+        var skill = (Skill)gameObject.AddComponent(Type.GetType(skillName));
+        skills.Add(skill);
+    }
+
+    /// <summary>
+    /// (public) 스킬 등록
+    /// </summary>
+    /// <param name="newSkill">등록하려는 스킬 이름</param>
+    /// <param name="index">슬롯 위치</param>
+    public void setSkill(string newSkill, int index)
+    {
+        if (index >= skills.Count)
+        {
+            //TODO UI Error Message
+            return;
+        }
+        havingSkills[index] = newSkill;
+        addSkillComponent(newSkill);
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="index">slot 위치</param>
+    public void removeSkill(int index)
+    {
+        if (index >= skills.Count || havingSkills[index] == null || skills[index] == null)
+        {
+            //TODO UI Error Message
+            return;
+        }
+        havingSkills[index] = "";
+        Destroy(skills[index]);
+    }
 
     public void GetEXP(int getEXP)
     {
@@ -175,7 +237,7 @@ public class Unit : MonoBehaviour
 
     public void GetDamage(int number)
     {
-        currentHP -= number * (100 - defenseRate);
+        currentHP -= number;
 
 //        if (currentHP < 0)
 //            Die();
