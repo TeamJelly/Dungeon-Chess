@@ -5,18 +5,23 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
+    public static MenuManager instance;
+    private void Awake()
+    {
+        instance = this;
+    }
     public void StartGame()
     {
-        SceneLoader.LoadScene("Game Preparation");
+        SceneLoader.GotoPrepareScene();
     }
 
-    public void GotoMainMenu()
+    public void GotoMain()
     {
-        SceneLoader.LoadScene("MainMenu");
+        SceneLoader.GotoMain();
     }
 
-    public void GotoStageScene()
+    public void GotoStage()
     {
-        SceneLoader.LoadScene("StageScene");
+        SceneLoader.GotoStage();
     }
 }
