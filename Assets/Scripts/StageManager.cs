@@ -291,4 +291,13 @@ public class StageManager : MonoBehaviour
                     numberOfMonster--;
                 }
     }
+
+    //UI에 의해 선택된 방 방문
+    public void VisitRoom(Room room)
+    {
+        //현재 방 갱신 및 기록 추가
+        currentRoom = room;
+        roomHistory.Add(new Vector2Int(room.position.x, room.position.y));
+        SceneLoader.LoadRoom(room.category);
+    }
 }
