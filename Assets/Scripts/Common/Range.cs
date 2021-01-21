@@ -11,9 +11,9 @@ namespace Common
         /// </summary>
         /// <param name="schema">범위 스키마</param>
         /// <param name="list">범위 리스트</param>
-        public static void ParseRangeSchema(string schema, List<Vector2Int> list)
+        public static List<Vector2Int> ParseRangeSchema(string schema)
         {
-            list.Clear();
+            List<Vector2Int> list = new List<Vector2Int>();
             var rows = schema.Split(';');
             var size = int.Parse(rows[0]);
             var mid = size / 2;
@@ -29,6 +29,7 @@ namespace Common
                     }
                 }
             }
+            return list;
         }
     }
 }

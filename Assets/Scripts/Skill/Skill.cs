@@ -46,29 +46,29 @@ public class Skill : MonoBehaviour
     public Domain domain = Domain.NULL;
     public Target target = Target.NULL;
 
-    private List<Vector2Int> AvailablePositions = new List<Vector2Int>(); // 사용가능한 위치
-    private List<Vector2Int> RangePositions = new List<Vector2Int>(); // 다중 범위
+//    private List<Vector2Int> AvailablePositions = new List<Vector2Int>(); // 사용가능한 위치
+//    private List<Vector2Int> RangePositions = new List<Vector2Int>(); // 다중 범위
     public string APSchema;
     public string RPSchema;
 
     private void Awake()
     {
         // APSchema 파싱
-        Common.Range.ParseRangeSchema(APSchema, AvailablePositions);
+        // Common.Range.ParseRangeSchema(APSchema, AvailablePositions);
 
         // PRSchema 파싱
-        Common.Range.ParseRangeSchema(APSchema, RangePositions);
+        // Common.Range.ParseRangeSchema(APSchema, RangePositions);
     }
 
     public virtual List<Vector2Int> GetAvailablePositions()
     {
-        return AvailablePositions;
+        return Common.Range.ParseRangeSchema(APSchema);
     }
 
     public virtual List<Vector2Int> GetRangePositions()
     {
         // 스킬 레벨에 따라 달라지는 다중 범위면 변경 필요.
-        return RangePositions;
+        return Common.Range.ParseRangeSchema(RPSchema);
     }
 
     public virtual void EnhanceSkill(int level) // 강화할때마다 호출해서 스팩을 업데이트한다.
@@ -166,7 +166,7 @@ public class Skill : MonoBehaviour
     {
         List<Vector2Int> positions = new List<Vector2Int>();
 
-        foreach (var item in AvailablePositions)
+        foreach (var item in GetAvailablePositions())
         {
 
             foreach (var position in skillUser.unitPosition.GetAdd(item).GetPositions())

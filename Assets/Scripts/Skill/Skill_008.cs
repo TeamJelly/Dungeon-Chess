@@ -18,12 +18,29 @@ public class Skill_008 : Skill
         description = "범위 안에 있는 모든 적군에게 데미지를 입히고 기절 시킨다.";
         criticalRate = 0;
         reuseTime = 5;
-        domain = Domain.Fixed;
-        target = Target.EnemyUnit;
+        domain = Domain.Rotate;
+        target = Target.AnyTile;
         APSchema = "3;010;111;010";
-        RPSchema = "1;1";//회전 들어감. 추후 수정.
+        // RPSchema = "3;111;111;000";//회전 들어감. 추후 수정.
         strengthToDamageRatio = 2;
-     }
+    }
+
+    string[] RPSchemas = { 
+        "3;111;111;000",
+        "5;111;111;111;000;000",
+        "7;111;111;111;111;000;000;000",
+        "9;111;111;111;111;111;000;000;000;000",
+        "11;111;111;111;111;111;111;000;000;000;000;000"
+    };
+
+    public override List<Vector2Int> GetRangePositions()
+    {
+        if (enhancedLevel <= 5)
+            return Common.Range.ParseRangeSchema(RPSchemas[enhancedLevel]);
+        else
+            return Common.Range.ParseRangeSchema(RPSchemas[5]);
+    }
+
     public override void UseSkillToUnit(Unit unit)
     {
         Debug.LogError(name + " 스킬을 " + unit.name + "에 사용!");
