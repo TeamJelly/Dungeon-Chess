@@ -29,7 +29,7 @@ public class BattleManager : MonoBehaviour
 
         //유닛들 타일 할당
         foreach (Unit unit in AllUnits)
-            AllocateUnitTiles(unit,unit.unitPosition);
+            AllocateUnitTiles(unit, unit.unitPosition);
 
         //UI세팅
         BattleUI.instance.Init();

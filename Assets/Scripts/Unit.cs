@@ -29,11 +29,10 @@ public class Unit : MonoBehaviour
 
     [Header("Position & Size Status")]
     public UnitPosition unitPosition;
-    public Vector2Int size;
 
     [Header("Basic Status")]
     public int strength;
-    public int defense;
+    // public int defense;
 
     [Header("Special Status")]
     public int agility;
@@ -42,7 +41,7 @@ public class Unit : MonoBehaviour
 
     [Header("Hidden Status")]
     public float actionRate; // 행동 퍼센테이지
-    public int defenseRate;
+    // public int defenseRate;
 
     [Header("Count Status")]
     public int moveCount;
@@ -122,7 +121,7 @@ public class Unit : MonoBehaviour
                 BattleManager.instance.GetTile(i, j).tileEffect?.AfterMove();
     }
 
-    public List<UnitPosition> GetMovablePosition(){ // 현재 유닛의 이동가능한 위치들을 리턴해준다.
+    public List<UnitPosition> GetMovableUnitPositions(){ // 현재 유닛의 이동가능한 위치들을 리턴해준다.
 
         List<UnitPosition> explored = new List<UnitPosition>();
         List<UnitPosition> frontier = new List<UnitPosition>();
@@ -153,6 +152,32 @@ public class Unit : MonoBehaviour
         return explored;
     }
 
+    public List<Vector2Int> GetMovablePositions()
+    {
+        List<Vector2Int> positions = new List<Vector2Int>();
+
+        foreach (UnitPosition unitPosition in GetMovableUnitPositions())
+        {
+            foreach (var position in unitPosition.GetPositions())
+            {
+                bool isContain = false;
+
+                foreach (var item in positions)
+                {
+                    if (item.x == position.x && item.y == position.y)
+                        isContain = true;
+                }
+
+                if (isContain)
+                    continue;
+                else
+                    positions.Add(position);
+            }
+        }
+
+        return positions;
+    }
+
     public void Move(UnitPosition destination) // 거인 & 1x1 통합본
     {
         BeforeMove();
@@ -175,10 +200,10 @@ public class Unit : MonoBehaviour
 
     public void GetDamage(int number)
     {
-        currentHP -= number * (100 - defenseRate);
+        currentHP -= number;
 
-//        if (currentHP < 0)
-//            Die();
+        // if (currentHP < 0)
+        // Die();
     }
 
     public void GetHeal(int number)

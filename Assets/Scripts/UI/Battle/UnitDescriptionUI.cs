@@ -21,9 +21,7 @@ public class UnitDescriptionUI : MonoBehaviour
     {
         text.Text =
             "이름: " + unit.name +
-            "\nstrength: " + unit.strength +
-            "\ndefense: " + unit.defense;
-        //text.text = "A";
+            "\nstrength: " + unit.strength;
         gameObject.SetActive(true);
     }
 

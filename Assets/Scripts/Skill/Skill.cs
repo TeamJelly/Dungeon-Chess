@@ -65,15 +65,15 @@ public class Skill : MonoBehaviour
         enhancedLevel = level;
     }
 
-    public virtual void UseSkillToTile(Vector2Int position)
+    public virtual void UseSkillToTile(Tile tile)
     {
         currentReuseTime = reuseTime;
     }
 
-    public virtual void UseSkillToTile(List<Vector2Int> positions)
+    public virtual void UseSkillToTile(List<Tile> tiles)
     {
-        foreach (var position in positions)
-            UseSkillToTile(position);
+        foreach (var tile in tiles)
+            UseSkillToTile(tile);
     }
 
     public virtual void UseSkillToUnit(Unit unit)
@@ -88,6 +88,12 @@ public class Skill : MonoBehaviour
             UseSkillToUnit(unit);
     }
 
+    public List<Unit> GetUnitsInDomain()
+    {
+        Unit skillUser = GetComponent<Unit>();
+        return GetUnitsInDomain(skillUser);
+    }
+
     public List<Unit> GetUnitsInDomain(Unit skillUser) //
     {
         List<Unit> units = new List<Unit>();
@@ -99,6 +105,7 @@ public class Skill : MonoBehaviour
 
         return units;
     }
+
 
     public List<Unit> GetUnitsInSelectOne(Unit skillUser) 
     {
@@ -120,15 +127,38 @@ public class Skill : MonoBehaviour
         return units;
     }
 
+    public List<UnitPosition> GetUnitPositionsInDomain()
+    {
+        Unit skillUser = GetComponent<Unit>();
+        return GetUnitPositionsInDomain(skillUser);
+    }
+
+    public List<UnitPosition> GetUnitPositionsInDomain(Unit skillUser)
+    {
+        List<UnitPosition> unitPositions = new List<UnitPosition>();
+
+        foreach (var item in GetUnitsInDomain(skillUser))
+        {
+            unitPositions.Add(item.unitPosition);
+        }
+
+        return unitPositions;
+    }
+
+/*    public List<Vector2Int> GetPositionsInDomain()
+    {
+        Unit skillUser = GetComponent<Unit>();
+        return GetPositionsInDomain(skillUser);
+    }*/
+
     public List<Vector2Int> GetPositionsInDomain(Unit skillUser) // 스킬 범위를 절대 위치로 바꾼다.
     {
         List<Vector2Int> positions = new List<Vector2Int>();
 
         foreach (var item in AvailablePositions)
         {
-            List<Vector2Int> temp = UnitPosition.VectoredPosition(skillUser.unitPosition, item).UnitPositionToVector2IntList();
 
-            foreach (var position in temp)
+            foreach (var position in skillUser.unitPosition.GetAdd(item).GetPositions())
             {
                 if (position.x < 0 || position.y < 0) // 범위 제한
                     continue;
@@ -136,9 +166,9 @@ public class Skill : MonoBehaviour
                     continue;
                 if (target == Target.NoUnitTile && !BattleManager.instance.AllTiles[position.x, position.y].IsUsable())
                     continue;
-                positions.Add(position);
+                if (!positions.Contains(position))
+                    positions.Add(position);
             }
-
         }
         return positions;
     }
