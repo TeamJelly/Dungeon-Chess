@@ -20,7 +20,7 @@ public class Skill_000 : Skill
         reuseTime = 0;
         domain = Domain.SelectOne;
         target = Target.AnyUnit;
-        APSchema = "3;010;111;010";
+        APSchema = "3;010;101;010";
         RPSchema = "1;1";
         strengthToDamageRatio = 1;
     }

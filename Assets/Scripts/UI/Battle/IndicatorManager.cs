@@ -29,8 +29,8 @@ public class IndicatorManager : MonoBehaviour
     [Header("Unit Indicator")]
     [SerializeField]
     public GameObject mainUnitIndicatorPrefab; // 메인 유닛 인디케이터
-    [SerializeField]
-    public GameObject subUnitIndicatorPrefab;
+//    [SerializeField]
+//    public GameObject subUnitIndicatorPrefab;
     [SerializeField]
     public GameObject unitIndicatorBoundaryPrefab;
 
@@ -222,13 +222,18 @@ public class IndicatorManager : MonoBehaviour
 
     public void SetCustomClickTriggerOnIndicator(EventTrigger.Entry entryPointerClick)
     {
+        if (Indicator == null)
+        {
+            Debug.LogWarning("인디케이터가 없습니다.");
+            return;
+        }
+
         if (Indicator.gameObject.GetComponent<EventTrigger>() == null)
             Indicator.gameObject.AddComponent<EventTrigger>();
         if (Indicator.gameObject.GetComponent<BoxCollider2D>() == null)
             Indicator.gameObject.AddComponent<BoxCollider2D>();
 
         EventTrigger eventTrigger = Indicator.GetComponent<EventTrigger>();
-        eventTrigger.triggers.Clear();
         eventTrigger.triggers.Add(entryPointerClick);
     }
 
@@ -248,7 +253,6 @@ public class IndicatorManager : MonoBehaviour
                 child.gameObject.AddComponent<BoxCollider2D>();
 
             EventTrigger eventTrigger = child.GetComponent<EventTrigger>();
-            //eventTrigger.triggers.Clear();
             EventTrigger.Entry entryPointerEnter = new EventTrigger.Entry();
             entryPointerEnter.eventID = EventTriggerType.PointerEnter;
 
@@ -291,8 +295,6 @@ public class IndicatorManager : MonoBehaviour
                 child.gameObject.AddComponent<BoxCollider2D>();
 
             EventTrigger eventTrigger = IndicatorBoundary.GetChild(i).GetComponent<EventTrigger>();
-            //eventTrigger.triggers.Clear();
-
             Transform transform = IndicatorBoundary.GetChild(i);
             int x = Mathf.RoundToInt(transform.position.x);
             int y = Mathf.RoundToInt(transform.position.y);
@@ -347,6 +349,12 @@ public class IndicatorManager : MonoBehaviour
     /// </summary>
     public void SetEqualizeEnterTriggerOnIndicatorBoundary()
     {
+        if (IndicatorBoundary == null)
+        {
+            Debug.LogWarning("인디케이터 바운더리가 존재하지 않습니다.");
+            return;
+        }
+
         for (int i = 0; i < IndicatorBoundary.childCount; i++)
         {
             Transform child = IndicatorBoundary.GetChild(i);
@@ -359,7 +367,6 @@ public class IndicatorManager : MonoBehaviour
                 child.gameObject.AddComponent<BoxCollider2D>();
 
             EventTrigger eventTrigger = child.GetComponent<EventTrigger>();
-            //eventTrigger.triggers.Clear();
             EventTrigger.Entry entryPointerEnter = new EventTrigger.Entry();
             entryPointerEnter.eventID = EventTriggerType.PointerEnter;
 
@@ -385,7 +392,6 @@ public class IndicatorManager : MonoBehaviour
                 IndicatorBoundary.GetChild(i).gameObject.AddComponent<EventTrigger>();
 
             EventTrigger eventTrigger = IndicatorBoundary.GetChild(i).GetComponent<EventTrigger>();
-            eventTrigger.triggers.Clear();
             eventTrigger.triggers.Add(entryPointerEnter);
         }
     }

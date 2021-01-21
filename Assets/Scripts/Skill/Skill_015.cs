@@ -21,11 +21,11 @@ public class Skill_015 : Skill
         RPSchema = "1;1";
     }
 
-    public override void UseSkillToTile(Vector2Int position)
+    public override void UseSkillToTile(Tile tile)
     {
-        Debug.LogError(name + " 스킬을 " + position + "에 사용!");
+        Debug.LogError(name + " 스킬을 " + tile.name + "에 사용!");
         // 유닛 이동
-        base.UseSkillToTile(position);
+        base.UseSkillToTile(tile);
     }
 
     public override void UseSkillToUnit(Unit unit)
