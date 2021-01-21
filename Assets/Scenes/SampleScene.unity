@@ -176,18 +176,15 @@ MonoBehaviour:
   unitPosition:
     lowerLeft: {x: 0, y: 0}
     upperRight: {x: 0, y: 0}
-  size: {x: 0, y: 0}
   strength: 0
-  defense: 0
   agility: 0
   move: 0
   critical: 0
   actionRate: 0
-  defenseRate: 0
   moveCount: 0
   skillCount: 0
   itemCount: 0
-  skills: []
+  havingSkills: []
   antiques: []
   items: []
   stateEffects: []
@@ -297,22 +294,15 @@ MonoBehaviour:
   unitPosition:
     lowerLeft: {x: 5, y: 5}
     upperRight: {x: 5, y: 5}
-  size: {x: 1, y: 1}
   strength: 0
-  defense: 0
   agility: 5
   move: 3
   critical: 0
   actionRate: 0
-  defenseRate: 0
   moveCount: 1
   skillCount: 1
   itemCount: 0
-  skills:
-  - {fileID: 5096750378147797336, guid: 0a4b405da0e35944ea19171b2917d0f0, type: 3}
-  - {fileID: 5096750378147797336, guid: 0a4b405da0e35944ea19171b2917d0f0, type: 3}
-  - {fileID: 5096750378147797336, guid: 0a4b405da0e35944ea19171b2917d0f0, type: 3}
-  - {fileID: 5096750378147797336, guid: 0a4b405da0e35944ea19171b2917d0f0, type: 3}
+  havingSkills: []
   antiques: []
   items: []
   stateEffects: []
@@ -459,22 +449,19 @@ MonoBehaviour:
   unitPosition:
     lowerLeft: {x: 2, y: 2}
     upperRight: {x: 2, y: 2}
-  size: {x: 2, y: 2}
   strength: 0
-  defense: 0
   agility: 3
   move: 3
   critical: 0
   actionRate: 0
-  defenseRate: 0
   moveCount: 1
   skillCount: 1
   itemCount: 0
-  skills:
-  - {fileID: 5096750378147797336, guid: 0a4b405da0e35944ea19171b2917d0f0, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  havingSkills:
+  - Skill_004
+  - Skill_005
+  - Skill_006
+  - Skill_007
   antiques: []
   items: []
   stateEffects: []
@@ -903,22 +890,19 @@ MonoBehaviour:
   unitPosition:
     lowerLeft: {x: 3, y: 3}
     upperRight: {x: 3, y: 3}
-  size: {x: 2, y: 2}
   strength: 10
-  defense: 0
   agility: 4
   move: 3
   critical: 0
   actionRate: 0
-  defenseRate: 0
   moveCount: 1
   skillCount: 1
   itemCount: 0
-  skills:
-  - {fileID: 5096750378147797336, guid: 0a4b405da0e35944ea19171b2917d0f0, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  havingSkills:
+  - Skill_008
+  - Skill_009
+  - Skill_010
+  - Skill_011
   antiques: []
   items: []
   stateEffects: []
@@ -1229,19 +1213,15 @@ MonoBehaviour:
   unitPosition:
     lowerLeft: {x: 7, y: 1}
     upperRight: {x: 8, y: 2}
-  size: {x: 2, y: 2}
   strength: 0
-  defense: 0
   agility: 2
   move: 4
   critical: 0
   actionRate: 0
-  defenseRate: 0
   moveCount: 0
   skillCount: 0
   itemCount: 0
-  skills:
-  - {fileID: 5096750378147797336, guid: 0a4b405da0e35944ea19171b2917d0f0, type: 3}
+  havingSkills: []
   antiques: []
   items: []
   stateEffects: []
@@ -1263,6 +1243,7 @@ GameObject:
   - component: {fileID: 1309214666}
   - component: {fileID: 1309214665}
   - component: {fileID: 1309214668}
+  - component: {fileID: 1309214669}
   m_Layer: 0
   m_Name: Scripts
   m_TagString: Untagged
@@ -1329,6 +1310,30 @@ MonoBehaviour:
   - {fileID: 1495762511}
   - {fileID: 251066082}
   - {fileID: 566507864}
+--- !u!114 &1309214669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1309214664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1a360600e4212f44a7bae93e8ead593, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Indicator: {fileID: 0}
+  IndicatorBoundary: {fileID: 0}
+  mainTileIndicatorPrefab: {fileID: 4462922396805816717, guid: 2394cc8ef5fb41f4f9a99880d6f5b9dd,
+    type: 3}
+  subTileIndicatorPrefab: {fileID: 4462922396805816717, guid: 82b93824c43cdbc45952da075b54d755,
+    type: 3}
+  tileIndicatorBoundaryPrefab: {fileID: 4462922396805816717, guid: 465b988f26ffcd24981ee965e2d442b2,
+    type: 3}
+  mainUnitIndicatorPrefab: {fileID: 4462922396805816717, guid: 822346c4e09633d4597569f9b9bf3140,
+    type: 3}
+  unitIndicatorBoundaryPrefab: {fileID: 4462922396805816717, guid: 71c6a9b75046b0a4b8cc38011d79a53a,
+    type: 3}
 --- !u!1 &1495762510
 GameObject:
   m_ObjectHideFlags: 0
@@ -1371,22 +1376,19 @@ MonoBehaviour:
   unitPosition:
     lowerLeft: {x: 0, y: 0}
     upperRight: {x: 0, y: 0}
-  size: {x: 2, y: 2}
   strength: 0
-  defense: 0
   agility: 1
   move: 3
   critical: 0
   actionRate: 0
-  defenseRate: 0
   moveCount: 1
   skillCount: 1
   itemCount: 0
-  skills:
-  - {fileID: 5096750378147797336, guid: 0a4b405da0e35944ea19171b2917d0f0, type: 3}
-  - {fileID: 4257804430510249537, guid: ad6d80d466447d04b80f2e334be54571, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
+  havingSkills:
+  - Skill_000
+  - Skill_001
+  - Skill_002
+  - Skill_003
   antiques: []
   items: []
   stateEffects: []
@@ -4851,15 +4853,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitsInfoPanel: {fileID: 5384038422599118344}
-  BlueTile: {fileID: 4462922396805816717, guid: c0e1c27f9d58aef458a694d7e4f8eefe,
-    type: 3}
-  YelloTile: {fileID: 4462922396805816717, guid: 2394cc8ef5fb41f4f9a99880d6f5b9dd,
-    type: 3}
-  OrangeTile: {fileID: 4462922396805816717, guid: 82b93824c43cdbc45952da075b54d755,
-    type: 3}
-  YelloBox: {fileID: 4462922396805816717, guid: 71c6a9b75046b0a4b8cc38011d79a53a,
-    type: 3}
-  RedBox: {fileID: 4462922396805816717, guid: 822346c4e09633d4597569f9b9bf3140, type: 3}
   UnitInfoUIPrefab: {fileID: 8318358189355216722, guid: 1732e33becc7edb4b8a73b9aff95319e,
     type: 3}
   currentPushedButton: {fileID: 0}
@@ -4872,7 +4865,7 @@ MonoBehaviour:
   itemButtons:
   - {fileID: 790935216}
   - {fileID: 2038982287}
-  selectedUnitInfo: {fileID: 7181283910661206482}
+  thisTurnUnitInfo: {fileID: 7181283910661206482}
 --- !u!1 &5384038420959352498
 GameObject:
   m_ObjectHideFlags: 0
@@ -9128,7 +9121,7 @@ GameObject:
   - component: {fileID: 5384038422767847903}
   - component: {fileID: 7181283910661206482}
   m_Layer: 5
-  m_Name: SelectedUnit
+  m_Name: ThisTurnUnitInfoPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
