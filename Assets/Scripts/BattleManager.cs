@@ -42,17 +42,26 @@ public class BattleManager : MonoBehaviour
         OnBattleStart();
         SetNextTurn();
     }
+
     public void EndBattle()
     {
         OnBattleEnd();
     }
+
     public Tile GetTile(Vector2Int position)
     {
-        return AllTiles[position.x, position.y];
+        if (position.x >= 0 && position.y >= 0 && position.x < AllTiles.GetLength(0) && position.y < AllTiles.GetLength(1))
+            return AllTiles[position.x, position.y];
+        else
+            return null;
     }
+
     public Tile GetTile(int x, int y)
     {
-        return AllTiles[x,y];
+        if (x >= 0 && y >= 0 && x < AllTiles.GetLength(0) && y < AllTiles.GetLength(1))
+            return AllTiles[x, y];
+        else
+            return null;
     }
 
     public void AllocateUnitTiles(Unit unit, UnitPosition position)
