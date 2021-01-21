@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4462922396805816723}
   - component: {fileID: 4462922396805816719}
   m_Layer: 0
-  m_Name: YelloBox
+  m_Name: RedTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,9 +75,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2015372681170674923, guid: f19e0c71272325d469e347e810c85ac6,
-    type: 3}
-  m_Color: {r: 1, g: 0.8543676, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: b415218d45943a44c8fb78d9bbc9347a, type: 3}
+  m_Color: {r: 0.9811321, g: 0.35635456, b: 0.35635456, a: 0.48235294}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

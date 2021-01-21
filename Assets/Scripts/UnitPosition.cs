@@ -25,24 +25,76 @@ public class UnitPosition
         this.upperRight = upperRight;
     }
 
+    /// <summary>
+    /// ToString() override
+    /// </summary>
+    /// <returns></returns>
+    public override string ToString()
+    {
+        return "LowerLeft : " + lowerLeft + ", UpperRight :" + upperRight;
+    }
+
+    /// <summary>
+    /// Equals() override, 값이 같으면 같다.
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
+    public override bool Equals(object obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        UnitPosition temp = (UnitPosition)obj;
+
+        if (lowerLeft.Equals(temp.lowerLeft) && upperRight.Equals(temp.upperRight))
+            return true;
+
+        return false;
+    }
+
+    public override int GetHashCode()
+    {
+        int hashCode = -750348174;
+        hashCode = hashCode * -1521134295 + lowerLeft.GetHashCode();
+        hashCode = hashCode * -1521134295 + upperRight.GetHashCode();
+        return hashCode;
+    }
+
     public List<Vector2Int> GetPositions()
     {
         List<Vector2Int> positions = new List<Vector2Int>();
 
-        for (int i = lowerLeft.y; i <= upperRight.y; i++)
-        {
-            for (int j = lowerLeft.x; j <= upperRight.x; j++)
-            {
+        for (int i = lowerLeft.x; i <= upperRight.x; i++)
+            for (int j = lowerLeft.y; j <= upperRight.y; j++)
                 positions.Add(new Vector2Int(i, j));
-            }
-        }
 
         return positions;
     }
 
     public Vector2Int GetSize()
     {
-        return upperRight - lowerLeft;
+        return upperRight - lowerLeft + Vector2Int.one;
+    }
+
+    public static UnitPosition TransformToUnitPosition(Transform transform)
+    {
+        UnitPosition unitPosition = new UnitPosition();
+
+        int up = Mathf.RoundToInt(transform.position.y + ((transform.localScale.y - 1) / 2));
+        int down = Mathf.RoundToInt(transform.position.y - ((transform.localScale.y - 1) / 2));
+        int right = Mathf.RoundToInt(transform.position.x + ((transform.localScale.x - 1) / 2));
+        int left = Mathf.RoundToInt(transform.position.x - ((transform.localScale.x - 1) / 2));
+
+        unitPosition.lowerLeft = new Vector2Int(left, down);
+        unitPosition.upperRight = new Vector2Int(right, up);
+
+        return unitPosition;
+    }
+
+    public void SetTransform(Transform transform)
+    {
+        transform.position = new Vector3((float)(lowerLeft.x + upperRight.x) / 2, (float)(lowerLeft.y + upperRight.y) / 2, (float)transform.position.z);
+        transform.localScale = new Vector3(GetSize().x, GetSize().y, transform.localScale.z);
     }
 
     public void Set(Vector2Int lowerLeft, Vector2Int upperRight)
@@ -69,6 +121,11 @@ public class UnitPosition
     {
         lowerLeft += value;
         upperRight += value;
+    }
+
+    public UnitPosition GetAdd(Vector2Int value)
+    {
+        return new UnitPosition(lowerLeft + value, upperRight + value);
     }
 
     public void Up(int number)
@@ -184,43 +241,6 @@ public class UnitPosition
                     return false;
 
         return true;
-    }
-
-    public static List<Vector2Int> UnitPositionToVector2IntList(UnitPosition unitPositon)
-    {
-        List<Vector2Int> positions = new List<Vector2Int>();
-
-        for (int i = unitPositon.lowerLeft.x; i <= unitPositon.upperRight.x; i++)
-            for (int j = unitPositon.lowerLeft.y; j <= unitPositon.upperRight.y; j++)
-                positions.Add(new Vector2Int(i,j));
-
-        return positions;
-    }
-
-    public List<Vector2Int> UnitPositionToVector2IntList()
-    {
-        return UnitPositionToVector2IntList(this);
-    }
-
-    public override bool Equals(object obj)
-    {
-        if (obj == null || GetType() != obj.GetType())
-            return false;
-
-        UnitPosition temp = (UnitPosition)obj;
-
-        if (lowerLeft.Equals(temp.lowerLeft) && upperRight.Equals(temp.upperRight))
-            return true;
-
-        return false;
-    }
-
-    public override int GetHashCode()
-    {
-        int hashCode = -750348174;
-        hashCode = hashCode * -1521134295 + lowerLeft.GetHashCode();
-        hashCode = hashCode * -1521134295 + upperRight.GetHashCode();
-        return hashCode;
     }
 }
 
