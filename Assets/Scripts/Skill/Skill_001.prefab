@@ -55,8 +55,8 @@ MonoBehaviour:
   reuseTime: 0
   currentReuseTime: 0
   criticalRate: 5
-  domain: 3
-  target: 3
+  domain: 2
+  target: 1
   AvailablePositions:
   - {x: 1, y: -1}
   - {x: 1, y: 0}

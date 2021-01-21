@@ -181,4 +181,14 @@ public class Skill : MonoBehaviour
             return false;
     }
 
+/*    public static Tile RandomPick(List<Tile> tiles)
+    {
+        return tiles[Random.Range(0, tiles.Count)];
+    }
+
+    public static Unit RandomPick(List<Unit> units)
+    {
+        return units[Random.Range(0, units.Count)];
+    }*/
+
 }

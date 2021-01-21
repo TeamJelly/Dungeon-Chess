@@ -200,8 +200,11 @@ public class BattleUI : MonoBehaviour
                         if ((skill.target == Skill.Target.AnyTile || skill.target == Skill.Target.NoUnitTile)
                             && skill.domain == Skill.Domain.Fixed)
                         {
-                            indicatorManager.InitMainIndicator(skill.GetPositionsInDomain(unit)[0], indicatorManager.mainTileIndicatorPrefab);
+                            if (skill.GetPositionsInDomain(unit).Count != 0)
+                                indicatorManager.InitMainIndicator(skill.GetPositionsInDomain(unit)[0], indicatorManager.mainTileIndicatorPrefab);
                             // 메인 인디케이터 생성
+                            indicatorManager.AddSubIndicator(skill.GetRangePositions(), indicatorManager.subTileIndicatorPrefab);
+                            // 서브 인디케이터 생성
                             indicatorManager.AddIndicatorBoundary(skill.GetPositionsInDomain(unit), indicatorManager.tileIndicatorBoundaryPrefab);
                             // 인디케이터 바운더리 생성
                             indicatorManager.SetFollowEnterTriggerOnIndicatorBoundary();
@@ -216,7 +219,8 @@ public class BattleUI : MonoBehaviour
                         else if ((skill.target == Skill.Target.AnyTile || skill.target == Skill.Target.NoUnitTile)
                             && skill.domain == Skill.Domain.Rotate)
                         {
-                            indicatorManager.InitMainIndicator(skill.GetPositionsInDomain(unit)[0], indicatorManager.mainTileIndicatorPrefab);
+                            if (skill.GetPositionsInDomain(unit).Count != 0)
+                                indicatorManager.InitMainIndicator(skill.GetPositionsInDomain(unit)[0], indicatorManager.mainTileIndicatorPrefab);
                             // 메인 인디케이터 생성
                             indicatorManager.AddSubIndicator(skill.GetRangePositions(), indicatorManager.subTileIndicatorPrefab);
                             // 서브 인디케이터 생성
@@ -234,14 +238,35 @@ public class BattleUI : MonoBehaviour
                             indicatorManager.SetCustomClickTriggerOnIndicator(entry_PointerClick);
                             // 인디케이터에 커스텀 클릭 트리거 설정
                         }
+                        else if ((skill.target == Skill.Target.AnyTile || skill.target == Skill.Target.NoUnitTile)
+                          && skill.domain == Skill.Domain.RandomOne)
+                        {
+                            if (skill.GetPositionsInDomain(unit).Count != 0)
+                                indicatorManager.InitMainIndicator(skill.GetPositionsInDomain(unit)[0], indicatorManager.mainTileIndicatorPrefab);
+                            // 메인 인디케이터 생성
+                            indicatorManager.AddIndicatorBoundary(skill.GetPositionsInDomain(unit), indicatorManager.mainTileIndicatorPrefab);
+                            // 인디케이터 바운더리 생성
+                                
+                            indicatorManager.SetFollowEnterTriggerOnIndicatorBoundary();
+                            // 인디케이터 바운더리에 따라오기 엔터 트리거 설정
+
+                            entry_PointerClick = new EventTrigger.Entry();
+                            entry_PointerClick.eventID = EventTriggerType.PointerClick;
+                            entry_PointerClick.callback.AddListener((data) => { skill.UseSkillToTile(indicatorManager.GetTilesOnIndicator()); });
+                            indicatorManager.SetCustomClickTriggerOnIndicator(entry_PointerClick);
+                            // 인디케이터에 커스텀 클릭 트리거 설정
+                        }
                         else if ((skill.target == Skill.Target.AnyUnit || skill.target == Skill.Target.EnemyUnit
                             || skill.target == Skill.Target.FriendlyUnit || skill.target == Skill.Target.PartyUnit)
                             && skill.domain == Skill.Domain.RandomOne)
                         {
-                            indicatorManager.InitMainIndicator(skill.GetUnitPositionsInDomain(unit)[0], indicatorManager.mainUnitIndicatorPrefab);
+                            if (skill.GetUnitPositionsInDomain(unit).Count != 0)
+                                indicatorManager.InitMainIndicator(skill.GetUnitPositionsInDomain(unit)[0], indicatorManager.mainUnitIndicatorPrefab);
                             // 메인 인디케이터 생성
-                            indicatorManager.AddIndicatorBoundary(skill.GetPositionsInDomain(unit), indicatorManager.mainUnitIndicatorPrefab);
+                            indicatorManager.AddIndicatorBoundary(skill.GetUnitPositionsInDomain(unit), indicatorManager.mainUnitIndicatorPrefab);
                             // 인디케이터 바운더리 생성
+                            indicatorManager.SetEqualizeEnterTriggerOnIndicatorBoundary();
+                            // 인디케이터 바운더리에 동일화 엔터 트리거 설정
 
                             entry_PointerClick = new EventTrigger.Entry();
                             entry_PointerClick.eventID = EventTriggerType.PointerClick;
@@ -256,17 +281,22 @@ public class BattleUI : MonoBehaviour
                             || skill.target == Skill.Target.FriendlyUnit || skill.target == Skill.Target.PartyUnit) 
                             && skill.domain == Skill.Domain.SelectOne)
                         {
-                            if (skill.GetUnitPositionsInDomain(unit).Count == 0) // 실행 불가
-                            {
-                                indicatorManager.AddIndicatorBoundary(skill.GetPositionsInDomain(unit), indicatorManager.tileIndicatorBoundaryPrefab);
-                                return;
-                            }
-
-                            indicatorManager.InitMainIndicator(skill.GetUnitPositionsInDomain(unit)[0], indicatorManager.mainUnitIndicatorPrefab);
+                            if (skill.GetUnitPositionsInDomain(unit).Count != 0)
+                                indicatorManager.InitMainIndicator(skill.GetUnitPositionsInDomain(unit)[0], indicatorManager.mainUnitIndicatorPrefab);
+                            // 메인 인디케이터 생성
                             indicatorManager.AddIndicatorBoundary(skill.GetUnitPositionsInDomain(unit), indicatorManager.unitIndicatorBoundaryPrefab);
+                            // 인디케이터 바운더리 생성
                             indicatorManager.SetEqualizeEnterTriggerOnIndicatorBoundary();
+                            // 인디케이터 바운더리에 동일화 엔터 트리거 설정
+
+                            entry_PointerClick = new EventTrigger.Entry();
+                            entry_PointerClick.eventID = EventTriggerType.PointerClick;
+                            entry_PointerClick.callback.AddListener((data) => { skill.UseSkillToUnit(indicatorManager.GetUnitsOnIndicator()); });
+                            indicatorManager.SetCustomClickTriggerOnIndicator(entry_PointerClick);
+                            // 인디케이터에 커스텀 클릭 트리거 설정
 
                             indicatorManager.AddIndicatorBoundary(skill.GetPositionsInDomain(unit), indicatorManager.tileIndicatorBoundaryPrefab);
+                            // 엔터 트리거 없는 바운더리 추가
                         }
 
                         entry_PointerClick = new EventTrigger.Entry();
