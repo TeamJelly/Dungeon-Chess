@@ -212,22 +212,6 @@ public class UnitPosition
 
         return temp;
     }
-
-    /*public bool IsMovableUnitPosition() // 사용 가능한 UnitPosition인가?
-    {
-        if (lowerLeft.x < 0 || lowerLeft.y < 0) // 맵 크기 안인가?
-            return false;
-        if (upperRight.x >= BattleManager.instance.AllTiles.GetLength(0) || upperRight.y >= BattleManager.instance.AllTiles.GetLength(1)) // 맵 크기 안인가?
-            return false;
-
-        for (int i = lowerLeft.x; i <= upperRight.x; i++)
-            for (int j = lowerLeft.y; j <= upperRight.y; j++)
-                if (!BattleManager.instance.AllTiles[i, j].IsUsable()) // 사용 가능한 타일인가?
-                    return false;
-
-        return true;
-    }*/
-
     public bool IsMovableUnitPosition(Unit unit) // 사용 가능한 UnitPosition인가?
     {
         if (lowerLeft.x < 0 || lowerLeft.y < 0) // 맵 크기 안인가?

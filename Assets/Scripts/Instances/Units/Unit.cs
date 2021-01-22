@@ -52,7 +52,7 @@ public class Unit : MonoBehaviour
     public List<Skill> skills { get => _skills; }
     [Header("Having")]
     public List<string> havingSkills;
-    public List<Antique> antiques;
+    public List<Artifact> antiques;
     public List<Item> items;
     public List<Effect> stateEffects;
 
