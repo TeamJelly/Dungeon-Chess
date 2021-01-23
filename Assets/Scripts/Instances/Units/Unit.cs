@@ -257,8 +257,7 @@ public class Unit : MonoBehaviour
         Vector2 screenPosition = unitPosition.lowerLeft + (Vector2)(unitPosition.upperRight - unitPosition.lowerLeft) / 2;
         transform.localPosition = screenPosition;
 
-        //HP바 위치 갱신.
-        BattleUI.instance.SetHPBarPosition(this);
+
 
         AfterMove();
     }

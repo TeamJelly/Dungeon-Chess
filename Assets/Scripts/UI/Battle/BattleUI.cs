@@ -52,7 +52,6 @@ public class BattleUI : MonoBehaviour
             Slider newHPBar = Instantiate(HPBarPrefab, transform).GetComponent<Slider>();
             newHPBar.transform.localScale = new Vector3(unit.unitPosition.GetSize().x, 1, 1);
             hpBars.Add(newHPBar);
-            SetHPBarPosition(unit);
         }
 
         //파티원 유닛과 대응하는 UI 생성.
@@ -78,12 +77,21 @@ public class BattleUI : MonoBehaviour
         unitTurnIndicator.localScale = Vector3.one;
         unitTurnIndicator.gameObject.SetActive(false);
     }
-    public void SetHPBarPosition(Unit unit)
+    public void UpdateHPBarPosition()
     {
-        hpBars[BattleManager.instance.AllUnits.IndexOf(unit)].transform.position =
+        foreach(Unit unit in BattleManager.instance.AllUnits)
+        {
+            hpBars[BattleManager.instance.AllUnits.IndexOf(unit)].transform.position =
         Camera.main.WorldToScreenPoint(new Vector3(unit.transform.position.x, unit.unitPosition.upperRight.y + 0.55f));
+        }
+        
     }
 
+    private void Update()
+    {
+        //HP바 위치 갱신.
+        UpdateHPBarPosition();
+    }
 
     //턴종료 버튼 이벤트
     public void SetNextTurn()
