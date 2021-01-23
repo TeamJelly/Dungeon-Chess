@@ -50,7 +50,7 @@ public class BattleUI : MonoBehaviour
             eventTrigger.triggers.Add(entry_PointerClick);
 
             Slider newHPBar = Instantiate(HPBarPrefab, transform).GetComponent<Slider>();
-            newHPBar.transform.localScale = new Vector3(unit.unitPosition.GetSize().x, 1, 1);
+            newHPBar.transform.localScale = new Vector3(unit.unitPosition.GetSize().x * 0.8f, 1, 1);
             hpBars.Add(newHPBar);
         }
 
