@@ -1311,7 +1311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Indicator: {fileID: 0}
   IndicatorBoundary: {fileID: 0}
-  mainTileIndicatorPrefab: {fileID: 4462922396805816717, guid: 2394cc8ef5fb41f4f9a99880d6f5b9dd,
+  mainTileIndicatorPrefab: {fileID: 4462922396805816717, guid: 353af6cd85dd63041ba08e140016d886,
     type: 3}
   subTileIndicatorPrefab: {fileID: 4462922396805816717, guid: 82b93824c43cdbc45952da075b54d755,
     type: 3}
