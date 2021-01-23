@@ -6,36 +6,50 @@ public class StageManager : MonoBehaviour
 {
     public static StageManager instance;
 
-    public Room currentRoom = null;
+    public Room currentRoom
+    {
+        get => GameManager.Instance.currentRoom;
+        set => GameManager.Instance.currentRoom = value;
+    }
 
-    public Room[,] AllRooms; // 10층, 각층에는 5개
+    Room[,] AllRooms
+    {
+        get => GameManager.Instance.AllRooms;
+        set => GameManager.Instance.AllRooms = value;
+    }// 10층, 각층에는 5개
 
     public int numberOfFloors = 14;
     public int numberOfRoomsPerOneFloor = 5;
 
-    public List<Vector2Int>[] pathList;
+    public List<Vector2Int>[] pathList
+    {
+        get => GameManager.Instance.pathList;
+        set => GameManager.Instance.pathList = value;
+    }
 
 
-    public List<Vector2Int> roomHistory = new List<Vector2Int>();
+    public List<Vector2Int> roomHistory
+    {
+        get => GameManager.Instance.roomHistory;
+        set => GameManager.Instance.roomHistory = value;
+    }
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
         instance = this;
     }
 
     public void Start()
     {
-//        for (int i = 0; i < 100; i++)
-//        {
+        if (currentRoom == null)
+        {
             InitStage(1, 0);
             foreach (var item in AllRooms)
                 if (item.isActivate == true && item.category == Room.Category.NULL)
                     Debug.LogError("error"); // 없는 방 존재
                                              //        }
-
-        currentRoom = null;
-        StageUI.instance.InitStageUI();
+        }
+        StageUI.instance.InitStageUI(AllRooms);
     }
 
     void InitStage(int stageNumber, int difficulty)
@@ -276,5 +290,14 @@ public class StageManager : MonoBehaviour
                     item.category = Room.Category.Monster;
                     numberOfMonster--;
                 }
+    }
+
+    //UI에 의해 선택된 방 방문
+    public void VisitRoom(Room room)
+    {
+        //현재 방 갱신 및 기록 추가
+        currentRoom = room;
+        roomHistory.Add(new Vector2Int(room.position.x, room.position.y));
+        SceneLoader.LoadRoom(room.category);
     }
 }

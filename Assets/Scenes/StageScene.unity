@@ -151,7 +151,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &238243820
 MonoBehaviour:
@@ -165,14 +165,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dac63cef7544314b96ea14b501bcc97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentRoom:
-    category: 0
-    isActivate: 0
-    isSelectable: 0
-    position: {x: 0, y: 0}
   numberOfFloors: 14
   numberOfRoomsPerOneFloor: 5
-  roomHistory: []
 --- !u!114 &238243821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,29 +176,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 238243818}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd4d0d530653b91478df0d448ab38735, type: 3}
+  m_Script: {fileID: 11500000, guid: 2abc93aafead1e54ead5248dfeeb03e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  contentPanel: {fileID: 1378862224}
-  floorPrefab: {fileID: 6903638791167561107, guid: 62d4219a3fd01f249869391f94982e63,
-    type: 3}
-  roomPrefab: {fileID: 3833849723751400645, guid: db86f808dde83e649afa2febc9850904,
-    type: 3}
-  linePrefab: {fileID: 9146095783542598053, guid: fcff55ccc1302d045bf8e3385cb6f97a,
-    type: 3}
-  clearSignPrefab: {fileID: 472463796}
-  selector: {fileID: 1454517234}
-  floors: []
-  lines: []
-  roomImages:
-  - {fileID: -3714409817710726143, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
-  - {fileID: 3279467473711108629, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
-  - {fileID: -6404053778309610593, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
-  - {fileID: -5986936575811970920, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
-  - {fileID: -2784276677790117873, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
-  - {fileID: 3360335357785681208, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
-  - {fileID: 8011179097440696663, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
-  - {fileID: 2412317363535826626, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
 --- !u!1 &261949722
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,7 +243,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &447641199
 GameObject:
@@ -352,8 +326,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1763747178}
   m_HandleRect: {fileID: 1763747177}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -971,7 +945,7 @@ RectTransform:
   - {fileID: 472463795}
   - {fileID: 1372698147}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1235,6 +1209,69 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1763747176}
   m_CullTransparentMesh: 0
+--- !u!1 &1818791202
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1818791203}
+  - component: {fileID: 1818791204}
+  m_Layer: 0
+  m_Name: Scripts_UI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1818791203
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1818791202}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1818791204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1818791202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd4d0d530653b91478df0d448ab38735, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contentPanel: {fileID: 1378862224}
+  floorPrefab: {fileID: 6903638791167561107, guid: 62d4219a3fd01f249869391f94982e63,
+    type: 3}
+  roomPrefab: {fileID: 3833849723751400645, guid: db86f808dde83e649afa2febc9850904,
+    type: 3}
+  linePrefab: {fileID: 9146095783542598053, guid: fcff55ccc1302d045bf8e3385cb6f97a,
+    type: 3}
+  clearSignPrefab: {fileID: 472463796}
+  selector: {fileID: 1454517234}
+  floors: []
+  lines: []
+  roomImages:
+  - {fileID: -3714409817710726143, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
+  - {fileID: 3279467473711108629, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
+  - {fileID: -6404053778309610593, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
+  - {fileID: -5986936575811970920, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
+  - {fileID: -2784276677790117873, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
+  - {fileID: 3360335357785681208, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
+  - {fileID: 8011179097440696663, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
+  - {fileID: 2412317363535826626, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
 --- !u!1 &1837316626
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,11 +14,6 @@ public class GamePrepareManager : MonoBehaviour
     {
         //UpdateCurrentUnit();
     }
-    public void StartGame()
-    {
-        SceneLoader.MoveScene("StageScene");
-    }
-
     public void AddToParty(Unit unit)
     {
         PartyManager.instance.AddUnit(unit);

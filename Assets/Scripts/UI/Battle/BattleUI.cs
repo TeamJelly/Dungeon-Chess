@@ -11,6 +11,7 @@ public class BattleUI : MonoBehaviour
 
     public GameObject unitsInfoPanel;
     public GameObject UnitInfoUIPrefab;
+    public GameObject HPBarPrefab;
 
     [Header("Buttons")]
     public Button currentPushedButton; // 현재 누르고 있는 버튼
@@ -23,6 +24,8 @@ public class BattleUI : MonoBehaviour
 
     RectTransform unitTurnIndicator;
     IndicatorManager indicatorManager;
+
+    public List<Slider> hpBars = new List<Slider>();
 
     private void Awake()
     {
@@ -45,6 +48,11 @@ public class BattleUI : MonoBehaviour
                 UnitDescriptionUI.instance.Enable(unit);
             });
             eventTrigger.triggers.Add(entry_PointerClick);
+
+            Slider newHPBar = Instantiate(HPBarPrefab, transform).GetComponent<Slider>();
+            newHPBar.transform.localScale = new Vector3(unit.unitPosition.GetSize().x, 1, 1);
+            hpBars.Add(newHPBar);
+            SetHPBarPosition(unit);
         }
 
         //파티원 유닛과 대응하는 UI 생성.
@@ -70,6 +78,12 @@ public class BattleUI : MonoBehaviour
         unitTurnIndicator.localScale = Vector3.one;
         unitTurnIndicator.gameObject.SetActive(false);
     }
+    public void SetHPBarPosition(Unit unit)
+    {
+        hpBars[BattleManager.instance.AllUnits.IndexOf(unit)].transform.position =
+        Camera.main.WorldToScreenPoint(new Vector3(unit.transform.position.x, unit.unitPosition.upperRight.y + 0.55f));
+    }
+
 
     //턴종료 버튼 이벤트
     public void SetNextTurn()
