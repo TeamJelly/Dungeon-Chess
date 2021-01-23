@@ -73,7 +73,7 @@ public class BattleUI : MonoBehaviour
         //유닛 턴 표시기 생성
         unitTurnIndicator = new GameObject().AddComponent<RectTransform>();
         unitTurnIndicator.SetParent(this.transform);
-        unitTurnIndicator.sizeDelta = new Vector2(245, 120);
+        unitTurnIndicator.sizeDelta = UnitInfoUIPrefab.GetComponent<RectTransform>().sizeDelta + new Vector2(10, 10);
         unitTurnIndicator.gameObject.AddComponent<Image>().color = Color.yellow;
         unitTurnIndicator.localScale = Vector3.one;
         unitTurnIndicator.gameObject.SetActive(false);

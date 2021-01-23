@@ -1,0 +1,286 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &735187058338204338
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 735187058338204341}
+  - component: {fileID: 735187058338204345}
+  - component: {fileID: 735187058338204340}
+  - component: {fileID: 8233514311662503012}
+  - component: {fileID: 167007388216673510}
+  - component: {fileID: 6459266887827217527}
+  - component: {fileID: 1051963327252563027}
+  - component: {fileID: 5993631473418688487}
+  - component: {fileID: 251372279239185377}
+  m_Layer: 0
+  m_Name: "\uC720\uB2DB3"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &735187058338204341
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735187058338204338}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3, y: 3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &735187058338204345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735187058338204338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f1ebbb0e34186a49963d03a214bb594, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: "\uC720\uB2DB3"
+  category: 0
+  unitClass: 0
+  unitAI: 0
+  level: 0
+  currentHP: 0
+  maxHP: 0
+  currentEXP: 0
+  nextEXP: 0
+  unitPosition:
+    lowerLeft: {x: 3, y: 3}
+    upperRight: {x: 3, y: 3}
+  strength: 10
+  agility: 4
+  move: 3
+  critical: 0
+  actionRate: 93.333336
+  moveCount: 1
+  skillCount: 1
+  itemCount: 0
+  havingSkills:
+  - Skill_008
+  - Skill_009
+  - Skill_010
+  - Skill_011
+  antiques: []
+  items: []
+  stateEffects: []
+--- !u!212 &735187058338204340
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735187058338204338}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: -256319028896179214, guid: f19e0c71272325d469e347e810c85ac6,
+    type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.969697, y: 0.969697}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!114 &8233514311662503012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735187058338204338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a11dd66babe15e43899c4e5435d47fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  number: 8
+  name: "\uD798\uC758 \uD30C\uB3D9"
+  unitClass: 2
+  grade: 2
+  skillImage: {fileID: 21300000, guid: 66480f0cb55fae64f9e33481722795db, type: 3}
+  description: "\uBC94\uC704 \uC548\uC5D0 \uC788\uB294 \uBAA8\uB4E0 \uC801\uAD70\uC5D0\uAC8C
+    \uB370\uBBF8\uC9C0\uB97C \uC785\uD788\uACE0 \uAE30\uC808 \uC2DC\uD0A8\uB2E4."
+  enhancedLevel: 0
+  reuseTime: 5
+  currentReuseTime: 0
+  criticalRate: 0
+  domain: 5
+  target: 1
+  APSchema: 3;010;111;010
+  RPSchema: 
+--- !u!114 &167007388216673510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735187058338204338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d17509c9e08c134c83bf2cdbab5c6ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  number: 9
+  name: "\uC808\uBA85"
+  unitClass: 2
+  grade: 2
+  skillImage: {fileID: 737140459280839253, guid: cceda1ad674f7a14fa9495327f91e76c,
+    type: 3}
+  description: "\uBC94\uC704 \uC548\uC5D0 \uC790\uC2E0\uC744 \uC81C\uC678\uD55C \uC720\uB2DB\uC5D0\uAC8C
+    \uB370\uBBF8\uC9C0\uB97C \uC900\uB2E4, \uB9CC\uC57D \uADF8 \uC720\uB2DB\uC774
+    \uC8FD\uC5C8\uC744 \uACBD\uC6B0, \uC774 \uC2A4\uD0AC\uC744 \uB2E4\uC2DC \uC0AC\uC6A9\uD55C\uB2E4."
+  enhancedLevel: 0
+  reuseTime: 5
+  currentReuseTime: 0
+  criticalRate: 10
+  domain: 4
+  target: 3
+  APSchema: 5;11111;11111;11111;11111;11111
+  RPSchema: 1;1
+--- !u!114 &6459266887827217527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735187058338204338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1438f31ea41bd514fa1095a6e2f2ff25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  number: 10
+  name: "\uAD11\uC5ED \uB3C4\uBC1C"
+  unitClass: 2
+  grade: 2
+  skillImage: {fileID: 0}
+  description: "\uBC29 \uC548\uC5D0 \uC788\uB294 \uBAA8\uB4E0 \uC801\uAD70\uC5D0\uAC8C
+    \uB3C4\uBC1C \uD6A8\uACFC\uB97C \uC8FC\uACE0 \uBCF4\uD638\uB9C9\uC744 2\uD134
+    \uC5BB\uB294\uB2E4."
+  enhancedLevel: 0
+  reuseTime: 6
+  currentReuseTime: 0
+  criticalRate: 0
+  domain: 4
+  target: 6
+  APSchema: 1;1
+  RPSchema: 1;1
+--- !u!114 &1051963327252563027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735187058338204338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac11a3213124e3342b1a27bc72ab43d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  number: 11
+  name: "\uD63C\uC2E0\uC758 \uC77C\uACA9"
+  unitClass: 2
+  grade: 3
+  skillImage: {fileID: 737140459280839253, guid: cceda1ad674f7a14fa9495327f91e76c,
+    type: 3}
+  description: "\uB2E8\uC77C \uC801\uC5D0\uAC8C \uCCB4\uB825 \uB9CC\uD07C\uC758 \uB370\uBBF8\uC9C0\uB97C
+    \uC900\uB2E4."
+  enhancedLevel: 0
+  reuseTime: 3
+  currentReuseTime: 0
+  criticalRate: 0
+  domain: 3
+  target: 3
+  APSchema: 5;00100;00100;11111;00100;00100
+  RPSchema: 1;1
+--- !u!61 &5993631473418688487
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735187058338204338}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 0.969697, y: 0.969697}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!114 &251372279239185377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735187058338204338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
