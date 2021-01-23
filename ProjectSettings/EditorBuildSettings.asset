@@ -17,4 +17,22 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game Preparation.unity
     guid: d47188b68923f8c41891857c84654c58
+  - enabled: 1
+    path: Assets/Scenes/Boss.unity
+    guid: 9c64f373d14cda14e9a7744d70cfc449
+  - enabled: 1
+    path: Assets/Scenes/Elite.unity
+    guid: 11cedf1d0704f2f468c0d40d36ada63f
+  - enabled: 1
+    path: Assets/Scenes/Event.unity
+    guid: 959148d2a3b4990468d8ab235d7d3f58
+  - enabled: 1
+    path: Assets/Scenes/Shop.unity
+    guid: af9e3d4e26e4aa044a0a2a4515c492d1
+  - enabled: 1
+    path: Assets/Scenes/Tavern.unity
+    guid: 07ef8ac5432f0434db806d8b993b6822
+  - enabled: 1
+    path: Assets/Scenes/Treasure.unity
+    guid: 8a6ae9de73d31ec4784efa668bd968ba
   m_configObjects: {}
