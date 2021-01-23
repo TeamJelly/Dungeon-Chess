@@ -15,62 +15,56 @@ public class SceneLoader
     {
         SceneManager.LoadScene(sceneName);
     }
-    public static void GotoPrepareScene()
-    {
-        LoadScene("Game Preparation");
-    }
-    //Boss, monster, elite일 경우 유형 구분 매개변수 필요할 듯 함.
-    public static void GotoBossRoom()
-    {
-        LoadScene("Boss");
-    }
-    public static void GotoMonsterRoom()
-    {
-        LoadScene("SampleScene");
-    }
-    public static void GotoEliteRoom()
-    {
-        LoadScene("Elite");
-    }
-    public static void GotoTreasureRoom()
-    {
-        LoadScene("Treasure");
-    }
-    public static void GotoShopRoom()
-    {
-        LoadScene("Shop");
-    }
-    public static void GotoTavernRoom()
-    {
-        LoadScene("Tavern");
-    }
-    public static void GotoEventRoom()
-    {
-        LoadScene("Event");
-    }
 
     public static void GotoMain()
     {
-        LoadScene("MainMenu");
+        LoadScene("#001_MainMenu");
+    }
+
+    public static void GotoPrepareScene()
+    {
+        LoadScene("#002_Preparation");
     }
 
     public static void GotoStage()
     {
-        LoadScene("StageScene");
+        LoadScene("#003_Stage");
     }
+
+    public static void GotoBattleRoom()
+    {
+        LoadScene("#004_Battle");
+    }
+
+    public static void GotoTreasureRoom()
+    {
+        LoadScene("#005_Treasure");
+    }
+
+    public static void GotoShopRoom()
+    {
+        LoadScene("#006_Shop");
+    }
+
+    public static void GotoTavernRoom()
+    {
+        LoadScene("#007_Tavern");
+    }
+
+    public static void GotoEventRoom()
+    {
+        LoadScene("#008_Event");
+    }
+
 
     public static void LoadRoom(Room.Category category)
     {
         switch (category)
         {
             case Room.Category.Boss:
-                GotoBossRoom();
-                break;
             case Room.Category.Monster:
-                GotoMonsterRoom();
-                break;
             case Room.Category.Elite:
-                GotoEliteRoom();
+                GotoBattleRoom();
                 break;
             case Room.Category.Treasure:
                 GotoTreasureRoom();
