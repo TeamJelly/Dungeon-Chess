@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager
 {
-
     static GameManager instance;
 
     public List<Vector2Int> roomHistory = new List<Vector2Int>();
@@ -20,5 +20,10 @@ public class GameManager
                 instance = new GameManager();
             return instance;
         }
+    }
+
+    public static void Reset()
+    {
+        instance = new GameManager();
     }
 }

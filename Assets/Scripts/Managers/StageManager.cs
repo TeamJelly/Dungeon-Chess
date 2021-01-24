@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class StageManager : MonoBehaviour
 {
@@ -48,8 +50,14 @@ public class StageManager : MonoBehaviour
                 if (item.isActivate == true && item.category == Room.Category.NULL)
                     Debug.LogError("error"); // 없는 방 존재
                                              //        }
-        }
+        } 
         StageUI.instance.InitStageUI(AllRooms);
+    }
+
+    public void Restart()
+    {
+        GameManager.Reset();
+        SceneManager.LoadScene("#003_Stage");
     }
 
     void InitStage(int stageNumber, int difficulty)
