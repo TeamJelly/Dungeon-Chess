@@ -13,6 +13,11 @@ public class BattleUI : MonoBehaviour
     public GameObject UnitInfoUIPrefab;
     public GameObject HPBarPrefab;
 
+    [Header("Skill Info")]
+    public GameObject SkillInfoInstance;
+    public TextMeshProUGUI SkillInfoNameText;
+    public TextMeshProUGUI SkillInfoText;
+
     [Header("Buttons")]
     public Button currentPushedButton; // 현재 누르고 있는 버튼
     public Button moveButton;
@@ -82,9 +87,9 @@ public class BattleUI : MonoBehaviour
         foreach(Unit unit in BattleManager.instance.AllUnits)
         {
             hpBars[BattleManager.instance.AllUnits.IndexOf(unit)].transform.position =
-        Camera.main.WorldToScreenPoint(new Vector3(unit.transform.position.x, unit.unitPosition.upperRight.y + 0.55f));
+                Camera.main.WorldToScreenPoint(new Vector3(unit.transform.position.x, unit.unitPosition.upperRight.y + 0.55f));
         }
-        
+
     }
 
     private void Update()
@@ -145,8 +150,11 @@ public class BattleUI : MonoBehaviour
 
             for (int i = 0; i < unit.skills.Count; i++)
             {
-                if (unit.skills[i] != null)
-                    skillButtons[i].GetComponent<Image>().sprite = unit.skills[i].skillImage;
+                if (unit.skills[i] != null && unit.skills[i].SkillImage != null)
+                {
+                    Debug.Log(unit.skills[i].SkillImage.name);
+                    skillButtons[i].GetComponent<Image>().sprite = unit.skills[i].SkillImage;
+                }
             }
 
 
@@ -224,6 +232,10 @@ public class BattleUI : MonoBehaviour
                     skillButtons[i].onClick.AddListener(() => // 스킬 버튼을 눌렀을 때 작동하는 코드
                     {
                         EventTrigger.Entry entry_PointerClick;
+
+                        SkillInfoNameText.text = skill.name;
+                        SkillInfoText.text = skill.description;
+                        SkillInfoInstance.SetActive(true);
 
                         if ((skill.target == Skill.Target.AnyTile || skill.target == Skill.Target.NoUnitTile)
                             && skill.domain == Skill.Domain.Fixed)
@@ -365,6 +377,7 @@ public class BattleUI : MonoBehaviour
             currentPushedButton.onClick.AddListener(() =>
             {
                 indicatorManager.DestoryAll();
+                SkillInfoInstance.SetActive(false);
 
                 currentPushedButton = null;
                 UpdateThisTurnPanel();

@@ -13,6 +13,7 @@ public class Skill_006 : Skill
         name = "철인";
         unitClass = UnitClass.Warrior;
         grade = Grade.Normal;
+        skillImagePath = "HandMade/SkillImage/006_철인";
         description = "자신에게 보호막을 부여한다.";
         criticalRate = 0;
         reuseTime = 2;

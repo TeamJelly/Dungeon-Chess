@@ -12,6 +12,7 @@ public class Skill_001 : Skill
         name = "속사";
         unitClass = UnitClass.Archer;
         grade = Grade.Normal;
+        skillImagePath = "HandMade/SkillImage/001_속사";
         description = "세칸 안에 있는 단일 적에게 데미지를 입힌다.";
         criticalRate = 10;
         reuseTime = 0;

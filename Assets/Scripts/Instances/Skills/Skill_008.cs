@@ -15,6 +15,7 @@ public class Skill_008 : Skill
         name = "힘의 파동";
         unitClass = UnitClass.Warrior;
         grade = Grade.Rare;
+        skillImagePath = "HandMade/SkillImage/008_힘의 파동";
         description = "범위 안에 있는 모든 적군에게 데미지를 입히고 기절 시킨다.";
         criticalRate = 0;
         reuseTime = 5;

@@ -15,6 +15,7 @@ public class Skill_012 : Skill
         name = "광전사의 힘";
         unitClass = UnitClass.Warrior;
         grade = Grade.Legend;
+        skillImagePath = "HandMade/SkillImage/012_광전사의 힘";
         description = "자신에게 광폭화 상태를 2턴 부여하고, 단일 적에게 준 데미지 만큼, 체력을 회복한다.";
         criticalRate = 50;
         reuseTime = 5;

@@ -12,6 +12,7 @@ public class Skill_023 : Skill
         name = "화염구";
         unitClass = UnitClass.Wizard;
         grade = Grade.Normal;
+        skillImagePath = "HandMade/SkillImage/023_화염구";
         description = "범위 안에 있는 모든 유닛에게 데미지를 입힌다.";
         criticalRate = 0;
         reuseTime = 1;

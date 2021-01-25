@@ -16,6 +16,7 @@ public class Skill_002 : Skill
         name = "마법 화살";
         unitClass = UnitClass.Wizard;
         grade = Grade.Normal;
+        skillImagePath = "HandMade/SkillImage/002_마법화살";
         description = "세칸 안에 있는 단일 적에게 데미지를 입힌다.";
         criticalRate = 0;
         reuseTime = 0;

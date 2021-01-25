@@ -15,6 +15,7 @@ public class Skill_000 : Skill
         name = "베기";
         unitClass = UnitClass.Warrior;
         grade = Grade.Normal;
+        skillImagePath = "HandMade/SkillImage/000_베기";
         description = "한칸 안에 있는 단일 적에게 데미지를 입힌다.";
         criticalRate = 5;
         reuseTime = 0;

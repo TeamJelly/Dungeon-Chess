@@ -13,6 +13,7 @@ public class Skill_004 : Skill
         name = "강타";
         unitClass = UnitClass.Warrior;
         grade = Grade.Normal;
+        skillImagePath = "HandMade/SkillImage/004_강타";
         description = "한칸 안에 있는 단일 적에게 데미지를 입힌고, 기절 상태이상을 건다.";
         criticalRate = 0;
         reuseTime = 3;

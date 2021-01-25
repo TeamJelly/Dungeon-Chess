@@ -12,6 +12,7 @@ public class Skill_009 : Skill
         name = "절명";
         unitClass = UnitClass.Warrior;
         grade = Grade.Rare;
+        skillImagePath = "HandMade/SkillImage/009_절명";
         description = "범위 안에 자신을 제외한 유닛에게 데미지를 준다, 만약 그 유닛이 죽었을 경우, 이 스킬을 다시 사용한다.";
         criticalRate = 10;
         reuseTime = 5;

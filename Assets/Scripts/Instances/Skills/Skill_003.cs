@@ -12,6 +12,7 @@ public class Skill_003 : Skill
         name = "천벌";
         unitClass = UnitClass.Priest;
         grade = Grade.Normal;
+        skillImagePath = "HandMade/SkillImage/003_천벌";
         description = "두칸 안에 있는 단일 적에게 데미지를 입힌다.";
         criticalRate = 0;
         reuseTime = 0;

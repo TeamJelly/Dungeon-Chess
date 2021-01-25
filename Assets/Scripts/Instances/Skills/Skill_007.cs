@@ -11,6 +11,7 @@ public class Skill_007 : Skill
         name = "수호";
         unitClass = UnitClass.Warrior;
         grade = Grade.Normal;
+        skillImagePath = "HandMade/SkillImage/007_수호";
         description = "두칸 안에 있는 아군에게 보호 효과를 3턴간 건다,";
         criticalRate = 5;
         reuseTime = 3;

@@ -12,6 +12,7 @@ public class Skill_005 : Skill
         name = "회전베기";
         unitClass = UnitClass.Warrior;
         grade = Grade.Normal;
+        skillImagePath = "HandMade/SkillImage/005_회전베기";
         description = "범위 안에 있는 모든 유닛에게 데미지를 입힌다.";
         criticalRate = 5;
         reuseTime = 1;
