@@ -2,31 +2,35 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using Common.UI;
+using Model.Models;
 
-//유닛 누르면 팝업 형식으로 뜨는 ui
-public class UnitDescriptionUI : MonoBehaviour
+namespace UI.Battle
 {
-    public CommonText text;
-    public static UnitDescriptionUI instance;
-    //여기에 유물정보 있으면 좋을 것 같음.
-
-    private void Awake()
+    //유닛 누르면 팝업 형식으로 뜨는 ui
+    public class UnitDescriptionUI : MonoBehaviour
     {
-        instance = this;
-        gameObject.SetActive(false);
-    }
+        public Text text;
+        public static UnitDescriptionUI instance;
+        //여기에 유물정보 있으면 좋을 것 같음.
 
-    public void Enable(Unit unit)
-    {
-        text.Text =
-            "이름: " + unit.name +
-            "\nstrength: " + unit.strength;
-        gameObject.SetActive(true);
-    }
+        private void Awake()
+        {
+            instance = this;
+            gameObject.SetActive(false);
+        }
 
-    public void Disable()
-    {
-        gameObject.SetActive(false);
+        public void Enable(Unit unit)
+        {
+            text.TextString =
+                "이름: " + unit.name +
+                "\nstrength: " + unit.strength;
+            gameObject.SetActive(true);
+        }
+
+        public void Disable()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

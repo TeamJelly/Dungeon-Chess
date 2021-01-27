@@ -3,36 +3,40 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
+using Common.UI;
+using Model.Models;
 
-public class UnitInfoUI : MonoBehaviour
+namespace UI.Battle
 {
-    public CommonImage unitImage;
-
-    public CommonText description;
-
-    Unit allocatedUnit;
-    public void Set(Unit unit)
+    public class UnitInfoUI : MonoBehaviour
     {
-        allocatedUnit = unit;
-        SetText( unit.name +
-           "\nHP:" + unit.currentHP + "/" + unit.maxHP +
-            "\nSPEED: " + unit.agility);
-        
-        unitImage.Sprite = unit.GetComponent<SpriteRenderer>().sprite;
-    }
+        public Image unitImage;
 
-    void SetText(string text)
-    {
-        //Debug.Log(description.Text);
-        description.Text = text;
-    }
+        public Text description;
 
-    public void Init()
-    {
-        gameObject.AddComponent<Button>().onClick.AddListener(() =>
+        Unit allocatedUnit;
+        public void Set(Unit unit)
         {
-            UnitDescriptionUI.instance.Enable(allocatedUnit);
-        });
+            allocatedUnit = unit;
+            SetText(unit.name +
+               "\nHP:" + unit.currentHP + "/" + unit.maxHP +
+                "\nSPEED: " + unit.agility);
+
+            unitImage.Sprite = unit.GetComponent<SpriteRenderer>().sprite;
+        }
+
+        void SetText(string text)
+        {
+            //Debug.Log(description.Text);
+            description.TextString = text;
+        }
+
+        public void Init()
+        {
+            gameObject.AddComponent<UnityEngine.UI.Button>().onClick.AddListener(() =>
+            {
+                UnitDescriptionUI.instance.Enable(allocatedUnit);
+            });
+        }
     }
 }
