@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using Model.Models;
+using Model;
 
 namespace Model.Managers
 {
@@ -11,7 +11,7 @@ namespace Model.Managers
         public static BattleManager instance;
         public List<Unit> AllUnits;
 
-        public List<Unit> PartyUnits;// 임시용 적군 더미데이터
+        public List<Unit> PartyUnits;// 임시용 아군 더미데이터
         public List<Unit> EnemyUnits;// 임시용 적군 더미데이터
 
         public Tile[,] AllTiles; //10x10일때 0,0 ~ 9,9으로
@@ -124,7 +124,7 @@ namespace Model.Managers
         }
 
         /// <summary>
-        /// 전투가 시작 시 발동되는 효과 활성화
+        /// 전투 시작 시 발동되는 효과 활성화
         /// </summary>
         public void OnBattleStart()
         {
@@ -134,7 +134,9 @@ namespace Model.Managers
                     effect.OnBattleStart();
             }
         }
-
+        /// <summary>
+        /// 전투 종료 시 발동되는 효과 활성화
+        /// </summary>
         public void OnBattleEnd()
         {
             foreach (var unit in AllUnits)

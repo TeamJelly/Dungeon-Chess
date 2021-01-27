@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Common.UI;
 using Model.Managers;
-using Model.Models;
+using Model;
 
 namespace UI
 {

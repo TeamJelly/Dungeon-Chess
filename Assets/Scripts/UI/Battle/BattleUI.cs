@@ -1,6 +1,6 @@
 ﻿using Common;
 using Model.Managers;
-using Model.Models;
+using Model;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;

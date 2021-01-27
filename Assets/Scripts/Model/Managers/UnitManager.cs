@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Model.Models;
+using Model;
 namespace Model.Managers
 {
     public class UnitManager

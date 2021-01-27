@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Common.UI;
-using Model.Models;
+using Model;
 
 namespace UI.Battle
 {

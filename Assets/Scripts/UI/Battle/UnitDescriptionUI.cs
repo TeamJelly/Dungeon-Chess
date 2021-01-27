@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Common.UI;
-using Model.Models;
+using Model;
 
 namespace UI.Battle
 {

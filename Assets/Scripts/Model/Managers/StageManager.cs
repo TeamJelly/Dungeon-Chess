@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Common;
-using Model.Models;
+using Model;
 using UI;
 
 namespace Model.Managers
