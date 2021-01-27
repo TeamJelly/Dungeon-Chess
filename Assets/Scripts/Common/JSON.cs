@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Common
+namespace Common
 {
     /// <summary>
     /// JSON 관련 유틸리티 클래스 입니다.

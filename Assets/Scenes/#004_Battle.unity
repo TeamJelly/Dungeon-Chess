@@ -835,7 +835,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1309214667}
   - component: {fileID: 1309214666}
-  - component: {fileID: 1309214668}
   - component: {fileID: 1309214669}
   - component: {fileID: 1309214670}
   m_Layer: 0
@@ -857,7 +856,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf46e86329aafcb42b6797dcfe9cf7e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AllUnits:
+  AllUnits: []
+  PartyUnits:
+  - {fileID: 257454798335792771}
+  - {fileID: 2910232208517419947}
+  - {fileID: 735187057604178035}
+  EnemyUnits:
   - {fileID: 4486814427846606055}
   - {fileID: 8654326609890971656}
   thisTurnUnit: {fileID: 0}
@@ -875,22 +879,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1309214668
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1309214664}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 431b5affc481a98478d205e8c4716ce4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AllUnits:
-  - {fileID: 257454798335792771}
-  - {fileID: 2910232208517419947}
-  - {fileID: 735187057604178035}
 --- !u!114 &1309214669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2595,7 +2583,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1309214670}
+      objectReference: {fileID: 5384038422985716112}
     - target: {fileID: 244154134704501698, guid: ee225d207c6e7b04a962c64f314e307c,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -2604,7 +2592,7 @@ PrefabInstance:
     - target: {fileID: 244154134704501698, guid: ee225d207c6e7b04a962c64f314e307c,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: GotoStage
+      value: EndGame
       objectReference: {fileID: 0}
     - target: {fileID: 244154134704501698, guid: ee225d207c6e7b04a962c64f314e307c,
         type: 3}
@@ -2909,7 +2897,7 @@ MonoBehaviour:
   name: "\uC808\uBA85"
   unitClass: 2
   grade: 2
-  skillImagePath: 
+  skillImagePath: "HandMade/SkillImage/009_\uC808\uBA85"
   description: "\uBC94\uC704 \uC548\uC5D0 \uC790\uC2E0\uC744 \uC81C\uC678\uD55C \uC720\uB2DB\uC5D0\uAC8C
     \uB370\uBBF8\uC9C0\uB97C \uC900\uB2E4, \uB9CC\uC57D \uADF8 \uC720\uB2DB\uC774
     \uC8FD\uC5C8\uC744 \uACBD\uC6B0, \uC774 \uC2A4\uD0AC\uC744 \uB2E4\uC2DC \uC0AC\uC6A9\uD55C\uB2E4."
@@ -4242,7 +4230,7 @@ MonoBehaviour:
   name: "\uBCA0\uAE30"
   unitClass: 2
   grade: 1
-  skillImagePath: 
+  skillImagePath: "HandMade/SkillImage/000_\uBCA0\uAE30"
   description: "\uD55C\uCE78 \uC548\uC5D0 \uC788\uB294 \uB2E8\uC77C \uC801\uC5D0\uAC8C
     \uB370\uBBF8\uC9C0\uB97C \uC785\uD78C\uB2E4."
   enhancedLevel: 0
@@ -4373,7 +4361,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &3461679926605939544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4620,7 +4608,7 @@ MonoBehaviour:
   name: "\uB9C8\uBC95 \uD654\uC0B4"
   unitClass: 3
   grade: 1
-  skillImagePath: 
+  skillImagePath: "HandMade/SkillImage/002_\uB9C8\uBC95\uD654\uC0B4"
   description: "\uC138\uCE78 \uC548\uC5D0 \uC788\uB294 \uB2E8\uC77C \uC801\uC5D0\uAC8C
     \uB370\uBBF8\uC9C0\uB97C \uC785\uD78C\uB2E4."
   enhancedLevel: 0
@@ -10542,6 +10530,9 @@ MonoBehaviour:
     type: 3}
   HPBarPrefab: {fileID: 1795776118007711893, guid: b838e0645ba12244ca46bf06b138c326,
     type: 3}
+  SkillInfoInstance: {fileID: 3461679926547954012}
+  SkillInfoNameText: {fileID: 1289220065577342764}
+  SkillInfoText: {fileID: 6576838309066273732}
   currentPushedButton: {fileID: 0}
   moveButton: {fileID: 1144052994}
   skillButtons:
@@ -10755,7 +10746,7 @@ MonoBehaviour:
   name: "\uCC9C\uBC8C"
   unitClass: 4
   grade: 1
-  skillImagePath: 
+  skillImagePath: "HandMade/SkillImage/003_\uCC9C\uBC8C"
   description: "\uB450\uCE78 \uC548\uC5D0 \uC788\uB294 \uB2E8\uC77C \uC801\uC5D0\uAC8C
     \uB370\uBBF8\uC9C0\uB97C \uC785\uD78C\uB2E4."
   enhancedLevel: 0
@@ -10782,7 +10773,7 @@ MonoBehaviour:
   name: "\uC218\uD638"
   unitClass: 2
   grade: 1
-  skillImagePath: 
+  skillImagePath: "HandMade/SkillImage/007_\uC218\uD638"
   description: "\uB450\uCE78 \uC548\uC5D0 \uC788\uB294 \uC544\uAD70\uC5D0\uAC8C \uBCF4\uD638
     \uD6A8\uACFC\uB97C 3\uD134\uAC04 \uAC74\uB2E4,"
   enhancedLevel: 0
@@ -11297,7 +11288,7 @@ MonoBehaviour:
   name: "\uC18D\uC0AC"
   unitClass: 5
   grade: 1
-  skillImagePath: 
+  skillImagePath: "HandMade/SkillImage/001_\uC18D\uC0AC"
   description: "\uC138\uCE78 \uC548\uC5D0 \uC788\uB294 \uB2E8\uC77C \uC801\uC5D0\uAC8C
     \uB370\uBBF8\uC9C0\uB97C \uC785\uD78C\uB2E4."
   enhancedLevel: 0
@@ -11338,7 +11329,7 @@ MonoBehaviour:
   name: "\uCCA0\uC778"
   unitClass: 2
   grade: 1
-  skillImagePath: 
+  skillImagePath: "HandMade/SkillImage/006_\uCCA0\uC778"
   description: "\uC790\uC2E0\uC5D0\uAC8C \uBCF4\uD638\uB9C9\uC744 \uBD80\uC5EC\uD55C\uB2E4."
   enhancedLevel: 0
   reuseTime: 2
@@ -11364,7 +11355,7 @@ MonoBehaviour:
   name: "\uAC15\uD0C0"
   unitClass: 2
   grade: 1
-  skillImagePath: 
+  skillImagePath: "HandMade/SkillImage/004_\uAC15\uD0C0"
   description: "\uD55C\uCE78 \uC548\uC5D0 \uC788\uB294 \uB2E8\uC77C \uC801\uC5D0\uAC8C
     \uB370\uBBF8\uC9C0\uB97C \uC785\uD78C\uACE0, \uAE30\uC808 \uC0C1\uD0DC\uC774\uC0C1\uC744
     \uAC74\uB2E4."
@@ -11583,7 +11574,7 @@ MonoBehaviour:
   name: "\uD68C\uC804\uBCA0\uAE30"
   unitClass: 2
   grade: 1
-  skillImagePath: 
+  skillImagePath: "HandMade/SkillImage/005_\uD68C\uC804\uBCA0\uAE30"
   description: "\uBC94\uC704 \uC548\uC5D0 \uC788\uB294 \uBAA8\uB4E0 \uC720\uB2DB\uC5D0\uAC8C
     \uB370\uBBF8\uC9C0\uB97C \uC785\uD78C\uB2E4."
   enhancedLevel: 0
@@ -11894,7 +11885,7 @@ MonoBehaviour:
   name: "\uD798\uC758 \uD30C\uB3D9"
   unitClass: 2
   grade: 2
-  skillImagePath: 
+  skillImagePath: "HandMade/SkillImage/008_\uD798\uC758 \uD30C\uB3D9"
   description: "\uBC94\uC704 \uC548\uC5D0 \uC788\uB294 \uBAA8\uB4E0 \uC801\uAD70\uC5D0\uAC8C
     \uB370\uBBF8\uC9C0\uB97C \uC785\uD788\uACE0 \uAE30\uC808 \uC2DC\uD0A8\uB2E4."
   enhancedLevel: 0
