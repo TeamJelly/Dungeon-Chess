@@ -7,7 +7,7 @@ using Model;
 /// </summary>
 public class Skill_010 : Skill
 {
-     Skill_010()
+     public Skill_010()
      {
         number = 10;
         name = "광역 도발";
@@ -21,12 +21,12 @@ public class Skill_010 : Skill
         APSchema = "1;1";
         RPSchema = "1;1";
      }
-    public override void UseSkillToUnit(Unit unit)
+    public override void UseSkillToUnit(Unit owner, Unit unit)
     {
         Debug.LogError(name + " 스킬을 " + unit.name + "에 사용!");
 
         //도발 효과, 보호막 2턱
-        // unit.GetDamage(GetComponent<Unit>().strength * damage + enhancedLevel);
-        base.UseSkillToUnit(unit);
+        // unit.GetDamage(owner.strength * damage + enhancedLevel);
+        base.UseSkillToUnit(owner,unit);
     }
 }

@@ -22,7 +22,7 @@ namespace UI.Battle
                "\nHP:" + unit.currentHP + "/" + unit.maxHP +
                 "\nSPEED: " + unit.agility);
 
-            unitImage.Sprite = unit.GetComponent<SpriteRenderer>().sprite;
+            unitImage.Sprite = unit.transform.GetComponent<SpriteRenderer>().sprite;
         }
 
         void SetText(string text)

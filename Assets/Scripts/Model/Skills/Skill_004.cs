@@ -7,7 +7,7 @@ using Model;
 /// </summary>
 public class Skill_004 : Skill
 {
-    Skill_004()
+    public Skill_004()
     {
         number = 4;
         name = "강타";
@@ -22,10 +22,10 @@ public class Skill_004 : Skill
         APSchema = "3;010;111;010";
         RPSchema = "1;1";
     }
-    public override void UseSkillToUnit(Unit unit)
+    public override void UseSkillToUnit(Unit owner, Unit unit)
     {
         Debug.LogError(name + " 스킬을 " + unit.name + "에 사용!");
         unit.GetDamage(10 + enhancedLevel);
-        base.UseSkillToUnit(unit);
+        base.UseSkillToUnit(owner,unit);
     }
 }

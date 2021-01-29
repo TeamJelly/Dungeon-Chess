@@ -5,7 +5,7 @@ public class Skill_007 : Skill
 {
 
     // Use this for initialization
-    private Skill_007()
+    public Skill_007()
     {
         number = 7;
         name = "수호";
@@ -21,9 +21,9 @@ public class Skill_007 : Skill
         RPSchema = "1;0";
     }
 
-    public override void UseSkillToUnit(Unit unit)
+    public override void UseSkillToUnit(Unit owner, Unit unit)
     {
         Debug.LogError(name + " 스킬을 " + unit.name + "에 사용!");
-        base.UseSkillToUnit(unit);
+        base.UseSkillToUnit(owner,unit);
     }
 }

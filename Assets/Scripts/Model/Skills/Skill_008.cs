@@ -9,7 +9,7 @@ public class Skill_008 : Skill
 {
     [Header("스킬 고유 특성")]
     private int strengthToDamageRatio;
-    Skill_008()
+    public Skill_008()
     {
         number = 8;
         name = "힘의 파동";
@@ -96,10 +96,10 @@ public class Skill_008 : Skill
             return Common.Range.ParseRangeSchema(RPSchemas[4]);
     }
 
-    public override void UseSkillToUnit(Unit unit)
+    public override void UseSkillToUnit(Unit owner, Unit unit)
     {
         Debug.LogError(name + " 스킬을 " + unit.name + "에 사용!");
-        unit.GetDamage(GetComponent<Unit>().strength * strengthToDamageRatio + enhancedLevel);
-        base.UseSkillToUnit(unit);
+        unit.GetDamage(owner.strength * strengthToDamageRatio + enhancedLevel);
+        base.UseSkillToUnit(owner,unit);
     }
 }

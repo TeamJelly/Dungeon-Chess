@@ -6,7 +6,7 @@ public class Skill_011 : Skill
     private int fixedDamge;
 
     // Use this for initialization
-    private Skill_011()
+    public Skill_011()
     {
         number = 11;
         name = "혼신의 일격";
@@ -22,10 +22,10 @@ public class Skill_011 : Skill
         fixedDamge = 20;
     }
 
-    public override void UseSkillToUnit(Unit unit)
+    public override void UseSkillToUnit(Unit owner, Unit unit)
     {
         Debug.LogError(name + " 스킬을 " + unit.name + "에 사용!");
-        unit.GetDamage(GetComponent<Unit>().maxHP + fixedDamge);
-        base.UseSkillToUnit(unit);
+        unit.GetDamage(owner.maxHP + fixedDamge);
+        base.UseSkillToUnit(owner,unit);
     }
 }
