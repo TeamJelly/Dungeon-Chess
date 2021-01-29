@@ -16,17 +16,16 @@ public class Skill_003 : Skill
         description = "두칸 안에 있는 단일 적에게 데미지를 입힌다.";
         criticalRate = 0;
         reuseTime = 0;
-        domain = Domain.SelectOne;
-        target = Target.AnyUnit;
         APSchema = "5;00100;01110;11111;01110;00100";
         RPSchema = "1;1";
         strengthToDamageRatio = 1;
     }
 
-    public override void UseSkillToUnit(Unit unit)
+    public override void Use(Unit user, Tile target)
     {
-        Debug.LogError(name + " 스킬을 " + unit.name + "에 사용!");
-        unit.GetDamage(GetComponent<Unit>().strength * strengthToDamageRatio + enhancedLevel);
-        base.UseSkillToUnit(unit);
+        Unit unit = target.GetUnit();
+        int damage = user.strength * strengthToDamageRatio + enhancedLevel;
+        Common.UnitAction.Damage(unit, damage);
+        base.Use(user, target);
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Model;
+
 /// <summary>
 /// 스킬 이름: 베기
 /// </summary>
@@ -19,17 +20,17 @@ public class Skill_000 : Skill
         description = "한칸 안에 있는 단일 적에게 데미지를 입힌다.";
         criticalRate = 5;
         reuseTime = 0;
-        domain = Domain.SelectOne;
-        target = Target.AnyUnit;
         APSchema = "3;010;101;010";
         RPSchema = "1;1";
         strengthToDamageRatio = 1;
     }
 
-    public override void UseSkillToUnit(Unit unit)
+    public override void Use(Unit user, Tile target)
     {
-        Debug.LogError(name + " 스킬을 " + unit.name + "에 사용!");
-        unit.GetDamage(GetComponent<Unit>().strength * strengthToDamageRatio + enhancedLevel * 2);
-        base.UseSkillToUnit(unit);
+
+        Unit unit = target.GetUnit();
+        int damage = user.strength * strengthToDamageRatio + enhancedLevel * 2;
+        Common.UnitAction.Damage(unit, damage);
+        base.Use(user, target);
     }
 }

@@ -17,15 +17,15 @@ public class Skill_004 : Skill
         description = "한칸 안에 있는 단일 적에게 데미지를 입힌고, 기절 상태이상을 건다.";
         criticalRate = 0;
         reuseTime = 3;
-        domain = Domain.SelectOne;
-        target = Target.EnemyUnit;
         APSchema = "3;010;111;010";
         RPSchema = "1;1";
     }
-    public override void UseSkillToUnit(Unit unit)
+
+    public override void Use(Unit user, Tile target)
     {
-        Debug.LogError(name + " 스킬을 " + unit.name + "에 사용!");
-        unit.GetDamage(10 + enhancedLevel);
-        base.UseSkillToUnit(unit);
+        Unit unit = target.GetUnit();
+        int damage = 10 + enhancedLevel;
+        Common.UnitAction.Damage(unit, damage);
+        base.Use(user, target);
     }
 }

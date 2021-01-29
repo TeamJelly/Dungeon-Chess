@@ -16,17 +16,13 @@ public class Skill_010 : Skill
         description = "방 안에 있는 모든 적군에게 도발 효과를 주고 보호막을 2턴 얻는다.";
         criticalRate = 0;
         reuseTime = 6;
-        domain = Domain.Fixed;
-        target = Target.EnemyUnit;
         APSchema = "1;1";
         RPSchema = "1;1";
      }
-    public override void UseSkillToUnit(Unit unit)
+    public override void Use(Unit user, Tile target)
     {
-        Debug.LogError(name + " 스킬을 " + unit.name + "에 사용!");
-
+        Unit unit = target.GetUnit();
         //도발 효과, 보호막 2턱
-        // unit.GetDamage(GetComponent<Unit>().strength * damage + enhancedLevel);
-        base.UseSkillToUnit(unit);
+        base.Use(user, target);
     }
 }

@@ -71,8 +71,8 @@ namespace UI.Battle
         {
             foreach (Unit unit in BattleManager.instance.AllUnits)
             {
-                unit.gameObject.AddComponent<BoxCollider2D>();
-                EventTrigger eventTrigger = unit.gameObject.AddComponent<EventTrigger>();
+                //unit.gameObject.AddComponent<BoxCollider2D>();
+                //EventTrigger eventTrigger = unit.gameObject.AddComponent<EventTrigger>();
                 EventTrigger.Entry entry_PointerClick = new EventTrigger.Entry();
                 entry_PointerClick.eventID = EventTriggerType.PointerClick;
                 entry_PointerClick.callback.AddListener((data) =>
@@ -91,7 +91,7 @@ namespace UI.Battle
             foreach (Unit unit in BattleManager.instance.AllUnits)
             {
                 Slider newHPBar = Instantiate(HPBarPrefab, transform).GetComponent<Slider>();
-                newHPBar.transform.localScale = new Vector3(unit.unitPosition.GetSize().x * 0.8f, 1, 1);
+                //newHPBar.transform.localScale = new Vector3(unit.unitPosition.GetSize().x * 0.8f, 1, 1);
                 hpBars.Add(newHPBar);
             }
         }
@@ -170,14 +170,15 @@ namespace UI.Battle
         /// <param name="from">출발 위치</param>
         /// <param name="to">도착 위치</param>
         /// <returns></returns>
-        IEnumerator MoveUnit(Unit unit, UnitPosition from, UnitPosition to)
+        IEnumerator MoveUnit(Unit unit, Vector2Int from, Vector2Int to)
         {
-            List<UnitPosition> path = BattleManager.PathFindAlgorithm(unit, from, to);
+            List<Vector2Int> path = PathFind.PathFindAlgorithm(from, to);
 
             var waitForSeconds = new WaitForSeconds(0.1f);
-            foreach (UnitPosition position in path)
+            foreach (Vector2Int position in path)
             {
-                unit.Move(position);
+                UnitAction.Move(unit, position);
+                // 화면 갱신 코드 필요.
                 yield return waitForSeconds;
             }
         }

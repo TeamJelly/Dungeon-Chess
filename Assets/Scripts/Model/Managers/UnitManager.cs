@@ -7,8 +7,6 @@ namespace Model.Managers
     public class UnitManager
     {
         public List<Unit> AllUnits = new List<Unit>();
-
-
         public List<Unit> PartyUnits = new List<Unit>();
         public List<Unit> EnemyUnits = new List<Unit>();
 

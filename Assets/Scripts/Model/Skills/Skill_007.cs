@@ -15,15 +15,14 @@ public class Skill_007 : Skill
         description = "두칸 안에 있는 아군에게 보호 효과를 3턴간 건다,";
         criticalRate = 5;
         reuseTime = 3;
-        domain = Domain.SelectOne;
-        target = Target.FriendlyUnit;
         APSchema = "5;00100;01110;11111;01110;00100";
         RPSchema = "1;0";
     }
 
-    public override void UseSkillToUnit(Unit unit)
+    public override void Use(Unit user, Tile target)
     {
-        Debug.LogError(name + " 스킬을 " + unit.name + "에 사용!");
-        base.UseSkillToUnit(unit);
+        Unit unit = target.GetUnit();
+        //Common.UnitAction.GetEffect(unit, new Effect("수호, ))
+        base.Use(user, target);
     }
 }
