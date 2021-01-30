@@ -15,16 +15,20 @@ namespace Model.Managers
         // 현재 전투의 모든 타일을 참조할 수 있습니다.
         private Tile[,] AllTiles; 
         // 현재 턴의 유닛
+
         public Unit thisTurnUnit;
 
+        public List<Vector3> PartyPositions;
+        public List<Vector3> EnemyPositions;
         private void Awake()
         {
             instance = this;
             GenerateTiles(10, 10);
 
             /***유닛 더미데이터 추가. 추후 BattleUI의 EndGame 함수 포함하여 코드 제거***/
-            AddUnitsIntoRoom(UnitManager.Instance.EnemyUnits);
-            AddUnitsIntoRoom(UnitManager.Instance.PartyUnits);
+            UnitManager.Instance.InitForTesting();
+            AddUnitsIntoRoom(UnitManager.Instance.EnemyUnits,EnemyPositions);
+            AddUnitsIntoRoom(UnitManager.Instance.PartyUnits,PartyPositions);
             /***************************************************************************/
         }
 
@@ -71,15 +75,19 @@ namespace Model.Managers
         }
 
         /// <summary>
-        /// 룸에 유닛들 추가
+        /// 룸에 유닛들 추가. 
         /// </summary>
         /// <param name="units">추가할 유닛 리스트</param>
-        void AddUnitsIntoRoom(List<Unit> units)
+        void AddUnitsIntoRoom(List<Unit> units, List<Vector3> positions)
         {
-            foreach (Unit unit in units)
+            for(int i = 0; i < units.Count; i++)
             {
-                AllUnits.Add(unit);
-                Common.UnitAction.Summon(unit, unit.position);
+                //Common.UnitAction.Summon(unit, unit.position);
+                AllUnits.Add(units[i]);
+                GameObject unitShape = Instantiate(Resources.Load("Prefabs/Units/" + units[i].name), positions[i], Quaternion.identity) as GameObject;
+                units[i].SetUnitShape(unitShape.transform);
+                //유닛 타일 할당
+                AllocateUnitTiles(units[i], units[i].unitPosition);
             }
         }
 
