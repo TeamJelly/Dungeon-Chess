@@ -26,11 +26,10 @@ namespace UI
 
         public List<Sprite> roomImages;
 
-        private void Awake()
+        private void Start()
         {
-            instance = this;
+           InitStageUI(StageManager.instance.AllRooms);
         }
-
         /// <summary>
         /// 이용 가능한 방 및 현재 방 표시
         /// </summary>
