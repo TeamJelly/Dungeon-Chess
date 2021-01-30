@@ -7,7 +7,7 @@ using TMPro;
 
 namespace Common.UI
 {
-    public class Image : MonoBehaviour
+    public class UImage : MonoBehaviour
     {
         private TMP_Text textMesh;
 
