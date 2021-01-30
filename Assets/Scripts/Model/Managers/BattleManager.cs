@@ -27,6 +27,8 @@ namespace Model.Managers
             EnemyUnits.Add(UnitManager.GetUnit("몬스터2"));
 
             AddUnitsIntoRoom(EnemyUnits, EnemyPositions);
+
+            if (GameManager.PartyUnits.Count == 0) GameManager.Instance.InitForTesting();
             AddUnitsIntoRoom(GameManager.PartyUnits,PartyPositions);
             /***************************************************************************/
 

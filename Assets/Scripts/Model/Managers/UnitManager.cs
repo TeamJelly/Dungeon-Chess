@@ -22,7 +22,9 @@ namespace Model.Managers
 
         UnitManager()
         {
-
+            AllUnits.Add(GetUnit("유닛1"));
+            AllUnits.Add(GetUnit("유닛2"));
+            AllUnits.Add(GetUnit("유닛3"));
         }
 
         /// <summary>

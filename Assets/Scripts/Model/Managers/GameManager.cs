@@ -28,7 +28,7 @@ namespace Model.Managers
         }
         GameManager()
         {
-            InitForTesting();
+            //InitForTesting();
         }
         public static void Reset()
         {
@@ -45,7 +45,7 @@ namespace Model.Managers
             PartyUnits.Remove(unit);
         }
 
-        void InitForTesting()
+        public void InitForTesting()
         {
             partyUnits.Add(UnitManager.GetUnit("유닛1"));
             partyUnits.Add(UnitManager.GetUnit("유닛2"));
