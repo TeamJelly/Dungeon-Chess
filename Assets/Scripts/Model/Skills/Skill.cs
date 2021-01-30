@@ -50,6 +50,9 @@ namespace Model
             NULL,
             Any,            // 모든 타일에 사용가능
             NoUnit,         // 유닛이 없는 곳에만 사용가능, 이동 혹은 소환류 스킬에 사용
+            Party,
+            Friendly,
+            Enemy,
         }
 
         public Type type = Type.Fixed;          // Default : Fixed
@@ -82,7 +85,7 @@ namespace Model
             {
                 if (target == Target.Any)
                     return true;
-                else if (target == Target.NoUnit && BattleManager.instance.GetUnit(position) == null)
+                else if (target == Target.NoUnit && BattleManager.GetUnit(position) == null)
                     return true;
             }
 

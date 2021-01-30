@@ -10,8 +10,11 @@ namespace Model.Managers
     {
         public static BattleManager instance;
 
-        public List<Unit> AllUnits;
-        public Tile[,] AllTiles; //10x10일때 0,0 ~ 9,9으로
+        // 현재 전투의 모든 유닛을 참조할 수 있습니다.
+        private static List<Unit> AllUnits;
+        // 현재 전투의 모든 타일을 참조할 수 있습니다.
+        private Tile[,] AllTiles; 
+        // 현재 턴의 유닛
         public Unit thisTurnUnit;
 
         private void Awake()
@@ -25,17 +28,28 @@ namespace Model.Managers
             /***************************************************************************/
         }
 
-        public List<Unit> GetEnemyUnits()
+
+
+        public static List<Unit> GetUnit(Category category)
         {
             List<Unit> units = new List<Unit>();
 
             foreach (var item in AllUnits)
             {
-                if (item.category == Category.Enemy)
+                if (item.category == category)
                     units.Add(item);
             }
 
             return units;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static List<Unit> GetUnit()
+        {
+            return AllUnits;
         }
 
         public static Unit GetUnit(Vector2Int position)

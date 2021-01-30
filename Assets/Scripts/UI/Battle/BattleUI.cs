@@ -42,15 +42,15 @@ namespace UI.Battle
         {
             //Init();
             indicatorManager = IndicatorUI.instance;
-            Init_UnitDescriptionUI();
-            Init_UnitHPBar();
+            //Init_UnitDescriptionUI();
+            //Init_UnitHPBar();
             Init_UnitInfoUI();
             Init_UnitTurnIndicator();
             SetNextTurn();
         }
         private void Update()
         {
-            UpdateHPBarPosition();
+            //UpdateHPBarPosition();
         }
 
         /// <summary>
@@ -63,16 +63,16 @@ namespace UI.Battle
             UnitManager.Instance.PartyUnits.Clear();
             SceneLoader.GotoStage();
         }
-
+/*
         /// <summary>
         /// 유닛 설명창 활성화 기능 생성
         /// </summary>
         void Init_UnitDescriptionUI()
         {
-            foreach (Unit unit in BattleManager.instance.AllUnits)
+            foreach (Unit unit in BattleManager.GetUnit())
             {
-                //unit.gameObject.AddComponent<BoxCollider2D>();
-                //EventTrigger eventTrigger = unit.gameObject.AddComponent<EventTrigger>();
+                unit.gameObject.AddComponent<BoxCollider2D>();
+                EventTrigger eventTrigger = unit.gameObject.AddComponent<EventTrigger>();
                 EventTrigger.Entry entry_PointerClick = new EventTrigger.Entry();
                 entry_PointerClick.eventID = EventTriggerType.PointerClick;
                 entry_PointerClick.callback.AddListener((data) =>
@@ -108,6 +108,8 @@ namespace UI.Battle
             }
 
         }
+*/
+
 
         /// <summary>
         /// 파티원 유닛 정보창 생성
