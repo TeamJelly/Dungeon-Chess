@@ -14,7 +14,13 @@ namespace UI
         public Common.UI.Text startButton;
         Unit currentUnit;
 
-        int selectedUnitCount = 0;
+        int selectedUnitCount = 0;//현재 고용된 파티 인원
+        int index = 0;
+
+        private void Start()
+        {
+            
+        }
         public void EnableStartButton()
         {
 
@@ -38,12 +44,12 @@ namespace UI
 
         public void Hire()
         {
-            UnitManager.Instance.AddPartyUnit(currentUnit);
+            GameManager.AddPartyUnit(currentUnit);
             if (selectedUnitCount > 0) startButton.enabled = true;
         }
         public void Fire()
         {
-            UnitManager.Instance.SubPartyUnit(currentUnit);
+            GameManager.SubPartyUnit(currentUnit);
             if (selectedUnitCount == 0) startButton.enabled = false;
         }
     }

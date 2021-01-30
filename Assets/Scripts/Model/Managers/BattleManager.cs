@@ -18,17 +18,20 @@ namespace Model.Managers
 
         public Unit thisTurnUnit;
 
-        public List<Vector3> PartyPositions;
-        public List<Vector3> EnemyPositions;
+        public List<Vector2> PartyPositions;
+        public List<Vector2> EnemyPositions;
         private void Awake()
         {
             instance = this;
             GenerateTiles(10, 10);
 
             /***유닛 더미데이터 추가. 추후 BattleUI의 EndGame 함수 포함하여 코드 제거***/
-            UnitManager.Instance.InitForTesting();
-            AddUnitsIntoRoom(UnitManager.Instance.EnemyUnits,EnemyPositions);
-            AddUnitsIntoRoom(UnitManager.Instance.PartyUnits,PartyPositions);
+            List<Unit> EnemyUnits = new List<Unit>();
+            EnemyUnits.Add(UnitManager.GetUnit("몬스터2"));
+            EnemyUnits.Add(UnitManager.GetUnit("몬스터2"));
+
+            AddUnitsIntoRoom(EnemyUnits, EnemyPositions);
+            AddUnitsIntoRoom(GameManager.PartyUnits,PartyPositions);
             /***************************************************************************/
         }
 
@@ -78,16 +81,16 @@ namespace Model.Managers
         /// 룸에 유닛들 추가. 
         /// </summary>
         /// <param name="units">추가할 유닛 리스트</param>
-        void AddUnitsIntoRoom(List<Unit> units, List<Vector3> positions)
+        void AddUnitsIntoRoom(List<Unit> units, List<Vector2> positions)
         {
             for(int i = 0; i < units.Count; i++)
             {
                 //Common.UnitAction.Summon(unit, unit.position);
                 AllUnits.Add(units[i]);
                 GameObject unitShape = Instantiate(Resources.Load("Prefabs/Units/" + units[i].name), positions[i], Quaternion.identity) as GameObject;
+                unitShape.transform.position += Vector3.back; // 화면상 이미지 겹쳐서 안보이는 문제 해결
                 units[i].SetUnitShape(unitShape.transform);
-                //유닛 타일 할당
-                AllocateUnitTiles(units[i], units[i].unitPosition);
+                AllocateUnitTiles(units[i], units[i].unitPosition);//유닛 타일 할당
             }
         }
 

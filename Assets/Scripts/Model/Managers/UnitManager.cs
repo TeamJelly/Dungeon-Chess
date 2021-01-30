@@ -6,9 +6,8 @@ namespace Model.Managers
 {
     public class UnitManager
     {
+        //고용 가능한 모든 유닛들
         public List<Unit> AllUnits = new List<Unit>();
-        public List<Unit> PartyUnits = new List<Unit>();
-        public List<Unit> EnemyUnits = new List<Unit>();
 
         static UnitManager instance;
         public static UnitManager Instance
@@ -27,50 +26,24 @@ namespace Model.Managers
         }
 
         /// <summary>
+        /// 유닛 이름으로 유닛 반환. DB에서 불러오는게 좋을 듯 함.
+        /// </summary>
+        /// <param name="unitName"></param>
+        /// <returns></returns>
+        public static Unit GetUnit(string unitName)
+        {
+            Unit newUnit = new Unit(unitName);
+            newUnit.agility = 3;
+            newUnit.setSkill(new Skill_000(), 0);
+            newUnit.setSkill(new Skill_001(), 1);
+            newUnit.setSkill(new Skill_002(), 2);
+            newUnit.setSkill(new Skill_003(), 3);
+            return newUnit;
+        }
+        /// <summary>
         /// 배틀 씬에서 더미데이터 추가하는 코드.
         /// </summary>
-        public void InitForTesting()
-        {
-            PartyUnits.Add(new Unit("유닛1"));
-            PartyUnits.Add(new Unit("유닛2"));
-            PartyUnits.Add(new Unit("유닛3"));
-            for(int i = 0; i < PartyUnits.Count; i++)
-            {
-                PartyUnits[i].agility = i + 1;
-                PartyUnits[i].setSkill(new  Skill_000(),0);
-                PartyUnits[i].setSkill(new  Skill_001(),1);
-                PartyUnits[i].setSkill(new  Skill_002(),2);
-                PartyUnits[i].setSkill(new  Skill_003(),3);
-            }
-            EnemyUnits.Add(new Unit("몬스터2"));
-            EnemyUnits.Add(new Unit("몬스터2"));
-            for (int i = 0; i < EnemyUnits.Count; i++)
-            {
-                EnemyUnits[i].agility = i + 2;
-                EnemyUnits[i].setSkill(new Skill_004(), 0);
-                EnemyUnits[i].setSkill(new Skill_005(), 1);
-                EnemyUnits[i].setSkill(new Skill_006(), 2);
-                EnemyUnits[i].setSkill(new Skill_007(), 3);
-            }
-        }
 
-        public void AddPartyUnit(Unit unit)
-        {
-            PartyUnits.Add(unit);
-        }
 
-        public void SubPartyUnit(Unit unit)
-        {
-            PartyUnits.Remove(unit);
-        }
-
-        public void AddEnemyUnit(Unit unit)
-        {
-            EnemyUnits.Add(unit);
-        }
-        public void SubEnemyUnit(Unit unit)
-        {
-            EnemyUnits.Remove(unit);
-        }
     }
 }

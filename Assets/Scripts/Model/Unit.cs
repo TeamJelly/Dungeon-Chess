@@ -72,7 +72,8 @@ namespace Model
         public void SetUnitShape(Transform t)
         {
             this.transform = t;
-            unitPosition.Add(new Vector2Int((int)t.position.x, (int)t.position.y));
+            Vector2Int newPos = new Vector2Int((int)t.position.x, (int)t.position.y);
+            unitPosition.Set(newPos, newPos);
             
         }
         /// <summary>

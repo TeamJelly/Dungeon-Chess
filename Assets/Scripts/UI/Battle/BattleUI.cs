@@ -59,8 +59,6 @@ namespace UI.Battle
         /// </summary>
         public void EndGame()
         {
-            UnitManager.Instance.EnemyUnits.Clear();
-            UnitManager.Instance.PartyUnits.Clear();
             SceneLoader.GotoStage();
         }
 /*
@@ -116,7 +114,7 @@ namespace UI.Battle
         /// </summary>
         void Init_UnitInfoUI()
         {
-            for (int i = 0; i < UnitManager.Instance.PartyUnits.Count; i++)
+            for (int i = 0; i < GameManager.PartyUnits.Count; i++)
             {
                 GameObject g = Instantiate(UnitInfoUIPrefab);
 
@@ -127,7 +125,7 @@ namespace UI.Battle
                 UnitInfoUI unitInfoUI = g.GetComponent<UnitInfoUI>();
                 unitInfoUI.Init(); ;
                 UnitsInfoList.Add(unitInfoUI);
-                UpdateUnitInfo(UnitManager.Instance.PartyUnits[i]);
+                UpdateUnitInfo(GameManager.PartyUnits[i]);
             }
         }
 
@@ -150,7 +148,7 @@ namespace UI.Battle
         /// <param name="unit">현재 턴 유닛</param>
         void SetUnitTurnIndicator(Unit unit)
         {
-            int index = UnitManager.Instance.PartyUnits.IndexOf(unit);
+            int index = GameManager.PartyUnits.IndexOf(unit);
             unitTurnIndicator.SetParent(UnitsInfoList[index].transform);
             unitTurnIndicator.SetAsFirstSibling();
             unitTurnIndicator.anchoredPosition = Vector2.zero;
@@ -191,7 +189,7 @@ namespace UI.Battle
         /// <param name="unit">갱신할 유닛</param>
         public void UpdateUnitInfo(Unit unit)
         {
-            int index = UnitManager.Instance.PartyUnits.IndexOf(unit);
+            int index = GameManager.PartyUnits.IndexOf(unit);
             UnitsInfoList[index].Set(unit);
         }
 
@@ -204,7 +202,7 @@ namespace UI.Battle
             currentPushedButton = null;
             indicatorManager.DestoryAll();
 
-            bool isPartyUnit = UnitManager.Instance.PartyUnits.Contains(unit);
+            bool isPartyUnit = GameManager.PartyUnits.Contains(unit);
             if (isPartyUnit) // 파티원인가?
             {
                 foreach (Button button in skillButtons) // 이전 스킬 이미지 제거.
