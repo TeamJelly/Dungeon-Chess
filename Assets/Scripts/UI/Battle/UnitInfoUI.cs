@@ -10,7 +10,7 @@ namespace UI.Battle
 {
     public class UnitInfoUI : MonoBehaviour
     {
-        public Image unitImage;
+        public UImage unitImage;
 
         public Text description;
 

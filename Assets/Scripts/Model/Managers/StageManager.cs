@@ -18,7 +18,7 @@ namespace Model.Managers
             set => GameManager.Instance.currentRoom = value;
         }
 
-        Room[,] AllRooms
+        public Room[,] AllRooms
         {
             get => GameManager.Instance.AllRooms;
             set => GameManager.Instance.AllRooms = value;
@@ -43,10 +43,6 @@ namespace Model.Managers
         private void Awake()
         {
             instance = this;
-        }
-
-        public void Start()
-        {
             if (currentRoom == null)
             {
                 InitStage(1, 0);
@@ -55,7 +51,6 @@ namespace Model.Managers
                         Debug.LogError("error"); // 없는 방 존재
                                                  //        }
             }
-            StageUI.instance.InitStageUI(AllRooms);
         }
 
         public void Restart()
