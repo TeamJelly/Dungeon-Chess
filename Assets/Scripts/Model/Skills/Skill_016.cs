@@ -9,7 +9,7 @@ public class Skill_016 : Skill
 {
     [Header("스킬 고유 특성")]
     private int strengthToDamageRatio;
-    Skill_016()
+    public Skill_016()
     {
         number = 16;
         name = "화살비";
@@ -25,10 +25,10 @@ public class Skill_016 : Skill
         RPSchema = "3;111;101;111";
         strengthToDamageRatio = 1;
     }
-    public override void UseSkillToUnit(Unit unit)
+    public override void UseSkillToUnit(Unit owner, Unit unit)
     {
         Debug.LogError(name + " 스킬을 " + unit.name + "에 사용!");
-        unit.GetDamage(GetComponent<Unit>().strength * strengthToDamageRatio + enhancedLevel * 2);
-        base.UseSkillToUnit(unit);
+        unit.GetDamage(owner.strength * strengthToDamageRatio + enhancedLevel * 2);
+        base.UseSkillToUnit(owner,unit);
     }
 }

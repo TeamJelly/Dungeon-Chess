@@ -9,7 +9,7 @@ public class Skill_012 : Skill
 {
     [Header("스킬 고유 특성")]
     private int strengthToDamageRatio;
-     Skill_012()
+     public Skill_012()
      {
         number = 12;
         name = "광전사의 힘";
@@ -25,15 +25,15 @@ public class Skill_012 : Skill
          RPSchema = "1;1";
         strengthToDamageRatio = 1;
      }
-    public override void UseSkillToUnit(Unit unit)
+    public override void UseSkillToUnit(Unit owner, Unit unit)
     {
         Debug.LogError(name + " 스킬을 " + unit.name + "에 사용!");
-        Unit owner = GetComponent<Unit>();
+        //Unit owner = GetComponent<Unit>();
         int damage = owner.strength * strengthToDamageRatio + enhancedLevel;
 
         //적에게 광폭화 상태효과 부여 필요
         unit.GetDamage(damage);
         owner.GetHeal(damage);
-        base.UseSkillToUnit(unit);
+        base.UseSkillToUnit(owner,unit);
     }
 }

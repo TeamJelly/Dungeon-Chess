@@ -11,7 +11,7 @@ public enum Grade { NULL, Normal, Rare, Legend, Boss }
 namespace Model
 {
     [System.Serializable]
-    public class Skill : MonoBehaviour
+    public class Skill
     {
         public int number;                                              // 스킬 번호
         public new string name = "No Skill Name";                       // 스킬 이름
@@ -104,23 +104,23 @@ namespace Model
                 UseSkillToTile(tile);
         }
 
-        public virtual void UseSkillToUnit(Unit unit)
+        public virtual void UseSkillToUnit(Unit owner, Unit unit)
         {
             // 스킬당 구현 필요
             currentReuseTime = reuseTime;
         }
 
-        public virtual void UseSkillToUnit(List<Unit> units)
+        public virtual void UseSkillToUnit(Unit owner, List<Unit> units)
         {
             foreach (var unit in units)
-                UseSkillToUnit(unit);
+                UseSkillToUnit(owner, unit);
         }
 
-        public List<Unit> GetUnitsInDomain()
+        /*public List<Unit> GetUnitsInDomain()
         {
             Unit skillUser = GetComponent<Unit>();
             return GetUnitsInDomain(skillUser);
-        }
+        }*/
 
         public List<Unit> GetUnitsInDomain(Unit skillUser) //
         {
@@ -135,7 +135,7 @@ namespace Model
         }
 
 
-        public List<Unit> GetUnitsInSelectOne(Unit skillUser)
+        List<Unit> GetUnitsInSelectOne(Unit skillUser)
         {
             List<Unit> units = new List<Unit>();
             List<Unit> tempUnits = BattleManager.GetUnitsInPositions(GetPositionsInDomain(skillUser)); // 스킬 도메인을 받고 그위의 유닛들을 반환
@@ -155,11 +155,11 @@ namespace Model
             return units;
         }
 
-        public List<UnitPosition> GetUnitPositionsInDomain()
+        /*public List<UnitPosition> GetUnitPositionsInDomain()
         {
             Unit skillUser = GetComponent<Unit>();
             return GetUnitPositionsInDomain(skillUser);
-        }
+        }*/
 
         public List<UnitPosition> GetUnitPositionsInDomain(Unit skillUser)
         {

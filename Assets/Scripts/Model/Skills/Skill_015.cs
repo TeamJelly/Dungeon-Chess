@@ -7,7 +7,7 @@ public class Skill_015 : Skill
     // bless 수치가 없음.
 
     // Use this for initialization
-    private Skill_015()
+    public Skill_015()
     {
         number = 15;
         name = "철수";
@@ -29,10 +29,10 @@ public class Skill_015 : Skill
         base.UseSkillToTile(tile);
     }
 
-    public override void UseSkillToUnit(Unit unit)
+    public override void UseSkillToUnit(Unit owner, Unit unit)
     {
         Debug.LogError(name + " 스킬을 " + unit.name + "에 사용!");
         // 유닛 축복
-        base.UseSkillToUnit(unit);
+        base.UseSkillToUnit(owner,unit);
     }
 }

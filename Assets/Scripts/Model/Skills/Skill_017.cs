@@ -9,7 +9,7 @@ public class Skill_017 : Skill
     private float minDamage;
 
     // Use this for initialization
-    private Skill_017()
+    public Skill_017()
     {
         number = 17;
         name = "럭키샷";
@@ -28,11 +28,11 @@ public class Skill_017 : Skill
         minDamage = 10;
     }
 
-    public override void UseSkillToUnit(Unit unit)
+    public override void UseSkillToUnit(Unit owner, Unit unit)
     {
         Debug.LogError(name + " 스킬을 " + unit.name + "에 사용!");
         float damage = Random.Range(minDamage + minDamageUp * enhancedLevel, maxDamage + maxDamageUp * enhancedLevel);
         unit.GetDamage((int)damage);
-        base.UseSkillToUnit(unit);
+        base.UseSkillToUnit(owner,unit);
     }
 }

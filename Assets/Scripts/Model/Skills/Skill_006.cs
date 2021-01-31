@@ -7,7 +7,7 @@ using Model;
 /// </summary>
 public class Skill_006 : Skill
 {
-    Skill_006()
+    public Skill_006()
     {
         number = 6;
         name = "철인";
@@ -22,13 +22,13 @@ public class Skill_006 : Skill
         APSchema = "1;1";
         RPSchema = "1;1";
     }
-    public override void UseSkillToUnit(Unit unit)
+    public override void UseSkillToUnit(Unit owner, Unit unit)
     {
         Debug.LogError(name + " 스킬을 " + unit.name + "에 사용!");
         
        //자신에게 보호막 효과 부여 필요
        //강화시 보호막 수치 + 1
        //기본수치 = 15
-        base.UseSkillToUnit(unit);
+        base.UseSkillToUnit(owner,unit);
     }
 }

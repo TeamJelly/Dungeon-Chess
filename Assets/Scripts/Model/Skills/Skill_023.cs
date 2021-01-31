@@ -6,7 +6,7 @@ public class Skill_023 : Skill
 {
     private int strengthToDamageRatio;
 
-    private Skill_023()
+    public Skill_023()
     {
         number = 23;
         name = "화염구";
@@ -23,10 +23,10 @@ public class Skill_023 : Skill
         strengthToDamageRatio = 1;
     }
 
-    public override void UseSkillToUnit(Unit unit)
+    public override void UseSkillToUnit(Unit owner, Unit unit)
     {
         Debug.LogError(name + " 스킬을 " + unit.name + "에 사용!");
-        unit.GetDamage(GetComponent<Unit>().strength * strengthToDamageRatio + enhancedLevel * 2);
-        base.UseSkillToUnit(unit);
+        unit.GetDamage(owner.strength * strengthToDamageRatio + enhancedLevel * 2);
+        base.UseSkillToUnit(owner,unit);
     }
 }

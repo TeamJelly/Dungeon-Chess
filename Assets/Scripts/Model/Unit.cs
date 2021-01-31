@@ -13,10 +13,11 @@ public enum UnitAI {NULL, AI1, AI2, AI3, AI4 };
 
 namespace Model
 {
-    public class Unit : MonoBehaviour
+    [System.Serializable]
+    public class Unit
     {
         [Header("Normal Status")]
-        public new string name = "NoName";
+        public string name = "NoName";
 
         public Category category = Category.NULL;
         public UnitClass unitClass = UnitClass.NULL;
@@ -32,7 +33,7 @@ namespace Model
         public int currentEXP, nextEXP;
 
         [Header("Position & Size Status")]
-        public UnitPosition unitPosition;
+        public UnitPosition unitPosition = new UnitPosition();
 
         [Header("Basic Status")]
         public int strength;
@@ -40,7 +41,7 @@ namespace Model
 
         [Header("Special Status")]
         public int agility;
-        public int move;
+        public int move = 3;
         public int critical;
 
         [Header("Hidden Status")]
@@ -52,58 +53,66 @@ namespace Model
         public int skillCount;
         public int itemCount;
 
-        private List<Skill> _skills = new List<Skill>();
-        public List<Skill> skills { get => _skills; }
+        private Skill[] _skills = new Skill[4];
+        public Skill[] skills { get => _skills; }
         [Header("Having")]
-        public List<string> havingSkills;
-        public List<Artifact> antiques;
-        public List<Item> items;
-        public List<Effect> stateEffects;
+        //public string[] havingSkills = new string[4];
+        public List<Artifact> antiques = new List<Artifact>();
+        public Item[] items = new Item[2];
+        public List<Effect> stateEffects = new List<Effect>();
 
+        public Transform transform;
         // 초기화 함수
-        private void Awake()
+        /*private void Awake()
         {
             AwakeSkills();
-        }
+        }*/
 
+        /// <summary>
+        /// DB로부터 정보를 받아 초기화 예정. (이름, unitPositoin등 위의 속성들).
+        /// </summary>
+        /// <param name="name"></param>
+        public Unit(string name)
+        {
+            this.name = name;
+        }
+        public void SetUnitShape(Transform t)
+        {
+            this.transform = t;
+            unitPosition.Add(new Vector2Int((int)t.position.x, (int)t.position.y));
+            
+        }
         /// <summary>
         /// 처음에 스킬 가지고 있는 것을 초기화
         /// </summary>
-        private void AwakeSkills()
+        /*private void AwakeSkills()
         {
-            for (int i = 0; i < havingSkills.Count; i++)
+            for (int i = 0; i < havingSkills.Length; i++)
             {
                 if (havingSkills[i] != null)
                 {
-                    addSkillComponent(havingSkills[i]);
+                    AddSkillComponent(havingSkills[i]);
                 }
             }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="skillName">스킬 이름</param>
-        private void addSkillComponent(string skillName)
-        {
-            var skill = (Skill)gameObject.AddComponent(Type.GetType(skillName));
-            skills.Add(skill);
-        }
+        }*/
 
         /// <summary>
         /// (public) 스킬 등록
         /// </summary>
         /// <param name="newSkill">등록하려는 스킬 이름</param>
         /// <param name="index">슬롯 위치</param>
-        public void setSkill(string newSkill, int index)
+        public void setSkill(Skill newSkill, int index)
         {
-            if (index >= skills.Count)
+            if (index >= skills.Length)
             {
                 //TODO UI Error Message
                 return;
             }
-            havingSkills[index] = newSkill;
-            addSkillComponent(newSkill);
+            //havingSkills[index] = newSkill;
+            //Type type = Type.GetType(newSkill);
+            //Skill instance = Activator.CreateInstance(Type.GetType(newSkill)) as Skill;
+            
+            skills[index] = newSkill;
         }
         /// <summary>
         /// 
@@ -111,13 +120,14 @@ namespace Model
         /// <param name="index">slot 위치</param>
         public void removeSkill(int index)
         {
-            if (index >= skills.Count || havingSkills[index] == null || skills[index] == null)
+            if (index >= skills.Length || skills[index] == null)
             {
                 //TODO UI Error Message
                 return;
             }
-            havingSkills[index] = "";
-            Destroy(skills[index]);
+            //havingSkills[index] = "";
+            skills[index] = null;
+           // Destroy(skills[index]);
         }
 
         public void GetEXP(int getEXP)
@@ -194,7 +204,6 @@ namespace Model
             List<UnitPosition> frontier = new List<UnitPosition>();
 
             frontier.Add(unitPosition);
-
             for (int i = 0; i < move; i++)
             {
                 List<UnitPosition> nextFrontier = new List<UnitPosition>();
@@ -215,7 +224,6 @@ namespace Model
                 }
                 frontier = nextFrontier;
             }
-
             return explored;
         }
 
@@ -259,7 +267,8 @@ namespace Model
             BattleManager.instance.AllocateUnitTiles(this, unitPosition);
 
             //화면상 위치 갱신.
-            Vector2 screenPosition = unitPosition.lowerLeft + (Vector2)(unitPosition.upperRight - unitPosition.lowerLeft) / 2;
+            Vector3 screenPosition = unitPosition.lowerLeft + (Vector2)(unitPosition.upperRight - unitPosition.lowerLeft) / 2;
+            screenPosition.z = -1;
             transform.localPosition = screenPosition;
 
 

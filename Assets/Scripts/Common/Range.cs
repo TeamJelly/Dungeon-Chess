@@ -31,5 +31,7 @@ namespace Common
             }
             return list;
         }
+
+        private Range() { }
     }
 }

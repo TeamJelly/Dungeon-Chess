@@ -4,9 +4,8 @@ using Model;
 public class Skill_001 : Skill
 {
     private int strengthToDamageRatio;
-
     // Use this for initialization
-    private Skill_001()
+    public Skill_001()
     {
         number = 1;
         name = "속사";
@@ -23,10 +22,10 @@ public class Skill_001 : Skill
         strengthToDamageRatio = 1;
     }
 
-    public override void UseSkillToUnit(Unit unit)
+    public override void UseSkillToUnit(Unit owner, Unit unit)
     {
         Debug.LogError(name + " 스킬을 " + unit.name + "에 사용!");
-        unit.GetDamage(GetComponent<Unit>().strength * strengthToDamageRatio + enhancedLevel);
-        base.UseSkillToUnit(unit);
+        unit.GetDamage(owner.strength * strengthToDamageRatio + enhancedLevel);
+        base.UseSkillToUnit(owner,unit);
     }
 }

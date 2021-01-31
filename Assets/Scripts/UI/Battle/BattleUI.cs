@@ -71,8 +71,8 @@ namespace UI.Battle
         {
             foreach (Unit unit in BattleManager.instance.AllUnits)
             {
-                unit.gameObject.AddComponent<BoxCollider2D>();
-                EventTrigger eventTrigger = unit.gameObject.AddComponent<EventTrigger>();
+                unit.transform.gameObject.AddComponent<BoxCollider2D>();
+                EventTrigger eventTrigger = unit.transform.gameObject.AddComponent<EventTrigger>();
                 EventTrigger.Entry entry_PointerClick = new EventTrigger.Entry();
                 entry_PointerClick.eventID = EventTriggerType.PointerClick;
                 entry_PointerClick.callback.AddListener((data) =>
@@ -103,7 +103,7 @@ namespace UI.Battle
         {
             foreach (Unit unit in BattleManager.instance.AllUnits)
             {
-                hpBars[BattleManager.instance.AllUnits.IndexOf(unit)].transform.position =
+                hpBars[BattleManager.instance.AllUnits.IndexOf(unit)].transform.position = 
                     Camera.main.WorldToScreenPoint(new Vector3(unit.transform.position.x, unit.unitPosition.upperRight.y + 0.55f));
             }
 
@@ -210,7 +210,7 @@ namespace UI.Battle
                     button.GetComponent<Image>().sprite = null;
                 }
 
-                for (int i = 0; i < unit.skills.Count; i++) //현재 턴 유닛의 스킬 이미지로 갱신.
+                for (int i = 0; i < unit.skills.Length; i++) //현재 턴 유닛의 스킬 이미지로 갱신.
                 {
                     if (unit.skills[i] != null && unit.skills[i].SkillImage != null)
                     {
@@ -272,24 +272,24 @@ namespace UI.Battle
                     });
                 }
 
-                for (int i = 0; i < unit.skills.Count; i++)
+                for (int i = 0; i < unit.skills.Length; i++)
                 {
                     Skill skill = unit.skills[i];
 
                     if (skill == null) continue;
-
                     if (skill.currentReuseTime == 0 && unit.skillCount > 0) // 스킬이 사용가능한 조건
                     {
                         skillButtons[i].interactable = true;
                         skillButtons[i].onClick.RemoveAllListeners();
 
                         int temp = i;
-
+                        
                         skillButtons[i].onClick.AddListener(() => // 스킬 버튼을 눌렀을 때 작동하는 코드
                         {
                             EventTrigger.Entry entry_PointerClick;
 
                             SkillInfoNameText.text = skill.name;
+                            
                             SkillInfoText.text = skill.description;
                             SkillInfoInstance.SetActive(true);
 
@@ -366,7 +366,7 @@ namespace UI.Battle
                                     // 메인 인디케이터 생성
                                     entry_PointerClick = new EventTrigger.Entry();
                                     entry_PointerClick.eventID = EventTriggerType.PointerClick;
-                                    entry_PointerClick.callback.AddListener((data) => { skill.UseSkillToUnit(indicatorManager.GetUnitsOnIndicator()); });
+                                    entry_PointerClick.callback.AddListener((data) => { skill.UseSkillToUnit(unit,indicatorManager.GetUnitsOnIndicator()); });
                                     indicatorManager.SetCustomClickTriggerOnIndicator(entry_PointerClick);
                                     // 인디케이터에 커스텀 클릭 트리거 설정
                                 }
@@ -388,7 +388,7 @@ namespace UI.Battle
                                     // 메인 인디케이터 생성
                                     entry_PointerClick = new EventTrigger.Entry();
                                     entry_PointerClick.eventID = EventTriggerType.PointerClick;
-                                    entry_PointerClick.callback.AddListener((data) => { skill.UseSkillToUnit(indicatorManager.GetUnitsOnIndicator()); });
+                                    entry_PointerClick.callback.AddListener((data) => { skill.UseSkillToUnit(unit, indicatorManager.GetUnitsOnIndicator()); });
                                     indicatorManager.SetCustomClickTriggerOnIndicator(entry_PointerClick);
                                     // 인디케이터에 커스텀 클릭 트리거 설정
                                 }
@@ -420,7 +420,7 @@ namespace UI.Battle
                     }
                 }
 
-                for (int i = 0; i < unit.items.Count; i++)
+                for (int i = 0; i < unit.items.Length; i++)
                 {
                     //아이템 버튼
                 }

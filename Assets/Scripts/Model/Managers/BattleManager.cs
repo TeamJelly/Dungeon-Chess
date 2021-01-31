@@ -11,22 +11,20 @@ namespace Model.Managers
         public static BattleManager instance;
         public List<Unit> AllUnits;
 
-        public List<Unit> PartyUnits;// 임시용 아군 더미데이터
-        public List<Unit> EnemyUnits;// 임시용 적군 더미데이터
-
         public Tile[,] AllTiles; //10x10일때 0,0 ~ 9,9으로
         public Unit thisTurnUnit;
 
+        public List<Vector3> PartyPositions;
+        public List<Vector3> EnemyPositions;
         private void Awake()
         {
             instance = this;
             GenerateTiles(10, 10);
 
             /***유닛 더미데이터 추가. 추후 BattleUI의 EndGame 함수 포함하여 코드 제거***/
-            foreach (Unit unit in PartyUnits) UnitManager.Instance.AddPartyUnit(unit);
-            foreach (Unit unit in EnemyUnits) UnitManager.Instance.AddEnemyUnit(unit);
-            AddUnitsIntoRoom(UnitManager.Instance.EnemyUnits);
-            AddUnitsIntoRoom(UnitManager.Instance.PartyUnits);
+            UnitManager.Instance.InitForTesting();
+            AddUnitsIntoRoom(UnitManager.Instance.EnemyUnits,EnemyPositions);
+            AddUnitsIntoRoom(UnitManager.Instance.PartyUnits,PartyPositions);
             /***************************************************************************/
 
             OnBattleStart();
@@ -34,16 +32,18 @@ namespace Model.Managers
 
 
         /// <summary>
-        /// 룸에 유닛들 추가
+        /// 룸에 유닛들 추가. 
         /// </summary>
         /// <param name="units">추가할 유닛 리스트</param>
-        void AddUnitsIntoRoom(List<Unit> units)
+        void AddUnitsIntoRoom(List<Unit> units, List<Vector3> positions)
         {
-            foreach (Unit unit in units)
+            for(int i = 0; i < units.Count; i++)
             {
-                AllUnits.Add(unit);
+                AllUnits.Add(units[i]);
+                GameObject unitShape = Instantiate(Resources.Load("Prefabs/Units/" + units[i].name), positions[i], Quaternion.identity) as GameObject;
+                units[i].SetUnitShape(unitShape.transform);
                 //유닛 타일 할당
-                AllocateUnitTiles(unit, unit.unitPosition);
+                AllocateUnitTiles(units[i], units[i].unitPosition);
             }
         }
 

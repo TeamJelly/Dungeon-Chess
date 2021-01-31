@@ -20,7 +20,7 @@ namespace UI.Battle
         Transform Indicator; // 메인 인디케이터의 위치, 서브 인디케이터는 자식으로 생성된다.
 
         [SerializeField]
-        Transform IndicatorBoundary; // 인디케이터 경계의 위치, 각종 인디케이터 경계가 자식으로 생성된다.
+        Transform IndicatorBoundary = null; // 인디케이터 경계의 위치, 각종 인디케이터 경계가 자식으로 생성된다.
 
         [Header("Tile Indicator")]
         [SerializeField]
