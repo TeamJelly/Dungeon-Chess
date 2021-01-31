@@ -1,4 +1,5 @@
 ﻿using Common;
+using Common.DB;
 using Model.Managers;
 using System.Collections;
 using System.Collections.Generic;
@@ -218,5 +219,22 @@ namespace Model
             {
                 return units[Random.Range(0, units.Count)];
             }*/
+
+        protected void InitializeSkillFromDB<T>() where T : Skill
+        {
+            var skill = Query.Instance.SelectFrom<T>("skill_table");
+            number = skill.number;
+            name = skill.name;
+            unitClass = skill.unitClass;
+            grade = skill.grade;
+            skillImagePath = skill.skillImagePath;
+            description = skill.description;
+            criticalRate = skill.criticalRate;
+            reuseTime = skill.reuseTime;
+            domain = skill.domain ;
+            target = skill.target;
+            APSchema = skill.APSchema;
+            RPSchema = skill.RPSchema;
+        }
     }
 }

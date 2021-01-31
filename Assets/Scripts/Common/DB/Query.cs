@@ -38,7 +38,7 @@ namespace Common.DB
             }
         }
 
-        private TextAsset ExecuteDBCommand(string sqlQuery)
+        private string ExecuteDBCommand(string sqlQuery)
         {
             try
             {
@@ -71,9 +71,7 @@ namespace Common.DB
                 sqliteConnection.Close();
                 sqliteConnection = null;
 
-                var json = JsonUtility.ToJson(dict);
-
-                TextAsset result = JSON.DictionaryToTextAsset(dict);
+                string result = JSON.DictionaryToJsonString(dict);
                 return result;
             }
             catch (SqliteException e)
@@ -86,19 +84,19 @@ namespace Common.DB
 
         public T SelectFrom<T>(string table, string where = null)
         {
-            TextAsset jsonData = null;
+            string jsonString = null;
             ConnectToDB();
 
             if (where is null)
             {
-                jsonData = ExecuteDBCommand($"SELECT * FROM {table}");
+                jsonString = ExecuteDBCommand($"SELECT * FROM {table}");
             }
             else
             {
-                jsonData = ExecuteDBCommand($"SELECT * FROM {table} WHERE {where}");
+                jsonString = ExecuteDBCommand($"SELECT * FROM {table} WHERE {where}");
             }
 
-            return JSON.ParseAsset<T>(jsonData);
+            return JSON.ParseString<T>(jsonString);
         }
     }
 }
