@@ -10,13 +10,13 @@ public class Skill_002 : Skill
     [Header("스킬 고유 특성")]
     private int strengthToDamageRatio;
 
-    Skill_002()
+    public Skill_002()
     {
         number = 2;
         name = "마법 화살";
         unitClass = UnitClass.Wizard;
         grade = Grade.Normal;
-        skillImagePath = "HandMade/SkillImage/002_마법화살";
+        spritePath = "HandMade/SkillImage/002_마법화살";
         description = "세칸 안에 있는 단일 적에게 데미지를 입힌다.";
         criticalRate = 0;
         reuseTime = 0;
@@ -25,11 +25,11 @@ public class Skill_002 : Skill
         strengthToDamageRatio = 1;
     }
 
-    public override void Use(Unit user, Tile target)
-    {
-        Unit unit = target.GetUnit();
-        int damage = user.strength * strengthToDamageRatio + enhancedLevel;
-        Common.UnitAction.Damage(unit, damage);
-        base.Use(user, target);
-    }
+    //public override void Use(Unit user, Vector2Int target)
+    //{
+    //    Unit unit = Model.Managers.BattleManager.GetUnit(target);
+    //    int damage = user.strength * strengthToDamageRatio + enhancedLevel;
+    //    Common.UnitAction.Damage(unit, damage);
+    //    base.Use(user, target);
+    //}
 }

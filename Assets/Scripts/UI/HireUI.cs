@@ -49,7 +49,7 @@ namespace UI
         }
         public void Fire()
         {
-            GameManager.SubPartyUnit(currentUnit);
+            GameManager.RemovePartyUnit(currentUnit);
             if (selectedUnitCount == 0) startButton.enabled = false;
         }
     }

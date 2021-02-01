@@ -14,7 +14,7 @@ public class Skill_005 : Skill
         name = "회전베기";
         unitClass = UnitClass.Warrior;
         grade = Grade.Normal;
-        skillImagePath = "HandMade/SkillImage/005_회전베기";
+        spritePath = "HandMade/SkillImage/005_회전베기";
         description = "범위 안에 있는 모든 유닛에게 데미지를 입힌다.";
         criticalRate = 5;
         reuseTime = 1;
@@ -23,11 +23,11 @@ public class Skill_005 : Skill
         strengthToDamageRatio = 1;
     }
 
-    public override void Use(Unit user, Tile target)
+    /*public override void Use(Unit user, Tile target)
     {
         Unit unit = target.GetUnit();
         int damage = user.strength * strengthToDamageRatio + enhancedLevel;
         Common.UnitAction.Damage(unit, damage);
         base.Use(user, target);
-    }
+    }*/
 }

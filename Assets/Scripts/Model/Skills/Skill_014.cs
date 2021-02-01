@@ -23,11 +23,11 @@ public class Skill_014 : Skill
         strengthToDamageRatio = 2;
     }
 
-    public override void Use(Unit user, Tile target)
-    {
-        Unit targetUnit = target.GetUnit();
-        int damage = user.strength * strengthToDamageRatio + enhancedLevel * 2;
-        Common.UnitAction.Damage(targetUnit, damage);
-        base.Use(user, target);
-    }
+    //public override void Use(Unit user, Tile target)
+    //{
+    //    Unit targetUnit = target.GetUnit();
+    //    int damage = user.strength * strengthToDamageRatio + enhancedLevel * 2;
+    //    Common.UnitAction.Damage(targetUnit, damage);
+    //    base.Use(user, target);
+    //}
 }

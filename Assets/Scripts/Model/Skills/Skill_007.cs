@@ -11,7 +11,7 @@ public class Skill_007 : Skill
         name = "수호";
         unitClass = UnitClass.Warrior;
         grade = Grade.Normal;
-        skillImagePath = "HandMade/SkillImage/007_수호";
+        spritePath = "HandMade/SkillImage/007_수호";
         description = "두칸 안에 있는 아군에게 보호 효과를 3턴간 건다,";
         criticalRate = 5;
         reuseTime = 3;
@@ -19,10 +19,10 @@ public class Skill_007 : Skill
         RPSchema = "1;0";
     }
 
-    public override void Use(Unit user, Tile target)
-    {
-        Unit unit = target.GetUnit();
-        //Common.UnitAction.GetEffect(unit, new Effect("수호, ))
-        base.Use(user, target);
-    }
+    //public override void Use(Unit user, Tile target)
+    //{
+    //    Unit unit = target.GetUnit();
+    //    //Common.UnitAction.GetEffect(unit, new Effect("수호, ))
+    //    base.Use(user, target);
+    //}
 }

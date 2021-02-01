@@ -20,15 +20,15 @@ public class Skill_013 : Skill
         strengthToDamageRatio = 1;
     }
 
-    public override void Use(Unit user, Tile target)
-    {
-        Unit targetUnit = target.GetUnit();
-        int damage = user.strength * strengthToDamageRatio + enhancedLevel;
+    //public override void Use(Unit user, Tile target)
+    //{
+    //    Unit targetUnit = target.GetUnit();
+    //    int damage = user.strength * strengthToDamageRatio + enhancedLevel;
 
-        Common.UnitAction.Damage(targetUnit, damage);
-        // 독 상태이상 부여
-        // Common.UnitAction.GetEffect(targetUnit, );
+    //    Common.UnitAction.Damage(targetUnit, damage);
+    //    // 독 상태이상 부여
+    //    // Common.UnitAction.GetEffect(targetUnit, );
 
-        base.Use(user, target);
-    }
+    //    base.Use(user, target);
+    //}
 }

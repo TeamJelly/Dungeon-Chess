@@ -19,10 +19,11 @@ public class Skill_010 : Skill
         APSchema = "1;1";
         RPSchema = "1;1";
      }
-    public override void Use(Unit user, Tile target)
-    {
-        Unit unit = target.GetUnit();
-        //도발 효과, 보호막 2턱
-        base.Use(user, target);
-    }
+
+    //public override void Use(Unit user, Tile target)
+    //{
+    //    Unit unit = target.GetUnit();
+    //    //도발 효과, 보호막 2턱
+    //    base.Use(user, target);
+    //}
 }

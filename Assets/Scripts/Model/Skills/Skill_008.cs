@@ -15,7 +15,7 @@ public class Skill_008 : Skill
         name = "힘의 파동";
         unitClass = UnitClass.Warrior;
         grade = Grade.Rare;
-        skillImagePath = "HandMade/SkillImage/008_힘의 파동";
+        spritePath = "HandMade/SkillImage/008_힘의 파동";
         description = "범위 안에 있는 모든 적군에게 데미지를 입히고 기절 시킨다.";
         criticalRate = 0;
         reuseTime = 5;
@@ -86,19 +86,19 @@ public class Skill_008 : Skill
             "0000000000000" // 5강
     };
 
-    public override List<Vector2Int> GetRangePositions(Unit unit)
-    {
-        if (enhancedLevel <= 5)
-            return Common.Range.ParseRangeSchema(RPSchemas[enhancedLevel]);
-        else
-            return Common.Range.ParseRangeSchema(RPSchemas[4]);
-    }
+    //public override List<Vector2Int> GetRangePositions(Unit unit)
+    //{
+    //    if (enhancedLevel <= 5)
+    //        return Common.Range.ParseRangeSchema(RPSchemas[enhancedLevel]);
+    //    else
+    //        return Common.Range.ParseRangeSchema(RPSchemas[4]);
+    //}
 
-    public override void Use(Unit user, Tile target)
-    {
-        Unit unit = target.GetUnit();
-        int damage = user.strength * strengthToDamageRatio + enhancedLevel;
-        Common.UnitAction.Damage(unit, damage);
-        base.Use(user, target);
-    }
+    //public override void Use(Unit user, Tile target)
+    //{
+    //    Unit unit = target.GetUnit();
+    //    int damage = user.strength * strengthToDamageRatio + enhancedLevel;
+    //    Common.UnitAction.Damage(unit, damage);
+    //    base.Use(user, target);
+    //}
 }

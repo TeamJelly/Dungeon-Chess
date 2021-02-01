@@ -11,15 +11,14 @@ namespace Model.Managers
         public static BattleManager instance;
 
         // 현재 전투의 모든 유닛을 참조할 수 있습니다.
-        private static List<Unit> AllUnits;
+        public List<Unit> AllUnits = new List<Unit>();
+
         // 현재 전투의 모든 타일을 참조할 수 있습니다.
         private Tile[,] AllTiles; 
-        // 현재 턴의 유닛
 
+        // 현재 턴의 유닛
         public Unit thisTurnUnit;
 
-        public List<Vector2> PartyPositions;
-        public List<Vector2> EnemyPositions;
         private void Awake()
         {
             instance = this;
@@ -27,38 +26,74 @@ namespace Model.Managers
 
             /***유닛 더미데이터 추가. 추후 BattleUI의 EndGame 함수 포함하여 코드 제거***/
             List<Unit> EnemyUnits = new List<Unit>();
-            EnemyUnits.Add(UnitManager.GetUnit("몬스터2"));
-            EnemyUnits.Add(UnitManager.GetUnit("몬스터2"));
 
-            AddUnitsIntoRoom(EnemyUnits, EnemyPositions);
-            AddUnitsIntoRoom(GameManager.PartyUnits,PartyPositions);
+            Unit temp = new Units.Unit_000
+            {
+                Category = Category.Enemy,
+                Position = new Vector2Int(1, 1)
+            };
+            EnemyUnits.Add(temp);
+
+            temp = new Units.Unit_000
+            {
+                Category = Category.Enemy,
+                Position = new Vector2Int(2, 2)
+            };
+            EnemyUnits.Add(temp);
+
+            temp = new Units.Unit_000
+            {
+                Category = Category.Enemy,
+                Position = new Vector2Int(3, 4)
+            };
+            EnemyUnits.Add(temp);
+
+            Common.UnitAction.Summon(EnemyUnits);
+            Common.UnitAction.Summon(GameManager.PartyUnits);
             /***************************************************************************/
         }
 
-
+        public static bool IsAvilablePosition(Vector2Int position)
+        {
+            if (position.x >= 0 &&
+                position.y >= 0 &&
+                position.x < instance.AllTiles.GetLength(0) &&
+                position.y < instance.AllTiles.GetLength(1))
+                return true;
+            else
+                return false;
+        }
 
         public static List<Unit> GetUnit(Category category)
         {
             List<Unit> units = new List<Unit>();
 
-            foreach (var item in AllUnits)
-            {
-                if (item.category == category)
-                    units.Add(item);
-            }
+            foreach (var unit in instance.AllUnits)
+                if (unit.Category == category)
+                    units.Add(unit);
 
             return units;
         }
-
         /// <summary>
-        /// 
+        /// 모든 유닛 리턴
         /// </summary>
         /// <returns></returns>
         public static List<Unit> GetUnit()
         {
-            return AllUnits;
-        }
+            Debug.LogError(instance.AllUnits.Count);
 
+            foreach (var item in instance.AllUnits)
+            {
+                Debug.LogError(item.Name);
+            }
+
+            return instance.AllUnits;
+        }
+        /// <summary>
+        /// 위치의 유닛 리턴
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
         public static Unit GetUnit(Vector2Int position)
         {
             return GetTile(position).GetUnit();
@@ -71,27 +106,10 @@ namespace Model.Managers
 
         public static Tile GetTile(int x, int y)
         {
-            if (x >= 0 && y >= 0 && x < instance.AllTiles.GetLength(0) && y < instance.AllTiles.GetLength(1))
+            if (IsAvilablePosition(new Vector2Int(x, y)))
                 return instance.AllTiles[x, y];
             else
                 return null;
-        }
-
-        /// <summary>
-        /// 룸에 유닛들 추가. 
-        /// </summary>
-        /// <param name="units">추가할 유닛 리스트</param>
-        void AddUnitsIntoRoom(List<Unit> units, List<Vector2> positions)
-        {
-            for(int i = 0; i < units.Count; i++)
-            {
-                //Common.UnitAction.Summon(unit, unit.position);
-                AllUnits.Add(units[i]);
-                GameObject unitShape = Instantiate(Resources.Load("Prefabs/Units/" + units[i].name), positions[i], Quaternion.identity) as GameObject;
-                unitShape.transform.position += Vector3.back; // 화면상 이미지 겹쳐서 안보이는 문제 해결
-                units[i].SetUnitShape(unitShape.transform);
-                AllocateUnitTiles(units[i], units[i].unitPosition);//유닛 타일 할당
-            }
         }
 
         /// <summary>
@@ -111,16 +129,16 @@ namespace Model.Managers
         /// 다음 턴 유닛 선택 알고리즘
         /// </summary>
         /// <returns>다음 턴 유닛</returns>
-        public Unit GetNextTurnUnit()
+        public static Unit GetNextTurnUnit()
         {
             float max = 100; // 주기의 최댓값
             float minTime = 100;
             Unit nextUnit = null; // 다음 턴에 행동할 유닛
 
-            foreach (var unit in AllUnits)
+            foreach (var unit in instance.AllUnits)
             {
-                float velocity = unit.agility * 10 + 100;
-                float time = (max - unit.actionRate) / velocity; // 거리 = 시간 * 속력 > 시간 = 거리 / 속력
+                float velocity = unit.Agility * 10 + 100;
+                float time = (max - unit.ActionRate) / velocity; // 거리 = 시간 * 속력 > 시간 = 거리 / 속력
                 if (minTime >= time) // 시간이 가장 적게 걸리는애가 먼저된다.
                 {
                     minTime = time;
@@ -129,19 +147,19 @@ namespace Model.Managers
             }
 
             //나머지 유닛들도 해당 시간만큼 이동.
-            foreach (var unit in AllUnits)
+            foreach (var unit in instance.AllUnits)
             {
-                float velocity = unit.agility * 10 + 100;
-                unit.actionRate += velocity * minTime;
+                float velocity = unit.Agility * 10 + 100;
+                unit.ActionRate += velocity * minTime;
             }
 
             //다음 턴 유닛 값들 초기화
-            nextUnit.actionRate = 0;
-            nextUnit.moveCount = 1;
-            nextUnit.skillCount = 1;
-            nextUnit.itemCount = 1;
+            nextUnit.ActionRate = 0;
+            nextUnit.MoveCount = 1;
+            nextUnit.SkillCount = 1;
+            nextUnit.ItemCount = 1;
 
-            thisTurnUnit = nextUnit;
+            instance.thisTurnUnit = nextUnit;
             return nextUnit;
         }
     }

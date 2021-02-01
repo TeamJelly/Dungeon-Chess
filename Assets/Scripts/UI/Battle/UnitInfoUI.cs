@@ -18,16 +18,16 @@ namespace UI.Battle
         public void Set(Unit unit)
         {
             allocatedUnit = unit;
-            SetText(unit.name +
-               "\nHP:" + unit.currentHP + "/" + unit.maxHP +
-                "\nSPEED: " + unit.agility);
-
-            unitImage.Sprite = unit.transform.GetComponent<SpriteRenderer>().sprite;
+            SetText(
+                $"{unit.Name} \n" +
+                $"HP : {unit.CurrentHP} / {unit.MaximumHP}" +
+                $"Agility : {unit.Agility}"
+                );
+            unitImage.Sprite = unit.Sprite;
         }
 
         void SetText(string text)
         {
-            //Debug.Log(description.Text);
             description.TextString = text;
         }
 

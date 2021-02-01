@@ -6,13 +6,13 @@ public class Skill_001 : Skill
     private int strengthToDamageRatio;
 
     // Use this for initialization
-    private Skill_001()
+    public Skill_001()
     {
         number = 1;
         name = "속사";
         unitClass = UnitClass.Archer;
         grade = Grade.Normal;
-        skillImagePath = "HandMade/SkillImage/001_속사";
+        spritePath = "HandMade/SkillImage/001_속사";
         description = "세칸 안에 있는 단일 적에게 데미지를 입힌다.";
         criticalRate = 10;
         reuseTime = 0;
@@ -21,12 +21,12 @@ public class Skill_001 : Skill
         strengthToDamageRatio = 1;
     }
 
-    public override void Use(Unit user, Tile target)
-    {
-        Unit unit = target.GetUnit();
-        int damage = user.strength * strengthToDamageRatio + enhancedLevel;
-        Common.UnitAction.Damage(unit, damage);
-        base.Use(user, target);
-    }
 
+    //public override void Use(Unit user, Vector2Int target)
+    //{
+    //    Unit unit = Model.Managers.BattleManager.GetUnit(target);
+    //    int damage = user.Strength * strengthToDamageRatio + enhancedLevel;
+    //    Common.UnitAction.Damage(unit, damage);
+    //    base.Use(user, target);
+    //}
 }

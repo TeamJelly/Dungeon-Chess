@@ -30,11 +30,11 @@ public class Skill_011 : Skill
         return base.GetRangePositions(user);
     }
 
-    public override void Use(Unit user, Tile target)
-    {
-        Unit unit = target.GetUnit();
-        int damage = user.maxHP + fixedDamge;
-        Common.UnitAction.Damage(unit, damage);
-        base.Use(user, target);
-    }
+    //public override void Use(Unit user, Tile target)
+    //{
+    //    Unit unit = target.GetUnit();
+    //    int damage = user.maxHP + fixedDamge;
+    //    Common.UnitAction.Damage(unit, damage);
+    //    base.Use(user, target);
+    //}
 }

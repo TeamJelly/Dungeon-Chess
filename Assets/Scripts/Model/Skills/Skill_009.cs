@@ -12,7 +12,7 @@ public class Skill_009 : Skill
         name = "절명";
         unitClass = UnitClass.Warrior;
         grade = Grade.Rare;
-        skillImagePath = "HandMade/SkillImage/009_절명";
+        spritePath = "HandMade/SkillImage/009_절명";
         description = "범위 안에 자신을 제외한 유닛에게 데미지를 준다, 만약 그 유닛이 죽었을 경우, 이 스킬을 다시 사용한다.";
         criticalRate = 10;
         reuseTime = 5;
@@ -21,11 +21,11 @@ public class Skill_009 : Skill
         strengthToDamageRatio = 2;
     }
 
-    public override void Use(Unit user, Tile target)
-    {
-        Unit unit = target.GetUnit();
-        int damage = Mathf.FloorToInt((float)(user.strength * strengthToDamageRatio + enhancedLevel * 0.2));
-        Common.UnitAction.Damage(unit, damage);
-        base.Use(user, target);
-    }
+    //public override void Use(Unit user, Tile target)
+    //{
+    //    Unit unit = target.GetUnit();
+    //    int damage = Mathf.FloorToInt((float)(user.strength * strengthToDamageRatio + enhancedLevel * 0.2));
+    //    Common.UnitAction.Damage(unit, damage);
+    //    base.Use(user, target);
+    //}
 }

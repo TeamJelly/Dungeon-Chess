@@ -26,10 +26,12 @@ namespace Model.Managers
                 return instance;
             }
         }
+
         GameManager()
         {
             InitForTesting();
         }
+
         public static void Reset()
         {
             instance = new GameManager();
@@ -38,18 +40,34 @@ namespace Model.Managers
         public static void AddPartyUnit(Unit unit)
         {
             PartyUnits.Add(unit);
+            unit.Category = Category.Party;
         }
 
-        public static void SubPartyUnit(Unit unit)
+        public static void RemovePartyUnit(Unit unit)
         {
             PartyUnits.Remove(unit);
         }
 
         void InitForTesting()
         {
-            partyUnits.Add(UnitManager.GetUnit("유닛1"));
-            partyUnits.Add(UnitManager.GetUnit("유닛2"));
-            partyUnits.Add(UnitManager.GetUnit("유닛3"));
+            partyUnits.Add(new Units.Unit_000
+            {
+                Name = "party1",
+                Category = Category.Party,
+                Position = new Vector2Int(1, 4)
+            });
+            partyUnits.Add(new Units.Unit_000
+            {
+                Name = "party2",
+                Category = Category.Party,
+                Position = new Vector2Int(1, 5)
+            });
+            partyUnits.Add(new Units.Unit_000
+            {
+                Name = "party3",
+                Category = Category.Party,
+                Position = new Vector2Int(1, 6)
+            });
         }
     }
 }

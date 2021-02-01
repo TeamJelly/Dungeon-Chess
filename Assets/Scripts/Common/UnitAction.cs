@@ -2,6 +2,7 @@
 using UnityEngine;
 using Model;
 using Model.Managers;
+using System.Collections.Generic;
 
 namespace Common
 {
@@ -9,30 +10,30 @@ namespace Common
     {
         public static void Die(Unit unit)
         {
-            unit.agility = 0;
+            unit.Agility = 0;
         }
 
         public static void Move(Unit unit, Vector2Int target)
         {
-            //BeforeMove();
+            // BeforeMove();
 
             //기존 타일 유닛 초기화 Tile.cs로 옮기면 좋을듯
-            BattleManager.GetTile(unit.position).SetUnit(null);
-            unit.position = target;
+            BattleManager.GetTile(unit.Position).SetUnit(null);
+            unit.Position = target;
             BattleManager.GetTile(target).SetUnit(unit);
 
-            //AfterMove();
+            // AfterMove();
         }
 
         public static int Damage(Unit unit, int number)
         {
             //BeforeDamage(unit, number);
 
-            unit.currentHP -= number;
+            unit.CurrentHP -= number;
 
             //AfterDamage(unit, number);
 
-            if (unit.currentHP <= 0)
+            if (unit.CurrentHP <= 0)
                 Die(unit);
 
             return number; // 피해량을 리턴
@@ -42,10 +43,10 @@ namespace Common
         {
             // Before Heal
 
-            unit.currentHP += number;
+            unit.CurrentHP += number;
 
-            if (unit.maxHP < unit.currentHP)
-                unit.currentHP = unit.maxHP;
+            if (unit.MaximumHP < unit.CurrentHP)
+                unit.CurrentHP = unit.MaximumHP;
 
             // After Heal
 
@@ -54,26 +55,67 @@ namespace Common
 
         public static void LevelUp(Unit unit)
         {
-            unit.level++;
-            unit.currentEXP = 0;
-            unit.nextEXP = unit.level * 10;
-            Debug.Log(unit.name + " level Up! (Lv" + (unit.level-1) + " > Lv" + unit.level);
+            unit.Level++;
+            unit.CurrentEXP = 0;
+            unit.NextEXP = unit.Level * 10;
+            Debug.Log($"{unit.Name} Level Up! ( Lv {unit.Level-1} > Lv {unit.Level} )");
         }
 
         public static void GetEffect(Unit unit, Effect effect)
         {
 
         }
+        
+        public static void Summon(Unit unit)
+        {
+            Summon(unit, unit.Position);
+        }
+
+        public static void Summon(List<Unit> units)
+        {
+            foreach (var unit in units)
+                Summon(unit);
+        }
 
         public static void Summon(Unit unit, Vector2Int target)
         {
             if (BattleManager.GetUnit(target) == null)
             {
-                unit.position = target;
+                unit.Position = target;
                 BattleManager.GetTile(target).SetUnit(unit);
+                BattleManager.instance.AllUnits.Add(unit);
             }
             else
                 Debug.LogError("이미 위치에 유닛이 존재합니다.");
         }
+
+        public static void GetSkill(Unit unit, Skill newSkill, int index)
+        {
+            if (index >= unit.Skills.Length || index < 0)
+            {
+                Debug.LogError("스킬 슬롯을 범위를 벗어났습니다.");
+                return;
+            }
+
+            RemoveSkill(unit, index);
+            unit.Skills[index] = newSkill;
+        }
+
+        public static void RemoveSkill(Unit unit, int index)
+        {
+            if (index >= unit.Skills.Length || index < 0)
+            {
+                Debug.LogError("스킬 슬롯을 범위를 벗어났습니다.");
+                return;
+            }
+            if (unit.Skills[index] == null)
+            {
+                Debug.LogError("제거할 스킬이 없습니다.");
+                return;
+            }
+
+            unit.Skills[index] = null;
+        }
+
     }
 }

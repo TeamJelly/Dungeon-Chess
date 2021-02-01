@@ -1,5 +1,6 @@
 ﻿using Common;
 using UnityEngine;
+using System.Collections.Generic;
 
 public enum Category { NULL, Party, Neutral, Friendly, Enemy, Boss};
 public enum UnitClass { NULL, Monster, Warrior, Wizard, Priest, Archer };
@@ -10,118 +11,89 @@ namespace Model
     [System.Serializable]
     public class Unit
     {
-        [Header("Normal Status")]
-        public string name = "NoName";
+        private string name = "NoName";
+        private Category category = Category.NULL;
+        private UnitClass unitClass = UnitClass.NULL;
+        private UnitAI unitAI = UnitAI.NULL;
+        public string spritePath;
+        private Sprite sprite;
+        private int level;
+        private int currentHP;
+        private int maximumHP;
+        private int currentEXP;
+        private int nextEXP;
+        private int strength;
+        private int agility;
+        private int move = 3;
+        private Vector2Int position;
+        private float actionRate;
+        private int moveCount;
+        private int skillCount;
+        private int itemCount;
+        private Skill[] skills = new Skill[4];
+        private Item[] items = new Item[2];
+        private List<Artifact> antiques = new List<Artifact>();
+        private List<Effect> stateEffects = new List<Effect>();
 
-        public Category category = Category.NULL;
-        public UnitClass unitClass = UnitClass.NULL;
-        public UnitAI unitAI = UnitAI.NULL;
+        public List<Animation> animations;
+        public Animation animation;
+        public string animationPath1;
+        public string animationPath2;
+        public string animationPath3;
+        public string animationPath4;
 
-        [Range(1, 99)]
-        public int level;
-
-        [Min(0)]
-        public int currentHP, maxHP;
-
-        [Min(0)]
-        public int currentEXP, nextEXP;
-
-        [Header("Basic Status")]
-        public int strength;
-
-        [Header("Special Status")]
-        public int agility;
-        public int move = 3;
-        public int critical;
-
-        [Header("Position")]
-        public Vector2Int position;
-
-        [Header("Hidden Status")]
-        public float actionRate;
-
-        [Header("Count Status")]
-        public int moveCount;
-        public int skillCount;
-        public int itemCount;
-
-        private Skill[] _skills = new Skill[4];
-        public Skill[] skills { get => _skills; }
-        [Header("Having")]
-        //public string[] havingSkills = new string[4];
-        public List<Artifact> antiques = new List<Artifact>();
-        public Item[] items = new Item[2];
-        public List<Effect> stateEffects = new List<Effect>();
-
-        public Transform transform;
-        // 초기화 함수
-        /*private void Awake()
+        public enum AnimationState
         {
-            AwakeSkills();
-        }*/
+            Idle, Hit, Attack, Move
+        }
 
-        /// <summary>
-        /// DB로부터 정보를 받아 초기화 예정. (이름, unitPositoin등 위의 속성들).
-        /// </summary>
-        /// <param name="name"></param>
+        public AnimationState animationState = AnimationState.Idle;
+
+        public string Name { get => name; set => name = value; }
+        public Category Category { get => category; set => category = value; }
+        public UnitClass UnitClass { get => unitClass; set => unitClass = value; }
+        public UnitAI UnitAI { get => unitAI; set => unitAI = value; }
+        public Sprite Sprite
+        {
+            get
+            {
+                if (sprite == null && spritePath != "")
+                    sprite = Resources.Load<Sprite>(spritePath);
+                return sprite;
+            }
+        }
+        public int Level { get => level; set => level = value; }
+        public int CurrentHP { get => currentHP; set => currentHP = value; }
+        public int MaximumHP { get => maximumHP; set => maximumHP = value; }
+        public int CurrentEXP { get => currentEXP; set => currentEXP = value; }
+        public int NextEXP { get => nextEXP; set => nextEXP = value; }
+        public int Strength { get => strength; set => strength = value; }
+        public int Agility { get => agility; set => agility = value; }
+        public int Move { get => move; set => move = value; }
+        public Vector2Int Position { get => position; 
+            set{
+                if (Managers.BattleManager.IsAvilablePosition(Position))
+                    position = value;
+                else
+                    Debug.LogError("유닛을 이곳으로 이동할 수 없습니다.");
+            } 
+        }
+        public float ActionRate { get => actionRate; set => actionRate = value; }
+        public int MoveCount { get => moveCount; set => moveCount = value; }
+        public int SkillCount { get => skillCount; set => skillCount = value; }
+        public int ItemCount { get => itemCount; set => itemCount = value; }
+        public Skill[] Skills { get => skills; set => skills = value; }
+        public Item[] Items { get => items; set => items = value; }
+        public List<Artifact> Antiques { get => antiques; set => antiques = value; }
+        public List<Effect> StateEffects { get => stateEffects; set => stateEffects = value; }
+
+        public Unit()
+        {
+        }
+
         public Unit(string name)
         {
             this.name = name;
-        }
-        
-        public void SetUnitShape(Transform t)
-        {
-            this.transform = t;
-            Vector2Int newPos = new Vector2Int((int)t.position.x, (int)t.position.y);
-            unitPosition.Set(newPos, newPos);
-            
-        }
-        /// <summary>
-        /// 처음에 스킬 가지고 있는 것을 초기화
-        /// </summary>
-        /*private void AwakeSkills()
-        {
-            for (int i = 0; i < havingSkills.Length; i++)
-            {
-                if (havingSkills[i] != null)
-                {
-                    AddSkillComponent(havingSkills[i]);
-                }
-            }
-        }*/
-
-        /// <summary>
-        /// (public) 스킬 등록
-        /// </summary>
-        /// <param name="newSkill">등록하려는 스킬 이름</param>
-        /// <param name="index">슬롯 위치</param>
-        public void setSkill(Skill newSkill, int index)
-        {
-            if (index >= skills.Length)
-            {
-                //TODO UI Error Message
-                return;
-            }
-            //havingSkills[index] = newSkill;
-            //Type type = Type.GetType(newSkill);
-            //Skill instance = Activator.CreateInstance(Type.GetType(newSkill)) as Skill;
-            
-            skills[index] = newSkill;
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="index">slot 위치</param>
-        public void removeSkill(int index)
-        {
-            if (index >= skills.Length || skills[index] == null)
-            {
-                //TODO UI Error Message
-                return;
-            }
-            //havingSkills[index] = "";
-            skills[index] = null;
-           // Destroy(skills[index]);
         }
     }
 }

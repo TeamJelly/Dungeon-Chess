@@ -16,16 +16,16 @@ namespace Model
         public UnitClass unitClass = UnitClass.NULL;                    // 스킬 클래스
         public Grade grade = Grade.NULL;                                // 스킬 등급
 
-        protected string skillImagePath;
-        private Sprite skillImage;
+        protected string spritePath;
+        private Sprite sprite;
 
-        public Sprite SkillImage
+        public Sprite Sprite
         {
             get
             {
-                if (skillImage == null && skillImagePath != "")
-                    skillImage = Resources.Load<Sprite>(skillImagePath);
-                return skillImage;
+                if (sprite == null && spritePath != "")
+                    sprite = Resources.Load<Sprite>(spritePath);
+                return sprite;
             }
         }
 
@@ -79,7 +79,7 @@ namespace Model
         /// <returns></returns>
         public virtual bool IsPossible(Unit user, Vector2Int position)
         {
-            Vector2Int temp = position - user.position;
+            Vector2Int temp = position - user.Position;
 
             if (GetAvailablePositions(user).Contains(temp))
             {
@@ -92,16 +92,12 @@ namespace Model
             return false;
         }
 
-        public virtual void Use(Unit user, Vector2Int target)
+        public virtual IEnumerator Use(Unit user, Vector2Int target)
         {
             Debug.LogError(name + " 스킬을 " + target + "에 사용!");
             currentReuseTime = reuseTime;
+            yield return null;
         }
 
-        public virtual void Use(Unit user, List<Vector2Int> targets)
-        {
-            foreach (var target in targets)
-                Use(user, target);
-        }
     }
 }

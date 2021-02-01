@@ -15,7 +15,7 @@ public class Skill_016 : Skill
         name = "화살비";
         unitClass = UnitClass.Archer;
         grade = Grade.Normal;
-        skillImagePath = "HandMade/SkillImage/016_화살비";
+        spritePath = "HandMade/SkillImage/016_화살비";
         description = "범위 안에 있는 모든 유닛에게 데미지를 준다.";
         criticalRate = 5;
         reuseTime = 1;

@@ -38,38 +38,13 @@ namespace UI.Battle
         [SerializeField]
         public GameObject unitIndicatorBoundaryPrefab;
 
-
-        /// <summary>
-        /// 현재 유닛 인디케이터로부터 유닛을 받는다.
-        /// </summary>
-        /// <returns> 유닛들 리스트 </returns>
-        public List<Unit> GetUnitsOnIndicator()
-        {
-            List<Unit> units = new List<Unit>();
-
-            foreach (var tile in GetTilesOnIndicator())
-            {
-                Unit temp = tile.GetUnit();
-                if (units.Contains(temp))
-                    continue;
-                else
-                    units.Add(temp);
-            }
-
-            return units;
-        }
-
-        /// <summary>
-        /// 현재 타일 인디케이터로부터 타일을 받는다.
-        /// </summary>
-        /// <returns> 타일들 리스트 </returns>
         public List<Tile> GetTilesOnIndicator()
         {
             List<Tile> tiles = new List<Tile>();
 
             foreach (var position in GetPositionsOnIndicators())
             {
-                tiles.Add(BattleManager.instance.GetTile(position));
+                tiles.Add(BattleManager.GetTile(position));
             }
 
             return tiles;
@@ -85,90 +60,38 @@ namespace UI.Battle
         {
             List<Vector2Int> positions = new List<Vector2Int>();
 
-            foreach (var unitPosition in GetUnitPositionsOnIndicators())
+            positions.Add(GetPositionOnMainIndicator()); // 메인 인디케이터 위치 추가
+
+            for (int i = 0; i < Indicator.childCount; i++)
             {
-                foreach (var position in unitPosition.GetPositions())
-                {
-                    if (positions.Contains(position))
-                        continue;
-                    else
-                        positions.Add(position);
-                }
+                // 서브 인디케이터 위치들 추가
+                Vector3 position = Indicator.GetChild(i).transform.position;
+                positions.Add(new Vector2Int(Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.y)));
             }
 
             return positions;
         }
 
-        /// <summary>
-        /// 인디케이터로부터 유닛 포지션을 받는다.
-        /// </summary>
-        /// <returns> 유닛 포지션 리스트 </returns>
-        public List<UnitPosition> GetUnitPositionsOnIndicators()
+        public Vector2Int GetPositionOnMainIndicator()
         {
-            List<UnitPosition> unitPositions = new List<UnitPosition>();
-
-            unitPositions.Add(GetUnitPositionOnMainIndicator()); // 메인 인디케이터 위치 추가
-
-            for (int i = 0; i < Indicator.childCount; i++)
-            {
-                // 서브 인디케이터 위치들 추가
-                unitPositions.Add(UnitPosition.TransformToUnitPosition(Indicator.GetChild(i).transform));
-            }
-
-            return unitPositions;
-        }
-
-        public UnitPosition GetUnitPositionOnMainIndicator()
-        {
-            return UnitPosition.TransformToUnitPosition(Indicator.transform);
+            Vector3 position = Indicator.position;
+            return new Vector2Int(Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.y));
         }
 
 
         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="unitPosition"></param>
-        public void InitMainIndicator(UnitPosition unitPosition, GameObject prefab)
+        public void InitMainIndicator(Vector2Int position, GameObject prefab)
         {
             DestoryAll();
             Indicator = Instantiate(prefab).transform;
             Indicator.name = "MainIndicator";
-            unitPosition.SetTransform(Indicator);
+            Indicator.position = new Vector3(position.x, position.y, 0);
             Indicator.position += Vector3.back * 2;
             Indicator.gameObject.SetActive(false);
         }
 
-        public void InitMainIndicator(Vector2Int position, GameObject prefab)
-        {
-            InitMainIndicator(new UnitPosition(position), prefab);
-        }
-
-
         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@서브 인디케이터 추가
-        /// <summary>
-        /// 서브 타일 인디케이터를 인디케이터의 자식으로 만들어 더한다.
-        /// </summary>
-        /// <param name="unitPosition">유닛 포지션</param>
-        /// <param name="prefab">만들 위치</param>
-        /*    public void AddSubIndicator(UnitPosition unitPosition, GameObject prefab)
-            {
-                if (Indicator == null)
-                {
-                    Debug.LogError("메인 인디케이터를 먼저 생성해 주세요");
-                    return;
-                }
-
-                GameObject gameObject = Instantiate(prefab, Indicator);
-                unitPosition.SetTransform(gameObject.transform);
-            }
-
-            public void AddSubIndicator(List<UnitPosition> unitPositions, GameObject prefab)
-            {
-                foreach (var unitPosition in unitPositions)
-                    AddSubIndicator(unitPosition, prefab);
-            }*/
 
         public void AddSubIndicator(List<Vector2Int> positions, GameObject prefab)
         {
@@ -190,30 +113,13 @@ namespace UI.Battle
 
         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@유닛 인디케이터 경계
 
-        /// <summary>
-        /// 타일 인디케이터 경계를 생성한다.
-        /// </summary>
-        /// <param name="unitPositions">  </param>
-        public void AddIndicatorBoundary(UnitPosition unitPosition, GameObject prefab)
+        public void AddIndicatorBoundary(Vector2Int position, GameObject prefab)
         {
             if (IndicatorBoundary == null)
                 IndicatorBoundary = new GameObject("IndicatorBoundary").transform;
 
             Transform transform = Instantiate(prefab, IndicatorBoundary).transform;
-            unitPosition.SetTransform(transform);
-        }
-
-        public void AddIndicatorBoundary(Vector2Int position, GameObject prefab)
-        {
-            AddIndicatorBoundary(new UnitPosition(position), prefab);
-        }
-
-        public void AddIndicatorBoundary(List<UnitPosition> unitPositions, GameObject prefab)
-        {
-            foreach (var unitPosition in unitPositions)
-            {
-                AddIndicatorBoundary(unitPosition, prefab);
-            }
+            transform.position = new Vector3(position.x, position.y, 0);
         }
 
         public void AddIndicatorBoundary(List<Vector2Int> positions, GameObject prefab)
@@ -246,7 +152,8 @@ namespace UI.Battle
         /// </summary>
         public void SetRotateEnterTriggerOnIndicatorBoundary()
         {
-            Transform thisTurnUnit = BattleManager.instance.thisTurnUnit.transform;
+            Transform thisTurnUnit = BattleUI.instance.unitObjects[BattleManager.instance.thisTurnUnit].transform;
+
             for (int i = 0; i < IndicatorBoundary.childCount; i++)
             {
                 Transform child = IndicatorBoundary.GetChild(i);
@@ -310,7 +217,7 @@ namespace UI.Battle
                 {
                     if (Indicator.gameObject.activeSelf == false)
                         Indicator.gameObject.SetActive(true);
-
+                    /*
                     Vector2Int distance = new Vector2Int();
                     UnitPosition indicatorUnitPosition = UnitPosition.TransformToUnitPosition(Indicator.transform);
 
@@ -342,6 +249,7 @@ namespace UI.Battle
 
                     indicatorUnitPosition.Add(distance);
                     indicatorUnitPosition.SetTransform(Indicator.transform);
+                    */
                 });
 
                 eventTrigger.triggers.Add(entryPointerEnter);

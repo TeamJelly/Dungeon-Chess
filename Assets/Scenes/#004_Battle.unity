@@ -756,38 +756,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AllUnits: []
   thisTurnUnit:
-    name: 
-    category: 0
-    unitClass: 0
-    unitAI: 0
-    level: 0
-    currentHP: 0
-    maxHP: 0
-    currentEXP: 0
-    nextEXP: 0
-    unitPosition:
-      lowerLeft: {x: 0, y: 0}
-      upperRight: {x: 0, y: 0}
-    strength: 0
-    agility: 0
-    move: 0
-    critical: 0
-    actionRate: 0
-    moveCount: 0
-    skillCount: 0
-    itemCount: 0
-    antiques: []
-    items: []
-    stateEffects: []
-    transform: {fileID: 0}
-  PartyPositions:
-  - {x: 0, y: 0}
-  - {x: 2, y: 2}
-  - {x: 3, y: 3}
-  - {x: 4, y: 4}
-  EnemyPositions:
-  - {x: 5, y: 5}
-  - {x: 8, y: 2}
+    spritePath: 
+    animations: []
+    animation: {fileID: 0}
+    animationPath1: 
+    animationPath2: 
+    animationPath3: 
+    animationPath4: 
+    animationState: 0
 --- !u!4 &1309214667
 Transform:
   m_ObjectHideFlags: 0
@@ -9766,7 +9742,6 @@ MonoBehaviour:
   - {fileID: 790935216}
   - {fileID: 2038982287}
   thisTurnUnitInfo: {fileID: 7181283910661206482}
-  hpBars: []
 --- !u!224 &5384038422985716144
 RectTransform:
   m_ObjectHideFlags: 0
