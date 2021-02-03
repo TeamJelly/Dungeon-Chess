@@ -68,15 +68,7 @@ namespace Model
         //    private List<Vector2Int> RangePositions = new List<Vector2Int>(); // 다중 범위
         public string APSchema;
         public string RPSchema;
-
-        private void Awake()
-        {
-            // APSchema 파싱
-            // Common.Range.ParseRangeSchema(APSchema, AvailablePositions);
-
-            // PRSchema 파싱
-            // Common.Range.ParseRangeSchema(APSchema, RangePositions);
-        }
+        public string extension; // 스킬 고유 특성
 
         public virtual List<Vector2Int> GetAvailablePositions()
         {
@@ -220,21 +212,57 @@ namespace Model
                 return units[Random.Range(0, units.Count)];
             }*/
 
-        protected void InitializeSkillFromDB<T>() where T : Skill
+        /// <summary>
+        /// 스킬을 초기화 합니다.
+        /// </summary>
+        /// <param name="skill_no">스킬번호</param>
+        /// <returns></returns>
+        protected void InitializeSkillFromDB(int skill_no)
         {
-            var skill = Query.Instance.SelectFrom<T>("skill_table");
-            number = skill.number;
-            name = skill.name;
-            unitClass = skill.unitClass;
-            grade = skill.grade;
-            skillImagePath = skill.skillImagePath;
-            description = skill.description;
-            criticalRate = skill.criticalRate;
-            reuseTime = skill.reuseTime;
-            domain = skill.domain ;
-            target = skill.target;
-            APSchema = skill.APSchema;
-            RPSchema = skill.RPSchema;
+            var results = Query.Instance.SelectFrom<Skill>("skill_table", $"number={skill_no}").results;
+            if (results.Length > 0)
+            {
+                var skill = results[0];
+                number = skill.number;
+                name = skill.name;
+                unitClass = skill.unitClass;
+                grade = skill.grade;
+                skillImagePath = skill.skillImagePath;
+                description = skill.description;
+                criticalRate = skill.criticalRate;
+                reuseTime = skill.reuseTime;
+                domain = skill.domain;
+                target = skill.target;
+                APSchema = skill.APSchema;
+                RPSchema = skill.RPSchema;
+                extension = skill.extension;
+            } 
+            else
+            {
+                Debug.LogError($"number={skill_no}에 해당하는 스킬이 없습니다.");
+            }
+        }
+        /// <summary>
+        /// 스킬 고유의 확장 스탯을 파싱합니다.
+        /// </summary>
+        /// <typeparam name="T">확장 클래스</typeparam>
+        /// <param name="extension">확장용 스키마를 넣습니다</param>
+        /// <returns>확장 클래스</returns>
+        protected T ParseExtension<T>(string extension)
+        {
+            string[] stats = extension.Split(';');
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+
+            foreach (var stat in stats)
+            {
+                var stat_split = stat.Split('=');
+                var name = stat_split[0];
+                var value = stat_split[1];
+                dict.Add(name, value);
+            }
+            
+            string jsonString = JSON.DictionaryToJsonString(dict);
+            return JSON.ParseString<T>(jsonString);
         }
     }
 }

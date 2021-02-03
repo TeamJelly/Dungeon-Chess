@@ -39,7 +39,7 @@ namespace Model.Managers
             newUnit.setSkill(new Skill_000(), 0);
             newUnit.setSkill(new Skill_001(), 1);
             newUnit.setSkill(new Skill_002(), 2);
-            newUnit.setSkill(new Skill_003(), 3);
+            newUnit.setSkill(new Skills.DummySkill(), 3);
             return newUnit;
         }
         /// <summary>

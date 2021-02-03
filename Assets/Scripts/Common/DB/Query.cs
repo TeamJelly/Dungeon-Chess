@@ -5,6 +5,11 @@ using System.Collections.Generic;
 
 namespace Common.DB
 {
+    [System.Serializable]
+    public class SelectResults<T>
+    {
+        public T[] results;
+    }
     public class Query
     {
         private string dbPath = $"URI=file:{Application.streamingAssetsPath}/project21.db";
@@ -42,7 +47,7 @@ namespace Common.DB
         {
             try
             {
-                Dictionary<string, object> dict = new Dictionary<string, object>();
+                List<Dictionary<string, object>> dict_list = new List<Dictionary<string, object>>();
                 SqliteCommand sqliteCommand = sqliteConnection.CreateCommand();
                 sqliteCommand.CommandText = sqlQuery;
 
@@ -50,16 +55,17 @@ namespace Common.DB
 
                 while (dataReader.Read())
                 {
+                    dict_list.Add(new Dictionary<string, object>());
                     for (int i = 0; i < dataReader.FieldCount; i++)
                     {
                         var type = dataReader.GetFieldType(i);
                         if (type.Equals(typeof(long)))
                         {
-                            dict.Add(dataReader.GetName(i), dataReader.GetValue(i));
+                            dict_list[dict_list.Count - 1].Add(dataReader.GetName(i), dataReader.GetValue(i));
                         }
                         else if (type.Equals(typeof(string)))
                         {
-                            dict.Add(dataReader.GetName(i), $"\"{dataReader.GetValue(i)}\"");
+                            dict_list[dict_list.Count - 1].Add(dataReader.GetName(i), $"\"{dataReader.GetValue(i)}\"");
                         }
                     }
                 }
@@ -68,11 +74,14 @@ namespace Common.DB
                 dataReader = null;
                 sqliteCommand.Dispose();
                 sqliteCommand = null;
-                sqliteConnection.Close();
-                sqliteConnection = null;
 
-                string result = JSON.DictionaryToJsonString(dict);
-                return result;
+                List<string> result = new List<string>();
+                dict_list.ForEach(dict =>
+                {
+                    result.Add(JSON.DictionaryToJsonString(dict));
+                });
+                
+                return "{\"results\": [" + string.Join(",", result) + "]}";
             }
             catch (SqliteException e)
             {
@@ -82,9 +91,16 @@ namespace Common.DB
             }
         }
 
-        public T SelectFrom<T>(string table, string where = null)
+        private void DisconnectToDB()
+        {
+            sqliteConnection.Close();
+            sqliteConnection = null;
+        }
+
+        public SelectResults<T> SelectFrom<T>(string table, string where = null)
         {
             string jsonString = null;
+
             ConnectToDB();
 
             if (where is null)
@@ -96,7 +112,9 @@ namespace Common.DB
                 jsonString = ExecuteDBCommand($"SELECT * FROM {table} WHERE {where}");
             }
 
-            return JSON.ParseString<T>(jsonString);
+            DisconnectToDB();
+
+            return JSON.ParseString<SelectResults<T>>(jsonString);
         }
     }
-}
+} 
