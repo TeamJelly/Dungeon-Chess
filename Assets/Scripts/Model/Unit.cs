@@ -30,6 +30,8 @@ namespace Model
         private int moveCount;
         private int skillCount;
         private int itemCount;
+
+        private Skill moveSkill = new Walk();
         private Skill[] skills = new Skill[4];
         private Item[] items = new Item[2];
         private List<Artifact> antiques = new List<Artifact>();
@@ -82,6 +84,7 @@ namespace Model
         public int MoveCount { get => moveCount; set => moveCount = value; }
         public int SkillCount { get => skillCount; set => skillCount = value; }
         public int ItemCount { get => itemCount; set => itemCount = value; }
+        public Skill MoveSkill { get => moveSkill; set => moveSkill = value; }
         public Skill[] Skills { get => skills; set => skills = value; }
         public Item[] Items { get => items; set => items = value; }
         public List<Artifact> Antiques { get => antiques; set => antiques = value; }
