@@ -27,21 +27,21 @@ namespace Model.Managers
             /***유닛 더미데이터 추가. 추후 BattleUI의 EndGame 함수 포함하여 코드 제거***/
             List<Unit> EnemyUnits = new List<Unit>();
 
-            Unit temp = new Units.Unit_000
+            Unit temp = new Units.Unit_001
             {
                 Category = Category.Enemy,
                 Position = new Vector2Int(1, 1)
             };
             EnemyUnits.Add(temp);
 
-            temp = new Units.Unit_000
+            temp = new Units.Unit_001
             {
                 Category = Category.Enemy,
                 Position = new Vector2Int(2, 2)
             };
             EnemyUnits.Add(temp);
 
-            temp = new Units.Unit_000
+            temp = new Units.Unit_001
             {
                 Category = Category.Enemy,
                 Position = new Vector2Int(3, 4)
@@ -80,13 +80,6 @@ namespace Model.Managers
         /// <returns></returns>
         public static List<Unit> GetUnit()
         {
-            Debug.LogError(instance.AllUnits.Count);
-
-            foreach (var item in instance.AllUnits)
-            {
-                Debug.LogError(item.Name);
-            }
-
             return instance.AllUnits;
         }
         /// <summary>

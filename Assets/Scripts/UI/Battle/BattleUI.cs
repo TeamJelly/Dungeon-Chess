@@ -44,13 +44,15 @@ namespace UI.Battle
 
         private void Start()
         {
+            Init_UnitInfoUI();
+            Init_UnitTurnIndicator();
+
             foreach (var unit in BattleManager.GetUnit())
             {
                 MakeUnitObject(unit);
+                UpdateUnitObejct(unit);
             }
 
-            Init_UnitInfoUI();
-            Init_UnitTurnIndicator();
             SetNextTurn();
         }
 
@@ -58,25 +60,7 @@ namespace UI.Battle
         {
             foreach (var unit in BattleManager.GetUnit())
             {
-                // 유닛 state가 Idle이 아니고, 유닛오브젝트 애니메이터가 Idle이면
-                if (unit.animationState != Unit.AnimationState.Idle &&
-                    unitObjects[unit].GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Idle")) 
-                {
-                    // 애니메이션 실행
-
-                }
-
-                if (new Vector3(unit.Position.x, unit.Position.y) != unitObjects[unit].transform.position)
-                {
-                    // 이동 애니메이션 실행
-                    unitObjects[unit].transform.position = new Vector3(unit.Position.x, unit.Position.y, -1);
-                }
-
-                if (unit.CurrentHP != hpBars[unit].value)
-                {
-                    // hpBars 갱신
-                    hpBars[unit].value = unit.CurrentHP;
-                }
+                UpdateUnitObejct(unit);
             }
         }
 
@@ -90,14 +74,11 @@ namespace UI.Battle
             else
             {
                 // 게임 오브젝트 생성
-                GameObject gameObject = Instantiate(
-                    new GameObject(),
-                    new Vector3(unit.Position.x, unit.Position.y, -1),
-                    Quaternion.identity
-                    );
+                GameObject gameObject = new GameObject(unit.Name);
 
-                gameObject.name = unit.Name;
-
+                // 위치 지정
+                gameObject.transform.position = new Vector3(unit.Position.x, unit.Position.y, -1);
+                    
                 // 이미지 컴포넌트 추가
                 SpriteRenderer spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
 
@@ -120,8 +101,7 @@ namespace UI.Battle
                 eventTrigger.triggers.Add(entry_PointerClick);
 
                 // 자식으로 슬라이더 추가
-                Slider slider = Instantiate(HPBarPrefab, gameObject.transform).GetComponent<Slider>();
-                slider.transform.localScale = new Vector3(0, 1, 1);
+                Slider slider = Instantiate(HPBarPrefab, transform).GetComponent<Slider>();
                 slider.maxValue = unit.MaximumHP;
                 slider.minValue = 0;
                 slider.value = unit.CurrentHP;
@@ -134,11 +114,28 @@ namespace UI.Battle
 
         public void UpdateUnitObejct(Unit unit)
         {
-            GameObject unitObject = unitObjects[unit];
-            Slider hpBar = hpBars[unit];
+            // 유닛 state가 Idle이 아니고, 유닛오브젝트 애니메이터가 Idle이면
+            if (unit.animationState != Unit.AnimationState.Idle &&
+                unitObjects[unit].GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+            {
+                // 애니메이션 실행
 
-            unitObject.transform.position = new Vector3(unit.Position.x, unit.Position.y, 0);
-            hpBar.value = unit.CurrentHP;
+            }
+
+            if (new Vector3(unit.Position.x, unit.Position.y) != unitObjects[unit].transform.position)
+            {
+                // 이동 애니메이션 실행
+                unitObjects[unit].transform.position = new Vector3(unit.Position.x, unit.Position.y, -1);
+                hpBars[unit].transform.position = Camera.main.WorldToScreenPoint(
+                    unitObjects[unit].transform.position + Vector3.up * 0.5f
+                    );
+            }
+
+            if (unit.CurrentHP != hpBars[unit].value)
+            {
+                // hpBars 갱신
+                hpBars[unit].value = unit.CurrentHP;
+            }
         }
 
         /// <summary>

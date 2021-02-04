@@ -54,19 +54,19 @@ namespace Model.Managers
             {
                 Name = "party1",
                 Category = Category.Party,
-                Position = new Vector2Int(1, 4)
+                Position = new Vector2Int(4, 1)
             });
             partyUnits.Add(new Units.Unit_000
             {
                 Name = "party2",
                 Category = Category.Party,
-                Position = new Vector2Int(1, 5)
+                Position = new Vector2Int(5, 1)
             });
             partyUnits.Add(new Units.Unit_000
             {
                 Name = "party3",
                 Category = Category.Party,
-                Position = new Vector2Int(1, 6)
+                Position = new Vector2Int(6, 1)
             });
         }
     }

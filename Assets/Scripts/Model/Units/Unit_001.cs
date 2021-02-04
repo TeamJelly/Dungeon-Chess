@@ -1,19 +1,18 @@
 ﻿using UnityEditor;
 using UnityEngine;
-using Model;
 
 namespace Model.Units
 {
-    public class Unit_000 : Unit
+    public class Unit_001 : Unit
     {
-        public Unit_000()
+        public Unit_001()
         {
-            Name = "기본 전사";
-            UnitClass = UnitClass.Warrior;
+            Name = "슬라임";
+            UnitClass = UnitClass.Monster;
             UnitAI = UnitAI.NULL;
-            spritePath = "HandMade/women";
+            spritePath = "HandMade/slime";
             Level = 1;
-            CurrentHP = 2;
+            CurrentHP = 20;
             MaximumHP = 20;
             CurrentEXP = 0;
             NextEXP = 10;
