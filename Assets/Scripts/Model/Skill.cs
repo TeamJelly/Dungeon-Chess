@@ -59,37 +59,60 @@ namespace Model
         public Target target = Target.Any;      // Default : Any
 
         protected string APSchema;
-        protected string RPSchema;
+        protected string RPSchema;              // relate Position
 
-        public virtual List<Vector2Int> GetAvailablePositions(Unit user)
+        public virtual bool IsAvailablePosition(Unit user, Vector2Int position)
         {
-            return Common.Range.ParseRangeSchema(APSchema);
+            // 등록한 범위 안이어야 한다.
+            if (!Common.Range.ParseRangeSchema(RPSchema).Contains(position - user.Position))
+                return false;
+
+            // 모든 타일에 사용가능
+            if (target == Target.Any)
+                return true;
+            // 유닛 없음타일에만 사용가능
+            else if (target == Target.NoUnit && 
+                BattleManager.GetTile(position).IsUsable())
+                return true;
+            // 파티 유닛에만 사용 가능
+            else if (target == Target.Party &&
+                BattleManager.GetUnit(position)?.Category == Category.Party)
+                return true;
+            // 우호적인 유닛에 사용 가능
+            else if (target == Target.Friendly && (
+                BattleManager.GetUnit(position)?.Category == Category.Friendly ||
+                BattleManager.GetUnit(position)?.Category == Category.Party))
+                return true;
+            // 적대적인 유닛에 사용 가능
+            else if (target == Target.Enemy &&
+                BattleManager.GetUnit(position)?.Category == Category.Enemy)
+                return true;
+            // 어디에도 속하지 않으면 false
+            else
+                return false;
         }
 
-        public virtual List<Vector2Int> GetRangePositions(Unit user)
+        /* public virtual List<Vector2Int> GetAvailablePositions(Unit user)
         {
-            return Common.Range.ParseRangeSchema(RPSchema);
-        }
+            List<Vector2Int> positions = new List<Vector2Int>();
 
-        /// <summary>
-        /// 스킬 사용가능한 위치인가?
-        /// </summary>
-        /// <param name="user"></param>
-        /// <param name="position"></param>
-        /// <returns></returns>
-        public virtual bool IsPossible(Unit user, Vector2Int position)
-        {
-            Vector2Int temp = position - user.Position;
-
-            if (GetAvailablePositions(user).Contains(temp))
+            foreach (var position in Common.Range.ParseRangeSchema(APSchema))
             {
-                if (target == Target.Any)
-                    return true;
-                else if (target == Target.NoUnit && BattleManager.GetUnit(position) == null)
-                    return true;
+                Vector2Int abs = user.Position + position;
+
+                if (IsAvailablePosition(user, abs))
+                    positions.Add(abs);
             }
 
-            return false;
+            return positions;
+        } */
+
+        // 메인 인디케이터의 위치가 position일때, 관련된 범위의 위치를 돌려줍니다.
+        public virtual List<Vector2Int> GetRelatePositions(Unit user, Vector2Int position)
+        {
+
+
+            return Common.Range.ParseRangeSchema(RPSchema);
         }
 
         public virtual IEnumerator Use(Unit user, Vector2Int target)
@@ -98,6 +121,5 @@ namespace Model
             currentReuseTime = reuseTime;
             yield return null;
         }
-
     }
 }

@@ -104,6 +104,10 @@ namespace Model.Managers
             else
                 return null;
         }
+        public static Tile[,] GetTile()
+        {
+            return instance.AllTiles;
+        }
 
         /// <summary>
         /// 정보 저장용 타일 생성

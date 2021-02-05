@@ -20,15 +20,15 @@ public class Skill_011 : Skill
         fixedDamge = 20;
     }
 
-    public override List<Vector2Int> GetRangePositions(Unit user)
-    {
-        if (enhancedLevel == 0)
-            RPSchema = "1;1";
-        else if (enhancedLevel >= 1)
-            RPSchema = "3;111;111;111";
+    //public override List<Vector2Int> GetRangePositions(Unit user)
+    //{
+    //    if (enhancedLevel == 0)
+    //        RPSchema = "1;1";
+    //    else if (enhancedLevel >= 1)
+    //        RPSchema = "3;111;111;111";
 
-        return base.GetRangePositions(user);
-    }
+    //    return base.GetRangePositions(user);
+    //}
 
     //public override void Use(Unit user, Tile target)
     //{

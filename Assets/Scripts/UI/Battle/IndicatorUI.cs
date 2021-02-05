@@ -1,6 +1,5 @@
 ﻿using Model.Managers;
 using Model;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -16,221 +15,142 @@ namespace UI.Battle
             instance = this;
         }
 
-        [SerializeField]
-        private static Transform mainIndicator; // 메인 인디케이터의 위치, 서브 인디케이터는 자식으로 생성된다.
-
-        public static Transform MainIndicator {
-            get
-            {
-                if (mainIndicator == null)
-                {
-                    mainIndicator = Instantiate(instance.mainTileIndicatorPrefab).transform;
-                    mainIndicator.name = "MainIndicator";
-                    mainIndicator.position = Vector3.back * 2;
-                    mainIndicator.gameObject.SetActive(false);
-                }
-
-                return mainIndicator;
-            }
-
-            set => mainIndicator = value; 
-        }
-
-        [SerializeField]
-        private static Transform indicatorBoundary; // 인디케이터 경계의 위치, 각종 인디케이터 경계가 자식으로 생성된다.
-
-        public static Transform IndicatorBoundary
+        private static GameObject tileIndicatorParent;
+        public static GameObject TileIndicatorParent
         {
             get
             {
-                if (indicatorBoundary == null)
-                {
-                    indicatorBoundary = new GameObject("IndicatorBoundary").transform;
-                    indicatorBoundary.position += Vector3.back;
-                }
-                return indicatorBoundary;
+                if (tileIndicatorParent == null)
+                    tileIndicatorParent = new GameObject("Tile Indicator Parent");
+
+                return tileIndicatorParent;
             }
-            set => indicatorBoundary = value;
+            set => tileIndicatorParent = value;
         }
+
+        private static GameObject[,] tileIndicators;
+        public static GameObject[,] TileIndicators
+        {
+            get
+            {
+                if (tileIndicators == null)
+                {
+                    tileIndicators = new GameObject[BattleManager.GetTile().GetLength(0), BattleManager.GetTile().GetLength(1)];
+
+
+                    for (int i = 0; i < tileIndicators.GetLength(0); i++)
+                        for (int j = 0; j < tileIndicators.GetLength(1); j++)
+                        {
+                            tileIndicators[i, j] = Instantiate(instance.tileIndicatorPrefab, new Vector3(i, j, 0), Quaternion.identity, TileIndicatorParent.transform);
+
+                            EventTrigger eventTrigger = tileIndicators[i, j].GetComponent<EventTrigger>();
+                            Vector2Int position = new Vector2Int(i, j);
+                            
+                            EventTrigger.Entry entry = new EventTrigger.Entry();
+                            entry.eventID = EventTriggerType.PointerEnter;
+                            entry.callback.AddListener((data) => UpdateTileIndicator(position));
+                            eventTrigger.triggers.Add(entry);
+
+                            entry = new EventTrigger.Entry();
+                            entry.eventID = EventTriggerType.PointerClick;
+                            entry.callback.AddListener((data) =>
+                            {
+                                if (currentSkill.IsAvailablePosition(currentUnit, position))
+                                {
+                                    currentSkill.Use(currentUnit, position);
+                                    HideTileIndicator();
+                                } else
+                                {
+                                    Debug.LogError("사용할수 없는 위치입니다.");
+                                }
+                            });
+                            eventTrigger.triggers.Add(entry);
+                        }
+                }
+
+                return tileIndicators;
+            }
+            set => tileIndicators = value;
+        }
+
 
         [Header("Tile Indicator")]
         [SerializeField]
-        public GameObject mainTileIndicatorPrefab; // 메인 타일 인디케이터
+        public GameObject tileIndicatorPrefab;
+
         [SerializeField]
-        public GameObject subTileIndicatorPrefab;
+        Color possibleColor = Color.green;
         [SerializeField]
-        public GameObject tileIndicatorBoundaryPrefab;
+        Color impossibleColor = Color.red;
+        [SerializeField]
+        Color subIndicatorColor = Color.yellow;
+        [SerializeField]
+        Color inBoundaryColor = Color.blue;
+        [SerializeField]
+        Color outBoundaryColor = Color.white;
 
-        public static List<Vector2Int> GetPositionsOnIndicators()
-        {
-            List<Vector2Int> positions = new List<Vector2Int>();
+        private static Skill currentSkill;
+        private static Unit currentUnit;
 
-            positions.Add(GetPositionOnMainIndicator()); // 메인 인디케이터 위치 추가
-
-            for (int i = 0; i < MainIndicator.childCount; i++)
-            {
-                // 서브 인디케이터 위치들 추가
-                Vector3 position = MainIndicator.GetChild(i).transform.position;
-                positions.Add(new Vector2Int(Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.y)));
-            }
-
-            return positions;
-        }
-
-        public static Vector2Int GetPositionOnMainIndicator()
-        {
-            Vector3 position = MainIndicator.position;
-            return new Vector2Int(Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.y));
-        }
-
-        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@서브 인디케이터 추가
-
-        public static void AddSubIndicator(List<Vector2Int> positions, GameObject prefab)
+        public static void ChangeTileIndicatorColor(List<Vector2Int> positions, Color color)
         {
             foreach (var position in positions)
-                AddSubIndicator(position, prefab);
+                ChangeTileIndicatorColor(position, color);
         }
 
-        public static void AddSubIndicator(Vector2Int position, GameObject prefab)
+        public static void ChangeTileIndicatorColor(Vector2Int position, Color color)
         {
-            GameObject child = Instantiate(prefab, MainIndicator);
-            child.transform.localPosition = new Vector3(position.x, position.y, 0);
+            if (BattleManager.IsAvilablePosition(position))
+                TileIndicators[position.x, position.y].GetComponent<SpriteRenderer>().color = color;
         }
 
-        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@유닛 인디케이터 경계
-
-        public static void AddIndicatorBoundary(Vector2Int position, GameObject prefab)
-        {
-            Transform transform = Instantiate(prefab, IndicatorBoundary).transform;
-            transform.localPosition = new Vector3(position.x, position.y, 0);
-        }
-
-        public static void AddIndicatorBoundary(List<Vector2Int> positions, GameObject prefab)
-        {
-            foreach (var position in positions)
-            {
-                AddIndicatorBoundary(position, prefab);
-            }
-        }
-
-        public static void SetCustomClickTriggerOnIndicator(EventTrigger.Entry entryPointerClick)
-        {
-            if (MainIndicator.gameObject.GetComponent<EventTrigger>() == null)
-                MainIndicator.gameObject.AddComponent<EventTrigger>();
-            if (MainIndicator.gameObject.GetComponent<BoxCollider2D>() == null)
-                MainIndicator.gameObject.AddComponent<BoxCollider2D>();
-
-            EventTrigger eventTrigger = MainIndicator.GetComponent<EventTrigger>();
-            eventTrigger.triggers.Add(entryPointerClick);
-        }
 
         /// <summary>
-        /// 인디케이터 바운더리에 회전 엔터 트리거를 추가한다.
+        /// 커서 표시 없음
         /// </summary>
-        public void SetRotateEnterTriggerOnIndicatorBoundary()
+        public static void UpdateTileIndicator()
         {
-            Transform thisTurnUnit = BattleUI.instance.unitObjects[BattleManager.instance.thisTurnUnit].transform;
-
-            for (int i = 0; i < IndicatorBoundary.childCount; i++)
-            {
-                Transform child = IndicatorBoundary.GetChild(i);
-
-                if (child.GetComponent<EventTrigger>() == null)
-                    child.gameObject.AddComponent<EventTrigger>();
-                if (child.GetComponent<BoxCollider2D>() == null)
-                    child.gameObject.AddComponent<BoxCollider2D>();
-
-                EventTrigger eventTrigger = child.GetComponent<EventTrigger>();
-                EventTrigger.Entry entryPointerEnter = new EventTrigger.Entry();
-                entryPointerEnter.eventID = EventTriggerType.PointerEnter;
-
-                entryPointerEnter.callback.AddListener((data) =>
+            for (int i = 0; i < TileIndicators.GetLength(0); i++)
+                for (int j = 0; j < TileIndicators.GetLength(1); j++)
                 {
-                    if (MainIndicator.gameObject.activeSelf == false)
-                        MainIndicator.gameObject.SetActive(true);
-
-                    int x = Mathf.RoundToInt(child.position.x - thisTurnUnit.position.x);
-                    int y = Mathf.RoundToInt(child.position.y - thisTurnUnit.position.y);
-                    Vector3 vector = new Vector3(x, y, 0);
-                    vector.Normalize();
-
-                    float angle;
-                    if (x < 0)
-                        angle = -Mathf.Rad2Deg * Mathf.Acos(vector.y);
+                    Vector2Int tempPosition = new Vector2Int(i, j);
+                    if (currentSkill.IsAvailablePosition(currentUnit, tempPosition))
+                        ChangeTileIndicatorColor(tempPosition, instance.inBoundaryColor);
                     else
-                        angle = Mathf.Rad2Deg * Mathf.Acos(vector.y);
-
-                    MainIndicator.rotation = Quaternion.Euler(0, 0, -angle);
-                });
-
-                //child.position += Vector3.back;
-                eventTrigger.triggers.Add(entryPointerEnter);
-            }
+                        ChangeTileIndicatorColor(tempPosition, instance.outBoundaryColor);
+                }
         }
 
-        /// <summary>
-        /// 인디케이터 바운더리에 사이즈와 위치를 똑같게하는 엔터 트리거를 추가한다.
-        /// </summary>
-        public static void SetFollowEnterTriggerOnIndicatorBoundary()
+        public static void UpdateTileIndicator(Vector2Int position)
         {
-            if (IndicatorBoundary == null)
-            {
-                Debug.LogWarning("인디케이터 바운더리가 존재하지 않습니다.");
-                return;
-            }
-
-            for (int i = 0; i < IndicatorBoundary.childCount; i++)
-            {
-                Transform child = IndicatorBoundary.GetChild(i);
-
-                if (child.GetComponent<EventTrigger>() == null)
-                    child.gameObject.AddComponent<EventTrigger>();
-                if (child.GetComponent<BoxCollider2D>() == null)
-                    child.gameObject.AddComponent<BoxCollider2D>();
-
-                EventTrigger eventTrigger = child.GetComponent<EventTrigger>();
-                EventTrigger.Entry entryPointerEnter = new EventTrigger.Entry();
-                entryPointerEnter.eventID = EventTriggerType.PointerEnter;
-
-                entryPointerEnter.callback.AddListener((data) =>
+            for (int i = 0; i < TileIndicators.GetLength(0); i++)
+                for (int j = 0; j < TileIndicators.GetLength(1); j++)
                 {
-                    if (MainIndicator.gameObject.activeSelf == false)
-                        MainIndicator.gameObject.SetActive(true);
+                    Vector2Int tempPosition = new Vector2Int(i, j);
+                    if (currentSkill.IsAvailablePosition(currentUnit, tempPosition))
+                        ChangeTileIndicatorColor(tempPosition, instance.inBoundaryColor);
+                    else
+                        ChangeTileIndicatorColor(tempPosition, instance.outBoundaryColor);
+                }
 
-                    MainIndicator.position = child.position + Vector3.back;
-                    // MainIndicator.localScale = child.localScale; 사이즈 1*1라 필요가 없음 이제.
-                });
-
-                child.position += Vector3.back;
-                eventTrigger.triggers.Add(entryPointerEnter);
-            }
+            if (currentSkill.IsAvailablePosition(currentUnit, position))
+                ChangeTileIndicatorColor(position, instance.possibleColor);
+            else
+                ChangeTileIndicatorColor(position, instance.impossibleColor);
         }
 
-        public void SetCustomEnterTriggerOnIndicatorBoundary(EventTrigger.Entry entryPointerEnter)
+        public static void ShowTileIndicator(Unit user, Skill skill)
         {
-            for (int i = 0; i < IndicatorBoundary.childCount; i++)
-            {
-                if (IndicatorBoundary.GetChild(i).GetComponent<EventTrigger>() == null)
-                    IndicatorBoundary.GetChild(i).gameObject.AddComponent<EventTrigger>();
+            currentUnit = user;
+            currentSkill = skill;
 
-                EventTrigger eventTrigger = IndicatorBoundary.GetChild(i).GetComponent<EventTrigger>();
-                eventTrigger.triggers.Add(entryPointerEnter);
-            }
+            TileIndicatorParent.SetActive(true);
+            UpdateTileIndicator();
         }
 
-        public static void DestoryAll()
+        public static void HideTileIndicator()
         {
-            if (MainIndicator != null)
-            {
-                Destroy(MainIndicator.gameObject);
-                MainIndicator = null;
-            }
-
-            if (IndicatorBoundary != null)
-            {
-                Destroy(IndicatorBoundary.gameObject);
-                IndicatorBoundary = null;
-            }
+            TileIndicatorParent.SetActive(false);
         }
     }
 }

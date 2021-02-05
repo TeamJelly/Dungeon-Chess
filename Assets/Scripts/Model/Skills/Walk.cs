@@ -16,12 +16,20 @@ public class Walk : Skill
         reuseTime = 0;
     }
 
+    public override bool IsAvailablePosition(Unit user, Vector2Int position)
+    {
+        if (GetAvailablePositions(user).Contains(position))
+            return true;
+        else
+            return false;
+    }
+
     /// <summary>
     /// 걷기의 이동 가능한 범위를 계산합니다.
     /// </summary>
     /// <param name="user"></param>
     /// <returns></returns>
-    public override List<Vector2Int> GetAvailablePositions(Unit user)
+    public List<Vector2Int> GetAvailablePositions(Unit user)
     {
         List<Vector2Int> positions = new List<Vector2Int>();        // 이동가능한 모든 위치를 저장
         List<Vector2Int> new_frontier = new List<Vector2Int>();     // 새로 추가한 외곽 위치를 저장
@@ -76,6 +84,7 @@ public class Walk : Skill
 
         yield return new WaitWhile(()=> user.animationState != Unit.AnimationState.Idle);
 
+        Debug.LogError("hello");
         base.Use(user, target);
     }
 }
