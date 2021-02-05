@@ -28,6 +28,8 @@ public class Walk : Skill
         List<Vector2Int> old_frontier = new List<Vector2Int>();     // 이전번에 추가한 외곽 위치를 저장
         Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
 
+        old_frontier.Add(user.Position);
+
         for (int i = 0; i < user.Move; i++)
         {
             foreach (var position in old_frontier)
@@ -36,6 +38,11 @@ public class Walk : Skill
                 foreach (var direction in directions)
                 {
                     Vector2Int temp = position + direction;
+
+                    /*Debug.LogError($"{temp} : " +
+                        $"{!positions.Contains(temp)}" +
+                        $"{BattleManager.IsAvilablePosition(temp)}" +
+                        $"{BattleManager.GetTile(temp)?.IsUsable()}");*/
 
                     if (!positions.Contains(temp) &&                // 전에 추가한 위치가 아니고
                         BattleManager.IsAvilablePosition(temp) &&   // 맵 범위 안이고
@@ -63,8 +70,12 @@ public class Walk : Skill
         base.Use(user, target);
 
         yield return new WaitWhile(() => user.animationState != Unit.AnimationState.Idle);
-        user.animationState = Unit.AnimationState.Move;
+        //user.animationState = Unit.AnimationState.Move;
+        user.Position = target;
+        user.MoveCount--;
 
         yield return new WaitWhile(()=> user.animationState != Unit.AnimationState.Idle);
+
+        base.Use(user, target);
     }
 }

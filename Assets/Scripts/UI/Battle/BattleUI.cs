@@ -290,24 +290,20 @@ namespace UI.Battle
                     moveButton.onClick.AddListener(() => // 이동 버튼을 눌렀을 때 작동하는 코드
                     {
                         IndicatorUI.DestoryAll();
-                        IndicatorUI.InitMainIndicator(unit.Position, IndicatorUI.instance.mainTileIndicatorPrefab);
-                        IndicatorUI.AddIndicatorBoundary(Range.ParseRangeSchema("3;010;101;010"), IndicatorUI.instance.tileIndicatorBoundaryPrefab);
+                        IndicatorUI.AddIndicatorBoundary(unit.MoveSkill.GetAvailablePositions(unit), IndicatorUI.instance.tileIndicatorBoundaryPrefab);
                         IndicatorUI.SetFollowEnterTriggerOnIndicatorBoundary();
 
-                        /*EventTrigger.Entry entry_PointerClick = new EventTrigger.Entry();
+                        EventTrigger.Entry entry_PointerClick = new EventTrigger.Entry();
                         entry_PointerClick.eventID = EventTriggerType.PointerClick;
                         entry_PointerClick.callback.AddListener((data) =>
                         {
                             StartCoroutine(unit.MoveSkill.Use(unit, IndicatorUI.GetPositionOnMainIndicator()));
-
                             IndicatorUI.DestoryAll();
-
-                            unit.MoveCount--;
                             currentPushedButton = null;
                             UpdateThisTurnPanel(unit);
                         });
                         IndicatorUI.SetCustomClickTriggerOnIndicator(entry_PointerClick);
-                        */
+                        
                         currentPushedButton = moveButton;
                         UpdateThisTurnPanel(unit);
                     });
@@ -465,7 +461,7 @@ namespace UI.Battle
                 for (int i = 0; i < unit.items.Length; i++)
                 {
                     //아이템 버튼
-                }
+                }*/
             }
             else // 버튼 눌린 상태, 타 버튼 비활성화, 다시 누르면 타일 표시기들 제거
             {
@@ -474,12 +470,12 @@ namespace UI.Battle
                 currentPushedButton.onClick.RemoveAllListeners();
                 currentPushedButton.onClick.AddListener(() =>
                 {
-                    indicatorManager.DestoryAll();
+                    IndicatorUI.DestoryAll();
                     SkillInfoInstance.SetActive(false);
 
                     currentPushedButton = null;
                     UpdateThisTurnPanel(unit);
-                });*/
+                });
             }
         }
     }

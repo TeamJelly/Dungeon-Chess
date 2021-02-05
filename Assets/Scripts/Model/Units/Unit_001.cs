@@ -18,6 +18,7 @@ namespace Model.Units
             NextEXP = 10;
             Agility = 10;
             Move = 2;
+            MoveSkill = new Walk();
         }
     }
 }
