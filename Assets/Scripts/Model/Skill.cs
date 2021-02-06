@@ -17,8 +17,8 @@ namespace Model
         public Grade grade = Grade.NULL;                                // 스킬 등급
 
         protected string spritePath;
-        private Sprite sprite;
 
+        private Sprite sprite;
         public Sprite Sprite
         {
             get
@@ -64,7 +64,7 @@ namespace Model
         public virtual bool IsAvailablePosition(Unit user, Vector2Int position)
         {
             // 등록한 범위 안이어야 한다.
-            if (!Common.Range.ParseRangeSchema(RPSchema).Contains(position - user.Position))
+            if (!Common.Range.ParseRangeSchema(APSchema).Contains(position - user.Position))
                 return false;
 
             // 모든 타일에 사용가능

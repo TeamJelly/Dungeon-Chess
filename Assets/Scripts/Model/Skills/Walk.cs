@@ -94,11 +94,13 @@ public class Walk : Skill
 
             user.animationState = Unit.AnimationState.Move;
             float moveTime = 0.5f / path.Count;
+
             for (int i = 1; i < path.Count; i++)
             {
                 Common.UnitAction.Move(user, path[i]);
                 yield return new WaitForSeconds(moveTime);
             }
+
             user.animationState = Unit.AnimationState.Idle;
         }
     }

@@ -17,6 +17,7 @@ namespace UI.Battle
         public Dictionary<Unit, GameObject> unitObjects = new Dictionary<Unit, GameObject>();
         private Dictionary<Unit, Slider> hpBars = new Dictionary<Unit, Slider>();
 
+        public GameObject ;
         public GameObject unitsInfoPanel;
         public GameObject UnitInfoUIPrefab;
         public GameObject HPBarPrefab;
