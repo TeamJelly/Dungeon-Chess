@@ -31,7 +31,7 @@ namespace UI
 
             for (int i = 0; i < units.Count; i++)
             {
-                unitImagies.Add(((GameObject)Instantiate(Resources.Load("Prefabs/Units/" + units[i].name))).GetComponent<SpriteRenderer>().sprite);
+                unitImagies.Add(((GameObject)Instantiate(Resources.Load("Prefabs/Units/" + units[i].Name))).GetComponent<SpriteRenderer>().sprite);
             }
             UpdateUI();
             //currentUnitImage.sprite = 
@@ -40,7 +40,7 @@ namespace UI
         {
             currentUnit = UnitManager.Instance.AllUnits[index];
             currentUnitImage.sprite = unitImagies[index];
-            descriptionText.text = $"이름: {UnitManager.Instance.AllUnits[index].name}\n";
+            descriptionText.text = $"이름: {UnitManager.Instance.AllUnits[index].Name}\n";
 
             if(GameManager.PartyUnits.Contains(currentUnit))
             {

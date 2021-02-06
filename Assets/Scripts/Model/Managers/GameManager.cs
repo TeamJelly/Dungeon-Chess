@@ -17,6 +17,7 @@ namespace Model.Managers
         List<Unit> partyUnits = new List<Unit>();
 
         public static List<Unit> PartyUnits { get => Instance.partyUnits; }
+
         public static GameManager Instance
         {
             get
@@ -29,7 +30,7 @@ namespace Model.Managers
 
         GameManager()
         {
-            //InitForTesting();
+            InitForTesting();
         }
 
         public static void Reset()

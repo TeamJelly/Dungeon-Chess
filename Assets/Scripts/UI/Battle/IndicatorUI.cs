@@ -81,13 +81,13 @@ namespace UI.Battle
         public GameObject tileIndicatorPrefab;
 
         [SerializeField]
-        Color possibleColor = Color.green;
+        Color possibleColor = Color.blue;
         [SerializeField]
         Color impossibleColor = Color.red;
         [SerializeField]
         Color subIndicatorColor = Color.yellow;
         [SerializeField]
-        Color inBoundaryColor = Color.blue;
+        Color inBoundaryColor = Color.green;
         [SerializeField]
         Color outBoundaryColor = Color.white;
 
