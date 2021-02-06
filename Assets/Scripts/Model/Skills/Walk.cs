@@ -82,11 +82,9 @@ public class Walk : Skill
     public override IEnumerator Use(Unit user, Vector2Int target)
     {
         // 0 단계 : 로그 출력, 스킬 소모 기록
-        {
-            Debug.Log(name + " 스킬을 " + target + "에 사용!");
-            user.MoveCount--;
-            currentReuseTime = reuseTime;
-        }
+        Debug.Log(name + " 스킬을 " + target + "에 사용!");
+        user.MoveCount--;
+        currentReuseTime = reuseTime;
 
         // 1 단계 : 위치 이동
         {

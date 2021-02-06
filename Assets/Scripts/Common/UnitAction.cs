@@ -27,6 +27,8 @@ namespace Common
 
         public static int Damage(Unit unit, int number)
         {
+            Debug.LogError($"{unit.Name} 가 {number} 만큼 데미지를 입었다! HP : {unit.CurrentHP} > {unit.CurrentHP - number}");
+
             //BeforeDamage(unit, number);
 
             unit.CurrentHP -= number;

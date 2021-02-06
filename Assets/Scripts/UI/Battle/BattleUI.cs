@@ -306,11 +306,18 @@ namespace UI.Battle
                     if (skill == null) continue;
 
                     // 스킬이 사용가능하다면
-                    if (skill.currentReuseTime == 0 && unit.SkillCount > 0) 
+                    if (skill.IsUsable(unit)) 
                     {
                         // 버튼 활성화
                         skillButton.interactable = true;
+                        skillButton.onClick.RemoveAllListeners();
 
+                        skillButton.onClick.AddListener(() =>
+                        {
+                            IndicatorUI.ShowTileIndicator(unit, skill);
+                            currentPushedButton = skillButton;
+                            UpdateThisTurnPanel(unit);
+                        });
                     }
                 }
 
