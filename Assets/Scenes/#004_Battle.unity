@@ -756,38 +756,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AllUnits: []
   thisTurnUnit:
-    name: 
-    category: 0
-    unitClass: 0
-    unitAI: 0
-    level: 0
-    currentHP: 0
-    maxHP: 0
-    currentEXP: 0
-    nextEXP: 0
-    unitPosition:
-      lowerLeft: {x: 0, y: 0}
-      upperRight: {x: 0, y: 0}
-    strength: 0
-    agility: 0
-    move: 0
-    critical: 0
-    actionRate: 0
-    moveCount: 0
-    skillCount: 0
-    itemCount: 0
-    antiques: []
-    items: []
-    stateEffects: []
-    transform: {fileID: 0}
-  PartyPositions:
-  - {x: 0, y: 0}
-  - {x: 2, y: 2}
-  - {x: 3, y: 3}
-  - {x: 4, y: 4}
-  EnemyPositions:
-  - {x: 5, y: 5}
-  - {x: 8, y: 2}
+    spritePath: 
+    animations: []
+    animation: {fileID: 0}
+    animationPath1: 
+    animationPath2: 
+    animationPath3: 
+    animationPath4: 
+    animationState: 0
 --- !u!4 &1309214667
 Transform:
   m_ObjectHideFlags: 0
@@ -814,18 +790,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1a360600e4212f44a7bae93e8ead593, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Indicator: {fileID: 0}
-  IndicatorBoundary: {fileID: 0}
-  mainTileIndicatorPrefab: {fileID: 4462922396805816717, guid: 353af6cd85dd63041ba08e140016d886,
+  tileIndicatorPrefab: {fileID: 4462922396805816717, guid: 316a856634a04434c9c6fd0b6d18cffb,
     type: 3}
-  subTileIndicatorPrefab: {fileID: 4462922396805816717, guid: 82b93824c43cdbc45952da075b54d755,
-    type: 3}
-  tileIndicatorBoundaryPrefab: {fileID: 4462922396805816717, guid: 465b988f26ffcd24981ee965e2d442b2,
-    type: 3}
-  mainUnitIndicatorPrefab: {fileID: 4462922396805816717, guid: 822346c4e09633d4597569f9b9bf3140,
-    type: 3}
-  unitIndicatorBoundaryPrefab: {fileID: 4462922396805816717, guid: 71c6a9b75046b0a4b8cc38011d79a53a,
-    type: 3}
+  possibleColor: {r: 0.010130882, g: 0, b: 1, a: 0.48235294}
+  impossibleColor: {r: 1, g: 0, b: 0, a: 0.48235294}
+  subIndicatorColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 0.48235294}
+  inBoundaryColor: {r: 0, g: 1, b: 0, a: 0.48235294}
+  outBoundaryColor: {r: 1, g: 1, b: 1, a: 0.48235294}
 --- !u!114 &1309214670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9766,7 +9737,6 @@ MonoBehaviour:
   - {fileID: 790935216}
   - {fileID: 2038982287}
   thisTurnUnitInfo: {fileID: 7181283910661206482}
-  hpBars: []
 --- !u!224 &5384038422985716144
 RectTransform:
   m_ObjectHideFlags: 0

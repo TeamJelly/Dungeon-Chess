@@ -23,8 +23,8 @@ namespace UI.Battle
         public void Enable(Unit unit)
         {
             text.TextString =
-                "이름: " + unit.name +
-                "\nstrength: " + unit.strength;
+                "이름: " + unit.Name +
+                "\nstrength: " + unit.Strength;
             gameObject.SetActive(true);
         }
 

@@ -35,17 +35,7 @@ namespace Model.Managers
         public static Unit GetUnit(string unitName)
         {
             Unit newUnit = new Unit(unitName);
-            newUnit.agility = 3;
-            newUnit.setSkill(new Skill_000(), 0);
-            newUnit.setSkill(new Skill_001(), 1);
-            newUnit.setSkill(new Skill_002(), 2);
-            newUnit.setSkill(new Skill_003(), 3);
             return newUnit;
         }
-        /// <summary>
-        /// 배틀 씬에서 더미데이터 추가하는 코드.
-        /// </summary>
-
-
     }
 }

@@ -5,7 +5,9 @@ using UnityEngine;
 
 namespace Model
 {
-    [System.Serializable]
+    // 봉인
+
+    /*[System.Serializable]
     public class UnitPosition
     {
         public Vector2Int lowerLeft, upperRight;
@@ -229,5 +231,5 @@ namespace Model
 
             return true;
         }
-    }
+    }*/
 }

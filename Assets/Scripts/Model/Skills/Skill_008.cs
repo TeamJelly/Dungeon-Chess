@@ -9,18 +9,16 @@ public class Skill_008 : Skill
 {
     [Header("스킬 고유 특성")]
     private int strengthToDamageRatio;
-    public Skill_008()
+    Skill_008()
     {
         number = 8;
         name = "힘의 파동";
         unitClass = UnitClass.Warrior;
         grade = Grade.Rare;
-        skillImagePath = "HandMade/SkillImage/008_힘의 파동";
+        spritePath = "HandMade/SkillImage/008_힘의 파동";
         description = "범위 안에 있는 모든 적군에게 데미지를 입히고 기절 시킨다.";
         criticalRate = 0;
         reuseTime = 5;
-        domain = Domain.Rotate;
-        target = Target.AnyTile;
         APSchema = "3;010;111;010";
         // RPSchema = "3;111;111;000";//회전 들어감. 추후 수정.
         strengthToDamageRatio = 2;
@@ -88,18 +86,19 @@ public class Skill_008 : Skill
             "0000000000000" // 5강
     };
 
-    public override List<Vector2Int> GetRangePositions()
-    {
-        if (enhancedLevel <= 5)
-            return Common.Range.ParseRangeSchema(RPSchemas[enhancedLevel]);
-        else
-            return Common.Range.ParseRangeSchema(RPSchemas[4]);
-    }
+    //public override List<Vector2Int> GetRangePositions(Unit unit)
+    //{
+    //    if (enhancedLevel <= 5)
+    //        return Common.Range.ParseRangeSchema(RPSchemas[enhancedLevel]);
+    //    else
+    //        return Common.Range.ParseRangeSchema(RPSchemas[4]);
+    //}
 
-    public override void UseSkillToUnit(Unit owner, Unit unit)
-    {
-        Debug.LogError(name + " 스킬을 " + unit.name + "에 사용!");
-        unit.GetDamage(owner.strength * strengthToDamageRatio + enhancedLevel);
-        base.UseSkillToUnit(owner,unit);
-    }
+    //public override void Use(Unit user, Tile target)
+    //{
+    //    Unit unit = target.GetUnit();
+    //    int damage = user.strength * strengthToDamageRatio + enhancedLevel;
+    //    Common.UnitAction.Damage(unit, damage);
+    //    base.Use(user, target);
+    //}
 }

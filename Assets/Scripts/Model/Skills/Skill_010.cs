@@ -7,7 +7,7 @@ using Model;
 /// </summary>
 public class Skill_010 : Skill
 {
-     public Skill_010()
+     Skill_010()
      {
         number = 10;
         name = "광역 도발";
@@ -16,17 +16,14 @@ public class Skill_010 : Skill
         description = "방 안에 있는 모든 적군에게 도발 효과를 주고 보호막을 2턴 얻는다.";
         criticalRate = 0;
         reuseTime = 6;
-        domain = Domain.Fixed;
-        target = Target.EnemyUnit;
         APSchema = "1;1";
         RPSchema = "1;1";
      }
-    public override void UseSkillToUnit(Unit owner, Unit unit)
-    {
-        Debug.LogError(name + " 스킬을 " + unit.name + "에 사용!");
 
-        //도발 효과, 보호막 2턱
-        // unit.GetDamage(owner.strength * damage + enhancedLevel);
-        base.UseSkillToUnit(owner,unit);
-    }
+    //public override void Use(Unit user, Tile target)
+    //{
+    //    Unit unit = target.GetUnit();
+    //    //도발 효과, 보호막 2턱
+    //    base.Use(user, target);
+    //}
 }
