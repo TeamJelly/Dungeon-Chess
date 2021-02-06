@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using UnityEngine;
 using Model;
+using System.Collections.Generic;
+
 public class Skill_011 : Skill
 {
     private int fixedDamge;
 
-    // Use this for initialization
-    public Skill_011()
+    private Skill_011()
     {
         number = 11;
         name = "혼신의 일격";
@@ -15,17 +16,25 @@ public class Skill_011 : Skill
         description = "단일 적에게 체력 만큼의 데미지를 준다.";
         criticalRate = 0;
         reuseTime = 3;
-        domain = Domain.SelectOne;
-        target = Target.AnyUnit;
         APSchema = "5;00100;00100;11111;00100;00100";
-        RPSchema = "1;1"; // 강화시 -> "3;111;111;111"
         fixedDamge = 20;
     }
 
-    public override void UseSkillToUnit(Unit owner, Unit unit)
-    {
-        Debug.LogError(name + " 스킬을 " + unit.name + "에 사용!");
-        unit.GetDamage(owner.maxHP + fixedDamge);
-        base.UseSkillToUnit(owner,unit);
-    }
+    //public override List<Vector2Int> GetRangePositions(Unit user)
+    //{
+    //    if (enhancedLevel == 0)
+    //        RPSchema = "1;1";
+    //    else if (enhancedLevel >= 1)
+    //        RPSchema = "3;111;111;111";
+
+    //    return base.GetRangePositions(user);
+    //}
+
+    //public override void Use(Unit user, Tile target)
+    //{
+    //    Unit unit = target.GetUnit();
+    //    int damage = user.maxHP + fixedDamge;
+    //    Common.UnitAction.Damage(unit, damage);
+    //    base.Use(user, target);
+    //}
 }

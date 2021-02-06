@@ -105,8 +105,8 @@ namespace UI
         }
         void Fire()
         {
-            GameManager.SubPartyUnit(currentUnit);
-            selectedUnitCount--;
+            GameManager.RemovePartyUnit(currentUnit);
+            if (selectedUnitCount == 0) startButton.enabled = false;
         }
     }
 }

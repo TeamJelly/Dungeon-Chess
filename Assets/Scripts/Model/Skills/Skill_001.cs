@@ -4,6 +4,7 @@ using Model;
 public class Skill_001 : Skill
 {
     private int strengthToDamageRatio;
+
     // Use this for initialization
     public Skill_001()
     {
@@ -11,21 +12,21 @@ public class Skill_001 : Skill
         name = "속사";
         unitClass = UnitClass.Archer;
         grade = Grade.Normal;
-        skillImagePath = "HandMade/SkillImage/001_속사";
+        spritePath = "HandMade/SkillImage/001_속사";
         description = "세칸 안에 있는 단일 적에게 데미지를 입힌다.";
         criticalRate = 10;
         reuseTime = 0;
-        domain = Domain.SelectOne;
-        target = Target.AnyUnit;
         APSchema = "7;0001000;0011100;0111110;1111111;0111110;0011100;0001000";
         RPSchema = "1;1";
         strengthToDamageRatio = 1;
     }
 
-    public override void UseSkillToUnit(Unit owner, Unit unit)
-    {
-        Debug.LogError(name + " 스킬을 " + unit.name + "에 사용!");
-        unit.GetDamage(owner.strength * strengthToDamageRatio + enhancedLevel);
-        base.UseSkillToUnit(owner,unit);
-    }
+
+    //public override void Use(Unit user, Vector2Int target)
+    //{
+    //    Unit unit = Model.Managers.BattleManager.GetUnit(target);
+    //    int damage = user.Strength * strengthToDamageRatio + enhancedLevel;
+    //    Common.UnitAction.Damage(unit, damage);
+    //    base.Use(user, target);
+    //}
 }

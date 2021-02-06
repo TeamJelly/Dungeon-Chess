@@ -16,20 +16,20 @@ public class Skill_002 : Skill
         name = "마법 화살";
         unitClass = UnitClass.Wizard;
         grade = Grade.Normal;
-        skillImagePath = "HandMade/SkillImage/002_마법화살";
+        spritePath = "HandMade/SkillImage/002_마법화살";
         description = "세칸 안에 있는 단일 적에게 데미지를 입힌다.";
         criticalRate = 0;
         reuseTime = 0;
-        domain = Domain.SelectOne;
-        target = Target.EnemyUnit;
         APSchema = "7;0001000;0011100;0111110;1111111;0111110;0011100;0001000";
         RPSchema = "1;1";
         strengthToDamageRatio = 1;
     }
-    public override void UseSkillToUnit(Unit owner, Unit unit)
-    {
-        Debug.LogError(name + " 스킬을 " + unit.name + "에 사용!");
-        unit.GetDamage(owner.strength * strengthToDamageRatio + enhancedLevel);
-        base.UseSkillToUnit(owner,unit);
-    }
+
+    //public override void Use(Unit user, Vector2Int target)
+    //{
+    //    Unit unit = Model.Managers.BattleManager.GetUnit(target);
+    //    int damage = user.strength * strengthToDamageRatio + enhancedLevel;
+    //    Common.UnitAction.Damage(unit, damage);
+    //    base.Use(user, target);
+    //}
 }
