@@ -790,12 +790,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1a360600e4212f44a7bae93e8ead593, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainTileIndicatorPrefab: {fileID: 4462922396805816717, guid: d570b0a0fbae05046ad9a627a6aa715d,
+  tileIndicatorPrefab: {fileID: 4462922396805816717, guid: 316a856634a04434c9c6fd0b6d18cffb,
     type: 3}
-  subTileIndicatorPrefab: {fileID: 4462922396805816717, guid: 82b93824c43cdbc45952da075b54d755,
-    type: 3}
-  tileIndicatorBoundaryPrefab: {fileID: 4462922396805816717, guid: be1a598420c4a944e94b4452944a7622,
-    type: 3}
+  possibleColor: {r: 0.010130882, g: 0, b: 1, a: 0.48235294}
+  impossibleColor: {r: 1, g: 0, b: 0, a: 0.48235294}
+  subIndicatorColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 0.48235294}
+  inBoundaryColor: {r: 0, g: 1, b: 0, a: 0.48235294}
+  outBoundaryColor: {r: 1, g: 1, b: 1, a: 0.48235294}
 --- !u!114 &1309214670
 MonoBehaviour:
   m_ObjectHideFlags: 0

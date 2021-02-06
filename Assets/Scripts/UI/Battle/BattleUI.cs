@@ -115,9 +115,10 @@ namespace UI.Battle
         public void UpdateUnitObejct(Unit unit)
         {
             // 유닛 state가 Idle이 아니고, 유닛오브젝트 애니메이터가 Idle이면
-            if (unit.animationState != Unit.AnimationState.Idle &&
-                unitObjects[unit].GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+            if (unit.animationState != Unit.AnimationState.Idle /*&&
+                unitObjects[unit].GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Idle")*/)
             {
+                unit.animationState = Unit.AnimationState.Idle;
                 // 애니메이션 실행
 
             }
@@ -125,7 +126,9 @@ namespace UI.Battle
             if (new Vector3(unit.Position.x, unit.Position.y) != unitObjects[unit].transform.position)
             {
                 // 이동 애니메이션 실행
+                
                 unitObjects[unit].transform.position = new Vector3(unit.Position.x, unit.Position.y, -1);
+
                 hpBars[unit].transform.position = Camera.main.WorldToScreenPoint(
                     unitObjects[unit].transform.position + Vector3.up * 0.5f
                     );
@@ -274,7 +277,6 @@ namespace UI.Battle
             thisTurnUnitInfo.Set(unit);
 
             moveButton.interactable = false;                // 이동 버튼 비활성화
-
             foreach (Button skillButton in skillButtons)    // 스킬 버튼 비활성화
                 skillButton.interactable = false;
             foreach (Button itemButton in itemButtons)      // 스킬 버튼 비활성화
@@ -282,7 +284,7 @@ namespace UI.Battle
 
             if (currentPushedButton == null) // 아무 버튼도 안눌린 기본 상태
             {
-                if (unit.Move > 0) // 이동 가능한가?
+                if (unit.MoveSkill.IsUsable(unit)) // 이동 가능한가?
                 {
                     moveButton.interactable = true;
                     moveButton.onClick.RemoveAllListeners();

@@ -92,7 +92,15 @@ namespace Model
                 return false;
         }
 
-        /* public virtual List<Vector2Int> GetAvailablePositions(Unit user)
+        public virtual bool IsUsable(Unit user)
+        {
+            if (user.SkillCount > 0 && currentReuseTime == 0)
+                return true;
+            else
+                return false;
+        }
+
+        /*public List<Vector2Int> GetAvailablePositions(Unit user)
         {
             List<Vector2Int> positions = new List<Vector2Int>();
 
@@ -105,13 +113,11 @@ namespace Model
             }
 
             return positions;
-        } */
+        }*/
 
         // 메인 인디케이터의 위치가 position일때, 관련된 범위의 위치를 돌려줍니다.
         public virtual List<Vector2Int> GetRelatePositions(Unit user, Vector2Int position)
         {
-
-
             return Common.Range.ParseRangeSchema(RPSchema);
         }
 

@@ -16,6 +16,17 @@ public class Walk : Skill
         reuseTime = 0;
     }
 
+    public override bool IsUsable(Unit user)
+    {
+        //if (GetAvailablePositions(user).Count == 0)
+        //    return false;
+
+        if (user.MoveCount > 0 && currentReuseTime == 0)
+            return true;
+        else
+            return false;
+    }
+
     public override bool IsAvailablePosition(Unit user, Vector2Int position)
     {
         if (GetAvailablePositions(user).Contains(position))
@@ -47,11 +58,6 @@ public class Walk : Skill
                 {
                     Vector2Int temp = position + direction;
 
-                    /*Debug.LogError($"{temp} : " +
-                        $"{!positions.Contains(temp)}" +
-                        $"{BattleManager.IsAvilablePosition(temp)}" +
-                        $"{BattleManager.GetTile(temp)?.IsUsable()}");*/
-
                     if (!positions.Contains(temp) &&                // 전에 추가한 위치가 아니고
                         BattleManager.IsAvilablePosition(temp) &&   // 맵 범위 안이고
                         BattleManager.GetTile(temp).IsUsable())     // 타일에 유닛이 존재하지 않는다면
@@ -75,16 +81,25 @@ public class Walk : Skill
 
     public override IEnumerator Use(Unit user, Vector2Int target)
     {
-        base.Use(user, target);
+        // 0 단계 : 로그 출력, 스킬 소모 기록
+        {
+            Debug.Log(name + " 스킬을 " + target + "에 사용!");
+            user.MoveCount--;
+            currentReuseTime = reuseTime;
+        }
 
-        yield return new WaitWhile(() => user.animationState != Unit.AnimationState.Idle);
-        //user.animationState = Unit.AnimationState.Move;
-        user.Position = target;
-        user.MoveCount--;
+        // 1 단계 : 위치 이동
+        {
+            List<Vector2Int> path = Common.PathFind.PathFindAlgorithm(user.Position, target);
 
-        yield return new WaitWhile(()=> user.animationState != Unit.AnimationState.Idle);
-
-        Debug.LogError("hello");
-        base.Use(user, target);
+            user.animationState = Unit.AnimationState.Move;
+            float moveTime = 0.5f / path.Count;
+            for (int i = 1; i < path.Count; i++)
+            {
+                Common.UnitAction.Move(user, path[i]);
+                yield return new WaitForSeconds(moveTime);
+            }
+            user.animationState = Unit.AnimationState.Idle;
+        }
     }
 }

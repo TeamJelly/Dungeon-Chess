@@ -37,7 +37,6 @@ namespace UI.Battle
                 {
                     tileIndicators = new GameObject[BattleManager.GetTile().GetLength(0), BattleManager.GetTile().GetLength(1)];
 
-
                     for (int i = 0; i < tileIndicators.GetLength(0); i++)
                         for (int j = 0; j < tileIndicators.GetLength(1); j++)
                         {
@@ -57,11 +56,15 @@ namespace UI.Battle
                             {
                                 if (currentSkill.IsAvailablePosition(currentUnit, position))
                                 {
-                                    currentSkill.Use(currentUnit, position);
+                                    instance.StartCoroutine(currentSkill.Use(currentUnit, position));
                                     HideTileIndicator();
-                                } else
+
+                                    BattleUI.instance.currentPushedButton = null;
+                                    BattleUI.instance.UpdateThisTurnPanel(currentUnit);
+                                }
+                                else
                                 {
-                                    Debug.LogError("사용할수 없는 위치입니다.");
+                                    Debug.LogError($"{position}에 사용할수 없습니다.");
                                 }
                             });
                             eventTrigger.triggers.Add(entry);
@@ -72,7 +75,6 @@ namespace UI.Battle
             }
             set => tileIndicators = value;
         }
-
 
         [Header("Tile Indicator")]
         [SerializeField]
@@ -104,23 +106,6 @@ namespace UI.Battle
                 TileIndicators[position.x, position.y].GetComponent<SpriteRenderer>().color = color;
         }
 
-
-        /// <summary>
-        /// 커서 표시 없음
-        /// </summary>
-        public static void UpdateTileIndicator()
-        {
-            for (int i = 0; i < TileIndicators.GetLength(0); i++)
-                for (int j = 0; j < TileIndicators.GetLength(1); j++)
-                {
-                    Vector2Int tempPosition = new Vector2Int(i, j);
-                    if (currentSkill.IsAvailablePosition(currentUnit, tempPosition))
-                        ChangeTileIndicatorColor(tempPosition, instance.inBoundaryColor);
-                    else
-                        ChangeTileIndicatorColor(tempPosition, instance.outBoundaryColor);
-                }
-        }
-
         public static void UpdateTileIndicator(Vector2Int position)
         {
             for (int i = 0; i < TileIndicators.GetLength(0); i++)
@@ -145,7 +130,7 @@ namespace UI.Battle
             currentSkill = skill;
 
             TileIndicatorParent.SetActive(true);
-            UpdateTileIndicator();
+            UpdateTileIndicator(user.Position);
         }
 
         public static void HideTileIndicator()
