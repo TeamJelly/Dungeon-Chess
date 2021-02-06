@@ -27,12 +27,12 @@ public class Walk : Skill
             return false;
     }
 
-    public override bool IsAvailablePosition(Unit user, Vector2Int position)
+    public override List<Vector2Int> GetRelatePositions(Unit user, Vector2Int target)
     {
-        if (GetAvailablePositions(user).Contains(position))
-            return true;
+        if (GetAvailablePositions(user).Contains(target))
+            return Common.PathFind.PathFindAlgorithm(user.Position, target);
         else
-            return false;
+            return null;
     }
 
     /// <summary>
@@ -40,7 +40,7 @@ public class Walk : Skill
     /// </summary>
     /// <param name="user"></param>
     /// <returns></returns>
-    public List<Vector2Int> GetAvailablePositions(Unit user)
+    public override List<Vector2Int> GetAvailablePositions(Unit user)
     {
         List<Vector2Int> positions = new List<Vector2Int>();        // 이동가능한 모든 위치를 저장
         List<Vector2Int> new_frontier = new List<Vector2Int>();     // 새로 추가한 외곽 위치를 저장
@@ -82,7 +82,7 @@ public class Walk : Skill
     public override IEnumerator Use(Unit user, Vector2Int target)
     {
         // 0 단계 : 로그 출력, 스킬 소모 기록
-        Debug.Log(name + " 스킬을 " + target + "에 사용!");
+        Debug.Log($"{user.Name}가 {name}스킬을 {target}에 사용!");
         user.MoveCount--;
         currentReuseTime = reuseTime;
 

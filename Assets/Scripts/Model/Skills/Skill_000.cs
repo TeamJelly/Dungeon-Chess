@@ -36,13 +36,17 @@ public class Skill_000 : Skill
 
         if (targetUnit != null)
         {
-            Debug.Log(name + " 스킬을 " + targetUnit.Name + "에 사용!");
+            Debug.Log($"{user.Name}가 {name}스킬을 {targetUnit.Name}에 사용!");
             user.animationState = Unit.AnimationState.Attack;
 
             // 2단계 : Acttack 후에 맞는 애니메이션, HP갱신 재생
             yield return new WaitWhile(() => user.animationState != Unit.AnimationState.Idle);
             targetUnit.animationState = Unit.AnimationState.Hit;
             Common.UnitAction.Damage(targetUnit, damage);
+        }
+        else
+        {
+            Debug.Log($"{user.Name}가 {name}스킬을 {target}에 사용!");
         }
 
     }

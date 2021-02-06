@@ -10,7 +10,8 @@ namespace Common
     {
         public static void Die(Unit unit)
         {
-            unit.Agility = 0;
+            Debug.Log($"{unit.Name}는(은) 사망했다!");
+            unit.Agility = -10;
         }
 
         public static void Move(Unit unit, Vector2Int target)
@@ -27,7 +28,7 @@ namespace Common
 
         public static int Damage(Unit unit, int number)
         {
-            Debug.LogError($"{unit.Name} 가 {number} 만큼 데미지를 입었다! HP : {unit.CurrentHP} > {unit.CurrentHP - number}");
+            Debug.Log($"{unit.Name}가(은) {number}만큼 데미지를 입었다! [HP : {unit.CurrentHP}>{unit.CurrentHP - number}]");
 
             //BeforeDamage(unit, number);
 
