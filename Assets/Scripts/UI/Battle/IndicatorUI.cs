@@ -21,7 +21,9 @@ namespace UI.Battle
             get
             {
                 if (tileIndicatorParent == null)
+                {
                     tileIndicatorParent = new GameObject("Tile Indicator Parent");
+                }
 
                 return tileIndicatorParent;
             }
@@ -59,6 +61,7 @@ namespace UI.Battle
                                     instance.StartCoroutine(currentSkill.Use(currentUnit, position));
                                     HideTileIndicator();
 
+                                    BattleUI.HideSkillInfo();
                                     BattleUI.instance.currentPushedButton = null;
                                     BattleUI.instance.UpdateThisTurnPanel(currentUnit);
                                 }

@@ -5,91 +5,96 @@ using System;
 
 namespace Model
 {
-    public class Effect : MonoBehaviour
+    public class Effect
     {
         public int number;
-        public new string name;
-        public Unit currentUnit;
+        public string name;
+        public Unit owner;
 
         [TextArea(1, 10)]
         public string description = "효과 설명";
 
-        public void OnGetThisEffect()
+        public virtual void OnOverlapEffect(Effect newEffect)
         {
 
         }
 
-        public void OnRemoveThisEffect()
+        public virtual void OnAddThisEffect()
         {
 
         }
 
-        public void OnBattleStart()
+        public virtual void OnRemoveThisEffect()
         {
 
         }
 
-        public void OnBattleEnd()
+        public virtual void OnBattleStart()
         {
 
         }
 
-        public void OnTurnStart()
+        public virtual void OnBattleEnd()
         {
 
         }
 
-        public void OnTurnEnd()
+        public virtual void OnTurnStart()
         {
 
         }
 
-        public void BeforeMove()
+        public virtual void OnTurnEnd()
         {
 
         }
 
-        public void AfterMove()
+        public virtual void BeforeMove()
         {
 
         }
 
-        public void BeforeUseSkill()
+        public virtual void AfterMove()
         {
 
         }
 
-        public void AfterUseSkill()
+        public virtual void BeforeUseSkill()
         {
 
         }
 
-        public void BeforeGetDamage()
+        public virtual void AfterUseSkill()
         {
 
         }
 
-        public void AfterGetDamamge()
+        public virtual void BeforeGetDamage()
         {
 
         }
 
-        public void OnGetOtherEffect()
+        public virtual void AfterGetDamamge()
         {
 
         }
 
-        public void BeforeUseItem()
+        public virtual void OnGetOtherEffect()
         {
 
         }
 
-        public void AfterUseItem()
+        public virtual void BeforeUseItem()
         {
 
         }
 
-        public void BeforeUnitDie()
+        public virtual void AfterUseItem()
+        {
+
+        }
+
+        public virtual void BeforeUnitDie()
         {
 
         }

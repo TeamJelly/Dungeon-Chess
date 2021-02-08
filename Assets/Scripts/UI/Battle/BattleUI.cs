@@ -234,6 +234,20 @@ namespace UI.Battle
             UnitsInfoList[index].Set(unit);
         }
 
+        public static void ShowSkillInfo(Skill skill)
+        {
+            instance.SkillInfoNameText.text = skill.name;
+            instance.SkillInfoText.text = skill.description;
+            instance.SkillInfoInstance.SetActive(true);
+        }
+
+        public static void HideSkillInfo()
+        {
+            instance.SkillInfoNameText.text = "스킬 이름";
+            instance.SkillInfoText.text = "스킬 설명";
+            instance.SkillInfoInstance.SetActive(false);
+        }
+
         /// <summary>
         /// 현재 턴의 유닛정보를 가져와서 스킬 및 아이템 창을 초기화 한다.
         /// </summary>
@@ -315,6 +329,7 @@ namespace UI.Battle
                         skillButton.onClick.AddListener(() =>
                         {
                             IndicatorUI.ShowTileIndicator(unit, skill);
+                            ShowSkillInfo(skill);
                             currentPushedButton = skillButton;
                             UpdateThisTurnPanel(unit);
                         });
@@ -334,7 +349,7 @@ namespace UI.Battle
                 currentPushedButton.onClick.AddListener(() =>
                 {
                     IndicatorUI.HideTileIndicator();
-                    SkillInfoInstance.SetActive(false);
+                    HideSkillInfo();
 
                     currentPushedButton = null;
                     UpdateThisTurnPanel(unit);

@@ -73,6 +73,8 @@ namespace Model
 
         public virtual List<Vector2Int> GetAvailablePositions(Unit user)
         {
+            if (APSchema == null) return null;
+
             List<Vector2Int> positions = new List<Vector2Int>();
 
             foreach (var position in Common.Range.ParseRangeSchema(APSchema))
@@ -110,7 +112,17 @@ namespace Model
         // 메인 인디케이터의 위치가 position일때, 관련된 범위의 위치를 돌려줍니다.
         public virtual List<Vector2Int> GetRelatePositions(Unit user, Vector2Int position)
         {
-            return Common.Range.ParseRangeSchema(RPSchema);
+            if (RPSchema == null) return null;
+
+            List<Vector2Int> positions = new List<Vector2Int>();
+
+            foreach (var vector in Common.Range.ParseRangeSchema(RPSchema))
+            {
+                Vector2Int abs = position + vector;
+                positions.Add(abs);
+            }
+
+            return positions;
         }
 
         public virtual IEnumerator Use(Unit user, Vector2Int target)

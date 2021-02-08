@@ -21,7 +21,6 @@ public class Skill_000 : Skill
         criticalRate = 5;
         reuseTime = 0;
         APSchema = "3;010;101;010";
-        RPSchema = "1;1";
         strengthToDamageRatio = 1;
     }
 

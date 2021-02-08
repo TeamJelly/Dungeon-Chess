@@ -64,9 +64,37 @@ namespace Common
             Debug.Log($"{unit.Name} Level Up! ( Lv {unit.Level-1} > Lv {unit.Level} )");
         }
 
-        public static void GetEffect(Unit unit, Effect effect)
+        public static Effect GetEffectByNumber(Unit unit, int number)
         {
+            Effect effect = new Effect();
 
+            foreach (var stateEffect in unit.StateEffects)
+                if (stateEffect.number == number)
+                    effect = stateEffect;
+
+            return effect;
+        }
+
+        public static void AddEffect(Unit unit, Effect newEffect)
+        {
+            Effect oldEffect = GetEffectByNumber(unit, newEffect.number);
+
+            if (oldEffect != null)
+                oldEffect.OnOverlapEffect(newEffect);
+            else
+            {
+                unit.StateEffects.Add(newEffect);
+                newEffect.OnAddThisEffect();
+            }
+        }
+
+        public static void RemoveEffect(Unit unit, Effect effect)
+        {
+            if (unit.StateEffects.Contains(effect))
+            {
+                effect.OnRemoveThisEffect();
+                unit.StateEffects.Remove(effect);
+            }
         }
         
         public static void Summon(Unit unit)
@@ -92,7 +120,7 @@ namespace Common
                 Debug.LogError("이미 위치에 유닛이 존재합니다.");
         }
 
-        public static void GetSkill(Unit unit, Skill newSkill, int index)
+        public static void AddSkill(Unit unit, Skill newSkill, int index)
         {
             if (index >= unit.Skills.Length || index < 0)
             {
