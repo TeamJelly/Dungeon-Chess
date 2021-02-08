@@ -5,7 +5,7 @@ namespace Model.Effects
 {
     public class Effect_004 : Effect
     {
-        Effect_004(Unit owner)
+        public Effect_004(Unit owner)
         {
             number = 4;
             name = "기절";
@@ -14,13 +14,15 @@ namespace Model.Effects
             this.owner = owner;
         }
 
-        public override void OnOverlapEffect(Effect newEffect)
+        /// <summary>
+        /// 효과의 중복 검사와 중복 처리를 해준다.
+        /// </summary>
+        public override void OnOverlapEffect()
         {
+            Effect oldEffect = Common.UnitAction.GetEffectByNumber(owner, number);
 
-        }
-
-        public override void OnAddThisEffect()
-        {
+            if (oldEffect != null)
+                owner.StateEffects.Remove(oldEffect);
         }
 
         public override void OnTurnStart()
@@ -32,6 +34,6 @@ namespace Model.Effects
 
             Common.UnitAction.RemoveEffect(owner, this);
         }
-
+        
     }
 }

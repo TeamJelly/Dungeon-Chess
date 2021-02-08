@@ -75,17 +75,10 @@ namespace Common
             return effect;
         }
 
-        public static void AddEffect(Unit unit, Effect newEffect)
+        public static void AddEffect(Unit target, Effect effect)
         {
-            Effect oldEffect = GetEffectByNumber(unit, newEffect.number);
-
-            if (oldEffect != null)
-                oldEffect.OnOverlapEffect(newEffect);
-            else
-            {
-                unit.StateEffects.Add(newEffect);
-                newEffect.OnAddThisEffect();
-            }
+            effect.OnAddThisEffect();
+            target.StateEffects.Add(effect);
         }
 
         public static void RemoveEffect(Unit unit, Effect effect)

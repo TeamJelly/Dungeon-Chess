@@ -14,14 +14,18 @@ namespace Model
         [TextArea(1, 10)]
         public string description = "효과 설명";
 
-        public virtual void OnOverlapEffect(Effect newEffect)
+        /// <summary>
+        /// 효과의 중복 검사와 중복 처리를 해준다.
+        /// </summary>
+        public virtual void OnOverlapEffect()
         {
 
         }
 
         public virtual void OnAddThisEffect()
         {
-
+            OnOverlapEffect();
+            Debug.LogError($"{owner}에게 {name} 효과 추가됨");
         }
 
         public virtual void OnRemoveThisEffect()

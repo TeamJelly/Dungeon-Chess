@@ -201,6 +201,17 @@ namespace UI.Battle
         public void SetNextTurn()
         {
             Unit nextTurnUnit = BattleManager.GetNextTurnUnit();
+
+            //다음 턴 유닛 값들 초기화
+            nextTurnUnit.ActionRate = 0;
+            nextTurnUnit.MoveCount = 1;
+            nextTurnUnit.SkillCount = 1;
+            nextTurnUnit.ItemCount = 1;
+
+            // 뒤에서부터 돌면 중간에 삭제해도 문제 없음.
+            for (int i = nextTurnUnit.StateEffects.Count - 1; i >= 0; i--)
+                nextTurnUnit.StateEffects[i].OnTurnStart();
+
             InitThisTurnPanel(nextTurnUnit);
         }
 
