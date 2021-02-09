@@ -47,7 +47,7 @@ namespace Model.Managers
                 Position = new Vector2Int(3, 4)
             };
             EnemyUnits.Add(temp);
-
+            GameManager.Instance.InitForTesting();
             Common.UnitAction.Summon(EnemyUnits);
             Common.UnitAction.Summon(GameManager.PartyUnits);
             /***************************************************************************/

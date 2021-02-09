@@ -23,24 +23,17 @@ namespace UI
         Unit currentUnit;
        
         int index = 0;
-
-        List<Sprite> unitImagies = new List<Sprite>();
         private void Start()
         {
             List<Unit> units = UnitManager.Instance.AllUnits;
-
-            for (int i = 0; i < units.Count; i++)
-            {
-                unitImagies.Add(((GameObject)Instantiate(Resources.Load("Prefabs/Units/" + units[i].name))).GetComponent<SpriteRenderer>().sprite);
-            }
             UpdateUI();
             //currentUnitImage.sprite = 
         }
         void UpdateUI()
         {
             currentUnit = UnitManager.Instance.AllUnits[index];
-            currentUnitImage.sprite = unitImagies[index];
-            descriptionText.text = $"이름: {UnitManager.Instance.AllUnits[index].name}\n";
+            currentUnitImage.sprite = currentUnit.Sprite;
+            descriptionText.text = $"이름: {UnitManager.Instance.AllUnits[index].Name}\n";
 
             if(GameManager.PartyUnits.Contains(currentUnit))
             {
@@ -68,7 +61,7 @@ namespace UI
         //UnitManager에서 Unit을 가져와서 화면에 보여주기.
         public void ShowNextUnit()
         {
-            if(index < unitImagies.Count - 1) index++;
+            if(index < UnitManager.Instance.AllUnits.Count - 1) index++;
             UpdateUI();
         }
 
@@ -92,8 +85,7 @@ namespace UI
             for (int i = 0; i < maximumUnitCount; i++) partyImagies[i].Sprite = null;
             for (int i = 0; i < GameManager.PartyUnits.Count; i++)
             {
-                int index = UnitManager.Instance.AllUnits.IndexOf(GameManager.PartyUnits[i]);
-                partyImagies[i].Sprite = unitImagies[index];
+                partyImagies[i].Sprite = GameManager.PartyUnits[i].Sprite;
             }
             UpdateUI();
         }
@@ -105,7 +97,7 @@ namespace UI
         }
         void Fire()
         {
-            GameManager.SubPartyUnit(currentUnit);
+            GameManager.RemovePartyUnit(currentUnit);
             selectedUnitCount--;
         }
     }

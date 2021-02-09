@@ -25,6 +25,10 @@ namespace Model.Managers
             AllUnits.Add(GetUnit("유닛1"));
             AllUnits.Add(GetUnit("유닛2"));
             AllUnits.Add(GetUnit("유닛3"));
+            foreach(Unit unit in AllUnits)
+            {
+                unit.spritePath = "HandMade/women";
+            }
         }
 
         /// <summary>

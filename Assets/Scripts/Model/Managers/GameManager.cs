@@ -78,6 +78,7 @@ namespace Model.Managers
                 Position = new Vector2Int(7, 1),
                 Move = 8
             });
+            /*
             partyUnits.Add(new Units.Unit_000
             {
                 Name = "party3",
@@ -112,7 +113,7 @@ namespace Model.Managers
                 Category = Category.Party,
                 Position = new Vector2Int(6, 5),
                 Move = 8
-            });
+            });*/
         }
     }
 }

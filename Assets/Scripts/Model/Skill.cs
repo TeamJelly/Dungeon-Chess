@@ -127,5 +127,11 @@ namespace Model
             currentReuseTime = reuseTime;
             yield return null;
         }
+
+        public virtual string GetDescription()
+        {
+            string str = description;
+            return description;
+        }
     }
 }

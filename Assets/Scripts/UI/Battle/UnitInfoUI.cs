@@ -20,7 +20,7 @@ namespace UI.Battle
             allocatedUnit = unit;
             SetText(
                 $"{unit.Name} \n" +
-                $"HP : {unit.CurrentHP} / {unit.MaximumHP}" +
+                $"HP : {unit.CurrentHP} / {unit.MaximumHP}\n" +
                 $"Agility : {unit.Agility}"
                 );
             unitImage.Sprite = unit.Sprite;
