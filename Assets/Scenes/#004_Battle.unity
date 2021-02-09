@@ -792,7 +792,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileIndicatorPrefab: {fileID: 4462922396805816717, guid: 316a856634a04434c9c6fd0b6d18cffb,
     type: 3}
-  possibleColor: {r: 0.010130882, g: 0, b: 1, a: 0.48235294}
+  possibleColor: {r: 0, g: 0, b: 1, a: 0.48235294}
   impossibleColor: {r: 1, g: 0, b: 0, a: 0.48235294}
   subIndicatorColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 0.48235294}
   inBoundaryColor: {r: 0, g: 1, b: 0, a: 0.48235294}
