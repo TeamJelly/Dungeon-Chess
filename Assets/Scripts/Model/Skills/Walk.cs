@@ -29,7 +29,7 @@ public class Walk : Skill
 
     public override List<Vector2Int> GetRelatePositions(Unit user, Vector2Int target)
     {
-        if (GetAvailablePositions(user).Contains(target))
+        if (GetAvailablePositions(user, user.Position).Contains(target))
             return Common.PathFind.PathFindAlgorithm(user.Position, target);
         else
             return null;
@@ -40,14 +40,14 @@ public class Walk : Skill
     /// </summary>
     /// <param name="user"></param>
     /// <returns></returns>
-    public override List<Vector2Int> GetAvailablePositions(Unit user)
+    public override List<Vector2Int> GetAvailablePositions(Unit user, Vector2Int userPosition)
     {
         List<Vector2Int> positions = new List<Vector2Int>();        // 이동가능한 모든 위치를 저장
         List<Vector2Int> new_frontier = new List<Vector2Int>();     // 새로 추가한 외곽 위치를 저장
         List<Vector2Int> old_frontier = new List<Vector2Int>();     // 이전번에 추가한 외곽 위치를 저장
         Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
 
-        old_frontier.Add(user.Position);
+        old_frontier.Add(userPosition);
 
         for (int i = 0; i < user.Move; i++)
         {

@@ -71,7 +71,7 @@ namespace Model
                 return false;
         }
 
-        public virtual List<Vector2Int> GetAvailablePositions(Unit user)
+        public virtual List<Vector2Int> GetAvailablePositions(Unit user, Vector2Int userPosition)
         {
             if (APSchema == null) return null;
 
@@ -79,7 +79,7 @@ namespace Model
 
             foreach (var position in Common.Range.ParseRangeSchema(APSchema))
             {
-                Vector2Int abs = user.Position + position;
+                Vector2Int abs = userPosition + position;
 
                 // 모든 타일에 사용가능
                 if (target == Target.Any)
@@ -107,6 +107,11 @@ namespace Model
             }
 
             return positions;
+        }
+
+        public virtual List<Vector2Int> GetAvailablePositions(Unit user)
+        {
+            return GetAvailablePositions(user, user.Position);
         }
 
         // 메인 인디케이터의 위치가 position일때, 관련된 범위의 위치를 돌려줍니다.
