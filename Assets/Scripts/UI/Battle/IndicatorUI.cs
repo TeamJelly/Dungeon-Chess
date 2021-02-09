@@ -3,6 +3,8 @@ using Model;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Model.Skills;
+using System;
 
 namespace UI.Battle
 {
@@ -21,7 +23,9 @@ namespace UI.Battle
             get
             {
                 if (tileIndicatorParent == null)
+                {
                     tileIndicatorParent = new GameObject("Tile Indicator Parent");
+                }
 
                 return tileIndicatorParent;
             }
@@ -44,7 +48,7 @@ namespace UI.Battle
 
                             EventTrigger eventTrigger = tileIndicators[i, j].GetComponent<EventTrigger>();
                             Vector2Int position = new Vector2Int(i, j);
-                            
+
                             EventTrigger.Entry entry = new EventTrigger.Entry();
                             entry.eventID = EventTriggerType.PointerEnter;
                             entry.callback.AddListener((data) => UpdateTileIndicator(position));
@@ -54,17 +58,21 @@ namespace UI.Battle
                             entry.eventID = EventTriggerType.PointerClick;
                             entry.callback.AddListener((data) =>
                             {
-                                if (currentSkill.IsAvailablePosition(currentUnit, position))
+                                if (currentAvailablePositions.Contains(position))
                                 {
                                     instance.StartCoroutine(currentSkill.Use(currentUnit, position));
                                     HideTileIndicator();
 
+                                    for (int k = currentUnit.StateEffects.Count - 1; k >= 0; k--)
+                                        currentUnit.StateEffects[k].AfterUseSkill();
+
+                                    BattleUI.HideSkillInfo();
                                     BattleUI.instance.currentPushedButton = null;
                                     BattleUI.instance.UpdateThisTurnPanel(currentUnit);
                                 }
                                 else
                                 {
-                                    Debug.LogError($"{position}에 사용할수 없습니다.");
+                                    Debug.LogError($"{position}에 사용할 수 없습니다.");
                                 }
                             });
                             eventTrigger.triggers.Add(entry);
@@ -78,21 +86,24 @@ namespace UI.Battle
 
         [Header("Tile Indicator")]
         [SerializeField]
-        public GameObject tileIndicatorPrefab;
+        GameObject tileIndicatorPrefab;
 
         [SerializeField]
-        Color possibleColor = Color.green;
+        Color possibleColor = new Color(0, 0, 1, 0.5f); // red
         [SerializeField]
-        Color impossibleColor = Color.red;
+        Color subPossibleColor = new Color(0, 0.5f, 1, 0.5f); // cyan
         [SerializeField]
-        Color subIndicatorColor = Color.yellow;
+        Color impossibleColor = new Color(1, 0, 0, 0.5f); // red
         [SerializeField]
-        Color inBoundaryColor = Color.blue;
+        Color subImpossibleColor = new Color(1, 0, 1, 0.5f); // magenta
         [SerializeField]
-        Color outBoundaryColor = Color.white;
+        Color inBoundaryColor = new Color(0, 1, 0, 0.5f); // green
+        [SerializeField]
+        Color outBoundaryColor = new Color(1, 1, 1, 0.5f); // white
 
         private static Skill currentSkill;
         private static Unit currentUnit;
+        private static List<Vector2Int> currentAvailablePositions;
 
         public static void ChangeTileIndicatorColor(List<Vector2Int> positions, Color color)
         {
@@ -108,17 +119,21 @@ namespace UI.Battle
 
         public static void UpdateTileIndicator(Vector2Int position)
         {
+            List<Vector2Int> RelatedPosition = currentSkill.GetRelatePositions(currentUnit, position);
+
             for (int i = 0; i < TileIndicators.GetLength(0); i++)
                 for (int j = 0; j < TileIndicators.GetLength(1); j++)
                 {
                     Vector2Int tempPosition = new Vector2Int(i, j);
-                    if (currentSkill.IsAvailablePosition(currentUnit, tempPosition))
+                    if (RelatedPosition != null && RelatedPosition.Contains(tempPosition))
+                        ChangeTileIndicatorColor(tempPosition, instance.subPossibleColor); 
+                    else if (currentAvailablePositions.Contains(tempPosition))
                         ChangeTileIndicatorColor(tempPosition, instance.inBoundaryColor);
                     else
                         ChangeTileIndicatorColor(tempPosition, instance.outBoundaryColor);
                 }
 
-            if (currentSkill.IsAvailablePosition(currentUnit, position))
+            if (currentAvailablePositions.Contains(position))
                 ChangeTileIndicatorColor(position, instance.possibleColor);
             else
                 ChangeTileIndicatorColor(position, instance.impossibleColor);
@@ -128,6 +143,7 @@ namespace UI.Battle
         {
             currentUnit = user;
             currentSkill = skill;
+            currentAvailablePositions = currentSkill.GetAvailablePositions(currentUnit);
 
             TileIndicatorParent.SetActive(true);
             UpdateTileIndicator(user.Position);

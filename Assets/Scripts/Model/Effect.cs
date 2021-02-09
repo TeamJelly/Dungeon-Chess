@@ -5,91 +5,100 @@ using System;
 
 namespace Model
 {
-    public class Effect : MonoBehaviour
+    public class Effect
     {
         public int number;
-        public new string name;
-        public Unit currentUnit;
+        public string name;
+        public Unit owner;
 
         [TextArea(1, 10)]
         public string description = "효과 설명";
 
-        public void OnGetThisEffect()
+        /// <summary>
+        /// 효과의 중복 검사와 중복 처리를 해준다.
+        /// </summary>
+        public virtual void OnOverlapEffect()
         {
 
         }
 
-        public void OnRemoveThisEffect()
+        public virtual void OnAddThisEffect()
+        {
+            OnOverlapEffect();
+            Debug.LogError($"{owner.Name}에게 {name} 효과 추가됨");
+        }
+
+        public virtual void OnRemoveThisEffect()
         {
 
         }
 
-        public void OnBattleStart()
+        public virtual void OnBattleStart()
         {
 
         }
 
-        public void OnBattleEnd()
+        public virtual void OnBattleEnd()
         {
 
         }
 
-        public void OnTurnStart()
+        public virtual void OnTurnStart()
         {
 
         }
 
-        public void OnTurnEnd()
+        public virtual void OnTurnEnd()
         {
 
         }
 
-        public void BeforeMove()
+        public virtual void BeforeMove()
         {
 
         }
 
-        public void AfterMove()
+        public virtual void AfterMove()
         {
 
         }
 
-        public void BeforeUseSkill()
+        public virtual void BeforeUseSkill()
         {
 
         }
 
-        public void AfterUseSkill()
+        public virtual void AfterUseSkill()
         {
 
         }
 
-        public void BeforeGetDamage()
+        public virtual void BeforeGetDamage()
         {
 
         }
 
-        public void AfterGetDamamge()
+        public virtual void AfterGetDamamge()
         {
 
         }
 
-        public void OnGetOtherEffect()
+        public virtual void OnGetOtherEffect()
         {
 
         }
 
-        public void BeforeUseItem()
+        public virtual void BeforeUseItem()
         {
 
         }
 
-        public void AfterUseItem()
+        public virtual void AfterUseItem()
         {
 
         }
 
-        public void BeforeUnitDie()
+        public virtual void BeforeUnitDie()
         {
 
         }

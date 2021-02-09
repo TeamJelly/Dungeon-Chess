@@ -17,6 +17,7 @@ namespace Model.Managers
         List<Unit> partyUnits = new List<Unit>();
 
         public static List<Unit> PartyUnits { get => Instance.partyUnits; }
+
         public static GameManager Instance
         {
             get
@@ -29,7 +30,7 @@ namespace Model.Managers
 
         GameManager()
         {
-            //InitForTesting();
+            InitForTesting();
         }
 
         public static void Reset()
@@ -52,68 +53,70 @@ namespace Model.Managers
         {
             partyUnits.Add(new Units.Unit_000
             {
-                Name = "party1",
+                Name = "파티원 1",
                 Category = Category.Party,
                 Position = new Vector2Int(4, 1),
                 Move = 6
             });
-            partyUnits.Add(new Units.Unit_000
-            {
-                Name = "party2",
-                Category = Category.Party,
-                Position = new Vector2Int(5, 1),
-                Move = 7
-            });
-            partyUnits.Add(new Units.Unit_000
-            {
-                Name = "party3",
-                Category = Category.Party,
-                Position = new Vector2Int(6, 1),
-                Move = 8
-            });
-            partyUnits.Add(new Units.Unit_000
-            {
-                Name = "party3",
-                Category = Category.Party,
-                Position = new Vector2Int(7, 1),
-                Move = 8
-            });
-            /*
-            partyUnits.Add(new Units.Unit_000
-            {
-                Name = "party3",
-                Category = Category.Party,
-                Position = new Vector2Int(8, 1),
-                Move = 8
-            });
-            partyUnits.Add(new Units.Unit_000
-            {
-                Name = "party3",
-                Category = Category.Party,
-                Position = new Vector2Int(6, 2),
-                Move = 8
-            });
-            partyUnits.Add(new Units.Unit_000
-            {
-                Name = "party3",
-                Category = Category.Party,
-                Position = new Vector2Int(6, 3),
-                Move = 8
-            });
-            partyUnits.Add(new Units.Unit_000
-            {
-                Name = "party3",
-                Category = Category.Party,
-                Position = new Vector2Int(6, 4),
-                Move = 8
-            });
-            partyUnits.Add(new Units.Unit_000
-            {
-                Name = "party3",
-                Category = Category.Party,
-                Position = new Vector2Int(6, 5),
-                Move = 8
-            });*/
+            Common.UnitAction.AddEffect(partyUnits[0], new Effects.Effect_004(partyUnits[0]));
+            Common.UnitAction.AddEffect(partyUnits[0], new Effects.Effect_005(partyUnits[0], 10, 5));
+
+            //partyUnits.Add(new Units.Unit_000
+            //{
+            //    Name = "party2",
+            //    Category = Category.Party,
+            //    Position = new Vector2Int(5, 1),
+            //    Move = 7
+            //});
+            //partyUnits.Add(new Units.Unit_000
+            //{
+            //    Name = "party3",
+            //    Category = Category.Party,
+            //    Position = new Vector2Int(6, 1),
+            //    Move = 8
+            //});
+            //partyUnits.Add(new Units.Unit_000
+            //{
+            //    Name = "party3",
+            //    Category = Category.Party,
+            //    Position = new Vector2Int(7, 1),
+            //    Move = 8
+            //});
+            //partyUnits.Add(new Units.Unit_000
+            //{
+            //    Name = "party3",
+            //    Category = Category.Party,
+            //    Position = new Vector2Int(8, 1),
+            //    Move = 8
+            //});
+            //partyUnits.Add(new Units.Unit_000
+            //{
+            //    Name = "party3",
+            //    Category = Category.Party,
+            //    Position = new Vector2Int(6, 2),
+            //    Move = 8
+            //});
+            //partyUnits.Add(new Units.Unit_000
+            //{
+            //    Name = "party3",
+            //    Category = Category.Party,
+            //    Position = new Vector2Int(6, 3),
+            //    Move = 8
+            //});
+            //partyUnits.Add(new Units.Unit_000
+            //{
+            //    Name = "party3",
+            //    Category = Category.Party,
+            //    Position = new Vector2Int(6, 4),
+            //    Move = 8
+            //});
+            //partyUnits.Add(new Units.Unit_000
+            //{
+            //    Name = "party3",
+            //    Category = Category.Party,
+            //    Position = new Vector2Int(6, 5),
+            //    Move = 8
+            //});
         }
     }
 }

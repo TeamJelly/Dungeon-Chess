@@ -1,6 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 using Model;
+using Model.Skills;
 
 namespace Model.Units
 {
@@ -17,6 +18,7 @@ namespace Model.Units
             MaximumHP = 20;
             CurrentEXP = 0;
             NextEXP = 10;
+            Strength = 3;
             Agility = 10;
             Move = 2;
             MoveSkill = new Walk();

@@ -7,6 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Model.Skills;
 
 namespace UI.Battle
 {
@@ -201,6 +202,17 @@ namespace UI.Battle
         public void SetNextTurn()
         {
             Unit nextTurnUnit = BattleManager.GetNextTurnUnit();
+
+            //다음 턴 유닛 값들 초기화
+            nextTurnUnit.ActionRate = 0;
+            nextTurnUnit.MoveCount = 1;
+            nextTurnUnit.SkillCount = 1;
+            nextTurnUnit.ItemCount = 1;
+
+            // 뒤에서부터 돌면 중간에 삭제해도 문제 없음.
+            for (int i = nextTurnUnit.StateEffects.Count - 1; i >= 0; i--)
+                nextTurnUnit.StateEffects[i].OnTurnStart();
+
             InitThisTurnPanel(nextTurnUnit);
         }
 
@@ -232,6 +244,20 @@ namespace UI.Battle
         {
             int index = GameManager.PartyUnits.IndexOf(unit);
             UnitsInfoList[index].Set(unit);
+        }
+
+        public static void ShowSkillInfo(Skill skill)
+        {
+            instance.SkillInfoNameText.text = skill.name;
+            instance.SkillInfoText.text = skill.description;
+            instance.SkillInfoInstance.SetActive(true);
+        }
+
+        public static void HideSkillInfo()
+        {
+            instance.SkillInfoNameText.text = "스킬 이름";
+            instance.SkillInfoText.text = "스킬 설명";
+            instance.SkillInfoInstance.SetActive(false);
         }
 
         /// <summary>
@@ -306,11 +332,19 @@ namespace UI.Battle
                     if (skill == null) continue;
 
                     // 스킬이 사용가능하다면
-                    if (skill.currentReuseTime == 0 && unit.SkillCount > 0) 
+                    if (skill.IsUsable(unit)) 
                     {
                         // 버튼 활성화
                         skillButton.interactable = true;
+                        skillButton.onClick.RemoveAllListeners();
 
+                        skillButton.onClick.AddListener(() =>
+                        {
+                            IndicatorUI.ShowTileIndicator(unit, skill);
+                            ShowSkillInfo(skill);
+                            currentPushedButton = skillButton;
+                            UpdateThisTurnPanel(unit);
+                        });
                     }
                 }
 
@@ -327,7 +361,7 @@ namespace UI.Battle
                 currentPushedButton.onClick.AddListener(() =>
                 {
                     IndicatorUI.HideTileIndicator();
-                    SkillInfoInstance.SetActive(false);
+                    HideSkillInfo();
 
                     currentPushedButton = null;
                     UpdateThisTurnPanel(unit);

@@ -150,12 +150,6 @@ namespace Model.Managers
                 unit.ActionRate += velocity * minTime;
             }
 
-            //다음 턴 유닛 값들 초기화
-            nextUnit.ActionRate = 0;
-            nextUnit.MoveCount = 1;
-            nextUnit.SkillCount = 1;
-            nextUnit.ItemCount = 1;
-
             instance.thisTurnUnit = nextUnit;
             return nextUnit;
         }

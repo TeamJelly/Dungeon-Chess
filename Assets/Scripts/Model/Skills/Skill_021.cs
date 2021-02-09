@@ -1,29 +1,23 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using Model;
 
-public class Skill_021 : Skill
+namespace Model.Skills
 {
-    private int strengthToDamageRatio;
-
-    private Skill_021()
+    public class Skill_021 : Skill
     {
-        number = 21;
-        name = "비장의 한발";
-        unitClass = UnitClass.Archer;
-        grade = Grade.Legend;
-        description = "지정 대상에게 큰 데미지를 입힌다.";
-        criticalRate = 50;
-        reuseTime = 5;
-        APSchema = "5;00100;00100;11111;00100;00100";
-        RPSchema = "1;1";
-        strengthToDamageRatio = 4;
+        private Extension_021 parsedExtension;
+        public Extension_021 ParsedExtension => parsedExtension;
+        public Skill_021() : base(21)
+        {
+            if (extension != null)
+            {
+                parsedExtension = ParseExtension<Extension_021>(extension);
+            }
+        }
     }
 
-    /*public override void UseSkillToUnit(Unit unit)
+    [System.Serializable]
+    public class Extension_021 : Extensionable
     {
-        Debug.LogError(name + " 스킬을 " + unit.name + "에 사용!");
-        unit.GetDamage(GetComponent<Unit>().strength * strengthToDamageRatio);
-        base.UseSkillToUnit(unit);
-    }*/
+    }
 }
