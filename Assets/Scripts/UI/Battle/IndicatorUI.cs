@@ -61,6 +61,9 @@ namespace UI.Battle
                                     instance.StartCoroutine(currentSkill.Use(currentUnit, position));
                                     HideTileIndicator();
 
+                                    for (int k = currentUnit.StateEffects.Count - 1; k >= 0; k--)
+                                        currentUnit.StateEffects[k].AfterUseSkill();
+
                                     BattleUI.HideSkillInfo();
                                     BattleUI.instance.currentPushedButton = null;
                                     BattleUI.instance.UpdateThisTurnPanel(currentUnit);

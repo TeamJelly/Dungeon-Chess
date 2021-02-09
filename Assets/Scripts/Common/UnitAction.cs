@@ -44,6 +44,7 @@ namespace Common
 
         public static int Heal(Unit unit, int number)
         {
+            Debug.Log($"{unit.Name}가(은) {number}만큼 회복했다! [HP : {unit.CurrentHP}>{unit.CurrentHP + number}]");
             // Before Heal
 
             unit.CurrentHP += number;

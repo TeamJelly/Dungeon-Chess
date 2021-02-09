@@ -19,15 +19,17 @@ namespace Model.Effects
             this.regen = regen;
         }
 
-        public override void OnOverlapEffect()
+        /*public override void OnOverlapEffect()
         {
             Effect_005 oldEffect = Common.UnitAction.GetEffectByNumber(owner, number) as Effect_005;
 
             if (oldEffect.turnCount > turnCount)
+                turnCount = oldEffect.turnCount;
+            if (oldEffect.regen)
 
             if (oldEffect != null)
                 owner.StateEffects.Remove(oldEffect);
-        }
+        }*/
 
         public override void OnTurnStart()
         {

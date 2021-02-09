@@ -53,12 +53,14 @@ namespace Model.Managers
         {
             partyUnits.Add(new Units.Unit_000
             {
-                Name = "party1",
+                Name = "파티원 1",
                 Category = Category.Party,
                 Position = new Vector2Int(4, 1),
                 Move = 6
             });
             Common.UnitAction.AddEffect(partyUnits[0], new Effects.Effect_004(partyUnits[0]));
+            Common.UnitAction.AddEffect(partyUnits[0], new Effects.Effect_005(partyUnits[0], 10, 5));
+
             //partyUnits.Add(new Units.Unit_000
             //{
             //    Name = "party2",

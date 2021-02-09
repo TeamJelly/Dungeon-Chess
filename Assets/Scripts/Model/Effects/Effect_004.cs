@@ -27,13 +27,23 @@ namespace Model.Effects
 
         public override void OnTurnStart()
         {
-            Debug.LogError($"{owner.Name} 기절 상태이상!");
+            Debug.Log($"{owner.Name} 기절 상태이상!");
             owner.MoveCount = 0;
             owner.SkillCount = 0;
             owner.ItemCount = 0;
 
             Common.UnitAction.RemoveEffect(owner, this);
         }
-        
+
+        public override void AfterUseSkill()
+        {
+            Debug.Log($"{owner.Name} 기절 상태이상!");
+            owner.MoveCount = 0;
+            owner.SkillCount = 0;
+            owner.ItemCount = 0;
+
+            Common.UnitAction.RemoveEffect(owner, this);
+        }
+
     }
 }
