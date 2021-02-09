@@ -1,32 +1,23 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using Model;
-public class Skill_001 : Skill
-{
-    private int strengthToDamageRatio;
 
-    // Use this for initialization
-    public Skill_001()
+namespace Model.Skills
+{
+    public class Skill_001 : Skill
     {
-        number = 1;
-        name = "속사";
-        unitClass = UnitClass.Archer;
-        grade = Grade.Normal;
-        spritePath = "HandMade/SkillImage/001_속사";
-        description = "세칸 안에 있는 단일 적에게 데미지를 입힌다.";
-        criticalRate = 10;
-        reuseTime = 0;
-        APSchema = "7;0001000;0011100;0111110;1111111;0111110;0011100;0001000";
-        RPSchema = "1;1";
-        strengthToDamageRatio = 1;
+        Extension_001 parsedExtension;
+        public Extension_001 ParsedExtension => parsedExtension;
+        public Skill_001() : base(1)
+        {
+            if (extension != null)
+            {
+                parsedExtension = ParseExtension<Extension_001>(extension);
+            }
+        }
     }
 
-
-    //public override void Use(Unit user, Vector2Int target)
-    //{
-    //    Unit unit = Model.Managers.BattleManager.GetUnit(target);
-    //    int damage = user.Strength * strengthToDamageRatio + enhancedLevel;
-    //    Common.UnitAction.Damage(unit, damage);
-    //    base.Use(user, target);
-    //}
+        [System.Serializable]
+    public class Extension_001 : Extensionable
+    {
+    }
 }

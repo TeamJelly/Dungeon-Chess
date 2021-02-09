@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using Model.Skills;
+using UnityEditor;
 using UnityEngine;
 
 namespace Model.Units

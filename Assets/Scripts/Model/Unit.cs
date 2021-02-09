@@ -8,6 +8,7 @@ public enum UnitAI {NULL, AI1, AI2, AI3, AI4 };
 
 namespace Model
 {
+    using Skills;
     [System.Serializable]
     public class Unit
     {

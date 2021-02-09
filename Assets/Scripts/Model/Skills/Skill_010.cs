@@ -1,29 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using Model;
-/// <summary>
-/// 스킬 이름: 
-/// </summary>
-public class Skill_010 : Skill
-{
-     Skill_010()
-     {
-        number = 10;
-        name = "광역 도발";
-        unitClass = UnitClass.Warrior;
-        grade = Grade.Rare;
-        description = "방 안에 있는 모든 적군에게 도발 효과를 주고 보호막을 2턴 얻는다.";
-        criticalRate = 0;
-        reuseTime = 6;
-        APSchema = "1;1";
-        RPSchema = "1;1";
-     }
 
-    //public override void Use(Unit user, Tile target)
-    //{
-    //    Unit unit = target.GetUnit();
-    //    //도발 효과, 보호막 2턱
-    //    base.Use(user, target);
-    //}
+namespace Model.Skills
+{
+    public class Skill_010 : Skill
+    {
+        Extension_010 parsedExtension;
+        public Extension_010 ParsedExtension => parsedExtension;
+        public Skill_010() : base(10)
+        {
+            if (extension != null)
+            {
+                parsedExtension = ParseExtension<Extension_010>(extension);
+            }
+        }
+    }
+
+        [System.Serializable]
+    public class Extension_010 : Extensionable
+    {
+    }
 }

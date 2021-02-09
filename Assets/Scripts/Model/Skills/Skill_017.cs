@@ -1,36 +1,27 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using Model;
-public class Skill_017 : Skill
-{
-    private float maxDamageUp;
-    private float minDamageUp;
-    private float maxDamage;
-    private float minDamage;
 
-    // Use this for initialization
-    private Skill_017()
+namespace Model.Skills
+{
+    public class Skill_017 : Skill
     {
-        number = 17;
-        name = "럭키샷";
-        unitClass = UnitClass.Archer;
-        grade = Grade.Rare;
-        description = "지정한 대상에게 데미지를 준다";
-        criticalRate = 20;
-        reuseTime = 1;
-        APSchema = "5;00100;01110;11111;01110;00100";
-        RPSchema = "1;1";
-        maxDamageUp = 10;
-        minDamageUp = 5;
-        maxDamage = 50;
-        minDamage = 10;
+        private Extension_017 parsedExtension;
+        public Extension_017 ParsedExtension => parsedExtension;
+        public Skill_017() : base(17)
+        {
+            if (extension != null)
+            {
+                parsedExtension = ParseExtension<Extension_017>(extension);
+            }
+        }
     }
 
-    /*public override void UseSkillToUnit(Unit unit)
+    [System.Serializable]
+    public class Extension_017 : Extensionable
     {
-        Debug.LogError(name + " 스킬을 " + unit.name + "에 사용!");
-        float damage = Random.Range(minDamage + minDamageUp * enhancedLevel, maxDamage + maxDamageUp * enhancedLevel);
-        unit.GetDamage((int)damage);
-        base.UseSkillToUnit(unit);
-    }*/
+        public float maxDamageUp;
+        public float minDamageUp;
+        public float maxDamage;
+        public float minDamage;
+    }
 }

@@ -33,13 +33,9 @@ namespace Common.DB
         {
             sqliteConnection = new SqliteConnection(dbPath);
             sqliteConnection.Open();
-            if (sqliteConnection.State == ConnectionState.Open)
+            if (sqliteConnection.State != ConnectionState.Open)
             {
-                Debug.Log("DB 연결 성공");
-            }
-            else
-            {
-                Debug.Log("DB 연결 실패");
+                Debug.LogError("DB 연결 실패");
             }
         }
 
@@ -113,7 +109,6 @@ namespace Common.DB
             }
 
             DisconnectToDB();
-
             return JSON.ParseString<SelectResults<T>>(jsonString);
         }
     }
