@@ -1,4 +1,5 @@
 ﻿using Model;
+using Model.Skills;
 using Model.Managers;
 using System;
 using System.Collections;
@@ -45,10 +46,9 @@ namespace UI.Popup
         {
             gameObject.SetActive(true);
 
-            //name으로 json 파일 파싱.
+            skill = (Skill)Activator.CreateInstance(Type.GetType($"Model.Skills.{name}"));
 
             //Skill 이미지, 설명 UI 갱신
-            skill = new Skill_000();
             skillImage.sprite = skill.Sprite;
             skillDescription.text = $"{skill.name}\n{skill.description}";
 

@@ -41,6 +41,11 @@ namespace Model.Skills
                 Debug.Log($"{user.Name}가 {name}스킬을 {target}에 사용!");
             }
         }
+        public override string GetDescription(Unit user)
+        {
+            int damage = user.Strength * parsedExtension.strengthToDamageRatio + enhancedLevel * parsedExtension.upgradePerEnhancedLevel;
+            return $"{base.GetDescription(user)}\n Damage: {damage}";
+        }
     }
     public class Extension_000 : Extensionable
     {
