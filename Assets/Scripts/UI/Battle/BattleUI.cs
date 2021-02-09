@@ -201,6 +201,7 @@ namespace UI.Battle
         /// </summary>
         public void SetNextTurn()
         {
+            HideSkillInfo();
             Unit nextTurnUnit = BattleManager.GetNextTurnUnit();
 
             //다음 턴 유닛 값들 초기화
@@ -214,26 +215,6 @@ namespace UI.Battle
                 nextTurnUnit.StateEffects[i].OnTurnStart();
 
             InitThisTurnPanel(nextTurnUnit);
-        }
-
-        /// <summary>
-        /// 길찾기 알고리즘으로 유닛 이동.
-        /// </summary>
-        /// <param name="unit">이동 유닛</param>
-        /// <param name="from">출발 위치</param>
-        /// <param name="to">도착 위치</param>
-        /// <returns></returns>
-        IEnumerator MoveUnit(Unit unit, Vector2Int from, Vector2Int to)
-        {
-            List<Vector2Int> path = PathFind.PathFindAlgorithm(from, to);
-
-            var waitForSeconds = new WaitForSeconds(0.1f);
-            foreach (Vector2Int position in path)
-            {
-                UnitAction.Move(unit, position);
-                // 화면 갱신 코드 필요.
-                yield return waitForSeconds;
-            }
         }
 
         /// <summary>
