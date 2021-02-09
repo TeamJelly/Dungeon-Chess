@@ -68,37 +68,6 @@ namespace Model
         public string RPSchema;              // relate Position
         public string extension; // 스킬 고유 특성
 
-        public virtual bool IsAvailablePosition(Unit user, Vector2Int position)
-        {
-            // 등록한 범위 안이어야 한다.
-            if (!Common.Range.ParseRangeSchema(APSchema).Contains(position - user.Position))
-                return false;
-
-            // 모든 타일에 사용가능
-            if (target == Target.Any)
-                return true;
-            // 유닛 없음타일에만 사용가능
-            else if (target == Target.NoUnit && 
-                BattleManager.GetTile(position).IsUsable())
-                return true;
-            // 파티 유닛에만 사용 가능
-            else if (target == Target.Party &&
-                BattleManager.GetUnit(position)?.Category == Category.Party)
-                return true;
-            // 우호적인 유닛에 사용 가능
-            else if (target == Target.Friendly && (
-                BattleManager.GetUnit(position)?.Category == Category.Friendly ||
-                BattleManager.GetUnit(position)?.Category == Category.Party))
-                return true;
-            // 적대적인 유닛에 사용 가능
-            else if (target == Target.Enemy &&
-                BattleManager.GetUnit(position)?.Category == Category.Enemy)
-                return true;
-            // 어디에도 속하지 않으면 false
-            else
-                return false;
-        }
-
         public virtual bool IsUsable(Unit user)
         {
             if (user.SkillCount > 0 && currentReuseTime == 0)
@@ -107,25 +76,63 @@ namespace Model
                 return false;
         }
 
-        /*public List<Vector2Int> GetAvailablePositions(Unit user)
+        public virtual List<Vector2Int> GetAvailablePositions(Unit user, Vector2Int userPosition)
         {
+            if (APSchema == null) return null;
+
             List<Vector2Int> positions = new List<Vector2Int>();
 
             foreach (var position in Common.Range.ParseRangeSchema(APSchema))
             {
-                Vector2Int abs = user.Position + position;
+                Vector2Int abs = userPosition + position;
 
-                if (IsAvailablePosition(user, abs))
+                // 모든 타일에 사용가능
+                if (target == Target.Any)
                     positions.Add(abs);
+                // 유닛 없음타일에만 사용가능
+                else if (target == Target.NoUnit &&
+                    BattleManager.GetTile(position).IsUsable())
+                    positions.Add(abs);
+                // 파티 유닛에만 사용 가능
+                else if (target == Target.Party &&
+                    BattleManager.GetUnit(position)?.Category == Category.Party)
+                    positions.Add(abs);
+                // 우호적인 유닛에 사용 가능
+                else if (target == Target.Friendly && (
+                    BattleManager.GetUnit(position)?.Category == Category.Friendly ||
+                    BattleManager.GetUnit(position)?.Category == Category.Party))
+                    positions.Add(abs);
+                // 적대적인 유닛에 사용 가능
+                else if (target == Target.Enemy &&
+                    BattleManager.GetUnit(position)?.Category == Category.Enemy)
+                    positions.Add(abs);
+                // 어디에도 속하지 않으면 false
+                else
+                    continue;
             }
 
             return positions;
-        }*/
+        }
+
+        public virtual List<Vector2Int> GetAvailablePositions(Unit user)
+        {
+            return GetAvailablePositions(user, user.Position);
+        }
 
         // 메인 인디케이터의 위치가 position일때, 관련된 범위의 위치를 돌려줍니다.
         public virtual List<Vector2Int> GetRelatePositions(Unit user, Vector2Int position)
         {
-            return Common.Range.ParseRangeSchema(RPSchema);
+            if (RPSchema == null) return null;
+
+            List<Vector2Int> positions = new List<Vector2Int>();
+
+            foreach (var vector in Common.Range.ParseRangeSchema(RPSchema))
+            {
+                Vector2Int abs = position + vector;
+                positions.Add(abs);
+            }
+
+            return positions;
         }
 
         public virtual IEnumerator Use(Unit user, Vector2Int target)

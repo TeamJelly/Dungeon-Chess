@@ -17,7 +17,8 @@ namespace Model.Skills
                 parsedExtension = ParseExtension<Extension_000>(extension);
             }
         }
-        public override IEnumerator Use(Unit user, Vector2Int target) {
+        public override IEnumerator Use(Unit user, Vector2Int target) 
+        {
             // 0 단계 : 로그 출력, 스킬 소모 기록, 필요 변수 계산
             Unit targetUnit = Model.Managers.BattleManager.GetUnit(target);
             user.SkillCount--;
@@ -27,7 +28,7 @@ namespace Model.Skills
 
             if (targetUnit != null)
             {
-                Debug.Log(name + " 스킬을 " + targetUnit.Name + "에 사용!");
+                Debug.Log($"{user.Name}가 {name}스킬을 {targetUnit.Name}에 사용!");
                 user.animationState = Unit.AnimationState.Attack;
 
                 // 2단계 : Acttack 후에 맞는 애니메이션, HP갱신 재생
@@ -35,9 +36,12 @@ namespace Model.Skills
                 targetUnit.animationState = Unit.AnimationState.Hit;
                 Common.UnitAction.Damage(targetUnit, damage);
             }
+            else
+            {
+                Debug.Log($"{user.Name}가 {name}스킬을 {target}에 사용!");
+            }
         }
     }
-
     public class Extension_000 : Extensionable
     {
         public int strengthToDamageRatio;
