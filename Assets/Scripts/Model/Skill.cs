@@ -7,8 +7,13 @@ using UnityEngine;
 
 namespace Model
 {
+    using Skills;
     public enum Grade { NULL, Normal, Rare, Legend, Boss }
-    
+    namespace Skills
+    {
+        public abstract class Extensionable { }
+    }
+
     [System.Serializable]
     public class Skill
     {
@@ -17,7 +22,7 @@ namespace Model
         public UnitClass unitClass = UnitClass.NULL;                    // 스킬 클래스
         public Grade grade = Grade.NULL;                                // 스킬 등급
 
-        protected string spritePath;
+        public string spritePath;
 
         private Sprite sprite;
         public Sprite Sprite
@@ -59,8 +64,8 @@ namespace Model
         public Type type = Type.Fixed;          // Default : Fixed
         public Target target = Target.Any;      // Default : Any
 
-        protected string APSchema;
-        protected string RPSchema;              // relate Position
+        public string APSchema;
+        public string RPSchema;              // relate Position
         public string extension; // 스킬 고유 특성
 
         public virtual bool IsUsable(Unit user)
@@ -146,7 +151,7 @@ namespace Model
         protected void InitializeSkillFromDB(int skill_no)
         {
             var results = Query.Instance.SelectFrom<Skill>("skill_table", $"number={skill_no}").results;
-            if (results.Length > 0)
+            if (results != null && results.Length > 0)
             {
                 var skill = results[0];
                 number = skill.number;
@@ -175,7 +180,7 @@ namespace Model
         /// <typeparam name="T">확장 클래스</typeparam>
         /// <param name="extension">확장용 스키마를 넣습니다</param>
         /// <returns>확장 클래스</returns>
-        protected T ParseExtension<T>(string extension)
+        protected E ParseExtension<E>(string extension) where E : Extensionable
         {
             string[] stats = extension.Split(';');
             Dictionary<string, object> dict = new Dictionary<string, object>();
@@ -189,7 +194,16 @@ namespace Model
             }
 
             string jsonString = JSON.DictionaryToJsonString(dict);
-            return JSON.ParseString<T>(jsonString);
+            return JSON.ParseString<E>(jsonString);
+        }
+        /// <summary>
+        /// 스킬을 초기화 할 때 DB에서 값을 불러옵니다.
+        /// </summary>
+        /// <param name="no">스킬 번호</param>
+        public Skill(int no)
+        {
+            /// TODO -> 공통된 스킬을 중복해서 불러오지 않게 리팩토링 해야함.
+            InitializeSkillFromDB(no);
         }
     }
 }

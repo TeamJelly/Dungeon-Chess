@@ -1,6 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 using Model;
+using Model.Skills;
 using Model.Managers;
 using System.Collections.Generic;
 

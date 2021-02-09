@@ -1,31 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Model;
-using Model.Managers;
 
-public class Walk : Skill
+namespace Model.Skills
 {
-    public Walk()
+    using Managers;
+    public class Walk : Skill
     {
-        number = 999;
-        name = "걷기";
-        unitClass = UnitClass.NULL;
-        spritePath = null;
-        description = "이동한다.";
-        reuseTime = 0;
-    }
+        public Walk() : base(999) {}
 
-    public override bool IsUsable(Unit user)
-    {
-        //if (GetAvailablePositions(user).Count == 0)
-        //    return false;
+        public override bool IsUsable(Unit user)
+        {
+            //if (GetAvailablePositions(user).Count == 0)
+            //    return false;
 
-        if (user.MoveCount > 0 && currentReuseTime == 0)
-            return true;
-        else
-            return false;
-    }
+            if (user.MoveCount > 0 && currentReuseTime == 0)
+                return true;
+            else
+                return false;
+        }
 
     public override List<Vector2Int> GetRelatePositions(Unit user, Vector2Int target)
     {
@@ -49,57 +42,63 @@ public class Walk : Skill
 
         old_frontier.Add(userPosition);
 
-        for (int i = 0; i < user.Move; i++)
-        {
-            foreach (var position in old_frontier)
+            for (int i = 0; i < user.Move; i++)
             {
-                // 4방위를 탐색
-                foreach (var direction in directions)
+                foreach (var position in old_frontier)
                 {
-                    Vector2Int temp = position + direction;
-
-                    if (!positions.Contains(temp) &&                // 전에 추가한 위치가 아니고
-                        BattleManager.IsAvilablePosition(temp) &&   // 맵 범위 안이고
-                        BattleManager.GetTile(temp).IsUsable())     // 타일에 유닛이 존재하지 않는다면
+                    // 4방위를 탐색
+                    foreach (var direction in directions)
                     {
-                        new_frontier.Add(temp);                     // 이동가능한 위치로 추가한다.
-                        positions.Add(temp);
+                        Vector2Int temp = position + direction;
+
+                        if (!positions.Contains(temp) &&                // 전에 추가한 위치가 아니고
+                            BattleManager.IsAvilablePosition(temp) &&   // 맵 범위 안이고
+                            BattleManager.GetTile(temp).IsUsable())     // 타일에 유닛이 존재하지 않는다면
+                        {
+                            new_frontier.Add(temp);                     // 이동가능한 위치로 추가한다.
+                            positions.Add(temp);
+                        }
                     }
                 }
+
+                // old와 new를 스왑한다.
+                old_frontier.Clear();
+                old_frontier.AddRange(new_frontier);
+
+                // new는 초기화 시킨다.
+                new_frontier.Clear();
             }
 
-            // old와 new를 스왑한다.
-            old_frontier.Clear();
-            old_frontier.AddRange(new_frontier);
-
-            // new는 초기화 시킨다.
-            new_frontier.Clear();
+            return positions;
         }
 
-        return positions;
-    }
-
-    public override IEnumerator Use(Unit user, Vector2Int target)
-    {
-        // 0 단계 : 로그 출력, 스킬 소모 기록
-        Debug.Log($"{user.Name}가 {name}스킬을 {target}에 사용!");
-        user.MoveCount--;
-        currentReuseTime = reuseTime;
-
-        // 1 단계 : 위치 이동
+        public override IEnumerator Use(Unit user, Vector2Int target)
         {
-            List<Vector2Int> path = Common.PathFind.PathFindAlgorithm(user.Position, target);
+            // 0 단계 : 로그 출력, 스킬 소모 기록
+            Debug.Log($"{user.Name}가 {name}스킬을 {target}에 사용!");
+            user.MoveCount--;
+            currentReuseTime = reuseTime;
 
-            user.animationState = Unit.AnimationState.Move;
-            float moveTime = 0.5f / path.Count;
-
-            for (int i = 1; i < path.Count; i++)
+            // 1 단계 : 위치 이동
             {
-                Common.UnitAction.Move(user, path[i]);
-                yield return new WaitForSeconds(moveTime);
-            }
+                List<Vector2Int> path = Common.PathFind.PathFindAlgorithm(user.Position, target);
 
-            user.animationState = Unit.AnimationState.Idle;
+                user.animationState = Unit.AnimationState.Move;
+                float moveTime = 0.5f / path.Count;
+
+                for (int i = 1; i < path.Count; i++)
+                {
+                    Common.UnitAction.Move(user, path[i]);
+                    yield return new WaitForSeconds(moveTime);
+                }
+
+                user.animationState = Unit.AnimationState.Idle;
+            }
         }
+    }
+    [System.Serializable]
+    public class Extension_Walk : Extensionable
+    {
     }
 }
+

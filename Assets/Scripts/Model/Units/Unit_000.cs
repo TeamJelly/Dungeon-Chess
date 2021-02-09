@@ -1,6 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 using Model;
+using Model.Skills;
 
 namespace Model.Units
 {
