@@ -97,10 +97,10 @@ namespace UI.Popup
         void EnableChangeSkillUI(int u, int s)
         {
             beforeSkillImage.sprite = GameManager.PartyUnits[u].Skills[s]?.Sprite;
-            beforeSkillText.text = GameManager.PartyUnits[u].Skills[s]?.GetDescription();
+            beforeSkillText.text = GameManager.PartyUnits[u].Skills[s]?.GetDescription(GameManager.PartyUnits[u]);
 
             afterSkillImage.sprite = skill.Sprite;
-            afterSkillText.text = skill.GetDescription();
+            afterSkillText.text = skill.GetDescription(GameManager.PartyUnits[u]);
 
             setButton.onClick.RemoveAllListeners();
             setButton.onClick.AddListener(() =>
@@ -127,12 +127,12 @@ namespace UI.Popup
             }*/
 
             beforeSkillImage.sprite = GameManager.PartyUnits[u].Skills[s].Sprite;
-            beforeSkillText.text = GameManager.PartyUnits[u].Skills[s].GetDescription();
+            beforeSkillText.text = GameManager.PartyUnits[u].Skills[s].GetDescription(GameManager.PartyUnits[u]);
 
             //한단계 업그레이드 시의 설명을 보여주기 위해 임시로 레벨을 올렸다가 내림
             GameManager.PartyUnits[u].Skills[s].enhancedLevel++;
-            afterSkillImage.sprite = skill.Sprite;
-            afterSkillText.text = skill.GetDescription();
+            afterSkillImage.sprite = GameManager.PartyUnits[u].Skills[s].Sprite;
+            afterSkillText.text = GameManager.PartyUnits[u].Skills[s].GetDescription(GameManager.PartyUnits[u]);
             GameManager.PartyUnits[u].Skills[s].enhancedLevel--;
 
             setButton.onClick.RemoveAllListeners();

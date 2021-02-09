@@ -128,7 +128,7 @@ namespace Model
             yield return null;
         }
 
-        public virtual string GetDescription()
+        public virtual string GetDescription(Unit user)
         {
             string str = description;
             return description;

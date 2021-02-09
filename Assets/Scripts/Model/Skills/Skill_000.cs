@@ -46,4 +46,10 @@ public class Skill_000 : Skill
 
         yield return new WaitWhile(() => targetUnit.animationState != Unit.AnimationState.Idle);
     }
+
+    public override string GetDescription(Unit user)
+    {
+        int damage = user.Strength * strengthToDamageRatio + enhancedLevel * 2;
+        return $"{base.GetDescription(user)}\n Damage: {damage}";
+    }
 }
