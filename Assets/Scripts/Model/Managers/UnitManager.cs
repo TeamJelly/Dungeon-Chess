@@ -25,10 +25,10 @@ namespace Model.Managers
             AllUnits.Add(GetUnit("유닛1"));
             AllUnits.Add(GetUnit("유닛2"));
             AllUnits.Add(GetUnit("유닛3"));
-            foreach(Unit unit in AllUnits)
-            {
-                unit.spritePath = "HandMade/women";
-            }
+
+            AllUnits[0].spritePath = "HandMade/women";
+            AllUnits[1].spritePath = "HandMade/slime";
+            AllUnits[2].spritePath = "HandMade/slime";
         }
 
         /// <summary>
