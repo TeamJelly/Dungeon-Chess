@@ -23,16 +23,22 @@ namespace UI
         Unit currentUnit;
        
         int index = 0;
+
+        List<Sprite> unitImagies = new List<Sprite>();
         private void Start()
         {
             List<Unit> units = UnitManager.Instance.AllUnits;
+
+            for (int i = 0; i < units.Count; i++)
+            {
+                unitImagies.Add(units[i].Sprite);
+            }
             UpdateUI();
-            //currentUnitImage.sprite = 
         }
         void UpdateUI()
         {
             currentUnit = UnitManager.Instance.AllUnits[index];
-            currentUnitImage.sprite = currentUnit.Sprite;
+            currentUnitImage.sprite = unitImagies[index];
             descriptionText.text = $"이름: {UnitManager.Instance.AllUnits[index].Name}\n";
 
             if(GameManager.PartyUnits.Contains(currentUnit))
@@ -61,7 +67,7 @@ namespace UI
         //UnitManager에서 Unit을 가져와서 화면에 보여주기.
         public void ShowNextUnit()
         {
-            if(index < UnitManager.Instance.AllUnits.Count - 1) index++;
+            if(index < unitImagies.Count - 1) index++;
             UpdateUI();
         }
 
@@ -85,7 +91,8 @@ namespace UI
             for (int i = 0; i < maximumUnitCount; i++) partyImagies[i].Sprite = null;
             for (int i = 0; i < GameManager.PartyUnits.Count; i++)
             {
-                partyImagies[i].Sprite = GameManager.PartyUnits[i].Sprite;
+                int index = UnitManager.Instance.AllUnits.IndexOf(GameManager.PartyUnits[i]);
+                partyImagies[i].Sprite = unitImagies[index];
             }
             UpdateUI();
         }
@@ -98,7 +105,7 @@ namespace UI
         void Fire()
         {
             GameManager.RemovePartyUnit(currentUnit);
-            selectedUnitCount--;
+            if (selectedUnitCount == 0) startButton.enabled = false;
         }
     }
 }
