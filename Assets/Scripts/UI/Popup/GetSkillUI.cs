@@ -52,11 +52,15 @@ namespace UI.Popup
             skillImage.sprite = skill.Sprite;
             skillDescription.text = $"{skill.name}\n{skill.description}";
 
-
+            for(int i = 0; i< unitImagies.Length; i++)
+            {
+                unitImagies[i].transform.parent.gameObject.SetActive(false);
+            }
             //UI 초기화
             for (int i = 0; i < GameManager.PartyUnits.Count; i++)
             {
                 //유닛 초상화 세팅
+                unitImagies[i].transform.parent.gameObject.SetActive(true);
                 unitImagies[i].sprite = GameManager.PartyUnits[i].Sprite;
                 int unitIndex = i;
 
