@@ -16,6 +16,10 @@ namespace Model.Managers
         public List<Vector2Int>[] pathList = null;
         List<Unit> partyUnits = new List<Unit>();
 
+        public int stage = 1;
+        public int Gold { get => gold; set => gold = value; }
+        int gold;
+
         public static List<Unit> PartyUnits { get => Instance.partyUnits; }
 
         public static GameManager Instance

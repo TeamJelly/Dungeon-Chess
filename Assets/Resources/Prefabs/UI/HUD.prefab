@@ -252,7 +252,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3475722194055015030}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9131068139753837172}
+        m_MethodName: EnableMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5881935877140228263
 GameObject:
   m_ObjectHideFlags: 0
@@ -264,6 +275,7 @@ GameObject:
   - component: {fileID: 5881935877140228260}
   - component: {fileID: 5881935877140228250}
   - component: {fileID: 5881935877140228261}
+  - component: {fileID: 9131068139753837172}
   m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
@@ -329,3 +341,16 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &9131068139753837172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5881935877140228263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 142f7ce1742950a4a980ef8bfae2f31e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 7143683771285064906}
