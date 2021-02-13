@@ -90,7 +90,7 @@ namespace Model.Managers
         /// <returns></returns>
         public static Unit GetUnit(Vector2Int position)
         {
-            return GetTile(position).GetUnit();
+            return GetTile(position)?.GetUnit();
         }
 
         public static Tile GetTile(Vector2Int position)

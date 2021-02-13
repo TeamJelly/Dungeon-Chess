@@ -19,5 +19,6 @@ namespace Model.Skills
     [System.Serializable]
     public class Extension_005 : Extensionable
     {
+        public int upgradePerEnhancedLevel = 1;
     }
 }
