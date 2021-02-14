@@ -150,7 +150,14 @@ namespace Model
         /// <returns></returns>
         protected void InitializeSkillFromDB(int skill_no)
         {
-            var results = Query.Instance.SelectFrom<Skill>("skill_table", $"number={skill_no}").results;
+            Skill[] results = new Skill[1];
+            results[0] = SkillDictionary.Instance[skill_no];
+            // 스킬을 새롭게 DB에서 불러와야하는 경우
+            if (results[0] == null)
+            {
+                results = Query.Instance.SelectFrom<Skill>("skill_table", $"number={skill_no}").results;
+                SkillDictionary.Instance[skill_no] = results[0];
+            }
             if (results != null && results.Length > 0)
             {
                 var skill = results[0];
@@ -202,7 +209,6 @@ namespace Model
         /// <param name="no">스킬 번호</param>
         public Skill(int no)
         {
-            /// TODO -> 공통된 스킬을 중복해서 불러오지 않게 리팩토링 해야함.
             InitializeSkillFromDB(no);
         }
     }
