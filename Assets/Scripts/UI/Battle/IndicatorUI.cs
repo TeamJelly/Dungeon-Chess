@@ -66,9 +66,9 @@ namespace UI.Battle
                                     for (int k = currentUnit.StateEffects.Count - 1; k >= 0; k--)
                                         currentUnit.StateEffects[k].AfterUseSkill();
 
-                                    BattleUI.HideSkillInfo();
-                                    BattleUI.instance.currentPushedButton = null;
-                                    BattleUI.instance.UpdateThisTurnPanel(currentUnit);
+                                    //BattleUI.HideSkillInfo();
+                                    //BattleUI.instance.currentPushedButton = null;
+                                    //BattleUI.instance.UpdateThisTurnPanel(currentUnit);
                                 }
                                 else
                                 {

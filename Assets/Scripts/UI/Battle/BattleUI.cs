@@ -18,35 +18,42 @@ namespace UI.Battle
         public Dictionary<Unit, GameObject> unitObjects = new Dictionary<Unit, GameObject>();
         private Dictionary<Unit, Slider> hpBars = new Dictionary<Unit, Slider>();
 
-        public GameObject unitsInfoPanel;
-        public GameObject UnitInfoUIPrefab;
-        public GameObject HPBarPrefab;
+        public GameObject UnitsInfoPanel;
+
+        private GameObject UnitInfoUIPrefab;
+        private GameObject HPBarPrefab;
 
         [Header("Skill Info")]
-        public GameObject SkillInfoInstance;
+        public GameObject SkillInfo;
         public TextMeshProUGUI SkillInfoNameText;
         public TextMeshProUGUI SkillInfoText;
 
         [Header("Buttons")]
-        public Button currentPushedButton; // 현재 누르고 있는 버튼
+        public Button currentPushedButton;
         public Button moveButton;
         public List<Button> skillButtons;
         public List<Button> itemButtons;
 
         List<UnitInfoUI> UnitsInfoList = new List<UnitInfoUI>();
-        public UnitInfoUI thisTurnUnitInfo;
 
         RectTransform unitTurnIndicator;
+
+        UnitInfoUI ThisTurnUnitInfo;
+        UnitInfoUI OtherUnitInfo;
 
         private void Awake()
         {
             instance = this;
+            UnitInfoUIPrefab = Resources.Load<GameObject>("Prefabs/UI/Battle/UnitInfoUI");
+            HPBarPrefab = Resources.Load<GameObject>("Prefabs/UI/Battle/HP_BAR");
+            ThisTurnUnitInfo = transform.Find("Panel/ThisTurnUnitInfo").GetComponent<UnitInfoUI>();
+            OtherUnitInfo = transform.Find("Panel/OtherUnitInfo").GetComponent<UnitInfoUI>();
         }
 
         private void Start()
         {
-            Init_UnitInfoUI();
-            Init_UnitTurnIndicator();
+//            InitUnitInfoUI();
+  //          InitUnitTurnIndicator();
 
             foreach (var unit in BattleManager.GetUnit())
             {
@@ -61,8 +68,19 @@ namespace UI.Battle
         {
             foreach (var unit in BattleManager.GetUnit())
             {
-                UpdateUnitObejct(unit);
+                if (unit.IsModified)
+                    UpdateUnitObejct(unit);
             }
+        }
+
+        public void TurnStart()
+        {
+            //스킬쿨 줄어듬/
+        }
+
+        public void TurnEnd()
+        {
+
         }
 
         public void MakeUnitObject(Unit unit)
@@ -97,11 +115,11 @@ namespace UI.Battle
                 entry_PointerClick.eventID = EventTriggerType.PointerClick;
                 entry_PointerClick.callback.AddListener((data) =>
                 {
-                    UnitDescriptionUI.instance.Enable(unit);
+                    DescriptionUI.instance.Enable(unit);
                 });
                 eventTrigger.triggers.Add(entry_PointerClick);
 
-                // 자식으로 슬라이더 추가
+                // BattleUI 자식으로 슬라이더 추가
                 Slider slider = Instantiate(HPBarPrefab, transform).GetComponent<Slider>();
                 slider.maxValue = unit.MaximumHP;
                 slider.minValue = 0;
@@ -154,18 +172,18 @@ namespace UI.Battle
         /// <summary>
         /// 파티원 유닛 정보창 생성
         /// </summary>
-        void Init_UnitInfoUI()
+        void InitUnitInfoUI()
         {
             for (int i = 0; i < GameManager.PartyUnits.Count; i++)
             {
-                GameObject g = Instantiate(UnitInfoUIPrefab);
+                GameObject gameObject = Instantiate(UnitInfoUIPrefab);
+                gameObject.transform.SetParent(UnitsInfoPanel.transform);
+                gameObject.transform.SetAsFirstSibling();
 
-                g.transform.SetParent(unitsInfoPanel.transform);
-                g.transform.SetAsFirstSibling();
-                g.transform.localScale = Vector3.one;
+                //gameObject.transform.localScale = Vector3.one;
 
-                UnitInfoUI unitInfoUI = g.GetComponent<UnitInfoUI>();
-                unitInfoUI.Init(); ;
+                UnitInfoUI unitInfoUI = gameObject.GetComponent<UnitInfoUI>();
+//                unitInfoUI.Init();
                 UnitsInfoList.Add(unitInfoUI);
                 UpdateUnitInfo(GameManager.PartyUnits[i]);
             }
@@ -174,7 +192,7 @@ namespace UI.Battle
         /// <summary>
         /// 유닛 턴 표시기 생성
         /// </summary>
-        void Init_UnitTurnIndicator()
+        void InitUnitTurnIndicator()
         {
             unitTurnIndicator = new GameObject().AddComponent<RectTransform>();
             unitTurnIndicator.SetParent(transform);
@@ -201,7 +219,16 @@ namespace UI.Battle
         /// </summary>
         public void SetNextTurn()
         {
-            HideSkillInfo();
+            // 이전 턴 유닛
+            Unit beforeUnit = BattleManager.instance.thisTurnUnit;
+
+            if(beforeUnit != null)
+            {
+                for (int i = beforeUnit.StateEffects.Count - 1; i >= 0; i--)
+                    beforeUnit.StateEffects[i].OnTurnEnd();
+            }
+
+            //HideSkillInfo();
             Unit nextTurnUnit = BattleManager.GetNextTurnUnit();
 
             //다음 턴 유닛 값들 초기화
@@ -214,7 +241,7 @@ namespace UI.Battle
             for (int i = nextTurnUnit.StateEffects.Count - 1; i >= 0; i--)
                 nextTurnUnit.StateEffects[i].OnTurnStart();
 
-            InitThisTurnPanel(nextTurnUnit);
+            //InitThisTurnPanel(nextTurnUnit);
         }
 
         /// <summary>
@@ -224,130 +251,130 @@ namespace UI.Battle
         public void UpdateUnitInfo(Unit unit)
         {
             int index = GameManager.PartyUnits.IndexOf(unit);
-            UnitsInfoList[index].Set(unit);
+//            UnitsInfoList[index].SetSimply(unit);
         }
 
-        public static void ShowSkillInfo(Skill skill)
-        {
-            instance.SkillInfoNameText.text = skill.name;
-            instance.SkillInfoText.text = skill.description;
-            instance.SkillInfoInstance.SetActive(true);
-        }
+        //public static void ShowSkillInfo(Skill skill)
+        //{
+        //    instance.SkillInfoNameText.text = skill.name;
+        //    instance.SkillInfoText.text = skill.description;
+        //    instance.SkillInfo.SetActive(true);
+        //}
 
-        public static void HideSkillInfo()
-        {
-            instance.SkillInfoNameText.text = "스킬 이름";
-            instance.SkillInfoText.text = "스킬 설명";
-            instance.SkillInfoInstance.SetActive(false);
-        }
+        //public static void HideSkillInfo()
+        //{
+        //    instance.SkillInfoNameText.text = "스킬 이름";
+        //    instance.SkillInfoText.text = "스킬 설명";
+        //    instance.SkillInfo.SetActive(false);
+        //}
 
         /// <summary>
         /// 현재 턴의 유닛정보를 가져와서 스킬 및 아이템 창을 초기화 한다.
         /// </summary>
         /// <param name="unit">현재 턴 유닛</param>
-        public void InitThisTurnPanel(Unit unit)
-        {
-            currentPushedButton = null;
-            IndicatorUI.HideTileIndicator();
+//        public void InitThisTurnPanel(Unit unit)
+//        {
+//            currentPushedButton = null;
+//            IndicatorUI.HideTileIndicator();
 
-            bool isPartyUnit = GameManager.PartyUnits.Contains(unit);
-            if (isPartyUnit) // 파티원인가?
-            {
-                foreach (Button button in skillButtons) // 이전 스킬 이미지 제거.
-                {
-                    button.interactable = false;
-                    button.GetComponent<Image>().sprite = null;
-                }
+//            bool isPartyUnit = GameManager.PartyUnits.Contains(unit);
+//            if (isPartyUnit) // 파티원인가?
+//            {
+//                foreach (Button button in skillButtons) // 이전 스킬 이미지 제거.
+//                {
+//                    button.interactable = false;
+//                    button.GetComponent<Image>().sprite = null;
+//                }
 
-                for (int i = 0; i < unit.Skills.Length; i++) //현재 턴 유닛의 스킬 이미지로 갱신.
-                {
-                    if (unit.Skills[i] != null && unit.Skills[i].Sprite != null)
-                    {
-                        skillButtons[i].GetComponent<Image>().sprite = unit.Skills[i].Sprite;
-                    }
-                }
-                SetUnitTurnIndicator(unit); // 현재 턴의 유닛 정보창에 테두리 표시
+//                for (int i = 0; i < unit.Skills.Length; i++) //현재 턴 유닛의 스킬 이미지로 갱신.
+//                {
+//                    if (unit.Skills[i] != null && unit.Skills[i].Sprite != null)
+//                    {
+//                        skillButtons[i].GetComponent<Image>().sprite = unit.Skills[i].Sprite;
+//                    }
+//                }
+//                SetUnitTurnIndicator(unit); // 현재 턴의 유닛 정보창에 테두리 표시
 
-                UpdateThisTurnPanel(unit);
-            }
-            // 파티원일때만 UI 활성화.
-            thisTurnUnitInfo.gameObject.SetActive(isPartyUnit);
-            unitTurnIndicator.gameObject.SetActive(isPartyUnit);
-        }
+//                UpdateThisTurnPanel(unit);
+//            }
+//            // 파티원일때만 UI 활성화.
+//            thisTurnUnitInfo.gameObject.SetActive(isPartyUnit);
+//            unitTurnIndicator.gameObject.SetActive(isPartyUnit);
+//        }
 
-        /// <summary>
-        /// thisTurnUnitInfo 패널의 버튼 기능 정의.
-        /// </summary>
-        /// <param name="unit">현재 턴 유닛</param>
-        public void UpdateThisTurnPanel(Unit unit)
-        {
-            thisTurnUnitInfo.Set(unit);
+//        /// <summary>
+//        /// thisTurnUnitInfo 패널의 버튼 기능 정의.
+//        /// </summary>
+//        /// <param name="unit">현재 턴 유닛</param>
+//        public void UpdateThisTurnPanel(Unit unit)
+//        {
+////            thisTurnUnitInfo.SetDetail(unit);
 
-            moveButton.interactable = false;                // 이동 버튼 비활성화
-            foreach (Button skillButton in skillButtons)    // 스킬 버튼 비활성화
-                skillButton.interactable = false;
-            foreach (Button itemButton in itemButtons)      // 스킬 버튼 비활성화
-                itemButton.interactable = false;
+//            moveButton.interactable = false;                // 이동 버튼 비활성화
+//            foreach (Button skillButton in skillButtons)    // 스킬 버튼 비활성화
+//                skillButton.interactable = false;
+//            foreach (Button itemButton in itemButtons)      // 스킬 버튼 비활성화
+//                itemButton.interactable = false;
 
-            if (currentPushedButton == null) // 아무 버튼도 안눌린 기본 상태
-            {
-                if (unit.MoveSkill.IsUsable(unit)) // 이동 가능한가?
-                {
-                    moveButton.interactable = true;
-                    moveButton.onClick.RemoveAllListeners();
+//            if (currentPushedButton == null) // 아무 버튼도 안눌린 기본 상태
+//            {
+//                if (unit.MoveSkill.IsUsable(unit)) // 이동 가능한가?
+//                {
+//                    moveButton.interactable = true;
+//                    moveButton.onClick.RemoveAllListeners();
 
-                    moveButton.onClick.AddListener(() => // 이동 버튼을 눌렀을 때 작동하는 코드
-                    {
-                        IndicatorUI.ShowTileIndicator(unit, unit.MoveSkill);
-                        currentPushedButton = moveButton;
-                        UpdateThisTurnPanel(unit);
-                    });
-                }
+//                    moveButton.onClick.AddListener(() => // 이동 버튼을 눌렀을 때 작동하는 코드
+//                    {
+//                        IndicatorUI.ShowTileIndicator(unit, unit.MoveSkill);
+//                        currentPushedButton = moveButton;
+//                        UpdateThisTurnPanel(unit);
+//                    });
+//                }
 
-                for (int i = 0; i < unit.Skills.Length; i++)
-                {
-                    Skill skill = unit.Skills[i];
-                    Button skillButton = skillButtons[i];
+//                for (int i = 0; i < unit.Skills.Length; i++)
+//                {
+//                    Skill skill = unit.Skills[i];
+//                    Button skillButton = skillButtons[i];
 
-                    // 슬롯에 스킬이 존재하지 않는다면, 스킵한다.
-                    if (skill == null) continue;
+//                    // 슬롯에 스킬이 존재하지 않는다면, 스킵한다.
+//                    if (skill == null) continue;
 
-                    // 스킬이 사용가능하다면
-                    if (skill.IsUsable(unit)) 
-                    {
-                        // 버튼 활성화
-                        skillButton.interactable = true;
-                        skillButton.onClick.RemoveAllListeners();
+//                    // 스킬이 사용가능하다면
+//                    if (skill.IsUsable(unit)) 
+//                    {
+//                        // 버튼 활성화
+//                        skillButton.interactable = true;
+//                        skillButton.onClick.RemoveAllListeners();
 
-                        skillButton.onClick.AddListener(() =>
-                        {
-                            IndicatorUI.ShowTileIndicator(unit, skill);
-                            ShowSkillInfo(skill);
-                            currentPushedButton = skillButton;
-                            UpdateThisTurnPanel(unit);
-                        });
-                    }
-                }
+//                        skillButton.onClick.AddListener(() =>
+//                        {
+//                            IndicatorUI.ShowTileIndicator(unit, skill);
+//                            ShowSkillInfo(skill);
+//                            currentPushedButton = skillButton;
+//                            UpdateThisTurnPanel(unit);
+//                        });
+//                    }
+//                }
 
-                for (int i = 0; i < unit.Items.Length; i++)
-                {
-                    //아이템 버튼
-                }
-            }
-            else // 버튼 눌린 상태, 타 버튼 비활성화, 다시 누르면 타일 표시기들 제거
-            {
-                currentPushedButton.interactable = true; // 취소버튼만 활성화
+//                for (int i = 0; i < unit.Items.Length; i++)
+//                {
+//                    //아이템 버튼
+//                }
+//            }
+//            else // 버튼 눌린 상태, 타 버튼 비활성화, 다시 누르면 타일 표시기들 제거
+//            {
+//                currentPushedButton.interactable = true; // 취소버튼만 활성화
 
-                currentPushedButton.onClick.RemoveAllListeners();
-                currentPushedButton.onClick.AddListener(() =>
-                {
-                    IndicatorUI.HideTileIndicator();
-                    HideSkillInfo();
+//                currentPushedButton.onClick.RemoveAllListeners();
+//                currentPushedButton.onClick.AddListener(() =>
+//                {
+//                    IndicatorUI.HideTileIndicator();
+//                    HideSkillInfo();
 
-                    currentPushedButton = null;
-                    UpdateThisTurnPanel(unit);
-                });
-            }
-        }
+//                    currentPushedButton = null;
+//                    UpdateThisTurnPanel(unit);
+//                });
+//            }
+//        }
     }
 }

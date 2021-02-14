@@ -14,6 +14,8 @@ namespace Model.Effects
             this.owner = owner;
         }
 
+        bool isActivated = false;
+
         /// <summary>
         /// 효과의 중복 검사와 중복 처리를 해준다.
         /// </summary>
@@ -31,8 +33,7 @@ namespace Model.Effects
             owner.MoveCount = 0;
             owner.SkillCount = 0;
             owner.ItemCount = 0;
-
-            Common.UnitAction.RemoveEffect(owner, this);
+            isActivated = true;
         }
 
         public override void AfterUseSkill()
@@ -41,8 +42,12 @@ namespace Model.Effects
             owner.MoveCount = 0;
             owner.SkillCount = 0;
             owner.ItemCount = 0;
+        }
 
-            Common.UnitAction.RemoveEffect(owner, this);
+        public override void OnTurnEnd()
+        {
+            if (isActivated == true)
+                Common.UnitAction.RemoveEffect(owner, this);
         }
 
     }

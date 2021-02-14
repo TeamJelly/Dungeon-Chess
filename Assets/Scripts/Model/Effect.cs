@@ -63,7 +63,7 @@ namespace Model
 
         }
 
-        public virtual void BeforeUseSkill()
+        public virtual void BeforeUseSkill(Skill skill)
         {
 
         }

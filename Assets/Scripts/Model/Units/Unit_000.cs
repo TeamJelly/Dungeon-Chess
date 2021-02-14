@@ -23,6 +23,7 @@ namespace Model.Units
             Move = 2;
             MoveSkill = new Walk();
             Skills[0] = new Skill_000();
+            Skills[0].enhancedLevel = 1;
         }
     }
 }
