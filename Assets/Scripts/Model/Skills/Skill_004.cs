@@ -41,10 +41,10 @@ namespace Model.Skills
             Common.UnitAction.AddEffect(targetUnit, new Effects.Effect_004(targetUnit));
 
         }
-        public override string GetDescription(Unit user)
+        public override string GetDescription(Unit user, int level)
         {
-            int damage = user.Strength * 10 + enhancedLevel * parsedExtension.upgradePerEnhancedLevel;
-            return $"{base.GetDescription(user)}\n Damage: {damage}";
+            int damage = user.Strength * 10 + level * parsedExtension.upgradePerEnhancedLevel;
+            return $"{base.GetDescription(user,level)}\n Damage: {damage}";
         }
     }
 

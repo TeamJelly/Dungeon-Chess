@@ -177,6 +177,10 @@ namespace Model
         }
         public virtual string GetDescription(Unit user)
         {
+            return GetDescription(user, enhancedLevel);
+        }
+        public virtual string GetDescription(Unit user, int level)
+        {
             string str = description;
             return description;
         }

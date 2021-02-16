@@ -109,7 +109,8 @@ namespace UI.Popup
             setButton.onClick.RemoveAllListeners();
             setButton.onClick.AddListener(() =>
             {
-                GameManager.PartyUnits[u].Skills[s] = skill;
+                Common.UnitAction.AddSkill(GameManager.PartyUnits[u], skill, s);
+                //.Skills[s] = skill;
                 gameObject.SetActive(false);
             });
             ChangeSkillPanel.SetActive(true);
@@ -134,15 +135,13 @@ namespace UI.Popup
             beforeSkillText.text = GameManager.PartyUnits[u].Skills[s].GetDescription(GameManager.PartyUnits[u]);
 
             //한단계 업그레이드 시의 설명을 보여주기 위해 임시로 레벨을 올렸다가 내림
-            GameManager.PartyUnits[u].Skills[s].enhancedLevel++;
             afterSkillImage.sprite = GameManager.PartyUnits[u].Skills[s].Sprite;
-            afterSkillText.text = GameManager.PartyUnits[u].Skills[s].GetDescription(GameManager.PartyUnits[u]);
-            GameManager.PartyUnits[u].Skills[s].enhancedLevel--;
+            afterSkillText.text = GameManager.PartyUnits[u].Skills[s].GetDescription(GameManager.PartyUnits[u], GameManager.PartyUnits[u].Skills[s].enhancedLevel + 1);
 
             setButton.onClick.RemoveAllListeners();
             setButton.onClick.AddListener(() =>
             {
-                GameManager.PartyUnits[u].Skills[s].enhancedLevel++;
+                Common.UnitAction.EnhanceSkill(GameManager.PartyUnits[u], s);
                 gameObject.SetActive(false);
             });
 

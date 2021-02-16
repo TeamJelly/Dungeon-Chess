@@ -125,6 +125,7 @@ namespace Common
 
             RemoveSkill(unit, index);
             unit.Skills[index] = newSkill;
+            unit.IsModified = true;
         }
 
         public static void RemoveSkill(Unit unit, int index)
@@ -143,5 +144,19 @@ namespace Common
             unit.Skills[index] = null;
         }
 
+        public static void EnhanceSkill(Unit unit, int index)
+        {
+            if (index >= unit.Skills.Length || index < 0)
+            {
+                Debug.LogError("스킬 슬롯을 범위를 벗어났습니다.");
+                return;
+            }
+            if (unit.Skills[index] == null)
+            {
+                Debug.LogError("업그레이드 할 스킬이 없습니다.");
+                return;
+            }
+            unit.Skills[index].enhancedLevel++;
+        }
     }
 }
