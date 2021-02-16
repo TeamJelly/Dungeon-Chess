@@ -29,6 +29,7 @@ namespace Model.Managers
 
             Unit temp = new Units.Unit_001
             {
+                Name = "슬라임1",
                 Category = Category.Enemy,
                 Position = new Vector2Int(1, 1)
             };
@@ -36,6 +37,7 @@ namespace Model.Managers
 
             temp = new Units.Unit_001
             {
+                Name = "슬라임2",
                 Category = Category.Enemy,
                 Position = new Vector2Int(2, 2)
             };
@@ -43,6 +45,7 @@ namespace Model.Managers
 
             temp = new Units.Unit_001
             {
+                Name = "슬라임3",
                 Category = Category.Enemy,
                 Position = new Vector2Int(3, 4)
             };
@@ -144,15 +147,20 @@ namespace Model.Managers
                 }
             }
 
+            return nextUnit;
+        }
+
+        public static void SetNextTurnUnit(Unit nextUnit)
+        {
+            float max = 100; // 주기의 최댓값
+            float velocity = nextUnit.Agility * 10 + 100;
+            float minTime = (max - nextUnit.ActionRate) / velocity; // 거리 = 시간 * 속력 > 시간 = 거리 / 속력
+
             //나머지 유닛들도 해당 시간만큼 이동.
             foreach (var unit in instance.AllUnits)
-            {
-                float velocity = unit.Agility * 10 + 100;
                 unit.ActionRate += velocity * minTime;
-            }
 
             instance.thisTurnUnit = nextUnit;
-            return nextUnit;
         }
     }
 }

@@ -11,8 +11,8 @@ namespace Model.Skills
 
         public override bool IsUsable(Unit user)
         {
-            //if (GetAvailablePositions(user).Count == 0)
-            //    return false;
+            if (GetAvailablePositions(user).Count == 0)
+                return false;
 
             if (user.MoveCount > 0 && currentReuseTime == 0)
                 return true;
@@ -74,6 +74,9 @@ namespace Model.Skills
 
         public override IEnumerator Use(Unit user, Vector2Int target)
         {
+            for (int i = user.StateEffects.Count - 1; i >= 0; i--)
+                user.StateEffects[i].BeforeUseSkill(this);
+
             // 0 단계 : 로그 출력, 스킬 소모 기록
             Debug.Log($"{user.Name}가 {name}스킬을 {target}에 사용!");
             user.MoveCount--;
@@ -94,6 +97,9 @@ namespace Model.Skills
 
                 user.animationState = Unit.AnimationState.Idle;
             }
+
+            for (int i = user.StateEffects.Count - 1; i >= 0; i--)
+                user.StateEffects[i].BeforeUseSkill(this);
         }
     }
     [System.Serializable]
