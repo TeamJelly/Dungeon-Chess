@@ -115,7 +115,7 @@ namespace UI.Battle
 
             string EffectList = "";
             foreach (var effect in unit.StateEffects)
-                EffectList += $"({effect.name})";
+                EffectList += $"({effect.Name})";
 
             EffectsText.text = EffectList;
 

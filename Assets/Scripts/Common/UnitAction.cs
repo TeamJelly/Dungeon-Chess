@@ -84,7 +84,7 @@ namespace Common
 
         public static void AddEffect(Unit target, Effect effect)
         {
-            Debug.Log($"{target.Name}에게 {effect.name}효과 추가");
+            Debug.Log($"{target.Name}에게 {effect.Name}효과 추가");
             effect.OnAddThisEffect();
             target.StateEffects.Add(effect);
         }
@@ -93,12 +93,12 @@ namespace Common
         {
             if (unit.StateEffects.Contains(effect))
             {
-                Debug.Log($"{unit.Name}에게 {effect.name}효과 제거");
+                Debug.Log($"{unit.Name}에게 {effect.Name}효과 제거");
                 effect.OnRemoveThisEffect();
                 unit.StateEffects.Remove(effect);
             } 
             else
-                Debug.LogError($"{unit.Name}에게 {effect.name}효과가 없음!");
+                Debug.LogError($"{unit.Name}에게 {effect.Name}효과가 없음!");
         }
 
         public static void Summon(Unit unit)
