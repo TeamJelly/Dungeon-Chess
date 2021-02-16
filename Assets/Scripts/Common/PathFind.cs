@@ -98,6 +98,12 @@ namespace Common
         /// <returns></returns>
         public static List<Vector2Int> PathFindAlgorithm(Vector2Int from, Vector2Int to)
         {
+            if (!BattleManager.GetTile(to).IsUsable())
+            {
+                Debug.LogWarning("목적지에 유닛이 존재합니다.");
+                return null;
+            }
+
             Node node = new Node(from, to);
             List<Node> frontier = new List<Node>(); // priority queue ordered by Path-Cost, with node as the only element
             List<Node> explored = new List<Node>(); // an empty set
@@ -127,13 +133,14 @@ namespace Common
                         continue;
 
                     bool isFrontiered = false;
-                    foreach (var item in frontier)
-                        if (item.unitPosition.Equals(child.unitPosition))
+
+                    for (int i = frontier.Count -1; i >= 0; i--)
+                        if (frontier[i].unitPosition.Equals(child.unitPosition))
                         {
                             isFrontiered = true;
-                            if (child.unitPosition == item.unitPosition && child.evaluationCost < item.evaluationCost)
+                            if (child.unitPosition == frontier[i].unitPosition && child.evaluationCost < frontier[i].evaluationCost)
                             {
-                                frontier.Remove(item);
+                                frontier.Remove(frontier[i]);
                                 frontier.Add(child);
                             }
                         }
