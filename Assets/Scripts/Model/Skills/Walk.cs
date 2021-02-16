@@ -105,7 +105,7 @@ namespace Model.Skills
         }
     }
     [System.Serializable]
-    public class Extension_Walk : Extensionable
+    public class Extension_Walk : Common.Extensionable
     {
     }
 }

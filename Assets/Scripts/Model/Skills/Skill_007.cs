@@ -11,13 +11,13 @@ namespace Model.Skills
         {
             if (extension != null)
             {
-                parsedExtension = ParseExtension<Extension_007>(extension);
+                parsedExtension = Common.Extension.Parse<Extension_007>(extension);
             }
         }
     }
 
     [System.Serializable]
-    public class Extension_007 : Extensionable
+    public class Extension_007 : Common.Extensionable
     {
     }
 }

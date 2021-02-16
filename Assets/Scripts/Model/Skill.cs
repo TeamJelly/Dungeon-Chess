@@ -9,10 +9,6 @@ namespace Model
 {
     using Skills;
     public enum Grade { NULL, Normal, Rare, Legend, Boss }
-    namespace Skills
-    {
-        public abstract class Extensionable { }
-    }
 
     [System.Serializable]
     public class Skill
@@ -188,28 +184,6 @@ namespace Model
             return description;
         }
 
-        /// <summary>
-        /// 스킬 고유의 확장 스탯을 파싱합니다.
-        /// </summary>
-        /// <typeparam name="T">확장 클래스</typeparam>
-        /// <param name="extension">확장용 스키마를 넣습니다</param>
-        /// <returns>확장 클래스</returns>
-        protected E ParseExtension<E>(string extension) where E : Extensionable
-        {
-            string[] stats = extension.Split(';');
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-
-            foreach (var stat in stats)
-            {
-                var stat_split = stat.Split('=');
-                var name = stat_split[0];
-                var value = stat_split[1];
-                dict.Add(name, value);
-            }
-
-            string jsonString = JSON.DictionaryToJsonString(dict);
-            return JSON.ParseString<E>(jsonString);
-        }
         /// <summary>
         /// 스킬을 초기화 할 때 DB에서 값을 불러옵니다.
         /// </summary>

@@ -68,10 +68,10 @@ namespace Common
 
         public static Effect GetEffectByNumber(Unit unit, int number)
         {
-            Effect effect = new Effect();
+            Effect effect = null;
 
             foreach (var stateEffect in unit.StateEffects)
-                if (stateEffect.number == number)
+                if (stateEffect.Number == number)
                     effect = stateEffect;
 
             return effect;

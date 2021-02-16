@@ -14,7 +14,7 @@ namespace Model.Skills
         {
             if (extension != null)
             {
-                parsedExtension = ParseExtension<Extension_000>(extension);
+                parsedExtension = Common.Extension.Parse<Extension_000>(extension);
             }
             reuseTime = 5;
         }
@@ -48,7 +48,7 @@ namespace Model.Skills
             return $"{base.GetDescription(user)}\n Damage: {damage}";
         }
     }
-    public class Extension_000 : Extensionable
+    public class Extension_000 : Common.Extensionable
     {
         public int strengthToDamageRatio;
         public int upgradePerEnhancedLevel;

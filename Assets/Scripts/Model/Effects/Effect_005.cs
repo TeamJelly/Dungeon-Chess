@@ -1,43 +1,43 @@
-﻿using UnityEditor;
-using UnityEngine;
-
-namespace Model.Effects
+﻿namespace Model.Effects
 {
-    public class Effect_005 : Effect
+    [System.Serializable]
+    public class Extension_005 : Common.Extensionable
     {
         public int turnCount;
         public int regen;
+    }
 
-        public Effect_005(Unit owner, int turnCount, int regen)
+    public class Effect_005 : Effect
+    {
+        private Extension_005 extension_005;
+
+        public Effect_005(Unit owner) : base(owner)
         {
-            number = 5;
-            name = "재생";
-            description = "부여된 턴 동안, 턴 시작시 회복 수치만큼 HP를 회복한다.";
-            this.owner = owner;
+            descriptor.number = 5;
+            descriptor.name = "재생";
+            descriptor.description = "부여된 턴 동안, 턴 시작시 회복 수치만큼 HP를 회복한다.";
+            
+            if (Extension != null)
+            {
+                extension_005 = Common.Extension.Parse<Extension_005>(Extension);
+            }
+            else
+            {
+                // 디버깅용
+                extension_005 = new Extension_005();
+                extension_005.turnCount = 10;
+                extension_005.regen = 5;
+            }
 
-            this.turnCount = turnCount;
-            this.regen = regen;
         }
-
-        /*public override void OnOverlapEffect()
-        {
-            Effect_005 oldEffect = Common.UnitAction.GetEffectByNumber(owner, number) as Effect_005;
-
-            if (oldEffect.turnCount > turnCount)
-                turnCount = oldEffect.turnCount;
-            if (oldEffect.regen)
-
-            if (oldEffect != null)
-                owner.StateEffects.Remove(oldEffect);
-        }*/
 
         public override void OnTurnStart()
         {
-            Common.UnitAction.Heal(owner, regen);
+            Common.UnitAction.Heal(Owner, extension_005.regen);
 
-            turnCount--;
-            if (turnCount == 0)
-                Common.UnitAction.RemoveEffect(owner, this);   
+            extension_005.turnCount--;
+            if (extension_005.turnCount == 0)
+                Common.UnitAction.RemoveEffect(Owner, this);   
         }
     }
 }
