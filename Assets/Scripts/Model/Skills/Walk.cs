@@ -22,6 +22,8 @@ namespace Model.Skills
 
     public override List<Vector2Int> GetRelatePositions(Unit user, Vector2Int target)
     {
+
+
         if (GetAvailablePositions(user, user.Position).Contains(target))
             return Common.PathFind.PathFindAlgorithm(user.Position, target);
         else
