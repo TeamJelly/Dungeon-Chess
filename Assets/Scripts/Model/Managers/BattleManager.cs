@@ -156,8 +156,6 @@ namespace Model.Managers
 
         public static void SetNextTurnUnit(Unit nextUnit)
         {
-            Debug.Log(nextUnit.Name + "" + nextUnit.Agility);
-
             float max = 100; // 주기의 최댓값
             float velocity = nextUnit.Agility * 10 + 100;
             float minTime = (max - nextUnit.ActionRate) / velocity; // 거리 = 시간 * 속력 > 시간 = 거리 / 속력

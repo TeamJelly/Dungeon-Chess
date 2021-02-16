@@ -31,7 +31,9 @@ namespace Model.Effects
             Debug.Log($"{name}효과 {turnCount}턴 남음");
 
             if (turnCount == 0)
-                Common.UnitAction.RemoveEffect(owner, this);   
+            {
+                Common.UnitAction.RemoveEffect(owner, this);
+            }
         }
     }
 }
