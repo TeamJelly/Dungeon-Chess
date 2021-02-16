@@ -82,7 +82,6 @@ namespace UI.Battle
             Unit thisTurnUnit = BattleManager.instance.thisTurnUnit;
 
             // 턴시작시 유닛 값들 초기화
-            // thisTurnUnit.ActionRate = 0;
             thisTurnUnit.MoveCount = 1;
             thisTurnUnit.SkillCount = 1;
             thisTurnUnit.ItemCount = 1;
