@@ -61,13 +61,14 @@ namespace Model.Managers
             Common.UnitAction.AddEffect(partyUnits[0], new Effects.Effect_004(partyUnits[0]));
             Common.UnitAction.AddEffect(partyUnits[0], new Effects.Effect_005(partyUnits[0], 10, 5));
 
-            //partyUnits.Add(new Units.Unit_000
-            //{
-            //    Name = "party2",
-            //    Category = Category.Party,
-            //    Position = new Vector2Int(5, 1),
-            //    Move = 7
-            //});
+            partyUnits.Add(new Units.Unit_000
+            {
+                Name = "party2",
+                Category = Category.Party,
+                Position = new Vector2Int(5, 1),
+                Agility = 11,
+                Move = 7
+            });
             //partyUnits.Add(new Units.Unit_000
             //{
             //    Name = "party3",

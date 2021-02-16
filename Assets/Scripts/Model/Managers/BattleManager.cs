@@ -77,6 +77,7 @@ namespace Model.Managers
 
             return units;
         }
+
         /// <summary>
         /// 모든 유닛 리턴
         /// </summary>
@@ -85,6 +86,7 @@ namespace Model.Managers
         {
             return instance.AllUnits;
         }
+
         /// <summary>
         /// 위치의 유닛 리턴
         /// </summary>
@@ -159,6 +161,7 @@ namespace Model.Managers
             foreach (var unit in instance.AllUnits)
                 unit.ActionRate += velocity * minTime;
 
+            nextUnit.ActionRate = 0;
             instance.thisTurnUnit = nextUnit;
         }
     }
