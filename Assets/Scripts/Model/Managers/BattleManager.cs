@@ -53,6 +53,14 @@ namespace Model.Managers
             if(GameManager.PartyUnits.Count == 0)
                  GameManager.Instance.InitForTesting();
             Common.UnitAction.Summon(EnemyUnits);
+
+
+            for(int i = 0; i <  GameManager.PartyUnits.Count; i++)
+            {
+                GameManager.PartyUnits[i].Category = Category.Party;
+                GameManager.PartyUnits[i].Position = new Vector2Int(i + 4, i + 4);
+            }
+
             Common.UnitAction.Summon(GameManager.PartyUnits);
             /***************************************************************************/
         }

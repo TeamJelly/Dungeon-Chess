@@ -16,6 +16,8 @@ namespace Model.Managers
         public List<Vector2Int>[] pathList = null;
         List<Unit> partyUnits = new List<Unit>();
 
+        public int Gold;
+        public int stage;
         public static List<Unit> PartyUnits { get => Instance.partyUnits; }
 
         public static GameManager Instance
@@ -30,7 +32,7 @@ namespace Model.Managers
 
         GameManager()
         {
-            InitForTesting();
+            //InitForTesting();
         }
 
         public static void Reset()
