@@ -31,10 +31,9 @@ namespace UI
 
             for (int i = 0; i < units.Count; i++)
             {
-                unitImagies.Add(((GameObject)Instantiate(Resources.Load("Prefabs/Units/" + units[i].Name))).GetComponent<SpriteRenderer>().sprite);
+                unitImagies.Add(units[i].Sprite);
             }
             UpdateUI();
-            //currentUnitImage.sprite = 
         }
         void UpdateUI()
         {

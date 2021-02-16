@@ -29,7 +29,9 @@ namespace Model
         {
             get
             {
-                if (sprite == null && spritePath != "")
+                if (spritePath == "")
+                    sprite = Resources.Load<Sprite>("1bitpack_kenney_1/Tilesheet/X");
+                else if (sprite == null)
                     sprite = Resources.Load<Sprite>(spritePath);
                 return sprite;
             }
@@ -179,6 +181,11 @@ namespace Model
             {
                 Debug.LogError($"number={skill_no}에 해당하는 스킬이 없습니다.");
             }
+        }
+        public virtual string GetDescription(Unit user)
+        {
+            string str = description;
+            return description;
         }
 
         /// <summary>

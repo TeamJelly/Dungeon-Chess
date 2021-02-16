@@ -16,6 +16,10 @@ namespace Model.Managers
         public List<Vector2Int>[] pathList = null;
         List<Unit> partyUnits = new List<Unit>();
 
+        public int stage = 1;
+        public int Gold { get => gold; set => gold = value; }
+        int gold;
+
         public static List<Unit> PartyUnits { get => Instance.partyUnits; }
 
         public static GameManager Instance
@@ -30,7 +34,7 @@ namespace Model.Managers
 
         GameManager()
         {
-            InitForTesting();
+            //InitForTesting();
         }
 
         public static void Reset()
@@ -61,13 +65,13 @@ namespace Model.Managers
             Common.UnitAction.AddEffect(partyUnits[0], new Effects.Effect_004(partyUnits[0]));
             Common.UnitAction.AddEffect(partyUnits[0], new Effects.Effect_005(partyUnits[0], 10, 5));
 
-            //partyUnits.Add(new Units.Unit_000
-            //{
-            //    Name = "party2",
-            //    Category = Category.Party,
-            //    Position = new Vector2Int(5, 1),
-            //    Move = 7
-            //});
+            partyUnits.Add(new Units.Unit_000
+            {
+                Name = "party2",
+                Category = Category.Party,
+                Position = new Vector2Int(5, 1),
+                Move = 7
+            });
             //partyUnits.Add(new Units.Unit_000
             //{
             //    Name = "party3",
