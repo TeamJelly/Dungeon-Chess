@@ -25,7 +25,7 @@ namespace Model
         public virtual void OnAddThisEffect()
         {
             OnOverlapEffect();
-            Debug.LogError($"{owner.Name}에게 {name} 효과 추가됨");
+            Debug.Log($"{owner.Name}에게 {name} 효과 추가됨");
         }
 
         public virtual void OnRemoveThisEffect()

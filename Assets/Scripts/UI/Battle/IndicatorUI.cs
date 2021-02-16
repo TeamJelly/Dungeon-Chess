@@ -44,7 +44,7 @@ namespace UI.Battle
                     for (int i = 0; i < tileIndicators.GetLength(0); i++)
                         for (int j = 0; j < tileIndicators.GetLength(1); j++)
                         {
-                            tileIndicators[i, j] = Instantiate(instance.tileIndicatorPrefab, new Vector3(i, j, 0), Quaternion.identity, TileIndicatorParent.transform);
+                            tileIndicators[i, j] = Instantiate(instance.tileIndicatorPrefab, new Vector3(i, j, -1), Quaternion.identity, TileIndicatorParent.transform);
 
                             EventTrigger eventTrigger = tileIndicators[i, j].GetComponent<EventTrigger>();
                             Vector2Int position = new Vector2Int(i, j);
@@ -66,9 +66,8 @@ namespace UI.Battle
                                     for (int k = currentUnit.StateEffects.Count - 1; k >= 0; k--)
                                         currentUnit.StateEffects[k].AfterUseSkill();
 
-                                    //BattleUI.HideSkillInfo();
-                                    //BattleUI.instance.currentPushedButton = null;
-                                    //BattleUI.instance.UpdateThisTurnPanel(currentUnit);
+                                    BattleUI.instance.ThisTurnUnitInfo.CurrentPushedButton = null;
+                                    BattleUI.instance.ThisTurnUnitInfo.UpdateUnitInfo();
                                 }
                                 else
                                 {

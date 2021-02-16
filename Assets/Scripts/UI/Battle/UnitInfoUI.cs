@@ -18,23 +18,54 @@ namespace UI.Battle
         [SerializeField]
         private TextMeshProUGUI StatusText;
         [SerializeField]
-        private Transform Move;
+        private SkillSlotUI Move;
         [SerializeField]
-        private Transform[] Items;
+        private SkillSlotUI[] Items;
         [SerializeField]
-        private Transform[] Skills;
+        private SkillSlotUI[] Skills;
 
-        Sprite noSprite;
+        [SerializeField]
+        private Button currentPushedButton;
+
+        [SerializeField]
+        private Unit unit;
+        [SerializeField]
+        private bool interactable;
+
+        [SerializeField]
+        private Sprite noSprite;
+
+        [System.Serializable]
+        public class SkillSlotUI
+        {
+            public Transform transform;
+            public TextMeshProUGUI name;
+            public TextMeshProUGUI count;
+            public Image image;
+            public Button button;
+
+            public SkillSlotUI(Transform _transform)
+            {
+                this.transform = _transform;
+                button = _transform.GetComponent<Button>();
+                image = _transform.Find("Image").GetComponent<Image>();
+                name = _transform.Find("Name").GetComponent<TextMeshProUGUI>();
+                count = _transform.Find("Image/Count").GetComponent<TextMeshProUGUI>();
+            }
+        }
 
         Sprite NoSprite
         {
             get
             {
                 if (noSprite == null)
-                    noSprite = Resources.Load<Sprite>("1bitpack_kenney_1/Tilesheet/X");
+                    noSprite = Resources.Load<Sprite>("1bitpack_kenney_1/Tilesheet/-");
                 return noSprite;
             }
         }
+
+        public Button CurrentPushedButton { get => currentPushedButton; set => currentPushedButton = value; }
+        public Unit Unit { get => unit; set => unit = value; }
 
         private void OnValidate()
         {
@@ -44,25 +75,33 @@ namespace UI.Battle
         private void Awake()
         {
             Name = transform.Find("Name").GetComponent<TextMeshProUGUI>();
-            Image = transform.Find("Image").GetComponent<Image>();
+            Image = transform.Find("ImagePanel/Image").GetComponent<Image>();
             StatusText = transform.Find("Status/ParameterText").GetComponent<TextMeshProUGUI>();
-            Move = transform.Find("MovePanel/Move");
-            Items = new Transform[2];
-            Skills = new Transform[4];
-            Items[0] = transform.Find("ItemPanel/item1");
-            Items[1] = transform.Find("ItemPanel/item2");
-            Skills[0] = transform.Find("SkillPanel/SkillIconPanel/Skill1");
-            Skills[1] = transform.Find("SkillPanel/SkillIconPanel/Skill2");
-            Skills[2] = transform.Find("SkillPanel/SkillIconPanel/Skill3");
-            Skills[3] = transform.Find("SkillPanel/SkillIconPanel/Skill4");
+            Move = new SkillSlotUI(transform.Find("MovePanel/Move"));
+            Items = new SkillSlotUI[2];
+            Skills = new SkillSlotUI[4];
+            Items[0] = new SkillSlotUI(transform.Find("ItemPanel/item1"));
+            Items[1] = new SkillSlotUI(transform.Find("ItemPanel/item2"));
+            Skills[0] = new SkillSlotUI(transform.Find("SkillPanel/SkillIconPanel/Skill1"));
+            Skills[1] = new SkillSlotUI(transform.Find("SkillPanel/SkillIconPanel/Skill2"));
+            Skills[2] = new SkillSlotUI(transform.Find("SkillPanel/SkillIconPanel/Skill3"));
+            Skills[3] = new SkillSlotUI(transform.Find("SkillPanel/SkillIconPanel/Skill4"));
         }
 
         private void Start()
         {
-            SetUnitInfo(Model.Managers.GameManager.PartyUnits[0], true);
+
         }
 
         public void SetUnitInfo(Unit unit, bool interactable)
+        {
+            this.unit = unit;
+            this.interactable = interactable;
+
+            UpdateUnitInfo();
+        }
+
+        public void UpdateUnitInfo()
         {
             Name.text = unit.Name;
             Image.sprite = unit.Sprite;
@@ -74,43 +113,56 @@ namespace UI.Battle
                 $"{unit.Agility}\n" +
                 $"{unit.Move}";
 
-            SetSkillSlot(Move, unit.MoveSkill, interactable);
+            SetSkillSlot(Move, unit.MoveSkill);
 
             for (int i = 0; i < unit.Items.Length; i++)
-                SetSkillSlot(Items[i], unit.Items[i], interactable);
+                SetSkillSlot(Items[i], unit.Items[i]);
 
             for (int i = 0; i < unit.Skills.Length; i++)
-                SetSkillSlot(Skills[i], unit.Skills[i], interactable);
+                SetSkillSlot(Skills[i], unit.Skills[i]);
         }
 
-        public void SetSkillSlot(Transform slot, Skill skill, bool interactable)
+        public void SetSkillSlot(SkillSlotUI slot, Skill skill)
         {
-            Button button = slot.GetComponent<Button>();
-            Image image = slot.Find("Image").GetComponent<Image>();
-            TextMeshProUGUI name = slot.Find("Name").GetComponent<TextMeshProUGUI>();
-            TextMeshProUGUI count = slot.Find("Image/Count").GetComponent<TextMeshProUGUI>();
-
+            // 스킬이 없을 경우
             if (skill == null)
             {
-                button.interactable = false;
-                image.sprite = NoSprite;
-                name.text = "";
-                count.text = "99";
+                slot.button.interactable = false;
+                slot.image.sprite = NoSprite;
+                slot.name.text = "";
+                slot.count.text = "";
                 return;
             }
-            else
+            // 스킬이 있다.
+            slot.button.interactable = false;
+            slot.image.sprite = skill.Sprite;
+            slot.name.text = skill.enhancedLevel == 0 ? $"{skill.name}" : $"{skill.name} <color=#FF0000>+{skill.enhancedLevel}</color>";
+            slot.count.text = skill.currentReuseTime == 0 ? "" : $"{skill.currentReuseTime}";
+
+            // 아무 버튼도 안눌러져 있고, 이 버튼을 누를수 있는 경우
+            if (currentPushedButton == null && skill.IsUsable(unit) && interactable == true)
             {
-                button.interactable = interactable == true && skill.currentReuseTime == 0 ? true : false;
-                image.sprite = skill.Sprite == null ? NoSprite : skill.Sprite;
-                name.text = skill.enhancedLevel == 0 ? $"{skill.name}" : $"{skill.name}+{skill.enhancedLevel}";
-                count.text = skill.currentReuseTime != 0 ? $"{skill.currentReuseTime}" : "";
+                slot.button.interactable = true;
+                slot.button.onClick.RemoveAllListeners();
+                slot.button.onClick.AddListener(() =>
+                {
+                    IndicatorUI.ShowTileIndicator(unit, skill);
+                    currentPushedButton = slot.button;
+                    UpdateUnitInfo();
+                });
+            }
+            // 이미 이 버튼이 눌려있는 경우
+            else if (currentPushedButton == slot.button)
+            {
+                slot.button.interactable = true;
+                slot.button.onClick.RemoveAllListeners();
+                slot.button.onClick.AddListener(() =>
+                {
+                    IndicatorUI.HideTileIndicator();
+                    currentPushedButton = null;
+                    UpdateUnitInfo();
+                });
             }
         }
-
-        public void SetOtherUnitInfo(Unit unit)
-        {
-
-        }
-
     }
 }
