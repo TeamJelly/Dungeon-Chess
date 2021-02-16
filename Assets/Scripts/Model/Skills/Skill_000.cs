@@ -16,6 +16,7 @@ namespace Model.Skills
             {
                 parsedExtension = ParseExtension<Extension_000>(extension);
             }
+            reuseTime = 5;
         }
         public override IEnumerator Use(Unit user, Vector2Int target) 
         {

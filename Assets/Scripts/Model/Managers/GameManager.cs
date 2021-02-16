@@ -70,6 +70,7 @@ namespace Model.Managers
                 Name = "party2",
                 Category = Category.Party,
                 Position = new Vector2Int(5, 1),
+                Agility = 11,
                 Move = 7
             });
             //partyUnits.Add(new Units.Unit_000

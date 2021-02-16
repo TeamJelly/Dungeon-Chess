@@ -54,7 +54,7 @@ namespace UI.Battle
             }
         }
 
-        Sprite NoSprite
+        Sprite NoSkill
         {
             get
             {
@@ -128,7 +128,7 @@ namespace UI.Battle
             if (skill == null)
             {
                 slot.button.interactable = false;
-                slot.image.sprite = NoSprite;
+                slot.image.sprite = NoSkill;
                 slot.name.text = "";
                 slot.count.text = "";
                 return;
