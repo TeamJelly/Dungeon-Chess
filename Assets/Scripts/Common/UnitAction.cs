@@ -13,6 +13,7 @@ namespace Common
         {
             Debug.Log($"{unit.Name}는(은) 사망했다!");
             unit.Agility = -10;
+            unit.ActionRate = 0;
         }
 
         public static void Move(Unit unit, Vector2Int target)
@@ -45,14 +46,15 @@ namespace Common
 
         public static int Heal(Unit unit, int number)
         {
-            Debug.Log($"{unit.Name}가(은) {number}만큼 회복했다! [HP : {unit.CurrentHP}>{unit.CurrentHP + number}]");
             // Before Heal
+            int AfterHP = unit.CurrentHP + number;
 
-            unit.CurrentHP += number;
+            if (unit.MaximumHP < AfterHP)
+                AfterHP = unit.MaximumHP;
 
-            if (unit.MaximumHP < unit.CurrentHP)
-                unit.CurrentHP = unit.MaximumHP;
+            Debug.Log($"{unit.Name}가(은) {number}만큼 회복했다! [HP : {unit.CurrentHP} > {AfterHP}]");
 
+            unit.CurrentHP = AfterHP;
             // After Heal
 
             return number;
