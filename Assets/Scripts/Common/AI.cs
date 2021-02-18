@@ -142,7 +142,6 @@ namespace Common
                 if (SkillablePositions.Contains(targetPosition))
                     TargetedMovablePositions.Add(moveablePosition);
             }
-
             return TargetedMovablePositions;
         }
 
@@ -183,12 +182,15 @@ namespace Common
                 else if (priority == Priority.NearFromPartys)
                 {
                     Vector2 averagePosition = new Vector2();
+                    List<Unit> partyUnits = Model.Managers.BattleManager.GetUnit(Category.Party);
 
-                    foreach (var unit in Model.Managers.BattleManager.GetUnit())
-                    {
-                        if (unit.Category == Category.Party)
-                            averagePosition += unit.Position;
-                    }
+                    foreach (var unit in partyUnits)
+                        averagePosition += unit.Position;
+
+                    averagePosition /= partyUnits.Count;
+
+
+
                 }
             }
 

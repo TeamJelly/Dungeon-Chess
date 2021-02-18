@@ -155,7 +155,6 @@ namespace Model
             yield return null;
         }
 
-
         /// <summary>
         /// 스킬을 초기화 합니다.
         /// </summary>

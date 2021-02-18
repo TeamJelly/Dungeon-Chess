@@ -1,33 +1,44 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
+﻿using UnityEngine;
 
 namespace Model
 {
-    public class Effect
+    [System.Serializable]
+    public class EffectDescriptor
     {
         public int number;
         public string name;
         public Unit owner;
-
+        public string extension;
         [TextArea(1, 10)]
         public string description = "효과 설명";
+    }
+
+    public class Effect
+    {
+        protected EffectDescriptor descriptor = new EffectDescriptor();
+        public Unit Owner => descriptor.owner;
+        public string Name => descriptor.name;
+        public int Number => descriptor.number;
+        public string Extension => descriptor.extension;
+        public string Description => descriptor.description;
+
+        public Effect(Unit owner)
+        {
+            descriptor.owner = owner;
+        }
 
         /// <summary>
         /// 효과의 중복 검사와 중복 처리를 해준다.
         /// </summary>
-        public virtual void OnOverlapEffect(Effect oldEffect)
+        public virtual void OnOverlapEffect()
         {
-            owner.StateEffects.Remove(oldEffect);
+            
         }
 
         public virtual void OnAddThisEffect()
         {
-            Effect oldEffect = Common.UnitAction.GetEffectByNumber(owner, number);
-            if(oldEffect != null)
-                OnOverlapEffect(oldEffect);
-            Debug.Log($"{owner.Name}에게 {name} 효과 추가됨");
+            OnOverlapEffect();
+            Debug.Log($"{Owner.Name}에게 {Name} 효과 추가됨");
         }
 
         public virtual void OnRemoveThisEffect()
@@ -75,14 +86,14 @@ namespace Model
 
         }
 
-        public virtual int BeforeGetDamage(int damage)
+        public virtual void BeforeGetDamage()
         {
-            return damage;
+
         }
 
-        public virtual int AfterGetDamamge(int damage)
+        public virtual void AfterGetDamamge()
         {
-            return damage;
+
         }
 
         public virtual void OnGetOtherEffect()
