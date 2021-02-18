@@ -148,6 +148,9 @@ namespace Model.Managers
 
             foreach (var unit in instance.AllUnits)
             {
+                if (unit.Agility <= -10)
+                    continue;
+
                 float velocity = unit.Agility * 10 + 100;
                 float time = (max - unit.ActionRate) / velocity; // 거리 = 시간 * 속력 > 시간 = 거리 / 속력
                 if (minTime >= time) // 시간이 가장 적게 걸리는애가 먼저된다.

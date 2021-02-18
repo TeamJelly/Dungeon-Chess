@@ -22,9 +22,7 @@ namespace Model.Skills
 
     public override List<Vector2Int> GetRelatePositions(Unit user, Vector2Int target)
     {
-
-
-        if (GetAvailablePositions(user, user.Position).Contains(target))
+        if (GetAvailablePositions(user).Contains(target))
             return Common.PathFind.PathFindAlgorithm(user.Position, target);
         else
             return null;
@@ -55,7 +53,7 @@ namespace Model.Skills
 
                         if (!positions.Contains(temp) &&                // 전에 추가한 위치가 아니고
                             BattleManager.IsAvilablePosition(temp) &&   // 맵 범위 안이고
-                            BattleManager.GetTile(temp).IsUsable())     // 타일에 유닛이 존재하지 않는다면
+                            !BattleManager.GetTile(temp).HasUnit())     // 타일에 유닛이 존재하지 않는다면
                         {
                             new_frontier.Add(temp);                     // 이동가능한 위치로 추가한다.
                             positions.Add(temp);
@@ -105,7 +103,7 @@ namespace Model.Skills
         }
     }
     [System.Serializable]
-    public class Extension_Walk : Extensionable
+    public class Extension_Walk : Common.Extensionable
     {
     }
 }

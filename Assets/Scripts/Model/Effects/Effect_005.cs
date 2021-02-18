@@ -1,43 +1,60 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Model.Effects
 {
-    public class Effect_005 : Effect
+    [System.Serializable]
+    public class Extension_005 : Common.Extensionable
     {
         public int turnCount;
         public int regen;
+    }
 
-        public Effect_005(Unit owner, int turnCount, int regen)
+    public class Effect_005 : Effect
+    {
+        private Extension_005 extension_005;
+        public int TurnCount 
         {
-            number = 5;
-            name = "재생";
-            description = "부여된 턴 동안, 턴 시작시 회복 수치만큼 HP를 회복한다.";
-            this.owner = owner;
-
-            this.turnCount = turnCount;
-            this.regen = regen;
+            get => extension_005.turnCount;
+            set => extension_005.turnCount = value;
         }
 
-        /*public override void OnOverlapEffect()
+        public Effect_005(Unit owner, int turnCount) : base(owner)
         {
-            Effect_005 oldEffect = Common.UnitAction.GetEffectByNumber(owner, number) as Effect_005;
+            descriptor.number = 5;
+            descriptor.name = "재생";
+            descriptor.description = "부여된 턴 동안, 턴 시작시 회복 수치만큼 HP를 회복한다.";
+            
+            if (Extension != null)
+            {
+                extension_005 = Common.Extension.Parse<Extension_005>(Extension);
+                TurnCount = turnCount;
+            }
+            else
+            {
+                // 디버깅용
+                extension_005 = new Extension_005();
+                TurnCount = turnCount;
+                extension_005.regen = 10;
+            }
+        }
 
-            if (oldEffect.turnCount > turnCount)
-                turnCount = oldEffect.turnCount;
-            if (oldEffect.regen)
-
-            if (oldEffect != null)
-                owner.StateEffects.Remove(oldEffect);
-        }*/
+        public override void OnAddThisEffect()
+        {
+            OnOverlapEffect();
+            Debug.Log($"{Owner.Name}에게 {Name}효과 {TurnCount}턴 동안 추가됨");
+        }
 
         public override void OnTurnStart()
         {
-            Common.UnitAction.Heal(owner, regen);
+            Common.UnitAction.Heal(Owner, extension_005.regen);
+            TurnCount--;
 
-            turnCount--;
-            if (turnCount == 0)
-                Common.UnitAction.RemoveEffect(owner, this);   
+            Debug.Log($"{Name}효과 {TurnCount}턴 남음");
+
+            if (TurnCount == 0)
+            {
+                Common.UnitAction.RemoveEffect(Owner, this);
+            }
         }
     }
 }

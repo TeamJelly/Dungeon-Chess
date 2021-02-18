@@ -9,10 +9,6 @@ namespace Model
 {
     using Skills;
     public enum Grade { NULL, Normal, Rare, Legend, Boss }
-    namespace Skills
-    {
-        public abstract class Extensionable { }
-    }
 
     [System.Serializable]
     public class Skill
@@ -21,6 +17,8 @@ namespace Model
         public string name = "No Skill Name";                           // 스킬 이름
         public UnitClass unitClass = UnitClass.NULL;                    // 스킬 클래스
         public Grade grade = Grade.NULL;                                // 스킬 등급
+
+        public AI.Priority priority = AI.Priority.NULL;           // (AI 스킬용) 스킬 타겟 우선순위
 
         public string spritePath;
 
@@ -78,6 +76,12 @@ namespace Model
                 return false;
         }
 
+        /// <summary>
+        /// 스킬 사용가능한 절대위치들을 반환한다.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="userPosition"></param>
+        /// <returns></returns>
         public virtual List<Vector2Int> GetAvailablePositions(Unit user, Vector2Int userPosition)
         {
             if (APSchema == null) return null;
@@ -88,25 +92,32 @@ namespace Model
             {
                 Vector2Int abs = userPosition + position;
 
+                // 맵밖에 넘어간다면 사용불가
+                if (!BattleManager.IsAvilablePosition(abs))
+                    continue;
+
                 // 모든 타일에 사용가능
                 if (target == Target.Any)
                     positions.Add(abs);
                 // 유닛 없음타일에만 사용가능
                 else if (target == Target.NoUnit &&
-                    BattleManager.GetTile(position).IsUsable())
+                    BattleManager.GetTile(abs).HasUnit())
                     positions.Add(abs);
                 // 파티 유닛에만 사용 가능
                 else if (target == Target.Party &&
-                    BattleManager.GetUnit(position)?.Category == Category.Party)
+                    BattleManager.GetTile(abs).HasUnit() &&
+                    BattleManager.GetUnit(abs).Category == Category.Party)
                     positions.Add(abs);
                 // 우호적인 유닛에 사용 가능
-                else if (target == Target.Friendly && (
-                    BattleManager.GetUnit(position)?.Category == Category.Friendly ||
-                    BattleManager.GetUnit(position)?.Category == Category.Party))
+                else if (target == Target.Friendly &&
+                    BattleManager.GetTile(abs).HasUnit() && (
+                    BattleManager.GetUnit(abs).Category == Category.Friendly ||
+                    BattleManager.GetUnit(abs).Category == Category.Party))
                     positions.Add(abs);
                 // 적대적인 유닛에 사용 가능
                 else if (target == Target.Enemy &&
-                    BattleManager.GetUnit(position)?.Category == Category.Enemy)
+                    BattleManager.GetTile(abs).HasUnit() &&
+                    BattleManager.GetUnit(abs).Category == Category.Enemy)
                     positions.Add(abs);
                 // 어디에도 속하지 않으면 false
                 else
@@ -152,7 +163,14 @@ namespace Model
         /// <returns></returns>
         protected void InitializeSkillFromDB(int skill_no)
         {
-            var results = Query.Instance.SelectFrom<Skill>("skill_table", $"number={skill_no}").results;
+            Skill[] results = new Skill[1];
+            results[0] = SkillDictionary.Instance[skill_no];
+            // 스킬을 새롭게 DB에서 불러와야하는 경우
+            if (results[0] == null)
+            {
+                results = Query.Instance.SelectFrom<Skill>("skill_table", $"number={skill_no}").results;
+                SkillDictionary.Instance[skill_no] = results[0];
+            }
             if (results != null && results.Length > 0)
             {
                 var skill = results[0];
@@ -191,34 +209,11 @@ namespace Model
         }
 
         /// <summary>
-        /// 스킬 고유의 확장 스탯을 파싱합니다.
-        /// </summary>
-        /// <typeparam name="T">확장 클래스</typeparam>
-        /// <param name="extension">확장용 스키마를 넣습니다</param>
-        /// <returns>확장 클래스</returns>
-        protected E ParseExtension<E>(string extension) where E : Extensionable
-        {
-            string[] stats = extension.Split(';');
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-
-            foreach (var stat in stats)
-            {
-                var stat_split = stat.Split('=');
-                var name = stat_split[0];
-                var value = stat_split[1];
-                dict.Add(name, value);
-            }
-
-            string jsonString = JSON.DictionaryToJsonString(dict);
-            return JSON.ParseString<E>(jsonString);
-        }
-        /// <summary>
         /// 스킬을 초기화 할 때 DB에서 값을 불러옵니다.
         /// </summary>
         /// <param name="no">스킬 번호</param>
         public Skill(int no)
         {
-            /// TODO -> 공통된 스킬을 중복해서 불러오지 않게 리팩토링 해야함.
             InitializeSkillFromDB(no);
         }
     }

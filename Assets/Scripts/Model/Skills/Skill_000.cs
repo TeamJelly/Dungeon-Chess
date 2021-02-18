@@ -14,9 +14,9 @@ namespace Model.Skills
         {
             if (extension != null)
             {
-                parsedExtension = ParseExtension<Extension_000>(extension);
+                parsedExtension = Common.Extension.Parse<Extension_000>(extension);
             }
-            reuseTime = 5;
+            target = Target.Enemy;
         }
         public override IEnumerator Use(Unit user, Vector2Int target) 
         {
@@ -49,7 +49,7 @@ namespace Model.Skills
             return str;
         }
     }
-    public class Extension_000 : Extensionable
+    public class Extension_000 : Common.Extensionable
     {
         public int strengthToDamageRatio;
         public int upgradePerEnhancedLevel;

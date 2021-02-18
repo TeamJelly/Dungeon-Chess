@@ -226,7 +226,7 @@ namespace Model
 
             for (int i = lowerLeft.x; i <= upperRight.x; i++)
                 for (int j = lowerLeft.y; j <= upperRight.y; j++)
-                    if (!BattleManager.instance.AllTiles[i, j].IsUsable(unit)) // 사용 가능한 타일인가?
+                    if (!BattleManager.instance.AllTiles[i, j].HasUnit(unit)) // 사용 가능한 타일인가?
                         return false;
 
             return true;

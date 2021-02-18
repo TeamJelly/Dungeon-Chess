@@ -12,7 +12,7 @@ namespace Model.Skills
         {
             if (extension != null)
             {
-                parsedExtension = ParseExtension<Extension_006>(extension);
+                parsedExtension = Common.Extension.Parse<Extension_006>(extension);
             }
         }
         public override IEnumerator Use(Unit user, Vector2Int target)
@@ -50,7 +50,7 @@ namespace Model.Skills
     }
 
         [System.Serializable]
-    public class Extension_006 : Extensionable
+    public class Extension_006 : Common.Extensionable
     {
         public int upgradePerEnhancedLevel;
     }

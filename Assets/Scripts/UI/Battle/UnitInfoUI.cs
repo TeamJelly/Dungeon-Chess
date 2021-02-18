@@ -23,17 +23,16 @@ namespace UI.Battle
         private SkillSlotUI[] Items;
         [SerializeField]
         private SkillSlotUI[] Skills;
-
         [SerializeField]
         private Button currentPushedButton;
-
         [SerializeField]
         private Unit unit;
         [SerializeField]
         private bool interactable;
-
         [SerializeField]
         private Sprite noSprite;
+        [SerializeField]
+        private TextMeshProUGUI EffectsText;
 
         [System.Serializable]
         public class SkillSlotUI
@@ -86,6 +85,7 @@ namespace UI.Battle
             Skills[1] = new SkillSlotUI(transform.Find("SkillPanel/SkillIconPanel/Skill2"));
             Skills[2] = new SkillSlotUI(transform.Find("SkillPanel/SkillIconPanel/Skill3"));
             Skills[3] = new SkillSlotUI(transform.Find("SkillPanel/SkillIconPanel/Skill4"));
+            EffectsText = transform.Find("EffectsText").GetComponent<TextMeshProUGUI>();
         }
 
         private void Start()
@@ -112,6 +112,12 @@ namespace UI.Battle
                 $"{unit.Strength}\n" +
                 $"{unit.Agility}\n" +
                 $"{unit.Move}";
+
+            string EffectList = "";
+            foreach (var effect in unit.StateEffects)
+                EffectList += $"({effect.Name})";
+
+            EffectsText.text = EffectList;
 
             SetSkillSlot(Move, unit.MoveSkill);
 

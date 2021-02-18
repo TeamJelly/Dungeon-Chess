@@ -18,14 +18,14 @@ namespace Model
 
         Unit unit = null;
 
-        public bool IsUsable()
+        public bool HasUnit()
         {
-            return unit == null;
+            return unit != null;
         }
 
-        public bool IsUsable(Unit unit)
+        public bool HasUnit(Unit unit)
         {
-            if (this.unit == unit || this.unit == null)
+            if (this.unit == unit)
                 return true;
             else
                 return false;

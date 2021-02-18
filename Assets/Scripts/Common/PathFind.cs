@@ -98,9 +98,9 @@ namespace Common
         /// <returns></returns>
         public static List<Vector2Int> PathFindAlgorithm(Vector2Int from, Vector2Int to)
         {
-            if (!BattleManager.GetTile(to).IsUsable())
+            if (BattleManager.GetTile(to) == null || BattleManager.GetTile(to).HasUnit())
             {
-                Debug.LogWarning("목적지에 유닛이 존재합니다.");
+                Debug.LogWarning("길찾기 알고리즘 오류");
                 return null;
             }
 
