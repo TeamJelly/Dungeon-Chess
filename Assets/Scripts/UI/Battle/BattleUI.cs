@@ -97,6 +97,15 @@ namespace UI.Battle
             // 뒤에서부터 돌면 중간에 삭제해도 문제 없음.
             for (int i = thisTurnUnit.StateEffects.Count - 1; i >= 0; i--)
                 thisTurnUnit.StateEffects[i].OnTurnStart();
+
+            // AI라면 자동 행동 실행
+            if (thisTurnUnit.Category == Category.Enemy || thisTurnUnit.Category == Category.Boss)
+            {
+                AI.Action action = AI.GetAction(thisTurnUnit);
+
+                if (action != null)
+                    action.Invoke();
+            }
         }
 
         public void TurnEnd()

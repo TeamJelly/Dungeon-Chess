@@ -18,6 +18,8 @@ namespace Model
         public UnitClass unitClass = UnitClass.NULL;                    // 스킬 클래스
         public Grade grade = Grade.NULL;                                // 스킬 등급
 
+        public AI.Priority priority = AI.Priority.NULL;           // (AI 스킬용) 스킬 타겟 우선순위
+
         public string spritePath;
 
         private Sprite sprite;
@@ -74,6 +76,12 @@ namespace Model
                 return false;
         }
 
+        /// <summary>
+        /// 스킬 사용가능한 절대위치들을 반환한다.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="userPosition"></param>
+        /// <returns></returns>
         public virtual List<Vector2Int> GetAvailablePositions(Unit user, Vector2Int userPosition)
         {
             if (APSchema == null) return null;
@@ -84,25 +92,32 @@ namespace Model
             {
                 Vector2Int abs = userPosition + position;
 
+                // 맵밖에 넘어간다면 사용불가
+                if (!BattleManager.IsAvilablePosition(abs))
+                    continue;
+
                 // 모든 타일에 사용가능
                 if (target == Target.Any)
                     positions.Add(abs);
                 // 유닛 없음타일에만 사용가능
                 else if (target == Target.NoUnit &&
-                    BattleManager.GetTile(position).IsUsable())
+                    BattleManager.GetTile(abs).HasUnit())
                     positions.Add(abs);
                 // 파티 유닛에만 사용 가능
                 else if (target == Target.Party &&
-                    BattleManager.GetUnit(position)?.Category == Category.Party)
+                    BattleManager.GetTile(abs).HasUnit() &&
+                    BattleManager.GetUnit(abs).Category == Category.Party)
                     positions.Add(abs);
                 // 우호적인 유닛에 사용 가능
-                else if (target == Target.Friendly && (
-                    BattleManager.GetUnit(position)?.Category == Category.Friendly ||
-                    BattleManager.GetUnit(position)?.Category == Category.Party))
+                else if (target == Target.Friendly &&
+                    BattleManager.GetTile(abs).HasUnit() && (
+                    BattleManager.GetUnit(abs).Category == Category.Friendly ||
+                    BattleManager.GetUnit(abs).Category == Category.Party))
                     positions.Add(abs);
                 // 적대적인 유닛에 사용 가능
                 else if (target == Target.Enemy &&
-                    BattleManager.GetUnit(position)?.Category == Category.Enemy)
+                    BattleManager.GetTile(abs).HasUnit() &&
+                    BattleManager.GetUnit(abs).Category == Category.Enemy)
                     positions.Add(abs);
                 // 어디에도 속하지 않으면 false
                 else
