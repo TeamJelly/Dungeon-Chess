@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System;
 
 namespace Model
 {
@@ -22,22 +25,27 @@ namespace Model
         public string Extension => descriptor.extension;
         public string Description => descriptor.description;
 
+        public Effect()
+        {
+
+        }
         public Effect(Unit owner)
         {
             descriptor.owner = owner;
         }
-
         /// <summary>
         /// 효과의 중복 검사와 중복 처리를 해준다.
         /// </summary>
-        public virtual void OnOverlapEffect()
+        public virtual void OnOverlapEffect(Effect oldEffect)
         {
-            
+            Owner.StateEffects.Remove(oldEffect);
         }
 
         public virtual void OnAddThisEffect()
         {
-            OnOverlapEffect();
+            Effect oldEffect = Common.UnitAction.GetEffectByNumber(Owner, Number);
+            if(oldEffect != null)
+                OnOverlapEffect(oldEffect);
             Debug.Log($"{Owner.Name}에게 {Name} 효과 추가됨");
         }
 
@@ -86,14 +94,14 @@ namespace Model
 
         }
 
-        public virtual void BeforeGetDamage()
+        public virtual int BeforeGetDamage(int damage)
         {
-
+            return damage;
         }
 
-        public virtual void AfterGetDamamge()
+        public virtual int AfterGetDamamge(int damage)
         {
-
+            return damage;
         }
 
         public virtual void OnGetOtherEffect()

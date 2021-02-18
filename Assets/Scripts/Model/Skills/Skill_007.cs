@@ -38,7 +38,7 @@ namespace Model.Skills
                 Common.UnitAction.Armor(user, 1);
                 Common.UnitAction.Armor(targetUnit, 1);
                 Common.UnitAction.AddEffect(user, new Effect_021(user, 1));
-                Common.UnitAction.AddEffect(user, new Effect_021(targetUnit, 1));
+                Common.UnitAction.AddEffect(targetUnit, new Effect_021(targetUnit, 1));
             }
             else
             {

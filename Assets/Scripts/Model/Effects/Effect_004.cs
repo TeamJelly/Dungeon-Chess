@@ -5,7 +5,7 @@ namespace Model.Effects
 {
     public class Effect_004 : Effect
     {
-        public Effect_004(Unit owner) : base(owner)
+        public Effect_004(Unit owner): base(owner)
         {
             descriptor.number = 4;
             descriptor.name = "기절";
@@ -14,17 +14,6 @@ namespace Model.Effects
         }
 
         bool isActivated = false;
-
-        /// <summary>
-        /// 효과의 중복 검사와 중복 처리를 해준다.
-        /// </summary>
-        public override void OnOverlapEffect()
-        {
-            Effect oldEffect = Common.UnitAction.GetEffectByNumber(Owner, Number);
-
-            if (oldEffect != null)
-                Owner.StateEffects.Remove(oldEffect);
-        }
 
         public override void OnTurnStart()
         {
@@ -35,8 +24,9 @@ namespace Model.Effects
             isActivated = true;
         }
 
-        public override void AfterUseSkill()
+        public override void OnAddThisEffect()
         {
+            base.OnAddThisEffect();
             Debug.Log($"{Owner.Name} 기절 상태이상!");
             Owner.MoveCount = 0;
             Owner.SkillCount = 0;

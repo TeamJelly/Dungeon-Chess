@@ -22,6 +22,12 @@ namespace Model.Units
             Agility = 10;
             Move = 2;
             MoveSkill = new Walk();
+            Skills[0] = new Skill_004();
+            Skills[0].enhancedLevel = 1;
+            Skills[0] = new Skill_005();
+            Skills[0].enhancedLevel = 1;
+            Skills[0] = new Skill_006();
+            Skills[0].enhancedLevel = 1;
             Skills[0] = new Skill_007();
             Skills[0].enhancedLevel = 1;
         }

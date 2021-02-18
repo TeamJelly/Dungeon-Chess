@@ -107,7 +107,7 @@ namespace UI.Battle
             Image.sprite = unit.Sprite;
             StatusText.text = $"{unit.UnitClass}\n" +
                 $"{unit.Level}\n" +
-                $"{unit.CurrentHP}/{unit.MaximumHP}\n" +
+                $"{unit.CurrentHP} <color=#0000ff>+{unit.Armor}</color> /{unit.MaximumHP}\n" +
                 $"{unit.CurrentEXP}/{unit.NextEXP}\n" +
                 $"{unit.Strength}\n" +
                 $"{unit.Agility}\n" +

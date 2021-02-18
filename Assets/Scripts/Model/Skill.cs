@@ -8,6 +8,8 @@ using UnityEngine;
 namespace Model
 {
     using Skills;
+    using UnityEngine.UIElements;
+
     public enum Grade { NULL, Normal, Rare, Legend, Boss }
 
     [System.Serializable]
@@ -84,9 +86,8 @@ namespace Model
         /// <returns></returns>
         public virtual List<Vector2Int> GetAvailablePositions(Unit user, Vector2Int userPosition)
         {
-            if (APSchema == null) return null;
-
             List<Vector2Int> positions = new List<Vector2Int>();
+            if (APSchema == null) return positions;
 
             foreach (var position in Common.Range.ParseRangeSchema(APSchema))
             {
@@ -135,9 +136,8 @@ namespace Model
         // 메인 인디케이터의 위치가 position일때, 관련된 범위의 위치를 돌려줍니다.
         public virtual List<Vector2Int> GetRelatePositions(Unit user, Vector2Int position)
         {
-            if (RPSchema == null) return null;
-
             List<Vector2Int> positions = new List<Vector2Int>();
+            if (RPSchema == null) return positions;
 
             foreach (var vector in Common.Range.ParseRangeSchema(RPSchema))
             {
