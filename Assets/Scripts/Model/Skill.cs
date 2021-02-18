@@ -185,6 +185,11 @@ namespace Model
             return description;
         }
 
+        public virtual void Upgrade()
+        {
+            enhancedLevel++;
+        }
+
         /// <summary>
         /// 스킬 고유의 확장 스탯을 파싱합니다.
         /// </summary>

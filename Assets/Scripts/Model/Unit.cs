@@ -21,6 +21,7 @@ namespace Model
         public string spritePath;
         private Sprite sprite;
         private int level;
+        private int armor;
         private int currentHP;
         private int maximumHP;
         private int currentEXP;
@@ -93,6 +94,17 @@ namespace Model
                 if (sprite == null && spritePath != "")
                     sprite = Resources.Load<Sprite>(spritePath);
                 return sprite;
+            }
+        }
+
+        public int Armor
+        {
+            get => armor;
+            set
+            {
+                Debug.Log($"{Name}가(은) 방어도가 변했다! [Armor: {Armor} > {value}");
+                armor = value;
+                IsModified = true;
             }
         }
         public int Level {

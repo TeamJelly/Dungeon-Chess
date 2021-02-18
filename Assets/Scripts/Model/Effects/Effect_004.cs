@@ -16,17 +16,6 @@ namespace Model.Effects
 
         bool isActivated = false;
 
-        /// <summary>
-        /// 효과의 중복 검사와 중복 처리를 해준다.
-        /// </summary>
-        public override void OnOverlapEffect()
-        {
-            Effect oldEffect = Common.UnitAction.GetEffectByNumber(owner, number);
-
-            if (oldEffect != null)
-                owner.StateEffects.Remove(oldEffect);
-        }
-
         public override void OnTurnStart()
         {
             Debug.Log($"{owner.Name} 기절 상태이상!");
@@ -36,8 +25,9 @@ namespace Model.Effects
             isActivated = true;
         }
 
-        public override void AfterUseSkill()
+        public override void OnAddThisEffect()
         {
+            base.OnAddThisEffect();
             Debug.Log($"{owner.Name} 기절 상태이상!");
             owner.MoveCount = 0;
             owner.SkillCount = 0;

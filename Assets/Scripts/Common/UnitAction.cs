@@ -29,17 +29,30 @@ namespace Common
 
         public static int Damage(Unit unit, int number)
         {
-            Debug.Log($"{unit.Name}가(은) {number}만큼 데미지를 입었다! [HP : {unit.CurrentHP}>{unit.CurrentHP - number}]");
+            for (int i = unit.StateEffects.Count - 1; i >= 0; i--)
+            {
+                number = unit.StateEffects[i].BeforeGetDamage(number);
+            }
+            int damagedArmor = unit.Armor - number;
 
-            //BeforeDamage(unit, number);
-
+          
+            if (damagedArmor > 0)
+            {
+                unit.Armor = damagedArmor;
+                number = 0;
+            }
+            else
+            {
+                unit.Armor = 0;
+                number = -damagedArmor;
+            }
             unit.CurrentHP -= number;
-
-            //AfterDamage(unit, number);
+            Debug.Log($"{unit.Name}가(은) {number}만큼 데미지를 입었다! [HP : {unit.CurrentHP + number}>{unit.CurrentHP}]");
 
             if (unit.CurrentHP <= 0)
                 Die(unit);
 
+            
             return number; // 피해량을 리턴
         }
 
@@ -58,6 +71,11 @@ namespace Common
             return number;
         }
 
+        public static int Armor(Unit unit, int number)
+        {
+            unit.Armor += number;
+            return number;
+        }
         public static void LevelUp(Unit unit)
         {
             unit.Level++;
@@ -156,7 +174,7 @@ namespace Common
                 Debug.LogError("업그레이드 할 스킬이 없습니다.");
                 return;
             }
-            unit.Skills[index].enhancedLevel++;
+            unit.Skills[index].Upgrade();
         }
     }
 }

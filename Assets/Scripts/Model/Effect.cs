@@ -17,14 +17,16 @@ namespace Model
         /// <summary>
         /// 효과의 중복 검사와 중복 처리를 해준다.
         /// </summary>
-        public virtual void OnOverlapEffect()
+        public virtual void OnOverlapEffect(Effect oldEffect)
         {
-
+            owner.StateEffects.Remove(oldEffect);
         }
 
         public virtual void OnAddThisEffect()
         {
-            OnOverlapEffect();
+            Effect oldEffect = Common.UnitAction.GetEffectByNumber(owner, number);
+            if(oldEffect != null)
+                OnOverlapEffect(oldEffect);
             Debug.Log($"{owner.Name}에게 {name} 효과 추가됨");
         }
 
@@ -73,14 +75,14 @@ namespace Model
 
         }
 
-        public virtual void BeforeGetDamage()
+        public virtual int BeforeGetDamage(int damage)
         {
-
+            return damage;
         }
 
-        public virtual void AfterGetDamamge()
+        public virtual int AfterGetDamamge(int damage)
         {
-
+            return damage;
         }
 
         public virtual void OnGetOtherEffect()
