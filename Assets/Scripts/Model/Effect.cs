@@ -5,29 +5,48 @@ using System;
 
 namespace Model
 {
-    public class Effect
+    [System.Serializable]
+    public class EffectDescriptor
     {
         public int number;
         public string name;
         public Unit owner;
-
+        public string extension;
         [TextArea(1, 10)]
         public string description = "효과 설명";
+    }
 
+    public class Effect
+    {
+        protected EffectDescriptor descriptor = new EffectDescriptor();
+        public Unit Owner => descriptor.owner;
+        public string Name => descriptor.name;
+        public int Number => descriptor.number;
+        public string Extension => descriptor.extension;
+        public string Description => descriptor.description;
+
+        public Effect()
+        {
+
+        }
+        public Effect(Unit owner)
+        {
+            descriptor.owner = owner;
+        }
         /// <summary>
         /// 효과의 중복 검사와 중복 처리를 해준다.
         /// </summary>
         public virtual void OnOverlapEffect(Effect oldEffect)
         {
-            owner.StateEffects.Remove(oldEffect);
+            Owner.StateEffects.Remove(oldEffect);
         }
 
         public virtual void OnAddThisEffect()
         {
-            Effect oldEffect = Common.UnitAction.GetEffectByNumber(owner, number);
+            Effect oldEffect = Common.UnitAction.GetEffectByNumber(Owner, Number);
             if(oldEffect != null)
                 OnOverlapEffect(oldEffect);
-            Debug.Log($"{owner.Name}에게 {name} 효과 추가됨");
+            Debug.Log($"{Owner.Name}에게 {Name} 효과 추가됨");
         }
 
         public virtual void OnRemoveThisEffect()

@@ -40,7 +40,7 @@ namespace Model.Effects
 
         public override void OnAddThisEffect()
         {
-            OnOverlapEffect();
+            base.OnAddThisEffect();
             Debug.Log($"{Owner.Name}에게 {Name}효과 {TurnCount}턴 동안 추가됨");
         }
 
