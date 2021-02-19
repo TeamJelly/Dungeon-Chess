@@ -92,7 +92,10 @@ namespace UI.Battle
                     skill.currentReuseTime--;
 
             // 유닛정보창 초기화
-            thisTurnUnitInfo.SetUnitInfo(thisTurnUnit, true);
+            if (thisTurnUnit.Category == Category.Enemy || thisTurnUnit.Category == Category.Boss)
+                thisTurnUnitInfo.SetUnitInfo(thisTurnUnit, false);
+            else
+                thisTurnUnitInfo.SetUnitInfo(thisTurnUnit, true);
 
             // 뒤에서부터 돌면 중간에 삭제해도 문제 없음.
             for (int i = thisTurnUnit.StateEffects.Count - 1; i >= 0; i--)

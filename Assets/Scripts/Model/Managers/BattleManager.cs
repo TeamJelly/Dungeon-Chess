@@ -31,7 +31,7 @@ namespace Model.Managers
             {
                 Name = "슬라임1",
                 Category = Category.Enemy,
-                Position = new Vector2Int(1, 1)
+                Position = new Vector2Int(0, 0)
                 
             };
             EnemyUnits.Add(temp);
@@ -40,7 +40,7 @@ namespace Model.Managers
             {
                 Name = "슬라임2",
                 Category = Category.Enemy,
-                Position = new Vector2Int(2, 2)
+                Position = new Vector2Int(9, 0)
             };
             EnemyUnits.Add(temp);
 
@@ -48,11 +48,19 @@ namespace Model.Managers
             {
                 Name = "슬라임3",
                 Category = Category.Enemy,
-                Position = new Vector2Int(3, 4)
+                Position = new Vector2Int(9, 9)
             };
             EnemyUnits.Add(temp);
 
-            if(GameManager.PartyUnits.Count == 0)
+            temp = new Units.Unit_001
+            {
+                Name = "슬라임4",
+                Category = Category.Enemy,
+                Position = new Vector2Int(0, 9)
+            };
+            EnemyUnits.Add(temp);
+
+            if (GameManager.PartyUnits.Count == 0)
                  GameManager.Instance.InitForTesting();
 
             Common.UnitAction.Summon(EnemyUnits);
