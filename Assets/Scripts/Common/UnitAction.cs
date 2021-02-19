@@ -13,6 +13,7 @@ namespace Common
         {
             Debug.Log($"{unit.Name}는(은) 사망했다!");
             unit.Agility = -10;
+            unit.Category = Category.NULL;
         }
 
         public static void Move(Unit unit, Vector2Int target)

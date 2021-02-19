@@ -16,7 +16,6 @@ namespace Model.Skills
             {
                 parsedExtension = Common.Extension.Parse<Extension_000>(extension);
             }
-            target = Target.Enemy;
         }
         public override IEnumerator Use(Unit user, Vector2Int target) 
         {

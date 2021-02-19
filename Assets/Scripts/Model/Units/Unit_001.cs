@@ -21,6 +21,8 @@ namespace Model.Units
             Agility = 10;
             Move = 2;
             MoveSkill = new Walk();
+            MoveSkill.priority = Common.AI.Priority.NearFromClosestParty;
+
             Skills[0] = new Skill_000();
             Skills[0].target = Skill.Target.Party;
         }

@@ -14,23 +14,29 @@ namespace Common
         /// </summary>
         public enum Priority
         {
-            NULL,               // 우선순위 없음
-            NearFromMe,         // 나에게 가까운 곳을 우선으로 사용
-            FarFromMe,          // 나에게 먼곳을 우선으로 사용
-            NearFromPartys,     // 파티들에게 가까운 곳을 우선으로 사용
-            FarFromPartys,      // 파티들에게 먼곳을 우선으로 사용
-            BiggerCurrentHP,    // 현재HP가 높은 유닛을 우선으로 사용
-            SmallerCurrentHP    // 현재HP가 낮은 유닛을 우선으로 사용
+            NULL,                   // 우선순위 없음
+
+            NearFromMe,             // 나에게 가까운 곳을 우선으로 사용
+            FarFromMe,              // 나에게 먼곳을 우선으로 사용
+
+            BiggerCurrentHP,        // 현재HP가 높은 유닛을 우선으로 사용
+            SmallerCurrentHP,       // 현재HP가 낮은 유닛을 우선으로 사용
+
+            NearFromPartys,         // 파티들에게 가까운 곳을 우선으로 사용
+            FarFromPartys,          // 파티들에게 먼곳을 우선으로 사용
+
+            NearFromClosestParty,   // 가장 가까운 파티원에게서 가까운 곳을 우선으로 사용
+            FarFromClosestParty,    // 가장 가까운 파티원에게서 먼 곳을 우선으로 사용
         }
 
-        public class Action : MonoBehaviour
+        public class Action
         {
             public Unit user;                   // 행동 주체
             public Skill skillToUse;            // 사용할 스킬
-            public Vector2Int targetPosition;   // 스킬을 사용할 위치
+            public Vector2Int? targetPosition;   // 스킬을 사용할 위치
             public Vector2Int movePosition;     // 이동할 위치
 
-            public Action(Unit user, Skill skillToUse, Vector2Int targetPosition, Vector2Int movePosition)
+            public Action(Unit user, Skill skillToUse, Vector2Int? targetPosition, Vector2Int movePosition)
             {
                 this.user = user;
                 this.skillToUse = skillToUse;
@@ -40,15 +46,15 @@ namespace Common
 
             public void Invoke()
             {
-                StartCoroutine(InvokeAIAction(this));
+                BattleUI.instance.StartCoroutine(InvokeAIAction(this));
             }
 
             public IEnumerator InvokeAIAction(Action action)
             {
-                yield return StartCoroutine(action.user.MoveSkill.Use(action.user, action.movePosition));
+                yield return BattleUI.instance.StartCoroutine(action.user.MoveSkill.Use(action.user, action.movePosition));
 
-                if (action.skillToUse != null)
-                    yield return StartCoroutine(action.skillToUse.Use(action.user, action.targetPosition));
+                if (action.skillToUse != null && action.targetPosition != null)
+                    yield return BattleUI.instance.StartCoroutine(action.skillToUse.Use(action.user, (Vector2Int)action.targetPosition));
 
                 BattleUI.instance.TurnEnd();
             }
@@ -76,15 +82,26 @@ namespace Common
                 if (skill == null)
                     continue;
 
-                // 사용할수 있는 스킬을 찾는다.
+                // 재사용 대기시간이 가장 긴, 사용할수 있는 스킬을 찾는다.
                 if (skill.IsUsable(user) && skill.reuseTime >= reuseTime && GetTargetPosition(user, skill) != null)
                     skillToUse = skill;
             }
 
-            Vector2Int targetPosition = (Vector2Int)GetTargetPosition(user, skillToUse);
-            Vector2Int movePosiiton = (Vector2Int)GetMovePostion(user, skillToUse, targetPosition);
+            // 사용할수 있는 스킬이 있는 경우
+            if (skillToUse != null)
+            {
+                Vector2Int targetPosition = (Vector2Int)GetTargetPosition(user, skillToUse);
+                Vector2Int movePosiiton = (Vector2Int)GetMovePosition(user, skillToUse, targetPosition);
+                return new Action(user, skillToUse, targetPosition, movePosiiton);
+            }
+            // 사용할수 있는 스킬이 없는 경우
+            else
+            {
+                Vector2Int movePosiiton = (Vector2Int)GetMovePosition(user);
+                return new Action(user, null, null, movePosiiton);
+            }
 
-            return new Action(user, skillToUse, targetPosition, movePosiiton);
+
         }
 
         /// <summary>
@@ -99,11 +116,13 @@ namespace Common
             List<Vector2Int> MovedSkillablePositions = new List<Vector2Int>();
 
             // 이동 가능한 위치
-            List<Vector2Int> MoveablePositions = user.MoveSkill.GetAvailablePositions(user);
+            List<Vector2Int> MoveablePositions = new List<Vector2Int>();
+            MoveablePositions.Add(user.Position);
+            MoveablePositions.AddRange(user.MoveSkill.GetAvailablePositions(user));
 
             foreach (var moveablePosition in MoveablePositions)
             {
-                // 이동후 그 위치에서 스킬이 가능한 위치 리스트를 찾는다.
+                // 이동 후 그 위치에서 스킬이 가능한 위치 리스트를 찾는다.
                 List<Vector2Int> SkillablePositions = skill.GetAvailablePositions(user, moveablePosition);
 
                 // 스킬을 사용가능한 위치를 순회하면서
@@ -131,6 +150,9 @@ namespace Common
 
             // 이동가능한 모든 위치들
             List<Vector2Int> MoveablePositions = user.MoveSkill.GetAvailablePositions(user);
+
+            // 현재위치도 일단 추가;;
+            MoveablePositions.Add(user.Position);
 
             // 이동가능한 위치들을 순회하면서
             foreach (var moveablePosition in MoveablePositions)
@@ -179,7 +201,8 @@ namespace Common
                 else if (priority == Priority.SmallerCurrentHP &&
                     Model.Managers.BattleManager.GetUnit(targetPosition).CurrentHP > Model.Managers.BattleManager.GetUnit(positions[i]).CurrentHP)
                     targetPosition = positions[i];
-                else if (priority == Priority.NearFromPartys)
+                // 타게 우선수누이가 파티들의 평균위치로부터 멀거나 가까운 위치이다.
+                else if (priority == Priority.NearFromPartys || priority == Priority.FarFromPartys)
                 {
                     Vector2 averagePosition = new Vector2();
                     List<Unit> partyUnits = Model.Managers.BattleManager.GetUnit(Category.Party);
@@ -187,10 +210,33 @@ namespace Common
                     foreach (var unit in partyUnits)
                         averagePosition += unit.Position;
 
+                    // 파티원들의 평균 위치
                     averagePosition /= partyUnits.Count;
 
+                    if (priority == Priority.NearFromPartys &&
+                        (targetPosition - averagePosition).magnitude > (positions[i] - averagePosition).magnitude)
+                        targetPosition = positions[i];
+                    else if (priority == Priority.FarFromPartys &&
+                        (targetPosition - averagePosition).magnitude < (positions[i] - averagePosition).magnitude)
+                        targetPosition = positions[i];
+                }
+                else if (priority == Priority.NearFromClosestParty || priority == Priority.FarFromClosestParty)
+                {
+                    List<Unit> partyUnits = Model.Managers.BattleManager.GetUnit(Category.Party);
 
+                    Unit closestUnit = partyUnits[0];
+                    float distance = (user.Position - partyUnits[0].Position).magnitude;
 
+                    foreach (var unit in partyUnits)
+                        if (distance > (user.Position - unit.Position).magnitude)
+                            closestUnit = unit;
+
+                    if (priority == Priority.NearFromClosestParty &&
+                        (targetPosition - closestUnit.Position).magnitude > (positions[i] - closestUnit.Position).magnitude)
+                        targetPosition = positions[i];
+                    else if (priority == Priority.FarFromClosestParty &&
+                        (targetPosition - closestUnit.Position).magnitude < (positions[i] - closestUnit.Position).magnitude)
+                        targetPosition = positions[i];
                 }
             }
 
@@ -217,14 +263,21 @@ namespace Common
         /// <param name="skill"></param>
         /// <param name="targetPosition"></param>
         /// <returns></returns>
-        private static Vector2Int? GetMovePostion(Unit user, Skill skill, Vector2Int targetPosition)
+        private static Vector2Int? GetMovePosition(Unit user, Skill skill, Vector2Int targetPosition)
         {
-            List<Vector2Int> MovePositions;
+            List<Vector2Int> MovePositions = GetTargetedMoveablePositions(user, skill, targetPosition);
 
-            if (skill != null)
-                MovePositions = GetTargetedMoveablePositions(user, skill, targetPosition);
-            else
-                MovePositions = user.MoveSkill.GetAvailablePositions(user);
+            return GetPriorityPosition(user, MovePositions, user.MoveSkill.priority);
+        }
+
+        /// <summary>
+        /// 사용가능한 스킬이 없을 경우에 스킬을 고려하지 않고 이동할 위치를 구한다.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        private static Vector2Int? GetMovePosition(Unit user)
+        {
+            List<Vector2Int> MovePositions = user.MoveSkill.GetAvailablePositions(user);
 
             return GetPriorityPosition(user, MovePositions, user.MoveSkill.priority);
         }

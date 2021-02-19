@@ -8,7 +8,6 @@ using UnityEngine;
 namespace Model
 {
     using Skills;
-    using UnityEngine.UIElements;
 
     public enum Grade { NULL, Normal, Rare, Legend, Boss }
 
@@ -87,6 +86,7 @@ namespace Model
         public virtual List<Vector2Int> GetAvailablePositions(Unit user, Vector2Int userPosition)
         {
             List<Vector2Int> positions = new List<Vector2Int>();
+
             if (APSchema == null) return positions;
 
             foreach (var position in Common.Range.ParseRangeSchema(APSchema))

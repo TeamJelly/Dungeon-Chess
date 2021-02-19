@@ -20,27 +20,27 @@ namespace Model.Skills
                 return false;
         }
 
-    public override List<Vector2Int> GetRelatePositions(Unit user, Vector2Int target)
-    {
-        if (GetAvailablePositions(user).Contains(target))
-            return Common.PathFind.PathFindAlgorithm(user.Position, target);
-        else
-            return null;
-    }
+        public override List<Vector2Int> GetRelatePositions(Unit user, Vector2Int target)
+        {
+            if (GetAvailablePositions(user).Contains(target))
+                return Common.PathFind.PathFindAlgorithm(user.Position, target);
+            else
+                return null;
+        }
 
-    /// <summary>
-    /// 걷기의 이동 가능한 범위를 계산합니다.
-    /// </summary>
-    /// <param name="user"></param>
-    /// <returns></returns>
-    public override List<Vector2Int> GetAvailablePositions(Unit user, Vector2Int userPosition)
-    {
-        List<Vector2Int> positions = new List<Vector2Int>();        // 이동가능한 모든 위치를 저장
-        List<Vector2Int> new_frontier = new List<Vector2Int>();     // 새로 추가한 외곽 위치를 저장
-        List<Vector2Int> old_frontier = new List<Vector2Int>();     // 이전번에 추가한 외곽 위치를 저장
-        Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
+        /// <summary>
+        /// 걷기의 이동 가능한 범위를 계산합니다.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public override List<Vector2Int> GetAvailablePositions(Unit user, Vector2Int userPosition)
+        {
+            List<Vector2Int> positions = new List<Vector2Int>();        // 이동가능한 모든 위치를 저장
+            List<Vector2Int> new_frontier = new List<Vector2Int>();     // 새로 추가한 외곽 위치를 저장
+            List<Vector2Int> old_frontier = new List<Vector2Int>();     // 이전번에 추가한 외곽 위치를 저장
+            Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
 
-        old_frontier.Add(userPosition);
+            old_frontier.Add(userPosition);
 
             for (int i = 0; i < user.Move; i++)
             {
@@ -74,6 +74,12 @@ namespace Model.Skills
 
         public override IEnumerator Use(Unit user, Vector2Int target)
         {
+            if (target == user.Position)
+            {
+                Debug.LogWarning($"{user.Name}가 제자리로 이동을 실행했습니다.");
+                yield break;
+            }                
+
             for (int i = user.StateEffects.Count - 1; i >= 0; i--)
                 user.StateEffects[i].BeforeUseSkill(this);
 
