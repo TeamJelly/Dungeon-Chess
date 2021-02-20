@@ -26,9 +26,9 @@ namespace Model.Managers
             AllUnits.Add(GetUnit("유닛2"));
             AllUnits.Add(GetUnit("유닛3"));
 
-            AllUnits[0].spritePath = "HandMade/women";
-            AllUnits[1].spritePath = "HandMade/slime";
-            AllUnits[2].spritePath = "HandMade/slime";
+            AllUnits[0].portraitPath = "HandMade/women";
+            AllUnits[1].portraitPath = "HandMade/slime";
+            AllUnits[2].portraitPath = "HandMade/slime";
         }
 
         /// <summary>
