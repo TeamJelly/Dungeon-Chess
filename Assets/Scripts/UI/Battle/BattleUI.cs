@@ -133,6 +133,21 @@ namespace UI.Battle
             else if (BattleManager.IsDefeat())
                 Defeat();
             TurnStart();
+            switch(BattleManager.CheckGameState())
+            {
+                case 0:
+                    // 다음 턴의 유닛을 받아 시작한다.
+                    Unit nextUnit = BattleManager.GetNextTurnUnit();
+                    BattleManager.SetNextTurnUnit(nextUnit);
+                    TurnStart();
+                    break;
+                case 1:
+                    Win();
+                    break;
+                case 2:
+                    Defeat();
+                    break;
+            }
         }
 
         public void CheckWinDefeat()
@@ -141,12 +156,12 @@ namespace UI.Battle
 
         public void Win()
         {
-
+            BattleResultUI.instance.EnableWinUI();
         }
 
         public void Defeat()
         {
-
+            BattleResultUI.instance.EnableDeafeatUI();
         }
 
         public void MakeUnitObject(Unit unit)

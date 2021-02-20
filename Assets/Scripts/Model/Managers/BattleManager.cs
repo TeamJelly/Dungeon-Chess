@@ -116,6 +116,29 @@ namespace Model.Managers
             }
             else
                 return false;
+
+        static int GetUnitCount(Category category)
+        {
+            int count = 0;
+            foreach (var unit in instance.AllUnits)
+                if (unit.Category == category)
+                {
+                    if (unit.Agility != -10) count++;
+                }
+            return count;
+        }
+
+        public static int CheckGameState()
+        {
+            if (GetUnitCount(Category.Enemy) == 0)
+            {
+                return 1; // 승리
+            }
+            else if (GetUnitCount(Category.Party) == 0)
+            {
+                return 2; // 패배
+            }
+            return 0; // 계속
         }
 
         public static bool IsAvilablePosition(Vector2Int position)
