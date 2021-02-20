@@ -15,17 +15,8 @@ namespace Common
             unit.Agility = -10;
             unit.Category = Category.NULL;
 
-            switch (BattleManager.CheckGameState())
-            {
-                case 0:
-                    break;
-                case 1:
-                    BattleUI.instance.Win();
-                    break;
-                case 2:
-                    BattleUI.instance.Defeat();
-                    break;
-            }
+            if (BattleManager.CheckGameState() != BattleManager.State.Continue)
+                BattleUI.instance.ThisTurnEnd();
         }
 
         public static void Move(Unit unit, Vector2Int target)
@@ -100,7 +91,7 @@ namespace Common
         public static Effect GetEffectByNumber(Unit unit, int number)
         {
             Debug.Log(unit);
-            Effect effect = new Effect();
+            Effect effect = null;
 
             foreach (var stateEffect in unit.StateEffects)
                 if (stateEffect.Number == number)

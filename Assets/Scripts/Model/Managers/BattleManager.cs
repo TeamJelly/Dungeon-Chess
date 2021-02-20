@@ -21,15 +21,22 @@ namespace Model.Managers
 
         public int turnCount;
 
-        public enum Goal
+        public enum State
+        {
+            Continue,
+            Win,
+            Defeat
+        }
+
+        public enum Condition
         {
             KillAllEnemy,
             KillAllParty,
             EndureTurn
         }
 
-        public Goal WinCondition = Goal.KillAllEnemy;
-        public Goal DefeatCondition = Goal.KillAllParty;
+        public Condition WinCondition = Condition.KillAllEnemy;
+        public Condition DefeatCondition = Condition.KillAllParty;
 
         private void Awake()
         {
@@ -87,58 +94,29 @@ namespace Model.Managers
             /***************************************************************************/
         }
 
-        public static bool IsWin()
+        public static State CheckGameState()
         {
             // 승리조건이 모든 적을 죽이는 것일때
-            if (instance.WinCondition == Goal.KillAllEnemy)
-            {
-                List<Unit> enemyUnits = GetUnit(Category.Enemy);
-                if (enemyUnits.Count == 0)
-                    return true;
-                else
-                    return false;
-            }
-            else
-                return false;
+            if (instance.WinCondition == Condition.KillAllEnemy && GetAliveUnitCount(Category.Enemy) == 0)
+                return State.Win;
+            
+            // 패배조건이 모든 아군이 죽이는 것일때
+            if (instance.DefeatCondition == Condition.KillAllParty && GetAliveUnitCount(Category.Party) == 0)
+                return State.Defeat;
+
+            // 계속
+            return State.Continue; 
         }
 
-
-        public static bool IsDefeat()
-        {
-            // 승리조건이 모든 적을 죽이는 것일때
-            if (instance.WinCondition == Goal.KillAllParty)
-            {
-                List<Unit> partyUnits = GetUnit(Category.Party);
-                if (partyUnits.Count == 0)
-                    return true;
-                else
-                    return false;
-            }
-            else
-                return false;
-
-        static int GetUnitCount(Category category)
+        private static int GetAliveUnitCount(Category category)
         {
             int count = 0;
-            foreach (var unit in instance.AllUnits)
-                if (unit.Category == category)
-                {
-                    if (unit.Agility != -10) count++;
-                }
-            return count;
-        }
 
-        public static int CheckGameState()
-        {
-            if (GetUnitCount(Category.Enemy) == 0)
-            {
-                return 1; // 승리
-            }
-            else if (GetUnitCount(Category.Party) == 0)
-            {
-                return 2; // 패배
-            }
-            return 0; // 계속
+            foreach (var unit in GetUnit(category))
+                if (Common.UnitAction.GetEffectByNumber(unit, 1) == null && (Common.UnitAction.GetEffectByNumber(unit, 2) == null)
+                    count++;
+
+            return count;
         }
 
         public static bool IsAvilablePosition(Vector2Int position)
@@ -249,7 +227,6 @@ namespace Model.Managers
             foreach (var unit in instance.AllUnits)
                 unit.ActionRate += velocity * minTime;
 
-            nextUnit.ActionRate = 0;
             instance.thisTurnUnit = nextUnit;
         }
     }

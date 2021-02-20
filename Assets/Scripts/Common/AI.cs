@@ -66,7 +66,7 @@ namespace Common
                 }
 
                 BattleUI.instance.turnEndButton.interactable = true;
-                BattleUI.instance.TurnEnd();
+                BattleUI.instance.ThisTurnEnd();
             }
         }
 
