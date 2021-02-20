@@ -88,7 +88,6 @@ namespace Model
             }
         }
 
-
         public int Armor
         {
             get => descriptor.armor;
