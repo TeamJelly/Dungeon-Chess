@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Model.Managers;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,22 +26,25 @@ namespace Model.Skills
             //1.0 Strength + 강화 횟수 x 1
             int damage = user.Strength + Level * parsedExtension.upgradePerEnhancedLevel;
 
-            Unit targetUnit = Managers.BattleManager.GetUnit(target);
-            if (targetUnit != null)
+            List<Unit> targetUnits = new List<Unit>();
+            foreach(Vector2Int vector in GetRelatePositions(user, user.Position))
             {
-                Debug.Log($"{user.Name}가 {Name}스킬을 {targetUnit.Name}에 사용!");
-
-                // 1단계 : 스킬 애니메이션 재생 및 화면 갱신.
-                user.animationState = Unit.AnimationState.Attack;
-                yield return new WaitWhile(() => user.animationState != Unit.AnimationState.Idle);
-                targetUnit.animationState = Unit.AnimationState.Hit;
-
-                // 2단계 : 스킬 적용
-                Common.UnitAction.Damage(targetUnit, damage);
+                Unit targetUnit = BattleManager.GetTile(vector).GetUnit();
+                if (targetUnit != null)
+                {
+                    targetUnits.Add(targetUnit);
+                }
             }
-            else
+            user.animationState = Unit.AnimationState.Attack;
+            yield return new WaitWhile(() => user.animationState != Unit.AnimationState.Idle);
+
+            foreach (Unit unit in targetUnits)
             {
-                Debug.Log($"{user.Name}가 {Name}스킬을 {target}에 사용!");
+                Debug.Log($"{user.Name}가 {Name}스킬을 {unit.Name}에 사용!");
+                // 1단계 : 스킬 애니메이션 재생 및 화면 갱신.
+                unit.animationState = Unit.AnimationState.Hit;
+                // 2단계 : 스킬 적용
+                Common.UnitAction.Damage(unit, damage);
             }
         }
         public override string GetDescription(Unit user, int level)
