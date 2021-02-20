@@ -95,8 +95,8 @@ namespace UI.Battle
 
             // 턴 시작시 스킬쿨 줄어듬
             foreach (var skill in nextUnit.Skills)
-                if (skill != null && skill.currentReuseTime != 0)
-                    skill.currentReuseTime--;
+                if (skill != null && skill.CurrentReuseTime != 0)
+                    skill.CurrentReuseTime--;
 
             // 유닛정보창 초기화
             if (nextUnit.Category != Category.Party)

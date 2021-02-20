@@ -142,8 +142,8 @@ namespace UI.Battle
             // 스킬이 있다.
             slot.button.interactable = false;
             slot.image.sprite = skill.Sprite;
-            slot.name.text = skill.level == 0 ? $"{skill.name}" : $"{skill.name} <color=#FF0000>+{skill.level}</color>";
-            slot.count.text = skill.currentReuseTime == 0 ? "" : $"{skill.currentReuseTime}";
+            slot.name.text = skill.Level == 0 ? $"{skill.Name}" : $"{skill.Name} <color=#FF0000>+{skill.Level}</color>";
+            slot.count.text = skill.CurrentReuseTime == 0 ? "" : $"{skill.CurrentReuseTime}";
 
             // 아무 버튼도 안눌러져 있고, 이 버튼을 누를수 있는 경우
             if (currentPushedButton == null && skill.IsUsable(unit) && interactable == true)

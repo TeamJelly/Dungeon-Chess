@@ -3,24 +3,27 @@ using System.Collections;
 
 namespace Model.Effects
 {
+
     public class Effect_021 : Effect
     {
-        public int barrierCount;
-
-        public Effect_021(Unit owner, int barrierCount, int turnCount) : base(owner)
+        private int barrierCount;
+        public int BarrierCount
         {
-            descriptor.number = 21;
-            descriptor.name = "보호막";
-            descriptor.description = "보호막의 수 만큼 공격의 데미지를 0로 만든다.";
-            this.barrierCount = barrierCount;
-            descriptor.turnCount = turnCount;
+            get => barrierCount;
+            set => barrierCount = value;
+        }
+
+        public Effect_021(Unit owner, int barrierCount, int turnCount) : base(owner, 21)
+        {
+            TurnCount = turnCount;
+            BarrierCount = barrierCount;
         }
 
         public override int BeforeGetDamage(int damage)
         {
             damage = 0;
-            barrierCount--;
-            if (barrierCount == 0) Common.UnitAction.RemoveEffect(Owner, this);
+            BarrierCount--;
+            if (BarrierCount == 0) Common.UnitAction.RemoveEffect(Owner, this);
             return base.BeforeGetDamage(damage);
         }
 
@@ -32,9 +35,9 @@ namespace Model.Effects
 
         public override void OnTurnStart()
         {
-            descriptor.turnCount--;
+            TurnCount--;
             Debug.Log($"{Name}효과 {TurnCount}턴 남음");
-            if (descriptor.turnCount == 0) Common.UnitAction.RemoveEffect(Owner, this);
+            if (TurnCount == 0) Common.UnitAction.RemoveEffect(Owner, this);
         }
     }
 }

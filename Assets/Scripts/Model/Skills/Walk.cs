@@ -14,7 +14,7 @@ namespace Model.Skills
             if (GetAvailablePositions(user).Count == 0)
                 return false;
 
-            if (user.MoveCount > 0 && currentReuseTime == 0)
+            if (user.MoveCount > 0 && CurrentReuseTime == 0)
                 return true;
             else
                 return false;
@@ -84,9 +84,9 @@ namespace Model.Skills
                 user.StateEffects[i].BeforeUseSkill(this);
 
             // 0 단계 : 로그 출력, 스킬 소모 기록
-            Debug.Log($"{user.Name}가 {name}스킬을 {target}에 사용!");
+            Debug.Log($"{user.Name}가 {Name}스킬을 {target}에 사용!");
             user.MoveCount--;
-            currentReuseTime = reuseTime;
+            CurrentReuseTime = reuseTime;
 
             // 1 단계 : 위치 이동
             {

@@ -1,6 +1,6 @@
-﻿using Common;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
+using Common.DB;
 
 public enum Category { NULL, Party, Neutral, Friendly, Enemy};
 public enum UnitClass { NULL, Monster, Warrior, Wizard, Priest, Archer };
@@ -8,72 +8,62 @@ public enum UnitClass { NULL, Monster, Warrior, Wizard, Priest, Archer };
 namespace Model
 {
     using Skills;
+    using Units;
     [System.Serializable]
     public class Unit
     {
         public bool IsModified = false;
 
-        private string name = "NoName";
-        private Category category = Category.NULL;
-        private UnitClass unitClass = UnitClass.NULL;
+        private UnitDescriptor descriptor = new UnitDescriptor();
+        public UnitDescriptor UnitDescriptor => descriptor;
 
-        private int level;
-        private int armor;
-        private int currentHP;
-        private int maximumHP;
-        private int currentEXP;
-        private int nextEXP;
-        private int strength;
-        private int agility;
-        private int move = 3;
-        private int critical;
         private Vector2Int position;
         private float actionRate;
         private int moveCount;
         private int skillCount;
         private int itemCount;
-
         private Skill moveSkill = new Walk();
         private Skill[] skills = new Skill[4];
         private Skill[] items = new Skill[2];
         private List<Artifact> antiques = new List<Artifact>();
         private List<Effect> stateEffects = new List<Effect>();
 
+        private int partyID; // 파티 내부에서 고유 아이디
+
         public enum AnimationState
         {
             Idle, Hit, Attack, Move, Heal
         }
-
-        public string portraitPath;
-        public string animatorPath;
 
         private Sprite portrait;
         private RuntimeAnimatorController animator;
 
         public AnimationState animationState = AnimationState.Idle;
 
+        public int ID => descriptor.id;
+
         public string Name {
-            get => name;
+            get => descriptor.name;
             set
             {
-                name = value;
+                descriptor.name = value;
                 IsModified = true;
             }
         }
 
         public Category Category {
-            get => category;
+            get => descriptor.category;
             set {
-                category = value;
+                descriptor.category = value;
                 IsModified = true;
             }
         }
 
         public UnitClass UnitClass {
-            get => unitClass;
+            get => descriptor.unitClass;
             set
             {
-                unitClass = value;
+                descriptor.unitClass = value;
                 IsModified = true;
             }
         }
@@ -82,8 +72,8 @@ namespace Model
         {
             get
             {
-                if (portrait == null && portraitPath != "")
-                    portrait = Resources.Load<Sprite>(portraitPath);
+                if (portrait == null && descriptor.portraitPath != "")
+                    portrait = Resources.Load<Sprite>(descriptor.portraitPath);
                 return portrait;
             }
         }
@@ -92,8 +82,8 @@ namespace Model
         {
             get
             {
-                if (animator == null && animatorPath != "")
-                    animator = Resources.Load<RuntimeAnimatorController>(animatorPath);
+                if (animator == null && descriptor.animatorPath != "")
+                    animator = Resources.Load<RuntimeAnimatorController>(descriptor.animatorPath);
                 return animator;
             }
         }
@@ -101,24 +91,25 @@ namespace Model
 
         public int Armor
         {
-            get => armor;
+            get => descriptor.armor;
             set
             {
                 Debug.Log($"{Name}가(은) 방어도가 변했다! [Armor: {Armor} > {value}");
-                armor = value;
+                descriptor.armor = value;
                 IsModified = true;
             }
         }
 
         public int Level {
-            get => level;
+            get => descriptor.level;
             set
             {
-                level = value;
+                descriptor.level = value;
                 IsModified = true;
             }
         }
 
+        private int currentHP;
         public int CurrentHP {
             get => currentHP;
             set
@@ -128,6 +119,7 @@ namespace Model
             }
         }
 
+        private int maximumHP;
         public int MaximumHP {
             get => maximumHP;
             set
@@ -137,6 +129,7 @@ namespace Model
             }
         }
 
+        private int currentEXP;
         public int CurrentEXP {
             get => currentEXP;
             set
@@ -146,6 +139,7 @@ namespace Model
             }
         }
 
+        private int nextEXP;
         public int NextEXP {
             get => nextEXP;
             set
@@ -156,28 +150,28 @@ namespace Model
         }
 
         public int Strength {
-            get => strength;
+            get => descriptor.strength;
             set
             {
-                strength = value;
+                descriptor.strength = value;
                 IsModified = true;
             }
         }
 
         public int Agility {
-            get => agility;
+            get => descriptor.agility;
             set
             {
-                agility = value;
+                descriptor.agility = value;
                 IsModified = true;
             }
         }
 
         public int Move {
-            get => move;
+            get => descriptor.move;
             set
             {
-                move = value;
+                descriptor.move = value;
                 IsModified = true;
             }
         }
@@ -268,20 +262,32 @@ namespace Model
         }
 
         public int Critical { 
-            get => critical; 
+            get => descriptor.critical; 
             set
             {
-                critical = value;
+                descriptor.critical = value;
                 IsModified = true;
             }
         }
-
-
-        public Unit() { }
-
-        public Unit(string name)
+        /// <summary>
+        /// DB로 부터 초기화
+        /// </summary>
+        /// <param name="id">DB 키값</param>
+        protected Unit(int id)
         {
-            this.name = name;
+            initializeUnitFromDB(id);
+        }
+        private void initializeUnitFromDB(int no)
+        {
+            var _descriptor = UnitStorage.Instance[no];
+            if (_descriptor != null)
+            {
+                descriptor = _descriptor.Copy();
+            }
+            else
+            {
+                Debug.LogError($"number={no}에 해당하는 유닛이 없습니다.");
+            }
         }
     }
 }

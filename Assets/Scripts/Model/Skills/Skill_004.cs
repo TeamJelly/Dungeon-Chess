@@ -19,14 +19,14 @@ namespace Model.Skills
         {
             // 0 단계 : 로그 출력, 스킬 소모 기록, 필요 변수 계산  
             user.SkillCount--;
-            currentReuseTime = reuseTime;
+            CurrentReuseTime = reuseTime;
 
             //10 + 강화 횟수 x 1
-            int damage = 10 + level * parsedExtension.upgradePerEnhancedLevel;
+            int damage = 10 + Level * parsedExtension.upgradePerEnhancedLevel;
             Unit targetUnit = Managers.BattleManager.GetUnit(target);
             if (targetUnit != null)
             {
-                Debug.Log($"{user.Name}가 {name}스킬을 {targetUnit.Name}에 사용!");
+                Debug.Log($"{user.Name}가 {Name}스킬을 {targetUnit.Name}에 사용!");
 
                 // 1단계 : 스킬 애니메이션 재생 및 화면 갱신.
                 user.animationState = Unit.AnimationState.Attack;
@@ -38,7 +38,7 @@ namespace Model.Skills
             }
             else
             {
-                Debug.Log($"{user.Name}가 {name}스킬을 {target}에 사용!");
+                Debug.Log($"{user.Name}가 {Name}스킬을 {target}에 사용!");
             }
             Common.UnitAction.AddEffect(targetUnit, new Effects.Effect_004(targetUnit));
 
@@ -51,7 +51,7 @@ namespace Model.Skills
         }
         public override void Upgrade()
         {
-            if (level < 10)
+            if (Level < 10)
                 base.Upgrade();
         }
     }

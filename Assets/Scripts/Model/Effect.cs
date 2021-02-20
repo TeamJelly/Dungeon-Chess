@@ -1,40 +1,40 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
+﻿using UnityEngine;
 
 namespace Model
 {
-    [System.Serializable]
-    public class EffectDescriptor
-    {
-        public int number;
-        public string name;
-        public Unit owner;
-        public string extension = "";
-        public int turnCount;
-        [TextArea(1, 10)]
-        public string description = "효과 설명";
-    }
-
+    using Effects;
     public class Effect
     {
         protected EffectDescriptor descriptor = new EffectDescriptor();
-        public Unit Owner => descriptor.owner;
+        public Unit Owner;
         public string Name => descriptor.name;
         public int Number => descriptor.number;
         public string Extension => descriptor.extension;
         public string Description => descriptor.description;
-
-        public int TurnCount => descriptor.turnCount;
-        public Effect()
+        private int turnCount;
+        public int TurnCount
         {
-
+            get => turnCount;
+            set => turnCount = value;
         }
-        public Effect(Unit owner)
+        public Effect(Unit owner, int number)
         {
-            descriptor.owner = owner;
+            Owner = owner;
+            InitializeEffectFromDB(number);
         }
+        private void InitializeEffectFromDB(int number)
+        {
+            var _descriptor = EffectStorage.Instance[number];
+            if (_descriptor != null)
+            {
+                descriptor = _descriptor.Copy();
+            }
+            else
+            {
+                Debug.LogError($"number={number}에 해당하는 효과가 없습니다.");
+            }
+        }
+
         /// <summary>
         /// 효과의 중복 검사와 중복 처리를 해준다.
         /// </summary>
