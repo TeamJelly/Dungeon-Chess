@@ -113,7 +113,7 @@ namespace Model.Managers
             int count = 0;
 
             foreach (var unit in GetUnit(category))
-                if (Common.UnitAction.GetEffectByNumber(unit, 1) == null && (Common.UnitAction.GetEffectByNumber(unit, 2) == null)
+                if (Common.UnitAction.GetEffectByNumber(unit, 1) == null && (Common.UnitAction.GetEffectByNumber(unit, 2) == null))
                     count++;
 
             return count;
