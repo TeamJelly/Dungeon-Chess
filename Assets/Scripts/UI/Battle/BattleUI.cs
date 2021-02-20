@@ -122,21 +122,31 @@ namespace UI.Battle
             for (int i = thisTurnUnit.StateEffects.Count - 1; i >= 0; i--)
                 thisTurnUnit.StateEffects[i].OnTurnEnd();
 
-            // 다음 턴의 유닛을 받아 시작한다.
-            Unit nextUnit = BattleManager.GetNextTurnUnit();
-            BattleManager.SetNextTurnUnit(nextUnit);
-
-            TurnStart();
+            switch(BattleManager.CheckGameState())
+            {
+                case 0:
+                    // 다음 턴의 유닛을 받아 시작한다.
+                    Unit nextUnit = BattleManager.GetNextTurnUnit();
+                    BattleManager.SetNextTurnUnit(nextUnit);
+                    TurnStart();
+                    break;
+                case 1:
+                    Win();
+                    break;
+                case 2:
+                    Defeat();
+                    break;
+            }
         }
 
         public void Win()
         {
-
+            BattleResultUI.instance.EnableWinUI();
         }
 
         public void Defeat()
         {
-
+            BattleResultUI.instance.EnableDeafeatUI();
         }
 
         public void MakeUnitObject(Unit unit)

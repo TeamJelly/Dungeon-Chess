@@ -4,7 +4,7 @@ using Model;
 using Model.Skills;
 using Model.Managers;
 using System.Collections.Generic;
-
+using UI.Battle;
 namespace Common
 {
     public class UnitAction
@@ -14,6 +14,18 @@ namespace Common
             Debug.Log($"{unit.Name}는(은) 사망했다!");
             unit.Agility = -10;
             unit.Category = Category.NULL;
+
+            switch (BattleManager.CheckGameState())
+            {
+                case 0:
+                    break;
+                case 1:
+                    BattleUI.instance.Win();
+                    break;
+                case 2:
+                    BattleUI.instance.Defeat();
+                    break;
+            }
         }
 
         public static void Move(Unit unit, Vector2Int target)
