@@ -54,11 +54,6 @@ namespace Model.Skills
             string str = base.GetDescription(user, level).Replace("X", defense.ToString());
             return str;
         }
-        public override void Upgrade()
-        {
-            if (level < 10)
-                base.Upgrade();
-        }
     }
 
     [System.Serializable]

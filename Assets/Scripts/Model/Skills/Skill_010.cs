@@ -64,30 +64,27 @@ namespace Model.Skills
         */
         public override void Upgrade()
         {
-            if (level < 5)
+            base.Upgrade();
+            switch (level)
             {
-                base.Upgrade();
-                switch (level)
-                {
-                    case 1:
-                        tauntTurnCount = 2;
-                        protectionTurnCount = 3;
-                        break;
-                    case 2:
-                        tauntTurnCount = 3;
-                        protectionTurnCount = 3;
-                        break;
-                    case 3:
-                        reuseTime = 5;
-                        break;
-                    case 4:
-                        tauntTurnCount = 3;
-                        protectionTurnCount = 3;
-                        break;
-                    case 5:
-                        reuseTime = 4;
-                        break;
-                }
+                case 1:
+                    tauntTurnCount = 2;
+                    protectionTurnCount = 3;
+                    break;
+                case 2:
+                    tauntTurnCount = 3;
+                    protectionTurnCount = 3;
+                    break;
+                case 3:
+                    reuseTime = 5;
+                    break;
+                case 4:
+                    tauntTurnCount = 3;
+                    protectionTurnCount = 3;
+                    break;
+                case 5:
+                    reuseTime = 4;
+                    break;
             }
         }
     }

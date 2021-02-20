@@ -136,8 +136,7 @@ namespace Model.Skills
         public override void Upgrade()
         {
             base.Upgrade();
-            if(level < 5)
-                RPSchema = RPSchemas[level];
+            RPSchema = RPSchemas[level];
         }
     }
 

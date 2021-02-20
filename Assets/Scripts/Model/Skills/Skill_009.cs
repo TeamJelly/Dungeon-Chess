@@ -55,13 +55,10 @@ namespace Model.Skills
 
         public override void Upgrade()
         {
-            if (level < 5)
-            {
-                base.Upgrade();
-                //10% + 10% * 강화 횟수 
-                criticalRate = 10 + 10 * level;
-            }
-               
+            base.Upgrade();
+            //10% + 10% * 강화 횟수 
+            criticalRate = 10 + 10 * level;
+
         }
     }
 
