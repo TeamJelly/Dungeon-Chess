@@ -24,7 +24,7 @@ namespace Model.Effects
             descriptor.name = "재생";
             descriptor.description = "부여된 턴 동안, 턴 시작시 회복 수치만큼 HP를 회복한다.";
             
-            if (Extension != null)
+            if(Extension.Length > 0)
             {
                 extension_005 = Common.Extension.Parse<Extension_005>(Extension);
                 TurnCount = turnCount;

@@ -11,7 +11,7 @@ namespace Model
         public int number;
         public string name;
         public Unit owner;
-        public string extension;
+        public string extension = "";
         public int turnCount;
         [TextArea(1, 10)]
         public string description = "효과 설명";

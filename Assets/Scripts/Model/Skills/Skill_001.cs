@@ -10,7 +10,7 @@ namespace Model.Skills
         public Extension_001 ParsedExtension => parsedExtension;
         public Skill_001() : base(1)
         {
-            if (extension != null)
+            if(extension.Length > 0)
             {
                 parsedExtension = Common.Extension.Parse<Extension_001>(extension);
             }

@@ -39,6 +39,7 @@ namespace Model
         [TextArea(1, 10)]
         public string description;                                      // 스킬 설명
         public int level;                                       // 강화도
+        public int maxLevel;
         public int reuseTime;                                           // 재사용 대기시간
         public int currentReuseTime;
 
