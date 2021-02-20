@@ -10,7 +10,6 @@ namespace Model.Units
         {
             Name = "슬라임";
             UnitClass = UnitClass.Monster;
-            UnitAI = UnitAI.NULL;
             spritePath = "HandMade/slime";
             Level = 1;
             CurrentHP = 20;

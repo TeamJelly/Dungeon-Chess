@@ -19,6 +19,18 @@ namespace Model.Managers
         // 현재 턴의 유닛
         public Unit thisTurnUnit;
 
+        public int turnCount;
+
+        public enum Goal
+        {
+            KillAllEnemy,
+            KillAllParty,
+            EndureTurn
+        }
+
+        public Goal WinCondition = Goal.KillAllEnemy;
+        public Goal DefeatCondition = Goal.KillAllParty;
+
         private void Awake()
         {
             instance = this;
@@ -31,8 +43,7 @@ namespace Model.Managers
             {
                 Name = "슬라임1",
                 Category = Category.Enemy,
-                Position = new Vector2Int(0, 0)
-                
+                Position = new Vector2Int(0, 0)                
             };
             EnemyUnits.Add(temp);
 
@@ -74,6 +85,37 @@ namespace Model.Managers
 
             Common.UnitAction.Summon(GameManager.PartyUnits);
             /***************************************************************************/
+        }
+
+        public static bool IsWin()
+        {
+            // 승리조건이 모든 적을 죽이는 것일때
+            if (instance.WinCondition == Goal.KillAllEnemy)
+            {
+                List<Unit> enemyUnits = GetUnit(Category.Enemy);
+                if (enemyUnits.Count == 0)
+                    return true;
+                else
+                    return false;
+            }
+            else
+                return false;
+        }
+
+
+        public static bool IsDefeat()
+        {
+            // 승리조건이 모든 적을 죽이는 것일때
+            if (instance.WinCondition == Goal.KillAllParty)
+            {
+                List<Unit> partyUnits = GetUnit(Category.Party);
+                if (partyUnits.Count == 0)
+                    return true;
+                else
+                    return false;
+            }
+            else
+                return false;
         }
 
         public static bool IsAvilablePosition(Vector2Int position)

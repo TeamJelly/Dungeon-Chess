@@ -25,9 +25,11 @@ namespace UI.Battle
         private UnitInfoUI thisTurnUnitInfo;
         [SerializeField]
         private UnitInfoUI otherUnitInfo;
-        [SerializeField]
-        private Button turnEndButton;
+
+        public Button turnEndButton;
+
         public UnitInfoUI ThisTurnUnitInfo { get => thisTurnUnitInfo; set => thisTurnUnitInfo = value; }
+        public Dictionary<Unit, GameObject> UnitObjects { get => unitObjects; set => unitObjects = value; }
 
         private void OnValidate()
         {
@@ -75,6 +77,7 @@ namespace UI.Battle
 
                     unit.IsModified = false;
                 }
+
         }
 
         public void TurnStart()
@@ -92,7 +95,7 @@ namespace UI.Battle
                     skill.currentReuseTime--;
 
             // 유닛정보창 초기화
-            if (thisTurnUnit.Category == Category.Enemy || thisTurnUnit.Category == Category.Boss)
+            if (thisTurnUnit.Category != Category.Party)
                 thisTurnUnitInfo.SetUnitInfo(thisTurnUnit, false);
             else
                 thisTurnUnitInfo.SetUnitInfo(thisTurnUnit, true);
@@ -102,7 +105,7 @@ namespace UI.Battle
                 thisTurnUnit.StateEffects[i].OnTurnStart();
 
             // AI라면 자동 행동 실행
-            if (thisTurnUnit.Category == Category.Enemy || thisTurnUnit.Category == Category.Boss)
+            if (thisTurnUnit.Category != Category.Party)
             {
                 AI.Action action = AI.GetAction(thisTurnUnit);
 
@@ -128,6 +131,7 @@ namespace UI.Battle
 
             TurnStart();
         }
+
 
         public void Win()
         {

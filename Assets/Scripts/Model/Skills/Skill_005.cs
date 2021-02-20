@@ -46,6 +46,7 @@ namespace Model.Skills
             string str = base.GetDescription(user, level).Replace("X", damage.ToString());
             return str;
         }
+
     }
     [System.Serializable]
     public class Extension_005 : Common.Extensionable

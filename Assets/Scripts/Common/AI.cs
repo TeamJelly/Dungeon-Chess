@@ -51,11 +51,21 @@ namespace Common
 
             public IEnumerator InvokeAIAction(Action action)
             {
+                BattleUI.instance.turnEndButton.interactable = false;
+
+                yield return new WaitForSeconds(0.5f);
+
                 yield return BattleUI.instance.StartCoroutine(action.user.MoveSkill.Use(action.user, action.movePosition));
 
-                if (action.skillToUse != null && action.targetPosition != null)
-                    yield return BattleUI.instance.StartCoroutine(action.skillToUse.Use(action.user, (Vector2Int)action.targetPosition));
+                yield return new WaitForSeconds(0.5f);
 
+                if (action.skillToUse != null && action.targetPosition != null)
+                {
+                    yield return BattleUI.instance.StartCoroutine(action.skillToUse.Use(action.user, (Vector2Int)action.targetPosition));
+                    yield return new WaitForSeconds(0.5f);
+                }
+
+                BattleUI.instance.turnEndButton.interactable = true;
                 BattleUI.instance.TurnEnd();
             }
         }

@@ -137,7 +137,8 @@ namespace Model
         public virtual List<Vector2Int> GetRelatePositions(Unit user, Vector2Int position)
         {
             List<Vector2Int> positions = new List<Vector2Int>();
-            if (RPSchema == null) return positions;
+
+            if (RPSchema == null || !GetAvailablePositions(user).Contains(position)) return positions;
 
             foreach (var vector in Common.Range.ParseRangeSchema(RPSchema))
             {

@@ -2,9 +2,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public enum Category { NULL, Party, Neutral, Friendly, Enemy, Boss};
+public enum Category { NULL, Party, Neutral, Friendly, Enemy};
 public enum UnitClass { NULL, Monster, Warrior, Wizard, Priest, Archer };
-public enum UnitAI {NULL, AI1, AI2, AI3, AI4 };
 
 namespace Model
 {
@@ -17,7 +16,6 @@ namespace Model
         private string name = "NoName";
         private Category category = Category.NULL;
         private UnitClass unitClass = UnitClass.NULL;
-        private UnitAI unitAI = UnitAI.NULL;
         public string spritePath;
         private Sprite sprite;
         private int level;
@@ -76,14 +74,6 @@ namespace Model
             set
             {
                 unitClass = value;
-                IsModified = true;
-            }
-        }
-        public UnitAI UnitAI {
-            get => unitAI;
-            set
-            {
-                unitAI = value;
                 IsModified = true;
             }
         }
