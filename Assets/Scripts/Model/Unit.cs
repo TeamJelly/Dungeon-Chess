@@ -118,12 +118,11 @@ namespace Model
             }
         }
 
-        private int maximumHP;
         public int MaximumHP {
-            get => maximumHP;
+            get => descriptor.HP;
             set
             {
-                maximumHP = value;
+                descriptor.HP = value;
                 IsModified = true;
             }
         }
