@@ -82,32 +82,34 @@ namespace UI.Battle
 
         public void TurnStart()
         {
-            Unit thisTurnUnit = BattleManager.instance.thisTurnUnit;
+            // 다음 턴의 유닛을 받아 시작한다.
+            Unit nextUnit = BattleManager.GetNextTurnUnit();
+            BattleManager.SetNextTurnUnit(nextUnit);
 
             // 턴시작시 유닛 값들 초기화
-            thisTurnUnit.MoveCount = 1;
-            thisTurnUnit.SkillCount = 1;
-            thisTurnUnit.ItemCount = 1;
+            nextUnit.MoveCount = 1;
+            nextUnit.SkillCount = 1;
+            nextUnit.ItemCount = 1;
 
             // 턴 시작시 스킬쿨 줄어듬
-            foreach (var skill in thisTurnUnit.Skills)
+            foreach (var skill in nextUnit.Skills)
                 if (skill != null && skill.currentReuseTime != 0)
                     skill.currentReuseTime--;
 
             // 유닛정보창 초기화
-            if (thisTurnUnit.Category != Category.Party)
-                thisTurnUnitInfo.SetUnitInfo(thisTurnUnit, false);
+            if (nextUnit.Category != Category.Party)
+                thisTurnUnitInfo.SetUnitInfo(nextUnit, false);
             else
-                thisTurnUnitInfo.SetUnitInfo(thisTurnUnit, true);
+                thisTurnUnitInfo.SetUnitInfo(nextUnit, true);
 
             // 뒤에서부터 돌면 중간에 삭제해도 문제 없음.
-            for (int i = thisTurnUnit.StateEffects.Count - 1; i >= 0; i--)
-                thisTurnUnit.StateEffects[i].OnTurnStart();
+            for (int i = nextUnit.StateEffects.Count - 1; i >= 0; i--)
+                nextUnit.StateEffects[i].OnTurnStart();
 
             // AI라면 자동 행동 실행
-            if (thisTurnUnit.Category != Category.Party)
+            if (nextUnit.Category != Category.Party)
             {
-                AI.Action action = AI.GetAction(thisTurnUnit);
+                AI.Action action = AI.GetAction(nextUnit);
 
                 if (action != null)
                     action.Invoke();
@@ -125,13 +127,17 @@ namespace UI.Battle
             for (int i = thisTurnUnit.StateEffects.Count - 1; i >= 0; i--)
                 thisTurnUnit.StateEffects[i].OnTurnEnd();
 
-            // 다음 턴의 유닛을 받아 시작한다.
-            Unit nextUnit = BattleManager.GetNextTurnUnit();
-            BattleManager.SetNextTurnUnit(nextUnit);
 
+            if (BattleManager.IsWin())
+                Win();
+            else if (BattleManager.IsDefeat())
+                Defeat();
             TurnStart();
         }
 
+        public void CheckWinDefeat()
+        {
+        }
 
         public void Win()
         {
