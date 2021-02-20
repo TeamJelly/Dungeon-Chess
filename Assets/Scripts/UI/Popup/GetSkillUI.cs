@@ -50,7 +50,7 @@ namespace UI.Popup
 
             //Skill 이미지, 설명 UI 갱신
             skillImage.sprite = skill.Sprite;
-            skillDescription.text = $"{skill.name}\n{skill.description}";
+            skillDescription.text = $"{skill.Name}\n{skill.Description}";
 
             for(int i = 0; i< unitImagies.Length; i++)
             {
@@ -136,7 +136,7 @@ namespace UI.Popup
 
             //한단계 업그레이드 시의 설명을 보여주기 위해 임시로 레벨을 올렸다가 내림
             afterSkillImage.sprite = GameManager.PartyUnits[u].Skills[s].Sprite;
-            afterSkillText.text = GameManager.PartyUnits[u].Skills[s].GetDescription(GameManager.PartyUnits[u], GameManager.PartyUnits[u].Skills[s].level + 1);
+            afterSkillText.text = GameManager.PartyUnits[u].Skills[s].GetDescription(GameManager.PartyUnits[u], GameManager.PartyUnits[u].Skills[s].Level + 1);
 
             setButton.onClick.RemoveAllListeners();
             setButton.onClick.AddListener(() =>

@@ -14,37 +14,75 @@ namespace Model
     [System.Serializable]
     public class Skill
     {
-        public int number;                                              // 스킬 번호
-        public string name = "No Skill Name";                           // 스킬 이름
-        public UnitClass unitClass = UnitClass.NULL;                    // 스킬 클래스
-        public Grade grade = Grade.NULL;                                // 스킬 등급
+        private SkillDescriptor descriptor;
+
+        public string Name
+        {
+            get => descriptor.name;
+            set => descriptor.name = value;
+        }
+
+        public int number => descriptor.number;
+        public UnitClass unitClass
+        {
+            get => descriptor.unitClass;
+            set => descriptor.unitClass = value;
+        }
+        public Grade Grade
+        {
+            get => descriptor.grade;
+            set => descriptor.grade = value;
+        }
 
         public AI.Priority priority = AI.Priority.NULL;           // (AI 스킬용) 스킬 타겟 우선순위
-
-        public string spritePath;
 
         private Sprite sprite;
         public Sprite Sprite
         {
             get
             {
-                if (spritePath == "")
+                if (descriptor.spritePath == "")
                     sprite = Resources.Load<Sprite>("1bitpack_kenney_1/Tilesheet/X");
                 else if (sprite == null)
-                    sprite = Resources.Load<Sprite>(spritePath);
+                    sprite = Resources.Load<Sprite>(descriptor.spritePath);
                 return sprite;
             }
         }
 
-        [TextArea(1, 10)]
-        public string description;                                      // 스킬 설명
-        public int level;                                       // 강화도
-        public int maxLevel;
-        public int reuseTime;                                           // 재사용 대기시간
-        public int currentReuseTime;
-
-        [Range(0, 100)]
-        public float criticalRate;                                      // 크리티컬율
+        public string Description => descriptor.description;            // 스킬 설명
+        private int level; // 강화도
+        public int Level
+        {
+            get => level;
+            set
+            {
+                level = value;
+            }
+        }
+        public int MaxLevel
+        {                     // 최대 강화도
+            get => descriptor.maxLevel;
+            set => descriptor.maxLevel = value;
+        }
+        public int reuseTime                                            // 재사용 대기시간
+        {
+            get => descriptor.reuseTime;
+            set => reuseTime = value;
+        }
+        private int currentReuseTime;                                   // 현재 재사용 대기시간
+        public int CurrentReuseTime
+        {
+            get => currentReuseTime;
+            set
+            {
+                currentReuseTime = value;
+            }
+        }
+        public float criticalRate
+        {
+            get => descriptor.criticalRate;
+            set => descriptor.criticalRate = value;
+        }
 
         public enum Type                                              // 스킬 사용가능 범위의 종류
         {
@@ -63,12 +101,32 @@ namespace Model
             Enemy,
         }
 
-        public Type type = Type.Fixed;          // Default : Fixed
-        public Target target = Target.Any;      // Default : Any
+        public Type type
+        {
+            get => descriptor.type;
+            set => descriptor.type = value;
+        }
+        public Target target
+        {
+            get => descriptor.target;
+            set => descriptor.target = value;
+        }
 
-        public string APSchema;
-        public string RPSchema;              // relate Position
-        public string extension; // 스킬 고유 특성
+        public string APSchema                  // Available Position
+        {
+            get => descriptor.APSchema;
+            set => descriptor.APSchema = value;
+        }
+        public string RPSchema
+        {
+            get => descriptor.RPSchema;
+            set => descriptor.RPSchema = value;
+        }
+        public string extension
+        {
+            get => descriptor.extension;
+            set => descriptor.extension = value;
+        }
 
         public virtual bool IsUsable(Unit user)
         {
@@ -152,7 +210,7 @@ namespace Model
 
         public virtual IEnumerator Use(Unit user, Vector2Int target)
         {
-            Debug.LogError(name + " 스킬을 " + target + "에 사용!");
+            Debug.LogError(Name + " 스킬을 " + target + "에 사용!");
             currentReuseTime = reuseTime;
             yield return null;
         }
@@ -164,30 +222,10 @@ namespace Model
         /// <returns></returns>
         protected void InitializeSkillFromDB(int skill_no)
         {
-            Skill[] results = new Skill[1];
-            results[0] = SkillStorage.Instance[skill_no];
-            // 스킬을 새롭게 DB에서 불러와야하는 경우
-            if (results[0] == null)
+            var _descriptor = SkillStorage.Instance[skill_no];
+            if (_descriptor != null)
             {
-                results = Query.Instance.SelectFrom<Skill>("skill_table", $"number={skill_no}").results;
-                SkillStorage.Instance[skill_no] = results[0];
-            }
-            if (results != null && results.Length > 0)
-            {
-                var skill = results[0];
-                number = skill.number;
-                name = skill.name;
-                unitClass = skill.unitClass;
-                grade = skill.grade;
-                spritePath = skill.spritePath;
-                description = skill.description;
-                criticalRate = skill.criticalRate;
-                reuseTime = skill.reuseTime;
-                type = skill.type;
-                target = skill.target;
-                APSchema = skill.APSchema;
-                RPSchema = skill.RPSchema;
-                extension = skill.extension;
+                descriptor = _descriptor.Copy();
             }
             else
             {
@@ -200,8 +238,7 @@ namespace Model
         }
         public virtual string GetDescription(Unit user, int level)
         {
-            string str = description;
-            return description;
+            return Description;
         }
 
         public virtual void Upgrade()

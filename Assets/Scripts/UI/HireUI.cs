@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Model.Managers;
 using Model;
+using Model.Units;
 
 namespace UI
 {
@@ -41,7 +42,7 @@ namespace UI
             currentUnitImage.sprite = unitImagies[index];
             descriptionText.text = $"이름: {UnitManager.Instance.AllUnits[index].Name}\n";
 
-            if(GameManager.PartyUnits.Contains(currentUnit))
+            if (hasCurrentUnitInParty)
             {
                 selectButton.TextString = "해고";
                 selectButton.UsableButton = true;
@@ -79,7 +80,7 @@ namespace UI
 
         public void SelectUnit()
         {
-            if(GameManager.PartyUnits.Contains(currentUnit))
+            if(hasCurrentUnitInParty)
             {
                 Fire();
             }
@@ -100,12 +101,19 @@ namespace UI
         {
             GameManager.AddPartyUnit(currentUnit);
             selectedUnitCount++;
-
         }
         void Fire()
         {
             GameManager.RemovePartyUnit(currentUnit);
+            selectedUnitCount--;
             if (selectedUnitCount == 0) startButton.enabled = false;
+        }
+        private bool hasCurrentUnitInParty
+        {
+            get
+            {
+                return GameManager.PartyUnits.Contains(currentUnit);
+            }
         }
     }
 }

@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Model;
+﻿using System.Collections.Generic;
+using Model.Units;
 namespace Model.Managers
 {
     public class UnitManager
@@ -22,24 +20,9 @@ namespace Model.Managers
 
         UnitManager()
         {
-            AllUnits.Add(GetUnit("유닛1"));
-            AllUnits.Add(GetUnit("유닛2"));
-            AllUnits.Add(GetUnit("유닛3"));
-
-            AllUnits[0].portraitPath = "HandMade/women";
-            AllUnits[1].portraitPath = "HandMade/slime";
-            AllUnits[2].portraitPath = "HandMade/slime";
-        }
-
-        /// <summary>
-        /// 유닛 이름으로 유닛 반환. DB에서 불러오는게 좋을 듯 함.
-        /// </summary>
-        /// <param name="unitName"></param>
-        /// <returns></returns>
-        public static Unit GetUnit(string unitName)
-        {
-            Unit newUnit = new Unit(unitName);
-            return newUnit;
+            AllUnits.Add(new Unit_000());
+            AllUnits.Add(new Unit_001());
+            AllUnits.Add(new Unit_001());
         }
     }
 }
