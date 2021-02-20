@@ -58,8 +58,6 @@ namespace UI.Battle
                 UpdateUnitObejct(unit);
             }
 
-            Unit nextUnit = BattleManager.GetNextTurnUnit();
-            BattleManager.SetNextTurnUnit(nextUnit);
             NextTurnStart();
         }
 
@@ -169,20 +167,20 @@ namespace UI.Battle
 
                 // 위치 지정
                 gameObject.transform.position = new Vector3(unit.Position.x, unit.Position.y, 0);
-
-                // 이미지 컴포넌트 추가
-                SpriteRenderer spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
-
+                
                 // 박스 콜라이더 컴포넌트 추가
                 BoxCollider2D boxCollider2D = gameObject.AddComponent<BoxCollider2D>();
                 boxCollider2D.size = new Vector2(1, 1);
-//                boxCollider2D.isTrigger = true;
 
                 // 이벤트 트리거 컴포넌트 추가
                 EventTrigger eventTrigger = gameObject.AddComponent<EventTrigger>();
 
-                // 스프라이트 설정
-                spriteRenderer.sprite = unit.Sprite;
+                // 스프라이터 랜더러 추가
+                SpriteRenderer spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
+
+                // 애니메이터 추가
+                Animator animator = gameObject.AddComponent<Animator>();
+                animator.runtimeAnimatorController = unit.Animator;
 
                 // 이벤트 트리거 설정
                 EventTrigger.Entry entry_PointerClick = new EventTrigger.Entry();

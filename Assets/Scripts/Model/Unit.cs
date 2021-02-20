@@ -16,8 +16,7 @@ namespace Model
         private string name = "NoName";
         private Category category = Category.NULL;
         private UnitClass unitClass = UnitClass.NULL;
-        public string spritePath;
-        private Sprite sprite;
+
         private int level;
         private int armor;
         private int currentHP;
@@ -40,17 +39,16 @@ namespace Model
         private List<Artifact> antiques = new List<Artifact>();
         private List<Effect> stateEffects = new List<Effect>();
 
-        public List<Animation> animations;
-        public Animation animation;
-        public string animationPath1;
-        public string animationPath2;
-        public string animationPath3;
-        public string animationPath4;
-
         public enum AnimationState
         {
             Idle, Hit, Attack, Move
         }
+
+        public string portraitPath;
+        public string animatorPath;
+
+        private Sprite portrait;
+        private RuntimeAnimatorController animator;
 
         public AnimationState animationState = AnimationState.Idle;
 
@@ -62,6 +60,7 @@ namespace Model
                 IsModified = true;
             }
         }
+
         public Category Category {
             get => category;
             set {
@@ -69,6 +68,7 @@ namespace Model
                 IsModified = true;
             }
         }
+
         public UnitClass UnitClass {
             get => unitClass;
             set
@@ -77,15 +77,27 @@ namespace Model
                 IsModified = true;
             }
         }
-        public Sprite Sprite
+
+        public Sprite Portrait
         {
             get
             {
-                if (sprite == null && spritePath != "")
-                    sprite = Resources.Load<Sprite>(spritePath);
-                return sprite;
+                if (portrait == null && portraitPath != "")
+                    portrait = Resources.Load<Sprite>(portraitPath);
+                return portrait;
             }
         }
+
+        public RuntimeAnimatorController Animator
+        {
+            get
+            {
+                if (animator == null && animatorPath != "")
+                    animator = Resources.Load<RuntimeAnimatorController>(animatorPath);
+                return animator;
+            }
+        }
+
 
         public int Armor
         {
@@ -97,6 +109,7 @@ namespace Model
                 IsModified = true;
             }
         }
+
         public int Level {
             get => level;
             set
@@ -105,6 +118,7 @@ namespace Model
                 IsModified = true;
             }
         }
+
         public int CurrentHP {
             get => currentHP;
             set
@@ -113,6 +127,7 @@ namespace Model
                 IsModified = true;
             }
         }
+
         public int MaximumHP {
             get => maximumHP;
             set
@@ -121,6 +136,7 @@ namespace Model
                 IsModified = true;
             }
         }
+
         public int CurrentEXP {
             get => currentEXP;
             set
@@ -129,6 +145,7 @@ namespace Model
                 IsModified = true;
             }
         }
+
         public int NextEXP {
             get => nextEXP;
             set
@@ -137,6 +154,7 @@ namespace Model
                 IsModified = true;
             }
         }
+
         public int Strength {
             get => strength;
             set
@@ -145,6 +163,7 @@ namespace Model
                 IsModified = true;
             }
         }
+
         public int Agility {
             get => agility;
             set
@@ -153,6 +172,7 @@ namespace Model
                 IsModified = true;
             }
         }
+
         public int Move {
             get => move;
             set
@@ -161,6 +181,7 @@ namespace Model
                 IsModified = true;
             }
         }
+
         public Vector2Int Position {
             get => position;
             set {
@@ -254,6 +275,7 @@ namespace Model
                 IsModified = true;
             }
         }
+
 
         public Unit() { }
 

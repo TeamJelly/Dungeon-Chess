@@ -920,9 +920,10 @@ Animation:
   m_GameObject: {fileID: 591184798}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 294f86e0d951fb645aa25b32a58d7e2b, type: 2}
+  m_Animation: {fileID: 7400000, guid: 20abb37e0b68a3f469907348b929a771, type: 2}
   m_Animations:
   - {fileID: 7400000, guid: 294f86e0d951fb645aa25b32a58d7e2b, type: 2}
+  - {fileID: 7400000, guid: 20abb37e0b68a3f469907348b929a771, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
@@ -1405,6 +1406,8 @@ MonoBehaviour:
     animationPath4: 
     animationState: 0
   turnCount: 0
+  WinCondition: 0
+  DefeatCondition: 1
 --- !u!4 &1309214667
 Transform:
   m_ObjectHideFlags: 0

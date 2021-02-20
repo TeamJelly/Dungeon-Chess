@@ -11,7 +11,6 @@ namespace Model.Units
         {
             Name = "기본 전사";
             UnitClass = UnitClass.Warrior;
-            spritePath = "HandMade/women";
             Level = 1;
             CurrentHP = 2;
             MaximumHP = 20;
@@ -20,6 +19,10 @@ namespace Model.Units
             Strength = 3;
             Agility = 10;
             Move = 2;
+
+            portraitPath = "Helltaker/Lucifer/Lucifer_portrait";
+            animatorPath = "Helltaker/Lucifer/Lucifer_animator";
+
             MoveSkill = new Walk();
             Skills[0] = new Skill_000();
             Skills[1] = new Skill_001();

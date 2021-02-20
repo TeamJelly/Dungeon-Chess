@@ -465,13 +465,8 @@ MonoBehaviour:
   currentPushedButton: {fileID: 0}
   unit:
     IsModified: 0
-    spritePath: 
-    animations: []
+    portraitPath: 
     animation: {fileID: 0}
-    animationPath1: 
-    animationPath2: 
-    animationPath3: 
-    animationPath4: 
     animationState: 0
   interactable: 0
   noSprite: {fileID: 0}
@@ -1191,7 +1186,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.2784314, g: 0.1764706, b: 0.23529413, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
