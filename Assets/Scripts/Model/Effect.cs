@@ -12,6 +12,7 @@ namespace Model
         public string name;
         public Unit owner;
         public string extension;
+        public int turnCount;
         [TextArea(1, 10)]
         public string description = "효과 설명";
     }
@@ -25,6 +26,7 @@ namespace Model
         public string Extension => descriptor.extension;
         public string Description => descriptor.description;
 
+        public int TurnCount => descriptor.turnCount;
         public Effect()
         {
 

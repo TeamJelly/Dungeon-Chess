@@ -18,22 +18,22 @@ namespace Model.Skills
         public override IEnumerator Use(Unit user, Vector2Int target)
         {
             // 0 단계 : 로그 출력, 스킬 소모 기록, 필요 변수 계산
-            Unit targetUnit = Model.Managers.BattleManager.GetUnit(target);
             user.SkillCount--;
             currentReuseTime = reuseTime;
+            //15 + 강화 횟수 x 2
+            int defense = 15 + level * parsedExtension.upgradePerEnhancedLevel;
 
-            int defense = 15 + enhancedLevel * parsedExtension.upgradePerEnhancedLevel;
-
+            Unit targetUnit = Managers.BattleManager.GetUnit(target);
             if (targetUnit != null)
             {
                 Debug.Log($"{user.Name}가 {name}스킬을 {targetUnit.Name}에 사용!");
+                // 1단계 : 스킬 애니메이션 재생 및 화면 갱신.
                 user.animationState = Unit.AnimationState.Attack;
-
-                // 2단계 : Acttack 후에 맞는 애니메이션, HP갱신 재생
                 yield return new WaitWhile(() => user.animationState != Unit.AnimationState.Idle);
-                targetUnit.animationState = Unit.AnimationState.Hit;
-                
-                //방어도 높이는 상태효과 발동.
+                targetUnit.animationState = Unit.AnimationState.Heal;
+
+                // 2단계 : 스킬 적용. 방어도 높이는 상태효과 발동.
+                Common.UnitAction.Armor(user, defense);
             }
             else
             {
@@ -46,6 +46,11 @@ namespace Model.Skills
             int defense = 15 + level * parsedExtension.upgradePerEnhancedLevel;
             string str = base.GetDescription(user, level).Replace("X", defense.ToString());
             return str;
+        }
+        public override void Upgrade()
+        {
+            if (level < 10)
+                base.Upgrade();
         }
     }
 

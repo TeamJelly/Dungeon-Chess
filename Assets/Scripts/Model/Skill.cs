@@ -38,7 +38,7 @@ namespace Model
 
         [TextArea(1, 10)]
         public string description;                                      // 스킬 설명
-        public int enhancedLevel;                                       // 강화도
+        public int level;                                       // 강화도
         public int reuseTime;                                           // 재사용 대기시간
         public int currentReuseTime;
 
@@ -194,7 +194,7 @@ namespace Model
         }
         public virtual string GetDescription(Unit user)
         {
-            return GetDescription(user, enhancedLevel);
+            return GetDescription(user, level);
         }
         public virtual string GetDescription(Unit user, int level)
         {
@@ -204,7 +204,7 @@ namespace Model
 
         public virtual void Upgrade()
         {
-            enhancedLevel++;
+            level++;
         }
 
         /// <summary>

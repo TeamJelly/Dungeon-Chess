@@ -81,20 +81,23 @@ namespace Model.Skills
         public override IEnumerator Use(Unit user, Vector2Int target)
         {
             // 0 단계 : 로그 출력, 스킬 소모 기록, 필요 변수 계산
-            Unit targetUnit = Model.Managers.BattleManager.GetUnit(target);
             user.SkillCount--;
             currentReuseTime = reuseTime;
 
-            int damage = user.Strength * 2;
+            //Strength x 2.0 
+            int damage = user.Strength * ParsedExtension.strengthToDamageRatio;
 
+            Unit targetUnit = Managers.BattleManager.GetUnit(target);
             if (targetUnit != null)
             {
                 Debug.Log($"{user.Name}가 {name}스킬을 {targetUnit.Name}에 사용!");
-                user.animationState = Unit.AnimationState.Attack;
 
-                // 2단계 : Acttack 후에 맞는 애니메이션, HP갱신 재생
+                // 1단계 : 스킬 애니메이션 재생 및 화면 갱신.
+                user.animationState = Unit.AnimationState.Attack;
                 yield return new WaitWhile(() => user.animationState != Unit.AnimationState.Idle);
                 targetUnit.animationState = Unit.AnimationState.Hit;
+
+                // 2단계 : 스킬 적용. 범위 안에 있는 대상에게 데미지를 주고 기절시킨다.
                 Common.UnitAction.Damage(targetUnit, damage);
                 Common.UnitAction.AddEffect(targetUnit, new Effects.Effect_004(targetUnit));
             }
@@ -107,7 +110,7 @@ namespace Model.Skills
         }
         public override string GetDescription(Unit user, int level)
         {
-            int damage = user.Strength * 2;
+            int damage = user.Strength * ParsedExtension.strengthToDamageRatio;
             string str = base.GetDescription(user, level).Replace("X", damage.ToString());
             return str;
         }
@@ -133,76 +136,14 @@ namespace Model.Skills
         public override void Upgrade()
         {
             base.Upgrade();
-            if(enhancedLevel < 5)
-                RPSchema = RPSchemas[enhancedLevel];
+            if(level < 5)
+                RPSchema = RPSchemas[level];
         }
     }
 
     [System.Serializable]
     public class Extension_008 : Common.Extensionable
     {
-        public int upgradePerEnhancedLevel;
+        public int strengthToDamageRatio;
     }
 }
-// 추후에 아래 코드를 참고해서 리펙토링 바람
-//string[] RPSchemas = {
-//        "3;" +
-//            "111;" +
-//            "111;" +
-//            "000", // 0강
-
-//        "5;" +
-//            "01110;" +
-//            "01110;" +
-//            "01110;" +
-//            "00000;" +
-//            "00000", // 1강
-
-//        "7;" +
-//            "0011100;" +
-//            "0011100;" +
-//            "0011100;" +
-//            "0011100;" +
-//            "0000000;" +
-//            "0000000;" +
-//            "0000000", // 2강
-
-//        "9;" +
-//            "000111000;" +
-//            "000111000;" +
-//            "000111000;" +
-//            "000111000;" +
-//            "000111000;" +
-//            "000000000;" +
-//            "000000000;" +
-//            "000000000;" +
-//            "000000000", // 3강
-
-//        "11;" +
-//            "00001110000;" +
-//            "00001110000;" +
-//            "00001110000;" +
-//            "00001110000;" +
-//            "00001110000;" +
-//            "00001110000;" +
-//            "00000000000;" +
-//            "00000000000;" +
-//            "00000000000;" +
-//            "00000000000;" +
-//            "00000000000", // 4강
-
-//        "13;" +
-//            "0000011100000;" +
-//            "0000011100000;" +
-//            "0000011100000;" +
-//            "0000011100000;" +
-//            "0000011100000;" +
-//            "0000011100000;" +
-//            "0000011100000;" +
-//            "0000000000000;" +
-//            "0000000000000;" +
-//            "0000000000000;" +
-//            "0000000000000;" +
-//            "0000000000000;" +
-//            "0000000000000" // 5강
-//    };

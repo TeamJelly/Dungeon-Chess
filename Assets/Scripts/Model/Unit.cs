@@ -51,7 +51,7 @@ namespace Model
 
         public enum AnimationState
         {
-            Idle, Hit, Attack, Move
+            Idle, Hit, Attack, Move, Heal
         }
 
         public AnimationState animationState = AnimationState.Idle;
