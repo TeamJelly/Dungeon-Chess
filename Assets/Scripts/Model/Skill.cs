@@ -164,12 +164,12 @@ namespace Model
         protected void InitializeSkillFromDB(int skill_no)
         {
             Skill[] results = new Skill[1];
-            results[0] = SkillDictionary.Instance[skill_no];
+            results[0] = SkillStorage.Instance[skill_no];
             // 스킬을 새롭게 DB에서 불러와야하는 경우
             if (results[0] == null)
             {
                 results = Query.Instance.SelectFrom<Skill>("skill_table", $"number={skill_no}").results;
-                SkillDictionary.Instance[skill_no] = results[0];
+                SkillStorage.Instance[skill_no] = results[0];
             }
             if (results != null && results.Length > 0)
             {
