@@ -2,22 +2,17 @@
 
 namespace Model.Effects
 {
-    [System.Serializable]
-    public class Extension_005 : Common.Extensionable
-    {
-        public int regen;
-    }
-
     public class Effect_005 : Effect
     {
-        private Extension_005 ext;
-
-        public Effect_005(Unit owner, int turnCount) : base(owner, 5)
+        private int regen;
+        public int Regen
         {
-            if(Extension.Length > 0)
-            {
-                ext = Common.Extension.Parse<Extension_005>(Extension);
-            }
+            get => regen;
+            set => regen = value;
+        }
+        public Effect_005(Unit owner, int turnCount, int regen) : base(owner, 5)
+        {
+            Regen = regen;
             TurnCount = turnCount;
         }
 
@@ -29,7 +24,7 @@ namespace Model.Effects
 
         public override void OnTurnStart()
         {
-            Common.UnitAction.Heal(Owner, ext.regen);
+            Common.UnitAction.Heal(Owner, Regen);
             TurnCount--;
 
             Debug.Log($"{Name}효과 {TurnCount}턴 남음");
