@@ -15,8 +15,7 @@ namespace Model
         public Category category = Category.NULL;
 
         public bool isActivate = false;
-        //    public bool isCleared = false;
-        public bool isSelectable = false;
+        // public bool isSelectable = false;
 
         public Vector2Int position; // x = 층, y = 번째 방
 

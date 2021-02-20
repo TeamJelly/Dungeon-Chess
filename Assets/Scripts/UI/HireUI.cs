@@ -31,7 +31,7 @@ namespace UI
 
             for (int i = 0; i < units.Count; i++)
             {
-                unitImagies.Add(units[i].Sprite);
+                unitImagies.Add(units[i].Portrait);
             }
             UpdateUI();
         }

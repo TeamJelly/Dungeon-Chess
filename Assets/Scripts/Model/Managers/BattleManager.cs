@@ -19,6 +19,25 @@ namespace Model.Managers
         // 현재 턴의 유닛
         public Unit thisTurnUnit;
 
+        public int turnCount;
+
+        public enum State
+        {
+            Continue,
+            Win,
+            Defeat
+        }
+
+        public enum Condition
+        {
+            KillAllEnemy,
+            KillAllParty,
+            EndureTurn
+        }
+
+        public Condition WinCondition = Condition.KillAllEnemy;
+        public Condition DefeatCondition = Condition.KillAllParty;
+
         private void Awake()
         {
             instance = this;
@@ -31,8 +50,7 @@ namespace Model.Managers
             {
                 Name = "슬라임1",
                 Category = Category.Enemy,
-                Position = new Vector2Int(0, 0)
-                
+                Position = new Vector2Int(0, 0)                
             };
             EnemyUnits.Add(temp);
 
@@ -76,29 +94,29 @@ namespace Model.Managers
             /***************************************************************************/
         }
 
-
-        static int GetUnitCount(Category category)
+        public static State CheckGameState()
         {
-            int count = 0;
-            foreach (var unit in instance.AllUnits)
-                if (unit.Category == category)
-                {
-                    if (unit.Agility != -10) count++;
-                }
-            return count;
+            // 승리조건이 모든 적을 죽이는 것일때
+            if (instance.WinCondition == Condition.KillAllEnemy && GetAliveUnitCount(Category.Enemy) == 0)
+                return State.Win;
+            
+            // 패배조건이 모든 아군이 죽이는 것일때
+            if (instance.DefeatCondition == Condition.KillAllParty && GetAliveUnitCount(Category.Party) == 0)
+                return State.Defeat;
+
+            // 계속
+            return State.Continue; 
         }
 
-        public static int CheckGameState()
+        private static int GetAliveUnitCount(Category category)
         {
-            if (GetUnitCount(Category.Enemy) == 0)
-            {
-                return 1; // 승리
-            }
-            else if (GetUnitCount(Category.Party) == 0)
-            {
-                return 2; // 패배
-            }
-            return 0; // 계속
+            int count = 0;
+
+            foreach (var unit in GetUnit(category))
+                if (Common.UnitAction.GetEffectByNumber(unit, 1) == null && (Common.UnitAction.GetEffectByNumber(unit, 2) == null))
+                    count++;
+
+            return count;
         }
 
         public static bool IsAvilablePosition(Vector2Int position)
@@ -209,7 +227,6 @@ namespace Model.Managers
             foreach (var unit in instance.AllUnits)
                 unit.ActionRate += velocity * minTime;
 
-            nextUnit.ActionRate = 0;
             instance.thisTurnUnit = nextUnit;
         }
     }

@@ -10,8 +10,6 @@ namespace Model.Units
         {
             Name = "슬라임";
             UnitClass = UnitClass.Monster;
-            UnitAI = UnitAI.NULL;
-            spritePath = "HandMade/slime";
             Level = 1;
             CurrentHP = 20;
             MaximumHP = 20;
@@ -20,9 +18,12 @@ namespace Model.Units
             Strength = 1;
             Agility = 10;
             Move = 2;
+
+            portraitPath = "Helltaker/Skeleton/skeleton_portrait";
+            animatorPath = "Helltaker/Skeleton/Skeleton_animator";
+
             MoveSkill = new Walk();
             MoveSkill.priority = Common.AI.Priority.NearFromClosestParty;
-
             Skills[0] = new Skill_000();
             Skills[0].target = Skill.Target.Party;
         }

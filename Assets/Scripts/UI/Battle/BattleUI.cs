@@ -25,9 +25,11 @@ namespace UI.Battle
         private UnitInfoUI thisTurnUnitInfo;
         [SerializeField]
         private UnitInfoUI otherUnitInfo;
-        [SerializeField]
-        private Button turnEndButton;
+
+        public Button turnEndButton;
+
         public UnitInfoUI ThisTurnUnitInfo { get => thisTurnUnitInfo; set => thisTurnUnitInfo = value; }
+        public Dictionary<Unit, GameObject> UnitObjects { get => unitObjects; set => unitObjects = value; }
 
         private void OnValidate()
         {
@@ -47,7 +49,7 @@ namespace UI.Battle
         {
             turnEndButton.onClick.AddListener(() =>
             {
-                TurnEnd();
+                ThisTurnEnd();
             });
 
             foreach (var unit in BattleManager.GetUnit())
@@ -56,9 +58,7 @@ namespace UI.Battle
                 UpdateUnitObejct(unit);
             }
 
-            Unit nextUnit = BattleManager.GetNextTurnUnit();
-            BattleManager.SetNextTurnUnit(nextUnit);
-            TurnStart();
+            NextTurnStart();
         }
 
         private void Update()
@@ -75,43 +75,50 @@ namespace UI.Battle
 
                     unit.IsModified = false;
                 }
+
         }
 
-        public void TurnStart()
+        /// <summary>
+        /// 인자로 유닛을 넣지 않을면 자동으로 다음 유닛을 계산하여 다음턴으로 설정한다.
+        /// </summary>
+        public void NextTurnStart()
         {
-            Unit thisTurnUnit = BattleManager.instance.thisTurnUnit;
+            // 다음 턴의 유닛을 받아 시작한다.
+            Unit nextUnit = BattleManager.GetNextTurnUnit();
+            BattleManager.SetNextTurnUnit(nextUnit);
 
             // 턴시작시 유닛 값들 초기화
-            thisTurnUnit.MoveCount = 1;
-            thisTurnUnit.SkillCount = 1;
-            thisTurnUnit.ItemCount = 1;
+            nextUnit.ActionRate = 0;
+            nextUnit.MoveCount = 1;
+            nextUnit.SkillCount = 1;
+            nextUnit.ItemCount = 1;
 
             // 턴 시작시 스킬쿨 줄어듬
-            foreach (var skill in thisTurnUnit.Skills)
+            foreach (var skill in nextUnit.Skills)
                 if (skill != null && skill.currentReuseTime != 0)
                     skill.currentReuseTime--;
 
             // 유닛정보창 초기화
-            if (thisTurnUnit.Category == Category.Enemy || thisTurnUnit.Category == Category.Boss)
-                thisTurnUnitInfo.SetUnitInfo(thisTurnUnit, false);
+            if (nextUnit.Category != Category.Party)
+                thisTurnUnitInfo.SetUnitInfo(nextUnit, false);
             else
-                thisTurnUnitInfo.SetUnitInfo(thisTurnUnit, true);
+                thisTurnUnitInfo.SetUnitInfo(nextUnit, true);
 
             // 뒤에서부터 돌면 중간에 삭제해도 문제 없음.
-            for (int i = thisTurnUnit.StateEffects.Count - 1; i >= 0; i--)
-                thisTurnUnit.StateEffects[i].OnTurnStart();
+            for (int i = nextUnit.StateEffects.Count - 1; i >= 0; i--)
+                nextUnit.StateEffects[i].OnTurnStart();
 
             // AI라면 자동 행동 실행
-            if (thisTurnUnit.Category == Category.Enemy || thisTurnUnit.Category == Category.Boss)
+            if (nextUnit.Category != Category.Party)
             {
-                AI.Action action = AI.GetAction(thisTurnUnit);
+                AI.Action action = AI.GetAction(nextUnit);
 
                 if (action != null)
                     action.Invoke();
             }
         }
 
-        public void TurnEnd()
+        public void ThisTurnEnd()
         {
             IndicatorUI.HideTileIndicator();
             thisTurnUnitInfo.CurrentPushedButton = null;
@@ -124,16 +131,13 @@ namespace UI.Battle
 
             switch(BattleManager.CheckGameState())
             {
-                case 0:
-                    // 다음 턴의 유닛을 받아 시작한다.
-                    Unit nextUnit = BattleManager.GetNextTurnUnit();
-                    BattleManager.SetNextTurnUnit(nextUnit);
-                    TurnStart();
+                case BattleManager.State.Continue:
+                    NextTurnStart();
                     break;
-                case 1:
+                case BattleManager.State.Win:
                     Win();
                     break;
-                case 2:
+                case BattleManager.State.Defeat:
                     Defeat();
                     break;
             }
@@ -163,20 +167,20 @@ namespace UI.Battle
 
                 // 위치 지정
                 gameObject.transform.position = new Vector3(unit.Position.x, unit.Position.y, 0);
-
-                // 이미지 컴포넌트 추가
-                SpriteRenderer spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
-
+                
                 // 박스 콜라이더 컴포넌트 추가
                 BoxCollider2D boxCollider2D = gameObject.AddComponent<BoxCollider2D>();
                 boxCollider2D.size = new Vector2(1, 1);
-//                boxCollider2D.isTrigger = true;
 
                 // 이벤트 트리거 컴포넌트 추가
                 EventTrigger eventTrigger = gameObject.AddComponent<EventTrigger>();
 
-                // 스프라이트 설정
-                spriteRenderer.sprite = unit.Sprite;
+                // 스프라이터 랜더러 추가
+                SpriteRenderer spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
+
+                // 애니메이터 추가
+                Animator animator = gameObject.AddComponent<Animator>();
+                animator.runtimeAnimatorController = unit.Animator;
 
                 // 이벤트 트리거 설정
                 EventTrigger.Entry entry_PointerClick = new EventTrigger.Entry();

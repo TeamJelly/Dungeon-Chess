@@ -61,7 +61,7 @@ namespace UI.Popup
             {
                 //유닛 초상화 세팅
                 unitImagies[i].transform.parent.gameObject.SetActive(true);
-                unitImagies[i].sprite = GameManager.PartyUnits[i].Sprite;
+                unitImagies[i].sprite = GameManager.PartyUnits[i].Portrait;
                 int unitIndex = i;
 
                 //유닛마다의 스킬 패널 세팅
