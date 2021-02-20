@@ -23,15 +23,15 @@ namespace Model.Skills
         {
             // 0 단계 : 로그 출력, 스킬 소모 기록, 필요 변수 계산
             user.SkillCount--;
-            currentReuseTime = reuseTime;
+            CurrentReuseTime = reuseTime;
 
             //40 + if (enhance ==  4) + 20
-            int value = 40 + level == 4 ? 20 : 0;
+            int value = 40 + Level == 4 ? 20 : 0;
 
             Unit targetUnit = Managers.BattleManager.GetUnit(target);
             if (targetUnit != null)
             {
-                Debug.Log($"{user.Name}가 {name}스킬을 {targetUnit.Name}에 사용!");
+                Debug.Log($"{user.Name}가 {Name}스킬을 {targetUnit.Name}에 사용!");
 
                 // 1단계 : 스킬 애니메이션 재생 및 화면 갱신.
                 user.animationState = Unit.AnimationState.Attack;
@@ -45,12 +45,12 @@ namespace Model.Skills
             }
             else
             {
-                Debug.Log($"{user.Name}가 {name}스킬을 {target}에 사용!");
+                Debug.Log($"{user.Name}가 {Name}스킬을 {target}에 사용!");
             }
         }
         public override string GetDescription(Unit user, int level)
         {
-            int damage = 40 + level == 4 ? 20 : 0;
+            int damage = 40 + Level == 4 ? 20 : 0;
             string str = base.GetDescription(user, level).Replace("X", damage.ToString());
             return str;
         }
@@ -65,7 +65,7 @@ namespace Model.Skills
         public override void Upgrade()
         {
             base.Upgrade();
-            switch (level)
+            switch (Level)
             {
                 case 1:
                     tauntTurnCount = 2;

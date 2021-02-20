@@ -276,6 +276,7 @@ namespace Model
         protected Unit(int id)
         {
             initializeUnitFromDB(id);
+            CurrentHP = MaximumHP;
         }
         private void initializeUnitFromDB(int no)
         {
