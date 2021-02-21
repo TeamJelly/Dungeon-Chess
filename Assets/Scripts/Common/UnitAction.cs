@@ -100,7 +100,6 @@ namespace Common
 
         public static Effect GetEffectByNumber(Unit unit, int number)
         {
-            Debug.Log(unit);
             Effect effect = null;
 
             foreach (var stateEffect in unit.StateEffects)
