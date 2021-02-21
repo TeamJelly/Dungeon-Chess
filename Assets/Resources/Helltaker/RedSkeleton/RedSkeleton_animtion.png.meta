@@ -131,6 +131,78 @@ TextureImporter:
   - first:
       213: 8271637348145407725
     second: Skeleton_animtion_18
+  - first:
+      213: -5183281383998811796
+    second: RedSkeleton_animtion_0
+  - first:
+      213: 3221004268087605500
+    second: RedSkeleton_animtion_1
+  - first:
+      213: -5848603700196558961
+    second: RedSkeleton_animtion_2
+  - first:
+      213: 2328356377295738573
+    second: RedSkeleton_animtion_3
+  - first:
+      213: -2697188300887198265
+    second: RedSkeleton_animtion_4
+  - first:
+      213: -8225293414482869872
+    second: RedSkeleton_animtion_5
+  - first:
+      213: -8670607628111326821
+    second: RedSkeleton_animtion_6
+  - first:
+      213: -8249258528359430509
+    second: RedSkeleton_animtion_7
+  - first:
+      213: 7578731835879239744
+    second: RedSkeleton_animtion_8
+  - first:
+      213: -2947908829653600166
+    second: RedSkeleton_animtion_9
+  - first:
+      213: 2035942281044989077
+    second: RedSkeleton_animtion_10
+  - first:
+      213: 2848222465970645586
+    second: RedSkeleton_animtion_11
+  - first:
+      213: -3875569406428859639
+    second: RedSkeleton_animtion_12
+  - first:
+      213: -6445140344567758711
+    second: RedSkeleton_animtion_13
+  - first:
+      213: -5202180512231035349
+    second: RedSkeleton_animtion_14
+  - first:
+      213: -4523709500693869881
+    second: RedSkeleton_animtion_15
+  - first:
+      213: -3904402320048682359
+    second: RedSkeleton_animtion_16
+  - first:
+      213: 5902204971739443936
+    second: RedSkeleton_animtion_17
+  - first:
+      213: -6212111770028254516
+    second: RedSkeleton_animtion_18
+  - first:
+      213: -3276612950893982780
+    second: RedSkeleton_animtion_19
+  - first:
+      213: 4056984503362266840
+    second: RedSkeleton_animtion_20
+  - first:
+      213: -6955933992986556072
+    second: RedSkeleton_animtion_21
+  - first:
+      213: -610793345366126786
+    second: RedSkeleton_animtion_22
+  - first:
+      213: 7589525384228316728
+    second: RedSkeleton_animtion_23
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -240,7 +312,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Skeleton_animtion_0
+      name: RedSkeleton_animtion_0
       rect:
         serializedVersion: 2
         x: 6
@@ -254,14 +326,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 34199d7e39e9b6fa0800000000000000
-      internalID: -5806372936476946109
+      spriteID: c611bdf1b094118b0800000000000000
+      internalID: -5183281383998811796
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_animtion_1
+      name: RedSkeleton_animtion_1
       rect:
         serializedVersion: 2
         x: 110
@@ -275,14 +347,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e329850bdf8756120800000000000000
-      internalID: 2406462606880051774
+      spriteID: cf8f063f05e43bc20800000000000000
+      internalID: 3221004268087605500
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_animtion_2
+      name: RedSkeleton_animtion_2
       rect:
         serializedVersion: 2
         x: 213
@@ -296,14 +368,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eed7d80da74d34a00800000000000000
-      internalID: 739668387768925678
+      spriteID: f87bfb10ce595dea0800000000000000
+      internalID: -5848603700196558961
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_animtion_3
+      name: RedSkeleton_animtion_3
       rect:
         serializedVersion: 2
         x: 314
@@ -317,14 +389,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3e3015361d8a97e10800000000000000
-      internalID: 2195971910587712483
+      spriteID: dc65a3bf9cbff4020800000000000000
+      internalID: 2328356377295738573
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_animtion_4
+      name: RedSkeleton_animtion_4
       rect:
         serializedVersion: 2
         x: 413
@@ -338,14 +410,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f8e637fdca4718d80800000000000000
-      internalID: -8250184756533956977
+      spriteID: 7c57749d789a19ad0800000000000000
+      internalID: -2697188300887198265
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_animtion_5
+      name: RedSkeleton_animtion_5
       rect:
         serializedVersion: 2
         x: 510
@@ -359,14 +431,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 38e6a7931aad16f30800000000000000
-      internalID: 4567171883119308419
+      spriteID: 09183601833e9dd80800000000000000
+      internalID: -8225293414482869872
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_animtion_6
+      name: RedSkeleton_animtion_6
       rect:
         serializedVersion: 2
         x: 606
@@ -380,14 +452,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: af748e71cac2de4c0800000000000000
-      internalID: -4256696955148154886
+      spriteID: b91d1a31d40dba780800000000000000
+      internalID: -8670607628111326821
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_animtion_7
+      name: RedSkeleton_animtion_7
       rect:
         serializedVersion: 2
         x: 709
@@ -401,14 +473,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e7be52eca9d6cb630800000000000000
-      internalID: 3944147885320694654
+      spriteID: 39646cc231fb48d80800000000000000
+      internalID: -8249258528359430509
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_animtion_8
+      name: RedSkeleton_animtion_8
       rect:
         serializedVersion: 2
         x: 809
@@ -422,14 +494,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dfdc22772d36791f0800000000000000
-      internalID: -1038251433492558339
+      spriteID: 040b68d63701d2960800000000000000
+      internalID: 7578731835879239744
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_animtion_9
+      name: RedSkeleton_animtion_9
       rect:
         serializedVersion: 2
         x: 910
@@ -443,14 +515,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5d49a0259109c3350800000000000000
-      internalID: 5997827242175665365
+      spriteID: a587242c98ce617d0800000000000000
+      internalID: -2947908829653600166
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_animtion_10
+      name: RedSkeleton_animtion_10
       rect:
         serializedVersion: 2
         x: 1009
@@ -464,14 +536,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1351e69ebc2aa1010800000000000000
-      internalID: 1160418850679690545
+      spriteID: 59492ecb7be114c10800000000000000
+      internalID: 2035942281044989077
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_animtion_11
+      name: RedSkeleton_animtion_11
       rect:
         serializedVersion: 2
         x: 1109
@@ -485,14 +557,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 779af23026fd2bf60800000000000000
-      internalID: 8048741096117741943
+      spriteID: 25aa7750e3be68720800000000000000
+      internalID: 2848222465970645586
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_animtion_12
+      name: RedSkeleton_animtion_12
       rect:
         serializedVersion: 2
         x: 8
@@ -506,14 +578,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 62d9f2c7bc9b43e70800000000000000
-      internalID: 9094097831180868902
+      spriteID: 903bf639826373ac0800000000000000
+      internalID: -3875569406428859639
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_animtion_13
+      name: RedSkeleton_animtion_13
       rect:
         serializedVersion: 2
         x: 103
@@ -527,14 +599,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0c4a29955716a11d0800000000000000
-      internalID: -3379281413746285376
+      spriteID: 980008221034e86a0800000000000000
+      internalID: -6445140344567758711
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_animtion_14
+      name: RedSkeleton_animtion_14
       rect:
         serializedVersion: 2
         x: 203
@@ -548,14 +620,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c39bc8fb167aba580800000000000000
-      internalID: -8814767807380276932
+      spriteID: b2e620fe2642ec7b0800000000000000
+      internalID: -5202180512231035349
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_animtion_15
+      name: RedSkeleton_animtion_15
       rect:
         serializedVersion: 2
         x: 303
@@ -569,14 +641,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3877436d8dfdcde20800000000000000
-      internalID: 3376819943020722051
+      spriteID: 7ca05104d2e8831c0800000000000000
+      internalID: -4523709500693869881
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_animtion_16
+      name: RedSkeleton_animtion_16
       rect:
         serializedVersion: 2
         x: 404
@@ -590,14 +662,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 933bd8a6ffed019c0800000000000000
-      internalID: -3958418883872967879
+      spriteID: 98a894db6c6c0d9c0800000000000000
+      internalID: -3904402320048682359
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_animtion_17
+      name: RedSkeleton_animtion_17
       rect:
         serializedVersion: 2
         x: 505
@@ -611,14 +683,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 97a1e16139294baf0800000000000000
-      internalID: -381518907990730119
+      spriteID: 0e2f21c8628d8e150800000000000000
+      internalID: 5902204971739443936
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_animtion_18
+      name: RedSkeleton_animtion_18
       rect:
         serializedVersion: 2
         x: 600
@@ -632,8 +704,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: de6af07d752cac270800000000000000
-      internalID: 8271637348145407725
+      spriteID: cca517222452ac9a0800000000000000
+      internalID: -6212111770028254516
       vertices: []
       indices: 
       edges: []
