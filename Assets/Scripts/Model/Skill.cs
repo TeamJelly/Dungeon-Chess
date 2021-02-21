@@ -202,6 +202,7 @@ namespace Model
             foreach (var vector in Common.Range.ParseRangeSchema(RPSchema))
             {
                 Vector2Int abs = position + vector;
+                if (BattleManager.IsAvilablePosition(abs))
                 positions.Add(abs);
             }
 
