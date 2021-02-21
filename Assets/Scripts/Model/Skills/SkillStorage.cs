@@ -7,7 +7,9 @@ namespace Model.Skills
         private static SkillStorage instance = new SkillStorage();
         public static SkillStorage Instance => instance;
         private SkillStorage(): base("skill_table", "number") { }
+
     }
+
     [System.Serializable]
     public class SkillDescriptor : Copyable<SkillDescriptor>
     {

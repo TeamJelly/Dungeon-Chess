@@ -105,7 +105,7 @@ namespace Model
             set
             {
                 descriptor.level = value;
-                IsModified = true;
+                IsModified = true;                
             }
         }
 
@@ -113,7 +113,7 @@ namespace Model
         public int CurrentHP {
             get => currentHP;
             set
-            {
+            {                
                 currentHP = value;
                 IsModified = true;
             }

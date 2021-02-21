@@ -922,7 +922,6 @@ Animation:
   serializedVersion: 3
   m_Animation: {fileID: 7400000, guid: 20abb37e0b68a3f469907348b929a771, type: 2}
   m_Animations:
-  - {fileID: 7400000, guid: 294f86e0d951fb645aa25b32a58d7e2b, type: 2}
   - {fileID: 7400000, guid: 20abb37e0b68a3f469907348b929a771, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 1
@@ -1502,6 +1501,7 @@ GameObject:
   - component: {fileID: 1309214666}
   - component: {fileID: 1309214669}
   - component: {fileID: 1309214670}
+  - component: {fileID: 1309214665}
   m_Layer: 0
   m_Name: Scripts
   m_TagString: Untagged
@@ -1509,6 +1509,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1309214665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1309214664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61626b53348e57c4eaae86e125519e35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1309214666
 MonoBehaviour:
   m_ObjectHideFlags: 0
