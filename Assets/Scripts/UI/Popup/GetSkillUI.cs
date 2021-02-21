@@ -52,15 +52,13 @@ namespace UI.Popup
             skillImage.sprite = skill.Sprite;
             skillDescription.text = $"{skill.Name}\n{skill.Description}";
 
-            for(int i = 0; i< unitImagies.Length; i++)
-            {
-                unitImagies[i].transform.parent.gameObject.SetActive(false);
-            }
             //UI 초기화
+            for (int i = 0; i < 4; i++)
+                unitImagies[i].transform.parent.gameObject.SetActive(false);
+
             for (int i = 0; i < GameManager.PartyUnits.Count; i++)
             {
                 //유닛 초상화 세팅
-                unitImagies[i].transform.parent.gameObject.SetActive(true);
                 unitImagies[i].sprite = GameManager.PartyUnits[i].Portrait;
                 int unitIndex = i;
 
@@ -82,12 +80,19 @@ namespace UI.Popup
         public void EquipSkill()
         {
             OnSlotClick = EnableChangeSkillUI;
+
+            for (int i = 0; i < GameManager.PartyUnits.Count; i++)
+                unitImagies[i].transform.parent.gameObject.SetActive(skill.unitClass == GameManager.PartyUnits[i].UnitClass);
+
             SelectSlotPanel.SetActive(true);
         }
 
         public void UpgradeSkill()
         {
             OnSlotClick = EnableUpgradeSkillUI;
+
+            for (int i = 0; i < GameManager.PartyUnits.Count; i++)
+                unitImagies[i].transform.parent.gameObject.SetActive(true);
             SelectSlotPanel.SetActive(true);
         }
 
@@ -126,10 +131,10 @@ namespace UI.Popup
             if (GameManager.PartyUnits[u].Skills[s] == null) return;
 
             //등급 검사. 새 스킬 등급이 기존 스킬보다 작을 때 레전드 등급이 아닐경우에는 종료.
-           /* if (skill.grade <= GameManager.PartyUnits[u].Skills[s].grade && skill.grade != Grade.Legend)
+            if (skill.Grade <= GameManager.PartyUnits[u].Skills[s].Grade && skill.Grade != Grade.Legend)
             {
                 return;
-            }*/
+            }
 
             beforeSkillImage.sprite = GameManager.PartyUnits[u].Skills[s].Sprite;
             beforeSkillText.text = GameManager.PartyUnits[u].Skills[s].GetDescription(GameManager.PartyUnits[u]);
