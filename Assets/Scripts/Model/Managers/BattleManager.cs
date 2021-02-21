@@ -52,11 +52,13 @@ namespace Model.Managers
             EnemyUnits.Add(new Proto_Skeleton());
             EnemyUnits.Add(new Proto_RedSkeleton());
             EnemyUnits.Add(new Proto_RedSkeleton());
+            EnemyUnits.Add(new Proto_Judgement());
 
             EnemyUnits[0].Position = new Vector2Int(3, 3);
             EnemyUnits[1].Position = new Vector2Int(3, 6);
             EnemyUnits[2].Position = new Vector2Int(6, 3);
             EnemyUnits[3].Position = new Vector2Int(6, 6);
+            EnemyUnits[4].Position = new Vector2Int(0, 0);
 
             if (GameManager.PartyUnits.Count == 0)
             {
