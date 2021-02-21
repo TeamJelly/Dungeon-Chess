@@ -7,7 +7,9 @@ namespace Model.Skills
     using Managers;
     public class Walk : Skill
     {
-        public Walk() : base(999) {}
+        public Walk() : base(999) 
+        {
+        }
 
         public override bool IsUsable(Unit user)
         {
