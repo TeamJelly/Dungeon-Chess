@@ -9,7 +9,7 @@ namespace Model.Units
     {
         public Proto_Skeleton() : base(4)
         {
-            MoveSkill = new Walk();
+           
         }
     }
 }

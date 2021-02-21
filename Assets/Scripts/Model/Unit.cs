@@ -23,7 +23,7 @@ namespace Model
         private int moveCount;
         private int skillCount;
         private int itemCount;
-        private Skill moveSkill = new Walk();
+        private Skill moveSkill;// = new Walk();
         private Skill[] skills = new Skill[4];
         private Skill[] items = new Skill[2];
         private List<Artifact> antiques = new List<Artifact>();
@@ -279,12 +279,14 @@ namespace Model
 
             var skillString = descriptor.skills.Split(';');
 
+            //descriptor로부터 걷기 추가
+            moveSkill = (Skill)Activator.CreateInstance(Type.GetType($"Model.Skills.{descriptor.moveSkill}"));
+
             //descriptor로부터 스킬 추가
-            for(int i = 0; i < skillString.Length; i++)
+            for (int i = 0; i < skillString.Length; i++)
             {
-                if(skillString[i].Length == 1)
-                    skills[i] = (Skill)Activator.CreateInstance(Type.GetType($"Model.Skills.Skill_00{skillString[i]}"));
-                else skills[i] = (Skill)Activator.CreateInstance(Type.GetType($"Model.Skills.Skill_0{skillString[i]}"));
+                Debug.Log(skillString[i]);
+                skills[i] = (Skill)Activator.CreateInstance(Type.GetType($"Model.Skills.{skillString[i]}"));
             }
         }
         private void initializeUnitFromDB(int no)

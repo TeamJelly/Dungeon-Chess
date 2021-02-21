@@ -28,6 +28,7 @@ namespace Model.Units
         public int agility;
         public int move;
         public int critical;
+        public string moveSkill = "";
         public string skills = "";
         public string antiques = "";
         public string items = "";
