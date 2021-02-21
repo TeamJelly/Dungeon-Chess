@@ -50,7 +50,7 @@ namespace Model.Skills
         }
         public override string GetDescription(Unit user, int level)
         {
-            int damage = 40 + level == 4 ? 20 : 0;
+            int damage = 40 + Level == 4 ? 20 : 0;
             string str = base.GetDescription(user, level).Replace("X", damage.ToString());
             return str;
         }
@@ -64,30 +64,27 @@ namespace Model.Skills
         */
         public override void Upgrade()
         {
-            if (Level < 5)
+            base.Upgrade();
+            switch (Level)
             {
-                base.Upgrade();
-                switch (Level)
-                {
-                    case 1:
-                        tauntTurnCount = 2;
-                        protectionTurnCount = 3;
-                        break;
-                    case 2:
-                        tauntTurnCount = 3;
-                        protectionTurnCount = 3;
-                        break;
-                    case 3:
-                        reuseTime = 5;
-                        break;
-                    case 4:
-                        tauntTurnCount = 3;
-                        protectionTurnCount = 3;
-                        break;
-                    case 5:
-                        reuseTime = 4;
-                        break;
-                }
+                case 1:
+                    tauntTurnCount = 2;
+                    protectionTurnCount = 3;
+                    break;
+                case 2:
+                    tauntTurnCount = 3;
+                    protectionTurnCount = 3;
+                    break;
+                case 3:
+                    reuseTime = 5;
+                    break;
+                case 4:
+                    tauntTurnCount = 3;
+                    protectionTurnCount = 3;
+                    break;
+                case 5:
+                    reuseTime = 4;
+                    break;
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Common;
 using Model.Units;
 namespace Model.Managers
 {
@@ -20,9 +21,8 @@ namespace Model.Managers
 
         UnitManager()
         {
-            AllUnits.Add(new Unit_000());
-            AllUnits.Add(new Unit_001());
-            AllUnits.Add(new Unit_001());
+            AllUnits.Add(new Proto_Priest());
+            AllUnits.Add(new Proto_Warrior());
         }
     }
 }

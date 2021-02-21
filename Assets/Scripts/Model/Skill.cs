@@ -130,7 +130,7 @@ namespace Model
 
         public virtual bool IsUsable(Unit user)
         {
-            if (user.SkillCount > 0 && currentReuseTime == 0)
+            if (user.SkillCount > 0 && CurrentReuseTime == 0)
                 return true;
             else
                 return false;
@@ -211,7 +211,7 @@ namespace Model
         public virtual IEnumerator Use(Unit user, Vector2Int target)
         {
             Debug.LogError(Name + " 스킬을 " + target + "에 사용!");
-            currentReuseTime = reuseTime;
+            CurrentReuseTime = reuseTime;
             yield return null;
         }
 
@@ -243,7 +243,8 @@ namespace Model
 
         public virtual void Upgrade()
         {
-            level++;
+            if (level < MaxLevel)
+                level++;
         }
 
         /// <summary>

@@ -1,19 +1,18 @@
-﻿using Model.Effects;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Model.Skills
 {
-    public class Skill_007 : Skill
+    public class Skill_031 : Skill
     {
-        Extension_007 parsedExtension;
-        public Extension_007 ParsedExtension => parsedExtension;
-        public Skill_007() : base(7)
+        private Extension_031 parsedExtension;
+        public Extension_031 ParsedExtension => parsedExtension;
+        public Skill_031() : base(31)
         {
-            if(extension.Length > 0)
+            if (extension != null)
             {
-                parsedExtension = Common.Extension.Parse<Extension_007>(extension);
+                parsedExtension = Common.Extension.Parse<Extension_031>(extension);
             }
         }
         public override IEnumerator Use(Unit user, Vector2Int target)
@@ -22,8 +21,8 @@ namespace Model.Skills
             user.SkillCount--;
             CurrentReuseTime = reuseTime;
 
-            //5+ 강화 횟수 
-            int defense = 5 + Level;
+            //공격력 계수 1.0 + 강화 횟수 만큼 회복
+            int heal = user.Strength * ParsedExtension.strengthToDamageRatio + Level;
 
             Unit targetUnit = Managers.BattleManager.GetUnit(target);
             if (targetUnit != null)
@@ -31,34 +30,31 @@ namespace Model.Skills
                 Debug.Log($"{user.Name}가 {Name}스킬을 {targetUnit.Name}에 사용!");
 
                 // 1단계 : 스킬 애니메이션 재생 및 화면 갱신.
-                user.animationState = Unit.AnimationState.Attack;
+                user.animationState = Unit.AnimationState.Heal;
                 yield return new WaitWhile(() => user.animationState != Unit.AnimationState.Idle);
                 targetUnit.animationState = Unit.AnimationState.Heal;
 
-                // 2단계 : 스킬 적용. 지정 대상과 자신에게 x + 1의 방어도와 1의 보호막 부여.
-                Common.UnitAction.Armor(user, 1);
-                Common.UnitAction.Armor(targetUnit, 1);
-                Common.UnitAction.AddEffect(user, new Effect_021(user, 1,1));
-                Common.UnitAction.AddEffect(targetUnit, new Effect_021(targetUnit, 1,1));
+                // 2단계 : 스킬 적용.
+                Common.UnitAction.Heal(targetUnit, heal);
             }
             else
             {
                 Debug.Log($"{user.Name}가 {Name}스킬을 {target}에 사용!");
             }
-            
+
 
         }
         public override string GetDescription(Unit user, int level)
         {
-            int defense = 5 + Level;
-            string str = base.GetDescription(user, level).Replace("X", defense.ToString());
+            int heal = user.Strength * ParsedExtension.strengthToDamageRatio + Level;
+            string str = base.GetDescription(user, level).Replace("X", heal.ToString());
             return str;
         }
     }
-
     [System.Serializable]
-    public class Extension_007 : Common.Extensionable
+    public class Extension_031 : Common.Extensionable
     {
-        public int upgradePerEnhancedLevel;
+        public int strengthToDamageRatio;
     }
 }
+

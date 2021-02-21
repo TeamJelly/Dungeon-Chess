@@ -87,26 +87,27 @@ namespace Model.Skills
             //Strength x 2.0 
             int damage = user.Strength * ParsedExtension.strengthToDamageRatio;
 
-            Unit targetUnit = Managers.BattleManager.GetUnit(target);
-            if (targetUnit != null)
+            List<Unit> targetUnits = new List<Unit>();
+            foreach (Vector2Int vector in GetRelatePositions(user, user.Position))
             {
-                Debug.Log($"{user.Name}가 {Name}스킬을 {targetUnit.Name}에 사용!");
+                Unit targetUnit = Managers.BattleManager.GetTile(vector).GetUnit();
+                if (targetUnit != null)
+                {
+                    targetUnits.Add(targetUnit);
+                }
+            }
+            user.animationState = Unit.AnimationState.Attack;
+            yield return new WaitWhile(() => user.animationState != Unit.AnimationState.Idle);
 
+            foreach (Unit unit in targetUnits)
+            {
+                Debug.Log($"{user.Name}가 {Name}스킬을 {unit.Name}에 사용!");
                 // 1단계 : 스킬 애니메이션 재생 및 화면 갱신.
-                user.animationState = Unit.AnimationState.Attack;
-                yield return new WaitWhile(() => user.animationState != Unit.AnimationState.Idle);
-                targetUnit.animationState = Unit.AnimationState.Hit;
-
-                // 2단계 : 스킬 적용. 범위 안에 있는 대상에게 데미지를 주고 기절시킨다.
-                Common.UnitAction.Damage(targetUnit, damage);
-                Common.UnitAction.AddEffect(targetUnit, new Effects.Effect_004(targetUnit));
+                unit.animationState = Unit.AnimationState.Hit;
+                // 2단계 : 스킬 적용
+                Common.UnitAction.Damage(unit, damage);
+                Common.UnitAction.AddEffect(unit, new Effects.Effect_004(unit));
             }
-            else
-            {
-                Debug.Log($"{user.Name}가 {Name}스킬을 {target}에 사용!");
-            }
-            
-
         }
         public override string GetDescription(Unit user, int level)
         {
@@ -136,8 +137,7 @@ namespace Model.Skills
         public override void Upgrade()
         {
             base.Upgrade();
-            if(Level < 5)
-                RPSchema = RPSchemas[Level];
+            RPSchema = RPSchemas[Level];
         }
     }
 

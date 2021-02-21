@@ -61,7 +61,7 @@ namespace Model.Managers
                 Move = 6
             });
             Common.UnitAction.AddEffect(partyUnits[0], new Effects.Effect_004(partyUnits[0]));
-            Common.UnitAction.AddEffect(partyUnits[0], new Effects.Effect_005(partyUnits[0], 3));
+            Common.UnitAction.AddEffect(partyUnits[0], new Effects.Effect_005(partyUnits[0], 3,10));
 
             partyUnits.Add(new Units.Unit_000
             {

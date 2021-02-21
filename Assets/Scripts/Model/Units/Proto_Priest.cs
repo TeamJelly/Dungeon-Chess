@@ -5,9 +5,9 @@ using Model.Skills;
 
 namespace Model.Units
 {
-    public class Unit_000 : Unit
+    public class Proto_Priest : Unit
     {
-        public Unit_000() : base(0)
+        public Proto_Priest() : base(2)
         {
             MoveSkill = new Walk();
         }

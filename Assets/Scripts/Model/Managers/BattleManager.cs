@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Model;
+using Model.Units;
 
 namespace Model.Managers
 {
@@ -46,37 +47,16 @@ namespace Model.Managers
             /***유닛 더미데이터 추가. 추후 BattleUI의 EndGame 함수 포함하여 코드 제거***/
             List<Unit> EnemyUnits = new List<Unit>();
 
-            Unit temp = new Units.Unit_001
-            {
-                Name = "슬라임1",
-                Category = Category.Enemy,
-                Position = new Vector2Int(0, 0)                
-            };
-            EnemyUnits.Add(temp);
 
-            temp = new Units.Unit_001
-            {
-                Name = "슬라임2",
-                Category = Category.Enemy,
-                Position = new Vector2Int(9, 0)
-            };
-            EnemyUnits.Add(temp);
+            EnemyUnits.Add(new Proto_Skeleton());
+            EnemyUnits.Add(new Proto_Skeleton());
+            EnemyUnits.Add(new Proto_Skeleton());
+            EnemyUnits.Add(new Proto_Skeleton());
 
-            temp = new Units.Unit_001
-            {
-                Name = "슬라임3",
-                Category = Category.Enemy,
-                Position = new Vector2Int(9, 9)
-            };
-            EnemyUnits.Add(temp);
-
-            temp = new Units.Unit_001
-            {
-                Name = "슬라임4",
-                Category = Category.Enemy,
-                Position = new Vector2Int(0, 9)
-            };
-            EnemyUnits.Add(temp);
+            EnemyUnits[0].Position = new Vector2Int(3, 3);
+            EnemyUnits[1].Position = new Vector2Int(3, 6);
+            EnemyUnits[2].Position = new Vector2Int(6, 3);
+            EnemyUnits[3].Position = new Vector2Int(6, 6);
 
             if (GameManager.PartyUnits.Count == 0)
                  GameManager.Instance.InitForTesting();
