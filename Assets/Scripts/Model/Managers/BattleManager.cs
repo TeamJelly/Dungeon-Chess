@@ -50,8 +50,8 @@ namespace Model.Managers
 
             EnemyUnits.Add(new Proto_Skeleton());
             EnemyUnits.Add(new Proto_Skeleton());
-            EnemyUnits.Add(new Proto_Skeleton());
-            EnemyUnits.Add(new Proto_Skeleton());
+            EnemyUnits.Add(new Proto_RedSkeleton());
+            EnemyUnits.Add(new Proto_RedSkeleton());
 
             EnemyUnits[0].Position = new Vector2Int(3, 3);
             EnemyUnits[1].Position = new Vector2Int(3, 6);

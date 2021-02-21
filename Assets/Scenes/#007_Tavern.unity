@@ -1670,7 +1670,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1578257259233380, guid: 907de760fc5bba448a1e0bb2d64b11f9, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -480
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1578257259233380, guid: 907de760fc5bba448a1e0bb2d64b11f9, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1698,7 +1698,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1578257756869011, guid: 907de760fc5bba448a1e0bb2d64b11f9, type: 3}
       propertyPath: m_text
-      value: "\uD734\uC2DD"
+      value: "\uD734\uC2DD\uD558\uAE30"
       objectReference: {fileID: 0}
     - target: {fileID: 1578257756869011, guid: 907de760fc5bba448a1e0bb2d64b11f9, type: 3}
       propertyPath: m_fontSize
@@ -2417,6 +2417,10 @@ PrefabInstance:
     - target: {fileID: 1578257259233381, guid: 907de760fc5bba448a1e0bb2d64b11f9, type: 3}
       propertyPath: m_Name
       value: "\uACE0\uC6A9 Button"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1578257259233381, guid: 907de760fc5bba448a1e0bb2d64b11f9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1578257259233400, guid: 907de760fc5bba448a1e0bb2d64b11f9, type: 3}
       propertyPath: size
