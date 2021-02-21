@@ -145,11 +145,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1309214670}
-    - target: {fileID: 1702202233183803607, guid: 2824e4e5ed5b67a4cb936492ee7d4de1,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: GotoStage
-      objectReference: {fileID: 0}
     - target: {fileID: 3255219563761434353, guid: 2824e4e5ed5b67a4cb936492ee7d4de1,
         type: 3}
       propertyPath: m_Pivot.x
@@ -265,11 +260,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1309214670}
-    - target: {fileID: 5785688207027059903, guid: 2824e4e5ed5b67a4cb936492ee7d4de1,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: GotoStage
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2824e4e5ed5b67a4cb936492ee7d4de1, type: 3}
 --- !u!1001 &323607588
@@ -4953,7 +4943,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 418, y: -203.99976}
+  m_AnchoredPosition: {x: 418, y: -204}
   m_SizeDelta: {x: 640, y: -440}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &5384038421684691288

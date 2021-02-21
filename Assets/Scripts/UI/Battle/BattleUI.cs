@@ -1,13 +1,11 @@
 ﻿using Common;
 using Model.Managers;
 using Model;
-using System.Collections;
+using UI.Popup;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Model.Skills;
 
 namespace UI.Battle
 {

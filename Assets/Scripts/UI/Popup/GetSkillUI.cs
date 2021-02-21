@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Common.UI;
 
 namespace UI.Popup
 {
@@ -44,7 +45,8 @@ namespace UI.Popup
         }
         public void Enable(string name)
         {
-            gameObject.SetActive(true);
+            UIEffect.FadeInPanel(gameObject);
+            //StartCoroutine(FadeInPanel(gameObject));
 
             skill = (Skill)Activator.CreateInstance(Type.GetType($"Model.Skills.{name}"));
 
@@ -139,7 +141,7 @@ namespace UI.Popup
             beforeSkillImage.sprite = GameManager.PartyUnits[u].Skills[s].Sprite;
             beforeSkillText.text = GameManager.PartyUnits[u].Skills[s].GetDescription(GameManager.PartyUnits[u]);
 
-            //한단계 업그레이드 시의 설명을 보여주기 위해 임시로 레벨을 올렸다가 내림
+            //한단계 업그레이드 시의 설명
             afterSkillImage.sprite = GameManager.PartyUnits[u].Skills[s].Sprite;
             afterSkillText.text = GameManager.PartyUnits[u].Skills[s].GetDescription(GameManager.PartyUnits[u], GameManager.PartyUnits[u].Skills[s].Level + 1);
 
@@ -154,7 +156,7 @@ namespace UI.Popup
         }
         public void Disable()
         {
-            gameObject.SetActive(false);
+            UIEffect.FadeOutPanel(gameObject);
         }
         /***********************************************************************************/
     }

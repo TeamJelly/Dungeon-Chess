@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using Common.UI;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UI.Battle
+namespace  UI.Popup
 {
     public class BattleResultUI : MonoBehaviour
     {
@@ -15,12 +16,12 @@ namespace UI.Battle
         }
         public void EnableWinUI()
         {
-            WinUI.SetActive(true);
+            UIEffect.FadeInPanel(WinUI);
         }
 
         public void EnableDeafeatUI()
         {
-            DeafeatUI.SetActive(true);
+            UIEffect.FadeInPanel(DeafeatUI);
         }
     }
 }
