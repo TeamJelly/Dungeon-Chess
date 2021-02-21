@@ -48,10 +48,10 @@ namespace Model.Managers
             List<Unit> EnemyUnits = new List<Unit>();
 
 
-            EnemyUnits.Add(new Unit_001());
-            EnemyUnits.Add(new Unit_001());
-            EnemyUnits.Add(new Unit_001());
-            EnemyUnits.Add(new Unit_001());
+            EnemyUnits.Add(new Proto_Skeleton());
+            EnemyUnits.Add(new Proto_Skeleton());
+            EnemyUnits.Add(new Proto_Skeleton());
+            EnemyUnits.Add(new Proto_Skeleton());
 
             EnemyUnits[0].Position = new Vector2Int(3, 3);
             EnemyUnits[1].Position = new Vector2Int(3, 6);
