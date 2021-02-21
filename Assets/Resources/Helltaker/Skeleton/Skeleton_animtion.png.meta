@@ -243,10 +243,10 @@ TextureImporter:
       name: Skeleton_animtion_0
       rect:
         serializedVersion: 2
-        x: 6
-        y: 315
-        width: 84
-        height: 84
+        x: 0
+        y: 0
+        width: 100
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -264,10 +264,10 @@ TextureImporter:
       name: Skeleton_animtion_1
       rect:
         serializedVersion: 2
-        x: 110
-        y: 315
-        width: 80
-        height: 80
+        x: 100
+        y: 0
+        width: 100
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -285,10 +285,10 @@ TextureImporter:
       name: Skeleton_animtion_2
       rect:
         serializedVersion: 2
-        x: 213
-        y: 315
-        width: 80
-        height: 78
+        x: 200
+        y: 0
+        width: 100
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -306,10 +306,10 @@ TextureImporter:
       name: Skeleton_animtion_3
       rect:
         serializedVersion: 2
-        x: 314
-        y: 315
-        width: 79
-        height: 77
+        x: 300
+        y: 0
+        width: 100
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -327,10 +327,10 @@ TextureImporter:
       name: Skeleton_animtion_4
       rect:
         serializedVersion: 2
-        x: 413
-        y: 315
-        width: 80
-        height: 78
+        x: 400
+        y: 0
+        width: 100
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -348,10 +348,10 @@ TextureImporter:
       name: Skeleton_animtion_5
       rect:
         serializedVersion: 2
-        x: 510
-        y: 315
-        width: 80
-        height: 80
+        x: 500
+        y: 0
+        width: 100
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -369,10 +369,10 @@ TextureImporter:
       name: Skeleton_animtion_6
       rect:
         serializedVersion: 2
-        x: 606
-        y: 315
-        width: 84
-        height: 84
+        x: 600
+        y: 0
+        width: 100
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -390,10 +390,10 @@ TextureImporter:
       name: Skeleton_animtion_7
       rect:
         serializedVersion: 2
-        x: 709
-        y: 315
-        width: 78
-        height: 80
+        x: 700
+        y: 0
+        width: 100
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -411,10 +411,10 @@ TextureImporter:
       name: Skeleton_animtion_8
       rect:
         serializedVersion: 2
-        x: 809
-        y: 315
-        width: 76
-        height: 78
+        x: 800
+        y: 0
+        width: 100
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -432,10 +432,10 @@ TextureImporter:
       name: Skeleton_animtion_9
       rect:
         serializedVersion: 2
-        x: 910
-        y: 315
-        width: 74
-        height: 78
+        x: 900
+        y: 0
+        width: 100
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -453,10 +453,10 @@ TextureImporter:
       name: Skeleton_animtion_10
       rect:
         serializedVersion: 2
-        x: 1009
-        y: 315
-        width: 76
-        height: 78
+        x: 1000
+        y: 0
+        width: 100
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -474,10 +474,10 @@ TextureImporter:
       name: Skeleton_animtion_11
       rect:
         serializedVersion: 2
-        x: 1109
-        y: 315
-        width: 78
-        height: 81
+        x: 1100
+        y: 0
+        width: 100
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -487,153 +487,6 @@ TextureImporter:
       bones: []
       spriteID: 779af23026fd2bf60800000000000000
       internalID: 8048741096117741943
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skeleton_animtion_12
-      rect:
-        serializedVersion: 2
-        x: 8
-        y: 95
-        width: 85
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 62d9f2c7bc9b43e70800000000000000
-      internalID: 9094097831180868902
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skeleton_animtion_13
-      rect:
-        serializedVersion: 2
-        x: 103
-        y: 95
-        width: 78
-        height: 63
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0c4a29955716a11d0800000000000000
-      internalID: -3379281413746285376
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skeleton_animtion_14
-      rect:
-        serializedVersion: 2
-        x: 203
-        y: 95
-        width: 78
-        height: 63
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c39bc8fb167aba580800000000000000
-      internalID: -8814767807380276932
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skeleton_animtion_15
-      rect:
-        serializedVersion: 2
-        x: 303
-        y: 95
-        width: 78
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3877436d8dfdcde20800000000000000
-      internalID: 3376819943020722051
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skeleton_animtion_16
-      rect:
-        serializedVersion: 2
-        x: 404
-        y: 95
-        width: 78
-        height: 67
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 933bd8a6ffed019c0800000000000000
-      internalID: -3958418883872967879
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skeleton_animtion_17
-      rect:
-        serializedVersion: 2
-        x: 505
-        y: 95
-        width: 79
-        height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 97a1e16139294baf0800000000000000
-      internalID: -381518907990730119
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skeleton_animtion_18
-      rect:
-        serializedVersion: 2
-        x: 600
-        y: 0
-        width: 600
-        height: 220
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: de6af07d752cac270800000000000000
-      internalID: 8271637348145407725
       vertices: []
       indices: 
       edges: []

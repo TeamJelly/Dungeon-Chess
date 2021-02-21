@@ -1,208 +1,73 @@
 fileFormatVersion: 2
-guid: 5bb8a9ec47378634cac8c68da8b4a3e9
+guid: 014c55d67ebf24f44841761ce76fb01e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4354231566380549168
-    second: Skeleton_0
+      213: -7772686870851653768
+    second: Judgement_animation_0
   - first:
-      213: 5809030516613042957
-    second: Skeleton_1
+      213: -1578632715649590465
+    second: Judgement_animation_1
   - first:
-      213: 6682473901004932845
-    second: Skeleton_2
+      213: 85548708293257970
+    second: Judgement_animation_2
   - first:
-      213: -6895646428441557691
-    second: Skeleton_3
+      213: 209645279681971741
+    second: Judgement_animation_3
   - first:
-      213: 8681928648562347177
-    second: Skeleton_4
+      213: -3347908849517669726
+    second: Judgement_animation_4
   - first:
-      213: -6534455043122499310
-    second: Skeleton_5
+      213: 884398159897005995
+    second: Judgement_animation_5
   - first:
-      213: -7021505876318606439
-    second: Skeleton_6
+      213: 3875681422571319819
+    second: Judgement_animation_6
   - first:
-      213: 653362398722190026
-    second: Skeleton_7
+      213: -1916237277427851554
+    second: Judgement_animation_7
   - first:
-      213: -9021820611684853211
-    second: Skeleton_8
+      213: 8596204472289590935
+    second: Judgement_animation_8
   - first:
-      213: -1443268486790046223
-    second: Skeleton_9
+      213: 238105286354286380
+    second: Judgement_animation_9
   - first:
-      213: -3968840907078709152
-    second: Skeleton_10
+      213: 4875272676319620078
+    second: Judgement_animation_10
   - first:
-      213: -2164511808432914653
-    second: Skeleton_11
+      213: 4125794724178709562
+    second: Judgement_animation_11
   - first:
-      213: -7000201611338815235
-    second: Skeleton_12
+      213: 2948731206955243787
+    second: Judgement_animation_12
   - first:
-      213: -4022789504429121826
-    second: Skeleton_13
+      213: -955095286301708908
+    second: Judgement_animation_13
   - first:
-      213: 8650110944895953673
-    second: Skeleton_14
+      213: 6861470479909016451
+    second: Judgement_animation_14
   - first:
-      213: 4520074865302796247
-    second: Skeleton_15
+      213: 8011762828605209294
+    second: Judgement_animation_15
   - first:
-      213: -1325205120640645288
-    second: Skeleton_16
+      213: 3409876479777661149
+    second: Judgement_animation_16
   - first:
-      213: 6219686596316222553
-    second: Skeleton_17
+      213: 6931513449064476296
+    second: Judgement_animation_17
   - first:
-      213: 2058306284268228198
-    second: Skeleton_18
+      213: 9083382637890363476
+    second: Judgement_animation_18
   - first:
-      213: -6896880325500990939
-    second: Skeleton_19
+      213: -5144850836180234673
+    second: Judgement_animation_19
   - first:
-      213: 8495289983822508492
-    second: Skeleton_20
+      213: 6381609881753505973
+    second: Judgement_animation_20
   - first:
-      213: -1155214034691015396
-    second: Skeleton_21
-  - first:
-      213: 380626319886666678
-    second: Skeleton_22
-  - first:
-      213: 8661365367480307861
-    second: Skeleton_23
-  - first:
-      213: -5806372936476946109
-    second: Skeleton_animtion_0
-  - first:
-      213: 2406462606880051774
-    second: Skeleton_animtion_1
-  - first:
-      213: 739668387768925678
-    second: Skeleton_animtion_2
-  - first:
-      213: 2195971910587712483
-    second: Skeleton_animtion_3
-  - first:
-      213: -8250184756533956977
-    second: Skeleton_animtion_4
-  - first:
-      213: 4567171883119308419
-    second: Skeleton_animtion_5
-  - first:
-      213: -4256696955148154886
-    second: Skeleton_animtion_6
-  - first:
-      213: 3944147885320694654
-    second: Skeleton_animtion_7
-  - first:
-      213: -1038251433492558339
-    second: Skeleton_animtion_8
-  - first:
-      213: 5997827242175665365
-    second: Skeleton_animtion_9
-  - first:
-      213: 1160418850679690545
-    second: Skeleton_animtion_10
-  - first:
-      213: 8048741096117741943
-    second: Skeleton_animtion_11
-  - first:
-      213: 9094097831180868902
-    second: Skeleton_animtion_12
-  - first:
-      213: -3379281413746285376
-    second: Skeleton_animtion_13
-  - first:
-      213: -8814767807380276932
-    second: Skeleton_animtion_14
-  - first:
-      213: 3376819943020722051
-    second: Skeleton_animtion_15
-  - first:
-      213: -3958418883872967879
-    second: Skeleton_animtion_16
-  - first:
-      213: -381518907990730119
-    second: Skeleton_animtion_17
-  - first:
-      213: 8271637348145407725
-    second: Skeleton_animtion_18
-  - first:
-      213: -5183281383998811796
-    second: RedSkeleton_animtion_0
-  - first:
-      213: 3221004268087605500
-    second: RedSkeleton_animtion_1
-  - first:
-      213: -5848603700196558961
-    second: RedSkeleton_animtion_2
-  - first:
-      213: 2328356377295738573
-    second: RedSkeleton_animtion_3
-  - first:
-      213: -2697188300887198265
-    second: RedSkeleton_animtion_4
-  - first:
-      213: -8225293414482869872
-    second: RedSkeleton_animtion_5
-  - first:
-      213: -8670607628111326821
-    second: RedSkeleton_animtion_6
-  - first:
-      213: -8249258528359430509
-    second: RedSkeleton_animtion_7
-  - first:
-      213: 7578731835879239744
-    second: RedSkeleton_animtion_8
-  - first:
-      213: -2947908829653600166
-    second: RedSkeleton_animtion_9
-  - first:
-      213: 2035942281044989077
-    second: RedSkeleton_animtion_10
-  - first:
-      213: 2848222465970645586
-    second: RedSkeleton_animtion_11
-  - first:
-      213: -3875569406428859639
-    second: RedSkeleton_animtion_12
-  - first:
-      213: -6445140344567758711
-    second: RedSkeleton_animtion_13
-  - first:
-      213: -5202180512231035349
-    second: RedSkeleton_animtion_14
-  - first:
-      213: -4523709500693869881
-    second: RedSkeleton_animtion_15
-  - first:
-      213: -3904402320048682359
-    second: RedSkeleton_animtion_16
-  - first:
-      213: 5902204971739443936
-    second: RedSkeleton_animtion_17
-  - first:
-      213: -6212111770028254516
-    second: RedSkeleton_animtion_18
-  - first:
-      213: -3276612950893982780
-    second: RedSkeleton_animtion_19
-  - first:
-      213: 4056984503362266840
-    second: RedSkeleton_animtion_20
-  - first:
-      213: -6955933992986556072
-    second: RedSkeleton_animtion_21
-  - first:
-      213: -610793345366126786
-    second: RedSkeleton_animtion_22
-  - first:
-      213: 7589525384228316728
-    second: RedSkeleton_animtion_23
+      213: -2917359214301385607
+    second: Judgement_animation_21
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -232,8 +97,8 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
-    aniso: -1
+    filterMode: -1
+    aniso: 1
     mipBias: -100
     wrapU: 1
     wrapV: 1
@@ -312,7 +177,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: RedSkeleton_animtion_0
+      name: Judgement_animation_0
       rect:
         serializedVersion: 2
         x: 0
@@ -326,14 +191,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c611bdf1b094118b0800000000000000
-      internalID: -5183281383998811796
+      spriteID: 87f6b80f87ed12490800000000000000
+      internalID: -7772686870851653768
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RedSkeleton_animtion_1
+      name: Judgement_animation_1
       rect:
         serializedVersion: 2
         x: 100
@@ -347,14 +212,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cf8f063f05e43bc20800000000000000
-      internalID: 3221004268087605500
+      spriteID: f3b55e8b8e1971ae0800000000000000
+      internalID: -1578632715649590465
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RedSkeleton_animtion_2
+      name: Judgement_animation_2
       rect:
         serializedVersion: 2
         x: 200
@@ -368,14 +233,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f87bfb10ce595dea0800000000000000
-      internalID: -5848603700196558961
+      spriteID: 2fa20d0d81eef2100800000000000000
+      internalID: 85548708293257970
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RedSkeleton_animtion_3
+      name: Judgement_animation_3
       rect:
         serializedVersion: 2
         x: 300
@@ -389,14 +254,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dc65a3bf9cbff4020800000000000000
-      internalID: 2328356377295738573
+      spriteID: d160848654fc8e200800000000000000
+      internalID: 209645279681971741
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RedSkeleton_animtion_4
+      name: Judgement_animation_4
       rect:
         serializedVersion: 2
         x: 400
@@ -410,14 +275,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7c57749d789a19ad0800000000000000
-      internalID: -2697188300887198265
+      spriteID: 2a2dc1ca3a6d981d0800000000000000
+      internalID: -3347908849517669726
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RedSkeleton_animtion_5
+      name: Judgement_animation_5
       rect:
         serializedVersion: 2
         x: 500
@@ -431,14 +296,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 09183601833e9dd80800000000000000
-      internalID: -8225293414482869872
+      spriteID: baf8ba0d073064c00800000000000000
+      internalID: 884398159897005995
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RedSkeleton_animtion_6
+      name: Judgement_animation_6
       rect:
         serializedVersion: 2
         x: 600
@@ -452,14 +317,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b91d1a31d40dba780800000000000000
-      internalID: -8670607628111326821
+      spriteID: b02b1f638bf29c530800000000000000
+      internalID: 3875681422571319819
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RedSkeleton_animtion_7
+      name: Judgement_animation_7
       rect:
         serializedVersion: 2
         x: 700
@@ -473,14 +338,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 39646cc231fb48d80800000000000000
-      internalID: -8249258528359430509
+      spriteID: ede1d8d49582865e0800000000000000
+      internalID: -1916237277427851554
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RedSkeleton_animtion_8
+      name: Judgement_animation_8
       rect:
         serializedVersion: 2
         x: 800
@@ -494,14 +359,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 040b68d63701d2960800000000000000
-      internalID: 7578731835879239744
+      spriteID: 79ef1734c6adb4770800000000000000
+      internalID: 8596204472289590935
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RedSkeleton_animtion_9
+      name: Judgement_animation_9
       rect:
         serializedVersion: 2
         x: 900
@@ -515,14 +380,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a587242c98ce617d0800000000000000
-      internalID: -2947908829653600166
+      spriteID: c273a441f7bed4300800000000000000
+      internalID: 238105286354286380
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RedSkeleton_animtion_10
+      name: Judgement_animation_10
       rect:
         serializedVersion: 2
         x: 1000
@@ -536,14 +401,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 59492ecb7be114c10800000000000000
-      internalID: 2035942281044989077
+      spriteID: eebe2373ba278a340800000000000000
+      internalID: 4875272676319620078
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RedSkeleton_animtion_11
+      name: Judgement_animation_11
       rect:
         serializedVersion: 2
         x: 1100
@@ -557,8 +422,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 25aa7750e3be68720800000000000000
-      internalID: 2848222465970645586
+      spriteID: a3c4ad63174c14930800000000000000
+      internalID: 4125794724178709562
       vertices: []
       indices: 
       edges: []
@@ -566,7 +431,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 6aa0d2f7eaec67a4db80504c031d4209
+    spriteID: 0c63e645501de3841b91d8fff7bbd6b5
     internalID: 0
     vertices: []
     indices: 
