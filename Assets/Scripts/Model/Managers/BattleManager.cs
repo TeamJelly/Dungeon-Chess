@@ -59,7 +59,11 @@ namespace Model.Managers
             EnemyUnits[3].Position = new Vector2Int(6, 6);
 
             if (GameManager.PartyUnits.Count == 0)
-                 GameManager.Instance.InitForTesting();
+            {
+                GameManager.PartyUnits.Add(UnitManager.Instance.AllUnits[0]);
+                GameManager.PartyUnits.Add(UnitManager.Instance.AllUnits[1]);
+            }
+                 //GameManager.Instance.InitForTesting();
 
             Common.UnitAction.Summon(EnemyUnits);
 

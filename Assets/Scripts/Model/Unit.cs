@@ -8,6 +8,7 @@ public enum UnitClass { NULL, Monster, Warrior, Wizard, Priest, Archer };
 namespace Model
 {
     using Skills;
+    using System;
     using Units;
     [System.Serializable]
     public class Unit
@@ -275,6 +276,16 @@ namespace Model
         {
             initializeUnitFromDB(id);
             CurrentHP = MaximumHP;
+
+            var skillString = descriptor.skills.Split(';');
+
+            //descriptor로부터 스킬 추가
+            for(int i = 0; i < skillString.Length; i++)
+            {
+                if(skillString[i].Length == 1)
+                    skills[i] = (Skill)Activator.CreateInstance(Type.GetType($"Model.Skills.Skill_00{skillString[i]}"));
+                else skills[i] = (Skill)Activator.CreateInstance(Type.GetType($"Model.Skills.Skill_0{skillString[i]}"));
+            }
         }
         private void initializeUnitFromDB(int no)
         {
