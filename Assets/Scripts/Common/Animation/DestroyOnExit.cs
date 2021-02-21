@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Common.Animation
 {
-    public class FadeOutTextStateMachine : StateMachineBehaviour
+    public class DestroyOnExit : StateMachineBehaviour
     {
         // OnStateEnter is called before OnStateEnter is called on any state inside this state machine
         //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -21,7 +21,10 @@ namespace Common.Animation
         // OnStateExit is called before OnStateExit is called on any state inside this state machine
         override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            Destroy(animator.transform.parent.gameObject);
+            if (animator.transform.parent != null)
+                Destroy(animator.transform.parent.gameObject);
+
+            Destroy(animator.gameObject);
         }
 
         // OnStateMove is called before OnStateMove is called on any state inside this state machine

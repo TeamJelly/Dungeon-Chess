@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-namespace Common.UI
+namespace UI.Battle
 {
-    public class FadeOutText : MonoBehaviour
+    public class FadeOutTextUI : MonoBehaviour
     {
-        public static FadeOutText instance;
+        public static FadeOutTextUI instance;
 
         private GameObject prefab;
 

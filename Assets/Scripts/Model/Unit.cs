@@ -285,7 +285,7 @@ namespace Model
             //descriptor로부터 스킬 추가
             for (int i = 0; i < skillString.Length; i++)
             {
-                Debug.Log(skillString[i]);
+                // Debug.Log(skillString[i]);
                 skills[i] = (Skill)Activator.CreateInstance(Type.GetType($"Model.Skills.{skillString[i]}"));
             }
         }

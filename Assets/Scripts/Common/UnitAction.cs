@@ -5,7 +5,6 @@ using Model.Skills;
 using Model.Managers;
 using System.Collections.Generic;
 using UI.Battle;
-using Common.UI;
 
 namespace Common
 {
@@ -41,27 +40,36 @@ namespace Common
             }
 
             string text = "";
-            int damagedArmor = unit.Armor - number;         
 
-            if (damagedArmor > 0)
+            if (unit.Armor > 0)
             {
-                text += $"Armor -{number}";
+                int damagedArmor = unit.Armor - number;
 
-                unit.Armor = damagedArmor;
-                number = 0;
+                if (damagedArmor > 0)
+                {
+                    text += $"방어함!\n";
+                    text += $"Armor -{number}";
+
+                    unit.Armor = damagedArmor;
+                    number = 0;
+                }
+                else
+                {
+                    text += $"Armor -{unit.Armor}\n";
+                    text += $"HP -{-damagedArmor}";
+
+                    unit.Armor = 0;
+                    number = -damagedArmor;
+                }
             }
             else
             {
-                text += $"Armor -{unit.Armor}\n";
-                text += $"HP -{-damagedArmor}";
-
-                unit.Armor = 0;
-                number = -damagedArmor;
+                text += $"HP -{number}";
             }
 
             unit.CurrentHP -= number;
 
-            UI.FadeOutText.MakeText(unit.Position + Vector2Int.up, text, Color.red);
+            FadeOutTextUI.MakeText(unit.Position + Vector2Int.up, text, Color.red);
 
             Debug.Log($"{unit.Name}가(은) {number}만큼 데미지를 입었다! [HP : {unit.CurrentHP + number}>{unit.CurrentHP}]");
 
@@ -74,13 +82,17 @@ namespace Common
 
         public static int Heal(Unit unit, int number)
         {
-            Debug.Log($"{unit.Name}가(은) {number}만큼 회복했다! [HP : {unit.CurrentHP}>{unit.CurrentHP + number}]");
             // Before Heal
+
+
+            if (unit.CurrentHP + number > unit.MaximumHP)
+                number = unit.MaximumHP - unit.CurrentHP;
 
             unit.CurrentHP += number;
 
-            if (unit.MaximumHP < unit.CurrentHP)
-                unit.CurrentHP = unit.MaximumHP;
+            FadeOutTextUI.MakeText(unit.Position + Vector2Int.up, $"HP +{number}", Color.green);
+
+            Debug.Log($"{unit.Name}가(은) {number}만큼 회복했다! [HP : {unit.CurrentHP}>{unit.CurrentHP + number}]");
 
             // After Heal
 
