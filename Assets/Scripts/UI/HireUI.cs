@@ -4,6 +4,7 @@ using UnityEngine;
 using Model.Managers;
 using Model;
 using Model.Units;
+using UnityEngine.UI;
 
 namespace UI
 {
@@ -13,6 +14,9 @@ namespace UI
         public int maximumUnitCount = 0; // 인스펙터 창에서 세팅할 것.
         public int selectedUnitCount = 0;//현재 고용된 파티 인원 수
         [Header("[중앙 패널]")]
+
+        public Button nextButton;
+        public Button prevButton;
         public UnityEngine.UI.Image currentUnitImage;
         public Common.UI.Text selectButton;
         public UnityEngine.UI.Text descriptionText;
@@ -34,6 +38,8 @@ namespace UI
             {
                 unitImagies.Add(units[i].Portrait);
             }
+            nextButton.onClick.AddListener(ShowNextUnit);
+            prevButton.onClick.AddListener(ShowPrevUnit);
             UpdateUI();
         }
         void UpdateUI()
@@ -68,13 +74,23 @@ namespace UI
         //UnitManager에서 Unit을 가져와서 화면에 보여주기.
         public void ShowNextUnit()
         {
-            if(index < unitImagies.Count - 1) index++;
+            if (index < unitImagies.Count - 1)
+            {
+                prevButton.interactable = true;
+                index++;
+            }
+            else nextButton.interactable = false;
             UpdateUI();
         }
 
         public void ShowPrevUnit()
         {
-            if(index > 0) index--;
+            if (index > 0)
+            {
+                nextButton.interactable = true;
+                index--;
+            }
+            else prevButton.interactable = false;
             UpdateUI();
         }
 

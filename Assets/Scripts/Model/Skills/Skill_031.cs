@@ -4,15 +4,15 @@ using UnityEngine;
 
 namespace Model.Skills
 {
-    public class Skill_014 : Skill
+    public class Skill_031 : Skill
     {
-        private Extension_014 parsedExtension;
-        public Extension_014 ParsedExtension => parsedExtension;
-        public Skill_014() : base(14)
+        private Extension_031 parsedExtension;
+        public Extension_031 ParsedExtension => parsedExtension;
+        public Skill_031() : base(31)
         {
             if (extension != null)
             {
-                parsedExtension = Common.Extension.Parse<Extension_014>(extension);
+                parsedExtension = Common.Extension.Parse<Extension_031>(extension);
             }
         }
         public override IEnumerator Use(Unit user, Vector2Int target)
@@ -21,8 +21,8 @@ namespace Model.Skills
             user.SkillCount--;
             CurrentReuseTime = reuseTime;
 
-            //Strength * 2 + 강화 횟수 * 2
-            int damage = user.Strength * ParsedExtension.strengthToDamageRatio + Level * ParsedExtension.upgradePerEnhancedLevel;
+            //공격력 계수 1.0 + 강화 횟수 만큼 회복
+            int heal = user.Strength * ParsedExtension.strengthToDamageRatio + Level;
 
             Unit targetUnit = Managers.BattleManager.GetUnit(target);
             if (targetUnit != null)
@@ -30,12 +30,12 @@ namespace Model.Skills
                 Debug.Log($"{user.Name}가 {Name}스킬을 {targetUnit.Name}에 사용!");
 
                 // 1단계 : 스킬 애니메이션 재생 및 화면 갱신.
-                user.animationState = Unit.AnimationState.Attack;
+                user.animationState = Unit.AnimationState.Heal;
                 yield return new WaitWhile(() => user.animationState != Unit.AnimationState.Idle);
-                targetUnit.animationState = Unit.AnimationState.Hit;
+                targetUnit.animationState = Unit.AnimationState.Heal;
 
                 // 2단계 : 스킬 적용.
-                Common.UnitAction.Damage(targetUnit, damage);
+                Common.UnitAction.Heal(targetUnit, heal);
             }
             else
             {
@@ -46,16 +46,15 @@ namespace Model.Skills
         }
         public override string GetDescription(Unit user, int level)
         {
-            int damage = user.Strength * ParsedExtension.strengthToDamageRatio + Level * ParsedExtension.upgradePerEnhancedLevel;
-            string str = base.GetDescription(user, level).Replace("X", damage.ToString());
+            int heal = user.Strength * ParsedExtension.strengthToDamageRatio + Level;
+            string str = base.GetDescription(user, level).Replace("X", heal.ToString());
             return str;
         }
     }
     [System.Serializable]
-    public class Extension_014 : Common.Extensionable
+    public class Extension_031 : Common.Extensionable
     {
         public int strengthToDamageRatio;
-        public int upgradePerEnhancedLevel;
     }
 }
 
