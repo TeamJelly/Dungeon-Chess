@@ -19,10 +19,10 @@ namespace Common.Animation
         //}
 
         // OnStateExit is called before OnStateExit is called on any state inside this state machine
-        //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-        //{
-        //    
-        //}
+        override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        {
+            Destroy(animator.transform.parent.gameObject);
+        }
 
         // OnStateMove is called before OnStateMove is called on any state inside this state machine
         //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -45,7 +45,7 @@ namespace Common.Animation
         //OnStateMachineExit is called when exiting a state machine via its Exit Node
         override public void OnStateMachineExit(Animator animator, int stateMachinePathHash)
         {
-            Destroy(animator.gameObject);
+            Destroy(animator.transform.parent.gameObject);
         }
     }
 }
