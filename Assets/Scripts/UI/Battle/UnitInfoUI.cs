@@ -68,7 +68,7 @@ namespace UI.Battle
 
         private void OnValidate()
         {
-            Awake();
+            // Awake();
         }
 
         private void Awake()

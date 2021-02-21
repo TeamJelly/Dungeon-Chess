@@ -37,20 +37,30 @@ namespace Common
             {
                 number = unit.StateEffects[i].BeforeGetDamage(number);
             }
-            int damagedArmor = unit.Armor - number;
 
-          
+            string text = "";
+            int damagedArmor = unit.Armor - number;         
+
             if (damagedArmor > 0)
             {
+                text += $"Armor -{number}";
+
                 unit.Armor = damagedArmor;
                 number = 0;
             }
             else
             {
+                text += $"Armor -{unit.Armor}\n";
+                text += $"HP -{-damagedArmor}";
+
                 unit.Armor = 0;
                 number = -damagedArmor;
             }
+
             unit.CurrentHP -= number;
+
+            UI.FadeOutText.MakeText(unit.Position + Vector2Int.up, text, Color.red);
+
             Debug.Log($"{unit.Name}가(은) {number}만큼 데미지를 입었다! [HP : {unit.CurrentHP + number}>{unit.CurrentHP}]");
 
             if (unit.CurrentHP <= 0)

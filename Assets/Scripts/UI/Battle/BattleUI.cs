@@ -33,7 +33,7 @@ namespace UI.Battle
 
         private void OnValidate()
         {
-            Awake();
+            // Awake();
         }
 
         private void Awake()
@@ -62,7 +62,7 @@ namespace UI.Battle
         }
 
         private void Update()
-        {
+        {            
             foreach (var unit in BattleManager.GetUnit())
                 if (unit.IsModified)
                 {
@@ -75,7 +75,6 @@ namespace UI.Battle
 
                     unit.IsModified = false;
                 }
-
         }
 
         /// <summary>
