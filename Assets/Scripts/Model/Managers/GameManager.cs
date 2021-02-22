@@ -1,6 +1,7 @@
 ﻿using Model;
 using System.Collections;
 using System.Collections.Generic;
+using UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,7 +17,16 @@ namespace Model.Managers
         public List<Vector2Int>[] pathList = null;
         List<Unit> partyUnits = new List<Unit>();
 
-        public int Gold;
+        public int Gold
+        {
+            get => gold;
+            set
+            {
+                gold = value;
+                HUD.instance.UpdateUI();
+            }
+        }
+        private int gold;
         public int stage;
         public static List<Unit> PartyUnits { get => Instance.partyUnits; }
 
