@@ -23,7 +23,7 @@ namespace Model.Skills
             CurrentReuseTime = reuseTime;
 
             //Strength *2.0 + Strength* 0.2 * 강화 횟수
-            float damage = user.Strength * ParsedExtension.strengthToDamageRatio + user.Strength * ParsedExtension.upgradePerEnhancedLevel;
+            float damage = user.Strength * ParsedExtension.strengthToDamageRatio + user.Strength * ParsedExtension.upgradePerEnhancedLevel * Level;
 
             Unit targetUnit = Managers.BattleManager.GetUnit(target);
             if (targetUnit != null)
@@ -48,7 +48,7 @@ namespace Model.Skills
         }
         public override string GetDescription(Unit user, int level)
         {
-            float damage = user.Strength * ParsedExtension.strengthToDamageRatio + user.Strength * ParsedExtension.upgradePerEnhancedLevel;
+            float damage = user.Strength * ParsedExtension.strengthToDamageRatio + user.Strength * ParsedExtension.upgradePerEnhancedLevel * level;
             string str = base.GetDescription(user, level).Replace("X", damage.ToString());
             return str;
         }

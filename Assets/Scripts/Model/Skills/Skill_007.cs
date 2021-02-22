@@ -50,7 +50,7 @@ namespace Model.Skills
         }
         public override string GetDescription(Unit user, int level)
         {
-            int defense = 5 + Level;
+            int defense = 5 + level;
             string str = base.GetDescription(user, level).Replace("X", defense.ToString());
             return str;
         }

@@ -26,10 +26,14 @@ namespace UI.Popup
 
         [Header("스킬 교체창")]
         public GameObject ChangeSkillPanel;
+        
         public Image beforeSkillImage;
         public Image afterSkillImage;
         public TextMeshProUGUI beforeSkillText;
         public TextMeshProUGUI afterSkillText;
+
+        public TextMeshProUGUI beforeSkillTitle;
+        public TextMeshProUGUI afterSkillTitle;
         public Button setButton;
 
         Action<int, int> OnSlotClick;
@@ -107,9 +111,11 @@ namespace UI.Popup
         /// <param name="s">슬롯 인덱스</param>
         void EnableChangeSkillUI(int u, int s)
         {
+            beforeSkillTitle.text = GameManager.PartyUnits[u].Skills[s]?.Name;
             beforeSkillImage.sprite = GameManager.PartyUnits[u].Skills[s]?.Sprite;
             beforeSkillText.text = GameManager.PartyUnits[u].Skills[s]?.GetDescription(GameManager.PartyUnits[u]);
 
+            afterSkillTitle.text = skill.Name;
             afterSkillImage.sprite = skill.Sprite;
             afterSkillText.text = skill.GetDescription(GameManager.PartyUnits[u]);
 
@@ -133,15 +139,17 @@ namespace UI.Popup
             if (GameManager.PartyUnits[u].Skills[s] == null) return;
 
             //등급 검사. 새 스킬 등급이 기존 스킬보다 작을 때 레전드 등급이 아닐경우에는 종료.
-            if (skill.Grade <= GameManager.PartyUnits[u].Skills[s].Grade && skill.Grade != Grade.Legend)
+            /*if (skill.Grade <= GameManager.PartyUnits[u].Skills[s].Grade && skill.Grade != Grade.Legend)
             {
                 return;
-            }
+            }*/
 
+            beforeSkillTitle.text = GameManager.PartyUnits[u].Skills[s].Name;
             beforeSkillImage.sprite = GameManager.PartyUnits[u].Skills[s].Sprite;
             beforeSkillText.text = GameManager.PartyUnits[u].Skills[s].GetDescription(GameManager.PartyUnits[u]);
 
             //한단계 업그레이드 시의 설명
+            afterSkillTitle.text = GameManager.PartyUnits[u].Skills[s].Name;
             afterSkillImage.sprite = GameManager.PartyUnits[u].Skills[s].Sprite;
             afterSkillText.text = GameManager.PartyUnits[u].Skills[s].GetDescription(GameManager.PartyUnits[u], GameManager.PartyUnits[u].Skills[s].Level + 1);
 
