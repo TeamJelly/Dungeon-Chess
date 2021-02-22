@@ -37,9 +37,18 @@ namespace UI.Popup
         public Button setButton;
 
         Action<int, int> OnSlotClick;
-        Skill skill;
+        private Skill skill;
 
-
+        private Sprite noSprite;
+        Sprite NoSkill
+        {
+            get
+            {
+                if (noSprite == null)
+                    noSprite = Resources.Load<Sprite>("1bitpack_kenney_1/Tilesheet/-");
+                return noSprite;
+            }
+        }
         public static GetSkillUI instance;
         private void Awake()
         {
@@ -73,7 +82,7 @@ namespace UI.Popup
                 {
                     int skillIndex = j;
                     SkillSlots[i].transform.GetChild(j).GetComponent<Button>().onClick.AddListener(() => OnSlotClick(unitIndex, skillIndex));
-                    SkillSlots[i].transform.GetChild(j).GetComponent<Image>().sprite = GameManager.PartyUnits[i].Skills[j]?.Sprite;
+                    SkillSlots[i].transform.GetChild(j).GetComponent<Image>().sprite = GameManager.PartyUnits[i].Skills[j] == null? NoSkill : GameManager.PartyUnits[i].Skills[j].Sprite;
                 }
             }
             //패널 활성화

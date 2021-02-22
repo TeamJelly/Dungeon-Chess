@@ -38,6 +38,7 @@ namespace Model.Managers
         public static void Reset()
         {
             instance = new GameManager();
+            UnitManager.Reset();
         }
 
         public static void AddPartyUnit(Unit unit)

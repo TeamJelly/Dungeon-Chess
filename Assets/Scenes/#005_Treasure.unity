@@ -447,10 +447,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: PopupUI
       objectReference: {fileID: 0}
+    - target: {fileID: 5482597011686852810, guid: 2824e4e5ed5b67a4cb936492ee7d4de1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7232987736242623528, guid: 2824e4e5ed5b67a4cb936492ee7d4de1,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2824e4e5ed5b67a4cb936492ee7d4de1, type: 3}

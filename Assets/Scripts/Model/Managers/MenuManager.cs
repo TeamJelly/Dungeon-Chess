@@ -19,12 +19,18 @@ namespace Model.Managers
 
         public void GotoMain()
         {
+            GameManager.Reset();
             SceneLoader.GotoMain();
         }
 
         public void GotoStage()
         {
             SceneLoader.GotoStage();
+        }
+
+        public void ExitGame()
+        {
+            Application.Quit();
         }
 
     }

@@ -329,6 +329,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\uC2A4\uD0AC\uD68D\uB4DD"
       objectReference: {fileID: 0}
+    - target: {fileID: 244154134704501709, guid: ee225d207c6e7b04a962c64f314e307c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 244154134704501710, guid: ee225d207c6e7b04a962c64f314e307c,
         type: 3}
       propertyPath: m_Pivot.x
@@ -954,7 +959,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: -35, y: 35}
-  m_SizeDelta: {x: 200, y: 75}
+  m_SizeDelta: {x: 300, y: 120}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &644060374
 MonoBehaviour:
@@ -1558,6 +1563,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animators: []
+  prefab: {fileID: 0}
 --- !u!114 &1309214669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3362,6 +3368,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GotoStage
       objectReference: {fileID: 0}
+    - target: {fileID: 244154134704501709, guid: ee225d207c6e7b04a962c64f314e307c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 244154134704501710, guid: ee225d207c6e7b04a962c64f314e307c,
         type: 3}
       propertyPath: m_Pivot.x
@@ -4957,7 +4968,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 418, y: -204}
+  m_AnchoredPosition: {x: 418, y: -203.99976}
   m_SizeDelta: {x: 640, y: -440}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &5384038421684691288

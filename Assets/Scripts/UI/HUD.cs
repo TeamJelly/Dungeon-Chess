@@ -20,7 +20,8 @@ namespace UI
 
         public void EnableMenu()
         {
-            Debug.Log("Menu Enabled");
+            PauseMenuUI.instance.Enable();
+            //Debug.Log("Menu Enabled");
         }
     }
 }

@@ -24,5 +24,10 @@ namespace Model.Managers
             AllUnits.Add(new Proto_Priest());
             AllUnits.Add(new Proto_Warrior());
         }
+
+        public static void Reset()
+        {
+            instance = new UnitManager();
+        }
     }
 }
