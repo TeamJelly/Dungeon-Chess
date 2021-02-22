@@ -15,6 +15,8 @@ namespace UI.Battle
         private void Awake()
         {
             instance = this;
+
+            tileIndicators = null;
         }
 
         private static GameObject tileIndicatorParent;
