@@ -44,39 +44,50 @@ namespace Model.Managers
             instance = this;
             GenerateTiles(10, 10);
 
-            /***유닛 더미데이터 추가. 추후 BattleUI의 EndGame 함수 포함하여 코드 제거***/
-            List<Unit> EnemyUnits = new List<Unit>();
 
 
-            EnemyUnits.Add(new Proto_Skeleton());
-          //  EnemyUnits.Add(new Proto_Skeleton());
-          //  EnemyUnits.Add(new Proto_RedSkeleton());
-          //  EnemyUnits.Add(new Proto_RedSkeleton());
-          //  EnemyUnits.Add(new Proto_Judgement());
+            if (GameManager.Instance.currentRoom.category == Room.Category.Monster)
+            {
+                int rand = UnityEngine.Random.Range(0, 2);
 
-            EnemyUnits[0].Position = new Vector2Int(3, 3);
-          //  EnemyUnits[1].Position = new Vector2Int(3, 6);
-           // EnemyUnits[2].Position = new Vector2Int(6, 3);
-           // EnemyUnits[3].Position = new Vector2Int(6, 6);
-           // EnemyUnits[4].Position = new Vector2Int(0, 0);
+                if (rand == 0)
+                {
+                    Common.UnitAction.Summon(new Proto_Skeleton(), new Vector2Int(4, 4));
+                    Common.UnitAction.Summon(new Proto_Skeleton(), new Vector2Int(5, 4));
+                }
+                else
+                {
+                    Common.UnitAction.Summon(new Proto_RedSkeleton(), new Vector2Int(4, 4));
+                }
+            }
+            else if (GameManager.Instance.currentRoom.category == Room.Category.Elite)
+            {
+                Common.UnitAction.Summon(new Proto_RedSkeleton(), new Vector2Int(6, 7));
+                Common.UnitAction.Summon(new Proto_Skeleton(), new Vector2Int(4, 4));
+                Common.UnitAction.Summon(new Proto_Skeleton(), new Vector2Int(4, 6));
+            }
+            else if (GameManager.Instance.currentRoom.category == Room.Category.Boss)
+            {
+                Common.UnitAction.Summon(new Proto_Judgement(), new Vector2Int(4, 4));
+            }
 
             if (GameManager.PartyUnits.Count == 0)
             {
                 GameManager.PartyUnits.Add(UnitManager.Instance.AllUnits[0]);
                 GameManager.PartyUnits.Add(UnitManager.Instance.AllUnits[1]);
             }
-                 //GameManager.Instance.InitForTesting();
 
-            Common.UnitAction.Summon(EnemyUnits);
+            Vector2Int[] party_position = { new Vector2Int(4, 0), new Vector2Int(5, 0), new Vector2Int(3, 0), new Vector2Int(6, 0) };
 
-
-            for(int i = 0; i <  GameManager.PartyUnits.Count; i++)
+            for (int i = 0; i < GameManager.PartyUnits.Count; i++)
             {
-                GameManager.PartyUnits[i].Category = Category.Party;
-                GameManager.PartyUnits[i].Position = new Vector2Int(i + 4, i + 4);
+                Common.UnitAction.Summon(GameManager.PartyUnits[i], party_position[i]);
+
+                foreach (var skill in GameManager.PartyUnits[i].Skills)
+                    if (skill != null)
+                        skill.CurrentReuseTime = 0;
             }
 
-            Common.UnitAction.Summon(GameManager.PartyUnits);
             /***************************************************************************/
         }
 
