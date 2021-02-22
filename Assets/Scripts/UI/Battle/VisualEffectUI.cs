@@ -31,7 +31,7 @@ namespace UI.Battle
         public static void MakeVisualEffect(Vector2Int position, string name)
         {
             GameObject gameObject = Instantiate(instance.prefab);
-            gameObject.transform.position = new Vector3(position.x, position.y);
+            gameObject.transform.position = new Vector3(position.x, position.y, -5);
             gameObject.GetComponent<Animator>().runtimeAnimatorController = instance.visualEffects[name];
         }
     }
