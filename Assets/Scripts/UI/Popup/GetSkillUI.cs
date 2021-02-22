@@ -8,11 +8,13 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Common.UI;
+using System.Runtime.CompilerServices;
 
 namespace UI.Popup
 {
     public class GetSkillUI : MonoBehaviour
     {
+        public GameObject panel;
 
         [Header("행동 선택창")]
         public GameObject SelectBehaviorPanel;
@@ -57,13 +59,12 @@ namespace UI.Popup
 
 
         }
-        public void Enable(string name)
+
+        public void Enable(Skill newSkill)
         {
-            UIEffect.FadeInPanel(gameObject);
-            //StartCoroutine(FadeInPanel(gameObject));
-
-            skill = (Skill)Activator.CreateInstance(Type.GetType($"Model.Skills.{name}"));
-
+            UIEffect.FadeInPanel(panel);
+            Debug.Log(newSkill);
+            skill = newSkill;
             //Skill 이미지, 설명 UI 갱신
             skillImage.sprite = skill.Sprite;
             skillDescription.text = $"<{skill.Name}>\n\n{skill.Description}";
@@ -83,7 +84,7 @@ namespace UI.Popup
                 {
                     int skillIndex = j;
                     SkillSlots[i].transform.GetChild(j).GetComponent<Button>().onClick.AddListener(() => OnSlotClick(unitIndex, skillIndex));
-                    SkillSlots[i].transform.GetChild(j).GetComponent<Image>().sprite = GameManager.PartyUnits[i].Skills[j] == null? NoSkill : GameManager.PartyUnits[i].Skills[j].Sprite;
+                    SkillSlots[i].transform.GetChild(j).GetComponent<Image>().sprite = GameManager.PartyUnits[i].Skills[j] == null ? NoSkill : GameManager.PartyUnits[i].Skills[j].Sprite;
                 }
             }
 
@@ -97,6 +98,13 @@ namespace UI.Popup
             SelectBehaviorPanel.SetActive(true);
             SelectSlotPanel.SetActive(false);
             ChangeSkillPanel.SetActive(false);
+        }
+        public void Enable(string name)
+        {
+            skill = (Skill)Activator.CreateInstance(Type.GetType($"Model.Skills.{name}"));
+            Enable(skill);
+
+            
         }
 
         /******************************행동 선택창에서 쓰이는 함수**************************/
@@ -194,7 +202,7 @@ namespace UI.Popup
         }
         public void Disable()
         {
-            UIEffect.FadeOutPanel(gameObject);
+            UIEffect.FadeOutPanel(panel);
         }
         /***********************************************************************************/
     }

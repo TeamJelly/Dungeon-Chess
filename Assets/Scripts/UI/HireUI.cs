@@ -44,6 +44,7 @@ namespace UI
         }
         private void Start()
         {
+            HUD.SetText("유닛 선택");
             List<Unit> units = UnitManager.Instance.AllUnits;
 
             for (int i = 0; i < units.Count; i++)
