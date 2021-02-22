@@ -88,7 +88,19 @@ namespace UI.Popup
             OnSlotClick = EnableChangeSkillUI;
 
             for (int i = 0; i < GameManager.PartyUnits.Count; i++)
-                unitImagies[i].transform.parent.gameObject.SetActive(skill.unitClass == GameManager.PartyUnits[i].UnitClass);
+            {
+                bool isActive = true;
+                for (int j = 0; j < GameManager.PartyUnits[i].Skills.Length; j++)
+                    if (GameManager.PartyUnits[i].Skills[j]?.Name == skill.Name)
+                    {
+                        isActive = false;
+                        break;
+                    }
+
+                isActive = isActive && skill.unitClass == GameManager.PartyUnits[i].UnitClass;
+                unitImagies[i].transform.parent.gameObject.SetActive(isActive);
+
+            }
 
             SelectSlotPanel.SetActive(true);
         }
