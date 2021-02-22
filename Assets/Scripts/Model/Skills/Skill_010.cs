@@ -50,7 +50,7 @@ namespace Model.Skills
         }
         public override string GetDescription(Unit user, int level)
         {
-            int damage = 40 + Level == 4 ? 20 : 0;
+            int damage = 40 + level == 4 ? 20 : 0;
             string str = base.GetDescription(user, level).Replace("X", damage.ToString());
             return str;
         }
