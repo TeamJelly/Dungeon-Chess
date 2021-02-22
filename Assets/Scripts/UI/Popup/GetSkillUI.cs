@@ -111,12 +111,12 @@ namespace UI.Popup
         public void EquipSkill()
         {
             OnSlotClick = EnableChangeSkillUI;
-
             for (int i = 0; i < GameManager.PartyUnits.Count; i++)
             {
                 bool isActive = true;
                 for (int j = 0; j < GameManager.PartyUnits[i].Skills.Length; j++)
-                    if (GameManager.PartyUnits[i].Skills[j]?.Name == skill.Name)
+                    if (GameManager.PartyUnits[i].Skills[j]?.Name == skill.Name &&
+                        GameManager.PartyUnits[i].Skills[j]?.Level == GameManager.PartyUnits[i].Skills[j]?.MaxLevel)
                     {
                         isActive = false;
                         break;
@@ -148,7 +148,7 @@ namespace UI.Popup
         /// <param name="s">슬롯 인덱스</param>
         void EnableChangeSkillUI(int u, int s)
         {
-            beforeSkillTitle.text = GameManager.PartyUnits[u].Skills[s].Level != 0 ? GameManager.PartyUnits[u].Skills[s]?.Name + $" +{GameManager.PartyUnits[u].Skills[s]?.Level}"
+            beforeSkillTitle.text = GameManager.PartyUnits[u].Skills[s]?.Level != 0 ? GameManager.PartyUnits[u].Skills[s]?.Name + $" +{GameManager.PartyUnits[u].Skills[s]?.Level}"
                                                                                     : GameManager.PartyUnits[u]?.Skills[s].Name;
             beforeSkillImage.sprite = GameManager.PartyUnits[u].Skills[s]?.Sprite;
             beforeSkillText.text = GameManager.PartyUnits[u].Skills[s]?.GetDescription(GameManager.PartyUnits[u]);

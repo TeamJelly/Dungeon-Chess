@@ -88,7 +88,7 @@ namespace Model.Skills
             int damage = user.Strength * ParsedExtension.strengthToDamageRatio;
 
             List<Unit> targetUnits = new List<Unit>();
-            foreach (Vector2Int vector in GetRelatePositions(user, user.Position))
+            foreach (Vector2Int vector in GetRelatePositions(user, target))
             {
                 Unit targetUnit = Managers.BattleManager.GetTile(vector).GetUnit();
                 if (targetUnit != null)
@@ -129,8 +129,9 @@ namespace Model.Skills
             double cos = Math.Cos(-angle);
             foreach(Vector2Int vector in Common.Range.ParseRangeSchema(RPSchema))
             {
-                Vector2Int pos = new Vector2Int((int)Math.Round((vector.x * cos + vector.y * sin)), (int)Math.Round(vector.x * -sin + vector.y * cos));
-                positions.Add(pos + position);
+                Vector2Int pos = new Vector2Int((int)Math.Round((vector.x * cos + vector.y * sin)), (int)Math.Round(vector.x * -sin + vector.y * cos)) + position;
+                if (Model.Managers.BattleManager.IsAvilablePosition(pos))
+                    positions.Add(pos);
             }
             return positions;
         }
