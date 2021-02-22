@@ -66,7 +66,7 @@ namespace UI.Popup
 
             //Skill 이미지, 설명 UI 갱신
             skillImage.sprite = skill.Sprite;
-            skillDescription.text = $"{skill.Name}\n{skill.Description}";
+            skillDescription.text = $"<{skill.Name}>\n\n{skill.Description}";
 
             //UI 초기화
             for (int i = 0; i < 4; i++)
