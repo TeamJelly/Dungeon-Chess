@@ -40,6 +40,7 @@ namespace UI.Battle
             hPBarPrefab = Resources.Load<GameObject>("Prefabs/UI/Battle/HP_BAR");
             thisTurnUnitInfo = transform.Find("Panel/ThisTurnUnitInfo").GetComponent<UnitInfoUI>();
             otherUnitInfo = transform.Find("Panel/OtherUnitInfo").GetComponent<UnitInfoUI>();
+            otherUnitInfo.gameObject.SetActive(false);
             turnEndButton = transform.Find("Panel/TurnEndButton").GetComponent<Button>();
         }
 
@@ -184,6 +185,7 @@ namespace UI.Battle
                 entry_PointerClick.eventID = EventTriggerType.PointerClick;
                 entry_PointerClick.callback.AddListener((data) =>
                 {
+                    otherUnitInfo.gameObject.SetActive(true);
                     otherUnitInfo.SetUnitInfo(unit, false);
                 });
                 eventTrigger.triggers.Add(entry_PointerClick);

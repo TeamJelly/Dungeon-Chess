@@ -5,6 +5,7 @@ using Model.Managers;
 using Model;
 using Model.Units;
 using UnityEngine.UI;
+using TMPro;
 
 namespace UI
 {
@@ -19,7 +20,7 @@ namespace UI
         public Button prevButton;
         public UnityEngine.UI.Image currentUnitImage;
         public Common.UI.Text selectButton;
-        public UnityEngine.UI.Text descriptionText;
+        public TextMeshProUGUI descriptionText;
 
         [Header("[하단 패널]")]
         public Common.UI.UImage testImage;
@@ -30,6 +31,17 @@ namespace UI
         int index = 0;
 
         List<Sprite> unitImagies = new List<Sprite>();
+
+        private Sprite noSprite;
+        Sprite NoSkill
+        {
+            get
+            {
+                if (noSprite == null)
+                    noSprite = Resources.Load<Sprite>("1bitpack_kenney_1/Tilesheet/-");
+                return noSprite;
+            }
+        }
         private void Start()
         {
             List<Unit> units = UnitManager.Instance.AllUnits;
@@ -40,13 +52,20 @@ namespace UI
             }
             nextButton.onClick.AddListener(ShowNextUnit);
             prevButton.onClick.AddListener(ShowPrevUnit);
+            for (int i = 0; i < maximumUnitCount; i++) partyImagies[i].Sprite = NoSkill;
             UpdateUI();
         }
         void UpdateUI()
         {
             currentUnit = UnitManager.Instance.AllUnits[index];
             currentUnitImage.sprite = unitImagies[index];
-            descriptionText.text = $"이름: {UnitManager.Instance.AllUnits[index].Name}\n";
+            descriptionText.text =   $"{currentUnit.UnitClass}\n" +
+                                $"{currentUnit.Level}\n" +
+                                $"{currentUnit.CurrentHP} <color=#0000ff>+{currentUnit.Armor}</color> /{currentUnit.MaximumHP}\n" +
+                                $"{currentUnit.CurrentEXP}/{currentUnit.NextEXP}\n" +
+                                $"{currentUnit.Strength}\n" +
+                                $"{currentUnit.Agility}\n" +
+                                $"{currentUnit.Move}";
 
             if (hasCurrentUnitInParty)
             {
@@ -105,7 +124,7 @@ namespace UI
                 Hire();
             }
 
-            for (int i = 0; i < maximumUnitCount; i++) partyImagies[i].Sprite = null;
+            for (int i = 0; i < maximumUnitCount; i++) partyImagies[i].Sprite = NoSkill;
             for (int i = 0; i < GameManager.PartyUnits.Count; i++)
             {
                 int index = UnitManager.Instance.AllUnits.IndexOf(GameManager.PartyUnits[i]);
