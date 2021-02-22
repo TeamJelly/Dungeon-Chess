@@ -35,6 +35,7 @@ namespace UI.Popup
         public TextMeshProUGUI beforeSkillTitle;
         public TextMeshProUGUI afterSkillTitle;
         public Button setButton;
+        public Button cancelButton;
 
         Action<int, int> OnSlotClick;
         private Skill skill;
@@ -85,6 +86,13 @@ namespace UI.Popup
                     SkillSlots[i].transform.GetChild(j).GetComponent<Image>().sprite = GameManager.PartyUnits[i].Skills[j] == null? NoSkill : GameManager.PartyUnits[i].Skills[j].Sprite;
                 }
             }
+
+            cancelButton.onClick.RemoveAllListeners();
+            cancelButton.onClick.AddListener(() =>
+            {
+                UIEffect.FadeOutPanel(ChangeSkillPanel);
+            });
+
             //패널 활성화
             SelectBehaviorPanel.SetActive(true);
             SelectSlotPanel.SetActive(false);
@@ -146,9 +154,9 @@ namespace UI.Popup
             {
                 Common.UnitAction.AddSkill(GameManager.PartyUnits[u], skill, s);
                 //.Skills[s] = skill;
-                gameObject.SetActive(false);
+                Disable();
             });
-            ChangeSkillPanel.SetActive(true);
+            UIEffect.FadeInPanel(ChangeSkillPanel);
         }
 
         /// <summary>
@@ -180,10 +188,9 @@ namespace UI.Popup
             setButton.onClick.AddListener(() =>
             {
                 Common.UnitAction.EnhanceSkill(GameManager.PartyUnits[u], s);
-                gameObject.SetActive(false);
+                Disable();
             });
-
-            ChangeSkillPanel.SetActive(true);
+            UIEffect.FadeInPanel(ChangeSkillPanel);
         }
         public void Disable()
         {

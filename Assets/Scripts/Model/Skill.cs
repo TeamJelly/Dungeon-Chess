@@ -245,7 +245,7 @@ namespace Model
         public virtual void Upgrade()
         {
             if (level < MaxLevel)
-                level++;
+                Level++;
         }
 
         /// <summary>
