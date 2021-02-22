@@ -28,6 +28,7 @@ namespace UI.Battle
 
         public UnitInfoUI ThisTurnUnitInfo { get => thisTurnUnitInfo; set => thisTurnUnitInfo = value; }
         public Dictionary<Unit, GameObject> UnitObjects { get => unitObjects; set => unitObjects = value; }
+        public Dictionary<Unit, Slider> HpBars { get => hpBars; set => hpBars = value; }
 
         private void OnValidate()
         {

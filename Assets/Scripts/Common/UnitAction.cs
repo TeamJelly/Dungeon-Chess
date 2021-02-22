@@ -13,8 +13,21 @@ namespace Common
         public static void Die(Unit unit)
         {
             Debug.Log($"{unit.Name}는(은) 사망했다!");
+
             unit.Agility = -10;
             unit.Category = Category.NULL;
+
+            BattleManager.instance.AllUnits.Remove(unit);
+
+            VisualEffectUI.MakeVisualEffect(unit.Position, "explosion");
+
+            GameObject gameObject = BattleUI.instance.UnitObjects[unit];
+            BattleUI.instance.UnitObjects.Remove(unit);
+            BattleUI.Destroy(gameObject);
+
+            gameObject = BattleUI.instance.HpBars[unit].gameObject;
+            BattleUI.instance.HpBars.Remove(unit);
+            BattleUI.Destroy(gameObject);
 
             if (BattleManager.CheckGameState() != BattleManager.State.Continue)
                 BattleUI.instance.ThisTurnEnd();

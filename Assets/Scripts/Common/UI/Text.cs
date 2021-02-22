@@ -36,6 +36,12 @@ namespace Common.UI
 
         public TMP_Text TextMesh => textMesh;
 
+        public void Start()
+        {
+            
+        }
+
+
         public string TextString
         {
             get => textMesh.text;
