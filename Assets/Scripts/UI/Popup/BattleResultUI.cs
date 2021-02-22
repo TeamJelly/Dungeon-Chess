@@ -29,14 +29,16 @@ namespace  UI.Popup
         }
 
         bool isUIEnabled = false;
+
+        int[] skillNumbers = { 0, 1, 2, 3, 4, 5, 7, 8};
         public void EnableWinUI()
         {
             if (isUIEnabled) return;
             isUIEnabled = true;
-
+            
             int gold = UnityEngine.Random.Range(0, 500);
 
-            int skillNumber = UnityEngine.Random.Range(0, 10);
+            int skillNumber = skillNumbers[UnityEngine.Random.Range(0, 8)];
             Skill skill = (Skill)Activator.CreateInstance(Type.GetType($"Model.Skills.Skill_00{skillNumber}"));
 
             GameObject goldReward = Instantiate(rewardPrefab,rewardList.transform);

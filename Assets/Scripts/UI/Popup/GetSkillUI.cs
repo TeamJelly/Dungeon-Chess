@@ -115,8 +115,7 @@ namespace UI.Popup
             {
                 bool isActive = true;
                 for (int j = 0; j < GameManager.PartyUnits[i].Skills.Length; j++)
-                    if (GameManager.PartyUnits[i].Skills[j]?.Name == skill.Name &&
-                        GameManager.PartyUnits[i].Skills[j]?.Level == GameManager.PartyUnits[i].Skills[j]?.MaxLevel)
+                    if (GameManager.PartyUnits[i].Skills[j]?.Name == skill.Name)
                     {
                         isActive = false;
                         break;
@@ -175,7 +174,7 @@ namespace UI.Popup
         void EnableUpgradeSkillUI(int u, int s)
         {
             if (GameManager.PartyUnits[u].Skills[s] == null) return;
-
+            if (GameManager.PartyUnits[u].Skills[s].Level == GameManager.PartyUnits[u].Skills[s].MaxLevel) return;
             //등급 검사. 새 스킬 등급이 기존 스킬보다 작을 때 레전드 등급이 아닐경우에는 종료.
             /*if (skill.Grade <= GameManager.PartyUnits[u].Skills[s].Grade && skill.Grade != Grade.Legend)
             {
