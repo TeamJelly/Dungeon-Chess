@@ -111,11 +111,12 @@ namespace UI.Popup
         /// <param name="s">슬롯 인덱스</param>
         void EnableChangeSkillUI(int u, int s)
         {
-            beforeSkillTitle.text = GameManager.PartyUnits[u].Skills[s]?.Name;
+            beforeSkillTitle.text = GameManager.PartyUnits[u].Skills[s].Level != 0 ? GameManager.PartyUnits[u].Skills[s]?.Name + $" +{GameManager.PartyUnits[u].Skills[s]?.Level}"
+                                                                                    : GameManager.PartyUnits[u]?.Skills[s].Name;
             beforeSkillImage.sprite = GameManager.PartyUnits[u].Skills[s]?.Sprite;
             beforeSkillText.text = GameManager.PartyUnits[u].Skills[s]?.GetDescription(GameManager.PartyUnits[u]);
 
-            afterSkillTitle.text = skill.Name;
+            afterSkillTitle.text = skill.Level != 0 ? skill.Name + $" +{skill.Level}" : skill.Name;
             afterSkillImage.sprite = skill.Sprite;
             afterSkillText.text = skill.GetDescription(GameManager.PartyUnits[u]);
 
@@ -144,12 +145,13 @@ namespace UI.Popup
                 return;
             }*/
 
-            beforeSkillTitle.text = GameManager.PartyUnits[u].Skills[s].Name;
+            beforeSkillTitle.text = GameManager.PartyUnits[u].Skills[s].Level != 0 ? GameManager.PartyUnits[u].Skills[s].Name + $" +{GameManager.PartyUnits[u].Skills[s].Level}"
+                                                                                    :GameManager.PartyUnits[u].Skills[s].Name;
             beforeSkillImage.sprite = GameManager.PartyUnits[u].Skills[s].Sprite;
             beforeSkillText.text = GameManager.PartyUnits[u].Skills[s].GetDescription(GameManager.PartyUnits[u]);
 
             //한단계 업그레이드 시의 설명
-            afterSkillTitle.text = GameManager.PartyUnits[u].Skills[s].Name;
+            afterSkillTitle.text = GameManager.PartyUnits[u].Skills[s].Name + $" +{GameManager.PartyUnits[u].Skills[s].Level + 1}";
             afterSkillImage.sprite = GameManager.PartyUnits[u].Skills[s].Sprite;
             afterSkillText.text = GameManager.PartyUnits[u].Skills[s].GetDescription(GameManager.PartyUnits[u], GameManager.PartyUnits[u].Skills[s].Level + 1);
 
