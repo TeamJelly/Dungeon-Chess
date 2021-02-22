@@ -17,8 +17,6 @@ namespace Common
             unit.Agility = -10;
             unit.Category = Category.NULL;
 
-            BattleManager.instance.AllUnits.Remove(unit);
-
             VisualEffectUI.MakeVisualEffect(unit.Position, "explosion");
 
             GameObject gameObject = BattleUI.instance.UnitObjects[unit];
@@ -28,6 +26,9 @@ namespace Common
             gameObject = BattleUI.instance.HpBars[unit].gameObject;
             BattleUI.instance.HpBars.Remove(unit);
             BattleUI.Destroy(gameObject);
+
+            BattleManager.instance.AllUnits.Remove(unit);            
+            BattleManager.GetTile(unit.Position).SetUnit(null);
 
             if (BattleManager.CheckGameState() != BattleManager.State.Continue)
                 BattleUI.instance.ThisTurnEnd();
