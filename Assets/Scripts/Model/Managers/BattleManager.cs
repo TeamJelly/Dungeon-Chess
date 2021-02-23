@@ -44,9 +44,14 @@ namespace Model.Managers
             instance = this;
             GenerateTiles(10, 10);
 
-
-
-            if (GameManager.Instance.currentRoom.category == Room.Category.Monster)
+            if (GameManager.Instance.currentRoom == null)
+            {
+                Unit unit = new Proto_Judgement();
+                Common.UnitAction.Summon(unit, new Vector2Int(4, 4));
+                Common.UnitAction.AddEffect(unit, new Model.Effects.Effect_004(unit));
+                Common.UnitAction.AddEffect(unit, new Model.Effects.Effect_005(unit, 99));
+            }
+            else if (GameManager.Instance.currentRoom.category == Room.Category.Monster)
             {
                 int rand = UnityEngine.Random.Range(0, 2);
 
@@ -68,7 +73,10 @@ namespace Model.Managers
             }
             else if (GameManager.Instance.currentRoom.category == Room.Category.Boss)
             {
-                Common.UnitAction.Summon(new Proto_Judgement(), new Vector2Int(4, 4));
+                Unit unit = new Proto_Judgement();
+                Common.UnitAction.Summon(unit, new Vector2Int(4, 4));
+                Common.UnitAction.AddEffect(unit, new Model.Effects.Effect_004(unit));
+                Common.UnitAction.AddEffect(unit, new Model.Effects.Effect_005(unit, 99));
             }
 
             if (GameManager.PartyUnits.Count == 0)
@@ -82,6 +90,8 @@ namespace Model.Managers
             for (int i = 0; i < GameManager.PartyUnits.Count; i++)
             {
                 Common.UnitAction.Summon(GameManager.PartyUnits[i], party_position[i]);
+
+                GameManager.PartyUnits[i].ActionRate = 0;
 
                 foreach (var skill in GameManager.PartyUnits[i].Skills)
                     if (skill != null)

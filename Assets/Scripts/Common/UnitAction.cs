@@ -141,14 +141,16 @@ namespace Common
         {
             effect.OnAddThisEffect();
             target.StateEffects.Add(effect);
+            FadeOutTextUI.MakeText(target.Position + Vector2Int.up, $"+{effect.Name}", Color.yellow);
         }
 
-        public static void RemoveEffect(Unit unit, Effect effect)
+        public static void RemoveEffect(Unit target, Effect effect)
         {
-            if (unit.StateEffects.Contains(effect))
+            if (target.StateEffects.Contains(effect))
             {
                 effect.OnRemoveThisEffect();
-                unit.StateEffects.Remove(effect);
+                target.StateEffects.Remove(effect);
+                FadeOutTextUI.MakeText(target.Position + Vector2Int.up, $"-{effect.Name}", Color.yellow);
             }
         }
         

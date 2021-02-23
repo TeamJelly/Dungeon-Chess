@@ -62,7 +62,10 @@ namespace UI.Battle
         }
 
         private void Update()
-        {            
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+                turnEndButton.onClick.Invoke();
+
             foreach (var unit in BattleManager.GetUnit())
                 if (unit.IsModified)
                 {

@@ -4,15 +4,14 @@ namespace Model.Effects
 {
     public class Effect_005 : Effect
     {
-        private int regen;
+        private int regen = 10;
         public int Regen
         {
             get => regen;
             set => regen = value;
         }
-        public Effect_005(Unit owner, int turnCount, int regen) : base(owner, 5)
+        public Effect_005(Unit owner, int turnCount) : base(owner, 5)
         {
-            Regen = regen;
             TurnCount = turnCount;
         }
 

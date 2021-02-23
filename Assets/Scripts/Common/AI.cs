@@ -34,9 +34,9 @@ namespace Common
             public Unit user;                   // 행동 주체
             public Skill skillToUse;            // 사용할 스킬
             public Vector2Int? targetPosition;   // 스킬을 사용할 위치
-            public Vector2Int movePosition;     // 이동할 위치
+            public Vector2Int? movePosition;     // 이동할 위치
 
-            public Action(Unit user, Skill skillToUse, Vector2Int? targetPosition, Vector2Int movePosition)
+            public Action(Unit user, Skill skillToUse, Vector2Int? targetPosition, Vector2Int? movePosition)
             {
                 this.user = user;
                 this.skillToUse = skillToUse;
@@ -55,7 +55,8 @@ namespace Common
 
                 yield return new WaitForSeconds(0.5f);
 
-                yield return BattleUI.instance.StartCoroutine(action.user.MoveSkill.Use(action.user, action.movePosition));
+                if (action.movePosition != null)
+                    yield return BattleUI.instance.StartCoroutine(action.user.MoveSkill.Use(action.user, (Vector2Int)action.movePosition));
 
                 yield return new WaitForSeconds(0.5f);
 
@@ -107,8 +108,7 @@ namespace Common
             // 사용할수 있는 스킬이 없는 경우
             else
             {
-                Vector2Int movePosiiton = (Vector2Int)GetMovePosition(user);
-                return new Action(user, null, null, movePosiiton);
+                return new Action(user, null, null, GetMovePosition(user));
             }
 
 
@@ -160,7 +160,6 @@ namespace Common
 
             // 이동가능한 모든 위치들
             List<Vector2Int> MoveablePositions = user.MoveSkill.GetAvailablePositions(user);
-
             // 현재위치도 일단 추가;;
             MoveablePositions.Add(user.Position);
 
@@ -275,9 +274,15 @@ namespace Common
         /// <returns></returns>
         private static Vector2Int? GetMovePosition(Unit user, Skill skill, Vector2Int targetPosition)
         {
-            List<Vector2Int> MovePositions = GetTargetedMoveablePositions(user, skill, targetPosition);
+            if (user.MoveSkill.IsUsable(user) == true)
+            {
 
-            return GetPriorityPosition(user, MovePositions, user.MoveSkill.priority);
+                List<Vector2Int> MovePositions = GetTargetedMoveablePositions(user, skill, targetPosition);
+
+                return GetPriorityPosition(user, MovePositions, user.MoveSkill.priority);
+            }
+            else
+                return null;
         }
 
         /// <summary>
@@ -287,9 +292,15 @@ namespace Common
         /// <returns></returns>
         private static Vector2Int? GetMovePosition(Unit user)
         {
-            List<Vector2Int> MovePositions = user.MoveSkill.GetAvailablePositions(user);
+            if (user.MoveSkill.IsUsable(user) == true)
+            {
+                List<Vector2Int> MovePositions = user.MoveSkill.GetAvailablePositions(user);
+                MovePositions.Add(user.Position);
 
-            return GetPriorityPosition(user, MovePositions, user.MoveSkill.priority);
+                return GetPriorityPosition(user, MovePositions, user.MoveSkill.priority);
+            }
+            else
+                return null;
         }
     }
 }

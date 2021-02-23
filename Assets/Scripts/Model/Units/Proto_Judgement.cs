@@ -11,7 +11,11 @@ namespace Model.Units
         {
             MoveSkill.priority = Common.AI.Priority.NearFromClosestParty;
             Skills[0].target = Skill.Target.Party;
+            Skills[0].Level = 5;
             Skills[1].target = Skill.Target.Party;
+            Skills[1].Level = 3;
+            Skills[2].target = Skill.Target.Party;
+            Skills[2].Level = 2;
         }
     }
 }
