@@ -4,14 +4,33 @@ using UnityEngine;
 
 public class BGMUI : MonoBehaviour
 {
+    AudioSource audioSource;
+
+    public static BGMUI instance;
 
     private void Awake()
     {
-        DontDestroyOnLoad(this);
+        audioSource = GetComponent<AudioSource>();
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else if (instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        
+    }
+    //[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+
+    public void SetAudioVolume(float volume)
+    {
+        audioSource.volume = volume;
     }
 
-    void Update()
+    public float GetAudioVolume()
     {
-        
+        return audioSource.volume;
     }
 }

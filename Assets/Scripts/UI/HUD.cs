@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Model.Managers;
+using UI.Popup;
 
 namespace UI
 {

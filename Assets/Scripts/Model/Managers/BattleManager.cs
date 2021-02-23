@@ -90,9 +90,7 @@ namespace Model.Managers
             for (int i = 0; i < GameManager.PartyUnits.Count; i++)
             {
                 Common.UnitAction.Summon(GameManager.PartyUnits[i], party_position[i]);
-
                 GameManager.PartyUnits[i].ActionRate = 0;
-
                 foreach (var skill in GameManager.PartyUnits[i].Skills)
                     if (skill != null)
                         skill.CurrentReuseTime = 0;
