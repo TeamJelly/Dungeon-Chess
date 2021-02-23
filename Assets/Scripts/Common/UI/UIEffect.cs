@@ -26,7 +26,7 @@ namespace Common.UI
         }
         static IEnumerator FadeInCoroutine(GameObject panel, CanvasGroup canvasGroup)
         {
-            float time = 0.2f;
+            float time = 0.1f;
             float value = 0;
             canvasGroup.alpha = 0;
             panel.SetActive(true);
@@ -41,7 +41,7 @@ namespace Common.UI
         }
         static IEnumerator FadeOutCoroutine(GameObject panel, CanvasGroup canvasGroup)
         {
-            float time = 0.2f;
+            float time = 0.1f;
             float value = time;
             canvasGroup.alpha = 1;
             while (value > 0)
