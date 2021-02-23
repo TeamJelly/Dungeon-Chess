@@ -12,6 +12,8 @@ namespace Model.Managers
     {
         public static StageManager instance;
 
+        public RectTransform ScrollRectTransform;
+
         public Room currentRoom
         {
             get => GameManager.Instance.currentRoom;
@@ -43,6 +45,10 @@ namespace Model.Managers
         private void Awake()
         {
             instance = this;
+
+            if (GameManager.Instance.ScrollRectTransformPosition != null)
+                ScrollRectTransform.anchoredPosition = GameManager.Instance.ScrollRectTransformPosition;
+
             if (currentRoom == null)
             {
                 InitStage(1, 0);
@@ -302,6 +308,8 @@ namespace Model.Managers
         //UI에 의해 선택된 방 방문
         public void VisitRoom(Room room)
         {
+            GameManager.Instance.ScrollRectTransformPosition = ScrollRectTransform.anchoredPosition;
+
             //현재 방 갱신 및 기록 추가
             currentRoom = room;
             roomHistory.Add(new Vector2Int(room.position.x, room.position.y));

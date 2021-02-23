@@ -130,6 +130,8 @@ namespace UI
         /// </summary>
         void GenerateLines()
         {
+            
+
             for (int j = 0; j < StageManager.instance.pathList.Length; j++)
             {
                 List<Vector2Int> path = StageManager.instance.pathList[j];

@@ -11,6 +11,8 @@ namespace Model.Managers
     {
         static GameManager instance;
 
+        public Vector2 ScrollRectTransformPosition;
+
         public List<Vector2Int> roomHistory = new List<Vector2Int>();
         public Room currentRoom = null;
         public Room[,] AllRooms = null;

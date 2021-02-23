@@ -582,6 +582,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dac63cef7544314b96ea14b501bcc97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ScrollRectTransform: {fileID: 1378862225}
   numberOfFloors: 14
   numberOfRoomsPerOneFloor: 5
 --- !u!114 &238243821
