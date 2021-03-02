@@ -1,3 +1,3 @@
-## 프로젝트 세팅
+## RSRPG
 
-1. Unity Assets Store에서 Bolt 패키지 설치 필요
+RSRPG는 로그라이크 방식의 SRPG 게임이다.
