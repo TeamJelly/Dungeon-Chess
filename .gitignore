@@ -75,3 +75,6 @@ Assets/Install Bolt/**/*
 Assets/Ludiq/**/*
 Assets/Install Bolt.meta
 Assets/Ludiq.meta
+
+# OSX
+.DS_Store
