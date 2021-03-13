@@ -1,0 +1,3 @@
+[submodule "Assets/StreamingAssets/db_sqlite"]
+	path = Assets/StreamingAssets/db_sqlite
+	url = git@github.com:TeamJelly/db_sqlite.git
