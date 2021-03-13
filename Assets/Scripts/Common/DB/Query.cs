@@ -12,7 +12,7 @@ namespace Common.DB
     }
     public class Query
     {
-        private string dbPath = $"URI=file:{Application.streamingAssetsPath}/project21.db";
+        private string dbPath = $"URI=file:{Application.streamingAssetsPath}/db_sqlite/project21.db";
         private SqliteConnection sqliteConnection = null;
         private static Query instance = null;
         public static Query Instance
