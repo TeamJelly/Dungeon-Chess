@@ -66,18 +66,19 @@ namespace UI.Battle
             if (Input.GetKeyDown(KeyCode.Space))
                 turnEndButton.onClick.Invoke();
 
-            foreach (var unit in BattleManager.GetUnit())
-                if (unit.IsModified)
-                {
-                    UpdateUnitObejct(unit);
+            // NOTE 리펙토링 될 사항임
+            // foreach (var unit in BattleManager.GetUnit())
+            //     if (unit.IsModified)
+            //     {
+            //         UpdateUnitObejct(unit);
 
-                    if (unit == thisTurnUnitInfo.Unit)
-                        thisTurnUnitInfo.UpdateUnitInfo();
-                    if (unit == otherUnitInfo.Unit)
-                        otherUnitInfo.UpdateUnitInfo();
+            //         if (unit == thisTurnUnitInfo.Unit)
+            //             thisTurnUnitInfo.UpdateUnitInfo();
+            //         if (unit == otherUnitInfo.Unit)
+            //             otherUnitInfo.UpdateUnitInfo();
 
-                    unit.IsModified = false;
-                }
+            //         unit.IsModified = false;
+            //     }
         }
 
         /// <summary>
