@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using Model.Skills;
 using System;
+using View;
 
 namespace UI.Battle
 {
@@ -68,8 +69,8 @@ namespace UI.Battle
                                     for (int k = currentUnit.StateEffects.Count - 1; k >= 0; k--)
                                         currentUnit.StateEffects[k].AfterUseSkill();
 
-                                    BattleController.instance.ThisTurnUnitInfo.CurrentPushedButton = null;
-                                    BattleController.instance.ThisTurnUnitInfo.UpdateUnitInfo();
+                                    Viewer.battle.ThisTurnUnitInfo.CurrentPushedButton = null;
+                                    Viewer.battle.ThisTurnUnitInfo.UpdateUnitInfo();
                                 }
                                 else
                                 {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using View;
 
 namespace UI.Battle
 {
@@ -16,7 +17,7 @@ namespace UI.Battle
 
             transform.position = 
                 Camera.main.WorldToScreenPoint(
-                    BattleController.instance.UnitObjects[Model.Managers.BattleManager.instance.thisTurnUnit].transform.position
+                    Viewer.battle.UnitObjects[Model.Managers.BattleManager.instance.thisTurnUnit].position
                     + Vector3.up);
         }
     }
