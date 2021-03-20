@@ -68,8 +68,8 @@ namespace UI.Battle
                                     for (int k = currentUnit.StateEffects.Count - 1; k >= 0; k--)
                                         currentUnit.StateEffects[k].AfterUseSkill();
 
-                                    BattleUI.instance.ThisTurnUnitInfo.CurrentPushedButton = null;
-                                    BattleUI.instance.ThisTurnUnitInfo.UpdateUnitInfo();
+                                    BattleController.instance.ThisTurnUnitInfo.CurrentPushedButton = null;
+                                    BattleController.instance.ThisTurnUnitInfo.UpdateUnitInfo();
                                 }
                                 else
                                 {

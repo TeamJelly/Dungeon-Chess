@@ -19,19 +19,19 @@ namespace Common
 
             VisualEffectUI.MakeVisualEffect(unit.Position, "explosion");
 
-            GameObject gameObject = BattleUI.instance.UnitObjects[unit];
-            BattleUI.instance.UnitObjects.Remove(unit);
-            BattleUI.Destroy(gameObject);
+            GameObject gameObject = BattleController.instance.UnitObjects[unit];
+            BattleController.instance.UnitObjects.Remove(unit);
+            BattleController.Destroy(gameObject);
 
-            gameObject = BattleUI.instance.HpBars[unit].gameObject;
-            BattleUI.instance.HpBars.Remove(unit);
-            BattleUI.Destroy(gameObject);
+            gameObject = BattleController.instance.HpBars[unit].gameObject;
+            BattleController.instance.HpBars.Remove(unit);
+            BattleController.Destroy(gameObject);
 
             BattleManager.instance.AllUnits.Remove(unit);            
             BattleManager.GetTile(unit.Position).SetUnit(null);
 
             if (BattleManager.CheckGameState() != BattleManager.State.Continue)
-                BattleUI.instance.ThisTurnEnd();
+                BattleController.instance.ThisTurnEnd();
         }
 
         public static void Move(Unit unit, Vector2Int target)

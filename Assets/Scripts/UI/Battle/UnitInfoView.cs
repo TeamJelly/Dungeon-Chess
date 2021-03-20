@@ -9,7 +9,7 @@ using Model;
 
 namespace UI.Battle
 {
-    public class UnitInfoUI : MonoBehaviour
+    public class UnitInfoView : MonoBehaviour
     {
         [SerializeField]
         private TextMeshProUGUI Name;
@@ -35,7 +35,7 @@ namespace UI.Battle
         private TextMeshProUGUI EffectsText;
 
         [System.Serializable]
-        public class SkillSlotUI
+        private class SkillSlotUI
         {
             public Transform transform;
             public TextMeshProUGUI name;
@@ -45,7 +45,7 @@ namespace UI.Battle
 
             public SkillSlotUI(Transform _transform)
             {
-                this.transform = _transform;
+                transform = _transform;
                 button = _transform.GetComponent<Button>();
                 image = _transform.Find("Image").GetComponent<Image>();
                 name = _transform.Find("Name").GetComponent<TextMeshProUGUI>();
@@ -66,11 +66,6 @@ namespace UI.Battle
         public Button CurrentPushedButton { get => currentPushedButton; set => currentPushedButton = value; }
         public Unit Unit { get => unit; set => unit = value; }
 
-        private void OnValidate()
-        {
-            // Awake();
-        }
-
         private void Awake()
         {
             Name = transform.Find("Name").GetComponent<TextMeshProUGUI>();
@@ -86,11 +81,6 @@ namespace UI.Battle
             Skills[2] = new SkillSlotUI(transform.Find("SkillPanel/SkillIconPanel/Skill3"));
             Skills[3] = new SkillSlotUI(transform.Find("SkillPanel/SkillIconPanel/Skill4"));
             EffectsText = transform.Find("EffectsText").GetComponent<TextMeshProUGUI>();
-        }
-
-        private void Start()
-        {
-
         }
 
         public void SetUnitInfo(Unit unit, bool interactable)
@@ -128,7 +118,7 @@ namespace UI.Battle
                 SetSkillSlot(Skills[i], unit.Skills[i]);
         }
 
-        public void SetSkillSlot(SkillSlotUI slot, Skill skill)
+        private void SetSkillSlot(SkillSlotUI slot, Skill skill)
         {
             // 스킬이 없을 경우
             if (skill == null)

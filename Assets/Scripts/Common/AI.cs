@@ -46,28 +46,28 @@ namespace Common
 
             public void Invoke()
             {
-                BattleUI.instance.StartCoroutine(InvokeAIAction(this));
+                BattleController.instance.StartCoroutine(InvokeAIAction(this));
             }
 
             public IEnumerator InvokeAIAction(Action action)
             {
-                BattleUI.instance.turnEndButton.interactable = false;
+                BattleController.instance.turnEndButton.interactable = false;
 
                 yield return new WaitForSeconds(0.5f);
 
                 if (action.movePosition != null)
-                    yield return BattleUI.instance.StartCoroutine(action.user.MoveSkill.Use(action.user, (Vector2Int)action.movePosition));
+                    yield return BattleController.instance.StartCoroutine(action.user.MoveSkill.Use(action.user, (Vector2Int)action.movePosition));
 
                 yield return new WaitForSeconds(0.5f);
 
                 if (action.skillToUse != null && action.targetPosition != null)
                 {
-                    yield return BattleUI.instance.StartCoroutine(action.skillToUse.Use(action.user, (Vector2Int)action.targetPosition));
+                    yield return BattleController.instance.StartCoroutine(action.skillToUse.Use(action.user, (Vector2Int)action.targetPosition));
                     yield return new WaitForSeconds(0.5f);
                 }
 
-                BattleUI.instance.turnEndButton.interactable = true;
-                BattleUI.instance.ThisTurnEnd();
+                BattleController.instance.turnEndButton.interactable = true;
+                BattleController.instance.ThisTurnEnd();
             }
         }
 

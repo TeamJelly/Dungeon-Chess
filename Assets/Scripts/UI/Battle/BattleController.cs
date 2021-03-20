@@ -9,9 +9,9 @@ using UnityEngine.UI;
 
 namespace UI.Battle
 {
-    public class BattleUI : MonoBehaviour
+    public class BattleController : MonoBehaviour
     {
-        public static BattleUI instance;
+        public static BattleController instance;
 
         [SerializeField]
         private Dictionary<Unit, GameObject> unitObjects = new Dictionary<Unit, GameObject>();
@@ -20,13 +20,13 @@ namespace UI.Battle
         [SerializeField]
         private GameObject hPBarPrefab;
         [SerializeField]
-        private UnitInfoUI thisTurnUnitInfo;
+        private UnitInfoView thisTurnUnitInfo;
         [SerializeField]
-        private UnitInfoUI otherUnitInfo;
+        private UnitInfoView otherUnitInfo;
 
         public Button turnEndButton;
 
-        public UnitInfoUI ThisTurnUnitInfo { get => thisTurnUnitInfo; set => thisTurnUnitInfo = value; }
+        public UnitInfoView ThisTurnUnitInfo { get => thisTurnUnitInfo; set => thisTurnUnitInfo = value; }
         public Dictionary<Unit, GameObject> UnitObjects { get => unitObjects; set => unitObjects = value; }
         public Dictionary<Unit, Slider> HpBars { get => hpBars; set => hpBars = value; }
 
@@ -39,8 +39,8 @@ namespace UI.Battle
         {
             instance = this;
             hPBarPrefab = Resources.Load<GameObject>("Prefabs/UI/Battle/HP_BAR");
-            thisTurnUnitInfo = transform.Find("Panel/ThisTurnUnitInfo").GetComponent<UnitInfoUI>();
-            otherUnitInfo = transform.Find("Panel/OtherUnitInfo").GetComponent<UnitInfoUI>();
+            thisTurnUnitInfo = transform.Find("Panel/ThisTurnUnitInfo").GetComponent<UnitInfoView>();
+            otherUnitInfo = transform.Find("Panel/OtherUnitInfo").GetComponent<UnitInfoView>();
             otherUnitInfo.gameObject.SetActive(false);
             turnEndButton = transform.Find("Panel/TurnEndButton").GetComponent<Button>();
         }
