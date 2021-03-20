@@ -5,6 +5,7 @@ using Model.Skills;
 using Model.Managers;
 using System.Collections.Generic;
 using UI.Battle;
+using View;
 
 namespace Common
 {
@@ -19,13 +20,13 @@ namespace Common
 
             VisualEffectUI.MakeVisualEffect(unit.Position, "explosion");
 
-            GameObject gameObject = BattleController.instance.UnitObjects[unit];
-            BattleController.instance.UnitObjects.Remove(unit);
-            BattleController.Destroy(gameObject);
+            Transform unitObj = Viewer.battle.UnitObjects[unit];
+            Viewer.battle.UnitObjects.Remove(unit);
+            Object.Destroy(unitObj);
 
-            gameObject = BattleController.instance.HpBars[unit].gameObject;
-            BattleController.instance.HpBars.Remove(unit);
-            BattleController.Destroy(gameObject);
+            unitObj = Viewer.battle.HpBars[unit].transform;
+            Viewer.battle.HpBars.Remove(unit);
+            Object.Destroy(unitObj);
 
             BattleManager.instance.AllUnits.Remove(unit);            
             BattleManager.GetTile(unit.Position).SetUnit(null);
