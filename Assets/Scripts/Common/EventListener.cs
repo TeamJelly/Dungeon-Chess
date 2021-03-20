@@ -4,13 +4,12 @@ using System;
 
 namespace Common
 {
-    public class EventListener
+    public class EventListener<T>
     {
-        private Action invoke = null;
-        public Action Invoke => invoke;
-        public void AddListener(Action callback) { invoke += callback; }
-        public void RemoveListener(Action callback) { invoke -= callback; }
-        public void RemoveAllListener(Action callback) { invoke = null; }
-
+        private Action<T> invoke = null;
+        public Action<T> Invoke => invoke;
+        public void AddListener(Action<T> callback) { invoke += callback; }
+        public void RemoveListener(Action<T> callback) { invoke -= callback; }
+        public void RemoveAllListener(Action<T> callback) { invoke = null; }
     }
 }
