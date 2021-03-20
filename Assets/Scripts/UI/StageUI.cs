@@ -147,5 +147,23 @@ namespace UI
             }
         }
 
+
+        void GenerateLines2()
+        {
+            for (int j = 0; j < StageManager.instance.pathList.Length; j++)
+            {
+                List<Vector2Int> path = StageManager.instance.pathList[j];
+                LineRenderer lineRenderer = lines[j].GetComponent<LineRenderer>();
+                lineRenderer.positionCount = path.Count;
+
+                for (int i = 0; i < path.Count; i++)
+                {
+                    Vector3 roomPosition = AllRoomButtons[path[i].x, path[i].y].transform.position;
+                    lineRenderer.SetPosition(i, roomPosition);
+                }
+                lines[j].transform.SetParent(contentPanel.transform);
+            }
+        }
+
     }
 }
