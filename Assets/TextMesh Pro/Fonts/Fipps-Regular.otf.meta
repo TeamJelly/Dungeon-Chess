@@ -1,16 +1,16 @@
 fileFormatVersion: 2
-guid: d1e9337993193b84cb53d558fc3586bc
+guid: 45c2e933eb42c3348974adfbdb8a221d
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
-  fontSize: 16
-  forceTextureCase: -1
+  fontSize: 8
+  forceTextureCase: -2
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: DungGeunMo
+  fontName: Fipps
   fontNames:
-  - DungGeunMo
+  - Fipps
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 2

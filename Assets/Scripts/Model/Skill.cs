@@ -9,7 +9,7 @@ namespace Model
 {
     using Skills;
 
-    public enum Grade { NULL, Normal, Rare, Legend, Boss }
+    //public enum Grade { NULL, Normal, Rare, Legend, Boss }
 
     [System.Serializable]
     public class Skill
@@ -28,7 +28,7 @@ namespace Model
             get => descriptor.unitClass;
             set => descriptor.unitClass = value;
         }
-        public Grade Grade
+        public int Grade
         {
             get => descriptor.grade;
             set => descriptor.grade = value;
@@ -244,8 +244,8 @@ namespace Model
 
         public virtual void Upgrade()
         {
-            if (level < MaxLevel)
-                Level++;
+            if (Grade < 4)
+                Grade++;
         }
 
         /// <summary>

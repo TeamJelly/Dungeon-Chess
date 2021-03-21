@@ -1,16 +1,16 @@
 fileFormatVersion: 2
-guid: d1e9337993193b84cb53d558fc3586bc
+guid: ac454111b5f8b7f41b3dc5f3a8e9fe8c
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
   fontSize: 16
-  forceTextureCase: -1
+  forceTextureCase: -2
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: DungGeunMo
+  fontName: NeoDunggeunmo
   fontNames:
-  - DungGeunMo
+  - NeoDunggeunmo
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 2
