@@ -1,16 +1,16 @@
 fileFormatVersion: 2
-guid: 45c2e933eb42c3348974adfbdb8a221d
+guid: 5d73595d2abc8c844a66cdb6ad89288a
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
-  fontSize: 8
+  fontSize: 16
   forceTextureCase: -2
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: Fipps
+  fontName: Karmatic Arcade
   fontNames:
-  - Fipps
+  - Karmatic Arcade
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 2
