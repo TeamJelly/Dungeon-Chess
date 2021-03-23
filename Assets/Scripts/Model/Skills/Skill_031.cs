@@ -30,9 +30,7 @@ namespace Model.Skills
                 Debug.Log($"{user.Name}가 {Name}스킬을 {targetUnit.Name}에 사용!");
 
                 // 1단계 : 스킬 애니메이션 재생 및 화면 갱신.
-                user.animationState = Unit.AnimationState.Heal;
-                yield return new WaitWhile(() => user.animationState != Unit.AnimationState.Idle);
-                targetUnit.animationState = Unit.AnimationState.Heal;
+                yield return null;
 
                 // 2단계 : 스킬 적용.
                 Common.UnitAction.Heal(targetUnit, heal);
