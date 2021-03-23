@@ -5,11 +5,15 @@ namespace Common
 {
     public class EventListener<T>
     {
-        private Action<T> invoke = null;
-        public Action<T> Invoke => invoke;
-        public void AddListener(Action<T> callback) { invoke += callback; }
-        public void RemoveListener(Action<T> callback) { invoke -= callback; }
-        public void RemoveAllListener(Action<T> callback) { invoke = null; }
+        private Action<T> actions = null;
+        public void AddListener(Action<T> callback) { actions += callback; }
+        public void RemoveListener(Action<T> callback) { actions -= callback; }
+        public void RemoveAllListeners() { actions = null; }
+
+        public void Invoke(T value)
+        {
+            actions?.Invoke(value);
+        }
     }
 
     public class UpAndDownEventListener<T>
