@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using Common.DB;
+using Common;
 
 public enum Category { NULL, Party, Neutral, Friendly, Enemy};
 public enum UnitClass { NULL, Monster, Warrior, Wizard, Priest, Archer };
@@ -13,7 +14,8 @@ namespace Model
     [System.Serializable]
     public class Unit
     {
-        public bool IsModified = false;
+        // NOTE 리펙토링 될 사항임
+        // public bool IsModified = false;
 
         private UnitDescriptor descriptor = new UnitDescriptor();
         public UnitDescriptor UnitDescriptor => descriptor;
@@ -43,31 +45,11 @@ namespace Model
 
         public int ID => descriptor.id;
 
-        public string Name {
-            get => descriptor.name;
-            set
-            {
-                descriptor.name = value;
-                IsModified = true;
-            }
-        }
+        public string Name => descriptor.name;
 
-        public Category Category {
-            get => descriptor.category;
-            set {
-                descriptor.category = value;
-                IsModified = true;
-            }
-        }
+        public Category Category { get => descriptor.category; set => descriptor.category = value; }
 
-        public UnitClass UnitClass {
-            get => descriptor.unitClass;
-            set
-            {
-                descriptor.unitClass = value;
-                IsModified = true;
-            }
-        }
+        public UnitClass UnitClass => descriptor.unitClass;
 
         public Sprite Portrait
         {
@@ -94,137 +76,310 @@ namespace Model
             get => descriptor.armor;
             set
             {
-                Debug.Log($"{Name}가(은) 방어도가 변했다! [Armor: {Armor} > {value}");
-                descriptor.armor = value;
-                IsModified = true;
+                if (descriptor.armor != value)
+                {
+                    descriptor.armor = value;
+                    OnAmor.changed.Invoke(value);
+                    if (descriptor.armor < value)
+                    {
+                        OnAmor.up.Invoke(value);
+                    } else
+                    {
+                        OnAmor.down.Invoke(value);
+                    }
+                    
+                }
             }
         }
+        public UpAndDownEventListener<int> OnAmor = new UpAndDownEventListener<int>();
 
         public int Level {
             get => descriptor.level;
             set
             {
-                descriptor.level = value;
-                IsModified = true;                
+                if (descriptor.level != value)
+                {
+                    descriptor.level = value;
+                    OnLevel.changed.Invoke(value);
+                    if (descriptor.level < value)
+                    {
+                        OnLevel.up.Invoke(value);
+                    }
+                    else
+                    {
+                        OnLevel.down.Invoke(value);
+                    }
+
+                }
             }
         }
+        public UpAndDownEventListener<int> OnLevel = new UpAndDownEventListener<int>();
 
         private int currentHP;
         public int CurrentHP {
             get => currentHP;
             set
-            {                
-                currentHP = value;
-                IsModified = true;
+            {
+                if (currentHP != value)
+                {
+                    currentHP = value;
+                    OnCurrentHP.changed.Invoke(value);
+                    if (currentHP < value)
+                    {
+                        OnCurrentHP.up.Invoke(value);
+                    }
+                    else
+                    {
+                        OnCurrentHP.down.Invoke(value);
+                    }
+
+                }
             }
         }
+        public UpAndDownEventListener<int> OnCurrentHP = new UpAndDownEventListener<int>();
 
         public int MaximumHP {
             get => descriptor.HP;
             set
             {
-                descriptor.HP = value;
-                IsModified = true;
+                if (descriptor.HP != value)
+                {
+                    descriptor.HP = value;
+                    OnMaximumHP.changed.Invoke(value);
+                    if (descriptor.HP < value)
+                    {
+                        OnMaximumHP.up.Invoke(value);
+                    }
+                    else
+                    {
+                        OnMaximumHP.down.Invoke(value);
+                    }
+
+                }
             }
         }
+        public UpAndDownEventListener<int> OnMaximumHP = new UpAndDownEventListener<int>();
 
         private int currentEXP;
         public int CurrentEXP {
             get => currentEXP;
             set
             {
-                currentEXP = value;
-                IsModified = true;
+                if (currentEXP != value)
+                {
+                    currentEXP = value;
+                    OnCurrentEXP.changed.Invoke(value);
+                    if (currentEXP < value)
+                    {
+                        OnCurrentEXP.up.Invoke(value);
+                    }
+                    else
+                    {
+                        OnCurrentEXP.down.Invoke(value);
+                    }
+
+                }
             }
         }
+        public UpAndDownEventListener<int> OnCurrentEXP = new UpAndDownEventListener<int>();
 
         private int nextEXP;
         public int NextEXP {
             get => nextEXP;
             set
             {
-                nextEXP = value;
-                IsModified = true;
+                if (nextEXP != value)
+                {
+                    nextEXP = value;
+                    OnNextEXP.changed.Invoke(value);
+                    if (nextEXP < value)
+                    {
+                        OnNextEXP.up.Invoke(value);
+                    }
+                    else
+                    {
+                        OnNextEXP.down.Invoke(value);
+                    }
+
+                }
             }
         }
+        public UpAndDownEventListener<int> OnNextEXP = new UpAndDownEventListener<int>();
 
         public int Strength {
             get => descriptor.strength;
             set
             {
-                descriptor.strength = value;
-                IsModified = true;
+                if (descriptor.strength != value)
+                {
+                    descriptor.strength = value;
+                    OnStrength.changed.Invoke(value);
+                    if (descriptor.strength < value)
+                    {
+                        OnStrength.up.Invoke(value);
+                    }
+                    else
+                    {
+                        OnStrength.down.Invoke(value);
+                    }
+
+                }
             }
         }
+        public UpAndDownEventListener<int> OnStrength = new UpAndDownEventListener<int>();
 
         public int Agility {
             get => descriptor.agility;
             set
             {
-                descriptor.agility = value;
-                IsModified = true;
+                if (descriptor.agility != value)
+                {
+                    descriptor.agility = value;
+                    OnAgility.changed.Invoke(value);
+                    if (descriptor.agility < value)
+                    {
+                        OnAgility.up.Invoke(value);
+                    }
+                    else
+                    {
+                        OnAgility.down.Invoke(value);
+                    }
+
+                }
             }
         }
+        public UpAndDownEventListener<int> OnAgility = new UpAndDownEventListener<int>();
 
         public int Move {
             get => descriptor.move;
             set
             {
-                descriptor.move = value;
-                IsModified = true;
+                if (descriptor.move != value)
+                {
+                    descriptor.move = value;
+                    OnMove.changed.Invoke(value);
+                    if (descriptor.move < value)
+                    {
+                        OnMove.up.Invoke(value);
+                    }
+                    else
+                    {
+                        OnMove.down.Invoke(value);
+                    }
+
+                }
             }
         }
+        public UpAndDownEventListener<int> OnMove = new UpAndDownEventListener<int>();
 
         public Vector2Int Position {
             get => position;
             set {
                 if (Managers.BattleManager.instance != null && Managers.BattleManager.IsAvilablePosition(Position))
                 {
-                    position = value;
-                    IsModified = true;
+                    if (position != value)
+                    {
+                        position = value;
+                        OnPositionChanged.Invoke(value);
+                    }
+                    
                 }
                 else
                     Debug.LogError("유닛을 이곳으로 이동할 수 없습니다.");
             }
         }
+        public EventListener<Vector2Int> OnPositionChanged = new EventListener<Vector2Int>();
+
         public float ActionRate {
             get => actionRate;
             set
             {
-                actionRate = value;
-                IsModified = true;
+                if (actionRate != value)
+                {
+                    actionRate = value;
+                    OnActionRate.changed.Invoke(value);
+                    if (actionRate < value)
+                    {
+                        OnActionRate.up.Invoke(value);
+                    }
+                    else
+                    {
+                        OnActionRate.down.Invoke(value);
+                    }
+
+                }
             }
         }
+        public UpAndDownEventListener<float> OnActionRate = new UpAndDownEventListener<float>();
+
         public int MoveCount {
             get => moveCount;
             set
             {
-                moveCount = value;
-                IsModified = true;
+                if (moveCount != value)
+                {
+                    moveCount = value;
+                    OnMoveCount.changed.Invoke(value);
+                    if (moveCount < value)
+                    {
+                        OnMoveCount.up.Invoke(value);
+                    }
+                    else
+                    {
+                        OnMoveCount.down.Invoke(value);
+                    }
+
+                }
             }
         }
+        public UpAndDownEventListener<int> OnMoveCount = new UpAndDownEventListener<int>();
         public int SkillCount {
             get => skillCount;
             set
             {
-                skillCount = value;
-                IsModified = true;
+                if (skillCount != value)
+                {
+                    skillCount = value;
+                    OnSkillCount.changed.Invoke(value);
+                    if (skillCount < value)
+                    {
+                        OnSkillCount.up.Invoke(value);
+                    }
+                    else
+                    {
+                        OnSkillCount.down.Invoke(value);
+                    }
+
+                }
             }
         }
+        public UpAndDownEventListener<int> OnSkillCount = new UpAndDownEventListener<int>();
         public int ItemCount {
             get => itemCount;
             set
             {
-                itemCount = value;
-                IsModified = true;
+                if (itemCount != value)
+                {
+                    itemCount = value;
+                    OnItemCount.changed.Invoke(value);
+                    if (itemCount < value)
+                    {
+                        OnItemCount.up.Invoke(value);
+                    }
+                    else
+                    {
+                        OnItemCount.down.Invoke(value);
+                    }
+
+                }
             }
         }
+        public UpAndDownEventListener<int> OnItemCount = new UpAndDownEventListener<int>();
         public Skill MoveSkill {
             get => moveSkill;
             set
             {
                 moveSkill = value;
-                IsModified = true;
             }
         }
         public Skill[] Skills {
@@ -232,7 +387,6 @@ namespace Model
             set
             {
                 skills = value;
-                IsModified = true;
             }
         }
         public Skill[] Items {
@@ -240,7 +394,6 @@ namespace Model
             set
             {
                 items = value;
-                IsModified = true;
             }
         }
         public List<Artifact> Antiques {
@@ -248,7 +401,6 @@ namespace Model
             set
             {
                 antiques = value;
-                IsModified = true;
             }
         }
         public List<Effect> StateEffects {
@@ -256,18 +408,30 @@ namespace Model
             set
             {
                 stateEffects = value;
-                IsModified = true;
             }
         }
 
         public int Critical { 
-            get => descriptor.critical; 
+            get => descriptor.critical;
             set
             {
-                descriptor.critical = value;
-                IsModified = true;
+                if (descriptor.critical != value)
+                {
+                    descriptor.critical = value;
+                    OnCritical.changed.Invoke(value);
+                    if (descriptor.critical < value)
+                    {
+                        OnCritical.up.Invoke(value);
+                    }
+                    else
+                    {
+                        OnCritical.down.Invoke(value);
+                    }
+
+                }
             }
         }
+        public UpAndDownEventListener<int> OnCritical = new UpAndDownEventListener<int>();
         /// <summary>
         /// DB로 부터 초기화
         /// </summary>

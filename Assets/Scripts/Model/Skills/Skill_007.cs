@@ -31,9 +31,7 @@ namespace Model.Skills
                 Debug.Log($"{user.Name}가 {Name}스킬을 {targetUnit.Name}에 사용!");
 
                 // 1단계 : 스킬 애니메이션 재생 및 화면 갱신.
-                user.animationState = Unit.AnimationState.Attack;
-                yield return new WaitWhile(() => user.animationState != Unit.AnimationState.Idle);
-                targetUnit.animationState = Unit.AnimationState.Heal;
+                yield return null;
 
                 // 2단계 : 스킬 적용. 지정 대상과 자신에게 x + 1의 방어도와 1의 보호막 부여.
                 Common.UnitAction.Armor(user, 1);

@@ -188,7 +188,7 @@ namespace Common
 
             RemoveSkill(unit, index);
             unit.Skills[index] = newSkill;
-            unit.IsModified = true;
+            // unit.IsModified = true;
         }
 
         public static void RemoveSkill(Unit unit, int index)
