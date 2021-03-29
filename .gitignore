@@ -2,7 +2,18 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/master/Unity.gitignore
 #
-/[Ll]ibrary/
+/[Ll]ibrary/*
+# TextMeshPro Error 
+!/Library/PackageCache/
+/Library/PackageCache/*
+!/Library/PackageCache/com.unity.textmeshpro@2.1.4/
+/Library/PackageCache/com.unity.textmeshpro@2.1.4/*
+!/Library/PackageCache/com.unity.textmeshpro@2.1.4/Scripts/
+/Library/PackageCache/com.unity.textmeshpro@2.1.4/Scripts/*
+!/Library/PackageCache/com.unity.textmeshpro@2.1.4/Scripts/Runtime/
+/Library/PackageCache/com.unity.textmeshpro@2.1.4/Scripts/Runtime/*
+!/Library/PackageCache/com.unity.textmeshpro@2.1.4/Scripts/Runtime/TMP_SubMeshUI.cs
+
 /[Tt]emp/
 /[Oo]bj/
 /[Bb]uild/
@@ -69,12 +80,6 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
-
-# bolt
-Assets/Install Bolt/**/*
-Assets/Ludiq/**/*
-Assets/Install Bolt.meta
-Assets/Ludiq.meta
 
 # OSX
 .DS_Store
