@@ -1280,8 +1280,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40ce1d32329f25f47b257f597865d1e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animators: []
-  prefab: {fileID: 0}
 --- !u!114 &1309214669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1294,14 +1292,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1a360600e4212f44a7bae93e8ead593, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileIndicatorPrefab: {fileID: 4462922396805816717, guid: 316a856634a04434c9c6fd0b6d18cffb,
-    type: 3}
-  possibleColor: {r: 0, g: 0, b: 1, a: 0.5}
-  subPossibleColor: {r: 0, g: 0.5, b: 1, a: 0.5}
-  impossibleColor: {r: 1, g: 0, b: 0, a: 0.5}
-  subImpossibleColor: {r: 1, g: 0, b: 1, a: 0.5}
-  inBoundaryColor: {r: 0, g: 1, b: 0, a: 0.5}
-  outBoundaryColor: {r: 1, g: 1, b: 1, a: 0.5}
 --- !u!114 &1309214670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1390,9 +1380,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: (space)
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: eaf4210ac1d01a940ac80e64f2acb372, type: 2}
-  m_sharedMaterial: {fileID: 3391521972093161665, guid: eaf4210ac1d01a940ac80e64f2acb372,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1524,9 +1513,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uD134\uC885\uB8CC"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: eaf4210ac1d01a940ac80e64f2acb372, type: 2}
-  m_sharedMaterial: {fileID: 3391521972093161665, guid: eaf4210ac1d01a940ac80e64f2acb372,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3284,6 +3272,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: HUD
       objectReference: {fileID: 0}
+    - target: {fileID: 7143683771285064906, guid: 37b1161279fc13240aef316becbf1ffd,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 646a62eb14c81c0488dd56ff43b17835,
+        type: 2}
+    - target: {fileID: 7143683771285064906, guid: 37b1161279fc13240aef316becbf1ffd,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3670432280451070285, guid: 646a62eb14c81c0488dd56ff43b17835,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37b1161279fc13240aef316becbf1ffd, type: 3}
 --- !u!224 &1897118204 stripped
