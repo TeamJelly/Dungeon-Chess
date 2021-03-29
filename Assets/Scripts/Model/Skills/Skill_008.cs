@@ -99,14 +99,12 @@ namespace Model.Skills
                     targetUnits.Add(targetUnit);
                 }
             }
-            user.animationState = Unit.AnimationState.Attack;
-            yield return new WaitWhile(() => user.animationState != Unit.AnimationState.Idle);
 
             foreach (Unit unit in targetUnits)
             {
                 Debug.Log($"{user.Name}가 {Name}스킬을 {unit.Name}에 사용!");
                 // 1단계 : 스킬 애니메이션 재생 및 화면 갱신.
-                unit.animationState = Unit.AnimationState.Hit;
+                yield return null;
                 // 2단계 : 스킬 적용
                 Common.UnitAction.Damage(unit, damage);
                 Common.UnitAction.AddEffect(unit, new Effects.Effect_004(unit));

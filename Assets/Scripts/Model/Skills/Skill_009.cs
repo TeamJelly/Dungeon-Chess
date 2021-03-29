@@ -31,9 +31,7 @@ namespace Model.Skills
                 Debug.Log($"{user.Name}가 {Name}스킬을 {targetUnit.Name}에 사용!");
 
                 // 1단계 : 스킬 애니메이션 재생 및 화면 갱신.
-                user.animationState = Unit.AnimationState.Attack;
-                yield return new WaitWhile(() => user.animationState != Unit.AnimationState.Idle);
-                targetUnit.animationState = Unit.AnimationState.Hit;
+                yield return null;
 
                 // 2단계 : 스킬 적용. 자신을 제외한 범위 안에 있는 대상에게 X의 데미지를 준다. 
                 // 만약 그 데미지를 준 유닛이 죽었을 경우, 이 스킬을 다시 사용한다.

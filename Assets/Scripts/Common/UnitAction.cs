@@ -20,12 +20,12 @@ namespace Common
 
             VisualEffectUI.MakeVisualEffect(unit.Position, "explosion");
 
-            Transform unitObj = Viewer.battle.UnitObjects[unit];
+            GameObject unitObj = Viewer.battle.UnitObjects[unit];
             Viewer.battle.UnitObjects.Remove(unit);
             Object.Destroy(unitObj);
 
-            unitObj = Viewer.battle.HpBars[unit].transform;
-            Viewer.battle.HpBars.Remove(unit);
+            unitObj = Viewer.battle.HPBars[unit];
+            Viewer.battle.HPBars.Remove(unit);
             Object.Destroy(unitObj);
 
             BattleManager.instance.AllUnits.Remove(unit);            
@@ -188,7 +188,7 @@ namespace Common
 
             RemoveSkill(unit, index);
             unit.Skills[index] = newSkill;
-            unit.IsModified = true;
+            // unit.IsModified = true;
         }
 
         public static void RemoveSkill(Unit unit, int index)
