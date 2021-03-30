@@ -211,7 +211,7 @@ namespace TMPro
         /// <returns></returns>
         public static TMP_SubMeshUI AddSubTextObject(TextMeshProUGUI textComponent, MaterialReference materialReference)
         {
-            GameObject go = new GameObject("TMP UI SubObject [" + /*materialReference.material.name +*/ "]", typeof(RectTransform));
+            GameObject go = new GameObject("TMP UI SubObject [" + materialReference.material.name + "]", typeof(RectTransform));
             go.hideFlags = HideFlags.DontSave;
 
             go.transform.SetParent(textComponent.transform, false);
