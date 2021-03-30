@@ -33,7 +33,7 @@ public class SkillButtonView : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     {
         if (eventData.button == PointerEventData.InputButton.Left && interactable)
         {
-            ImageTransfrom.anchoredPosition = new Vector2(0, -1);
+            ImageTransfrom.anchoredPosition = new Vector2(0, -1);            
             Frame.sprite = PushedButtonSprite[CurrentSkill.Grade];
         }
     }
@@ -79,10 +79,11 @@ public class SkillButtonView : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     {
         UpgradeButton.onClick.AddListener(() =>
         {
-            CurrentSkill.Upgrade();
+            CurrentSkill?.Upgrade();
             SetSkill(CurrentSkill);
         });
 
-        SetSkill(new Skill_000() { Grade = 1 });
+        // 테스트용 코드
+        // SetSkill(new Skill_000() { Grade = 1 });
     }
 }

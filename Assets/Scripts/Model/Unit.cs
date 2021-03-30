@@ -11,6 +11,7 @@ namespace Model
     using Skills;
     using System;
     using Units;
+
     [System.Serializable]
     public class Unit
     {
@@ -26,8 +27,9 @@ namespace Model
         private int skillCount;
         private int itemCount;
         private Skill moveSkill;// = new Walk();
+        private Skill passiveSkill;
         private Skill[] skills = new Skill[4];
-        private Skill[] items = new Skill[2];
+
         private List<Artifact> antiques = new List<Artifact>();
         private List<Effect> stateEffects = new List<Effect>();
 
@@ -382,6 +384,15 @@ namespace Model
                 moveSkill = value;
             }
         }
+
+        public Skill PassiveSkill { 
+            get => passiveSkill;
+            set
+            {
+                passiveSkill = value;
+            }
+        }
+
         public Skill[] Skills {
             get => skills;
             set
@@ -389,13 +400,7 @@ namespace Model
                 skills = value;
             }
         }
-        public Skill[] Items {
-            get => items;
-            set
-            {
-                items = value;
-            }
-        }
+
         public List<Artifact> Antiques {
             get => antiques;
             set
@@ -431,6 +436,8 @@ namespace Model
                 }
             }
         }
+
+
         public UpAndDownEventListener<int> OnCritical = new UpAndDownEventListener<int>();
         /// <summary>
         /// DB로 부터 초기화
