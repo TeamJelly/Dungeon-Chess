@@ -5,6 +5,7 @@ using System.Collections;
 using Model;
 using UI.Battle;
 using View;
+using Model.Managers;
 
 namespace Common
 {
@@ -68,7 +69,9 @@ namespace Common
                 }
 
                 Viewer.battle.TurnEndButton.interactable = true;
-                BattleController.instance.ThisTurnEnd();
+
+                if(BattleManager.CheckGameState() == BattleManager.State.Continue)
+                    BattleController.instance.ThisTurnEnd();
             }
         }
 

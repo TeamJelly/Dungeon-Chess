@@ -20,14 +20,8 @@ namespace Common
 
             VisualEffectUI.MakeVisualEffect(unit.Position, "explosion");
 
-            GameObject unitObj = Viewer.battle.UnitObjects[unit];
-            Viewer.battle.UnitObjects.Remove(unit);
-            Object.Destroy(unitObj);
 
-            unitObj = Viewer.battle.HPBars[unit];
-            Viewer.battle.HPBars.Remove(unit);
-            Object.Destroy(unitObj);
-
+            Viewer.battle.DestroyUnitObject(unit);
             BattleManager.instance.AllUnits.Remove(unit);            
             BattleManager.GetTile(unit.Position).SetUnit(null);
 

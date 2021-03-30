@@ -23,6 +23,7 @@ namespace UI.Battle
             foreach (var unit in BattleManager.GetUnit())
             {
                 Viewer.battle.MakeUnitObject(unit);
+                AgilityViewer.instance.AddToList(unit);
             }
             NextTurnStart();
         }
@@ -35,7 +36,7 @@ namespace UI.Battle
             // 다음 턴의 유닛을 받아 시작한다.
             Unit nextUnit = BattleManager.GetNextTurnUnit();
             BattleManager.SetNextTurnUnit(nextUnit);
-            
+            AgilityViewer.instance.UpdteView();
             // 턴시작시 유닛 값들 초기화
             nextUnit.ActionRate = 0;
             nextUnit.MoveCount = 1;
@@ -62,6 +63,7 @@ namespace UI.Battle
                 if (action != null)
                     action.Invoke();
             }
+
         }
 
         public void ThisTurnEnd()

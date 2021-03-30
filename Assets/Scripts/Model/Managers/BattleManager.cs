@@ -218,7 +218,6 @@ namespace Model.Managers
                     nextUnit = unit;
                 }
             }
-
             return nextUnit;
         }
 
@@ -230,7 +229,7 @@ namespace Model.Managers
 
             //나머지 유닛들도 해당 시간만큼 이동.
             foreach (var unit in instance.AllUnits)
-                unit.ActionRate += velocity * minTime;
+                unit.ActionRate += (unit.Agility * 10 + 100) * minTime;
 
             instance.thisTurnUnit = nextUnit;
         }

@@ -106,5 +106,21 @@ namespace View
             newHPBar.SetValue(unit.CurrentHP);
             unit.OnPositionChanged.Invoke(unit.Position);
         }
+
+        public void DestroyUnitObject(Unit unit)
+        {
+            GameObject unitObj = UnitObjects[unit];
+            UnitObjects.Remove(unit);
+            Destroy(unitObj);
+
+            unitObj = HPBars[unit];
+            HPBars.Remove(unit);
+            Destroy(unitObj);
+
+            AgilityViewer.instance.DestroyObject(unit);
+
+
+
+        }
     }
 }
