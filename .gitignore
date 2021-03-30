@@ -2,17 +2,17 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/master/Unity.gitignore
 #
-/[Ll]ibrary/*
+/[Ll]ibrary/
 # TextMeshPro Error 
-!/Library/PackageCache/
-/Library/PackageCache/*
-!/Library/PackageCache/com.unity.textmeshpro@2.1.4/
-/Library/PackageCache/com.unity.textmeshpro@2.1.4/*
-!/Library/PackageCache/com.unity.textmeshpro@2.1.4/Scripts/
-/Library/PackageCache/com.unity.textmeshpro@2.1.4/Scripts/*
-!/Library/PackageCache/com.unity.textmeshpro@2.1.4/Scripts/Runtime/
-/Library/PackageCache/com.unity.textmeshpro@2.1.4/Scripts/Runtime/*
-!/Library/PackageCache/com.unity.textmeshpro@2.1.4/Scripts/Runtime/TMP_SubMeshUI.cs
+#!/Library/PackageCache/
+#/Library/PackageCache/*
+#!/Library/PackageCache/com.unity.textmeshpro@2.1.4/
+#/Library/PackageCache/com.unity.textmeshpro@2.1.4/*
+#!/Library/PackageCache/com.unity.textmeshpro@2.1.4/Scripts/
+#/Library/PackageCache/com.unity.textmeshpro@2.1.4/Scripts/*
+#!/Library/PackageCache/com.unity.textmeshpro@2.1.4/Scripts/Runtime/
+#/Library/PackageCache/com.unity.textmeshpro@2.1.4/Scripts/Runtime/*
+#!/Library/PackageCache/com.unity.textmeshpro@2.1.4/Scripts/Runtime/TMP_SubMeshUI.cs
 
 /[Tt]emp/
 /[Oo]bj/
