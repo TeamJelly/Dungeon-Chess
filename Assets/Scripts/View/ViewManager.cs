@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace View
 {
-    public class Viewer : MonoBehaviour
+    public class ViewManager : MonoBehaviour
     {
-        public static Viewer instance;
+        public static ViewManager instance;
         public static BattleView battle;
 
         [SerializeField]

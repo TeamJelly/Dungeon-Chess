@@ -21,9 +21,10 @@ namespace Common
             VisualEffectUI.MakeVisualEffect(unit.Position, "explosion");
 
 
-            Viewer.battle.DestroyUnitObject(unit);
+            ViewManager.battle.DestroyUnitObject(unit);
             BattleManager.instance.AllUnits.Remove(unit);            
             BattleManager.GetTile(unit.Position).SetUnit(null);
+            BattleManager.instance.InitializeUnitBuffer();
 
             if (BattleManager.CheckGameState() != BattleManager.State.Continue)
                 BattleController.instance.ThisTurnEnd();

@@ -89,7 +89,7 @@ namespace View
             UnitObjects.Add(unit, newObj);
 
             // HP 바 생성
-            HPBar newHPBar = Instantiate(hPBarPrefab, Viewer.instance.MainPanel).GetComponent<HPBar>();
+            HPBar newHPBar = Instantiate(hPBarPrefab, ViewManager.instance.MainPanel).GetComponent<HPBar>();
             newHPBar.Init(unit);
             HPBars.Add(unit, newHPBar.gameObject);
 
@@ -117,7 +117,7 @@ namespace View
             HPBars.Remove(unit);
             Destroy(unitObj);
 
-            AgilityViewer.instance.DestroyObject(unit);
+            //AgilityViewer.instance.DestroyObject(unit);
 
 
 

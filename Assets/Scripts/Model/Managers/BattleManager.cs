@@ -199,12 +199,28 @@ namespace Model.Managers
         /// 다음 턴 유닛 선택 알고리즘
         /// </summary>
         /// <returns>다음 턴 유닛</returns>
-        public static Unit GetNextTurnUnit()
+
+
+        Queue<Unit> unitBuffer = new Queue<Unit>();
+        int bufferSize = 5;
+        public int UnitBufferSize => bufferSize;
+        public Queue<Unit> UnitBuffer => unitBuffer;
+
+        public void InitializeUnitBuffer()
+        {
+            unitBuffer.Clear();
+            for(int i = 0; i < bufferSize; i++)
+            {
+                Unit unit = CalculateNextUnit();
+                Debug.Log(unit.Name);
+                unitBuffer.Enqueue(unit);
+            }
+        }
+        Unit CalculateNextUnit()
         {
             float max = 100; // 주기의 최댓값
             float minTime = 100;
             Unit nextUnit = null; // 다음 턴에 행동할 유닛
-
             foreach (var unit in instance.AllUnits)
             {
                 if (unit.Agility <= -10)
@@ -218,20 +234,59 @@ namespace Model.Managers
                     nextUnit = unit;
                 }
             }
+            foreach (var unit in instance.AllUnits)
+                unit.ActionRate += (unit.Agility * 10 + 100) * minTime;
+
+            nextUnit.ActionRate = 0;
             return nextUnit;
+        }
+
+        public static Unit GetNextTurnUnit()
+        {
+            instance.unitBuffer.Enqueue(instance.CalculateNextUnit());
+            return instance.unitBuffer.Dequeue();
         }
 
         public static void SetNextTurnUnit(Unit nextUnit)
         {
-            float max = 100; // 주기의 최댓값
-            float velocity = nextUnit.Agility * 10 + 100;
-            float minTime = (max - nextUnit.ActionRate) / velocity; // 거리 = 시간 * 속력 > 시간 = 거리 / 속력
-
-            //나머지 유닛들도 해당 시간만큼 이동.
-            foreach (var unit in instance.AllUnits)
-                unit.ActionRate += (unit.Agility * 10 + 100) * minTime;
-
             instance.thisTurnUnit = nextUnit;
         }
+
+        /* public static Unit GetNextTurnUnit()
+            {
+                float max = 100; // 주기의 최댓값
+                float minTime = 100;
+                Unit nextUnit = null; // 다음 턴에 행동할 유닛
+
+                foreach (var unit in instance.AllUnits)
+                {
+                    if (unit.Agility <= -10)
+                        continue;
+
+                    float velocity = unit.Agility * 10 + 100;
+                    float time = (max - unit.ActionRate) / velocity; // 거리 = 시간 * 속력 > 시간 = 거리 / 속력
+                    if (minTime >= time) // 시간이 가장 적게 걸리는애가 먼저된다.
+                    {
+                        minTime = time;
+                        nextUnit = unit;
+                    }
+                }
+                return nextUnit;
+            }
+
+
+
+            public static void SetNextTurnUnit(Unit nextUnit)
+            {
+                float max = 100; // 주기의 최댓값
+                float velocity = nextUnit.Agility * 10 + 100;
+                float minTime = (max - nextUnit.ActionRate) / velocity; // 거리 = 시간 * 속력 > 시간 = 거리 / 속력
+
+                //나머지 유닛들도 해당 시간만큼 이동.
+                foreach (var unit in instance.AllUnits)
+                    unit.ActionRate += (unit.Agility * 10 + 100) * minTime;
+
+                instance.thisTurnUnit = nextUnit;
+            }*/
     }
 }
