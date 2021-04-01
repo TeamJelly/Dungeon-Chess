@@ -31,8 +31,9 @@ namespace UI.Popup
         }
         public void SetWindowModeScreen()
         {
-            Screen.SetResolution(960, 540, FullScreenMode.Windowed);
+            Screen.SetResolution(1280, 720, FullScreenMode.Windowed);
         }
+
         public void SetFullModeScreen()
         {
             Screen.SetResolution(1920, 1080,

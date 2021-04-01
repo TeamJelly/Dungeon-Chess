@@ -9,7 +9,7 @@ namespace UI.Battle
     {
         public static FadeOutTextUI instance;
 
-        private GameObject prefab;
+        public GameObject prefab;
 
         private void Awake()
         {
