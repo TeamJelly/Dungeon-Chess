@@ -357,25 +357,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67958c1c90345f641b512141be3ae44d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactable: 1
+  DownTransfrom: {fileID: 2880999053783113632}
+  FrameImage: {fileID: 7185328526610373886}
+  DefaultFrameSprite: {fileID: 3571569290027043033, guid: 7914d9cb19fbb714186aa1261edd2841,
+    type: 3}
+  PushedFrameSprite: {fileID: -671109378201181900, guid: 7914d9cb19fbb714186aa1261edd2841,
+    type: 3}
   CurrentSkill:
     priority: 0
-  interactable: 1
-  Image: {fileID: 0}
-  Frame: {fileID: 0}
-  UpgradeButton: {fileID: 1924429519}
-  ImageTransfrom: {fileID: 0}
-  ButtonSprite:
-  - {fileID: 2086001136419137212, guid: d18e439e932042041a74c7dafa31d4ba, type: 3}
-  - {fileID: -3365026510449541564, guid: d18e439e932042041a74c7dafa31d4ba, type: 3}
-  - {fileID: -2967420753229415777, guid: d18e439e932042041a74c7dafa31d4ba, type: 3}
-  - {fileID: -5913615384380763287, guid: d18e439e932042041a74c7dafa31d4ba, type: 3}
-  - {fileID: 6728816855829378758, guid: d18e439e932042041a74c7dafa31d4ba, type: 3}
-  PushedButtonSprite:
-  - {fileID: -367297571359391035, guid: d18e439e932042041a74c7dafa31d4ba, type: 3}
-  - {fileID: -6535755057457109292, guid: d18e439e932042041a74c7dafa31d4ba, type: 3}
-  - {fileID: -7557933213817748184, guid: d18e439e932042041a74c7dafa31d4ba, type: 3}
-  - {fileID: -4913853463894955111, guid: d18e439e932042041a74c7dafa31d4ba, type: 3}
-  - {fileID: 890131817929682334, guid: d18e439e932042041a74c7dafa31d4ba, type: 3}
 --- !u!114 &7185328526610373886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -395,7 +385,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 2158072300971651936, guid: d18e439e932042041a74c7dafa31d4ba,
+  m_Sprite: {fileID: 3571569290027043033, guid: 7914d9cb19fbb714186aa1261edd2841,
     type: 3}
   m_Type: 1
   m_PreserveAspect: 0
