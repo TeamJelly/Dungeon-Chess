@@ -14,19 +14,20 @@ namespace View
     {
         private GameObject hPBarPrefab;
 
-        public UnitInfoView ThisTurnUnitInfo { get; set; }
-        public UnitInfoView OtherUnitInfo { get; set; }
+        //public UnitInfoView ThisTurnUnitInfo { get; set; }
+        //public UnitInfoView OtherUnitInfo { get; set; }
 
         public Button TurnEndButton { get; private set; }
         public Dictionary<Unit, GameObject> UnitObjects { get; } = new Dictionary<Unit, GameObject>();
         public Dictionary<Unit, GameObject> HPBars { get; } = new Dictionary<Unit, GameObject>();
+
         private void Awake()
         {
             hPBarPrefab = Resources.Load<GameObject>("Prefabs/UI/Battle/HP_BAR");
-            ThisTurnUnitInfo = transform.Find("Panel/ThisTurnUnitInfo").GetComponent<UnitInfoView>();
-            OtherUnitInfo = transform.Find("Panel/OtherUnitInfo").GetComponent<UnitInfoView>();
-            OtherUnitInfo.gameObject.SetActive(false);
-            TurnEndButton = transform.Find("Panel/TurnEndButton").GetComponent<Button>();
+            //ThisTurnUnitInfo = transform.Find("Panel/ThisTurnUnitInfo").GetComponent<UnitInfoView>();
+            //OtherUnitInfo = transform.Find("Panel/OtherUnitInfo").GetComponent<UnitInfoView>();
+            //OtherUnitInfo.gameObject.SetActive(false);
+            TurnEndButton = transform.Find("MainPanel/TurnEndButton").GetComponent<Button>();
         }
 
         private void Update()
@@ -40,12 +41,15 @@ namespace View
             TurnEndButton.onClick.RemoveAllListeners();
             TurnEndButton.onClick.AddListener(action);
         }
+
         public void SetTurnUnitPanel(Unit unit)
         {
+/*
             if (unit.Category != Category.Party)
                 ThisTurnUnitInfo.SetUnitInfo(unit, false);
             else
                 ThisTurnUnitInfo.SetUnitInfo(unit, true);
+*/
         }
 
         public void MakeUnitObject(Unit unit)
@@ -82,8 +86,8 @@ namespace View
             entry_PointerClick.eventID = EventTriggerType.PointerClick;
             entry_PointerClick.callback.AddListener((data) =>
             {
-                OtherUnitInfo.gameObject.SetActive(true);
-                OtherUnitInfo.SetUnitInfo(unit, false);
+//                OtherUnitInfo.gameObject.SetActive(true);
+//                OtherUnitInfo.SetUnitInfo(unit, false);
             });
             eventTrigger.triggers.Add(entry_PointerClick);
             UnitObjects.Add(unit, newObj);

@@ -20,6 +20,7 @@ namespace UI.Battle
         private void Start()
         {
             Viewer.battle.SetTurnEndButton(ThisTurnEnd);
+
             foreach (var unit in BattleManager.GetUnit())
             {
                 Viewer.battle.MakeUnitObject(unit);
@@ -67,7 +68,7 @@ namespace UI.Battle
         public void ThisTurnEnd()
         {
             IndicatorUI.HideTileIndicator();
-            Viewer.battle.ThisTurnUnitInfo.CurrentPushedButton = null;
+            //Viewer.battle.ThisTurnUnitInfo.CurrentPushedButton = null;
 
             Unit thisTurnUnit = BattleManager.instance.thisTurnUnit;
 
