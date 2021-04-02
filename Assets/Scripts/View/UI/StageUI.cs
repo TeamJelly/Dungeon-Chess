@@ -26,6 +26,7 @@ namespace UI
 
         public List<Sprite> roomImages;
 
+        public RectTransform linePrefab2;
         private void Start()
         {
            InitStageUI(StageManager.instance.AllRooms);
@@ -80,9 +81,10 @@ namespace UI
             for (int i = 0; i < AllRooms.GetLength(0); i++)
             {
                 GameObject floor = Instantiate(floorPrefab, contentPanel.transform);
+
+                ((RectTransform)floor.transform).anchoredPosition = Vector2.right * ((RectTransform)floor.transform).rect.width * i;
                 floor.name = "floor " + i;
                 floors.Add(floor);
-
                 for (int j = 0; j < AllRooms.GetLength(1); j++)
                 {
                     Room room = AllRooms[i, j];
@@ -96,6 +98,18 @@ namespace UI
                         AllRoomButtons[i, j].onClick.AddListener(() => StageManager.instance.VisitRoom(room));
                         AllRoomButtons[i, j].interactable = false; //생성된 모든 버튼은 처음에 비활성화.
                     }
+                }
+
+                float gap = ((RectTransform)floor.transform).rect.height / floor.transform.childCount;
+                float centerHeight = ((RectTransform)floor.transform).rect.height * 0.5f;
+                for(int j = 0; j < floor.transform.childCount; j++)
+                {
+                    RectTransform child = (RectTransform)floor.transform.GetChild(j);
+                    child.anchorMin =  Vector2.one * 0.5f;
+                    child.anchorMax =  Vector2.one * 0.5f;
+                    child.pivot = Vector2.one * 0.5f;
+                    child.sizeDelta = Vector2.one * 20;
+                    child.anchoredPosition = new Vector2(0, -gap * j + centerHeight  - gap * 0.5f);
                 }
             }
 
@@ -117,12 +131,13 @@ namespace UI
             }
 
             //방 잇는 라인UI 생성
-            for (int i = 0; i < AllRooms.GetLength(1); i++)
+            /*for (int i = 0; i < AllRooms.GetLength(1); i++)
             {
                 lines.Add(Instantiate(linePrefab));
-            }
-            Invoke("GenerateLines", 0.05f);
-
+            }*/
+            Canvas.ForceUpdateCanvases();
+            GenerateLines2();
+            //Invoke("GenerateLines", 0.05f);
         }
 
         /// <summary>
@@ -130,8 +145,6 @@ namespace UI
         /// </summary>
         void GenerateLines()
         {
-            
-
             for (int j = 0; j < StageManager.instance.pathList.Length; j++)
             {
                 List<Vector2Int> path = StageManager.instance.pathList[j];
@@ -147,22 +160,69 @@ namespace UI
             }
         }
 
-
         void GenerateLines2()
         {
-            for (int j = 0; j < StageManager.instance.pathList.Length; j++)
+            Room[,] AllRooms = StageManager.instance.AllRooms;
+            for (int i = 0; i < AllRooms.GetLength(0); i++)
             {
-                List<Vector2Int> path = StageManager.instance.pathList[j];
-                LineRenderer lineRenderer = lines[j].GetComponent<LineRenderer>();
-                lineRenderer.positionCount = path.Count;
-
-                for (int i = 0; i < path.Count; i++)
+                for (int j = 0; j < AllRooms.GetLength(1); j++)
                 {
-                    Vector3 roomPosition = AllRoomButtons[path[i].x, path[i].y].transform.position;
-                    lineRenderer.SetPosition(i, roomPosition);
+                    Room room = AllRooms[i, j];
+                    if (room.isActivate)
+                    {
+                        Room roomChecker = room.left;
+                        if (roomChecker != null)
+                        {
+                            DrawLine(room, roomChecker);
+                        }
+                        roomChecker = room.center;
+                        if (roomChecker != null)
+                        {
+                            DrawLine(room, roomChecker);
+                        }
+
+                        roomChecker = room.right;
+                        if (roomChecker != null)
+                        {
+                            DrawLine(room, roomChecker);
+                        }
+                    }
                 }
-                lines[j].transform.SetParent(contentPanel.transform);
             }
+        }
+
+        Vector2 canvasResolution = new Vector2(320,180);
+        void DrawLine(Room A, Room B)
+        {
+            float angle = GetAngle(((RectTransform)AllRoomButtons[A.position.x, A.position.y].transform).position,
+                                   ((RectTransform)AllRoomButtons[B.position.x, B.position.y].transform).position);
+            RectTransform line = Instantiate(linePrefab2,contentPanel.transform);
+            line.position = AllRoomButtons[A.position.x,A.position.y].transform.position;
+
+            //Debug.Log(((RectTransform)(AllRoomButtons[A.position.x, A.position.y].transform)).position);
+           // Debug.Log(((RectTransform)(AllRoomButtons[B.position.x, B.position.y].transform)).position);
+            
+            Vector2 posA = AllRoomButtons[A.position.x, A.position.y].transform.position;
+            Vector2 posB = AllRoomButtons[B.position.x, B.position.y].transform.position;
+
+            posA.x *= canvasResolution.x / Screen.currentResolution.width;
+            posA.y *= canvasResolution.y / Screen.currentResolution.height;
+
+            posB.x *= canvasResolution.x / Screen.currentResolution.width;
+            posB.y *= canvasResolution.y / Screen.currentResolution.height;
+
+            float distance = Vector2.Distance(posA,posB);
+            line.sizeDelta = new Vector2(distance , 1);
+    
+            //Debug.Log(distance);
+            line.eulerAngles = new Vector3(0, 0, angle);
+            line.SetParent(contentPanel.transform);
+            line.SetAsFirstSibling();
+        }
+        float GetAngle(Vector3 vStart, Vector3 vEnd)
+        {
+            Vector3 v = vEnd - vStart;
+            return Mathf.Atan2(v.y, v.x) * Mathf.Rad2Deg;
         }
 
     }
