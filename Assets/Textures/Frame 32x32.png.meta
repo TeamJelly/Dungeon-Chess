@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7914d9cb19fbb714186aa1261edd2841
+guid: 6f5b858cb629be545a2e54ebc4dc0371
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -8,6 +8,21 @@ TextureImporter:
   - first:
       213: -671109378201181900
     second: Frame 16x17_1
+  - first:
+      213: -3661460982301610385
+    second: Frame 16x18_0
+  - first:
+      213: -1848702529427546083
+    second: Frame 16x18_1
+  - first:
+      213: -619711056627489183
+    second: Frame 32x32_0
+  - first:
+      213: -4534884331647366591
+    second: Frame 32x32_1
+  - first:
+      213: 829559148086961432
+    second: Frame 32x32_2
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -105,43 +120,64 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Frame 16x17_0
+      name: Frame 32x32_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 16
-        height: 16
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
-      border: {x: 2, y: 2, z: 2, w: 2}
+      border: {x: 4, y: 4, z: 4, w: 4}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9d881c6a853c09130800000000000000
-      internalID: 3571569290027043033
+      spriteID: 166265ec3185667f0800000000000000
+      internalID: -619711056627489183
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Frame 16x17_1
+      name: Frame 32x32_1
       rect:
         serializedVersion: 2
-        x: 16
+        x: 32
         y: 0
-        width: 16
-        height: 16
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
-      border: {x: 2, y: 1, z: 2, w: 3}
+      border: {x: 4, y: 2, z: 4, w: 6}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 431a2e2839dbfa6f0800000000000000
-      internalID: -671109378201181900
+      spriteID: 14a8caa2abad011c0800000000000000
+      internalID: -4534884331647366591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Frame 32x32_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 4, y: 4, z: 4, w: 4}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81526e566af238b00800000000000000
+      internalID: 829559148086961432
       vertices: []
       indices: 
       edges: []
