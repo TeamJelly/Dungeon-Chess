@@ -15,16 +15,16 @@ public class PixelButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public Sprite DefaultFrameSprite;
     public Sprite PushedFrameSprite;
 
-    public void OnPointerDown(PointerEventData eventData)
+    public virtual void OnPointerDown(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Left && interactable)
         {
-            DownTransfrom.anchoredPosition = new Vector2(0, -1);
+            DownTransfrom.anchoredPosition = new Vector2(0, -2);
             FrameImage.sprite = PushedFrameSprite;
         }
     }
 
-    public void OnPointerUp(PointerEventData eventData)
+    public virtual void OnPointerUp(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Left && interactable)
         {
@@ -39,6 +39,7 @@ public class PixelButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         GetComponent<Button>().transition = Selectable.Transition.None;
         FrameImage = GetComponent<Image>();
         FrameImage.sprite = DefaultFrameSprite;
+        FrameImage.type = Image.Type.Sliced;
     }
 
 }

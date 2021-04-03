@@ -9,44 +9,56 @@ using Model.Skills;
 public class SkillButton : PixelButton
 {
     public Skill CurrentSkill;
-/*
-    public void SetSkill(Skill skill)
+
+    public override void OnPointerDown(PointerEventData eventData)
     {
-        CurrentSkill = skill;
-
-        Image.sprite = CurrentSkill.Sprite;
-
-        if (CurrentSkill.Grade == 0)
-            SetInteractable(false);
-        else
-            SetInteractable(true);
+        base.OnPointerDown(eventData);
+        Debug.Log("뭐가 되냐?");
     }
 
-    public void SetInteractable(bool boolean)
+    public override void OnPointerUp(PointerEventData eventData)
     {
-        interactable = boolean;
-
-        if (interactable == false)
-        {
-            ImageTransfrom.anchoredPosition = new Vector2(0, -1);
-            Frame.sprite = PushedButtonSprite[CurrentSkill.Grade];
-        }
-        else
-        {
-            ImageTransfrom.anchoredPosition = new Vector2(0, 0);
-            Frame.sprite = ButtonSprite[CurrentSkill.Grade];
-        }
+        base.OnPointerUp(eventData);
     }
 
-    private void Start()
-    {
-        UpgradeButton.onClick.AddListener(() =>
+    /*
+        public void SetSkill(Skill skill)
         {
-            CurrentSkill?.Upgrade();
-            SetSkill(CurrentSkill);
-        });
+            CurrentSkill = skill;
 
-        // 테스트용 코드
-        // SetSkill(new Skill_000() { Grade = 1 });
-    }*/
+            Image.sprite = CurrentSkill.Sprite;
+
+            if (CurrentSkill.Grade == 0)
+                SetInteractable(false);
+            else
+                SetInteractable(true);
+        }
+
+        public void SetInteractable(bool boolean)
+        {
+            interactable = boolean;
+
+            if (interactable == false)
+            {
+                ImageTransfrom.anchoredPosition = new Vector2(0, -1);
+                Frame.sprite = PushedButtonSprite[CurrentSkill.Grade];
+            }
+            else
+            {
+                ImageTransfrom.anchoredPosition = new Vector2(0, 0);
+                Frame.sprite = ButtonSprite[CurrentSkill.Grade];
+            }
+        }
+
+        private void Start()
+        {
+            UpgradeButton.onClick.AddListener(() =>
+            {
+                CurrentSkill?.Upgrade();
+                SetSkill(CurrentSkill);
+            });
+
+            // 테스트용 코드
+            // SetSkill(new Skill_000() { Grade = 1 });
+        }*/
 }
