@@ -11,7 +11,6 @@ namespace UI
 {
     public class HireUI : MonoBehaviour
     {
-
         public int maximumUnitCount = 0; // 인스펙터 창에서 세팅할 것.
         public int selectedUnitCount = 0;//현재 고용된 파티 인원 수
         [Header("[중앙 패널]")]

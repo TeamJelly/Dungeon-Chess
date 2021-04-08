@@ -111,9 +111,6 @@ namespace UI.Battle
 
             SetSkillSlot(Move, unit.MoveSkill);
 
-            for (int i = 0; i < unit.Items.Length; i++)
-                SetSkillSlot(Items[i], unit.Items[i]);
-
             for (int i = 0; i < unit.Skills.Length; i++)
                 SetSkillSlot(Skills[i], unit.Skills[i]);
         }
