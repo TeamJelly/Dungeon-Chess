@@ -70,7 +70,7 @@ namespace UI.Battle
         public void ThisTurnEnd()
         {
             IndicatorUI.HideTileIndicator();
-            ViewManager.battle.ThisTurnUnitInfo.CurrentPushedButton = null;
+            //ViewManager.battle.ThisTurnUnitInfo.CurrentPushedButton = null;
 
             Unit thisTurnUnit = BattleManager.instance.thisTurnUnit;
 

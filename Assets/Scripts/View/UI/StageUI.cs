@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Common.UI;
 
 namespace UI
 {
@@ -11,6 +12,7 @@ namespace UI
     {
         public static StageUI instance;
 
+        public GameObject panel;
         public GameObject contentPanel;
         public GameObject floorPrefab;
         public GameObject roomPrefab;
@@ -30,6 +32,15 @@ namespace UI
         private void Start()
         {
            InitStageUI(StageManager.instance.AllRooms);
+        }
+        public void Enable()
+        {
+            UIEffect.FadeInPanel(panel);
+        }
+
+        public void Disable()
+        {
+            UIEffect.FadeOutPanel(panel);
         }
         /// <summary>
         /// 이용 가능한 방 및 현재 방 표시

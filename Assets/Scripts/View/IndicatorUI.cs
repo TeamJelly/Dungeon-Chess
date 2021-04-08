@@ -69,8 +69,8 @@ namespace UI.Battle
                                     for (int k = currentUnit.StateEffects.Count - 1; k >= 0; k--)
                                         currentUnit.StateEffects[k].AfterUseSkill();
 
-                                    ViewManager.battle.ThisTurnUnitInfo.CurrentPushedButton = null;
-                                    ViewManager.battle.ThisTurnUnitInfo.UpdateUnitInfo();
+                                    //ViewManager.battle.ThisTurnUnitInfo.CurrentPushedButton = null;
+                                   // ViewManager.battle.ThisTurnUnitInfo.UpdateUnitInfo();
                                 }
                                 else
                                 {
