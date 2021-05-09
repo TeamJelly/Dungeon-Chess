@@ -20,12 +20,11 @@ namespace UI.Battle
         private void Start()
         {
             ViewManager.battle.SetTurnEndButton(ThisTurnEnd);
+
             foreach (var unit in BattleManager.GetUnit())
             {
                 ViewManager.battle.MakeUnitObject(unit);
             }
-            AgilityView.instance.Init(BattleManager.instance.UnitBufferSize);
-            BattleManager.instance.InitializeUnitBuffer();
             NextTurnStart();
         }
 
@@ -37,6 +36,7 @@ namespace UI.Battle
             // 다음 턴의 유닛을 받아 시작한다.
             Unit nextUnit = BattleManager.GetNextTurnUnit();
             BattleManager.SetNextTurnUnit(nextUnit);
+            
             // 턴시작시 유닛 값들 초기화
             nextUnit.ActionRate = 0;
             nextUnit.MoveCount = 1;
@@ -63,14 +63,12 @@ namespace UI.Battle
                 if (action != null)
                     action.Invoke();
             }
-            AgilityView.instance.UpdteView();
-
         }
 
         public void ThisTurnEnd()
         {
             IndicatorUI.HideTileIndicator();
-            //ViewManager.battle.ThisTurnUnitInfo.CurrentPushedButton = null;
+            //Viewer.battle.ThisTurnUnitInfo.CurrentPushedButton = null;
 
             Unit thisTurnUnit = BattleManager.instance.thisTurnUnit;
 
