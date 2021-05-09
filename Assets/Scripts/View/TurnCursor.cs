@@ -6,7 +6,7 @@ using View;
 
 namespace UI.Battle
 {
-    public class CursorUI : MonoBehaviour
+    public class TurnCursor : MonoBehaviour
     {
         void FixedUpdate()
         {
