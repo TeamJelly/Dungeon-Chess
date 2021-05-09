@@ -1306,6 +1306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61626b53348e57c4eaae86e125519e35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefab: {fileID: 0}
 --- !u!114 &1309214666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7571,7 +7572,7 @@ GameObject:
   - component: {fileID: 5384038422620740428}
   - component: {fileID: 5384038422620740430}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: MainPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
