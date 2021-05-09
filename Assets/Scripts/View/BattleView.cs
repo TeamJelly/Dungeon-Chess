@@ -27,7 +27,7 @@ namespace View
             //ThisTurnUnitInfo = transform.Find("Panel/ThisTurnUnitInfo").GetComponent<UnitInfoView>();
             //OtherUnitInfo = transform.Find("Panel/OtherUnitInfo").GetComponent<UnitInfoView>();
             //OtherUnitInfo.gameObject.SetActive(false);
-            TurnEndButton = transform.Find("Panel/TurnEndButton").GetComponent<Button>();
+            TurnEndButton = transform.Find("MainPanel/TurnEndButton").GetComponent<Button>();
         }
 
         private void Update()
