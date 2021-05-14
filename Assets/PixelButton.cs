@@ -7,37 +7,69 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 public class PixelButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    public bool interactable = true;
-
     public RectTransform DownTransfrom;
     public Image FrameImage;
+    public Image MainImage;
 
     public Sprite DefaultFrameSprite;
     public Sprite PushedFrameSprite;
 
+    public Button properties;
+
+    public bool hasImage = false;
+    public bool toggleOption = false;
+    public bool pressed = false;
+
     public virtual void OnPointerDown(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Left && interactable)
+        if (!properties.interactable) return;
+
+        if (toggleOption) pressed = !pressed;
+        else pressed = true;
+
+        if (pressed && eventData.button == PointerEventData.InputButton.Left)
         {
-            DownTransfrom.anchoredPosition = new Vector2(0, -2);
-            FrameImage.sprite = PushedFrameSprite;
+            ShowPushEffect();
         }
+
     }
 
     public virtual void OnPointerUp(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Left && interactable)
+        if (!properties.interactable) return;
+
+        if (!toggleOption) pressed = false;
+        if (!pressed && eventData.button == PointerEventData.InputButton.Left)
         {
-            DownTransfrom.anchoredPosition = new Vector2(0, 0);
-            FrameImage.sprite = DefaultFrameSprite;
+            ShowPopEffect();
         }
+    }
+
+
+    public void ShowPushEffect()
+    {
+        DownTransfrom.anchoredPosition = new Vector2(0, -2);
+        FrameImage.sprite = PushedFrameSprite;
+    }
+
+    public void ShowPopEffect()
+    {
+        DownTransfrom.anchoredPosition = new Vector2(0, 0);
+        FrameImage.sprite = DefaultFrameSprite;
+    }
+    public virtual void SetInteractable(bool b)
+    {
+        properties.interactable = b;
     }
 
     private void OnValidate()
     {
-        GetComponent<Button>().interactable = interactable;
-        GetComponent<Button>().transition = Selectable.Transition.None;
-        FrameImage = GetComponent<Image>();
+        if (properties == null) properties = GetComponent<Button>();
+        if(FrameImage == null) FrameImage = GetComponent<Image>();
+        if(hasImage && MainImage == null)MainImage = DownTransfrom.GetChild(0).GetComponent<Image>();
+
+        properties.transition = Selectable.Transition.None;
+
         FrameImage.sprite = DefaultFrameSprite;
         FrameImage.type = Image.Type.Sliced;
     }

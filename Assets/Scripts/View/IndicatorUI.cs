@@ -16,7 +16,6 @@ namespace UI.Battle
         private void Awake()
         {
             instance = this;
-
             tileIndicators = null;
         }
 
@@ -64,6 +63,7 @@ namespace UI.Battle
                                 if (currentAvailablePositions.Contains(position))
                                 {
                                     instance.StartCoroutine(currentSkill.Use(currentUnit, position));
+                                    ViewManager.battle.unitControlUI.RefreshButtons(currentUnit);
                                     HideTileIndicator();
 
                                     for (int k = currentUnit.StateEffects.Count - 1; k >= 0; k--)

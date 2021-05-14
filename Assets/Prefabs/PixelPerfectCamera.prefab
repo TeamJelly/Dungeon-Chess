@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 38423511361271649}
   - component: {fileID: 38423511361271650}
   - component: {fileID: 1712081022}
+  - component: {fileID: 6801557335796507505}
   m_Layer: 0
   m_Name: PixelPerfectCamera
   m_TagString: MainCamera
@@ -123,3 +124,19 @@ MonoBehaviour:
   horizontal: 0
   LeftDownLimit: {x: 6, y: 2}
   RightUpLimit: {x: 10, y: 14}
+--- !u!114 &6801557335796507505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 38423511361271662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56666c5a40171f54783dd416a44f42bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EventMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_MaxRayIntersections: 0

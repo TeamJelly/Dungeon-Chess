@@ -14,13 +14,14 @@ namespace View
     {
         private GameObject hPBarPrefab;
 
-        //public UnitInfoView ThisTurnUnitInfo { get; set; }
+        public UnitInfoView ThisTurnUnitInfo;
         //public UnitInfoView OtherUnitInfo { get; set; }
 
         public Button TurnEndButton { get; private set; }
         public Dictionary<Unit, GameObject> UnitObjects { get; } = new Dictionary<Unit, GameObject>();
         public Dictionary<Unit, HPBar> HPBars { get; } = new Dictionary<Unit, HPBar>();
 
+        public UnitControlUI unitControlUI;
         private void Awake()
         {
             hPBarPrefab = Resources.Load<GameObject>("Prefabs/UI/Battle/HP_BAR");
@@ -28,6 +29,7 @@ namespace View
             //OtherUnitInfo = transform.Find("Panel/OtherUnitInfo").GetComponent<UnitInfoView>();
             //OtherUnitInfo.gameObject.SetActive(false);
             TurnEndButton = transform.Find("MainPanel/TurnEndButton").GetComponent<Button>();
+            unitControlUI = GetComponent<UnitControlUI>();
         }
 
         private void Update()
@@ -49,12 +51,14 @@ namespace View
 
         public void SetTurnUnitPanel(Unit unit)
         {
-/*
+            unitControlUI?.UpdateUI(unit);
+
             if (unit.Category != Category.Party)
-                ThisTurnUnitInfo.SetUnitInfo(unit, false);
+                ThisTurnUnitInfo?.SetUnitInfo(unit, false);
             else
-                ThisTurnUnitInfo.SetUnitInfo(unit, true);
-*/
+                ThisTurnUnitInfo?.SetUnitInfo(unit, true);
+           
+
         }
 
         public void MakeUnitObject(Unit unit)
