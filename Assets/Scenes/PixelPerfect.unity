@@ -3904,7 +3904,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 848305296}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2484267678505574094}
+        m_MethodName: SetWindowModeScreen
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &848305296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5218,7 +5229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 1
+  m_UiScaleMode: 2
   m_ReferencePixelsPerUnit: 16
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 640, y: 360}
@@ -10758,7 +10769,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1534614710}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2484267678505574094}
+        m_MethodName: SetFullModeScreen
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1534614710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13914,6 +13936,65 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1712081022, guid: 8208c2e5111fca042aea1da79e503f0f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 38423511361271648, guid: 8208c2e5111fca042aea1da79e503f0f,
+        type: 3}
+      propertyPath: m_ForceIntoRT
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 38423511361271648, guid: 8208c2e5111fca042aea1da79e503f0f,
+        type: 3}
+      propertyPath: orthographic size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 38423511361271648, guid: 8208c2e5111fca042aea1da79e503f0f,
+        type: 3}
+      propertyPath: m_NormalizedViewPortRect.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 38423511361271648, guid: 8208c2e5111fca042aea1da79e503f0f,
+        type: 3}
+      propertyPath: m_NormalizedViewPortRect.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 38423511361271648, guid: 8208c2e5111fca042aea1da79e503f0f,
+        type: 3}
+      propertyPath: m_NormalizedViewPortRect.width
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 38423511361271648, guid: 8208c2e5111fca042aea1da79e503f0f,
+        type: 3}
+      propertyPath: m_NormalizedViewPortRect.height
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 38423511361271650, guid: 8208c2e5111fca042aea1da79e503f0f,
+        type: 3}
+      propertyPath: m_UpscaleRT
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 38423511361271650, guid: 8208c2e5111fca042aea1da79e503f0f,
+        type: 3}
+      propertyPath: m_StretchFill
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 38423511361271650, guid: 8208c2e5111fca042aea1da79e503f0f,
+        type: 3}
+      propertyPath: m_PixelSnapping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 38423511361271650, guid: 8208c2e5111fca042aea1da79e503f0f,
+        type: 3}
+      propertyPath: m_RefResolutionX
+      value: 320
+      objectReference: {fileID: 0}
+    - target: {fileID: 38423511361271650, guid: 8208c2e5111fca042aea1da79e503f0f,
+        type: 3}
+      propertyPath: m_RefResolutionY
+      value: 180
+      objectReference: {fileID: 0}
     - target: {fileID: 38423511361271651, guid: 8208c2e5111fca042aea1da79e503f0f,
         type: 3}
       propertyPath: m_RootOrder

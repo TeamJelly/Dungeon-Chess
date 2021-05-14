@@ -12,7 +12,7 @@ public class BattleCamera : MonoBehaviour
 
     private void Awake()
     {
-        Cursor.lockState = CursorLockMode.Confined;
+        //Cursor.lockState = CursorLockMode.Confined;
     }
 
     // Update is called once per frame
@@ -21,14 +21,14 @@ public class BattleCamera : MonoBehaviour
         vertical = Input.GetAxis("Vertical");
         horizontal = Input.GetAxis("Horizontal");
 
-        if (Input.mousePosition.x <= mouseMoveRange)
-            horizontal = -1;
-        if (Input.mousePosition.x >= Screen.width - mouseMoveRange)
-            horizontal = 1;
-        if (Input.mousePosition.y <= mouseMoveRange)
-            vertical = -1;
-        if (Input.mousePosition.y >= Screen.height - mouseMoveRange)
-            vertical = 1;
+        //if (Input.mousePosition.x <= mouseMoveRange)
+        //    horizontal = -1;
+        //if (Input.mousePosition.x >= Screen.width - mouseMoveRange)
+        //    horizontal = 1;
+        //if (Input.mousePosition.y <= mouseMoveRange)
+        //    vertical = -1;
+        //if (Input.mousePosition.y >= Screen.height - mouseMoveRange)
+        //    vertical = 1;
 
         Vector3 arrow = new Vector2(horizontal, vertical);
         transform.position += arrow * Time.deltaTime * speed;
