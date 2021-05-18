@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 public class BattleCamera : MonoBehaviour
 {
@@ -10,9 +12,15 @@ public class BattleCamera : MonoBehaviour
     public Vector2 LeftDownLimit;
     public Vector2 RightUpLimit;
 
+    public int zoom = 4;
+    UnityEngine.U2D.PixelPerfectCamera pixelPerfectCamera;
+
     private void Awake()
     {
         //Cursor.lockState = CursorLockMode.Confined;
+
+        pixelPerfectCamera = GetComponent<UnityEngine.U2D.PixelPerfectCamera>();
+        UpdatePixelCameraZoom();
     }
 
     // Update is called once per frame
@@ -42,6 +50,25 @@ public class BattleCamera : MonoBehaviour
         if (transform.position.y > RightUpLimit.y)
             transform.position = new Vector3(transform.position.x, RightUpLimit.y, transform.position.z);
 
+        if (Input.mouseScrollDelta.y < 0 && zoom > 2)
+        {
+            // Zoom이 작을수록 축소
+            zoom -= 1;
+            UpdatePixelCameraZoom();
+        }
+        if (Input.mouseScrollDelta.y > 0 && pixelPerfectCamera.refResolutionX > 100)
+        {
+            // Zoom이 클수록 확대
+            zoom += 1;
+            UpdatePixelCameraZoom();
+        }
+    }
 
+    public void UpdatePixelCameraZoom()
+    {
+        pixelPerfectCamera.refResolutionX =
+            (Screen.width / zoom) % 2 == 0 ? Screen.width / zoom : Screen.width / zoom - 1;
+        pixelPerfectCamera.refResolutionY =
+            (Screen.height / zoom) % 2 == 0 ? Screen.height / zoom : Screen.height / zoom - 1;
     }
 }
