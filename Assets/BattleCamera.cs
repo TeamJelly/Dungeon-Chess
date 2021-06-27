@@ -13,6 +13,8 @@ public class BattleCamera : MonoBehaviour
     public Vector2 RightUpLimit;
 
     public int zoom = 4;
+    public int zoomDownLimit;
+    public int zoomUpLimit;
     UnityEngine.U2D.PixelPerfectCamera pixelPerfectCamera;
 
     private void Awake()
