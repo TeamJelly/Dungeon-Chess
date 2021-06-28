@@ -136,7 +136,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Text
+  m_text: "\uC7AC\uC0DD"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 646a62eb14c81c0488dd56ff43b17835, type: 2}
   m_sharedMaterial: {fileID: -3670432280451070285, guid: 646a62eb14c81c0488dd56ff43b17835,
@@ -164,8 +164,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 3
-  m_fontSizeBase: 3
+  m_fontSize: 8
+  m_fontSizeBase: 8
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

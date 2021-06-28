@@ -19,11 +19,11 @@ namespace UI.Battle
         }
         private void Start()
         {
-            Viewer.battle.SetTurnEndButton(ThisTurnEnd);
+            ViewManager.battle.SetTurnEndButton(ThisTurnEnd);
 
             foreach (var unit in BattleManager.GetUnit())
             {
-                Viewer.battle.MakeUnitObject(unit);
+                ViewManager.battle.MakeUnitObject(unit);
             }
             NextTurnStart();
         }
@@ -53,7 +53,7 @@ namespace UI.Battle
                 nextUnit.StateEffects[i].OnTurnStart();
 
             // 유닛정보창 초기화
-            Viewer.battle.SetTurnUnitPanel(nextUnit);
+            ViewManager.battle.SetTurnUnitPanel(nextUnit);
 
             // AI라면 자동 행동 실행
             if (nextUnit.Category != Category.Party)

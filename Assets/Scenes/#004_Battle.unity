@@ -1365,6 +1365,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1a360600e4212f44a7bae93e8ead593, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileIndicatorPrefab: {fileID: 4462922396805816717, guid: 316a856634a04434c9c6fd0b6d18cffb,
+    type: 3}
+  possibleColor: {r: 0, g: 0, b: 1, a: 0.5}
+  subPossibleColor: {r: 0, g: 0.5, b: 1, a: 0.5}
+  impossibleColor: {r: 1, g: 0, b: 0, a: 0.5}
+  subImpossibleColor: {r: 1, g: 0, b: 1, a: 0.5}
+  inBoundaryColor: {r: 0, g: 1, b: 0, a: 0.5}
+  outBoundaryColor: {r: 1, g: 1, b: 1, a: 0.5}
 --- !u!114 &1309214670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1727,6 +1735,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1758563011 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1129724453412847526, guid: f49e11de9fffe2f46bf9d7dfc328f8e3,
+    type: 3}
+  m_PrefabInstance: {fileID: 7783519557876895348}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92e89b6c2ba9ff44996de23e384f7c55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1828962411
 GameObject:
   m_ObjectHideFlags: 0
@@ -8783,7 +8803,7 @@ GameObject:
   - component: {fileID: 5384038422985716110}
   - component: {fileID: 5384038422985716109}
   - component: {fileID: 5384038422985716114}
-  - component: {fileID: 5384038422985716113}
+  - component: {fileID: 5384038422985716112}
   m_Layer: 5
   m_Name: BattleUI
   m_TagString: Untagged
@@ -8851,7 +8871,7 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_TargetDisplay: 0
---- !u!114 &5384038422985716113
+--- !u!114 &5384038422985716112
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8860,7 +8880,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5384038422985716108}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1157f288b46e9cf4a9b665279e988cf0, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e6a941bbf05a5a4895646055e431849, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mainPanel: {fileID: 5384038422620740428}
@@ -8876,6 +8896,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d7eee7e3d6476644b1146e17c17901a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ThisTurnUnitInfo: {fileID: 1758563011}
+  unitControlUI: {fileID: 0}
 --- !u!224 &5384038422985716144
 RectTransform:
   m_ObjectHideFlags: 0

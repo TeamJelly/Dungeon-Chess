@@ -14,13 +14,14 @@ namespace View
     {
         private GameObject hPBarPrefab;
 
-        //public UnitInfoView ThisTurnUnitInfo { get; set; }
+        public UnitInfoView ThisTurnUnitInfo;
         //public UnitInfoView OtherUnitInfo { get; set; }
 
         public Button TurnEndButton { get; private set; }
         public Dictionary<Unit, GameObject> UnitObjects { get; } = new Dictionary<Unit, GameObject>();
-        public Dictionary<Unit, GameObject> HPBars { get; } = new Dictionary<Unit, GameObject>();
+        public Dictionary<Unit, HPBar> HPBars { get; } = new Dictionary<Unit, HPBar>();
 
+        public UnitControlUI unitControlUI;
         private void Awake()
         {
             hPBarPrefab = Resources.Load<GameObject>("Prefabs/UI/Battle/HP_BAR");
@@ -28,10 +29,16 @@ namespace View
             //OtherUnitInfo = transform.Find("Panel/OtherUnitInfo").GetComponent<UnitInfoView>();
             //OtherUnitInfo.gameObject.SetActive(false);
             TurnEndButton = transform.Find("MainPanel/TurnEndButton").GetComponent<Button>();
+            unitControlUI = GetComponent<UnitControlUI>();
         }
 
         private void Update()
         {
+            foreach(Unit unit in HPBars.Keys)
+            {
+                Vector3 unitPos = new Vector3(unit.Position.x, unit.Position.y);
+                HPBars[unit].SetPosition(unitPos);
+            }
             if (Input.GetKeyDown(KeyCode.Space))
                 TurnEndButton.onClick.Invoke();
         }
@@ -44,12 +51,14 @@ namespace View
 
         public void SetTurnUnitPanel(Unit unit)
         {
-/*
+            unitControlUI?.UpdateUI(unit);
+
             if (unit.Category != Category.Party)
-                ThisTurnUnitInfo.SetUnitInfo(unit, false);
+                ThisTurnUnitInfo?.SetUnitInfo(unit, false);
             else
-                ThisTurnUnitInfo.SetUnitInfo(unit, true);
-*/
+                ThisTurnUnitInfo?.SetUnitInfo(unit, true);
+           
+
         }
 
         public void MakeUnitObject(Unit unit)
@@ -93,9 +102,9 @@ namespace View
             UnitObjects.Add(unit, newObj);
 
             // HP 바 생성
-            HPBar newHPBar = Instantiate(hPBarPrefab, Viewer.instance.MainPanel).GetComponent<HPBar>();
+            HPBar newHPBar = Instantiate(hPBarPrefab, ViewManager.instance.MainPanel).GetComponent<HPBar>();
             newHPBar.Init(unit);
-            HPBars.Add(unit, newHPBar.gameObject);
+            HPBars.Add(unit, newHPBar);
 
             //유닛 오브젝트 상호작용 콜백 등록
             unit.OnPositionChanged.AddListener((v) =>
@@ -109,6 +118,22 @@ namespace View
             //최초 갱신
             newHPBar.SetValue(unit.CurrentHP);
             unit.OnPositionChanged.Invoke(unit.Position);
+        }
+
+        public void DestroyUnitObject(Unit unit)
+        {
+            GameObject unitObj = UnitObjects[unit];
+            UnitObjects.Remove(unit);
+            Destroy(unitObj);
+
+            HPBar hpBar = HPBars[unit];
+            HPBars.Remove(unit);
+            Destroy(hpBar);
+
+            //AgilityViewer.instance.DestroyObject(unit);
+
+
+
         }
     }
 }

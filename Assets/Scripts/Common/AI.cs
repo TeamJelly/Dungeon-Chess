@@ -5,6 +5,7 @@ using System.Collections;
 using Model;
 using UI.Battle;
 using View;
+using Model.Managers;
 
 namespace Common
 {
@@ -52,7 +53,7 @@ namespace Common
 
             public IEnumerator InvokeAIAction(Action action)
             {
-                Viewer.battle.TurnEndButton.interactable = false;
+                ViewManager.battle.TurnEndButton.interactable = false;
 
                 yield return new WaitForSeconds(0.5f);
 
@@ -67,8 +68,10 @@ namespace Common
                     yield return new WaitForSeconds(0.5f);
                 }
 
-                Viewer.battle.TurnEndButton.interactable = true;
-                BattleController.instance.ThisTurnEnd();
+                ViewManager.battle.TurnEndButton.interactable = true;
+
+                if(BattleManager.CheckGameState() == BattleManager.State.Continue)
+                    BattleController.instance.ThisTurnEnd();
             }
         }
 
