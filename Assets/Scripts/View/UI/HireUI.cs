@@ -17,17 +17,17 @@ namespace UI
 
         public Button nextButton;
         public Button prevButton;
-        public UnityEngine.UI.Image currentUnitImage;
-        public Common.UI.Text selectButton;
+        public Image currentUnitImage;
+        public Button hireButton;
         public TextMeshProUGUI descriptionText;
 
         [Header("[하단 패널]")]
         public Common.UI.UImage testImage;
         public List<Common.UI.UImage> partyImagies;
-        public Common.UI.Text startButton;
+        public Button startButton;
         Unit currentUnit;
        
-        int index = 0;
+        public int index = 0;
 
         List<Sprite> unitImagies = new List<Sprite>();
 
@@ -43,7 +43,9 @@ namespace UI
         }
         private void Start()
         {
-            HUD.SetText("유닛 선택");
+            // HUD.SetText("유닛 선택");
+            hireButton.onClick.AddListener(SelectUnit);
+            prevButton.interactable = false;
             List<Unit> units = UnitManager.Instance.AllUnits;
 
             for (int i = 0; i < units.Count; i++)
@@ -69,15 +71,15 @@ namespace UI
 
             if (hasCurrentUnitInParty)
             {
-                selectButton.TextString = "해고";
-                selectButton.UsableButton = true;
+                hireButton.GetComponentInChildren<TextMeshProUGUI>().text = "해고";
+                hireButton.enabled = true;
             }
             else
             {
-                selectButton.TextString = "고용";
-                selectButton.UsableButton = selectedUnitCount != maximumUnitCount;
+                hireButton.GetComponentInChildren<TextMeshProUGUI>().text = "고용";
+                hireButton.enabled = selectedUnitCount != maximumUnitCount;
             }
-            startButton.UsableButton = (selectedUnitCount > 0);
+            startButton.enabled = (selectedUnitCount > 0);
 
         }
         public void EnableStartButton()
@@ -93,23 +95,25 @@ namespace UI
         //UnitManager에서 Unit을 가져와서 화면에 보여주기.
         public void ShowNextUnit()
         {
+            
             if (index < unitImagies.Count - 1)
             {
                 prevButton.interactable = true;
                 index++;
             }
-            else nextButton.interactable = false;
+            if(index == unitImagies.Count - 1) nextButton.interactable = false;
             UpdateUI();
         }
 
         public void ShowPrevUnit()
         {
+            
             if (index > 0)
             {
                 nextButton.interactable = true;
                 index--;
             }
-            else prevButton.interactable = false;
+            if(index == 0) prevButton.interactable = false;
             UpdateUI();
         }
 
