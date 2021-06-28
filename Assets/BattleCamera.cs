@@ -9,7 +9,7 @@ public class BattleCamera : MonoBehaviour
     public Vector2 LeftDownLimit;
     public Vector2 RightUpLimit;
 
-    private int zoom = 4;
+    private int zoom = 0;
     public int Zoom
     {
         get => zoom;
@@ -68,20 +68,30 @@ public class BattleCamera : MonoBehaviour
         }
 
         // 축소
-        if (Input.mouseScrollDelta.y < 0 && Zoom > 2)
+        if (Input.mouseScrollDelta.y < 0 && Zoom > 0)
             Zoom -= 1;
         // 확대
-        if (Input.mouseScrollDelta.y > 0 && pixelPerfectCamera.refResolutionX > 100)
+        if (Input.mouseScrollDelta.y > 0 && Zoom < Resolutions.Length - 1 /* && pixelPerfectCamera.refResolutionX > 100*/ )
             Zoom += 1;
     }
 
+    public Vector2Int[] Resolutions =
+    {
+        // new Vector2Int(240, 134),
+        new Vector2Int(320, 180),
+        // new Vector2Int(480, 270)
+    };
+
     public void UpdatePixelCameraZoom()
     {
-        // Screen Size를 zoom으로 나누고 홀수일 경우 (-1)짝수로 만들어준다.
-        pixelPerfectCamera.refResolutionX =
-            (Screen.width / zoom) % 2 == 0 ? Screen.width / zoom : Screen.width / zoom - 1;
-        pixelPerfectCamera.refResolutionY =
-            (Screen.height / zoom) % 2 == 0 ? Screen.height / zoom : Screen.height / zoom - 1;
+        pixelPerfectCamera.refResolutionX = Resolutions[Zoom].x;
+        pixelPerfectCamera.refResolutionY = Resolutions[Zoom].y;
+
+        //// Screen Size를 zoom으로 나누고 홀수일 경우 (-1)짝수로 만들어준다.
+        //pixelPerfectCamera.refResolutionX =
+        //    (Screen.width / zoom) % 2 == 0 ? Screen.width / zoom : Screen.width / zoom - 1;
+        //pixelPerfectCamera.refResolutionY =
+        //    (Screen.height / zoom) % 2 == 0 ? Screen.height / zoom : Screen.height / zoom - 1;
     }
 
 }
