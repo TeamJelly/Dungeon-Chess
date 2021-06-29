@@ -6,6 +6,7 @@ using Model;
 using Model.Units;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 namespace UI
 {
@@ -23,11 +24,14 @@ namespace UI
 
         [Header("[하단 패널]")]
         public Common.UI.UImage testImage;
-        public List<Common.UI.UImage> partyImagies;
+        public List<Image> partyImagies;
         public Button startButton;
+
+        public Image crownImage;
+
         Unit currentUnit;
-       
-        public int index = 0;
+
+        int index = 0;
 
         List<Sprite> unitImagies = new List<Sprite>();
 
@@ -54,8 +58,26 @@ namespace UI
             }
             nextButton.onClick.AddListener(ShowNextUnit);
             prevButton.onClick.AddListener(ShowPrevUnit);
-            for (int i = 0; i < maximumUnitCount; i++) partyImagies[i].Sprite = NoSkill;
+            for (int i = 0; i < maximumUnitCount; i++)
+            {
+                int idx = i;
+                partyImagies[i].gameObject.GetComponent<Button>().onClick.AddListener(() =>
+                {
+                    if (selectedUnitCount <= idx) return;
+                    GameManager.LeaderUnit = GameManager.PartyUnits[idx];
+                    SetCrownPosition(idx);
+                });
+                partyImagies[i].sprite = NoSkill;
+            }
+
             UpdateUI();
+        }
+
+        void SetCrownPosition(int idx)
+        {
+            crownImage.transform.SetParent(partyImagies[idx].transform);
+            ((RectTransform)crownImage.transform).anchoredPosition = Vector2.zero;
+            crownImage.gameObject.SetActive(true);
         }
         void UpdateUI()
         {
@@ -80,7 +102,7 @@ namespace UI
                 hireButton.enabled = selectedUnitCount != maximumUnitCount;
             }
             startButton.enabled = (selectedUnitCount > 0);
-
+            crownImage.gameObject.SetActive(selectedUnitCount > 0);
         }
         public void EnableStartButton()
         {
@@ -128,24 +150,34 @@ namespace UI
                 Hire();
             }
 
-            for (int i = 0; i < maximumUnitCount; i++) partyImagies[i].Sprite = NoSkill;
+            //리더가 없는 상태면 첫번째 유닛을 리더로 등록.
+            if (GameManager.LeaderUnit == null && selectedUnitCount > 0)
+            {
+                GameManager.LeaderUnit = GameManager.PartyUnits[0];
+            }
+            for (int i = 0; i < maximumUnitCount; i++) partyImagies[i].sprite = NoSkill;
             for (int i = 0; i < GameManager.PartyUnits.Count; i++)
             {
                 int index = UnitManager.Instance.AllUnits.IndexOf(GameManager.PartyUnits[i]);
-                partyImagies[i].Sprite = unitImagies[index];
+                partyImagies[i].sprite = unitImagies[index];
+                if (GameManager.PartyUnits[i] == GameManager.LeaderUnit) SetCrownPosition(i);
             }
             UpdateUI();
         }
         void Hire()
         {
-            GameManager.AddPartyUnit(currentUnit);
+            GameManager.AddPartyUnit(currentUnit);    
             selectedUnitCount++;
         }
         void Fire()
         {
             GameManager.RemovePartyUnit(currentUnit);
             selectedUnitCount--;
-            if (selectedUnitCount == 0) startButton.enabled = false;
+            if (GameManager.LeaderUnit == currentUnit) // 해고하려는 유닛이 리더인 경우.
+            {
+                GameManager.LeaderUnit = null;
+            }
+            
         }
         private bool hasCurrentUnitInParty
         {

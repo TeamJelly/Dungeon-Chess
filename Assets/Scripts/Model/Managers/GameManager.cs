@@ -1,6 +1,7 @@
 ﻿using Model;
 using System.Collections;
 using System.Collections.Generic;
+using System.Dynamic;
 using UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -18,7 +19,7 @@ namespace Model.Managers
         public Room[,] AllRooms = null;
         public List<Vector2Int>[] pathList = null;
         List<Unit> partyUnits = new List<Unit>();
-
+        Unit leader;
         public int Gold
         {
             get => gold;
@@ -31,6 +32,8 @@ namespace Model.Managers
         private int gold;
         public int stage;
         public static List<Unit> PartyUnits { get => Instance.partyUnits; }
+
+        public static Unit LeaderUnit { get => instance.leader; set => instance.leader = value; }
 
         public static GameManager Instance
         {
