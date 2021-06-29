@@ -76,6 +76,7 @@ public class FieldManager : MonoBehaviour
         field = new Model.Tile[row, col];
 
         int x = 0, y = row - 1;
+
         for (int i = 0; i < fieldData.Length; i++)
         {
             if (chars[i] == '\n')
@@ -86,33 +87,25 @@ public class FieldManager : MonoBehaviour
             else
             {
                 field[y, x] = new Model.Tile();
-                field[y, x].category = (Model.Tile.Category)tileBasesChar.IndexOf(chars[i]);
-                tileMap.SetTile(
-                    new Vector3Int(x, y, 0), 
-                    tileBases[tileBasesChar.IndexOf(chars[i])]
-                    );
+                field[y, x].category = (Model.Tile.Category) chars[i];
                 x++;
             }
         }
 
-        //field = new Model.Tile[fildData.GetLength(0), fildData.GetLength(1)];
+        UpdateTileMap();
+    }
 
-        //for (int y = 0; y < fildData.GetLength(0); y++)
-        //{
-        //    for (int x = 0; x < fildData.GetLength(1); x++)
-        //    {
-        //        field[y, x] = new Model.Tile();
-        //        field[y, x].category = (Model.Tile.Category)fildData[y, x];
-        //    }
-        //}
-
-        //for (int y = 0; y < field.GetLength(0); y++)
-        //{
-        //    for (int x = 0; x < field.GetLength(1); x++)
-        //    {
-        //        tileMap.SetTile(new Vector3Int(x, y, 0), tileBases[(int) field[y, x].category]);
-        //    }
-        //}
+    public void UpdateTileMap()
+    {
+        for (int y = 0; y < field.GetLength(0); y++)
+        {
+            for (int x = 0; x < field.GetLength(1); x++)
+            {
+                char c = (char) field[y, x].category;
+                int i = tileBasesChar.IndexOf(c);
+                tileMap.SetTile(new Vector3Int(x, y, 0), tileBases[i]);
+            }
+        }
     }
 
     private void Awake()
