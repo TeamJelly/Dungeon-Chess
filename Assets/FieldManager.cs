@@ -20,7 +20,7 @@ public class FieldManager : MonoBehaviour
     public Model.Tile[,] field;
 
     // 필드 데이터
-    [TextArea(10,20)]
+    [TextArea(0,20)]
     public List<string> FieldDatas = new List<string>()
     {
         "WWWWWWWWWWWWWWWW\n" +
@@ -38,7 +38,7 @@ public class FieldManager : MonoBehaviour
         "WWWFFFFFFFFFFWWW\n" +
         "WWWWWWWWWWWWWWWW\n" +
         "WWWWWWWWWWWWWWWW\n" +
-        "WWWWWWWWWWWWWWWW\n"
+        "WWWWWWWWWWWWWWWW"
         ,
         "WWWWWWWWWWWWWWWW\n" +
         "WWWWWWWWWWWWWWWW\n" +
@@ -55,20 +55,23 @@ public class FieldManager : MonoBehaviour
         "WWFFFFFTTFFFFFWW\n" +
         "WWFFFFFTTFFFFFWW\n" +
         "WWWWWWWWWWWWWWWW\n" +
-        "WWWWWWWWWWWWWWWW\n"
+        "WWWWWWWWWWWWWWWW"
     };
 
     public void InitField(string fieldData)
     {
         char[] chars = fieldData.ToCharArray();
 
-        int col = 0, row = 0;
+        // 열과 행
+        int col = 0, row = 1;
+
+        // 개행의 개수를 세줍니다.
         for (int i = 0; i < fieldData.Length; i++)
-        {
             if (chars[i] == '\n')
                 row++;
-        }
-        col = fieldData.Length / row - 1;
+        
+        // 전체 길이를 row로 나눈거를 올림한다. \n이 있으므로 값을 하나 빼주면 열의 개수이다.
+        col = (fieldData.Length + row - 1) / row - 1;
 
         field = new Model.Tile[row, col];
 
