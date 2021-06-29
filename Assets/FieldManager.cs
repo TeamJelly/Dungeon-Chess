@@ -20,6 +20,7 @@ public class FieldManager : MonoBehaviour
     public Model.Tile[,] field;
 
     // 필드 데이터
+    [TextArea(10,20)]
     public List<string> FieldDatas = new List<string>()
     {
         "WWWWWWWWWWWWWWWW\n" +
