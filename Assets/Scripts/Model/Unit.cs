@@ -21,16 +21,46 @@ namespace Model
         private UnitDescriptor descriptor = new UnitDescriptor();
         public UnitDescriptor UnitDescriptor => descriptor;
 
+        // 유닛의 현재 경험치
+        [SerializeField]
+        private int currentEXP;
+
+        // 유닛의 현재 체력
+        [SerializeField]
+        private int currentHP;
+
+        // 유닛의 위치
+        [SerializeField]
         private Vector2Int position;
+
+        // 행동가능 퍼센테이지
+        [SerializeField]
         private float actionRate;
+
+        // 이동가능 횟수
+        [SerializeField]
         private int moveCount;
+
+        // 스킬가능 횟수
+        [SerializeField]
         private int skillCount;
-        private int itemCount;
+
+        // 아이템 가능 횟수 (삭제)
+        // private int itemCount;
+
+        [SerializeField]
         private Skill moveSkill;// = new Walk();
+
+        [SerializeField]
         private Skill passiveSkill;
+
+        [SerializeField]
         private Skill[] skills = new Skill[4];
 
+        [SerializeField]
         private List<Artifact> antiques = new List<Artifact>();
+
+        [SerializeField]
         private List<Effect> stateEffects = new List<Effect>();
 
         private int partyID; // 파티 내부에서 고유 아이디
@@ -117,7 +147,6 @@ namespace Model
         }
         public UpAndDownEventListener<int> OnLevel = new UpAndDownEventListener<int>();
 
-        private int currentHP;
         public int CurrentHP {
             get => currentHP;
             set
@@ -162,7 +191,6 @@ namespace Model
         }
         public UpAndDownEventListener<int> OnMaximumHP = new UpAndDownEventListener<int>();
 
-        private int currentEXP;
         public int CurrentEXP {
             get => currentEXP;
             set
@@ -339,16 +367,23 @@ namespace Model
             get => skillCount;
             set
             {
+                // 스킬 가능 횟수가 변경되면
                 if (skillCount != value)
                 {
+                    // 값을 변경해주고
                     skillCount = value;
+
+                    // 값이 변경됨 이벤트를 발생시킨다.
                     OnSkillCount.changed.Invoke(value);
+
                     if (skillCount < value)
                     {
+                        // 값이 오름 이벤트를 발생시킨다.
                         OnSkillCount.up.Invoke(value);
                     }
                     else
                     {
+                        // 값이 낮아짐 이벤트를 발생시킨다.
                         OnSkillCount.down.Invoke(value);
                     }
 
@@ -356,27 +391,29 @@ namespace Model
             }
         }
         public UpAndDownEventListener<int> OnSkillCount = new UpAndDownEventListener<int>();
-        public int ItemCount {
-            get => itemCount;
-            set
-            {
-                if (itemCount != value)
-                {
-                    itemCount = value;
-                    OnItemCount.changed.Invoke(value);
-                    if (itemCount < value)
-                    {
-                        OnItemCount.up.Invoke(value);
-                    }
-                    else
-                    {
-                        OnItemCount.down.Invoke(value);
-                    }
 
-                }
-            }
-        }
-        public UpAndDownEventListener<int> OnItemCount = new UpAndDownEventListener<int>();
+        //public int ItemCount {
+        //    get => itemCount;
+        //    set
+        //    {
+        //        if (itemCount != value)
+        //        {
+        //            itemCount = value;
+        //            OnItemCount.changed.Invoke(value);
+        //            if (itemCount < value)
+        //            {
+        //                OnItemCount.up.Invoke(value);
+        //            }
+        //            else
+        //            {
+        //                OnItemCount.down.Invoke(value);
+        //            }
+
+        //        }
+        //    }
+        //}
+        //public UpAndDownEventListener<int> OnItemCount = new UpAndDownEventListener<int>();
+
         public Skill MoveSkill {
             get => moveSkill;
             set
@@ -436,9 +473,8 @@ namespace Model
                 }
             }
         }
-
-
         public UpAndDownEventListener<int> OnCritical = new UpAndDownEventListener<int>();
+
         /// <summary>
         /// DB로 부터 초기화
         /// </summary>
@@ -460,6 +496,8 @@ namespace Model
                 skills[i] = (Skill)Activator.CreateInstance(Type.GetType($"Model.Skills.{skillString[i]}"));
             }
         }
+
+
         private void initializeUnitFromDB(int no)
         {
             var _descriptor = UnitStorage.Instance[no];

@@ -17,7 +17,6 @@ namespace Model.Effects
             Debug.Log($"{Owner.Name} 기절 상태이상!");
             Owner.MoveCount = 0;
             Owner.SkillCount = 0;
-            Owner.ItemCount = 0;
             isActivated = true;
         }
 
@@ -27,7 +26,6 @@ namespace Model.Effects
             Debug.Log($"{Owner.Name} 기절 상태이상!");
             Owner.MoveCount = 0;
             Owner.SkillCount = 0;
-            Owner.ItemCount = 0;
         }
 
         public override void OnTurnEnd()

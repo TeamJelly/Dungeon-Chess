@@ -14,9 +14,6 @@ namespace Model.Managers
         // 현재 전투의 모든 유닛을 참조할 수 있습니다.
         public List<Unit> AllUnits = new List<Unit>();
 
-        // 현재 전투의 모든 타일을 참조할 수 있습니다.
-        private Tile[,] AllTiles; 
-
         // 현재 턴의 유닛
         public Unit thisTurnUnit;
 
@@ -42,7 +39,11 @@ namespace Model.Managers
         private void Awake()
         {
             instance = this;
-            GenerateTiles(16, 16);
+        }
+
+        private void Start()
+        {
+            GenerateTiles();
 
             if (GameManager.Instance.currentRoom == null)
             {
@@ -101,11 +102,11 @@ namespace Model.Managers
 
         public static State CheckGameState()
         {
-            // 승리조건이 모든 적을 죽이는 것일때
+            // 승리조건이 모든 적이 죽는 것일 때
             if (instance.WinCondition == Condition.KillAllEnemy && GetAliveUnitCount(Category.Enemy) == 0)
                 return State.Win;
             
-            // 패배조건이 모든 아군이 죽이는 것일때
+            // 패배조건이 모든 아군이 죽는 것일 때
             if (instance.DefeatCondition == Condition.KillAllParty && GetAliveUnitCount(Category.Party) == 0)
                 return State.Defeat;
 
@@ -128,8 +129,8 @@ namespace Model.Managers
         {
             if (position.x >= 0 &&
                 position.y >= 0 &&
-                position.x < instance.AllTiles.GetLength(0) &&
-                position.y < instance.AllTiles.GetLength(1))
+                position.x < FieldManager.instance.field.GetLength(0) &&
+                position.y < FieldManager.instance.field.GetLength(1))
                 return true;
             else
                 return false;
@@ -173,13 +174,13 @@ namespace Model.Managers
         public static Tile GetTile(int x, int y)
         {
             if (IsAvilablePosition(new Vector2Int(x, y)))
-                return instance.AllTiles[x, y];
+                return FieldManager.instance.field[x, y];
             else
                 return null;
         }
         public static Tile[,] GetTile()
         {
-            return instance.AllTiles;
+            return FieldManager.instance.field;
         }
 
         /// <summary>
@@ -187,19 +188,10 @@ namespace Model.Managers
         /// </summary>
         /// <param name="width">맵 너비</param>
         /// <param name="height">맵 높이</param>
-        void GenerateTiles(int width, int height)
+        public void GenerateTiles()
         {
-            AllTiles = new Tile[width, height];
-            for (int i = 0; i < AllTiles.GetLength(0); i++)
-                for (int j = 0; j < AllTiles.GetLength(1); j++)
-                    AllTiles[i, j] = new Tile();
+            FieldManager.instance.InitField();
         }
-
-        /// <summary>
-        /// 다음 턴 유닛 선택 알고리즘
-        /// </summary>
-        /// <returns>다음 턴 유닛</returns>
-
 
         Queue<Unit> unitBuffer = new Queue<Unit>();
         int bufferSize = 5;
@@ -216,6 +208,7 @@ namespace Model.Managers
                 unitBuffer.Enqueue(unit);
             }
         }
+
         Unit CalculateNextUnit()
         {
             float max = 100; // 주기의 최댓값
@@ -234,6 +227,7 @@ namespace Model.Managers
                     nextUnit = unit;
                 }
             }
+
             foreach (var unit in instance.AllUnits)
                 unit.ActionRate += (unit.Agility * 10 + 100) * minTime;
 

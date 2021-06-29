@@ -12,7 +12,16 @@ namespace Model
 
         public Vector2Int position;
 
-        public enum Category { NULL };
+        public enum Category
+        {
+            Floor = 0,
+            Wall = 1,
+            Stair = 2,
+            Thorn = 3,
+            Hole = 4,
+        };
+
+        public Category category;
 
         public Effect tileEffect;
 

@@ -41,7 +41,6 @@ namespace UI.Battle
             nextUnit.ActionRate = 0;
             nextUnit.MoveCount = 1;
             nextUnit.SkillCount = 1;
-            nextUnit.ItemCount = 1;
 
             // 턴 시작시 스킬쿨 줄어듬
             foreach (var skill in nextUnit.Skills)

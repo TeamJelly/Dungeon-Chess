@@ -25,9 +25,11 @@ namespace View
         private void Awake()
         {
             hPBarPrefab = Resources.Load<GameObject>("Prefabs/UI/Battle/HP_BAR");
+
             //ThisTurnUnitInfo = transform.Find("Panel/ThisTurnUnitInfo").GetComponent<UnitInfoView>();
             //OtherUnitInfo = transform.Find("Panel/OtherUnitInfo").GetComponent<UnitInfoView>();
             //OtherUnitInfo.gameObject.SetActive(false);
+
             TurnEndButton = transform.Find("MainPanel/TurnEndButton").GetComponent<Button>();
             unitControlUI = GetComponent<UnitControlUI>();
         }
@@ -61,6 +63,11 @@ namespace View
 
         }
 
+        /// <summary>
+        /// 유닛을 필드에 오브젝트로 생성시키는 함수
+        /// 생성하면서 이벤트 콜벡을 할당해줘야 한다.
+        /// </summary>
+        /// <param name="unit"></param>
         public void MakeUnitObject(Unit unit)
         {
             // 미리 존재 여부 확인
@@ -116,7 +123,8 @@ namespace View
             unit.OnCurrentHP.changed.AddListener(newHPBar.SetValue);
 
             //최초 갱신
-            newHPBar.SetValue(unit.CurrentHP);
+            // newHPBar.SetValue(unit.CurrentHP);
+            unit.OnCurrentHP.changed.Invoke(unit.CurrentHP);
             unit.OnPositionChanged.Invoke(unit.Position);
         }
 
@@ -130,9 +138,10 @@ namespace View
             HPBars.Remove(unit);
             Destroy(hpBar);
 
-            //AgilityViewer.instance.DestroyObject(unit);
+            unit.OnPositionChanged.RemoveAllListeners();
+            unit.OnCurrentHP.changed.RemoveAllListeners();
 
-
+            // AgilityViewer.instance.DestroyObject(unit);
 
         }
     }

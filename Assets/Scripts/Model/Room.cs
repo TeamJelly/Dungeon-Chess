@@ -37,7 +37,5 @@ namespace Model
         {
             this.category = category;
         }
-
-
     }
 }
