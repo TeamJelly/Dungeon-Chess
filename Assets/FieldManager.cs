@@ -61,17 +61,16 @@ public class FieldManager : MonoBehaviour
         };
     }
 
-    public void InitField()
+    public void InitField(int[,] fildData)
     {
+        field = new Model.Tile[fildData.GetLength(0), fildData.GetLength(1)];
 
-        field = new Model.Tile[Field1.GetLength(0), Field1.GetLength(1)];
-
-        for (int y = 0; y < Field1.GetLength(0); y++)
+        for (int y = 0; y < fildData.GetLength(0); y++)
         {
-            for (int x = 0; x < Field1.GetLength(1); x++)
+            for (int x = 0; x < fildData.GetLength(1); x++)
             {
                 field[y, x] = new Model.Tile();
-                field[y, x].category = (Model.Tile.Category)Field1[y, x];
+                field[y, x].category = (Model.Tile.Category)fildData[y, x];
             }
         }
 
