@@ -190,7 +190,7 @@ namespace Model.Managers
         /// <param name="height">맵 높이</param>
         public void GenerateTiles()
         {
-            FieldManager.instance.InitField(FieldManager.instance.Field1);
+            FieldManager.instance.InitField(FieldManager.instance.FieldDatas[1]);
         }
 
         Queue<Unit> unitBuffer = new Queue<Unit>();

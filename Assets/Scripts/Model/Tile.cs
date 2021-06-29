@@ -14,11 +14,11 @@ namespace Model
 
         public enum Category
         {
-            Floor = 0,
-            Wall = 1,
-            Stair = 2,
-            Thorn = 3,
-            Hole = 4,
+            Floor   = 'F',
+            Wall    = 'W',
+            Stair   = 'S',
+            Thorn   = 'T',
+            Hole    = 'H',
         };
 
         public Category category;

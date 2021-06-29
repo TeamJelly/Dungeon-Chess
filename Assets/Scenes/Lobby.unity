@@ -12655,11 +12655,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileMap: {fileID: 1256185293}
   tileBases:
-  - {fileID: 11400000, guid: cfa714b5becb6e2419c55bea22f75c18, type: 2}
+  - {fileID: 0}
   - {fileID: 11400000, guid: 6367e85228148e940a01758ece259ab3, type: 2}
   - {fileID: 11400000, guid: 767b7a6d27c28b7449fabc1decb69732, type: 2}
   - {fileID: 11400000, guid: e8a15957e4aaa30468023ab628883104, type: 2}
   - {fileID: 0}
+  tileBasesChar: 46005700530054004800
 --- !u!1 &1399906093
 GameObject:
   m_ObjectHideFlags: 0
