@@ -42,7 +42,7 @@ namespace Model.Managers
         private void Awake()
         {
             instance = this;
-            GenerateTiles(10, 10);
+            GenerateTiles(16, 16);
 
             if (GameManager.Instance.currentRoom == null)
             {
