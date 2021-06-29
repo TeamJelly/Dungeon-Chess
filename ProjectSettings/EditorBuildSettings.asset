@@ -8,4 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PixelPerfect.unity
     guid: 59f64de6b8b051b41956c9f5a7985c8c
+  - enabled: 1
+    path: Assets/Scenes/Lobby.unity
+    guid: cc1eb2834ea763747aa1a0e3d4a54279
+  - enabled: 1
+    path: Assets/Scenes/#001_MainMenu.unity
+    guid: 4a1cd2a23fa589443aae7d7f1486a6ae
   m_configObjects: {}

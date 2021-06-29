@@ -49,6 +49,7 @@ namespace UI
         {
             // HUD.SetText("유닛 선택");
             hireButton.onClick.AddListener(SelectUnit);
+            startButton.onClick.AddListener(MenuManager.instance.GotoLobby);
             prevButton.interactable = false;
             List<Unit> units = UnitManager.Instance.AllUnits;
 
@@ -66,6 +67,7 @@ namespace UI
                     if (selectedUnitCount <= idx) return;
                     GameManager.LeaderUnit = GameManager.PartyUnits[idx];
                     SetCrownPosition(idx);
+                    ShowUnit(idx);
                 });
                 partyImagies[i].sprite = NoSkill;
             }
@@ -114,6 +116,14 @@ namespace UI
 
         }
 
+        //하단 고용된 유닛 이미지 클릭 시 해당 유닛 정보를 보여줌.
+        void ShowUnit(int idx)
+        {
+            nextButton.interactable = idx < unitImagies.Count - 1;
+            prevButton.interactable = idx > 0;
+            index = idx;
+            UpdateUI();
+        }
         //UnitManager에서 Unit을 가져와서 화면에 보여주기.
         public void ShowNextUnit()
         {

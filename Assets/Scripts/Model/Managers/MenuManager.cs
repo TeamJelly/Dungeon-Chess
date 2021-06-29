@@ -28,6 +28,11 @@ namespace Model.Managers
             SceneLoader.GotoStage();
         }
 
+        public void GotoLobby()
+        {
+            SceneLoader.GotoLobby();
+        }
+
         public void ExitGame()
         {
             Application.Quit();

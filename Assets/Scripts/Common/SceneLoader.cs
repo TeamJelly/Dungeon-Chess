@@ -19,6 +19,11 @@ namespace Common
             SceneManager.LoadScene(sceneName);
         }
 
+
+        public static void GotoLobby()
+        {
+            LoadScene("Lobby");
+        }
         public static void GotoMain()
         {
             LoadScene("#001_MainMenu");
