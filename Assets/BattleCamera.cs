@@ -6,71 +6,92 @@ using UnityEngine.EventSystems;
 
 public class BattleCamera : MonoBehaviour
 {
-    public float speed = 5f;
-    public float mouseMoveRange = 10f;
-    public float vertical, horizontal;
     public Vector2 LeftDownLimit;
     public Vector2 RightUpLimit;
 
-    public int zoom = 4;
-    public int zoomDownLimit;
-    public int zoomUpLimit;
+    private int zoom = 0;
+    public int Zoom
+    {
+        get => zoom;
+        set
+        {
+            zoom = value;
+            UpdatePixelCameraZoom();
+        }
+    }
+
+    public Vector3 Position
+    {
+        get => transform.position;
+        set
+        {
+            transform.position = value;
+            if (transform.position.x < LeftDownLimit.x)
+                transform.position = new Vector3(LeftDownLimit.x, transform.position.y, transform.position.z);
+            if (transform.position.y < LeftDownLimit.y)
+                transform.position = new Vector3(transform.position.x, LeftDownLimit.y, transform.position.z);
+            if (transform.position.x > RightUpLimit.x)
+                transform.position = new Vector3(RightUpLimit.x, transform.position.y, transform.position.z);
+            if (transform.position.y > RightUpLimit.y)
+                transform.position = new Vector3(transform.position.x, RightUpLimit.y, transform.position.z);
+        }
+    }
+
     UnityEngine.U2D.PixelPerfectCamera pixelPerfectCamera;
+
+    public float dragSpeed = 15;
+    private Vector3 cameraOrigin;
+    private Vector3 dragOrigin;
 
     private void Awake()
     {
-        //Cursor.lockState = CursorLockMode.Confined;
-
         pixelPerfectCamera = GetComponent<UnityEngine.U2D.PixelPerfectCamera>();
         UpdatePixelCameraZoom();
     }
 
-    // Update is called once per frame
-    void LateUpdate()
+
+    void Update()
     {
-        vertical = Input.GetAxis("Vertical");
-        horizontal = Input.GetAxis("Horizontal");
-
-        //if (Input.mousePosition.x <= mouseMoveRange)
-        //    horizontal = -1;
-        //if (Input.mousePosition.x >= Screen.width - mouseMoveRange)
-        //    horizontal = 1;
-        //if (Input.mousePosition.y <= mouseMoveRange)
-        //    vertical = -1;
-        //if (Input.mousePosition.y >= Screen.height - mouseMoveRange)
-        //    vertical = 1;
-
-        Vector3 arrow = new Vector2(horizontal, vertical);
-        transform.position += arrow * Time.deltaTime * speed;
-
-        if (transform.position.x < LeftDownLimit.x)
-            transform.position = new Vector3(LeftDownLimit.x, transform.position.y, transform.position.z);
-        if (transform.position.y < LeftDownLimit.y)
-            transform.position = new Vector3(transform.position.x, LeftDownLimit.y, transform.position.z);
-        if (transform.position.x > RightUpLimit.x)
-            transform.position = new Vector3(RightUpLimit.x, transform.position.y, transform.position.z);
-        if (transform.position.y > RightUpLimit.y)
-            transform.position = new Vector3(transform.position.x, RightUpLimit.y, transform.position.z);
-
-        if (Input.mouseScrollDelta.y < 0 && zoom > 2)
+        // 마우스를 눌렀을때 위치를 기록한다.
+        if (Input.GetMouseButtonDown(0))
         {
-            // Zoom이 작을수록 축소
-            zoom -= 1;
-            UpdatePixelCameraZoom();
+            cameraOrigin = Position;
+            dragOrigin = Input.mousePosition;
+            return;
         }
-        if (Input.mouseScrollDelta.y > 0 && pixelPerfectCamera.refResolutionX > 100)
+
+        // 마우스를 누르고 있으면 이동한다.
+        if (Input.GetMouseButton(0))
         {
-            // Zoom이 클수록 확대
-            zoom += 1;
-            UpdatePixelCameraZoom();
+            Vector3 vec = Camera.main.ScreenToViewportPoint(Input.mousePosition - dragOrigin);
+            Position = new Vector3(vec.x * dragSpeed, vec.y * dragSpeed, 0) + cameraOrigin;
         }
+
+        // 축소
+        if (Input.mouseScrollDelta.y < 0 && Zoom > 0)
+            Zoom -= 1;
+        // 확대
+        if (Input.mouseScrollDelta.y > 0 && Zoom < Resolutions.Length - 1 /* && pixelPerfectCamera.refResolutionX > 100*/ )
+            Zoom += 1;
     }
+
+    public Vector2Int[] Resolutions =
+    {
+        // new Vector2Int(240, 134),
+        new Vector2Int(320, 180),
+        // new Vector2Int(480, 270)
+    };
 
     public void UpdatePixelCameraZoom()
     {
-        pixelPerfectCamera.refResolutionX =
-            (Screen.width / zoom) % 2 == 0 ? Screen.width / zoom : Screen.width / zoom - 1;
-        pixelPerfectCamera.refResolutionY =
-            (Screen.height / zoom) % 2 == 0 ? Screen.height / zoom : Screen.height / zoom - 1;
+        pixelPerfectCamera.refResolutionX = Resolutions[Zoom].x;
+        pixelPerfectCamera.refResolutionY = Resolutions[Zoom].y;
+
+        //// Screen Size를 zoom으로 나누고 홀수일 경우 (-1)짝수로 만들어준다.
+        //pixelPerfectCamera.refResolutionX =
+        //    (Screen.width / zoom) % 2 == 0 ? Screen.width / zoom : Screen.width / zoom - 1;
+        //pixelPerfectCamera.refResolutionY =
+        //    (Screen.height / zoom) % 2 == 0 ? Screen.height / zoom : Screen.height / zoom - 1;
     }
+
 }
