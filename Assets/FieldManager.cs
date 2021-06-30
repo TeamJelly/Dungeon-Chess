@@ -134,11 +134,14 @@ public class FieldManager : MonoBehaviour
                     foreach (var vector in around)
                     {
                         Vector2Int position = new Vector2Int(x, y) + vector;
+
                         if (StairAroundPosition.Contains(position) == false &&
                             field[position.y, position.x].category != Model.Tile.Category.Hole &&
                             field[position.y, position.x].category != Model.Tile.Category.Wall &&
                             field[position.y, position.x].HasUnit() == false)
                             StairAroundPosition.Add(position);
+                        else
+                            Debug.LogError($"{x},{y} + {vector}");
                     }
                 }
             }

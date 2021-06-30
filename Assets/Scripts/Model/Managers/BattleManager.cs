@@ -179,7 +179,7 @@ namespace Model.Managers
         public static Tile GetTile(int x, int y)
         {
             if (IsAvilablePosition(new Vector2Int(x, y)))
-                return FieldManager.instance.field[x, y];
+                return FieldManager.instance.field[y, x];
             else
                 return null;
         }
