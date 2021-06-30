@@ -53,7 +53,17 @@ namespace UI.Battle
 
                             EventTrigger.Entry entry = new EventTrigger.Entry();
                             entry.eventID = EventTriggerType.PointerEnter;
-                            entry.callback.AddListener((data) => UpdateTileIndicator(position));
+                            entry.callback.AddListener(
+                                (data) =>
+                                {
+                                    if (currentSkill != null)
+                                        UpdateSkillIndicator(position);
+                                    else
+                                    {
+                                        UpdateTileIndicator(position);
+                                    }
+                                }
+                            );
                             eventTrigger.triggers.Add(entry);
 
                             entry = new EventTrigger.Entry();
@@ -62,15 +72,26 @@ namespace UI.Battle
                             {
                                 if (currentAvailablePositions.Contains(position))
                                 {
-                                    instance.StartCoroutine(currentSkill.Use(currentUnit, position));
-                                    ViewManager.battle.unitControlUI.RefreshButtons(currentUnit);
-                                    HideTileIndicator();
+                                    if (currentSkill != null)
+                                    {
+                                        instance.StartCoroutine(currentSkill.Use(currentUnit, position));
 
-                                    for (int k = currentUnit.StateEffects.Count - 1; k >= 0; k--)
-                                        currentUnit.StateEffects[k].AfterUseSkill();
+                                        ViewManager.battle.unitControlUI.RefreshButtons(currentUnit);
+                                        HideTileIndicator();
 
+                                        for (int k = currentUnit.StateEffects.Count - 1; k >= 0; k--)
+                                            currentUnit.StateEffects[k].AfterUseSkill();
+                                    }
+                                    else
+                                    {
+                                        tileAction(position);
+                                        // 다음 유닛을 소환해야 해서 타일을 자동으로 숨길수가 없다.
+                                        // 수동으로 타일을 숨겨주세요.
+                                        // HideTileIndicator();
+                                    }
+                                    
                                     //ViewManager.battle.ThisTurnUnitInfo.CurrentPushedButton = null;
-                                   // ViewManager.battle.ThisTurnUnitInfo.UpdateUnitInfo();
+                                    // ViewManager.battle.ThisTurnUnitInfo.UpdateUnitInfo();
                                 }
                                 else
                                 {
@@ -105,6 +126,7 @@ namespace UI.Battle
 
         private static Skill currentSkill;
         private static Unit currentUnit;
+        public static Action<Vector2Int> tileAction;
         private static List<Vector2Int> currentAvailablePositions;
 
         public static void ChangeTileIndicatorColor(List<Vector2Int> positions, Color color)
@@ -119,7 +141,7 @@ namespace UI.Battle
                 TileIndicators[position.x, position.y].GetComponent<SpriteRenderer>().color = color;
         }
 
-        public static void UpdateTileIndicator(Vector2Int position)
+        public static void UpdateSkillIndicator(Vector2Int position)
         {
             List<Vector2Int> RelatedPosition = currentSkill.GetRelatePositions(currentUnit, position);
 
@@ -141,14 +163,45 @@ namespace UI.Battle
                 ChangeTileIndicatorColor(position, instance.impossibleColor);
         }
 
-        public static void ShowTileIndicator(Unit user, Skill skill)
+        /// <summary>
+        /// 파티 소환에 사용
+        /// </summary>
+        /// <param name="positions"></param>
+        /// <param name="action"></param>
+        public static void ShowTileIndicator(List<Vector2Int> positions, Action<Vector2Int> action)
+        {
+            currentSkill = null;
+            currentAvailablePositions = positions;
+            tileAction = action;
+            UpdateTileIndicator(positions[0]);
+        }
+
+        private static void UpdateTileIndicator(Vector2Int position)
+        {
+            for (int i = 0; i < TileIndicators.GetLength(0); i++)
+                for (int j = 0; j < TileIndicators.GetLength(1); j++)
+                {
+                    Vector2Int tempPosition = new Vector2Int(i, j);
+                    if (currentAvailablePositions.Contains(tempPosition))
+                        ChangeTileIndicatorColor(tempPosition, instance.inBoundaryColor);
+                    else
+                        ChangeTileIndicatorColor(tempPosition, instance.outBoundaryColor);
+                }
+
+            if (currentAvailablePositions.Contains(position))
+                ChangeTileIndicatorColor(position, instance.possibleColor);
+            else
+                ChangeTileIndicatorColor(position, instance.impossibleColor);
+        }
+
+        public static void ShowSkillIndicator(Unit user, Skill skill)
         {
             currentUnit = user;
             currentSkill = skill;
             currentAvailablePositions = currentSkill.GetAvailablePositions(currentUnit);
 
             TileIndicatorParent.SetActive(true);
-            UpdateTileIndicator(user.Position);
+            UpdateSkillIndicator(user.Position);
         }
 
         public static void HideTileIndicator()

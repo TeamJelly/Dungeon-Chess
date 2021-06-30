@@ -108,6 +108,45 @@ public class FieldManager : MonoBehaviour
         }
     }
 
+    public List<Vector2Int> GetStairAroundPosition()
+    {
+        List<Vector2Int> around = new List<Vector2Int>()
+        {
+            new Vector2Int(-1, -1),
+            new Vector2Int(-1,  0),
+            new Vector2Int(-1,  1),
+            new Vector2Int( 0, -1),
+            new Vector2Int( 0,  0),
+            new Vector2Int( 0,  1),
+            new Vector2Int( 1, -1),
+            new Vector2Int( 1,  0),
+            new Vector2Int( 1,  1)
+        };
+
+        List<Vector2Int> StairAroundPosition = new List<Vector2Int>();
+
+        for (int y = 0; y < field.GetLength(0); y++)
+        {
+            for (int x = 0; x < field.GetLength(1); x++)
+            {
+                if (field[y,x].category == Model.Tile.Category.Stair)
+                {
+                    foreach (var vector in around)
+                    {
+                        Vector2Int position = new Vector2Int(x, y) + vector;
+                        if (StairAroundPosition.Contains(position) == false &&
+                            field[position.y, position.x].category != Model.Tile.Category.Hole &&
+                            field[position.y, position.x].category != Model.Tile.Category.Wall &&
+                            field[position.y, position.x].HasUnit() == false)
+                            StairAroundPosition.Add(position);
+                    }
+                }
+            }
+        }
+
+        return StairAroundPosition;
+    }
+
     private void Awake()
     {
         instance = this;

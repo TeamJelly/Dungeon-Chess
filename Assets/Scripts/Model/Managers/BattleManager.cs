@@ -43,7 +43,7 @@ namespace Model.Managers
 
         private void Start()
         {
-            GenerateTiles();
+            FieldManager.instance.InitField(FieldManager.instance.FieldDatas[0]);
 
             if (GameManager.Instance.currentRoom == null)
             {
@@ -86,16 +86,21 @@ namespace Model.Managers
                 GameManager.PartyUnits.Add(UnitManager.Instance.AllUnits[1]);
             }
 
-            Vector2Int[] party_position = { new Vector2Int(4, 0), new Vector2Int(5, 0), new Vector2Int(3, 0), new Vector2Int(6, 0) };
+            // 파티 유닛 summon
+            View.ViewManager.battle.SummonPartyUnits(0);
 
-            for (int i = 0; i < GameManager.PartyUnits.Count; i++)
-            {
-                Common.UnitAction.Summon(GameManager.PartyUnits[i], party_position[i]);
-                GameManager.PartyUnits[i].ActionRate = 0;
-                foreach (var skill in GameManager.PartyUnits[i].Skills)
-                    if (skill != null)
-                        skill.CurrentReuseTime = 0;
-            }
+            // UI.Battle.IndicatorUI.ShowTileIndicator()
+
+            //Vector2Int[] party_position = { new Vector2Int(4, 0), new Vector2Int(5, 0), new Vector2Int(3, 0), new Vector2Int(6, 0) };
+
+            //for (int i = 0; i < GameManager.PartyUnits.Count; i++)
+            //{
+            //    // Common.UnitAction.Summon(GameManager.PartyUnits[i], party_position[i]);
+            //    GameManager.PartyUnits[i].ActionRate = 0;
+            //    foreach (var skill in GameManager.PartyUnits[i].Skills)
+            //        if (skill != null)
+            //            skill.CurrentReuseTime = 0;
+            //}
 
             /***************************************************************************/
         }
@@ -183,19 +188,11 @@ namespace Model.Managers
             return FieldManager.instance.field;
         }
 
-        /// <summary>
-        /// 정보 저장용 타일 생성
-        /// </summary>
-        /// <param name="width">맵 너비</param>
-        /// <param name="height">맵 높이</param>
-        public void GenerateTiles()
-        {
-            FieldManager.instance.InitField(FieldManager.instance.FieldDatas[0]);
-        }
-
         Queue<Unit> unitBuffer = new Queue<Unit>();
         int bufferSize = 5;
+
         public int UnitBufferSize => bufferSize;
+
         public Queue<Unit> UnitBuffer => unitBuffer;
 
         public void InitializeUnitBuffer()
@@ -267,8 +264,6 @@ namespace Model.Managers
                 }
                 return nextUnit;
             }
-
-
 
             public static void SetNextTurnUnit(Unit nextUnit)
             {

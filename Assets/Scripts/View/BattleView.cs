@@ -14,8 +14,10 @@ namespace View
     {
         private GameObject hPBarPrefab;
 
-        public UnitInfoView ThisTurnUnitInfo;
-        //public UnitInfoView OtherUnitInfo { get; set; }
+        public Image CurrentUnitPortrait;
+
+        // public UnitInfoView ThisTurnUnitInfo;
+        // public UnitInfoView OtherUnitInfo { get; set; }
 
         public Button TurnEndButton { get; private set; }
         public Dictionary<Unit, GameObject> UnitObjects { get; } = new Dictionary<Unit, GameObject>();
@@ -32,6 +34,29 @@ namespace View
 
             TurnEndButton = transform.Find("MainPanel/TurnEndButton").GetComponent<Button>();
             unitControlUI = GetComponent<UnitControlUI>();
+        }
+
+        public void SummonPartyUnits(int index = 0)
+        {
+            Unit unit = GameManager.PartyUnits[index];
+            CurrentUnitPortrait.sprite = unit.Portrait;
+
+            IndicatorUI.ShowTileIndicator(FieldManager.instance.GetStairAroundPosition(),
+                (Vector2Int position) =>
+                {
+                    Common.UnitAction.Summon(unit, position);
+                    index++;
+
+                    if (index == GameManager.PartyUnits.Count)
+                    {
+                        IndicatorUI.HideTileIndicator();
+                        BattleController.instance.NextTurnStart();
+                    }
+                    // 전부 소환할때까지 재귀로 돈다.
+                    else
+                        SummonPartyUnits(index);
+                }
+            );
         }
 
         private void Update()
@@ -55,12 +80,10 @@ namespace View
         {
             unitControlUI?.UpdateUI(unit);
 
-            if (unit.Category != Category.Party)
-                ThisTurnUnitInfo?.SetUnitInfo(unit, false);
-            else
-                ThisTurnUnitInfo?.SetUnitInfo(unit, true);
-           
-
+            //if (unit.Category != Category.Party)
+            //    ThisTurnUnitInfo?.SetUnitInfo(unit, false);
+            //else
+            //    ThisTurnUnitInfo?.SetUnitInfo(unit, true);
         }
 
         /// <summary>
@@ -73,7 +96,7 @@ namespace View
             // 미리 존재 여부 확인
             if (UnitObjects.ContainsKey(unit) == true)
             {
-                Debug.LogError("이미 필드에 유닛 오브젝트가 존재합니다.");
+                Debug.LogError($"이미 필드에 유닛({unit.Name}) 오브젝트가 존재합니다.");
                 return;
             }
 

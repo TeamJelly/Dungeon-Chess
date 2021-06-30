@@ -139,7 +139,7 @@ namespace UI.Battle
                 slot.button.onClick.RemoveAllListeners();
                 slot.button.onClick.AddListener(() =>
                 {
-                    IndicatorUI.ShowTileIndicator(unit, skill);
+                    IndicatorUI.ShowSkillIndicator(unit, skill);
                     currentPushedButton = slot.button;
                     UpdateUnitInfo();
                 });

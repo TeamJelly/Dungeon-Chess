@@ -42,7 +42,7 @@ public class SkillButton : PixelButton
         properties.onClick.AddListener(() =>
         {
             if (pressed)
-                 UI.Battle.IndicatorUI.ShowTileIndicator(unit, skill);
+                 UI.Battle.IndicatorUI.ShowSkillIndicator(unit, skill);
             else UI.Battle.IndicatorUI.HideTileIndicator();
         });
         

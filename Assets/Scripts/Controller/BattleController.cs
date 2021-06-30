@@ -17,15 +17,19 @@ namespace UI.Battle
         {
             instance = this;
         }
+
         private void Start()
         {
             ViewManager.battle.SetTurnEndButton(ThisTurnEnd);
 
-            foreach (var unit in BattleManager.GetUnit())
-            {
-                ViewManager.battle.MakeUnitObject(unit);
-            }
-            NextTurnStart();
+            // 적 유닛의 뷰를 만든다. -> UnitAction.Summon 으로 이동
+            //foreach (var unit in BattleManager.GetUnit())
+            //{
+            //    ViewManager.battle.MakeUnitObject(unit);
+            //}
+
+            // 유닛 배치가 끝난 뒤에 최초 턴을 시작하도록 바꾼다.
+            // NextTurnStart();
         }
 
         /// <summary>
