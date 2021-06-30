@@ -140,8 +140,8 @@ public class FieldManager : MonoBehaviour
                             field[position.y, position.x].category != Model.Tile.Category.Wall &&
                             field[position.y, position.x].HasUnit() == false)
                             StairAroundPosition.Add(position);
-                        else
-                            Debug.LogError($"{x},{y} + {vector}");
+                        //else
+                        //    Debug.LogError($"{x},{y} + {vector}");
                     }
                 }
             }
