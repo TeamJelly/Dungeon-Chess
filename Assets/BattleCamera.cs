@@ -64,7 +64,7 @@ public class BattleCamera : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             Vector3 vec = Camera.main.ScreenToViewportPoint(Input.mousePosition - dragOrigin);
-            Position = new Vector3(vec.x * dragSpeed, vec.y * dragSpeed, 0) + cameraOrigin;
+            Position = cameraOrigin - new Vector3(vec.x * dragSpeed, vec.y * dragSpeed, 0);
         }
 
         // 축소
