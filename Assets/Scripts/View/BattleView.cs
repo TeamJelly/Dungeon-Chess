@@ -48,7 +48,7 @@ namespace View
             {
                 if(Input.GetKeyDown(KeyCode.Mouse1))
                 {
-                    Vector3 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    Vector3 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition) + Vector3.one * 0.5f;
 
                     Vector2Int destination = new Vector2Int((int)mousepos.x, (int)mousepos.y);
 
