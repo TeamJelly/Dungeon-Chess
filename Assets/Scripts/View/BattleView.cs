@@ -34,11 +34,41 @@ namespace View
 
             TurnEndButton = transform.Find("MainPanel/TurnEndButton").GetComponent<Button>();
             unitControlUI = GetComponent<UnitControlUI>();
+
+            if (!GameManager.InBattle)
+            {
+                TurnEndButton.gameObject.SetActive(false);
+                unitControlUI.panel.gameObject.SetActive(false);
+            }
+        }
+        public IEnumerator MoveLeaderUnit()
+        {
+            IEnumerator coroutine = GameManager.LeaderUnit.MoveSkill.Use(GameManager.LeaderUnit, Vector2Int.zero);
+            while (true)
+            {
+                if(Input.GetKeyDown(KeyCode.Mouse1))
+                {
+                    Vector3 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+                    Vector2Int destination = new Vector2Int((int)mousepos.x, (int)mousepos.y);
+
+                    //맵 범위 안으로 값 조정
+                    destination.x = Mathf.Clamp(destination.x, 0, 15);
+                    destination.y = Mathf.Clamp(destination.y, 0, 15);
+
+                    //리더 유닛 이동 코루틴 실행. 기존 실행되던 코루틴은 정지.
+                    StopCoroutine(coroutine);
+                    coroutine = GameManager.LeaderUnit.MoveSkill.Use(GameManager.LeaderUnit, destination);
+                    StartCoroutine(coroutine);
+                }
+                yield return null;
+            }
         }
 
         public void SummonPartyUnits(int index = 0)
         {
             Unit unit = GameManager.PartyUnits[index];
+
             currentUnitPortrait.sprite = unit.Portrait;
 
             IndicatorUI.ShowTileIndicator(FieldManager.instance.GetStairAroundPosition(),

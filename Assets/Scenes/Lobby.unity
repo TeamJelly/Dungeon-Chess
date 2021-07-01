@@ -5470,7 +5470,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d7eee7e3d6476644b1146e17c17901a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentUnitPortrait: {fileID: 103640119}
+  currentUnitPortrait: {fileID: 103640119}
   unitControlUI: {fileID: 0}
 --- !u!114 &984850863
 MonoBehaviour:

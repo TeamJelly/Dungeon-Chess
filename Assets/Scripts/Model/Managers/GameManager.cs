@@ -20,6 +20,7 @@ namespace Model.Managers
         public List<Vector2Int>[] pathList = null;
         List<Unit> partyUnits = new List<Unit>();
         Unit leader;
+        bool inBattle = false;
         public int Gold
         {
             get => gold;
@@ -33,7 +34,10 @@ namespace Model.Managers
         public int stage;
         public static List<Unit> PartyUnits { get => Instance.partyUnits; }
 
-        public static Unit LeaderUnit { get => instance.leader; set => instance.leader = value; }
+        public static Unit LeaderUnit 
+        { get { if (Instance.leader == null) instance.leader = instance.partyUnits[0]; return instance.leader; } set => Instance.leader = value; }
+
+        public static bool InBattle { get => Instance.inBattle; set => Instance.inBattle = value; }
 
         public static GameManager Instance
         {
