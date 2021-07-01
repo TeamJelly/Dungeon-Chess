@@ -14,7 +14,7 @@ namespace View
     {
         private GameObject hPBarPrefab;
 
-        public Image CurrentUnitPortrait;
+        public Image currentUnitPortrait;
 
         // public UnitInfoView ThisTurnUnitInfo;
         // public UnitInfoView OtherUnitInfo { get; set; }
@@ -39,7 +39,7 @@ namespace View
         public void SummonPartyUnits(int index = 0)
         {
             Unit unit = GameManager.PartyUnits[index];
-            CurrentUnitPortrait.sprite = unit.Portrait;
+            currentUnitPortrait.sprite = unit.Portrait;
 
             IndicatorUI.ShowTileIndicator(FieldManager.instance.GetStairAroundPosition(),
                 (Vector2Int position) =>
@@ -78,6 +78,7 @@ namespace View
 
         public void SetTurnUnitPanel(Unit unit)
         {
+            currentUnitPortrait.sprite = unit.Portrait;
             unitControlUI?.UpdateUI(unit);
 
             //if (unit.Category != Category.Party)
