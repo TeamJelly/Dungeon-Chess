@@ -218,7 +218,7 @@ namespace Common
                 else if (priority == Priority.NearFromPartys || priority == Priority.FarFromPartys)
                 {
                     Vector2 averagePosition = new Vector2();
-                    List<Unit> partyUnits = Model.Managers.BattleManager.GetUnit(Category.Party);
+                    List<Unit> partyUnits = Model.Managers.BattleManager.GetUnit(Alliance.Party);
 
                     foreach (var unit in partyUnits)
                         averagePosition += unit.Position;
@@ -235,7 +235,7 @@ namespace Common
                 }
                 else if (priority == Priority.NearFromClosestParty || priority == Priority.FarFromClosestParty)
                 {
-                    List<Unit> partyUnits = Model.Managers.BattleManager.GetUnit(Category.Party);
+                    List<Unit> partyUnits = Model.Managers.BattleManager.GetUnit(Alliance.Party);
 
                     Unit closestUnit = partyUnits[0];
                     float distance = (user.Position - partyUnits[0].Position).magnitude;

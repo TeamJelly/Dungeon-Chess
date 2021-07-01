@@ -22,8 +22,8 @@ namespace Model.Skills
         public string description;
         public float criticalRate;
         public int reuseTime;
-        public Skill.Type type;
-        public Skill.Target target;
+        public Skill.RangeType type;
+        public Skill.TargetType target;
         public string APSchema;
         public string RPSchema;
         public string extension;

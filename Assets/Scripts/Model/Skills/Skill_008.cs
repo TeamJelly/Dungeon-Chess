@@ -118,9 +118,9 @@ namespace Model.Skills
         }
         public override List<Vector2Int> GetRelatePositions(Unit user, Vector2Int position)
         {
-            if (RPSchema == null) return null;
+            if (RPData == null) return null;
 
-            if (!Common.Range.ParseRangeSchema(APSchema).Contains(position - user.Position)) return null;
+            if (!Common.Data.ParseRangeData(APData).Contains(position - user.Position)) return null;
 
             List<Vector2Int> positions = new List<Vector2Int>();
 
@@ -128,7 +128,7 @@ namespace Model.Skills
             double angle = Math.Atan2(gap.y, gap.x) - 90 * Math.PI / 180;
             double sin = Math.Sin(-angle);
             double cos = Math.Cos(-angle);
-            foreach(Vector2Int vector in Common.Range.ParseRangeSchema(RPSchema))
+            foreach(Vector2Int vector in Common.Data.ParseRangeData(RPData))
             {
                 Vector2Int pos = new Vector2Int((int)Math.Round((vector.x * cos + vector.y * sin)), (int)Math.Round(vector.x * -sin + vector.y * cos)) + position;
                 if (Model.Managers.BattleManager.IsAvilablePosition(pos))
@@ -139,7 +139,7 @@ namespace Model.Skills
         public override void Upgrade()
         {
             base.Upgrade();
-            RPSchema = RPSchemas[Level];
+            RPData = RPSchemas[Level];
         }
     }
 

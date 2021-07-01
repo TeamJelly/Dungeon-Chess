@@ -4,17 +4,17 @@ using UnityEngine;
 
 namespace Common
 {
-    public class Range
+    public class Data
     {
         /// <summary>
         /// 범위 스키마를 범위 리스트로 해석합니다.
         /// </summary>
-        /// <param name="schema">범위 스키마</param>
+        /// <param name="data">범위 스키마</param>
         /// <param name="list">범위 리스트</param>
-        public static List<Vector2Int> ParseRangeSchema(string schema)
+        public static List<Vector2Int> ParseRangeData(string data)
         {
             List<Vector2Int> list = new List<Vector2Int>();
-            var rows = schema.Split(';');
+            var rows = data.Split(';');
             var size = int.Parse(rows[0]);
             var mid = size / 2;
             for (int i = 1; i < rows.Length; i++)
@@ -32,6 +32,14 @@ namespace Common
             return list;
         }
 
-        private Range() { }
+        public static Sprite LoadSprite(string path)
+        {
+            Sprite sprite;
+            if (path == "")
+                sprite = Resources.Load<Sprite>("1bitpack_kenney_1/Tilesheet/X");
+            else
+                sprite = Resources.Load<Sprite>(path);
+            return sprite;
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace Common
             Debug.Log($"{unit.Name}는(은) 사망했다!");
 
             unit.Agility = -10;
-            unit.Category = Category.NULL;
+            unit.Category = Alliance.NULL;
 
             VisualEffectUI.MakeVisualEffect(unit.Position, "explosion");
 

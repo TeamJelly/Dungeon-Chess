@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using Common.DB;
 using Common;
 
-public enum Category { NULL, Party, Neutral, Friendly, Enemy};
-public enum UnitClass { NULL, Monster, Warrior, Wizard, Priest, Archer };
-
 namespace Model
 {
     using Skills;
@@ -15,125 +12,80 @@ namespace Model
     [System.Serializable]
     public class Unit
     {
-        // NOTE 리펙토링 될 사항임
-        // public bool IsModified = false;
+        public enum UnitAlliance { NULL, Party, Neutral, Friendly, Enemy };
+        public enum UnitClass { NULL, Monster, Warrior, Wizard, Priest, Archer };
+        public enum AnimationState { Idle, Hit, Attack, Move, Heal };
 
-        private UnitDescriptor descriptor = new UnitDescriptor();
-        public UnitDescriptor UnitDescriptor => descriptor;
+        public string Name { get; set; }            // 이름
+        private int level;
+        private int curEXP;                         // 현재 경험치
+        private int nextEXP;                        // 다음 레벨업에 필요한 경험치 
+        private int curHP;                          // 현재 체력
+        private int maxHP;                          // 최대 체력
+        private int armor;                          // 방어도 (추가 체력)
+        private int strength;                       // 힘
+        private int agility;                        // 민첩
+        private int move;                           // 이동력
+        private int moveCount;                      // 이동가능 횟수
+        private int skillCount;                     // 스킬가능 횟수
+        private float actionRate;                   // 행동가능 퍼센테이지
+        private Vector2Int position;                // 위치
+        private Skill moveSkill;                    // 이동 스킬
+        private Skill passiveSkill;                 // 패시브 스킬
+        private Skill[] skills = new Skill[4];      // 4가지 스킬
+        private List<Artifact> antiques = new();    // 보유한 유물
+        private List<Effect> stateEffects = new();  // 보유한 상태효과
 
-        // 유닛의 현재 경험치
-        [SerializeField]
-        private int currentEXP;
+        private RuntimeAnimatorController animator; // 애니메이터
 
-        // 유닛의 현재 체력
-        [SerializeField]
-        private int currentHP;
+        public AnimationState animationState = AnimationState.Idle; // 현재 애니메이션 상태
+        public UnitAlliance Alliance { get; set; }  // 진영
+        public UnitClass Class { get; set; }        // 직업
 
-        // 유닛의 위치
-        [SerializeField]
-        private Vector2Int position;
-
-        // 행동가능 퍼센테이지
-        [SerializeField]
-        private float actionRate;
-
-        // 이동가능 횟수
-        [SerializeField]
-        private int moveCount;
-
-        // 스킬가능 횟수
-        [SerializeField]
-        private int skillCount;
-
-        // 아이템 가능 횟수 (삭제)
-        // private int itemCount;
-
-        [SerializeField]
-        private Skill moveSkill;// = new Walk();
-
-        [SerializeField]
-        private Skill passiveSkill;
-
-        [SerializeField]
-        private Skill[] skills = new Skill[4];
-
-        [SerializeField]
-        private List<Artifact> antiques = new List<Artifact>();
-
-        [SerializeField]
-        private List<Effect> stateEffects = new List<Effect>();
-
-        private int partyID; // 파티 내부에서 고유 아이디
-
-        public enum AnimationState
-        {
-            Idle, Hit, Attack, Move, Heal
-        }
-
+        private readonly string portraitPath = "";
         private Sprite portrait;
-        private RuntimeAnimatorController animator;
-
-        public AnimationState animationState = AnimationState.Idle;
-
-        public int ID => descriptor.id;
-
-        public string Name => descriptor.name;
-
-        public Category Category { get => descriptor.category; set => descriptor.category = value; }
-
-        public UnitClass UnitClass => descriptor.unitClass;
-
         public Sprite Portrait
         {
             get
             {
-                if (portrait == null && descriptor.portraitPath != "")
-                    portrait = Resources.Load<Sprite>(descriptor.portraitPath);
+                if (portrait == null)
+                    portrait = Common.Data.LoadSprite(portraitPath);
                 return portrait;
             }
         }
 
-        public RuntimeAnimatorController Animator
-        {
-            get
-            {
-                if (animator == null && descriptor.animatorPath != "")
-                    animator = Resources.Load<RuntimeAnimatorController>(descriptor.animatorPath);
-                return animator;
-            }
-        }
-
+        // 아머 up 혹은 아머 break 효과 추가 필요
         public int Armor
         {
-            get => descriptor.armor;
+            get => armor;
             set
             {
-                if (descriptor.armor != value)
+                if (armor != value)
                 {
-                    descriptor.armor = value;
                     OnAmor.changed.Invoke(value);
-                    if (descriptor.armor < value)
+                    if (armor < value)
                     {
                         OnAmor.up.Invoke(value);
-                    } else
+                    }
+                    else
                     {
                         OnAmor.down.Invoke(value);
                     }
-                    
+                    armor = value;
                 }
             }
         }
         public UpAndDownEventListener<int> OnAmor = new UpAndDownEventListener<int>();
 
+        // 레벨업 효과 추가 필요
         public int Level {
-            get => descriptor.level;
+            get => level;
             set
             {
-                if (descriptor.level != value)
+                if (level != value)
                 {
-                    descriptor.level = value;
                     OnLevel.changed.Invoke(value);
-                    if (descriptor.level < value)
+                    if (level < value)
                     {
                         OnLevel.up.Invoke(value);
                     }
@@ -141,86 +93,90 @@ namespace Model
                     {
                         OnLevel.down.Invoke(value);
                     }
-
+                    level = value;
                 }
             }
         }
         public UpAndDownEventListener<int> OnLevel = new UpAndDownEventListener<int>();
 
-        public int CurrentHP {
-            get => currentHP;
+        // HP가 변했을때 효과 추가 필요
+        public int CurHP {
+            get => curHP;
             set
             {
-                if (currentHP != value)
+                if (curHP != value)
                 {
-                    currentHP = value;
-                    OnCurrentHP.changed.Invoke(value);
-                    if (currentHP < value)
+                    BeforeChangeCurHP.changed.Invoke(value);
+                    if (curHP < value)
                     {
-                        OnCurrentHP.up.Invoke(value);
+                        BeforeChangeCurHP.up.Invoke(value);
+                        curHP = value;
+                        AfterChangeCurHP.up.Invoke(value);
                     }
                     else
                     {
-                        OnCurrentHP.down.Invoke(value);
+                        BeforeChangeCurHP.down.Invoke(value);
+                        curHP = value;
+                        AfterChangeCurHP.down.Invoke(value);
                     }
-
+                    AfterChangeCurHP.changed.Invoke(value);
                 }
             }
         }
-        public UpAndDownEventListener<int> OnCurrentHP = new UpAndDownEventListener<int>();
+        public UpAndDownEventListener<int> BeforeChangeCurHP = new();
+        public UpAndDownEventListener<int> AfterChangeCurHP = new();
 
-        public int MaximumHP {
-            get => descriptor.HP;
+        // 최대 HP는 딱히 효과가 있을지 모르겠다.
+        public int MaxHP {
+            get => maxHP;
             set
             {
-                if (descriptor.HP != value)
+                if (maxHP != value)
                 {
-                    descriptor.HP = value;
-                    OnMaximumHP.changed.Invoke(value);
-                    if (descriptor.HP < value)
+                    OnMaxHP.changed.Invoke(value);
+                    if (maxHP < value)
                     {
-                        OnMaximumHP.up.Invoke(value);
+                        OnMaxHP.up.Invoke(value);
                     }
                     else
                     {
-                        OnMaximumHP.down.Invoke(value);
+                        OnMaxHP.down.Invoke(value);
                     }
-
+                    maxHP = value;
                 }
             }
         }
-        public UpAndDownEventListener<int> OnMaximumHP = new UpAndDownEventListener<int>();
+        public UpAndDownEventListener<int> OnMaxHP = new UpAndDownEventListener<int>();
 
-        public int CurrentEXP {
-            get => currentEXP;
+        // EXP가 상승했을때 효과 추가 필요
+        public int CurEXP {
+            get => curEXP;
             set
             {
-                if (currentEXP != value)
+                if (curEXP != value)
                 {
-                    currentEXP = value;
-                    OnCurrentEXP.changed.Invoke(value);
-                    if (currentEXP < value)
+                    OnCurEXP.changed.Invoke(value);
+                    if (curEXP < value)
                     {
-                        OnCurrentEXP.up.Invoke(value);
+                        OnCurEXP.up.Invoke(value);
                     }
                     else
                     {
-                        OnCurrentEXP.down.Invoke(value);
+                        OnCurEXP.down.Invoke(value);
                     }
-
+                    curEXP = value;
                 }
             }
         }
-        public UpAndDownEventListener<int> OnCurrentEXP = new UpAndDownEventListener<int>();
+        public UpAndDownEventListener<int> OnCurEXP = new UpAndDownEventListener<int>();
 
-        private int nextEXP;
+        // 효과 추가 필요없음
         public int NextEXP {
             get => nextEXP;
             set
             {
                 if (nextEXP != value)
                 {
-                    nextEXP = value;
                     OnNextEXP.changed.Invoke(value);
                     if (nextEXP < value)
                     {
@@ -230,21 +186,21 @@ namespace Model
                     {
                         OnNextEXP.down.Invoke(value);
                     }
-
+                    nextEXP = value;
                 }
             }
         }
         public UpAndDownEventListener<int> OnNextEXP = new UpAndDownEventListener<int>();
 
+        // 효과 추가 필요없음
         public int Strength {
-            get => descriptor.strength;
+            get => strength;
             set
             {
-                if (descriptor.strength != value)
+                if (strength != value)
                 {
-                    descriptor.strength = value;
                     OnStrength.changed.Invoke(value);
-                    if (descriptor.strength < value)
+                    if (strength < value)
                     {
                         OnStrength.up.Invoke(value);
                     }
@@ -252,21 +208,20 @@ namespace Model
                     {
                         OnStrength.down.Invoke(value);
                     }
-
+                    strength = value;
                 }
             }
         }
         public UpAndDownEventListener<int> OnStrength = new UpAndDownEventListener<int>();
 
         public int Agility {
-            get => descriptor.agility;
+            get => agility;
             set
             {
-                if (descriptor.agility != value)
+                if (agility != value)
                 {
-                    descriptor.agility = value;
                     OnAgility.changed.Invoke(value);
-                    if (descriptor.agility < value)
+                    if (agility < value)
                     {
                         OnAgility.up.Invoke(value);
                     }
@@ -274,21 +229,20 @@ namespace Model
                     {
                         OnAgility.down.Invoke(value);
                     }
-
+                    agility = value;
                 }
             }
         }
         public UpAndDownEventListener<int> OnAgility = new UpAndDownEventListener<int>();
 
         public int Move {
-            get => descriptor.move;
+            get => move;
             set
             {
-                if (descriptor.move != value)
+                if (move != value)
                 {
-                    descriptor.move = value;
                     OnMove.changed.Invoke(value);
-                    if (descriptor.move < value)
+                    if (move < value)
                     {
                         OnMove.up.Invoke(value);
                     }
@@ -296,7 +250,7 @@ namespace Model
                     {
                         OnMove.down.Invoke(value);
                     }
-
+                    move = value;
                 }
             }
         }
@@ -309,10 +263,9 @@ namespace Model
                 {
                     if (position != value)
                     {
-                        position = value;
                         OnPositionChanged.Invoke(value);
+                        position = value;
                     }
-                    
                 }
                 else
                     Debug.LogError("유닛을 이곳으로 이동할 수 없습니다.");
@@ -326,7 +279,6 @@ namespace Model
             {
                 if (actionRate != value)
                 {
-                    actionRate = value;
                     OnActionRate.changed.Invoke(value);
                     if (actionRate < value)
                     {
@@ -336,7 +288,7 @@ namespace Model
                     {
                         OnActionRate.down.Invoke(value);
                     }
-
+                    actionRate = value;
                 }
             }
         }
@@ -348,7 +300,6 @@ namespace Model
             {
                 if (moveCount != value)
                 {
-                    moveCount = value;
                     OnMoveCount.changed.Invoke(value);
                     if (moveCount < value)
                     {
@@ -358,11 +309,12 @@ namespace Model
                     {
                         OnMoveCount.down.Invoke(value);
                     }
-
+                    moveCount = value;
                 }
             }
         }
         public UpAndDownEventListener<int> OnMoveCount = new UpAndDownEventListener<int>();
+
         public int SkillCount {
             get => skillCount;
             set
@@ -370,12 +322,8 @@ namespace Model
                 // 스킬 가능 횟수가 변경되면
                 if (skillCount != value)
                 {
-                    // 값을 변경해주고
-                    skillCount = value;
-
                     // 값이 변경됨 이벤트를 발생시킨다.
                     OnSkillCount.changed.Invoke(value);
-
                     if (skillCount < value)
                     {
                         // 값이 오름 이벤트를 발생시킨다.
@@ -386,33 +334,12 @@ namespace Model
                         // 값이 낮아짐 이벤트를 발생시킨다.
                         OnSkillCount.down.Invoke(value);
                     }
-
+                    // 값을 변경해주고
+                    skillCount = value;
                 }
             }
         }
         public UpAndDownEventListener<int> OnSkillCount = new UpAndDownEventListener<int>();
-
-        //public int ItemCount {
-        //    get => itemCount;
-        //    set
-        //    {
-        //        if (itemCount != value)
-        //        {
-        //            itemCount = value;
-        //            OnItemCount.changed.Invoke(value);
-        //            if (itemCount < value)
-        //            {
-        //                OnItemCount.up.Invoke(value);
-        //            }
-        //            else
-        //            {
-        //                OnItemCount.down.Invoke(value);
-        //            }
-
-        //        }
-        //    }
-        //}
-        //public UpAndDownEventListener<int> OnItemCount = new UpAndDownEventListener<int>();
 
         public Skill MoveSkill {
             get => moveSkill;

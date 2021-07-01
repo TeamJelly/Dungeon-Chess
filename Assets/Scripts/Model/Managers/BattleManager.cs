@@ -108,22 +108,22 @@ namespace Model.Managers
         public static State CheckGameState()
         {
             // 승리조건이 모든 적이 죽는 것일 때
-            if (instance.WinCondition == Condition.KillAllEnemy && GetAliveUnitCount(Category.Enemy) == 0)
+            if (instance.WinCondition == Condition.KillAllEnemy && GetAliveUnitCount(Alliance.Enemy) == 0)
                 return State.Win;
             
             // 패배조건이 모든 아군이 죽는 것일 때
-            if (instance.DefeatCondition == Condition.KillAllParty && GetAliveUnitCount(Category.Party) == 0)
+            if (instance.DefeatCondition == Condition.KillAllParty && GetAliveUnitCount(Alliance.Party) == 0)
                 return State.Defeat;
 
             // 계속
             return State.Continue; 
         }
 
-        private static int GetAliveUnitCount(Category category)
+        private static int GetAliveUnitCount(Unit.UnitAlliance alliance)
         {
             int count = 0;
 
-            foreach (var unit in GetUnit(category))
+            foreach (var unit in GetUnit(alliance))
                 if (Common.UnitAction.GetEffectByNumber(unit, 1) == null && (Common.UnitAction.GetEffectByNumber(unit, 2) == null))
                     count++;
 
@@ -141,12 +141,12 @@ namespace Model.Managers
                 return false;
         }
 
-        public static List<Unit> GetUnit(Category category)
+        public static List<Unit> GetUnit(Unit.UnitAlliance alliance)
         {
             List<Unit> units = new List<Unit>();
 
             foreach (var unit in instance.AllUnits)
-                if (unit.Category == category)
+                if (unit.Alliance == alliance)
                     units.Add(unit);
 
             return units;

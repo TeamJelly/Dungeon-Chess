@@ -48,8 +48,8 @@ namespace UI.Battle
 
             // 턴 시작시 스킬쿨 줄어듬
             foreach (var skill in nextUnit.Skills)
-                if (skill != null && skill.CurrentReuseTime != 0)
-                    skill.CurrentReuseTime--;
+                if (skill != null && skill.CurReuseTime != 0)
+                    skill.CurReuseTime--;
 
             // 뒤에서부터 돌면 중간에 삭제해도 문제 없음.
             for (int i = nextUnit.StateEffects.Count - 1; i >= 0; i--)
@@ -59,7 +59,7 @@ namespace UI.Battle
             ViewManager.battle.SetTurnUnitPanel(nextUnit);
 
             // AI라면 자동 행동 실행
-            if (nextUnit.Category != Category.Party)
+            if (nextUnit.Category != Alliance.Party)
             {
                 AI.Action action = AI.GetAction(nextUnit);
 

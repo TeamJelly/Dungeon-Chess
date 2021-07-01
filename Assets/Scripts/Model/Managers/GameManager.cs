@@ -59,7 +59,7 @@ namespace Model.Managers
         public static void AddPartyUnit(Unit unit)
         {
             PartyUnits.Add(unit);
-            unit.Category = Category.Party;
+            unit.Category = Alliance.Party;
         }
 
         public static void RemovePartyUnit(Unit unit)

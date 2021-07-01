@@ -10,9 +10,9 @@ namespace UI.Battle
     {
         void FixedUpdate()
         {
-            if (Model.Managers.BattleManager.instance.thisTurnUnit.Category == Category.Party)
+            if (Model.Managers.BattleManager.instance.thisTurnUnit.Category == Alliance.Party)
                 GetComponentInChildren<Image>().color = Color.green;
-            else if (Model.Managers.BattleManager.instance.thisTurnUnit.Category == Category.Enemy)
+            else if (Model.Managers.BattleManager.instance.thisTurnUnit.Category == Alliance.Enemy)
                 GetComponentInChildren<Image>().color = Color.red;
 
             transform.position = 

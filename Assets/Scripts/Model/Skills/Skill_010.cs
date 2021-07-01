@@ -37,7 +37,7 @@ namespace Model.Skills
                 yield return null;
 
                 // 2단계 : 스킬 적용
-                foreach (Unit unit in BattleManager.GetUnit(Category.Enemy))
+                foreach (Unit unit in BattleManager.GetUnit(Alliance.Enemy))
                     Common.UnitAction.AddEffect(unit, new Effect_013(unit, tauntTurnCount));
                 Common.UnitAction.AddEffect(user, new Effect_021(user, 1,protectionTurnCount));
             }
