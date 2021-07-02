@@ -86,9 +86,10 @@ namespace Model.Managers
                 GameManager.PartyUnits.Add(UnitManager.Instance.AllUnits[1]);
             }
 
+            // GameManager.InBattle = true;
 
-            if (GameManager.InBattle) View.ViewManager.battle.SummonPartyUnits(0);// 파티 유닛 summon
-
+            if (GameManager.InBattle) 
+                View.ViewManager.battle.SummonPartyUnits();// 파티 유닛 최초 소환
             else
             {
                 Common.UnitAction.Summon(GameManager.LeaderUnit, new Vector2Int(8, 8));
