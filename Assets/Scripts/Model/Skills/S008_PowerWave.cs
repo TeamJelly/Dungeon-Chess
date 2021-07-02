@@ -5,12 +5,32 @@ using UnityEngine;
 
 namespace Model.Skills
 {
-    public class Skill_008 : Skill
+    public class S008_PowerWave : Skill
     {
-        Extension_008 parsedExtension;
-        public Extension_008 ParsedExtension => parsedExtension;
+        public S008_PowerWave()
+        {
+            Name = "힘의파동";
+            Number = 8;
+            UnitClass = UnitClass.Warrior;
+            MaxGrade = 5;
+            ReuseTime = 4;
+            CriticalRate = 5;
 
-        string[] RPSchemas = {
+            Priority = Common.AI.Priority.NULL;
+            Target = TargetType.Any;
+            Range = RangeType.Rotate;
+
+            spritePath = "HandMade/SkillImage/008_힘의 파동";
+            Description =
+                $"범위 안에 있는 대상에게 X 데미지를 주고 기절시킨다.\n\n\n " +
+                $"‘  “엑스...칼리버!!! “.’";
+
+            APData = "3;010;101;010";
+        }
+
+        private readonly int strToDmg = 2;
+
+        string[] RPDatas = {
                 "3;" +
                     "111;" +
                     "111;" +
@@ -71,21 +91,15 @@ namespace Model.Skills
                     "0000000000000;" +
                     "0000000000000" // 5강
             };
-        public Skill_008() : base(8)
-        {
-            if(extension.Length > 0)
-            {
-                parsedExtension = Common.Extension.Parse<Extension_008>(extension);
-            }
-        }
+
         public override IEnumerator Use(Unit user, Vector2Int target)
         {
             // 0 단계 : 로그 출력, 스킬 소모 기록, 필요 변수 계산
             user.SkillCount--;
-            CurrentReuseTime = reuseTime;
+            CurReuseTime = ReuseTime;
 
             //Strength x 2.0 
-            int damage = user.Strength * ParsedExtension.strengthToDamageRatio;
+            int damage = user.Strength * strToDmg;
 
             List<Unit> targetUnits = new List<Unit>();
             foreach (Vector2Int vector in GetRelatePositions(user, target))
@@ -110,12 +124,14 @@ namespace Model.Skills
                 Common.UnitAction.AddEffect(unit, new Effects.Effect_004(unit));
             }
         }
+
         public override string GetDescription(Unit user, int level)
         {
-            int damage = user.Strength * ParsedExtension.strengthToDamageRatio;
+            int damage = user.Strength * strToDmg;
             string str = base.GetDescription(user, level).Replace("X", damage.ToString());
             return str;
         }
+
         public override List<Vector2Int> GetRelatePositions(Unit user, Vector2Int position)
         {
             if (RPData == null) return null;
@@ -128,24 +144,19 @@ namespace Model.Skills
             double angle = Math.Atan2(gap.y, gap.x) - 90 * Math.PI / 180;
             double sin = Math.Sin(-angle);
             double cos = Math.Cos(-angle);
-            foreach(Vector2Int vector in Common.Data.ParseRangeData(RPData))
+            foreach (Vector2Int vector in Common.Data.ParseRangeData(RPData))
             {
                 Vector2Int pos = new Vector2Int((int)Math.Round((vector.x * cos + vector.y * sin)), (int)Math.Round(vector.x * -sin + vector.y * cos)) + position;
-                if (Model.Managers.BattleManager.IsAvilablePosition(pos))
+                if (Managers.BattleManager.IsAvilablePosition(pos))
                     positions.Add(pos);
             }
             return positions;
         }
+
         public override void Upgrade()
         {
             base.Upgrade();
-            RPData = RPSchemas[Level];
+            RPData = RPDatas[Grade];
         }
-    }
-
-    [System.Serializable]
-    public class Extension_008 : Common.Extensionable
-    {
-        public int strengthToDamageRatio;
     }
 }

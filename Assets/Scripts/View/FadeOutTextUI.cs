@@ -8,8 +8,16 @@ namespace UI.Battle
     public class FadeOutTextUI : MonoBehaviour
     {
         public static FadeOutTextUI instance;
-
         public GameObject prefab;
+
+        public class FadeOutText
+        {
+            Vector2Int position;
+            string text;
+            Color color;
+        }
+
+        public List<FadeOutText> WaitingQueue = new List<FadeOutText>();
 
         private void Awake()
         {

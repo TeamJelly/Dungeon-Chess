@@ -18,8 +18,14 @@ namespace Model.Managers
         public Room currentRoom = null;
         public Room[,] AllRooms = null;
         public List<Vector2Int>[] pathList = null;
-        List<Unit> partyUnits = new List<Unit>();
+
+        public List<Unit> partyUnits = new List<Unit>();
+
+        private int gold;
+        public int stage;
+
         Unit leader;
+
         public int Gold
         {
             get => gold;
@@ -29,8 +35,6 @@ namespace Model.Managers
                 HUD.instance.UpdateUI();
             }
         }
-        private int gold;
-        public int stage;
         public static List<Unit> PartyUnits { get => Instance.partyUnits; }
 
         public static Unit LeaderUnit { get => instance.leader; set => instance.leader = value; }
@@ -59,7 +63,7 @@ namespace Model.Managers
         public static void AddPartyUnit(Unit unit)
         {
             PartyUnits.Add(unit);
-            unit.Category = Alliance.Party;
+            unit.Alliance = UnitAlliance.Party;
         }
 
         public static void RemovePartyUnit(Unit unit)

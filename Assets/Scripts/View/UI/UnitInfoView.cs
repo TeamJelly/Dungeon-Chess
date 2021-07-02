@@ -95,10 +95,10 @@ namespace UI.Battle
         {
             Name.text = unit.Name;
             Image.sprite = unit.Portrait;
-            StatusText.text = $"{unit.UnitClass}\n" +
+            StatusText.text = $"{unit.Alliance}\n" +
                 $"{unit.Level}\n" +
-                $"{unit.CurrentHP} <color=#0000ff>+{unit.Armor}</color> /{unit.MaximumHP}\n" +
-                $"{unit.CurrentEXP}/{unit.NextEXP}\n" +
+                $"{unit.CurHP} <color=#0000ff>+{unit.Armor}</color> /{unit.MaxHP}\n" +
+                $"{unit.CurEXP}/{unit.NextEXP}\n" +
                 $"{unit.Strength}\n" +
                 $"{unit.Agility}\n" +
                 $"{unit.Move}";
@@ -129,8 +129,8 @@ namespace UI.Battle
             // 스킬이 있다.
             slot.button.interactable = false;
             slot.image.sprite = skill.Sprite;
-            slot.name.text = skill.Level == 0 ? $"{skill.Name}" : $"{skill.Name} <color=#FF0000>+{skill.Level}</color>";
-            slot.count.text = skill.CurrentReuseTime == 0 ? "" : $"{skill.CurrentReuseTime}";
+            slot.name.text = skill.Grade == 0 ? $"{skill.Name}" : $"{skill.Name} <color=#FF0000>+{skill.Grade}</color>";
+            slot.count.text = skill.CurReuseTime == 0 ? "" : $"{skill.CurReuseTime}";
 
             // 아무 버튼도 안눌러져 있고, 이 버튼을 누를수 있는 경우
             if (currentPushedButton == null && skill.IsUsable(unit) && interactable == true)

@@ -4,28 +4,41 @@ using UnityEngine;
 
 namespace Model.Skills
 {
-    /// <summary>
-    /// 스킬 이름: 마법 화살(Colored_280)
-    /// </summary>
-    public class Skill_002 : Skill
+    public class S001_Snapshot : Skill
     {
-        Extension_002 parsedExtension;
-        public Extension_002 ParsedExtension => parsedExtension;
-        public Skill_002() : base(2)
+        public S001_Snapshot()
         {
-            if(extension.Length > 0)
-            {
-                parsedExtension = Common.Extension.Parse<Extension_002>(extension);
-            }
+            Name = "속사";
+            Number = 1;
+            UnitClass = UnitClass.Archer;
+            MaxGrade = 3;
+            ReuseTime = 0;
+            CriticalRate = 10;
+
+            Priority = Common.AI.Priority.NULL;
+            Target = TargetType.Any;
+            Range = RangeType.Fixed;
+
+            spritePath = "HandMade/SkillImage/001_속사";
+            Description =
+                $"선택한 대상에게 X의 데미지를 준다.\n\n\n" +
+                $"‘느리게 쏘는건 없나요?.’";
+
+            APData = "7;0001000;0011100;0111110;1110111;0111110;0011100;0001000";
+            RPData = "1;1";
         }
+
+        private readonly int strToDmg = 1;
+        private readonly int grdToDmg = 1;
+
         public override IEnumerator Use(Unit user, Vector2Int target)
         {
             // 0 단계 : 로그 출력, 스킬 소모 기록, 필요 변수 계산
             user.SkillCount--;
-            CurrentReuseTime = reuseTime;
+            CurReuseTime = ReuseTime;
 
             //Strength + 강화 횟수 x 1
-            int damage = user.Strength * parsedExtension.strengthToDamageRatio + Level * parsedExtension.upgradePerEnhancedLevel;
+            int damage = user.Strength * strToDmg + Grade * grdToDmg;
 
             Unit targetUnit = Managers.BattleManager.GetUnit(target);
             if (targetUnit != null)
@@ -45,16 +58,10 @@ namespace Model.Skills
         }
         public override string GetDescription(Unit user, int level)
         {
-            int damage = user.Strength * parsedExtension.strengthToDamageRatio + level * parsedExtension.upgradePerEnhancedLevel;
+            int damage = user.Strength * strToDmg + Grade * grdToDmg;
             string str = base.GetDescription(user, level).Replace("X", damage.ToString());
             return str;
         }
     }
 
-    [System.Serializable]
-    public class Extension_002 : Common.Extensionable
-    {
-        public int strengthToDamageRatio;
-        public int upgradePerEnhancedLevel;
-    }
 }

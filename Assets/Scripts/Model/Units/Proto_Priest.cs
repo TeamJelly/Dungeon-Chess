@@ -7,9 +7,29 @@ namespace Model.Units
 {
     public class Proto_Priest : Unit
     {
-        public Proto_Priest() : base(2)
+        public Proto_Priest()
         {
+            Name = "아자젤";
+            Alliance = UnitAlliance.Party;
+            Class = UnitClass.Warrior;
 
+            Level = 1;
+            NextEXP = 10;
+            MaxHP = 35;
+            CurHP = MaxHP;
+
+            Strength = 13;
+            Agility = 10;
+            Move = 3;
+            CriticalRate = 5;
+
+            portraitPath = "Helltaker/Azazel/Azazel_portrait";
+            animatorPath = "Helltaker/Azazel/Azazel_animator";
+
+            MoveSkill = new S100_Walk();
+
+            Skills[0] = new S001_Snapshot();
+            Skills[1] = new S002_MagicArrow();
         }
     }
 }

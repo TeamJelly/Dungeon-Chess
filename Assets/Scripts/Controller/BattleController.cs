@@ -58,8 +58,8 @@ namespace UI.Battle
             // 유닛정보창 초기화
             ViewManager.battle.SetTurnUnitPanel(nextUnit);
 
-            // AI라면 자동 행동 실행
-            if (nextUnit.Category != Alliance.Party)
+            // 파티원이 아닌 AI라면 자동 행동 실행
+            if (nextUnit.Alliance != UnitAlliance.Party)
             {
                 AI.Action action = AI.GetAction(nextUnit);
 

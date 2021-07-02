@@ -16,7 +16,7 @@ namespace Model.Units
     {
         public int id;
         public string name = "";
-        public Alliance category;
+        public UnitAlliance alliance;
         public UnitClass unitClass;
         public string portraitPath = "";
         public string animatorPath = "";

@@ -13,9 +13,9 @@ namespace View
         public void Init(Unit unit)
         {
             name = $"{unit.Name} HPBAR";
-            slider.maxValue = unit.MaximumHP;
+            slider.maxValue = unit.MaxHP;
             slider.minValue = 0;
-            slider.value = unit.CurrentHP;
+            slider.value = unit.CurHP;
             SetPosition(new Vector3(unit.Position.x, unit.Position.y));
         }
         public void SetPosition(Vector3 unitPosition)

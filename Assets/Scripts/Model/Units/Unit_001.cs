@@ -6,12 +6,12 @@ namespace Model.Units
 {
     public class Unit_001 : Unit
     {
-        public Unit_001(): base(1)
+        public Unit_001()
         {
-            MoveSkill = new Walk();
-            MoveSkill.priority = Common.AI.Priority.NearFromClosestParty;
-            Skills[0] = new Skill_000();
-            Skills[0].target = Skill.TargetType.Party;
+            MoveSkill = new S100_Walk();
+            MoveSkill.Priority = Common.AI.Priority.NearFromClosestParty;
+            Skills[0] = new S000_Cut();
+            Skills[0].Target = Skill.TargetType.Party;
         }
     }
 }

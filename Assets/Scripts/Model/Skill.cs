@@ -26,22 +26,25 @@ namespace Model
             Friendly,
             Enemy,
         }
+        public string Name { get; set; }
         public int Number           { get; set; }
+        public UnitClass UnitClass { get; set; }
         public int Grade            { get; set; }
-        public int MaxGrade         { get; }
+        public int MaxGrade         { get; set; }
         public int ReuseTime        { get; set; }
         public int CurReuseTime     { get; set; }
         public int CriticalRate     { get; set; }
-        public string Name          { get; set; }
-        public string APData        { get; set; }
-        public string RPData        { get; set; }
-        public string Description   { get; set; }
+
         public AI.Priority Priority { get; set; }
-        public TargetType Target    { get; set; }
-        public RangeType Range      { get; set; }
+        public TargetType Target { get; set; }
+        public RangeType Range { get; set; }
 
         [SerializeField]
-        private readonly string spritePath = "";
+        protected string spritePath = "";
+        public string Description { get; set; }
+        public string APData        { get; set; }
+        public string RPData        { get; set; }
+
         private Sprite sprite;
         public Sprite Sprite
         {
@@ -71,7 +74,7 @@ namespace Model
         /// <returns>사용 가능한 스킬 위치들</returns>
         public virtual List<Vector2Int> GetAvailablePositions(Unit user, Vector2Int userPosition)
         {
-            List<Vector2Int> positions = new();
+            List<Vector2Int> positions = new List<Vector2Int>();
 
             if (APData == null) return positions;
 
@@ -93,18 +96,18 @@ namespace Model
                 // 파티 유닛에만 사용 가능
                 else if (Target == TargetType.Party &&
                     BattleManager.GetTile(abs).HasUnit() &&
-                    BattleManager.GetUnit(abs).Alliance == Unit.UnitAlliance.Party)
+                    BattleManager.GetUnit(abs).Alliance == UnitAlliance.Party)
                     positions.Add(abs);
                 // 우호적인 유닛에 사용 가능
                 else if (Target == TargetType.Friendly &&
                     BattleManager.GetTile(abs).HasUnit() && (
-                    BattleManager.GetUnit(abs).Alliance == Unit.UnitAlliance.Friendly ||
-                    BattleManager.GetUnit(abs).Alliance == Unit.UnitAlliance.Party))
+                    BattleManager.GetUnit(abs).Alliance == UnitAlliance.Friendly ||
+                    BattleManager.GetUnit(abs).Alliance == UnitAlliance.Party))
                     positions.Add(abs);
                 // 적대적인 유닛에 사용 가능
                 else if (Target == TargetType.Enemy &&
                     BattleManager.GetTile(abs).HasUnit() &&
-                    BattleManager.GetUnit(abs).Alliance == Unit.UnitAlliance.Enemy)
+                    BattleManager.GetUnit(abs).Alliance == UnitAlliance.Enemy)
                     positions.Add(abs);
                 // 어디에도 속하지 않으면 false
                 else
@@ -132,7 +135,7 @@ namespace Model
         /// <returns>스킬이 영향을 미치는 위치</returns>
         public virtual List<Vector2Int> GetRelatePositions(Unit user, Vector2Int skillPosition)
         {
-            List<Vector2Int> positions = new();
+            List<Vector2Int> positions = new List<Vector2Int>();
 
             if (RPData == null || !GetAvailablePositions(user).Contains(skillPosition)) return positions;
 
@@ -146,6 +149,11 @@ namespace Model
             return positions;
         }
 
+        public virtual void CalculateDamage(Unit user)
+        {
+
+        }
+
         public virtual IEnumerator Use(Unit user, Vector2Int target)
         {
             Debug.LogError(Name + " 스킬을 " + target + "에 사용!");
@@ -157,6 +165,16 @@ namespace Model
         {
             if (MaxGrade > Grade)
                 Grade++;
+        }
+
+        public virtual string GetDescription(Unit user)
+        {
+            return GetDescription(user, Grade);
+        }
+
+        public virtual string GetDescription(Unit user, int grade)
+        {
+            return Description;
         }
     }
 }

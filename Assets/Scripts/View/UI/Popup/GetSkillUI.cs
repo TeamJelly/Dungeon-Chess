@@ -121,7 +121,7 @@ namespace UI.Popup
                         break;
                     }
 
-                isActive = isActive && skill.unitClass == GameManager.PartyUnits[i].UnitClass;
+                isActive = isActive && skill.UnitClass == GameManager.PartyUnits[i].Class;
                 unitImagies[i].transform.parent.gameObject.SetActive(isActive);
 
             }
@@ -147,12 +147,12 @@ namespace UI.Popup
         /// <param name="s">슬롯 인덱스</param>
         void EnableChangeSkillUI(int u, int s)
         {
-            beforeSkillTitle.text = GameManager.PartyUnits[u].Skills[s]?.Level != 0 ? GameManager.PartyUnits[u].Skills[s]?.Name + $" +{GameManager.PartyUnits[u].Skills[s]?.Level}"
+            beforeSkillTitle.text = GameManager.PartyUnits[u].Skills[s]?.Grade != 0 ? GameManager.PartyUnits[u].Skills[s]?.Name + $" +{GameManager.PartyUnits[u].Skills[s]?.Grade}"
                                                                                     : GameManager.PartyUnits[u]?.Skills[s].Name;
             beforeSkillImage.sprite = GameManager.PartyUnits[u].Skills[s]?.Sprite;
             beforeSkillText.text = GameManager.PartyUnits[u].Skills[s]?.GetDescription(GameManager.PartyUnits[u]);
 
-            afterSkillTitle.text = skill.Level != 0 ? skill.Name + $" +{skill.Level}" : skill.Name;
+            afterSkillTitle.text = skill.Grade != 0 ? skill.Name + $" +{skill.Grade}" : skill.Name;
             afterSkillImage.sprite = skill.Sprite;
             afterSkillText.text = skill.GetDescription(GameManager.PartyUnits[u]);
 
@@ -174,22 +174,22 @@ namespace UI.Popup
         void EnableUpgradeSkillUI(int u, int s)
         {
             if (GameManager.PartyUnits[u].Skills[s] == null) return;
-            if (GameManager.PartyUnits[u].Skills[s].Level == GameManager.PartyUnits[u].Skills[s].MaxLevel) return;
+            if (GameManager.PartyUnits[u].Skills[s].Grade == GameManager.PartyUnits[u].Skills[s].MaxGrade) return;
             //등급 검사. 새 스킬 등급이 기존 스킬보다 작을 때 레전드 등급이 아닐경우에는 종료.
             /*if (skill.Grade <= GameManager.PartyUnits[u].Skills[s].Grade && skill.Grade != Grade.Legend)
             {
                 return;
             }*/
 
-            beforeSkillTitle.text = GameManager.PartyUnits[u].Skills[s].Level != 0 ? GameManager.PartyUnits[u].Skills[s].Name + $" +{GameManager.PartyUnits[u].Skills[s].Level}"
+            beforeSkillTitle.text = GameManager.PartyUnits[u].Skills[s].Grade != 0 ? GameManager.PartyUnits[u].Skills[s].Name + $" +{GameManager.PartyUnits[u].Skills[s].Grade}"
                                                                                     :GameManager.PartyUnits[u].Skills[s].Name;
             beforeSkillImage.sprite = GameManager.PartyUnits[u].Skills[s].Sprite;
             beforeSkillText.text = GameManager.PartyUnits[u].Skills[s].GetDescription(GameManager.PartyUnits[u]);
 
             //한단계 업그레이드 시의 설명
-            afterSkillTitle.text = GameManager.PartyUnits[u].Skills[s].Name + $" +{GameManager.PartyUnits[u].Skills[s].Level + 1}";
+            afterSkillTitle.text = GameManager.PartyUnits[u].Skills[s].Name + $" +{GameManager.PartyUnits[u].Skills[s].Grade + 1}";
             afterSkillImage.sprite = GameManager.PartyUnits[u].Skills[s].Sprite;
-            afterSkillText.text = GameManager.PartyUnits[u].Skills[s].GetDescription(GameManager.PartyUnits[u], GameManager.PartyUnits[u].Skills[s].Level + 1);
+            afterSkillText.text = GameManager.PartyUnits[u].Skills[s].GetDescription(GameManager.PartyUnits[u], GameManager.PartyUnits[u].Skills[s].Grade + 1);
 
             setButton.onClick.RemoveAllListeners();
             setButton.onClick.AddListener(() =>

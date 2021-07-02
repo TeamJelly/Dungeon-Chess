@@ -5,10 +5,23 @@ using UnityEngine;
 namespace Model.Skills
 {
     using Managers;
-    public class Walk : Skill
+    public class S100_Walk : Skill
     {
-        public Walk() : base(999) 
+        public S100_Walk()
         {
+            Name = "걷기";
+            Number = 100;
+            UnitClass = UnitClass.NULL;
+            MaxGrade = 0;
+            ReuseTime = 0;
+            CriticalRate = 0;
+
+            Priority = Common.AI.Priority.NULL;
+            Target = TargetType.NoUnit;
+            Range = RangeType.Fixed;
+
+            spritePath = "";
+            Description = "선택한 위치로 이동한다.";
         }
 
         public override bool IsUsable(Unit user)
@@ -16,7 +29,7 @@ namespace Model.Skills
             if (GetAvailablePositions(user).Count == 0)
                 return false;
 
-            if (user.MoveCount > 0 && CurrentReuseTime == 0)
+            if (user.MoveCount > 0 && CurReuseTime == 0)
                 return true;
             else
                 return false;
@@ -88,7 +101,7 @@ namespace Model.Skills
             // 0 단계 : 로그 출력, 스킬 소모 기록
             Debug.Log($"{user.Name}가 {Name}스킬을 {target}에 사용!");
             user.MoveCount--;
-            CurrentReuseTime = reuseTime;
+            CurReuseTime = ReuseTime;
 
             // 1 단계 : 위치 이동
             {
@@ -109,10 +122,6 @@ namespace Model.Skills
             for (int i = user.StateEffects.Count - 1; i >= 0; i--)
                 user.StateEffects[i].BeforeUseSkill(this);
         }
-    }
-    [System.Serializable]
-    public class Extension_Walk : Common.Extensionable
-    {
     }
 }
 

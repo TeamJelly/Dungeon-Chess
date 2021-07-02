@@ -108,18 +108,18 @@ namespace Model.Managers
         public static State CheckGameState()
         {
             // 승리조건이 모든 적이 죽는 것일 때
-            if (instance.WinCondition == Condition.KillAllEnemy && GetAliveUnitCount(Alliance.Enemy) == 0)
+            if (instance.WinCondition == Condition.KillAllEnemy && GetAliveUnitCount(UnitAlliance.Enemy) == 0)
                 return State.Win;
             
             // 패배조건이 모든 아군이 죽는 것일 때
-            if (instance.DefeatCondition == Condition.KillAllParty && GetAliveUnitCount(Alliance.Party) == 0)
+            if (instance.DefeatCondition == Condition.KillAllParty && GetAliveUnitCount(UnitAlliance.Party) == 0)
                 return State.Defeat;
 
             // 계속
             return State.Continue; 
         }
 
-        private static int GetAliveUnitCount(Unit.UnitAlliance alliance)
+        private static int GetAliveUnitCount(UnitAlliance alliance)
         {
             int count = 0;
 
@@ -141,7 +141,7 @@ namespace Model.Managers
                 return false;
         }
 
-        public static List<Unit> GetUnit(Unit.UnitAlliance alliance)
+        public static List<Unit> GetUnit(UnitAlliance alliance)
         {
             List<Unit> units = new List<Unit>();
 

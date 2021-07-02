@@ -16,7 +16,7 @@ namespace Common
             Debug.Log($"{unit.Name}는(은) 사망했다!");
 
             unit.Agility = -10;
-            unit.Category = Alliance.NULL;
+            unit.Alliance = UnitAlliance.NULL;
 
             VisualEffectUI.MakeVisualEffect(unit.Position, "explosion");
 
@@ -42,26 +42,26 @@ namespace Common
             // AfterMove();
         }
 
-        public static int Damage(Unit unit, int number)
+        public static int Damage(Unit unit, int value)
         {
             for (int i = unit.StateEffects.Count - 1; i >= 0; i--)
             {
-                number = unit.StateEffects[i].BeforeGetDamage(number);
+                value = unit.StateEffects[i].BeforeGetDamage(value);
             }
 
             string text = "";
 
             if (unit.Armor > 0)
             {
-                int damagedArmor = unit.Armor - number;
+                int damagedArmor = unit.Armor - value;
 
                 if (damagedArmor > 0)
                 {
                     text += $"방어함!\n";
-                    text += $"Armor -{number}";
+                    text += $"Armor -{value}";
 
                     unit.Armor = damagedArmor;
-                    number = 0;
+                    value = 0;
                 }
                 else
                 {
@@ -69,65 +69,65 @@ namespace Common
                     text += $"HP -{-damagedArmor}";
 
                     unit.Armor = 0;
-                    number = -damagedArmor;
+                    value = -damagedArmor;
                 }
             }
             else
             {
-                text += $"HP -{number}";
+                text += $"HP -{value}";
             }
 
-            unit.CurrentHP -= number;
+            unit.CurHP -= value;
 
             FadeOutTextUI.MakeText(unit.Position + Vector2Int.up, text, Color.red);
 
-            Debug.Log($"{unit.Name}가(은) {number}만큼 데미지를 입었다! [HP : {unit.CurrentHP + number}>{unit.CurrentHP}]");
+            Debug.Log($"{unit.Name}가(은) {value}만큼 데미지를 입었다! [HP : {unit.CurHP + value}>{unit.CurHP}]");
 
-            if (unit.CurrentHP <= 0)
+            if (unit.CurHP <= 0)
                 Die(unit);
 
             
-            return number; // 피해량을 리턴
+            return value; // 피해량을 리턴
         }
 
-        public static int Heal(Unit unit, int number)
+        public static int Heal(Unit unit, int value)
         {
-            // Before Heal
+            unit.OnHeal.before.Invoke(ref value);
 
+            // 최대체력 이상으로 회복하지 않습니다.
+            if (unit.CurHP + value > unit.MaxHP)
+                value = unit.MaxHP - unit.CurHP;
 
-            if (unit.CurrentHP + number > unit.MaximumHP)
-                number = unit.MaximumHP - unit.CurrentHP;
+            unit.CurHP += value;
 
-            unit.CurrentHP += number;
+            FadeOutTextUI.MakeText(unit.Position + Vector2Int.up, $"HP +{value}", Color.green);
 
-            FadeOutTextUI.MakeText(unit.Position + Vector2Int.up, $"HP +{number}", Color.green);
-
-            Debug.Log($"{unit.Name}가(은) {number}만큼 회복했다! [HP : {unit.CurrentHP}>{unit.CurrentHP + number}]");
+            Debug.Log($"{unit.Name}가(은) {value}만큼 회복했다! [HP : {unit.CurHP}>{unit.CurHP + value}]");
 
             // After Heal
 
-            return number;
+            return value;
         }
 
-        public static int Armor(Unit unit, int number)
+        public static int Armor(Unit unit, int value)
         {
-            unit.Armor += number;
-            return number;
+            unit.Armor += value;
+            return value;
         }
         public static void LevelUp(Unit unit)
         {
             unit.Level++;
-            unit.CurrentEXP = 0;
+            unit.CurEXP = 0;
             unit.NextEXP = unit.Level * 10;
             Debug.Log($"{unit.Name} Level Up! ( Lv {unit.Level-1} > Lv {unit.Level} )");
         }
 
-        public static Effect GetEffectByNumber(Unit unit, int number)
+        public static Effect GetEffectByNumber(Unit unit, int value)
         {
             Effect effect = null;
 
             foreach (var stateEffect in unit.StateEffects)
-                if (stateEffect.Number == number)
+                if (stateEffect.Number == value)
                     effect = stateEffect;
 
             return effect;

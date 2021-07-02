@@ -5,29 +5,44 @@ using UnityEngine;
 
 namespace Model.Skills
 {
-    public class Skill_005 : Skill
+    public class S005_SpinSlash : Skill
     {
-        Extension_005 parsedExtension;
-        public Extension_005 ParsedExtension => parsedExtension;
-        public Skill_005() : base(5)
+        public S005_SpinSlash()
         {
-            if(extension.Length > 0)
-            {
-                parsedExtension = Common.Extension.Parse<Extension_005>(extension);
-            }
+            Name = "회전베기";
+            Number = 5;
+            UnitClass = UnitClass.Warrior;
+            MaxGrade = 3;
+            ReuseTime = 1;
+            CriticalRate = 5;
 
+            Priority = Common.AI.Priority.NULL;
+            Target = TargetType.Any;
+            Range = RangeType.Fixed;
+
+            spritePath = "HandMade/SkillImage/005_회전베기";
+            Description =
+                $"범위안의 모든 대상에게 X의 데미지를 입힌다.\n\n\n" +
+                $"‘ 회전~ 회오리~’";
+
+            APData = "1;1";
+            RPData = "3;111;101;111";
         }
+
+        private readonly int strToDmg = 1;
+        private readonly int grdToDmg = 2;
+
         public override IEnumerator Use(Unit user, Vector2Int target)
         {
             // 0 단계 : 로그 출력, 스킬 소모 기록, 필요 변수 계산
             user.SkillCount--;
-            CurrentReuseTime = reuseTime;
+            CurReuseTime = ReuseTime;
 
             //1.0 Strength + 강화 횟수 x 1
-            int damage = user.Strength + Level * parsedExtension.upgradePerEnhancedLevel;
+            int damage = user.Strength * strToDmg + Grade + grdToDmg;
 
             List<Unit> targetUnits = new List<Unit>();
-            foreach(Vector2Int vector in GetRelatePositions(user, user.Position))
+            foreach (Vector2Int vector in GetRelatePositions(user, user.Position))
             {
                 Unit targetUnit = BattleManager.GetTile(vector).GetUnit();
                 if (targetUnit != null)
@@ -47,14 +62,9 @@ namespace Model.Skills
         }
         public override string GetDescription(Unit user, int level)
         {
-            int damage = user.Strength + level * parsedExtension.upgradePerEnhancedLevel;
+            int damage = user.Strength * strToDmg + Grade + grdToDmg;
             string str = base.GetDescription(user, level).Replace("X", damage.ToString());
             return str;
         }
-    }
-    [System.Serializable]
-    public class Extension_005 : Common.Extensionable
-    {
-        public int upgradePerEnhancedLevel;
     }
 }

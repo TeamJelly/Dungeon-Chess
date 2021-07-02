@@ -4,25 +4,40 @@ using UnityEngine;
 
 namespace Model.Skills
 {
-    public class Skill_004 : Skill
+    public class S004_Bang : Skill
     {
-        Extension_004 parsedExtension;
-        public Extension_004 ParsedExtension => parsedExtension;
-        public Skill_004() : base(4)
+        public S004_Bang()
         {
-            if(extension.Length > 0)
-            {
-                parsedExtension = Common.Extension.Parse<Extension_004>(extension);
-            }
+            Name = "강타";
+            Number = 4;
+            UnitClass = UnitClass.Warrior;
+            MaxGrade = 3;
+            ReuseTime = 3;
+            CriticalRate = 0;
+
+            Priority = Common.AI.Priority.NULL;
+            Target = TargetType.Any;
+            Range = RangeType.Fixed;
+
+            spritePath = "HandMade/SkillImage/004_강타";
+            Description = 
+                $"선택한 대상에게 X의 데미지를 입히고, 한턴간 기절시킨다.\n\n\n" +
+                $"‘그냥 힘 줘서 때리면 기절 하더라고.’";
+
+            APData = "3;010;101;010";
+            RPData = "1;1";
         }
+
+        private readonly int grdToDmg = 1;
+
         public override IEnumerator Use(Unit user, Vector2Int target)
         {
             // 0 단계 : 로그 출력, 스킬 소모 기록, 필요 변수 계산  
             user.SkillCount--;
-            CurrentReuseTime = reuseTime;
+            CurReuseTime = ReuseTime;
 
             //10 + 강화 횟수 x 1
-            int damage = 10 + Level * parsedExtension.upgradePerEnhancedLevel;
+            int damage = 10 + Grade * grdToDmg;
             Unit targetUnit = Managers.BattleManager.GetUnit(target);
             if (targetUnit != null)
             {
@@ -43,15 +58,9 @@ namespace Model.Skills
         }
         public override string GetDescription(Unit user, int level)
         {
-            int damage = 10 + level * parsedExtension.upgradePerEnhancedLevel;
+            int damage = 10 + Grade * grdToDmg;
             string str = base.GetDescription(user, level).Replace("X", damage.ToString());
             return str;
         }
-    }
-
-        [System.Serializable]
-    public class Extension_004 : Common.Extensionable
-    {
-       public int upgradePerEnhancedLevel;
     }
 }

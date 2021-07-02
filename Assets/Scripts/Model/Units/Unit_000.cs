@@ -7,9 +7,9 @@ namespace Model.Units
 {
     public class Unit_000 : Unit
     {
-        public Unit_000() : base(0)
+        public Unit_000()
         {
-            MoveSkill = new Walk();
+            MoveSkill = new S100_Walk();
         }
     }
 }

@@ -7,10 +7,10 @@ namespace Model.Units
 {
     public class Proto_RedSkeleton : Unit
     {
-        public Proto_RedSkeleton() : base(5)
+        public Proto_RedSkeleton()
         {
-            MoveSkill.priority = Common.AI.Priority.FarFromClosestParty;
-            Skills[0].target = Skill.TargetType.Party;
+            MoveSkill.Priority = Common.AI.Priority.FarFromClosestParty;
+            Skills[0].Target = Skill.TargetType.Party;
         }
     }
 }

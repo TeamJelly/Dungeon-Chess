@@ -7,15 +7,38 @@ namespace Model.Units
 {
     public class Proto_Judgement : Unit
     {
-        public Proto_Judgement() : base(6)
+        public Proto_Judgement() 
         {
-            MoveSkill.priority = Common.AI.Priority.NearFromClosestParty;
-            Skills[0].target = Skill.TargetType.Party;
-            Skills[0].Level = 5;
-            Skills[1].target = Skill.TargetType.Party;
-            Skills[1].Level = 3;
-            Skills[2].target = Skill.TargetType.Party;
-            Skills[2].Level = 2;
+            Name = "저지먼트";
+            Alliance = UnitAlliance.Enemy;
+            Class = UnitClass.Monster;
+
+            Level = 1;
+            MaxHP = 150;
+            CurHP = MaxHP;
+
+            Strength = 10;
+            Agility = 10;
+            Move = 5;
+            CriticalRate = 15;
+            
+            portraitPath = "Helltaker/Judgement/Judgement_portrait";
+            animatorPath = "Helltaker/Judgement/Judgement_animator";
+
+            MoveSkill = new S100_Walk()
+            {
+                Priority = Common.AI.Priority.NearFromClosestParty,
+            };
+
+            Skills[0] = new S000_Cut()
+            { 
+                Target = Skill.TargetType.Party,
+            };
+
+            Skills[1] = new S004_Bang()
+            {
+                Target = Skill.TargetType.Party,
+            };
         }
     }
 }

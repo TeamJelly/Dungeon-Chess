@@ -9,6 +9,7 @@ using Model.Managers;
 
 namespace Common
 {
+
     public class AI
     {
         /// <summary>
@@ -21,8 +22,8 @@ namespace Common
             NearFromMe,             // 나에게 가까운 곳을 우선으로 사용
             FarFromMe,              // 나에게 먼곳을 우선으로 사용
 
-            BiggerCurrentHP,        // 현재HP가 높은 유닛을 우선으로 사용
-            SmallerCurrentHP,       // 현재HP가 낮은 유닛을 우선으로 사용
+            BiggerCurHP,        // 현재HP가 높은 유닛을 우선으로 사용
+            SmallerCurHP,       // 현재HP가 낮은 유닛을 우선으로 사용
 
             NearFromPartys,         // 파티들에게 가까운 곳을 우선으로 사용
             FarFromPartys,          // 파티들에게 먼곳을 우선으로 사용
@@ -98,7 +99,7 @@ namespace Common
                     continue;
 
                 // 재사용 대기시간이 가장 긴, 사용할수 있는 스킬을 찾는다.
-                if (skill.IsUsable(user) && skill.reuseTime >= reuseTime && GetTargetPosition(user, skill) != null)
+                if (skill.IsUsable(user) && skill.ReuseTime >= reuseTime && GetTargetPosition(user, skill) != null)
                     skillToUse = skill;
             }
 
@@ -207,18 +208,18 @@ namespace Common
                     (targetPosition - user.Position).magnitude < (positions[i] - user.Position).magnitude)
                     targetPosition = positions[i];
                 // 타겟 우선순위가 현재 HP가 가장 많은 유닛의 위치이다.
-                else if (priority == Priority.BiggerCurrentHP &&
-                    Model.Managers.BattleManager.GetUnit(targetPosition).CurrentHP < Model.Managers.BattleManager.GetUnit(positions[i]).CurrentHP)
+                else if (priority == Priority.BiggerCurHP &&
+                    BattleManager.GetUnit(targetPosition).CurHP < BattleManager.GetUnit(positions[i]).CurHP)
                     targetPosition = positions[i];
                 // 타겟 우선순위가 현재 HP가 가장 적은 유닛의 위치이다.
-                else if (priority == Priority.SmallerCurrentHP &&
-                    Model.Managers.BattleManager.GetUnit(targetPosition).CurrentHP > Model.Managers.BattleManager.GetUnit(positions[i]).CurrentHP)
+                else if (priority == Priority.SmallerCurHP &&
+                    BattleManager.GetUnit(targetPosition).CurHP > BattleManager.GetUnit(positions[i]).CurHP)
                     targetPosition = positions[i];
                 // 타게 우선수누이가 파티들의 평균위치로부터 멀거나 가까운 위치이다.
                 else if (priority == Priority.NearFromPartys || priority == Priority.FarFromPartys)
                 {
                     Vector2 averagePosition = new Vector2();
-                    List<Unit> partyUnits = Model.Managers.BattleManager.GetUnit(Alliance.Party);
+                    List<Unit> partyUnits = BattleManager.GetUnit(UnitAlliance.Party);
 
                     foreach (var unit in partyUnits)
                         averagePosition += unit.Position;
@@ -235,7 +236,7 @@ namespace Common
                 }
                 else if (priority == Priority.NearFromClosestParty || priority == Priority.FarFromClosestParty)
                 {
-                    List<Unit> partyUnits = Model.Managers.BattleManager.GetUnit(Alliance.Party);
+                    List<Unit> partyUnits = BattleManager.GetUnit(UnitAlliance.Party);
 
                     Unit closestUnit = partyUnits[0];
                     float distance = (user.Position - partyUnits[0].Position).magnitude;
@@ -266,7 +267,7 @@ namespace Common
         {
             List<Vector2Int> TargetPositions = GetMovedSkillablePositions(user, skill);
 
-            return GetPriorityPosition(user, TargetPositions, skill.priority);
+            return GetPriorityPosition(user, TargetPositions, skill.Priority);
         }
 
         /// <summary>
@@ -283,7 +284,7 @@ namespace Common
 
                 List<Vector2Int> MovePositions = GetTargetedMoveablePositions(user, skill, targetPosition);
 
-                return GetPriorityPosition(user, MovePositions, user.MoveSkill.priority);
+                return GetPriorityPosition(user, MovePositions, user.MoveSkill.Priority);
             }
             else
                 return null;
@@ -301,7 +302,7 @@ namespace Common
                 List<Vector2Int> MovePositions = user.MoveSkill.GetAvailablePositions(user);
                 MovePositions.Add(user.Position);
 
-                return GetPriorityPosition(user, MovePositions, user.MoveSkill.priority);
+                return GetPriorityPosition(user, MovePositions, user.MoveSkill.Priority);
             }
             else
                 return null;

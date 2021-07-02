@@ -6,6 +6,7 @@ namespace Model
     public class Effect
     {
         protected EffectDescriptor descriptor = new EffectDescriptor();
+
         public Unit Owner;
         public string Name => descriptor.name;
         public int Number => descriptor.number;
