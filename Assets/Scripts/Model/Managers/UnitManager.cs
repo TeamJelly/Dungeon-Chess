@@ -21,8 +21,8 @@ namespace Model.Managers
 
         UnitManager()
         {
-            AllUnits.Add(new Proto_Priest());
-            AllUnits.Add(new Proto_Warrior());
+            AllUnits.Add(new P001_Priest());
+            AllUnits.Add(new P000_Warrior());
         }
 
         public static void Reset()

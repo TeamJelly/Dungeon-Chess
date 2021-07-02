@@ -5,9 +5,9 @@ using Model.Skills;
 
 namespace Model.Units
 {
-    public class Proto_Warrior : Unit
+    public class P000_Warrior : Unit
     {
-        public Proto_Warrior()
+        public P000_Warrior()
         {
             Name = "루시퍼";
             Alliance = UnitAlliance.Party;

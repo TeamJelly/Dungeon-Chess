@@ -47,7 +47,7 @@ namespace Model.Managers
 
             if (GameManager.Instance.currentRoom == null)
             {
-                Unit unit = new Proto_Judgement();
+                Unit unit = new M000_Judgement();
                 Common.UnitAction.Summon(unit, new Vector2Int(4, 4));
                 Common.UnitAction.AddEffect(unit, new Model.Effects.Effect_004(unit));
                 Common.UnitAction.AddEffect(unit, new Model.Effects.Effect_005(unit, 99));
@@ -74,7 +74,7 @@ namespace Model.Managers
             }
             else if (GameManager.Instance.currentRoom.category == Room.Category.Boss)
             {
-                Unit unit = new Proto_Judgement();
+                Unit unit = new M000_Judgement();
                 Common.UnitAction.Summon(unit, new Vector2Int(4, 4));
                 Common.UnitAction.AddEffect(unit, new Model.Effects.Effect_004(unit));
                 Common.UnitAction.AddEffect(unit, new Model.Effects.Effect_005(unit, 99));

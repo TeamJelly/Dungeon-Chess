@@ -5,9 +5,9 @@ using Model.Skills;
 
 namespace Model.Units
 {
-    public class Proto_Judgement : Unit
+    public class M000_Judgement : Unit
     {
-        public Proto_Judgement() 
+        public M000_Judgement() 
         {
             Name = "저지먼트";
             Alliance = UnitAlliance.Enemy;
