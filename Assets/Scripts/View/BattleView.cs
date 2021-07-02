@@ -38,7 +38,7 @@ namespace View
             if (!GameManager.InBattle)
             {
                 TurnEndButton.gameObject.SetActive(false);
-                unitControlUI.panel.gameObject.SetActive(false);
+                unitControlUI.panel.SetActive(false);
             }
         }
         public IEnumerator MoveLeaderUnit()
@@ -109,6 +109,10 @@ namespace View
         public void SetTurnUnitPanel(Unit unit)
         {
             currentUnitPortrait.sprite = unit.Portrait;
+
+            TurnEndButton.gameObject.SetActive(true);
+            unitControlUI.panel.SetActive(true);
+
             unitControlUI?.UpdateUI(unit);
 
             //if (unit.Category != Category.Party)
