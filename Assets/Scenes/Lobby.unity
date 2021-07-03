@@ -12347,18 +12347,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AllUnits: []
   thisTurnUnit:
-    currentEXP: 0
-    currentHP: 0
-    position: {x: 0, y: 0}
-    actionRate: 0
-    moveCount: 0
-    skillCount: 0
-    moveSkill:
-      priority: 0
-    passiveSkill:
-      priority: 0
-    skills: []
-    antiques: []
     animationState: 0
   turnCount: 0
   WinCondition: 0
@@ -12812,17 +12800,17 @@ MonoBehaviour:
 
     WWWFFFFFFFFFFWWW
 
+    WWWFFFFFTTTTFWWW
+
+    WWWFFFFFFFFFFWWW
+
+    WWWFFFFFSFFFFWWW
+
     WWWFFFFFFFFFFWWW
 
     WWWFFFFFFFFFFWWW
 
     WWWFFFFFFFFFFWWW
-
-    WWWFFFFFSSSFFWWW
-
-    WWWFFFFFFFFFFWWW
-
-    WWWFSFFFFFFFFWWW
 
     WWWFFFFFFFFFFWWW
 
