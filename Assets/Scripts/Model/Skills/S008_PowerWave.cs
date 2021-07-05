@@ -105,7 +105,7 @@ namespace Model.Skills
             foreach (Vector2Int vector in GetRelatePositions(user, target))
             {
 
-                UI.Battle.VisualEffectUI.MakeVisualEffect(vector, "explosion");
+                View.VisualEffectView.MakeVisualEffect(vector, "Explosion");
 
                 Unit targetUnit = Managers.BattleManager.GetTile(vector).GetUnit();
                 if (targetUnit != null)

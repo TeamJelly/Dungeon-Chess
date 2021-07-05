@@ -55,7 +55,7 @@ namespace Model.Skills
                 Debug.Log($"{user.Name}가 {Name}스킬을 {target}에 사용!");
             }
 
-            UI.Battle.VisualEffectUI.MakeVisualEffect(target, "hit_claws");
+            View.VisualEffectView.MakeVisualEffect(target, "Scratch");
         }
 
         public override string GetDescription(Unit user, int grade)

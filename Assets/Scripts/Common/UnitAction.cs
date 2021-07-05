@@ -18,7 +18,7 @@ namespace Common
             unit.Agility = -10;
             unit.Alliance = UnitAlliance.NULL;
 
-            VisualEffectUI.MakeVisualEffect(unit.Position, "explosion");
+            VisualEffectView.MakeVisualEffect(unit.Position, "Explosion");
 
 
             ViewManager.battle.DestroyUnitObject(unit);
