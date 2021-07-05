@@ -20,7 +20,6 @@ namespace Common
 
             VisualEffectView.MakeVisualEffect(unit.Position, "Explosion");
 
-
             ViewManager.battle.DestroyUnitObject(unit);
             BattleManager.instance.AllUnits.Remove(unit);            
             BattleManager.GetTile(unit.Position).SetUnit(null);
