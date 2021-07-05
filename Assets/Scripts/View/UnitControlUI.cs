@@ -54,9 +54,10 @@ namespace UI.Battle
                 });
             }
             skillButtons[0].SetSkill(unit, unit.MoveSkill);
+            skillButtons[1].SetSkill(unit, unit.PassiveSkill);
             for (int i = 0; i < 4; i++)
             {
-                SkillButton button = skillButtons[i + 1];
+                SkillButton button = skillButtons[i + 2];
                 button.SetSkill(unit, unit.Skills[i]);
             }
             RefreshButtons(unit);
