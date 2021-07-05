@@ -21,7 +21,7 @@ namespace View
 
         public Button TurnEndButton { get; private set; }
         public Dictionary<Unit, GameObject> UnitObjects { get; } = new Dictionary<Unit, GameObject>();
-        public Dictionary<Unit, HPBar> HPBars { get; } = new Dictionary<Unit, HPBar>();
+        public Dictionary<Unit, HPBarView> HPBars { get; } = new Dictionary<Unit, HPBarView>();
 
         public UnitControlUI unitControlUI;
         private void Awake()
@@ -167,7 +167,7 @@ namespace View
             UnitObjects.Add(unit, newObj);
 
             // HP 바 생성
-            HPBar newHPBar = Instantiate(hPBarPrefab, ViewManager.instance.MainPanel).GetComponent<HPBar>();
+            HPBarView newHPBar = Instantiate(hPBarPrefab, ViewManager.instance.MainPanel).GetComponent<HPBarView>();
             newHPBar.Init(unit);
             HPBars.Add(unit, newHPBar);
 
@@ -195,9 +195,9 @@ namespace View
             UnitObjects.Remove(unit);
             Destroy(unitObj);
 
-            HPBar hpBar = HPBars[unit];
+            HPBarView hpBar = HPBars[unit];
             HPBars.Remove(unit);
-            Destroy(hpBar);
+            Destroy(hpBar.gameObject);
 
             unit.OnPosition.changed.RemoveAllListeners();
             unit.OnCurHP.changed.RemoveAllListeners();

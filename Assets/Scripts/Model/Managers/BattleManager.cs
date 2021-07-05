@@ -86,7 +86,7 @@ namespace Model.Managers
                 GameManager.PartyUnits.Add(UnitManager.Instance.AllUnits[1]);
             }
 
-            //GameManager.InBattle = true;
+            GameManager.InBattle = true;
 
             if (GameManager.InBattle)
             {
