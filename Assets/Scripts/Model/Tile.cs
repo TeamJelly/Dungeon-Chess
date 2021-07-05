@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace Model
 {
@@ -11,6 +12,8 @@ namespace Model
         public string name;
 
         public Vector2Int position;
+
+        Obtainable obtainableObject = null;
 
         public enum Category
         {
@@ -48,6 +51,21 @@ namespace Model
         public Unit GetUnit()
         {
             return unit;
+        }
+
+        public void SetObtainableObj(Obtainable obt)
+        {
+            obtainableObject = obt;
+        }
+
+        public Obtainable GetObtainableObj()
+        {
+            Obtainable obt = obtainableObject;
+            if(obt != null)
+            {
+                obtainableObject = null;
+            }
+            return obt;
         }
     }
 }

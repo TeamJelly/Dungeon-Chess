@@ -9,6 +9,7 @@ public class FieldManager : MonoBehaviour
     public static FieldManager instance;
 
     public Tilemap tileMap;
+    public Tilemap obtainableTilemap;
 
     /// <summary>
     /// Tile.cs의 Category와 똑같이 사용해야 작동한다.
@@ -106,6 +107,19 @@ public class FieldManager : MonoBehaviour
                 tileMap.SetTile(new Vector3Int(x, y, 0), tileBases[i]);
             }
         }
+    }
+
+    public void SetObtainableObj(Obtainable obt, Vector2Int pos)
+    {
+        field[pos.x, pos.y].SetObtainableObj(obt);
+        obtainableTilemap.SetTile((Vector3Int)pos, obt.GetTileBase());
+    }
+
+    public Obtainable GetObtainableObj(Vector2Int pos)
+    {
+        Obtainable obt = field[pos.x, pos.y].GetObtainableObj();
+        obtainableTilemap.SetTile((Vector3Int)pos, null);
+        return obt;
     }
 
     public List<Vector2Int> GetStairAroundPosition()
