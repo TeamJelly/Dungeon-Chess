@@ -112,6 +112,8 @@ namespace Model.Skills
 
                 for (int i = 1; i < path.Count; i++)
                 {
+                    //벽이 있으면 더이상 가질 못함.
+                    if (FieldManager.instance.field[path[i].y, path[i].x].category == Model.Tile.Category.Wall) break;
                     Common.UnitAction.Move(user, path[i]);
                     yield return new WaitForSeconds(moveTime);
                 }
