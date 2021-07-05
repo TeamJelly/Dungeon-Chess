@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class ObjectInfo
 {
+    public string name;
     public string spritePath = "";
     public string Description { get; set; }
 
@@ -20,5 +22,4 @@ public class ObjectInfo
             return sprite;
         }
     }
-    public TileBase tilebase;
 }

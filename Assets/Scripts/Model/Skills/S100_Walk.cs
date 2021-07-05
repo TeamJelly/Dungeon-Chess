@@ -122,7 +122,8 @@ namespace Model.Skills
                 user.animationState = Unit.AnimationState.Idle;
             }
             // 2 단계 : 타일 위의 아이템, 유물 습득
-            FieldManager.instance.GetObtainableObj(user.Position)?.AssignTo(user);
+            if(target == user.Position)
+                FieldManager.instance.GetObtainableObj(user.Position)?.AssignTo(user);
 
 
             for (int i = user.StateEffects.Count - 1; i >= 0; i--)

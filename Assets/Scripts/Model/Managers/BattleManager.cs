@@ -86,7 +86,7 @@ namespace Model.Managers
                 GameManager.PartyUnits.Add(UnitManager.Instance.AllUnits[1]);
             }
 
-            //GameManager.InBattle = true;
+           // GameManager.InBattle = true;
 
             if (GameManager.InBattle)
             {
@@ -97,6 +97,14 @@ namespace Model.Managers
                 Common.UnitAction.Summon(GameManager.LeaderUnit, new Vector2Int(8, 8));
                 StartCoroutine(View.ViewManager.battle.MoveLeaderUnit());
             }
+
+
+            //유물 타일 맵 테스트
+            FieldManager.instance.SetObtainableObj(new Artifact_Test(), new Vector2Int(6, 6));
+            FieldManager.instance.SetObtainableObj(new Artifact_Test(), new Vector2Int(10, 5));
+            FieldManager.instance.SetObtainableObj(new Artifact_Test(), new Vector2Int(6, 8));
+            FieldManager.instance.SetObtainableObj(new Artifact_Test(), new Vector2Int(9, 9));
+            FieldManager.instance.SetObtainableObj(new Artifact_Test(), new Vector2Int(6, 4));
 
             // UI.Battle.IndicatorUI.ShowTileIndicator()
 

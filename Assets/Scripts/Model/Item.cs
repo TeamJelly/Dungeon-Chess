@@ -13,10 +13,14 @@ namespace Model
         {
             
         }
-
-        public TileBase GetTileBase()
+        public void DropImage(Vector2Int position)
         {
-            return info.tilebase;
+            throw new System.NotImplementedException();
+        }
+
+        public void DeleteImage()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

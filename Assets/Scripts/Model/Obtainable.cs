@@ -8,6 +8,8 @@ public interface Obtainable
 {
     void AssignTo(Unit unit);
 
-    TileBase GetTileBase();
+    void DropImage(Vector2Int position);
+
+    void DeleteImage();
 
 }
