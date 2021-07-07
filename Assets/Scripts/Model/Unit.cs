@@ -60,6 +60,8 @@ namespace Model
         // 유닛 이벤트 모음
         public TimeEventListener<bool> OnBattleStart = new TimeEventListener<bool>();
         public TimeEventListener<bool> OnBattleEnd = new TimeEventListener<bool>();
+        public TimeEventListener<bool> OnTurnStart = new TimeEventListener<bool>();
+        public TimeEventListener<bool> OnTurnEnd = new TimeEventListener<bool>();
 
         public TimeEventListener<int> OnCurHP = new TimeEventListener<int>();
         public TimeEventListener<int> OnHeal = new TimeEventListener<int>();
@@ -77,9 +79,9 @@ namespace Model
             {
                 if (curHP != value)
                 {
-                    OnCurHP.before.Invoke(ref value);
+                    OnCurHP.before.RefInvoke(ref value);
                     curHP = value;
-                    OnCurHP.changed.Invoke(ref value);
+                    OnCurHP.after.RefInvoke(ref value);
                 }
             }
         }
@@ -92,9 +94,9 @@ namespace Model
             {
                 if (armor != value)
                 {
-                    OnArmor.before.Invoke(ref value);
+                    OnArmor.before.RefInvoke(ref value);
                     armor = value;
-                    OnArmor.changed.Invoke(ref value);
+                    OnArmor.after.RefInvoke(ref value);
                 }
             }
         }
@@ -106,9 +108,9 @@ namespace Model
             {
                 if (level != value)
                 {
-                    OnLevel.before.Invoke(ref value);
+                    OnLevel.before.RefInvoke(ref value);
                     level = value;
-                    OnLevel.changed.Invoke(ref value);
+                    OnLevel.after.RefInvoke(ref value);
                 }
             }
         }
@@ -120,9 +122,9 @@ namespace Model
             {
                 if (curEXP != value)
                 {
-                    OnCurEXP.before.Invoke(ref value);
+                    OnCurEXP.before.RefInvoke(ref value);
                     curEXP = value;
-                    OnCurEXP.changed.Invoke(ref value);
+                    OnCurEXP.after.RefInvoke(ref value);
                 }
             }
         }
@@ -136,9 +138,11 @@ namespace Model
                 {
                     if (position != value)
                     {
-                        OnPosition.before.Invoke(ref value);
+                        OnPosition.before.RefInvoke(ref value);
+                        OnPosition.before.Invoke(value);
                         position = value;
-                        OnPosition.changed.Invoke(ref value);
+                        OnPosition.after.RefInvoke(ref value);
+                        OnPosition.after.Invoke(value);
                     }
                 }
                 else
@@ -172,7 +176,8 @@ namespace Model
             set => animator = value;
         }
 
-        public bool IsFlying { get; set; }
+        private bool isFlying = false;
+        public bool IsFlying { get => isFlying; set => isFlying = value; }
 
         /// <summary>
         /// DB로 부터 초기화

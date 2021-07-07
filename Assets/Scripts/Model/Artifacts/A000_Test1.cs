@@ -8,7 +8,6 @@ namespace Model.Artifacts
     {
         A000_Test1()
         {
-
         }
         
     }

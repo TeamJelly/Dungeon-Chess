@@ -2,38 +2,54 @@
 
 namespace Model
 {
-    using Effects;
     public class Effect
     {
-        protected EffectDescriptor descriptor = new EffectDescriptor();
+        public Unit Owner { get; set; }
+        public string Name { get; set; }
+        public int Number { get; set; }
+        public string Description { get; set; }
 
-        public Unit Owner;
-        public string Name => descriptor.name;
-        public int Number => descriptor.number;
-        public string Extension => descriptor.extension;
-        public string Description => descriptor.description;
         private int turnCount;
         public int TurnCount
         {
             get => turnCount;
             set => turnCount = value;
         }
-        public Effect(Unit owner, int number)
+
+        protected string spritePath;
+        private Sprite sprite;
+        public Sprite Sprite
+        {
+            set => sprite = value;
+            get
+            {
+                if (sprite == null)
+                {
+                    sprite = Common.Data.LoadSprite(spritePath);
+                }
+                return sprite;
+            }
+        }
+
+        public Effect(Unit owner)
         {
             Owner = owner;
-            InitializeEffectFromDB(number);
         }
-        private void InitializeEffectFromDB(int number)
+
+        public Effect(Unit owner, int turnCount)
         {
-            var _descriptor = EffectStorage.Instance[number];
-            if (_descriptor != null)
-            {
-                descriptor = _descriptor.Copy();
-            }
-            else
-            {
-                Debug.LogError($"number={number}에 해당하는 효과가 없습니다.");
-            }
+            Owner = owner;
+            TurnCount = turnCount;
+        }
+
+        public virtual void OnAddThisEffect()
+        {
+            Effect oldEffect = Common.UnitAction.GetEffectByNumber(Owner, Number);
+
+            if (oldEffect != null)
+                OnOverlapEffect(oldEffect);
+
+            Debug.Log($"{Owner.Name}에게 {Name} 효과 추가됨");
         }
 
         /// <summary>
@@ -42,14 +58,6 @@ namespace Model
         public virtual void OnOverlapEffect(Effect oldEffect)
         {
             Owner.StateEffects.Remove(oldEffect);
-        }
-
-        public virtual void OnAddThisEffect()
-        {
-            Effect oldEffect = Common.UnitAction.GetEffectByNumber(Owner, Number);
-            if(oldEffect != null)
-                OnOverlapEffect(oldEffect);
-            Debug.Log($"{Owner.Name}에게 {Name} 효과 추가됨");
         }
 
         public virtual void OnRemoveThisEffect()
@@ -67,12 +75,12 @@ namespace Model
 
         }
 
-        public virtual void OnTurnStart()
+        public virtual void OnTurnStart(ref bool _bool)
         {
 
         }
 
-        public virtual void OnTurnEnd()
+        public virtual void OnTurnEnd(ref bool _bool)
         {
 
         }
@@ -97,14 +105,13 @@ namespace Model
 
         }
 
-        public virtual int BeforeGetDamage(int damage)
+        public virtual void BeforeGetDamage(ref int damage)
         {
-            return damage;
+
         }
 
-        public virtual int AfterGetDamamge(int damage)
+        public virtual void AfterGetDamamge(ref int damage)
         {
-            return damage;
         }
 
         public virtual void OnGetOtherEffect()

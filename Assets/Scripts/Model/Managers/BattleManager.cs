@@ -49,8 +49,9 @@ namespace Model.Managers
             {
                 Unit unit = new M000_Judgement();
                 Common.UnitAction.Summon(unit, new Vector2Int(4, 4));
-                Common.UnitAction.AddEffect(unit, new Model.Effects.Effect_004(unit));
-                Common.UnitAction.AddEffect(unit, new Model.Effects.Effect_005(unit, 99));
+                Common.UnitAction.AddEffect(unit, new Model.Effects.E004_Stun(unit));
+                Common.UnitAction.AddEffect(unit, new Model.Effects.E005_Regeneration(unit, 99));
+                Common.UnitAction.AddEffect(unit, new Model.Effects.E021_Barrier(unit, 10, 99));
             }
             else if (GameManager.Instance.currentRoom.category == Room.Category.Monster)
             {
@@ -76,8 +77,8 @@ namespace Model.Managers
             {
                 Unit unit = new M000_Judgement();
                 Common.UnitAction.Summon(unit, new Vector2Int(4, 4));
-                Common.UnitAction.AddEffect(unit, new Model.Effects.Effect_004(unit));
-                Common.UnitAction.AddEffect(unit, new Model.Effects.Effect_005(unit, 99));
+                Common.UnitAction.AddEffect(unit, new Model.Effects.E004_Stun(unit));
+                Common.UnitAction.AddEffect(unit, new Model.Effects.E005_Regeneration(unit, 99));
             }
 
             if (GameManager.PartyUnits.Count == 0)
@@ -86,7 +87,7 @@ namespace Model.Managers
                 GameManager.PartyUnits.Add(UnitManager.Instance.AllUnits[1]);
             }
 
-            // GameManager.InBattle = true;
+            GameManager.InBattle = true;
 
             if (GameManager.InBattle)
             {

@@ -43,10 +43,13 @@ namespace Common
 
         public static int Damage(Unit unit, int value)
         {
-            for (int i = unit.StateEffects.Count - 1; i >= 0; i--)
-            {
-                value = unit.StateEffects[i].BeforeGetDamage(value);
-            }
+            //for (int i = unit.StateEffects.Count - 1; i >= 0; i--)
+            //{
+            //    value = unit.StateEffects[i].BeforeGetDamage(value);
+            //}
+
+            unit.OnDamage.before.RefInvoke(ref value);
+
 
             string text = "";
 
@@ -78,6 +81,8 @@ namespace Common
 
             unit.CurHP -= value;
 
+            unit.OnDamage.after.RefInvoke(ref value);
+
             FadeOutTextUI.MakeText(unit.Position + Vector2Int.up, text, Color.red);
 
             Debug.Log($"{unit.Name}가(은) {value}만큼 데미지를 입었다! [HP : {unit.CurHP + value}>{unit.CurHP}]");
@@ -91,7 +96,7 @@ namespace Common
 
         public static int Heal(Unit unit, int value)
         {
-            unit.OnHeal.before.Invoke(ref value);
+            unit.OnHeal.before.RefInvoke(ref value);
 
             // 최대체력 이상으로 회복하지 않습니다.
             if (unit.CurHP + value > unit.MaxHP)
@@ -147,6 +152,8 @@ namespace Common
                 target.StateEffects.Remove(effect);
                 FadeOutTextUI.MakeText(target.Position + Vector2Int.up, $"-{effect.Name}", Color.yellow);
             }
+            else
+                Debug.LogError($"{target.Name}이 {effect.Name}를 소유하고 있지 않습니다.");
         }
         
         public static void Summon(Unit unit)

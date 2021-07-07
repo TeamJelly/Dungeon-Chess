@@ -32,7 +32,7 @@ namespace Model
             if (HasUnit())
                return false;
             if (
-                    !unit.IsFlying && // 유닛이 날고있다면 위치 가능하다.
+                    unit.IsFlying == false && // 유닛이 날고있다면 위치 가능하다.
                     (
                         category == Category.Wall ||
                         category == Category.Hole

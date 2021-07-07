@@ -121,7 +121,7 @@ namespace Model.Skills
                 yield return null;
                 // 2단계 : 스킬 적용
                 Common.UnitAction.Damage(unit, damage);
-                Common.UnitAction.AddEffect(unit, new Effects.Effect_004(unit));
+                Common.UnitAction.AddEffect(unit, new Effects.E004_Stun(unit));
             }
         }
 

@@ -53,7 +53,7 @@ namespace Model.Skills
             {
                 Debug.Log($"{user.Name}가 {Name}스킬을 {target}에 사용!");
             }
-            Common.UnitAction.AddEffect(targetUnit, new Effects.Effect_004(targetUnit));
+            Common.UnitAction.AddEffect(targetUnit, new Effects.E004_Stun(targetUnit));
 
         }
         public override string GetDescription(Unit user, int level)

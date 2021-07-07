@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-namespace UI.Battle
+namespace View
 {
     public class FadeOutTextUI : MonoBehaviour
     {
