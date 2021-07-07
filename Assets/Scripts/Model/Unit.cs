@@ -132,7 +132,7 @@ namespace Model
             get => position;
             set
             {
-                if (Managers.BattleManager.instance != null && Managers.BattleManager.IsAvilablePosition(Position))
+                if (Managers.BattleManager.instance != null && Managers.FieldManager.IsInField(Position))
                 {
                     if (position != value)
                     {
@@ -171,6 +171,8 @@ namespace Model
             }
             set => animator = value;
         }
+
+        public bool IsFlying { get; set; }
 
         /// <summary>
         /// DB로 부터 초기화

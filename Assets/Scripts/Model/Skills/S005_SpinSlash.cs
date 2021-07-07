@@ -44,7 +44,7 @@ namespace Model.Skills
             List<Unit> targetUnits = new List<Unit>();
             foreach (Vector2Int vector in GetRelatePositions(user, user.Position))
             {
-                Unit targetUnit = BattleManager.GetTile(vector).GetUnit();
+                Unit targetUnit = FieldManager.GetTile(vector).GetUnit();
                 if (targetUnit != null)
                 {
                     targetUnits.Add(targetUnit);

@@ -49,17 +49,16 @@ namespace View
                 if(Input.GetKeyDown(KeyCode.Mouse1))
                 {
                     Vector3 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition) + Vector3.one * 0.5f;
-
                     Vector2Int destination = new Vector2Int((int)mousepos.x, (int)mousepos.y);
 
-                    //맵 범위 안으로 값 조정
-                    destination.x = Mathf.Clamp(destination.x, 0, 15);
-                    destination.y = Mathf.Clamp(destination.y, 0, 15);
-
-                    //리더 유닛 이동 코루틴 실행. 기존 실행되던 코루틴은 정지.
-                    StopCoroutine(coroutine);
-                    coroutine = GameManager.LeaderUnit.MoveSkill.Use(GameManager.LeaderUnit, destination);
-                    StartCoroutine(coroutine);
+                    // 리더 유닛이 해당 타일에 위치가능하다면
+                    if (FieldManager.GetTile(destination).IsUnitPositionable(GameManager.LeaderUnit))
+                    {
+                        //리더 유닛 이동 코루틴 실행. 기존 실행되던 코루틴은 정지.
+                        StopCoroutine(coroutine);
+                        coroutine = GameManager.LeaderUnit.MoveSkill.Use(GameManager.LeaderUnit, destination);
+                        StartCoroutine(coroutine);
+                    }
                 }
                 yield return null;
             }

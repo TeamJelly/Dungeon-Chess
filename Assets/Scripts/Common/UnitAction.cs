@@ -22,7 +22,7 @@ namespace Common
 
             ViewManager.battle.DestroyUnitObject(unit);
             BattleManager.instance.AllUnits.Remove(unit);            
-            BattleManager.GetTile(unit.Position).SetUnit(null);
+            FieldManager.GetTile(unit.Position).SetUnit(null);
             BattleManager.instance.InitializeUnitBuffer();
 
             if (BattleManager.CheckGameState() != BattleManager.State.Continue)
@@ -34,9 +34,9 @@ namespace Common
             // BeforeMove();
 
             //기존 타일 유닛 초기화 Tile.cs로 옮기면 좋을듯
-            BattleManager.GetTile(unit.Position).SetUnit(null);
+            FieldManager.GetTile(unit.Position).SetUnit(null);
             unit.Position = target;
-            BattleManager.GetTile(target).SetUnit(unit);
+            FieldManager.GetTile(target).SetUnit(unit);
 
             // AfterMove();
         }
@@ -165,7 +165,7 @@ namespace Common
             if (BattleManager.GetUnit(target) == null)
             {
                 unit.Position = target;
-                BattleManager.GetTile(target).SetUnit(unit);
+                FieldManager.GetTile(target).SetUnit(unit);
                 BattleManager.instance.AllUnits.Add(unit);
                 ViewManager.battle.MakeUnitObject(unit);
             }

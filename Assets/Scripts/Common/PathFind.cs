@@ -62,7 +62,7 @@ namespace Common
                 };
 
                 foreach (var item in vector2Ints)
-                    if (BattleManager.GetTile(item) != null && BattleManager.GetUnit(item) == null)
+                    if (FieldManager.GetTile(item) != null && BattleManager.GetUnit(item) == null)
                         neighbor.Add(new Node(item, node));
 
                 return neighbor;
@@ -98,7 +98,7 @@ namespace Common
         /// <returns></returns>
         public static List<Vector2Int> PathFindAlgorithm(Vector2Int from, Vector2Int to)
         {
-            if (BattleManager.GetTile(to) == null || BattleManager.GetTile(to).HasUnit())
+            if (FieldManager.GetTile(to) == null || FieldManager.GetTile(to).HasUnit())
             {
                 Debug.LogWarning("길찾기 알고리즘 오류");
                 return null;

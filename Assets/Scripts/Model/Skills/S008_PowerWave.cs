@@ -107,7 +107,7 @@ namespace Model.Skills
 
                 View.VisualEffectView.MakeVisualEffect(vector, "Explosion");
 
-                Unit targetUnit = Managers.BattleManager.GetTile(vector).GetUnit();
+                Unit targetUnit = Managers.FieldManager.GetTile(vector).GetUnit();
                 if (targetUnit != null)
                 {
                     targetUnits.Add(targetUnit);
@@ -147,7 +147,7 @@ namespace Model.Skills
             foreach (Vector2Int vector in Common.Data.ParseRangeData(RPData))
             {
                 Vector2Int pos = new Vector2Int((int)Math.Round((vector.x * cos + vector.y * sin)), (int)Math.Round(vector.x * -sin + vector.y * cos)) + position;
-                if (Managers.BattleManager.IsAvilablePosition(pos))
+                if (Managers.FieldManager.IsInField(pos))
                     positions.Add(pos);
             }
             return positions;

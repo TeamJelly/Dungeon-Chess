@@ -83,7 +83,7 @@ namespace Model
                 Vector2Int abs = userPosition + position;
 
                 // 맵밖에 넘어간다면 사용불가
-                if (!BattleManager.IsAvilablePosition(abs))
+                if (!FieldManager.IsInField(abs))
                     continue;
 
                 // 모든 타일에 사용가능
@@ -91,22 +91,22 @@ namespace Model
                     positions.Add(abs);
                 // 유닛 없음타일에만 사용가능
                 else if (Target == TargetType.NoUnit &&
-                    BattleManager.GetTile(abs).HasUnit())
+                    FieldManager.GetTile(abs).HasUnit())
                     positions.Add(abs);
                 // 파티 유닛에만 사용 가능
                 else if (Target == TargetType.Party &&
-                    BattleManager.GetTile(abs).HasUnit() &&
+                    FieldManager.GetTile(abs).HasUnit() &&
                     BattleManager.GetUnit(abs).Alliance == UnitAlliance.Party)
                     positions.Add(abs);
                 // 우호적인 유닛에 사용 가능
                 else if (Target == TargetType.Friendly &&
-                    BattleManager.GetTile(abs).HasUnit() && (
+                    FieldManager.GetTile(abs).HasUnit() && (
                     BattleManager.GetUnit(abs).Alliance == UnitAlliance.Friendly ||
                     BattleManager.GetUnit(abs).Alliance == UnitAlliance.Party))
                     positions.Add(abs);
                 // 적대적인 유닛에 사용 가능
                 else if (Target == TargetType.Enemy &&
-                    BattleManager.GetTile(abs).HasUnit() &&
+                    FieldManager.GetTile(abs).HasUnit() &&
                     BattleManager.GetUnit(abs).Alliance == UnitAlliance.Enemy)
                     positions.Add(abs);
                 // 어디에도 속하지 않으면 false
@@ -142,7 +142,7 @@ namespace Model
             foreach (var vector in Common.Data.ParseRangeData(RPData))
             {
                 Vector2Int abs = skillPosition + vector;
-                if (BattleManager.IsAvilablePosition(abs))
+                if (FieldManager.IsInField(abs))
                 positions.Add(abs);
             }
 
