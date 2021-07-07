@@ -25,7 +25,6 @@ namespace View
             foreach (var animator in animators)
                 VisualEffects.Add(animator.name, animator);
 
-            // prefab = Resources.Load<GameObject>("VFXs/VFX_Default");
         }
 
         public static void MakeVisualEffect(Vector2Int position, string name)

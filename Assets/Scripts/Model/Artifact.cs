@@ -7,6 +7,19 @@ namespace Model
     [System.Serializable]
     public class Artifact
     {
-        public Effect antiqueEffect;
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public int Number { get; set; }
+
+        public virtual void OnAddThisArtifact()
+        {
+
+        }
+
+        public virtual void OnRemoveThisArtifact()
+        {
+
+        }
     }
+
 }
