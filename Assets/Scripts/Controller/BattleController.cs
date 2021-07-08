@@ -51,13 +51,8 @@ namespace UI.Battle
                 if (skill != null && skill.CurReuseTime != 0)
                     skill.CurReuseTime--;
 
-            //// 뒤에서부터 돌면 중간에 삭제해도 문제 없음.
-            //for (int i = nextUnit.StateEffects.Count - 1; i >= 0; i--)
-            //    nextUnit.StateEffects[i].OnTurnStart();
-            bool _bool = false;
-            nextUnit.OnTurnStart.before.RefInvoke(ref _bool);
-            _bool = true;
-            nextUnit.OnTurnStart.after.RefInvoke(ref _bool);
+            nextUnit.OnTurnStart.before.Invoke(false);
+            nextUnit.OnTurnStart.after.Invoke(true);
 
             // 유닛정보창 초기화
             ViewManager.battle.SetTurnUnitPanel(nextUnit);
@@ -79,14 +74,8 @@ namespace UI.Battle
 
             Unit thisTurnUnit = BattleManager.instance.thisTurnUnit;
 
-            //// 턴 종료 효과 처리
-            //for (int i = thisTurnUnit.StateEffects.Count - 1; i >= 0; i--)
-            //    thisTurnUnit.StateEffects[i].OnTurnEnd();
-
-            bool _bool = false;
-            thisTurnUnit.OnTurnEnd.before.RefInvoke(ref _bool);
-            _bool = true;
-            thisTurnUnit.OnTurnEnd.after.RefInvoke(ref _bool);
+            thisTurnUnit.OnTurnEnd.before.Invoke(true);
+            thisTurnUnit.OnTurnEnd.after.Invoke(false);
 
             switch (BattleManager.CheckGameState())
             {

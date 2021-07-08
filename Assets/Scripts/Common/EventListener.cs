@@ -5,29 +5,35 @@ namespace Common
 {
     public class EventListener<T>
     {
-        public delegate void MyAction(ref T value);
+        public delegate T MyAction(T value);
 
-        public Action<T> actions = null;
+        private List<MyAction> myActions = new List<MyAction>();
 
-        private MyAction refActions = null;
+        //public Action<T> actions = null;
+        //private MyAction refActions = null;
 
-        public void AddListener(Action<T> callback) { actions += callback; }
-        public void RemoveListener(Action<T> callback) { actions -= callback; }
-        public void RemoveAllListeners() { actions = null; }
+        public void AddListener(MyAction callback) { myActions.Add(callback); }
+        public void RemoveListener(MyAction callback) { myActions.Remove(callback); }
+        public void RemoveAllListeners() { myActions.Clear(); }
 
-        public void AddRefListener(MyAction callback) { refActions += callback; }
-        public void RemoveRefListener(MyAction callback) { refActions -= callback; }
-        public void RemoveAllRefListeners() { refActions = null; }
+        //public void AddRefListener(MyAction callback) { refActions += callback; }
+        //public void RemoveRefListener(MyAction callback) { refActions -= callback; }
+        //public void RemoveAllRefListeners() { refActions = null; }
 
-        public void Invoke(T value)
+        public T Invoke(T value)
         {
-            actions?.Invoke(value);
+            T _return = value;
+
+            for (int i = myActions.Count - 1; i >= 0; i--)
+                _return = myActions[i].Invoke(_return);
+
+            return _return;
         }
 
-        public void RefInvoke(ref T value)
-        {
-            refActions?.Invoke(ref value);
-        }
+        //public void RefInvoke(ref T value)
+        //{
+        //    refActions?.Invoke(ref value);
+        //}
     }
 
     //public class UpAndDownEventListener<T>

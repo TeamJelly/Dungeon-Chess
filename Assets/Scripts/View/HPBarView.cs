@@ -38,9 +38,11 @@ namespace View
                 Camera.main.WorldToScreenPoint(unitPosition + Vector3.up * 0.5f);
         }
 
-        public void SetValue(ref int v)
+        public int SetValue(int value)
         {
-            slider.value = v;
+            slider.value = value;
+
+            return value;
         }
     }
 }

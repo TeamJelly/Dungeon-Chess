@@ -171,21 +171,23 @@ namespace View
             HPBars.Add(unit, newHPBar);
 
             //유닛 오브젝트 상호작용 콜백 등록
-            unit.OnPosition.after.AddListener((v) =>
+            unit.OnPosition.after.AddListener((value) =>
             {
-                Vector3 w = new Vector3(v.x, v.y);
+                Vector3 w = new Vector3(value.x, value.y);
                 newObj.transform.position = w;
                 newHPBar.SetPosition(w);
+
+                return value;
             });
-            unit.OnCurHP.after.AddRefListener(newHPBar.SetValue);
+            unit.OnCurHP.after.AddListener(newHPBar.SetValue);
 
             //최초 갱신
             //newHPBar.SetValue(unit.CurHP);
             int tempHP = unit.CurHP;
             Vector2Int tempPosition = unit.Position;
 
-            unit.OnPosition.after.RefInvoke(ref tempPosition);
-            unit.OnCurHP.after.RefInvoke(ref tempHP);
+            unit.OnPosition.after.Invoke(tempPosition);
+            unit.OnCurHP.after.Invoke(tempHP);
         }
 
         public void DestroyUnitObject(Unit unit)
@@ -198,8 +200,8 @@ namespace View
             HPBars.Remove(unit);
             Destroy(hpBar.gameObject);
 
-            unit.OnPosition.after.RemoveAllRefListeners();
-            unit.OnCurHP.after.RemoveAllRefListeners();
+            unit.OnPosition.after.RemoveAllListeners();
+            unit.OnCurHP.after.RemoveAllListeners();
 
             // AgilityViewer.instance.DestroyObject(unit);
 

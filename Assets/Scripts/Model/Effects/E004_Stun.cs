@@ -19,34 +19,36 @@ namespace Model.Effects
         {
             base.OnAddThisEffect();
 
-            Debug.Log($"{Owner.Name} 기절 상태이상!");
             Owner.MoveCount = 0;
             Owner.SkillCount = 0;
 
-            Owner.OnTurnEnd.after.AddRefListener(OnTurnEnd);
-            Owner.OnTurnStart.before.AddRefListener(OnTurnStart);
+            Owner.OnTurnEnd.after.AddListener(OnTurnEnd);
+            Owner.OnTurnStart.before.AddListener(OnTurnStart);
         }
 
         public override void OnRemoveThisEffect()
         {
-            Owner.OnTurnEnd.after.RemoveRefListener(OnTurnEnd);
-            Owner.OnTurnStart.before.RemoveRefListener(OnTurnStart);
+            Owner.OnTurnEnd.after.RemoveListener(OnTurnEnd);
+            Owner.OnTurnStart.before.RemoveListener(OnTurnStart);
         }
 
-        public override void OnTurnStart(ref bool _bool)
+        public override bool OnTurnStart(bool value)
         {
-            Debug.Log($"{Owner.Name} 기절 상태이상!");
+            View.FadeOutTextUI.MakeText(Owner.Position + Vector2Int.up, $"기절!", Color.red);
+
             Owner.MoveCount = 0;
             Owner.SkillCount = 0;
             isActivated = true;
+
+            return value;
         }
 
-        public override void OnTurnEnd(ref bool _bool)
+        public override bool OnTurnEnd(bool value)
         {
-            if (isActivated == true)
-            {
+            if (isActivated)
                 Common.UnitAction.RemoveEffect(Owner, this);
-            }
+
+            return value;
         }
 
 

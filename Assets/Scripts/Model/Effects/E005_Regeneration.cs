@@ -22,17 +22,16 @@ namespace Model.Effects
             Debug.Log($"{Owner.Name}에게 {Name}효과 {TurnCount}턴 동안 추가됨");
         }
 
-        public override void OnTurnStart(ref bool _bool)
+        public override bool OnTurnStart(bool value)
         {
+            View.FadeOutTextUI.MakeText(Owner.Position + Vector2Int.up, $"재생! ({TurnCount})", Color.green);
             Common.UnitAction.Heal(Owner, Regen);
-            TurnCount--;
 
-            Debug.Log($"{Name}효과 {TurnCount}턴 남음");
-
-            if (TurnCount == 0)
-            {
+            if (--TurnCount == 0)
                 Common.UnitAction.RemoveEffect(Owner, this);
-            }
+
+
+            return value;
         }
     }
 }

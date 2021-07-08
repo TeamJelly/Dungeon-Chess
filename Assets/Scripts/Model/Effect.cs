@@ -75,14 +75,14 @@ namespace Model
 
         }
 
-        public virtual void OnTurnStart(ref bool _bool)
+        public virtual bool OnTurnStart(bool value)
         {
-
+            return value;
         }
 
-        public virtual void OnTurnEnd(ref bool _bool)
+        public virtual bool OnTurnEnd(bool value)
         {
-
+            return value;
         }
 
         public virtual void BeforeMove()
@@ -105,13 +105,14 @@ namespace Model
 
         }
 
-        public virtual void BeforeGetDamage(ref int damage)
+        public virtual int BeforeGetDamage(int value)
         {
-
+            return value;
         }
 
-        public virtual void AfterGetDamamge(ref int damage)
+        public virtual int AfterGetDamamge(int value)
         {
+            return value;
         }
 
         public virtual void OnGetOtherEffect()

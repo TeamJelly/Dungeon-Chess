@@ -79,9 +79,9 @@ namespace Model
             {
                 if (curHP != value)
                 {
-                    OnCurHP.before.RefInvoke(ref value);
+                    value = OnCurHP.before.Invoke(value);
                     curHP = value;
-                    OnCurHP.after.RefInvoke(ref value);
+                    OnCurHP.after.Invoke(value);
                 }
             }
         }
@@ -94,9 +94,9 @@ namespace Model
             {
                 if (armor != value)
                 {
-                    OnArmor.before.RefInvoke(ref value);
+                    value = OnArmor.before.Invoke(value);
                     armor = value;
-                    OnArmor.after.RefInvoke(ref value);
+                    OnArmor.after.Invoke(value);
                 }
             }
         }
@@ -108,9 +108,9 @@ namespace Model
             {
                 if (level != value)
                 {
-                    OnLevel.before.RefInvoke(ref value);
+                    value = OnLevel.before.Invoke(value);
                     level = value;
-                    OnLevel.after.RefInvoke(ref value);
+                    OnLevel.after.Invoke(value);
                 }
             }
         }
@@ -122,9 +122,9 @@ namespace Model
             {
                 if (curEXP != value)
                 {
-                    OnCurEXP.before.RefInvoke(ref value);
+                    value = OnCurEXP.before.Invoke(value);
                     curEXP = value;
-                    OnCurEXP.after.RefInvoke(ref value);
+                    OnCurEXP.after.Invoke(value);
                 }
             }
         }
@@ -138,10 +138,8 @@ namespace Model
                 {
                     if (position != value)
                     {
-                        OnPosition.before.RefInvoke(ref value);
-                        OnPosition.before.Invoke(value);
+                        value = OnPosition.before.Invoke(value);
                         position = value;
-                        OnPosition.after.RefInvoke(ref value);
                         OnPosition.after.Invoke(value);
                     }
                 }

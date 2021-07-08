@@ -43,15 +43,7 @@ namespace Common
 
         public static int Damage(Unit unit, int value)
         {
-            //for (int i = unit.StateEffects.Count - 1; i >= 0; i--)
-            //{
-            //    value = unit.StateEffects[i].BeforeGetDamage(value);
-            //}
-
-            unit.OnDamage.before.RefInvoke(ref value);
-
-
-            string text = "";
+            value = unit.OnDamage.before.Invoke(value);
 
             if (unit.Armor > 0)
             {
@@ -59,31 +51,26 @@ namespace Common
 
                 if (damagedArmor > 0)
                 {
-                    text += $"방어함!\n";
-                    text += $"Armor -{value}";
+                    FadeOutTextUI.MakeText(unit.Position + Vector2Int.up, "방어함!", Color.red);
+                    FadeOutTextUI.MakeText(unit.Position + Vector2Int.up, $"Armor -{value}", Color.red);
 
                     unit.Armor = damagedArmor;
                     value = 0;
                 }
                 else
                 {
-                    text += $"Armor -{unit.Armor}\n";
-                    text += $"HP -{-damagedArmor}";
+                    FadeOutTextUI.MakeText(unit.Position + Vector2Int.up, $"Armor -{unit.Armor}", Color.red);
+                    FadeOutTextUI.MakeText(unit.Position + Vector2Int.up, $"HP -{-damagedArmor}", Color.red);
 
                     unit.Armor = 0;
                     value = -damagedArmor;
                 }
             }
             else
-            {
-                text += $"HP -{value}";
-            }
+                FadeOutTextUI.MakeText(unit.Position + Vector2Int.up, $"HP -{value}", Color.red);
 
             unit.CurHP -= value;
-
-            unit.OnDamage.after.RefInvoke(ref value);
-
-            FadeOutTextUI.MakeText(unit.Position + Vector2Int.up, text, Color.red);
+            unit.OnDamage.after.Invoke(value);
 
             Debug.Log($"{unit.Name}가(은) {value}만큼 데미지를 입었다! [HP : {unit.CurHP + value}>{unit.CurHP}]");
 
@@ -96,19 +83,20 @@ namespace Common
 
         public static int Heal(Unit unit, int value)
         {
-            unit.OnHeal.before.RefInvoke(ref value);
+            value = unit.OnHeal.before.Invoke(value);
 
             // 최대체력 이상으로 회복하지 않습니다.
             if (unit.CurHP + value > unit.MaxHP)
                 value = unit.MaxHP - unit.CurHP;
 
             unit.CurHP += value;
+            unit.OnHeal.after.Invoke(value);
 
             FadeOutTextUI.MakeText(unit.Position + Vector2Int.up, $"HP +{value}", Color.green);
 
             Debug.Log($"{unit.Name}가(은) {value}만큼 회복했다! [HP : {unit.CurHP}>{unit.CurHP + value}]");
 
-            // After Heal
+
 
             return value;
         }
