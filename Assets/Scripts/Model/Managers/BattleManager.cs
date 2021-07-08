@@ -99,6 +99,14 @@ namespace Model.Managers
                 StartCoroutine(View.ViewManager.battle.MoveLeaderUnit());
             }
 
+
+            //유물 타일 맵 테스트
+            FieldManager.instance.SetObtainableObj(new Artifact_Test(), new Vector2Int(6, 6));
+            FieldManager.instance.SetObtainableObj(new Artifact_Test(), new Vector2Int(10, 5));
+            FieldManager.instance.SetObtainableObj(new Artifact_Test(), new Vector2Int(6, 8));
+            FieldManager.instance.SetObtainableObj(new Artifact_Test(), new Vector2Int(9, 9));
+            FieldManager.instance.SetObtainableObj(new Artifact_Test(), new Vector2Int(6, 4));
+
             // UI.Battle.IndicatorUI.ShowTileIndicator()
 
             //Vector2Int[] party_position = { new Vector2Int(4, 0), new Vector2Int(5, 0), new Vector2Int(3, 0), new Vector2Int(6, 0) };
