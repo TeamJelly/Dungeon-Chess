@@ -10,14 +10,16 @@ namespace View
         public static FadeOutTextUI instance;
         public GameObject prefab;
 
+        public bool isCoroutineRunning = false;
+
         public class FadeOutText
         {
-            Vector2Int position;
-            string text;
-            Color color;
+            public Vector2Int position;
+            public string text;
+            public Color color;
         }
 
-        public List<FadeOutText> WaitingQueue = new List<FadeOutText>();
+        public Queue<FadeOutText> WaitingQueue = new Queue<FadeOutText>();
 
         private void Awake()
         {
@@ -25,23 +27,34 @@ namespace View
             prefab = Resources.Load<GameObject>("Prefabs/UI/FadeOutText");
         }
 
-        public static void MakeText(Vector2Int position, string text, Color color)
+        public static void MakeText(FadeOutText fadeOutText)
         {
-            instance.StartCoroutine(instance.MakeTextCoroutine(position, text, color));
+            instance.WaitingQueue.Enqueue(fadeOutText);
+
+            if (instance.isCoroutineRunning == false)
+                instance.StartCoroutine(instance.StartTextCoroutine());
         }
 
-        IEnumerator MakeTextCoroutine(Vector2Int position, string text, Color color)
+        public static void MakeText(Vector2Int position, string text, Color color)
         {
-            string[] lines = text.Split('\n');
+            MakeText(new FadeOutText() { position = position, text = text, color = color });
+        }
 
-            foreach (var line in lines)
+        IEnumerator StartTextCoroutine()
+        {
+            isCoroutineRunning = true;
+            
+            while (WaitingQueue.Count > 0)
             {
+                FadeOutText line = WaitingQueue.Dequeue();
                 GameObject gameObject = Instantiate(instance.prefab);
-                gameObject.GetComponentInChildren<TextMeshPro>().text = line;
-                gameObject.GetComponentInChildren<TextMeshPro>().color = color;
-                gameObject.transform.position = new Vector3(position.x, position.y);
+                gameObject.GetComponentInChildren<TextMeshPro>().text = line.text;
+                gameObject.GetComponentInChildren<TextMeshPro>().color = line.color;
+                gameObject.transform.position = new Vector3(line.position.x, line.position.y);
                 yield return new WaitForSeconds(1f);
             }
+
+            isCoroutineRunning = false;
         }
     }
 }
