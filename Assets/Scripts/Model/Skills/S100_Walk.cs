@@ -28,7 +28,6 @@ namespace Model.Skills
         {
             if (GetAvailablePositions(user).Count == 0)
                 return false;
-
             if (user.MoveCount > 0 && CurReuseTime == 0)
                 return true;
             else
@@ -66,11 +65,17 @@ namespace Model.Skills
                     {
                         Vector2Int temp = position + direction;
 
-                        if (!positions.Contains(temp) &&                // 전에 추가한 위치가 아니고
-                            BattleManager.IsAvilablePosition(temp) &&   // 맵 범위 안이고
-                            !BattleManager.GetTile(temp).HasUnit())     // 타일에 유닛이 존재하지 않는다면
+                        if (
+                            // 전에 추가한 위치가 아니고
+                            !positions.Contains(temp) &&
+                            // 맵 범위 안이고
+                            FieldManager.IsInField(temp) &&
+                            // 타일에 이 유닛이 위치할수 있으면
+                            FieldManager.GetTile(temp).IsUnitPositionable(user)
+                            )
                         {
-                            new_frontier.Add(temp);                     // 이동가능한 위치로 추가한다.
+                            // 이동가능한 위치로 추가한다.
+                            new_frontier.Add(temp);                
                             positions.Add(temp);
                         }
                     }
@@ -112,8 +117,6 @@ namespace Model.Skills
 
                 for (int i = 1; i < path.Count; i++)
                 {
-                    //벽이 있으면 더이상 가질 못함.
-                    if (FieldManager.instance.field[path[i].y, path[i].x].category == Model.Tile.Category.Wall) break;
                     View.VisualEffectView.MakeVisualEffect(user.Position, "Dust");
                     Common.UnitAction.Move(user, path[i]);
                     yield return new WaitForSeconds(moveTime);

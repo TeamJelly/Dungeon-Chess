@@ -49,17 +49,16 @@ namespace View
                 if(Input.GetKeyDown(KeyCode.Mouse1))
                 {
                     Vector3 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition) + Vector3.one * 0.5f;
-
                     Vector2Int destination = new Vector2Int((int)mousepos.x, (int)mousepos.y);
 
-                    //맵 범위 안으로 값 조정
-                    destination.x = Mathf.Clamp(destination.x, 0, 15);
-                    destination.y = Mathf.Clamp(destination.y, 0, 15);
-
-                    //리더 유닛 이동 코루틴 실행. 기존 실행되던 코루틴은 정지.
-                    StopCoroutine(coroutine);
-                    coroutine = GameManager.LeaderUnit.MoveSkill.Use(GameManager.LeaderUnit, destination);
-                    StartCoroutine(coroutine);
+                    // 리더 유닛이 해당 타일에 위치가능하다면
+                    if (FieldManager.GetTile(destination).IsUnitPositionable(GameManager.LeaderUnit))
+                    {
+                        //리더 유닛 이동 코루틴 실행. 기존 실행되던 코루틴은 정지.
+                        StopCoroutine(coroutine);
+                        coroutine = GameManager.LeaderUnit.MoveSkill.Use(GameManager.LeaderUnit, destination);
+                        StartCoroutine(coroutine);
+                    }
                 }
                 yield return null;
             }
@@ -172,21 +171,21 @@ namespace View
             HPBars.Add(unit, newHPBar);
 
             //유닛 오브젝트 상호작용 콜백 등록
-            unit.OnPosition.changed.AddListener((v) =>
+            unit.OnPosition.after.AddListener((v) =>
             {
                 Vector3 w = new Vector3(v.x, v.y);
                 newObj.transform.position = w;
                 newHPBar.SetPosition(w);
             });
-            unit.OnCurHP.changed.AddListener(newHPBar.SetValue);
+            unit.OnCurHP.after.AddRefListener(newHPBar.SetValue);
 
             //최초 갱신
             //newHPBar.SetValue(unit.CurHP);
             int tempHP = unit.CurHP;
             Vector2Int tempPosition = unit.Position;
 
-            unit.OnPosition.changed.Invoke(ref tempPosition);
-            unit.OnCurHP.changed.Invoke(ref tempHP);
+            unit.OnPosition.after.RefInvoke(ref tempPosition);
+            unit.OnCurHP.after.RefInvoke(ref tempHP);
         }
 
         public void DestroyUnitObject(Unit unit)
@@ -199,8 +198,8 @@ namespace View
             HPBars.Remove(unit);
             Destroy(hpBar.gameObject);
 
-            unit.OnPosition.changed.RemoveAllListeners();
-            unit.OnCurHP.changed.RemoveAllListeners();
+            unit.OnPosition.after.RemoveAllRefListeners();
+            unit.OnCurHP.after.RemoveAllRefListeners();
 
             // AgilityViewer.instance.DestroyObject(unit);
 

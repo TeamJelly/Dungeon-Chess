@@ -30,6 +30,23 @@ namespace Model
 
         Unit unit = null;
 
+        public bool IsUnitPositionable(Unit unit)
+        {
+            if (HasUnit())
+               return false;
+            if (
+                    unit.IsFlying == false && // 유닛이 날고있다면 위치 가능하다.
+                    (
+                        category == Category.Wall ||
+                        category == Category.Hole
+                    )
+                )
+                return false;
+            else
+                return true;
+        }
+
+
         public bool HasUnit()
         {
             return unit != null;

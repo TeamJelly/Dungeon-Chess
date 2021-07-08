@@ -41,7 +41,7 @@ namespace UI.Battle
             {
                 if (tileIndicators == null)
                 {
-                    tileIndicators = new GameObject[BattleManager.GetTile().GetLength(0), BattleManager.GetTile().GetLength(1)];
+                    tileIndicators = new GameObject[FieldManager.GetField().GetLength(0), FieldManager.GetField().GetLength(1)];
 
                     for (int i = 0; i < tileIndicators.GetLength(0); i++)
                         for (int j = 0; j < tileIndicators.GetLength(1); j++)
@@ -137,7 +137,7 @@ namespace UI.Battle
 
         public static void ChangeTileIndicatorColor(Vector2Int position, Color color)
         {
-            if (BattleManager.IsAvilablePosition(position))
+            if (FieldManager.IsInField(position))
                 TileIndicators[position.x, position.y].GetComponent<SpriteRenderer>().color = color;
         }
 

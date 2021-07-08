@@ -49,8 +49,9 @@ namespace Model.Managers
             {
                 Unit unit = new M000_Judgement();
                 Common.UnitAction.Summon(unit, new Vector2Int(4, 4));
-                Common.UnitAction.AddEffect(unit, new Model.Effects.Effect_004(unit));
-                Common.UnitAction.AddEffect(unit, new Model.Effects.Effect_005(unit, 99));
+                Common.UnitAction.AddEffect(unit, new Model.Effects.E004_Stun(unit));
+                Common.UnitAction.AddEffect(unit, new Model.Effects.E005_Regeneration(unit, 99));
+                Common.UnitAction.AddEffect(unit, new Model.Effects.E021_Barrier(unit, 10, 99));
             }
             else if (GameManager.Instance.currentRoom.category == Room.Category.Monster)
             {
@@ -76,8 +77,8 @@ namespace Model.Managers
             {
                 Unit unit = new M000_Judgement();
                 Common.UnitAction.Summon(unit, new Vector2Int(4, 4));
-                Common.UnitAction.AddEffect(unit, new Model.Effects.Effect_004(unit));
-                Common.UnitAction.AddEffect(unit, new Model.Effects.Effect_005(unit, 99));
+                Common.UnitAction.AddEffect(unit, new Model.Effects.E004_Stun(unit));
+                Common.UnitAction.AddEffect(unit, new Model.Effects.E005_Regeneration(unit, 99));
             }
 
             if (GameManager.PartyUnits.Count == 0)
@@ -147,17 +148,6 @@ namespace Model.Managers
             return count;
         }
 
-        public static bool IsAvilablePosition(Vector2Int position)
-        {
-            if (position.x >= 0 &&
-                position.y >= 0 &&
-                position.x < FieldManager.instance.field.GetLength(0) &&
-                position.y < FieldManager.instance.field.GetLength(1))
-                return true;
-            else
-                return false;
-        }
-
         public static List<Unit> GetUnit(UnitAlliance alliance)
         {
             List<Unit> units = new List<Unit>();
@@ -185,24 +175,7 @@ namespace Model.Managers
         /// <returns></returns>
         public static Unit GetUnit(Vector2Int position)
         {
-            return GetTile(position)?.GetUnit();
-        }
-
-        public static Tile GetTile(Vector2Int position)
-        {
-            return GetTile(position.x, position.y);
-        }
-
-        public static Tile GetTile(int x, int y)
-        {
-            if (IsAvilablePosition(new Vector2Int(x, y)))
-                return FieldManager.instance.field[y, x];
-            else
-                return null;
-        }
-        public static Tile[,] GetTile()
-        {
-            return FieldManager.instance.field;
+            return FieldManager.GetTile(position)?.GetUnit();
         }
 
         Queue<Unit> unitBuffer = new Queue<Unit>();

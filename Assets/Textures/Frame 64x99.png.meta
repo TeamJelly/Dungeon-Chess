@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6f5b858cb629be545a2e54ebc4dc0371
+guid: 1aaa6ec8a8a26524aa0bf81d543927bc
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -23,6 +23,9 @@ TextureImporter:
   - first:
       213: 829559148086961432
     second: Frame 32x32_2
+  - first:
+      213: 4431828734905303342
+    second: Frame 64x99_0
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -125,11 +128,11 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 32
+        width: 96
+        height: 96
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 4, y: 4, z: 4, w: 4}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 12, y: 12, z: 12, w: 12}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -144,13 +147,13 @@ TextureImporter:
       name: Frame 32x32_1
       rect:
         serializedVersion: 2
-        x: 32
+        x: 96
         y: 0
-        width: 32
-        height: 32
+        width: 96
+        height: 96
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 4, y: 2, z: 4, w: 6}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 12, y: 6, z: 12, w: 18}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -165,13 +168,13 @@ TextureImporter:
       name: Frame 32x32_2
       rect:
         serializedVersion: 2
-        x: 64
+        x: 192
         y: 0
-        width: 32
-        height: 32
+        width: 96
+        height: 96
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 4, y: 4, z: 4, w: 4}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 12, y: 12, z: 12, w: 12}
       outline: []
       physicsShape: []
       tessellationDetail: 0
