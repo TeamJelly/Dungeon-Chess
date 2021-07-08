@@ -141,41 +141,36 @@ namespace Model.Managers
             }
         }
 		
-    public void SetObtainableObj(Obtainable obt, Vector2Int pos)
-    {
-        field[pos.x, pos.y].SetObtainableObj(obt);
-        obt.DropImage(pos);
-    }
+        public void SetObtainableObj(Obtainable obt, Vector2Int pos)
+        {
+            field[pos.x, pos.y].SetObtainableObj(obt);
+            obt.DropImage(pos);
+        }
 
-    public Obtainable GetObtainableObj(Vector2Int pos)
-    {
-        Obtainable obt = field[pos.x, pos.y].GetObtainableObj();
-        obt?.DeleteImage();
-        return obt;
-    }
-
-    public List<Vector2Int> GetStairAroundPosition()
-    {
-        List<Vector2Int> around = new List<Vector2Int>()
+        public Obtainable GetObtainableObj(Vector2Int pos)
+        {
+            Obtainable obt = field[pos.x, pos.y].GetObtainableObj();
+            obt?.DeleteImage();
+            return obt;
+        }
         public static Tile[,] GetField()
         {
             return instance.field;
         }
-
         public List<Vector2Int> GetStairAroundPosition()
         {
             List<Vector2Int> around = new List<Vector2Int>()
-        {
-            new Vector2Int(-1, -1),
-            new Vector2Int(-1,  0),
-            new Vector2Int(-1,  1),
-            new Vector2Int( 0, -1),
-            new Vector2Int( 0,  0),
-            new Vector2Int( 0,  1),
-            new Vector2Int( 1, -1),
-            new Vector2Int( 1,  0),
-            new Vector2Int( 1,  1)
-        };
+            {
+                new Vector2Int(-1, -1),
+                new Vector2Int(-1,  0),
+                new Vector2Int(-1,  1),
+                new Vector2Int( 0, -1),
+                new Vector2Int( 0,  0),
+                new Vector2Int( 0,  1),
+                new Vector2Int( 1, -1),
+                new Vector2Int( 1,  0),
+                new Vector2Int( 1,  1)
+            };
 
             List<Vector2Int> StairAroundPosition = new List<Vector2Int>();
 

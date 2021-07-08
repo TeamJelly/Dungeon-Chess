@@ -7,7 +7,7 @@ public class Artifact_Test : Artifact
 {
     public Artifact_Test()
     {
-        info.name = "test";
-        info.spritePath = "HandMade/slime";
+        Name = "test";
+        spritePath = "HandMade/slime";
     }
 }
