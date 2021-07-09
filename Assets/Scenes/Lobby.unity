@@ -5009,7 +5009,6 @@ GameObject:
   - component: {fileID: 984850858}
   - component: {fileID: 984850857}
   - component: {fileID: 984850862}
-  - component: {fileID: 984850861}
   - component: {fileID: 984850863}
   - component: {fileID: 984850864}
   m_Layer: 5
@@ -5100,19 +5099,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &984850861
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 984850856}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e6a941bbf05a5a4895646055e431849, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainPanel: {fileID: 1040489498}
 --- !u!114 &984850862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5126,7 +5112,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentUnitPortrait: {fileID: 103640119}
-  unitControlUI: {fileID: 0}
+  mainPanel: {fileID: 1040489497}
+  turnEndButton: {fileID: 1446569517}
+  unitControlUI: {fileID: 984850863}
 --- !u!114 &984850863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30659,6 +30647,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 0}
+  isCoroutineRunning: 0
 --- !u!114 &1321821657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31119,7 +31108,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileMap: {fileID: 1256185293}
-  obtainableTilemap: {fileID: 1259291634}
   tileBases:
   - {fileID: 0}
   - {fileID: 11400000, guid: 6367e85228148e940a01758ece259ab3, type: 2}

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using View;
 
 namespace Model.Managers
 {
@@ -144,13 +145,13 @@ namespace Model.Managers
         public void SetObtainableObj(Obtainable obt, Vector2Int pos)
         {
             field[pos.x, pos.y].SetObtainableObj(obt);
-            obt.DropImage(pos);
+            BattleView.MakeObtainableObject(obt, pos);
         }
 
         public Obtainable GetObtainableObj(Vector2Int pos)
         {
             Obtainable obt = field[pos.x, pos.y].GetObtainableObj();
-            obt?.DeleteImage();
+            if (obt != null) BattleView.DestroyObtainableObject(obt);
             return obt;
         }
         public static Tile[,] GetField()

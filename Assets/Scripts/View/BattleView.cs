@@ -14,61 +14,79 @@ namespace View
     {
         private GameObject hPBarPrefab;
 
-        public Image currentUnitPortrait;
-
+        [SerializeField]
+        private Image currentUnitPortrait;
+        [SerializeField]
+        private GameObject mainPanel;
+        [SerializeField]
+        private Button turnEndButton;
+        [SerializeField]
+        private UnitControlUI unitControlUI;
+        static BattleView instance;
         // public UnitInfoView ThisTurnUnitInfo;
         // public UnitInfoView OtherUnitInfo { get; set; }
 
-        public Button TurnEndButton { get; private set; }
-        public Dictionary<Unit, GameObject> UnitObjects { get; } = new Dictionary<Unit, GameObject>();
-        public Dictionary<Unit, HPBarView> HPBars { get; } = new Dictionary<Unit, HPBarView>();
+       
 
-        public UnitControlUI unitControlUI;
+        private Dictionary<Unit, GameObject> unitObjects =   new Dictionary<Unit, GameObject>();
+        private Dictionary<Unit, HPBarView> hpBars =   new Dictionary<Unit, HPBarView>();
+        private Dictionary<Obtainable, GameObject> obtainableObjects =  new Dictionary<Obtainable, GameObject>();
+        public static Button TurnEndButton => instance.turnEndButton;
+        public static Image CurrentUnitPortrait => instance.currentUnitPortrait;
+        public static GameObject MainPanel => instance.mainPanel;
+        public static UnitControlUI UnitControlUI => instance.unitControlUI;
+        public static Dictionary<Unit, GameObject> UnitObjects => instance.unitObjects;
+        public static Dictionary<Unit, HPBarView> HPBars => instance.hpBars;
+        public static Dictionary<Obtainable, GameObject> ObtainableObjects => instance.obtainableObjects;
+
+
+
+        
         private void Awake()
         {
-            hPBarPrefab = Resources.Load<GameObject>("Prefabs/UI/Battle/HP_BAR");
+            instance = this;
 
+            hPBarPrefab = Resources.Load<GameObject>("Prefabs/UI/Battle/HP_BAR");
             //ThisTurnUnitInfo = transform.Find("Panel/ThisTurnUnitInfo").GetComponent<UnitInfoView>();
             //OtherUnitInfo = transform.Find("Panel/OtherUnitInfo").GetComponent<UnitInfoView>();
             //OtherUnitInfo.gameObject.SetActive(false);
-
-            TurnEndButton = transform.Find("MainPanel/TurnEndButton").GetComponent<Button>();
+            turnEndButton = transform.Find("MainPanel/TurnEndButton").GetComponent<Button>();
             unitControlUI = GetComponent<UnitControlUI>();
-
-            if (!GameManager.InBattle)
-            {
-                TurnEndButton.gameObject.SetActive(false);
-                unitControlUI.panel.SetActive(false);
-            }
         }
-        public IEnumerator MoveLeaderUnit()
+        /// <summary>
+        /// 비전투시에는 리더 유닛만 움직일 수 있음
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerator SetNonBattleMode()
         {
+            TurnEndButton.gameObject.SetActive(false);
+            UnitControlUI.panel.SetActive(false);
             IEnumerator coroutine = GameManager.LeaderUnit.MoveSkill.Use(GameManager.LeaderUnit, Vector2Int.zero);
             while (true)
             {
                 if(Input.GetKeyDown(KeyCode.Mouse1))
                 {
                     Vector3 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition) + Vector3.one * 0.5f;
-                    Vector2Int destination = new Vector2Int((int)mousepos.x, (int)mousepos.y);
+                    Vector2Int destination = new Vector2Int(Mathf.Clamp((int)mousepos.x, 0, 15), Mathf.Clamp((int)mousepos.y, 0, 15));
 
                     // 리더 유닛이 해당 타일에 위치가능하다면
                     if (FieldManager.GetTile(destination).IsUnitPositionable(GameManager.LeaderUnit))
                     {
                         //리더 유닛 이동 코루틴 실행. 기존 실행되던 코루틴은 정지.
-                        StopCoroutine(coroutine);
+                        instance.StopCoroutine(coroutine);
                         coroutine = GameManager.LeaderUnit.MoveSkill.Use(GameManager.LeaderUnit, destination);
-                        StartCoroutine(coroutine);
+                        instance.StartCoroutine(coroutine);
                     }
                 }
                 yield return null;
             }
         }
 
-        public void SummonPartyUnits(int index = 0)
+        public static void SummonPartyUnits(int index = 0)
         {
             Unit unit = GameManager.PartyUnits[index];
 
-            currentUnitPortrait.sprite = unit.Portrait;
+            CurrentUnitPortrait.sprite = unit.Portrait;
 
             IndicatorUI.ShowTileIndicator(FieldManager.instance.GetStairAroundPosition(),
                 (Vector2Int position) =>
@@ -99,20 +117,20 @@ namespace View
                 TurnEndButton.onClick.Invoke();
         }
 
-        public void SetTurnEndButton(UnityAction action)
+        public static void SetTurnEndButton(UnityAction action)
         {
             TurnEndButton.onClick.RemoveAllListeners();
             TurnEndButton.onClick.AddListener(action);
         }
 
-        public void SetTurnUnitPanel(Unit unit)
+        public static void SetTurnUnitPanel(Unit unit)
         {
-            currentUnitPortrait.sprite = unit.Portrait;
+            CurrentUnitPortrait.sprite = unit.Portrait;
 
             TurnEndButton.gameObject.SetActive(true);
-            unitControlUI.panel.SetActive(true);
+            UnitControlUI.panel.SetActive(true);
 
-            unitControlUI?.UpdateUI(unit);
+            UnitControlUI?.UpdateUI(unit);
 
             //if (unit.Category != Category.Party)
             //    ThisTurnUnitInfo?.SetUnitInfo(unit, false);
@@ -125,7 +143,7 @@ namespace View
         /// 생성하면서 이벤트 콜벡을 할당해줘야 한다.
         /// </summary>
         /// <param name="unit"></param>
-        public void MakeUnitObject(Unit unit)
+        public static void MakeUnitObject(Unit unit)
         {
             // 미리 존재 여부 확인
             if (UnitObjects.ContainsKey(unit) == true)
@@ -166,7 +184,7 @@ namespace View
             UnitObjects.Add(unit, newObj);
 
             // HP 바 생성
-            HPBarView newHPBar = Instantiate(hPBarPrefab, ViewManager.instance.MainPanel).GetComponent<HPBarView>();
+            HPBarView newHPBar = Instantiate(instance.hPBarPrefab, MainPanel.transform).GetComponent<HPBarView>();
             newHPBar.Init(unit);
             HPBars.Add(unit, newHPBar);
 
@@ -190,7 +208,27 @@ namespace View
             unit.OnCurHP.after.Invoke(tempHP);
         }
 
-        public void DestroyUnitObject(Unit unit)
+        public static void MakeObtainableObject(Obtainable ob, Vector2Int pos)
+        {
+
+            // 게임 오브젝트 생성
+            GameObject obObj = new GameObject();
+            // 위치 지정
+            obObj.transform.position = new Vector3(pos.x, pos.y, -0.1f);
+
+            // 스프라이터 랜더러 추가
+            SpriteRenderer spriteRenderer = obObj.AddComponent<SpriteRenderer>();
+            spriteRenderer.sprite = ob.GetImage();
+
+            ObtainableObjects.Add(ob, obObj);
+        }
+        public static void DestroyObtainableObject(Obtainable ob)
+        {
+            GameObject obObj = ObtainableObjects[ob];
+            ObtainableObjects.Remove(ob);
+            Destroy(obObj);
+        }
+        public static void DestroyUnitObject(Unit unit)
         {
             GameObject unitObj = UnitObjects[unit];
             UnitObjects.Remove(unit);

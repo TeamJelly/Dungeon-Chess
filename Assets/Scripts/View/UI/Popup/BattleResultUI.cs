@@ -5,9 +5,11 @@ using Model.Skills;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using View;
 
 namespace  UI.Popup
 {
@@ -38,21 +40,37 @@ namespace  UI.Popup
             
             int gold = UnityEngine.Random.Range(0, 500);
 
-            int skillNumber = skillNumbers[UnityEngine.Random.Range(0, 8)];
-            Skill skill = (Skill)Activator.CreateInstance(Type.GetType($"Model.Skills.Skill_00{skillNumber}"));
+            /* int skillNumber = skillNumbers[UnityEngine.Random.Range(0, 8)];
+             Skill skill = (Skill)Activator.CreateInstance(Type.GetType($"Model.Skills.Skill_00{skillNumber}"));
 
-            GameObject goldReward = Instantiate(rewardPrefab,rewardList.transform);
-            goldReward.GetComponent<Image>().sprite = goldSprite;
-            goldReward.GetComponentInChildren<TextMeshProUGUI>().text = $"${gold}";
-            goldReward.GetComponent<Button>().onClick.AddListener(() => { GameManager.Instance.Gold += gold; goldReward.gameObject.SetActive(false); });
-            goldReward.SetActive(true);
+             GameObject goldReward = Instantiate(rewardPrefab,rewardList.transform);
+             goldReward.GetComponent<Image>().sprite = goldSprite;
+             goldReward.GetComponentInChildren<TextMeshProUGUI>().text = $"${gold}";
+             goldReward.GetComponent<Button>().onClick.AddListener(() => { GameManager.Instance.Gold += gold; goldReward.gameObject.SetActive(false); });
+             goldReward.SetActive(true);
 
-            GameObject skillReward = Instantiate(rewardPrefab, rewardList.transform);
-            skillReward.GetComponent<Image>().sprite = skill.Sprite;
-            skillReward.GetComponentInChildren<TextMeshProUGUI>().text = skill.Name;
-            skillReward.GetComponent<Button>().onClick.AddListener(() => { GetSkillUI.instance.Enable(skill); skillReward.SetActive(false); });
-            skillReward.SetActive(true);
+             GameObject skillReward = Instantiate(rewardPrefab, rewardList.transform);
+             skillReward.GetComponent<Image>().sprite = skill.Sprite;
+             skillReward.GetComponentInChildren<TextMeshProUGUI>().text = skill.Name;
+             skillReward.GetComponent<Button>().onClick.AddListener(() => { GetSkillUI.instance.Enable(skill); skillReward.SetActive(false); });
+             skillReward.SetActive(true);*/
 
+
+            WinUI.GetComponentInChildren<Button>().onClick.AddListener(() =>
+            {
+                UIEffect.FadeOutPanel(WinUI);
+                var units = BattleView.UnitObjects.Keys.ToArray();
+                for(int i = units.Length - 1; i > 0; i--)
+                {
+                    if (units[i] != GameManager.LeaderUnit)
+                    {
+                        BattleView.DestroyUnitObject(units[i]);
+                        BattleView.UnitObjects.Remove(units[i]);
+                    }
+
+                }
+                StartCoroutine(BattleView.SetNonBattleMode());
+            });
             UIEffect.FadeInPanel(WinUI);
         }
 

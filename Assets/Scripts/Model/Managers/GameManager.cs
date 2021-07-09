@@ -39,7 +39,7 @@ namespace Model.Managers
         public static List<Unit> PartyUnits { get => Instance.partyUnits; }
 
         public static Unit LeaderUnit 
-        { get { if (Instance.leader == null) instance.leader = instance.partyUnits[0]; return instance.leader; } set => Instance.leader = value; }
+        { get { return instance.leader; } set => Instance.leader = value; }
 
         public static bool InBattle { get => Instance.inBattle; set => Instance.inBattle = value; }
 

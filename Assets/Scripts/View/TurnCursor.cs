@@ -17,10 +17,9 @@ namespace UI.Battle
 
             transform.position = 
                 Camera.main.WorldToScreenPoint(
-                    ViewManager.battle.UnitObjects[Model.Managers.BattleManager.instance.thisTurnUnit].transform.position
+                    BattleView.UnitObjects[Model.Managers.BattleManager.instance.thisTurnUnit].transform.position
                     + Vector3.up);
         }
     }
-
 }
 

@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using Model;
 using Model.Units;
+using View;
 
 namespace Model.Managers
 {
@@ -47,11 +48,11 @@ namespace Model.Managers
 
             if (GameManager.Instance.currentRoom == null)
             {
-                Unit unit = new M000_Judgement();
+                Unit unit = new Proto_Skeleton();//new M000_Judgement();
                 Common.UnitAction.Summon(unit, new Vector2Int(4, 4));
-                Common.UnitAction.AddEffect(unit, new Effects.E004_Stun(unit));
-                Common.UnitAction.AddEffect(unit, new Effects.E005_Regeneration(unit, 99));
-                Common.UnitAction.AddEffect(unit, new Effects.E021_Barrier(unit, 10));
+                //Common.UnitAction.AddEffect(unit, new Model.Effects.E004_Stun(unit));
+                //Common.UnitAction.AddEffect(unit, new Model.Effects.E005_Regeneration(unit, 99));
+                //Common.UnitAction.AddEffect(unit, new Model.Effects.E021_Barrier(unit, 10, 99));
             }
             else if (GameManager.Instance.currentRoom.category == Room.Category.Monster)
             {
@@ -91,12 +92,13 @@ namespace Model.Managers
 
             if (GameManager.InBattle)
             {
-                View.ViewManager.battle.SummonPartyUnits();// 파티 유닛 최초 소환
+                BattleView.SummonPartyUnits();// 파티 유닛 최초 소환
             }
             else
             {
+                if (GameManager.LeaderUnit == null) GameManager.LeaderUnit = GameManager.PartyUnits[0];
                 Common.UnitAction.Summon(GameManager.LeaderUnit, new Vector2Int(8, 8));
-                StartCoroutine(View.ViewManager.battle.MoveLeaderUnit());
+                StartCoroutine(BattleView.SetNonBattleMode());
             }
 
 
