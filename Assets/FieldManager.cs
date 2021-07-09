@@ -145,13 +145,13 @@ namespace Model.Managers
         public void SetObtainableObj(Obtainable obt, Vector2Int pos)
         {
             field[pos.x, pos.y].SetObtainableObj(obt);
-            ViewManager.battle.MakeObtainableObject(obt, pos);
+            BattleView.MakeObtainableObject(obt, pos);
         }
 
         public Obtainable GetObtainableObj(Vector2Int pos)
         {
             Obtainable obt = field[pos.x, pos.y].GetObtainableObj();
-            if (obt != null) ViewManager.battle.DestroyObtainableObject(obt);
+            if (obt != null) BattleView.DestroyObtainableObject(obt);
             return obt;
         }
         public static Tile[,] GetField()

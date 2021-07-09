@@ -54,7 +54,7 @@ namespace Common
 
             public IEnumerator InvokeAIAction(Action action)
             {
-                ViewManager.battle.TurnEndButton.interactable = false;
+                BattleView.TurnEndButton.interactable = false;
 
                 yield return new WaitForSeconds(0.5f);
 
@@ -69,7 +69,7 @@ namespace Common
                     yield return new WaitForSeconds(0.5f);
                 }
 
-                ViewManager.battle.TurnEndButton.interactable = true;
+                BattleView.TurnEndButton.interactable = true;
 
                 if(BattleManager.CheckGameState() == BattleManager.State.Continue)
                     BattleController.instance.ThisTurnEnd();

@@ -38,21 +38,23 @@ namespace  UI.Popup
             
             int gold = UnityEngine.Random.Range(0, 500);
 
-            int skillNumber = skillNumbers[UnityEngine.Random.Range(0, 8)];
-            Skill skill = (Skill)Activator.CreateInstance(Type.GetType($"Model.Skills.Skill_00{skillNumber}"));
+            /* int skillNumber = skillNumbers[UnityEngine.Random.Range(0, 8)];
+             Skill skill = (Skill)Activator.CreateInstance(Type.GetType($"Model.Skills.Skill_00{skillNumber}"));
 
-            GameObject goldReward = Instantiate(rewardPrefab,rewardList.transform);
-            goldReward.GetComponent<Image>().sprite = goldSprite;
-            goldReward.GetComponentInChildren<TextMeshProUGUI>().text = $"${gold}";
-            goldReward.GetComponent<Button>().onClick.AddListener(() => { GameManager.Instance.Gold += gold; goldReward.gameObject.SetActive(false); });
-            goldReward.SetActive(true);
+             GameObject goldReward = Instantiate(rewardPrefab,rewardList.transform);
+             goldReward.GetComponent<Image>().sprite = goldSprite;
+             goldReward.GetComponentInChildren<TextMeshProUGUI>().text = $"${gold}";
+             goldReward.GetComponent<Button>().onClick.AddListener(() => { GameManager.Instance.Gold += gold; goldReward.gameObject.SetActive(false); });
+             goldReward.SetActive(true);
 
-            GameObject skillReward = Instantiate(rewardPrefab, rewardList.transform);
-            skillReward.GetComponent<Image>().sprite = skill.Sprite;
-            skillReward.GetComponentInChildren<TextMeshProUGUI>().text = skill.Name;
-            skillReward.GetComponent<Button>().onClick.AddListener(() => { GetSkillUI.instance.Enable(skill); skillReward.SetActive(false); });
-            skillReward.SetActive(true);
+             GameObject skillReward = Instantiate(rewardPrefab, rewardList.transform);
+             skillReward.GetComponent<Image>().sprite = skill.Sprite;
+             skillReward.GetComponentInChildren<TextMeshProUGUI>().text = skill.Name;
+             skillReward.GetComponent<Button>().onClick.AddListener(() => { GetSkillUI.instance.Enable(skill); skillReward.SetActive(false); });
+             skillReward.SetActive(true);*/
 
+            //foreach()
+            WinUI.GetComponentInChildren<Button>().onClick.AddListener(() => UIEffect.FadeOutPanel(WinUI));
             UIEffect.FadeInPanel(WinUI);
         }
 

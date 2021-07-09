@@ -20,7 +20,7 @@ namespace UI.Battle
 
         private void Start()
         {
-            ViewManager.battle.SetTurnEndButton(ThisTurnEnd);
+            BattleView.SetTurnEndButton(ThisTurnEnd);
 
             // 적 유닛의 뷰를 만든다. -> UnitAction.Summon 으로 이동
             //foreach (var unit in BattleManager.GetUnit())
@@ -60,7 +60,7 @@ namespace UI.Battle
             nextUnit.OnTurnStart.after.RefInvoke(ref _bool);
 
             // 유닛정보창 초기화
-            ViewManager.battle.SetTurnUnitPanel(nextUnit);
+            BattleView.SetTurnUnitPanel(nextUnit);
 
             // 파티원이 아닌 AI라면 자동 행동 실행
             if (nextUnit.Alliance != UnitAlliance.Party)

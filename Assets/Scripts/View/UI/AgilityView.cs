@@ -47,8 +47,8 @@ public class AgilityView : MonoBehaviour
 
     public IEnumerator ShowAnimation()
     {
-        bool turnEndInteractable = ViewManager.battle.TurnEndButton.interactable;
-        ViewManager.battle.TurnEndButton.interactable = false;
+        bool turnEndInteractable = BattleView.TurnEndButton.interactable;
+        BattleView.TurnEndButton.interactable = false;
         RectTransform firstObj = unitObjects[0];
         UIEffect.FadeOutPanel(firstObj.gameObject);
         unitObjects.Remove(firstObj);
@@ -69,9 +69,9 @@ public class AgilityView : MonoBehaviour
         {
             unitObjects[i].GetComponent<Image>().sprite = unitBuffer[i - 1].Portrait;
         }
-       
+
         UIEffect.FadeInPanel(firstObj.gameObject);
-        ViewManager.battle.TurnEndButton.interactable = turnEndInteractable;
+        BattleView.TurnEndButton.interactable = turnEndInteractable;
     }
 
     IEnumerator MoveImagies(RectTransform transform, int nextIndex)

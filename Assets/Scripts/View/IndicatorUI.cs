@@ -76,7 +76,7 @@ namespace UI.Battle
                                     {
                                         instance.StartCoroutine(currentSkill.Use(currentUnit, position));
 
-                                        ViewManager.battle.unitControlUI.RefreshButtons(currentUnit);
+                                        BattleView.UnitControlUI.RefreshButtons(currentUnit);
                                         HideTileIndicator();
 
                                         for (int k = currentUnit.StateEffects.Count - 1; k >= 0; k--)

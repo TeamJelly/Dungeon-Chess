@@ -20,7 +20,7 @@ namespace Common
 
             VisualEffectView.MakeVisualEffect(unit.Position, "Explosion");
 
-            ViewManager.battle.DestroyUnitObject(unit);
+            BattleView.DestroyUnitObject(unit);
             BattleManager.instance.AllUnits.Remove(unit);            
             FieldManager.GetTile(unit.Position).SetUnit(null);
             BattleManager.instance.InitializeUnitBuffer();
@@ -174,7 +174,7 @@ namespace Common
                 unit.Position = target;
                 FieldManager.GetTile(target).SetUnit(unit);
                 BattleManager.instance.AllUnits.Add(unit);
-                ViewManager.battle.MakeUnitObject(unit);
+                BattleView.MakeUnitObject(unit);
             }
             else
                 Debug.LogError("이미 위치에 유닛이 존재합니다.");
