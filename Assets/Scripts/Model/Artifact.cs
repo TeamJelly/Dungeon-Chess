@@ -49,6 +49,7 @@ namespace Model
             Debug.Log(Name + "을 " + unit.Name + "에게 할당");
             unit.Antiques.Add(this);
         }
+
         public void DropImage(Vector2Int pos)
         {
             // 게임 오브젝트 생성
