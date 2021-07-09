@@ -194,15 +194,8 @@ namespace View
             newHPBar.Init(unit);
             HPBars.Add(unit, newHPBar);
 
-            unit.OnPosition.after.RemoveAllListeners();
-            unit.OnPosition.after.RemoveAllRefListeners();
             //유닛 오브젝트 상호작용 콜백 등록
-            unit.OnPosition.after.AddListener((v) =>
-            {
-                Vector3 w = new Vector3(v.x, v.y);
-                newObj.transform.position = w;
-                newHPBar.SetPosition(w);
-            });
+            unit.OnPosition.after.AddListener(MoveObject);
             unit.OnCurHP.after.AddRefListener(newHPBar.SetValue);
 
             //최초 갱신
@@ -212,6 +205,14 @@ namespace View
 
             unit.OnPosition.after.RefInvoke(ref tempPosition);
             unit.OnCurHP.after.RefInvoke(ref tempHP);
+        }
+
+        public static void MoveObject(Vector2Int v)
+        {
+            Unit unit = FieldManager.GetTile(v).GetUnit();
+            Vector3 w = new Vector3(v.x, v.y);
+            UnitObjects[unit].transform.position = w;
+            HPBars[unit].SetPosition(w);
         }
 
         public static void MakeObtainableObject(Obtainable ob, Vector2Int pos)

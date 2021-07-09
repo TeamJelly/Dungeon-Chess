@@ -35,9 +35,8 @@ namespace Common
 
             //기존 타일 유닛 초기화 Tile.cs로 옮기면 좋을듯
             FieldManager.GetTile(unit.Position).SetUnit(null);
-            unit.Position = target;
             FieldManager.GetTile(target).SetUnit(unit);
-
+            unit.Position = target;
             // AfterMove();
         }
 
@@ -171,6 +170,7 @@ namespace Common
         {
             if (BattleManager.GetUnit(target) == null)
             {
+                unit.OnPosition.after.RemoveListener(BattleView.MoveObject);
                 unit.Position = target;
                 FieldManager.GetTile(target).SetUnit(unit);
                 BattleManager.instance.AllUnits.Add(unit);

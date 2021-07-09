@@ -41,7 +41,7 @@ namespace Common
 
         public static void GotoBattleRoom()
         {
-            LoadScene("#004_Battle");
+            LoadScene("Lobby");
         }
 
         public static void GotoTreasureRoom()

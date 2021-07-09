@@ -87,19 +87,16 @@ namespace Model.Managers
                 GameManager.PartyUnits.Add(UnitManager.Instance.AllUnits[0]);
                 GameManager.PartyUnits.Add(UnitManager.Instance.AllUnits[1]);
             }
-
             GameManager.InBattle = true;
 
             if (GameManager.InBattle)
             {
                 BattleView.SummonPartyUnits();// 파티 유닛 최초 소환
-
             }
             else
             {
                 StartCoroutine(BattleView.SetNonBattleMode());
             }
-
 
             //유물 타일 맵 테스트
             FieldManager.instance.SetObtainableObj(new Artifact_Test(), new Vector2Int(6, 6));
@@ -129,13 +126,13 @@ namespace Model.Managers
             // 승리조건이 모든 적이 죽는 것일 때
             if (instance.WinCondition == Condition.KillAllEnemy && GetAliveUnitCount(UnitAlliance.Enemy) == 0)
                 return State.Win;
-            
+
             // 패배조건이 모든 아군이 죽는 것일 때
             if (instance.DefeatCondition == Condition.KillAllParty && GetAliveUnitCount(UnitAlliance.Party) == 0)
                 return State.Defeat;
 
             // 계속
-            return State.Continue; 
+            return State.Continue;
         }
 
         private static int GetAliveUnitCount(UnitAlliance alliance)
@@ -189,7 +186,7 @@ namespace Model.Managers
         public void InitializeUnitBuffer()
         {
             unitBuffer.Clear();
-            for(int i = 0; i < bufferSize; i++)
+            for (int i = 0; i < bufferSize; i++)
             {
                 Unit unit = CalculateNextUnit();
                 Debug.Log(unit.Name);
