@@ -23,6 +23,7 @@ namespace View
         public Dictionary<Unit, GameObject> UnitObjects { get; } = new Dictionary<Unit, GameObject>();
         public Dictionary<Unit, HPBarView> HPBars { get; } = new Dictionary<Unit, HPBarView>();
 
+        public Dictionary<Obtainable, GameObject> ObtainableObjects { get; } = new Dictionary<Obtainable, GameObject>();
         public UnitControlUI unitControlUI;
         private void Awake()
         {
@@ -188,6 +189,26 @@ namespace View
             unit.OnCurHP.after.RefInvoke(ref tempHP);
         }
 
+        public void MakeObtainableObject(Obtainable ob, Vector2Int pos)
+        {
+
+            // 게임 오브젝트 생성
+            GameObject obObj = new GameObject();
+            // 위치 지정
+            obObj.transform.position = new Vector3(pos.x, pos.y, -0.1f);
+
+            // 스프라이터 랜더러 추가
+            SpriteRenderer spriteRenderer = obObj.AddComponent<SpriteRenderer>();
+            spriteRenderer.sprite = ob.GetImage();
+
+            ObtainableObjects.Add(ob, obObj);
+        }
+        public void DestroyObtainableObject(Obtainable ob)
+        {
+            GameObject obObj = ObtainableObjects[ob];
+            ObtainableObjects.Remove(ob);
+            Destroy(obObj);
+        }
         public void DestroyUnitObject(Unit unit)
         {
             GameObject unitObj = UnitObjects[unit];

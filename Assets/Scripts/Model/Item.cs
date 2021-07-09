@@ -45,14 +45,10 @@ namespace Model
         {
             
         }
-        public void DropImage(Vector2Int position)
-        {
-            throw new System.NotImplementedException();
-        }
 
-        public void DeleteImage()
+        public Sprite GetImage()
         {
-            throw new System.NotImplementedException();
+            return Sprite;
         }
     }
 }

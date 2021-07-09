@@ -8,8 +8,6 @@ public interface Obtainable
 {
     void AssignTo(Unit unit);
 
-    void DropImage(Vector2Int position);
-
-    void DeleteImage();
+    Sprite GetImage();
 
 }
