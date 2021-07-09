@@ -93,6 +93,7 @@ namespace Model.Managers
             if (GameManager.InBattle)
             {
                 BattleView.SummonPartyUnits();// 파티 유닛 최초 소환
+
             }
             else
             {

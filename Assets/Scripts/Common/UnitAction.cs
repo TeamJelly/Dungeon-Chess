@@ -20,9 +20,9 @@ namespace Common
 
             VisualEffectView.MakeVisualEffect(unit.Position, "Explosion");
 
-            BattleView.DestroyUnitObject(unit);
-            BattleManager.instance.AllUnits.Remove(unit);            
-            FieldManager.GetTile(unit.Position).SetUnit(null);
+            UnSummon(unit);
+            GameManager.RemovePartyUnit(unit); //죽으면 파티유닛에서 박탈.
+
             BattleManager.instance.InitializeUnitBuffer();
 
             if (BattleManager.CheckGameState() != BattleManager.State.Continue)
@@ -178,6 +178,22 @@ namespace Common
             }
             else
                 Debug.LogError("이미 위치에 유닛이 존재합니다.");
+        }
+
+        public static void UnSummon(Unit unit)
+        {
+            BattleView.DestroyUnitObject(unit);
+            BattleManager.instance.AllUnits.Remove(unit);  
+            FieldManager.GetTile(unit.Position).SetUnit(null);
+        }
+
+        public static void UnSummonAll()
+        {
+            List<Unit> units = BattleManager.instance.AllUnits;
+            for(int i = units.Count - 1; i >= 0; i--)
+            {
+                UnSummon(units[i]);
+            }
         }
 
         public static void AddSkill(Unit unit, Skill newSkill, int index)

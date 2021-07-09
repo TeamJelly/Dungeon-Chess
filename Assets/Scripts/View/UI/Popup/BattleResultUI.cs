@@ -59,15 +59,15 @@ namespace  UI.Popup
             WinUI.GetComponentInChildren<Button>().onClick.AddListener(() =>
             {
                 UIEffect.FadeOutPanel(WinUI);
-                BattleView.DestroyAllUnitObject();
+                Common.UnitAction.UnSummonAll();
                 StartCoroutine(BattleView.SetNonBattleMode());
             });
-            UIEffect.FadeInPanel(WinUI);
+            UIEffect.FadeInPanel(WinUI, 0.5f);
         }
 
         public void EnableDeafeatUI()
         {
-            UIEffect.FadeInPanel(DeafeatUI);
+            UIEffect.FadeInPanel(DeafeatUI, 0.5f);
         }
     }
 }

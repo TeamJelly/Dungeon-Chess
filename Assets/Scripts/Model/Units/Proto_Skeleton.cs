@@ -17,7 +17,7 @@ namespace Model.Units
             MaxHP = 10;
             CurHP = MaxHP;
 
-            Strength = 3;
+            Strength = 30;
             Agility = 10;
             Move = 4;
             CriticalRate = 5;

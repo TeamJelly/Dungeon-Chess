@@ -65,10 +65,18 @@ namespace UI.Battle
             // 파티원이 아닌 AI라면 자동 행동 실행
             if (nextUnit.Alliance != UnitAlliance.Party)
             {
+                BattleView.TurnEndButton.gameObject.SetActive(false);
+                BattleView.UnitControlUI.panel.SetActive(false);
                 AI.Action action = AI.GetAction(nextUnit);
 
                 if (action != null)
                     action.Invoke();
+            }
+
+            else
+            {
+                BattleView.TurnEndButton.gameObject.SetActive(true);
+                BattleView.UnitControlUI.panel.SetActive(true);
             }
         }
 

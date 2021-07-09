@@ -53,6 +53,9 @@ namespace View
             //OtherUnitInfo.gameObject.SetActive(false);
             turnEndButton = transform.Find("MainPanel/TurnEndButton").GetComponent<Button>();
             unitControlUI = GetComponent<UnitControlUI>();
+
+            TurnEndButton.gameObject.SetActive(false);
+            UnitControlUI.panel.SetActive(false);
         }
         /// <summary>
         /// 비전투시에는 리더 유닛만 움직일 수 있음
@@ -245,16 +248,6 @@ namespace View
             unit.OnCurHP.after.RemoveAllRefListeners();
 
             // AgilityViewer.instance.DestroyObject(unit);
-        }
-
-        public static void DestroyAllUnitObject()
-        {
-            var units = UnitObjects.Keys.ToArray();
-            for(int i = 0; i < units.Length; i++)
-            {
-                DestroyUnitObject(units[i]);
-                FieldManager.GetTile(units[i].Position).SetUnit(null);
-            }
         }
     }
 }
