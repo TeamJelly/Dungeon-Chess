@@ -52,21 +52,22 @@ namespace View
             //OtherUnitInfo.gameObject.SetActive(false);
             turnEndButton = transform.Find("MainPanel/TurnEndButton").GetComponent<Button>();
             unitControlUI = GetComponent<UnitControlUI>();
-            if (!GameManager.InBattle)
-            {
-                TurnEndButton.gameObject.SetActive(false);
-                unitControlUI.panel.SetActive(false);
-            }
         }
-        public static IEnumerator MoveLeaderUnit()
+        /// <summary>
+        /// 비전투시에는 리더 유닛만 움직일 수 있음
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerator SetNonBattleMode()
         {
+            TurnEndButton.gameObject.SetActive(false);
+            UnitControlUI.panel.SetActive(false);
             IEnumerator coroutine = GameManager.LeaderUnit.MoveSkill.Use(GameManager.LeaderUnit, Vector2Int.zero);
             while (true)
             {
                 if(Input.GetKeyDown(KeyCode.Mouse1))
                 {
                     Vector3 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition) + Vector3.one * 0.5f;
-                    Vector2Int destination = new Vector2Int((int)mousepos.x, (int)mousepos.y);
+                    Vector2Int destination = new Vector2Int(Mathf.Clamp((int)mousepos.x, 0, 15), Mathf.Clamp((int)mousepos.y, 0, 15));
 
                     // 리더 유닛이 해당 타일에 위치가능하다면
                     if (FieldManager.GetTile(destination).IsUnitPositionable(GameManager.LeaderUnit))

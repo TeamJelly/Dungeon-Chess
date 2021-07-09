@@ -5,9 +5,11 @@ using Model.Skills;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using View;
 
 namespace  UI.Popup
 {
@@ -53,8 +55,22 @@ namespace  UI.Popup
              skillReward.GetComponent<Button>().onClick.AddListener(() => { GetSkillUI.instance.Enable(skill); skillReward.SetActive(false); });
              skillReward.SetActive(true);*/
 
-            //foreach()
-            WinUI.GetComponentInChildren<Button>().onClick.AddListener(() => UIEffect.FadeOutPanel(WinUI));
+
+            WinUI.GetComponentInChildren<Button>().onClick.AddListener(() =>
+            {
+                UIEffect.FadeOutPanel(WinUI);
+                var units = BattleView.UnitObjects.Keys.ToArray();
+                for(int i = units.Length - 1; i > 0; i--)
+                {
+                    if (units[i] != GameManager.LeaderUnit)
+                    {
+                        BattleView.DestroyUnitObject(units[i]);
+                        BattleView.UnitObjects.Remove(units[i]);
+                    }
+
+                }
+                StartCoroutine(BattleView.SetNonBattleMode());
+            });
             UIEffect.FadeInPanel(WinUI);
         }
 

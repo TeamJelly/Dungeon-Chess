@@ -21,6 +21,5 @@ namespace UI.Battle
                     + Vector3.up);
         }
     }
-
 }
 

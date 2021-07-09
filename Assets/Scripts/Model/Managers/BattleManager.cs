@@ -97,7 +97,7 @@ namespace Model.Managers
             else
             {
                 Common.UnitAction.Summon(GameManager.LeaderUnit, new Vector2Int(8, 8));
-                StartCoroutine(BattleView.MoveLeaderUnit());
+                StartCoroutine(BattleView.SetNonBattleMode());
             }
 
 
