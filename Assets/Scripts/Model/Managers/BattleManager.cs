@@ -96,6 +96,7 @@ namespace Model.Managers
             }
             else
             {
+                if (GameManager.LeaderUnit == null) GameManager.LeaderUnit = GameManager.PartyUnits[0];
                 Common.UnitAction.Summon(GameManager.LeaderUnit, new Vector2Int(8, 8));
                 StartCoroutine(BattleView.SetNonBattleMode());
             }
