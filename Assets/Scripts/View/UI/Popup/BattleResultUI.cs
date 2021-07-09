@@ -59,16 +59,7 @@ namespace  UI.Popup
             WinUI.GetComponentInChildren<Button>().onClick.AddListener(() =>
             {
                 UIEffect.FadeOutPanel(WinUI);
-                var units = BattleView.UnitObjects.Keys.ToArray();
-                for(int i = units.Length - 1; i > 0; i--)
-                {
-                    if (units[i] != GameManager.LeaderUnit)
-                    {
-                        BattleView.DestroyUnitObject(units[i]);
-                        BattleView.UnitObjects.Remove(units[i]);
-                    }
-
-                }
+                BattleView.DestroyAllUnitObject();
                 StartCoroutine(BattleView.SetNonBattleMode());
             });
             UIEffect.FadeInPanel(WinUI);

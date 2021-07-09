@@ -14,7 +14,7 @@ namespace Model.Units
             Class = UnitClass.Monster;
 
             Level = 1;
-            MaxHP = 15;
+            MaxHP = 10;
             CurHP = MaxHP;
 
             Strength = 3;

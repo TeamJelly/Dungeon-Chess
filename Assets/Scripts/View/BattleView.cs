@@ -2,6 +2,7 @@
 using Model.Managers;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UI.Battle;
 using UnityEngine;
 using UnityEngine.Events;
@@ -61,6 +62,8 @@ namespace View
         {
             TurnEndButton.gameObject.SetActive(false);
             UnitControlUI.panel.SetActive(false);
+            if (GameManager.LeaderUnit == null) GameManager.LeaderUnit = GameManager.PartyUnits[0];
+            Common.UnitAction.Summon(GameManager.LeaderUnit, GameManager.LeaderUnit.Position);
             IEnumerator coroutine = GameManager.LeaderUnit.MoveSkill.Use(GameManager.LeaderUnit, Vector2Int.zero);
             while (true)
             {
@@ -188,6 +191,8 @@ namespace View
             newHPBar.Init(unit);
             HPBars.Add(unit, newHPBar);
 
+            unit.OnPosition.after.RemoveAllListeners();
+            unit.OnPosition.after.RemoveAllRefListeners();
             //유닛 오브젝트 상호작용 콜백 등록
             unit.OnPosition.after.AddListener((v) =>
             {
@@ -240,7 +245,16 @@ namespace View
             unit.OnCurHP.after.RemoveAllRefListeners();
 
             // AgilityViewer.instance.DestroyObject(unit);
+        }
 
+        public static void DestroyAllUnitObject()
+        {
+            var units = UnitObjects.Keys.ToArray();
+            for(int i = 0; i < units.Length; i++)
+            {
+                DestroyUnitObject(units[i]);
+                FieldManager.GetTile(units[i].Position).SetUnit(null);
+            }
         }
     }
 }
