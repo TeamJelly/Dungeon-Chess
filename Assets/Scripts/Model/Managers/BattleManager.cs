@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using Model;
 using Model.Units;
 using View;
 
@@ -86,6 +85,7 @@ namespace Model.Managers
             {
                 GameManager.PartyUnits.Add(UnitManager.Instance.AllUnits[0]);
                 GameManager.PartyUnits.Add(UnitManager.Instance.AllUnits[1]);
+                GameManager.LeaderUnit = GameManager.PartyUnits[0];
             }
 
             GameManager.InBattle = true;

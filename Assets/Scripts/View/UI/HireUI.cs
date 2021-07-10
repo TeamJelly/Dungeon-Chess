@@ -3,19 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using Model.Managers;
 using Model;
-using Model.Units;
 using UnityEngine.UI;
 using TMPro;
-using System;
 
-namespace UI
+namespace View.UI
 {
     public class HireUI : MonoBehaviour
     {
         public int maximumUnitCount = 0; // 인스펙터 창에서 세팅할 것.
         public int selectedUnitCount = 0;//현재 고용된 파티 인원 수
-        [Header("[중앙 패널]")]
 
+        [Header("[중앙 패널]")]
         public Button nextButton;
         public Button prevButton;
         public Image currentUnitImage;
@@ -23,16 +21,12 @@ namespace UI
         public TextMeshProUGUI descriptionText;
 
         [Header("[하단 패널]")]
-        public Common.UI.UImage testImage;
+        // public UImage testImage;
         public List<Image> partyImagies;
         public Button startButton;
-
         public Image crownImage;
-
         Unit currentUnit;
-
         int index = 0;
-
         List<Sprite> unitImagies = new List<Sprite>();
 
         private Sprite noSprite;

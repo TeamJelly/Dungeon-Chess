@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using View;
 
 namespace Model.Effects
 {
@@ -44,7 +45,7 @@ namespace Model.Effects
 
         public override int BeforeGetDamage(int value)
         {
-            View.FadeOutTextUI.MakeText(Owner.Position + Vector2Int.up, $"배리어! ({--barrierCount})", Color.yellow);
+            FadeOutTextView.MakeText(Owner.Position + Vector2Int.up, $"배리어! ({--barrierCount})", Color.yellow);
             // 데미지 무효화
             value = 0;
 

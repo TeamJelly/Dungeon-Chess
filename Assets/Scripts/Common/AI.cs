@@ -9,7 +9,6 @@ using Model.Managers;
 
 namespace Common
 {
-
     public class AI
     {
         /// <summary>

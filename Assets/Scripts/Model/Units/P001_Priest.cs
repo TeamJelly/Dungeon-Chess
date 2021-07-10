@@ -11,7 +11,7 @@ namespace Model.Units
         {
             Name = "아자젤";
             Alliance = UnitAlliance.Party;
-            Class = UnitClass.Warrior;
+            Class = UnitClass.Priest;
 
             Level = 1;
             NextEXP = 10;

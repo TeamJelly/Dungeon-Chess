@@ -263,8 +263,8 @@ GameObject:
   - component: {fileID: 1543491313210720492}
   - component: {fileID: 1543491313210720495}
   - component: {fileID: 38075358}
-  - component: {fileID: 5035585083226056258}
   - component: {fileID: 7185328526610373886}
+  - component: {fileID: 6615780690483592371}
   m_Layer: 5
   m_Name: Skill Button
   m_TagString: Untagged
@@ -345,29 +345,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &5035585083226056258
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1543491313210720493}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67958c1c90345f641b512141be3ae44d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DownTransfrom: {fileID: 2880999053783113632}
-  FrameImage: {fileID: 7185328526610373886}
-  MainImage: {fileID: 3180933916788913461}
-  DefaultFrameSprite: {fileID: -619711056627489183, guid: 1aaa6ec8a8a26524aa0bf81d543927bc,
-    type: 3}
-  PushedFrameSprite: {fileID: -4534884331647366591, guid: 1aaa6ec8a8a26524aa0bf81d543927bc,
-    type: 3}
-  properties: {fileID: 38075358}
-  hasImage: 1
-  toggleOption: 0
-  pressed: 0
 --- !u!114 &7185328526610373886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -398,6 +375,29 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6615780690483592371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1543491313210720493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08a6be4dbb49f974983420ca17a85bd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DownTransfrom: {fileID: 2880999053783113632}
+  FrameImage: {fileID: 7185328526610373886}
+  MainImage: {fileID: 3180933916788913461}
+  DefaultFrameSprite: {fileID: -619711056627489183, guid: 1aaa6ec8a8a26524aa0bf81d543927bc,
+    type: 3}
+  PushedFrameSprite: {fileID: -4534884331647366591, guid: 1aaa6ec8a8a26524aa0bf81d543927bc,
+    type: 3}
+  properties: {fileID: 38075358}
+  hasImage: 1
+  toggleOption: 0
+  pressed: 0
 --- !u!1 &5690391563426045019
 GameObject:
   m_ObjectHideFlags: 0

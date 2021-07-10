@@ -1,5 +1,6 @@
 ﻿using UnityEditor;
 using UnityEngine;
+using View;
 
 namespace Model.Effects
 {
@@ -34,7 +35,7 @@ namespace Model.Effects
 
         public override bool OnTurnStart(bool value)
         {
-            View.FadeOutTextUI.MakeText(Owner.Position + Vector2Int.up, $"기절!", Color.red);
+            FadeOutTextView.MakeText(Owner.Position + Vector2Int.up, $"기절!", Color.red);
 
             Owner.MoveCount = 0;
             Owner.SkillCount = 0;

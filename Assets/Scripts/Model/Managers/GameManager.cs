@@ -33,7 +33,7 @@ namespace Model.Managers
             set
             {
                 gold = value;
-                HUD.instance.UpdateUI();
+                View.HUDView.instance.UpdateUI();
             }
         }
         public static List<Unit> PartyUnits { get => Instance.partyUnits; }

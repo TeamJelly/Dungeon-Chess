@@ -1,7 +1,6 @@
 ﻿using UnityEditor;
 using UnityEngine;
 using Model;
-using Model.Skills;
 using Model.Managers;
 using System.Collections.Generic;
 using UI.Battle;
@@ -18,7 +17,7 @@ namespace Common
             unit.Agility = -10;
             unit.Alliance = UnitAlliance.NULL;
 
-            VisualEffectView.MakeVisualEffect(unit.Position, "Explosion");
+            View.VisualEffectView.MakeVisualEffect(unit.Position, "Explosion");
 
             BattleView.DestroyUnitObject(unit);
             BattleManager.instance.AllUnits.Remove(unit);            
@@ -51,23 +50,23 @@ namespace Common
 
                 if (damagedArmor > 0)
                 {
-                    FadeOutTextUI.MakeText(unit.Position + Vector2Int.up, "방어함!", Color.red);
-                    FadeOutTextUI.MakeText(unit.Position + Vector2Int.up, $"Armor -{value}", Color.red);
+                    FadeOutTextView.MakeText(unit.Position + Vector2Int.up, "방어함!", Color.red);
+                    FadeOutTextView.MakeText(unit.Position + Vector2Int.up, $"Armor -{value}", Color.red);
 
                     unit.Armor = damagedArmor;
                     value = 0;
                 }
                 else
                 {
-                    FadeOutTextUI.MakeText(unit.Position + Vector2Int.up, $"Armor -{unit.Armor}", Color.red);
-                    FadeOutTextUI.MakeText(unit.Position + Vector2Int.up, $"HP -{-damagedArmor}", Color.red);
+                    FadeOutTextView.MakeText(unit.Position + Vector2Int.up, $"Armor -{unit.Armor}", Color.red);
+                    FadeOutTextView.MakeText(unit.Position + Vector2Int.up, $"HP -{-damagedArmor}", Color.red);
 
                     unit.Armor = 0;
                     value = -damagedArmor;
                 }
             }
             else
-                FadeOutTextUI.MakeText(unit.Position + Vector2Int.up, $"HP -{value}", Color.red);
+                FadeOutTextView.MakeText(unit.Position + Vector2Int.up, $"HP -{value}", Color.red);
 
             unit.CurHP -= value;
             unit.OnDamage.after.Invoke(value);
@@ -92,11 +91,9 @@ namespace Common
             unit.CurHP += value;
             unit.OnHeal.after.Invoke(value);
 
-            FadeOutTextUI.MakeText(unit.Position + Vector2Int.up, $"HP +{value}", Color.green);
+            FadeOutTextView.MakeText(unit.Position + Vector2Int.up, $"HP +{value}", Color.green);
 
             Debug.Log($"{unit.Name}가(은) {value}만큼 회복했다! [HP : {unit.CurHP}>{unit.CurHP + value}]");
-
-
 
             return value;
         }
@@ -129,7 +126,7 @@ namespace Common
         {
             effect.OnAddThisEffect();
             target.StateEffects.Add(effect);
-            FadeOutTextUI.MakeText(target.Position + Vector2Int.up, $"+{effect.Name}", Color.yellow);
+            FadeOutTextView.MakeText(target.Position + Vector2Int.up, $"+{effect.Name}", Color.yellow);
         }
 
         public static void RemoveEffect(Unit target, Effect effect)
@@ -138,7 +135,7 @@ namespace Common
             {
                 effect.OnRemoveThisEffect();
                 target.StateEffects.Remove(effect);
-                FadeOutTextUI.MakeText(target.Position + Vector2Int.up, $"-{effect.Name}", Color.yellow);
+                FadeOutTextView.MakeText(target.Position + Vector2Int.up, $"-{effect.Name}", Color.yellow);
             }
             else
                 Debug.LogError($"{target.Name}이 {effect.Name}를 소유하고 있지 않습니다.");

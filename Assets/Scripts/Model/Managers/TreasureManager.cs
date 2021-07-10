@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UI.Popup;
+using View.UI;
 using UnityEngine;
 
 namespace Model.Managers
@@ -10,7 +10,7 @@ namespace Model.Managers
         // Start is called before the first frame update
         void Start()
         {
-            BattleResultUI.instance.EnableWinUI();
+            View.BattleResultView.instance.EnableWinUI();
         }
     }
 }

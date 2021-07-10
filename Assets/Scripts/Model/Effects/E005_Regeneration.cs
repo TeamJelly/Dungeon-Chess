@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using View;
 
 namespace Model.Effects
 {
@@ -24,7 +25,7 @@ namespace Model.Effects
 
         public override bool OnTurnStart(bool value)
         {
-            View.FadeOutTextUI.MakeText(Owner.Position + Vector2Int.up, $"재생! ({TurnCount})", Color.green);
+            FadeOutTextView.MakeText(Owner.Position + Vector2Int.up, $"재생! ({TurnCount})", Color.green);
             Common.UnitAction.Heal(Owner, Regen);
 
             if (--TurnCount == 0)

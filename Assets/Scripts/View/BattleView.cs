@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using View.UI;
 
 namespace View
 {
@@ -26,27 +27,23 @@ namespace View
         // public UnitInfoView ThisTurnUnitInfo;
         // public UnitInfoView OtherUnitInfo { get; set; }
 
-       
-
         private Dictionary<Unit, GameObject> unitObjects =   new Dictionary<Unit, GameObject>();
-        private Dictionary<Unit, HPBarView> hpBars =   new Dictionary<Unit, HPBarView>();
+        private Dictionary<Unit, HPBar> hpBars =   new Dictionary<Unit, HPBar>();
         private Dictionary<Obtainable, GameObject> obtainableObjects =  new Dictionary<Obtainable, GameObject>();
         public static Button TurnEndButton => instance.turnEndButton;
         public static Image CurrentUnitPortrait => instance.currentUnitPortrait;
         public static GameObject MainPanel => instance.mainPanel;
         public static UnitControlUI UnitControlUI => instance.unitControlUI;
         public static Dictionary<Unit, GameObject> UnitObjects => instance.unitObjects;
-        public static Dictionary<Unit, HPBarView> HPBars => instance.hpBars;
+        public static Dictionary<Unit, HPBar> HPBars => instance.hpBars;
         public static Dictionary<Obtainable, GameObject> ObtainableObjects => instance.obtainableObjects;
 
 
-
-        
         private void Awake()
         {
             instance = this;
 
-            hPBarPrefab = Resources.Load<GameObject>("Prefabs/UI/Battle/HP_BAR");
+            hPBarPrefab = Resources.Load<GameObject>("Prefabs/UI/HP_BAR");
             //ThisTurnUnitInfo = transform.Find("Panel/ThisTurnUnitInfo").GetComponent<UnitInfoView>();
             //OtherUnitInfo = transform.Find("Panel/OtherUnitInfo").GetComponent<UnitInfoView>();
             //OtherUnitInfo.gameObject.SetActive(false);
@@ -88,7 +85,7 @@ namespace View
 
             CurrentUnitPortrait.sprite = unit.Portrait;
 
-            IndicatorUI.ShowTileIndicator(FieldManager.instance.GetStairAroundPosition(),
+            IndicatorView.ShowTileIndicator(FieldManager.instance.GetStairAroundPosition(),
                 (Vector2Int position) =>
                 {
                     Common.UnitAction.Summon(unit, position);
@@ -96,7 +93,7 @@ namespace View
 
                     if (index == GameManager.PartyUnits.Count)
                     {
-                        IndicatorUI.HideTileIndicator();
+                        IndicatorView.HideTileIndicator();
                         BattleController.instance.NextTurnStart();
                     }
                     // 전부 소환할때까지 재귀로 돈다.
@@ -184,13 +181,15 @@ namespace View
             UnitObjects.Add(unit, newObj);
 
             // HP 바 생성
-            HPBarView newHPBar = Instantiate(instance.hPBarPrefab, MainPanel.transform).GetComponent<HPBarView>();
+            HPBar newHPBar = Instantiate(instance.hPBarPrefab, MainPanel.transform).GetComponent<HPBar>();
             newHPBar.Init(unit);
             HPBars.Add(unit, newHPBar);
 
             //유닛 오브젝트 상호작용 콜백 등록
             unit.OnPosition.after.AddListener((value) =>
             {
+
+                BattleManager.GetUnit(value);
                 Vector3 w = new Vector3(value.x, value.y);
                 newObj.transform.position = w;
                 newHPBar.SetPosition(w);
@@ -234,7 +233,7 @@ namespace View
             UnitObjects.Remove(unit);
             Destroy(unitObj);
 
-            HPBarView hpBar = HPBars[unit];
+            HPBar hpBar = HPBars[unit];
             HPBars.Remove(unit);
             Destroy(hpBar.gameObject);
 
