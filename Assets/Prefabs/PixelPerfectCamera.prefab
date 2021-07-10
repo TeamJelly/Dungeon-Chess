@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 38423511361271648}
   - component: {fileID: 38423511361271649}
   - component: {fileID: 38423511361271650}
-  - component: {fileID: 1712081022}
   - component: {fileID: 6801557335796507505}
+  - component: {fileID: 1058832601585892822}
   m_Layer: 0
   m_Name: PixelPerfectCamera
   m_TagString: MainCamera
@@ -106,24 +106,6 @@ MonoBehaviour:
   m_CropFrameX: 1
   m_CropFrameY: 1
   m_StretchFill: 0
---- !u!114 &1712081022
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 38423511361271662}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbeede1aa134fcb448a2f5c0b4f14954, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 10
-  mouseMoveRange: 10
-  vertical: 0
-  horizontal: 0
-  LeftDownLimit: {x: 6, y: 2}
-  RightUpLimit: {x: 10, y: 14}
 --- !u!114 &6801557335796507505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,3 +122,20 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_MaxRayIntersections: 0
+--- !u!114 &1058832601585892822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 38423511361271662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18affe6b00ef9324391f0c260edb1378, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LeftDownLimit: {x: 0, y: 0}
+  RightUpLimit: {x: 16, y: 16}
+  dragSpeed: 15
+  Resolutions:
+  - {x: 320, y: 180}
