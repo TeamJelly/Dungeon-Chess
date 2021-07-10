@@ -49,9 +49,9 @@ namespace Model.Managers
             {
                 Unit unit = new Proto_Skeleton();//new M000_Judgement();
                 Common.UnitAction.Summon(unit, new Vector2Int(4, 4));
-                //Common.UnitAction.AddEffect(unit, new Model.Effects.E004_Stun(unit));
-                //Common.UnitAction.AddEffect(unit, new Model.Effects.E005_Regeneration(unit, 99));
-                //Common.UnitAction.AddEffect(unit, new Model.Effects.E021_Barrier(unit, 10, 99));
+                Common.UnitAction.AddEffect(unit, new Model.Effects.E004_Stun(unit));
+                Common.UnitAction.AddEffect(unit, new Model.Effects.E005_Regeneration(unit, 99));
+                Common.UnitAction.AddEffect(unit, new Model.Effects.E021_Barrier(unit, 10));
             }
             else if (GameManager.Instance.currentRoom.category == Room.Category.Monster)
             {
