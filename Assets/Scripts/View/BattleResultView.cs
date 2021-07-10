@@ -58,24 +58,15 @@ namespace View
             WinUI.GetComponentInChildren<Button>().onClick.AddListener(() =>
             {
                 UIEffect.FadeOutPanel(WinUI);
-                var units = View.BattleView.UnitObjects.Keys.ToArray();
-                for(int i = units.Length - 1; i > 0; i--)
-                {
-                    if (units[i] != GameManager.LeaderUnit)
-                    {
-                        View.BattleView.DestroyUnitObject(units[i]);
-                        View.BattleView.UnitObjects.Remove(units[i]);
-                    }
-
-                }
-                StartCoroutine(View.BattleView.SetNonBattleMode());
+                Common.UnitAction.UnSummonAll();
+                StartCoroutine(BattleView.SetNonBattleMode());
             });
-            UIEffect.FadeInPanel(WinUI);
+            UIEffect.FadeInPanel(WinUI, 0.5f);
         }
 
         public void EnableDeafeatUI()
         {
-            UIEffect.FadeInPanel(DeafeatUI);
+            UIEffect.FadeInPanel(DeafeatUI, 0.5f);
         }
     }
 }

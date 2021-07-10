@@ -2,6 +2,7 @@
 using Model.Managers;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UI.Battle;
 using UnityEngine;
 using UnityEngine.Events;
@@ -49,6 +50,9 @@ namespace View
             //OtherUnitInfo.gameObject.SetActive(false);
             turnEndButton = transform.Find("MainPanel/TurnEndButton").GetComponent<Button>();
             unitControlUI = GetComponent<UnitControlUI>();
+
+            TurnEndButton.gameObject.SetActive(false);
+            UnitControlUI.panel.SetActive(false);
         }
         /// <summary>
         /// 비전투시에는 리더 유닛만 움직일 수 있음
@@ -58,6 +62,8 @@ namespace View
         {
             TurnEndButton.gameObject.SetActive(false);
             UnitControlUI.panel.SetActive(false);
+            if (GameManager.LeaderUnit == null) GameManager.LeaderUnit = GameManager.PartyUnits[0];
+            Common.UnitAction.Summon(GameManager.LeaderUnit, GameManager.LeaderUnit.Position);
             IEnumerator coroutine = GameManager.LeaderUnit.MoveSkill.Use(GameManager.LeaderUnit, Vector2Int.zero);
             while (true)
             {
@@ -186,16 +192,7 @@ namespace View
             HPBars.Add(unit, newHPBar);
 
             //유닛 오브젝트 상호작용 콜백 등록
-            unit.OnPosition.after.AddListener((value) =>
-            {
-
-                BattleManager.GetUnit(value);
-                Vector3 w = new Vector3(value.x, value.y);
-                newObj.transform.position = w;
-                newHPBar.SetPosition(w);
-
-                return value;
-            });
+            unit.OnPosition.after.AddListener(MoveObject);
             unit.OnCurHP.after.AddListener(newHPBar.SetValue);
 
             //최초 갱신
@@ -205,6 +202,16 @@ namespace View
 
             unit.OnPosition.after.Invoke(tempPosition);
             unit.OnCurHP.after.Invoke(tempHP);
+        }
+
+        public static Vector2Int MoveObject(Vector2Int v)
+        {
+            Unit unit = FieldManager.GetTile(v).GetUnit();
+            Vector3 w = new Vector3(v.x, v.y);
+            UnitObjects[unit].transform.position = w;
+            HPBars[unit].SetPosition(w);
+
+            return v;
         }
 
         public static void MakeObtainableObject(Obtainable ob, Vector2Int pos)
@@ -241,7 +248,6 @@ namespace View
             unit.OnCurHP.after.RemoveAllListeners();
 
             // AgilityViewer.instance.DestroyObject(unit);
-
         }
     }
 }

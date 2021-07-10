@@ -19,9 +19,9 @@ namespace Common
 
             View.VisualEffectView.MakeVisualEffect(unit.Position, "Explosion");
 
-            BattleView.DestroyUnitObject(unit);
-            BattleManager.instance.AllUnits.Remove(unit);            
-            FieldManager.GetTile(unit.Position).SetUnit(null);
+            UnSummon(unit);
+            GameManager.RemovePartyUnit(unit); //죽으면 파티유닛에서 박탈.
+
             BattleManager.instance.InitializeUnitBuffer();
 
             if (BattleManager.CheckGameState() != BattleManager.State.Continue)
@@ -34,9 +34,8 @@ namespace Common
 
             //기존 타일 유닛 초기화 Tile.cs로 옮기면 좋을듯
             FieldManager.GetTile(unit.Position).SetUnit(null);
-            unit.Position = target;
             FieldManager.GetTile(target).SetUnit(unit);
-
+            unit.Position = target;
             // AfterMove();
         }
 
@@ -156,6 +155,7 @@ namespace Common
         {
             if (BattleManager.GetUnit(target) == null)
             {
+                unit.OnPosition.after.RemoveListener(BattleView.MoveObject);
                 unit.Position = target;
                 FieldManager.GetTile(target).SetUnit(unit);
                 BattleManager.instance.AllUnits.Add(unit);
@@ -163,6 +163,22 @@ namespace Common
             }
             else
                 Debug.LogError("이미 위치에 유닛이 존재합니다.");
+        }
+
+        public static void UnSummon(Unit unit)
+        {
+            BattleView.DestroyUnitObject(unit);
+            BattleManager.instance.AllUnits.Remove(unit);  
+            FieldManager.GetTile(unit.Position).SetUnit(null);
+        }
+
+        public static void UnSummonAll()
+        {
+            List<Unit> units = BattleManager.instance.AllUnits;
+            for(int i = units.Count - 1; i >= 0; i--)
+            {
+                UnSummon(units[i]);
+            }
         }
 
         public static void AddSkill(Unit unit, Skill newSkill, int index)

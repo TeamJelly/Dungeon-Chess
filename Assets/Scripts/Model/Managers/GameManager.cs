@@ -73,6 +73,11 @@ namespace Model.Managers
         public static void RemovePartyUnit(Unit unit)
         {
             PartyUnits.Remove(unit);
+            if(unit == LeaderUnit)
+            {
+                if(PartyUnits.Count != 0) LeaderUnit = PartyUnits[0];
+                else LeaderUnit = null;
+            }
         }
     }
 }
