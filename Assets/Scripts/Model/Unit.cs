@@ -70,6 +70,8 @@ namespace Model
         public TimeEventListener<int> OnLevel = new TimeEventListener<int>();
         public TimeEventListener<int> OnCurEXP = new TimeEventListener<int>();
         public TimeEventListener<Vector2Int> OnPosition = new TimeEventListener<Vector2Int>();
+        public TimeEventListener<Vector2Int> OnMove = new TimeEventListener<Vector2Int>();
+
 
         // HP가 변했을때 효과 추가 필요
         public int CurHP

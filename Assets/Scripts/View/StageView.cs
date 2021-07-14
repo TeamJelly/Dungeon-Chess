@@ -29,6 +29,11 @@ namespace View
         public List<Sprite> roomImages;
 
         public RectTransform linePrefab2;
+
+        private void Awake()
+        {
+            instance = this;
+        }
         private void Start()
         {
            InitStageUI(StageManager.instance.AllRooms);

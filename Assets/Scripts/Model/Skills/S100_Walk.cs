@@ -107,9 +107,10 @@ namespace Model.Skills
             Debug.Log($"{user.Name}가 {Name}스킬을 {target}에 사용!");
             user.MoveCount--;
             CurReuseTime = ReuseTime;
-
+            Vector2Int startPosition = user.Position;
             // 1 단계 : 위치 이동
             {
+                
                 List<Vector2Int> path = Common.PathFind.PathFindAlgorithm(user.Position, target);
 
                 user.animationState = Unit.AnimationState.Move;
@@ -118,12 +119,14 @@ namespace Model.Skills
                 for (int i = 1; i < path.Count; i++)
                 {
                     View.VisualEffectView.MakeVisualEffect(user.Position, "Dust");
-                    Common.UnitAction.Move(user, path[i]);
+                    user.Position = path[i];
+                    //Common.UnitAction.Move(user, path[i]);
                     yield return new WaitForSeconds(moveTime);
                 }
-
                 user.animationState = Unit.AnimationState.Idle;
             }
+            Common.UnitAction.Move(user,startPosition, target);
+
             // 2 단계 : 타일 위의 아이템, 유물 습득
             if(target == user.Position)
                 FieldManager.instance.GetObtainableObj(user.Position)?.AssignTo(user);

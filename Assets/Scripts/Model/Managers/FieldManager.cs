@@ -88,10 +88,8 @@ namespace Model.Managers
                 }
                 else
                 {
-                    field[y, x] = new Tile()
-                    {
-                        position = new Vector2Int(x,y)
-                    };
+                    field[y, x] = chars[i] == 'D' ?  new DownStairTIle() : new Tile();
+                    field[y, x].position = new Vector2Int(x,y);
                     field[y, x].category = (Tile.Category)chars[i];
                     x++;
                 }

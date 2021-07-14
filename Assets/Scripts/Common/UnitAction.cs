@@ -28,14 +28,21 @@ namespace Common
                 BattleController.instance.ThisTurnEnd();
         }
 
-        public static void Move(Unit unit, Vector2Int target)
+        //개념적 이동
+        public static void Move(Unit unit, Vector2Int start, Vector2Int target)
         {
             // BeforeMove();
 
             //기존 타일 유닛 초기화 Tile.cs로 옮기면 좋을듯
-            FieldManager.GetTile(unit.Position).SetUnit(null);
+
+            //OnMove는 이동 할때마다 항상 수행되는 이벤트
+            //OnTile은 타일의 특성에 따라 이동이 끝난 후 발동되는 타일의 이벤트
+            target = unit.OnMove.before.Invoke(target);
+            FieldManager.GetTile(start).SetUnit(null);
             FieldManager.GetTile(target).SetUnit(unit);
             unit.Position = target;
+            unit.OnMove.after.Invoke(target);
+            FieldManager.GetTile(target).OnTile();
             // AfterMove();
         }
 
@@ -75,7 +82,7 @@ namespace Common
             if (unit.CurHP <= 0)
                 Die(unit);
 
-            
+
             return value; // 피해량을 리턴
         }
 
@@ -107,7 +114,7 @@ namespace Common
             unit.Level++;
             unit.CurEXP = 0;
             unit.NextEXP = unit.Level * 10;
-            Debug.Log($"{unit.Name} Level Up! ( Lv {unit.Level-1} > Lv {unit.Level} )");
+            Debug.Log($"{unit.Name} Level Up! ( Lv {unit.Level - 1} > Lv {unit.Level} )");
         }
 
         public static Effect GetEffectByNumber(Unit unit, int value)
@@ -139,7 +146,7 @@ namespace Common
             else
                 Debug.LogError($"{target.Name}이 {effect.Name}를 소유하고 있지 않습니다.");
         }
-        
+
         public static void Summon(Unit unit)
         {
             Summon(unit, unit.Position);
@@ -168,14 +175,14 @@ namespace Common
         public static void UnSummon(Unit unit)
         {
             BattleView.DestroyUnitObject(unit);
-            BattleManager.instance.AllUnits.Remove(unit);  
+            BattleManager.instance.AllUnits.Remove(unit);
             FieldManager.GetTile(unit.Position).SetUnit(null);
         }
 
         public static void UnSummonAll()
         {
             List<Unit> units = BattleManager.instance.AllUnits;
-            for(int i = units.Count - 1; i >= 0; i--)
+            for (int i = units.Count - 1; i >= 0; i--)
             {
                 UnSummon(units[i]);
             }

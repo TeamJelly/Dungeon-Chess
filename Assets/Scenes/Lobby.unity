@@ -3664,8 +3664,6 @@ GameObject:
   - component: {fileID: 725121191}
   - component: {fileID: 725121193}
   - component: {fileID: 725121192}
-  - component: {fileID: 725121195}
-  - component: {fileID: 725121194}
   m_Layer: 5
   m_Name: "\uC9C0\uB3C4"
   m_TagString: Untagged
@@ -3731,49 +3729,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 725121190}
   m_CullTransparentMesh: 0
---- !u!114 &725121194
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 725121190}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ed199793af99f04db7bd9d5bf798f53, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  panel: {fileID: 725121190}
-  contentPanel: {fileID: 99610428}
-  floorPrefab: {fileID: 6903638791167561107, guid: 62d4219a3fd01f249869391f94982e63,
-    type: 3}
-  roomPrefab: {fileID: 3833849723751400645, guid: db86f808dde83e649afa2febc9850904,
-    type: 3}
-  linePrefab: {fileID: 9146095783542598053, guid: fcff55ccc1302d045bf8e3385cb6f97a,
-    type: 3}
-  clearSignPrefab: {fileID: 2191985043020564076, guid: 0b786e5c891afed418e9a6a6e7806ced,
-    type: 3}
-  selector: {fileID: 1289245513}
-  floors: []
-  lines: []
-  roomImages: []
-  linePrefab2: {fileID: 3592442216511262769, guid: ef7369fdc6a83e7479e424afd7edb421,
-    type: 3}
---- !u!114 &725121195
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 725121190}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0dac63cef7544314b96ea14b501bcc97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ScrollRectTransform: {fileID: 99610429}
-  numberOfFloors: 14
-  numberOfRoomsPerOneFloor: 5
 --- !u!1 &725691816
 GameObject:
   m_ObjectHideFlags: 0
@@ -31069,7 +31024,7 @@ MonoBehaviour:
 
     WWWWWWWWWWWWWWWW
 
-    WWWFFFFFFFFFFDWW
+    WWWFFFFFFUFFFDWW
 
     WWWFFFFFFFFFFWWW
 
@@ -31083,7 +31038,7 @@ MonoBehaviour:
 
     WWWFFFFFFFFFFWWW
 
-    WWWFUFFFFFFFFWWW
+    WWWFFFFFFFFFFWWW
 
     WWWFFFFFFFFFFWWW
 
@@ -54810,6 +54765,8 @@ GameObject:
   - component: {fileID: 6298739100550349377}
   - component: {fileID: 1092899634950574633}
   - component: {fileID: 2484267678505574094}
+  - component: {fileID: 3255219562686038412}
+  - component: {fileID: 3255219562686038413}
   m_Layer: 5
   m_Name: PopupUI
   m_TagString: Untagged
@@ -54817,6 +54774,57 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &3255219562686038412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3255219562686038411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ed199793af99f04db7bd9d5bf798f53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panel: {fileID: 725121190}
+  contentPanel: {fileID: 99610428}
+  floorPrefab: {fileID: 6903638791167561107, guid: 62d4219a3fd01f249869391f94982e63,
+    type: 3}
+  roomPrefab: {fileID: 3833849723751400645, guid: db86f808dde83e649afa2febc9850904,
+    type: 3}
+  linePrefab: {fileID: 9146095783542598053, guid: fcff55ccc1302d045bf8e3385cb6f97a,
+    type: 3}
+  clearSignPrefab: {fileID: 2191985043020564076, guid: 0b786e5c891afed418e9a6a6e7806ced,
+    type: 3}
+  selector: {fileID: 1289245513}
+  floors: []
+  lines: []
+  roomImages:
+  - {fileID: -3714409817710726143, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
+  - {fileID: 3279467473711108629, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
+  - {fileID: -6404053778309610593, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
+  - {fileID: -5986936575811970920, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
+  - {fileID: -2784276677790117873, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
+  - {fileID: 3360335357785681208, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
+  - {fileID: 8011179097440696663, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
+  - {fileID: 2412317363535826626, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
+  linePrefab2: {fileID: 3592442216511262769, guid: ef7369fdc6a83e7479e424afd7edb421,
+    type: 3}
+--- !u!114 &3255219562686038413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3255219562686038411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dac63cef7544314b96ea14b501bcc97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ScrollRectTransform: {fileID: 99610429}
+  numberOfFloors: 14
+  numberOfRoomsPerOneFloor: 5
 --- !u!222 &3402366451473686986
 CanvasRenderer:
   m_ObjectHideFlags: 0

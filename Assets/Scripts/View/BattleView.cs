@@ -206,11 +206,16 @@ namespace View
 
         public static Vector2Int MoveObject(Vector2Int v)
         {
-            Unit unit = FieldManager.GetTile(v).GetUnit();
-            Vector3 w = new Vector3(v.x, v.y);
-            UnitObjects[unit].transform.position = w;
-            HPBars[unit].SetPosition(w);
-
+            foreach(Unit unit in BattleManager.instance.AllUnits)
+            {
+                if(unit.Position == v)
+                {
+                    Vector3 w = new Vector3(v.x, v.y);
+                    UnitObjects[unit].transform.position = w;
+                    HPBars[unit].SetPosition(w);
+                    return v;
+                }
+            }
             return v;
         }
 

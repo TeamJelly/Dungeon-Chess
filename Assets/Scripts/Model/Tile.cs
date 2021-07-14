@@ -29,7 +29,7 @@ namespace Model
 
         public Effect tileEffect;
 
-        Unit unit = null;
+        protected Unit unit = null;
 
         public bool IsUnitPositionable(Unit unit)
         {
@@ -61,8 +61,8 @@ namespace Model
                 return false;
         }
 
-        public void SetUnit(Unit newUnit)
-        {
+        public virtual void SetUnit(Unit newUnit)
+        {        
             unit = newUnit;
         }
 
@@ -84,6 +84,11 @@ namespace Model
                 obtainableObject = null;
             }
             return obt;
+        }
+
+        public virtual void OnTile()
+        {
+
         }
     }
 }
