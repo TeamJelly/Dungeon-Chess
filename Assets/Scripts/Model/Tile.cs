@@ -19,7 +19,8 @@ namespace Model
         {
             Floor   = 'F',
             Wall    = 'W',
-            Stair   = 'S',
+            UpStair   = 'U',
+            DownStair   = 'D',
             Thorn   = 'T',
             Hole    = 'H',
         };

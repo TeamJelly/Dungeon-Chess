@@ -179,7 +179,7 @@ namespace Model.Managers
             {
                 for (int x = 0; x < field.GetLength(1); x++)
                 {
-                    if (field[y, x].category == Model.Tile.Category.Stair)
+                    if (field[y, x].category == Model.Tile.Category.UpStair)
                     {
                         foreach (var vector in around)
                         {
