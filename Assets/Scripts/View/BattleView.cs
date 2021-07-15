@@ -39,7 +39,6 @@ namespace View
         public static Dictionary<Unit, HPBar> HPBars => instance.hpBars;
         public static Dictionary<Obtainable, GameObject> ObtainableObjects => instance.obtainableObjects;
 
-
         private void Awake()
         {
             instance = this;
@@ -63,7 +62,7 @@ namespace View
             TurnEndButton.gameObject.SetActive(false);
             UnitControlUI.panel.SetActive(false);
             if (GameManager.LeaderUnit == null) GameManager.LeaderUnit = GameManager.PartyUnits[0];
-            Common.UnitAction.Summon(GameManager.LeaderUnit, GameManager.LeaderUnit.Position);
+            Common.Command.Summon(GameManager.LeaderUnit, GameManager.LeaderUnit.Position);
             IEnumerator coroutine = GameManager.LeaderUnit.MoveSkill.Use(GameManager.LeaderUnit, Vector2Int.zero);
             while (true)
             {
@@ -94,7 +93,7 @@ namespace View
             IndicatorView.ShowTileIndicator(FieldManager.instance.GetStairAroundPosition(),
                 (Vector2Int position) =>
                 {
-                    Common.UnitAction.Summon(unit, position);
+                    Common.Command.Summon(unit, position);
                     index++;
 
                     if (index == GameManager.PartyUnits.Count)

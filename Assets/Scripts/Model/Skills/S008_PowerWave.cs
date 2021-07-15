@@ -120,8 +120,8 @@ namespace Model.Skills
                 // 1단계 : 스킬 애니메이션 재생 및 화면 갱신.
                 yield return null;
                 // 2단계 : 스킬 적용
-                Common.UnitAction.Damage(unit, damage);
-                Common.UnitAction.AddEffect(unit, new Effects.E004_Stun(unit));
+                Common.Command.Damage(unit, damage);
+                Common.Command.AddEffect(unit, new Effects.E004_Stun(unit));
             }
         }
 

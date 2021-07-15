@@ -31,9 +31,10 @@ namespace Model
             }
         }
 
+        public Vector2Int Position { get; set; }
+
         public virtual void OnAddThisItem()
         {
-
 
         }
 
@@ -41,14 +42,15 @@ namespace Model
         {
 
         }
-        public void AssignTo(Unit unit)
-        {
-            
-        }
 
         public Sprite GetImage()
         {
             return Sprite;
+        }
+
+        public void ToBag()
+        {
+            Managers.GameManager.Instance.itemBag.Add(this);
         }
     }
 }

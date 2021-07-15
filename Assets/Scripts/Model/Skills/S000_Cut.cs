@@ -48,7 +48,7 @@ namespace Model.Skills
                 yield return null;
 
                 // 2단계 : 스킬 적용
-                Common.UnitAction.Damage(targetUnit, damage);
+                Common.Command.Damage(targetUnit, damage);
             }
             else
             {

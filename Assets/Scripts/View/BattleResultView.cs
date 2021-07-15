@@ -58,7 +58,7 @@ namespace View
             WinUI.GetComponentInChildren<Button>().onClick.AddListener(() =>
             {
                 UIEffect.FadeOutPanel(WinUI);
-                Common.UnitAction.UnSummonAll();
+                Common.Command.UnSummonAllUnit();
                 StartCoroutine(BattleView.SetNonBattleMode());
             });
             UIEffect.FadeInPanel(WinUI, 0.5f);

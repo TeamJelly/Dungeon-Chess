@@ -35,7 +35,7 @@ namespace Model
         // 배울수 있는 스킬
         private Skill[] learnableSkill = new Skill[8];
 
-        private List<Artifact> antiques = new List<Artifact>();    // 보유한 유물
+        private List<Artifact> artifacts = new List<Artifact>();    // 보유한 유물
         private List<Effect> stateEffects = new List<Effect>();  // 보유한 상태효과
 
         private RuntimeAnimatorController animator; // 애니메이터
@@ -160,7 +160,7 @@ namespace Model
         public Skill MoveSkill { get => moveSkill; set => moveSkill = value; }
         public Skill PassiveSkill { get => passiveSkill; set => passiveSkill = value; }
         public Skill[] Skills { get => skills; set => skills = value; }
-        public List<Artifact> Antiques { get => antiques; set => antiques = value; }
+        public List<Artifact> Artifacts { get => artifacts; set => artifacts = value; }
         public List<Effect> StateEffects { get => stateEffects; set => stateEffects = value; }
         public int MoveCount { get => moveCount; set => moveCount = value; }
         public int CriticalRate { get => criticalRate; set => criticalRate = value; }

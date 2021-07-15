@@ -57,7 +57,7 @@ namespace Model.Skills
                 // 1단계 : 스킬 애니메이션 재생 및 화면 갱신.
                 yield return null;
                 // 2단계 : 스킬 적용
-                Common.UnitAction.Damage(unit, damage);
+                Common.Command.Damage(unit, damage);
             }
         }
         public override string GetDescription(Unit user, int level)

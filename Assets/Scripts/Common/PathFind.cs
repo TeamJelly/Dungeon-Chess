@@ -50,7 +50,7 @@ namespace Common
                 return temp;
             }
 
-            public static List<Node> GetAvilableNeighbor(Node node)
+            public static List<Node> GetAvilableNeighbor(Model.Unit agent, Node node)
             {
                 List<Node> neighbor = new List<Node>();
 
@@ -62,7 +62,8 @@ namespace Common
                 };
 
                 foreach (var item in vector2Ints)
-                    if (FieldManager.GetTile(item) != null && BattleManager.GetUnit(item) == null)
+                    if (FieldManager.GetTile(item) != null && 
+                        FieldManager.GetTile(item).IsUnitPositionable(agent))
                         neighbor.Add(new Node(item, node));
 
                 return neighbor;
@@ -96,7 +97,7 @@ namespace Common
         /// <param name="from">출발 위치</param>
         /// <param name="to">도착 위치</param>
         /// <returns></returns>
-        public static List<Vector2Int> PathFindAlgorithm(Vector2Int from, Vector2Int to)
+        public static List<Vector2Int> PathFindAlgorithm(Model.Unit agent, Vector2Int from, Vector2Int to)
         {
             if (FieldManager.GetTile(to) == null || FieldManager.GetTile(to).HasUnit())
             {
@@ -123,7 +124,7 @@ namespace Common
 
                 explored.Add(node); // add node.State to explored
 
-                foreach (var child in Node.GetAvilableNeighbor(node))
+                foreach (var child in Node.GetAvilableNeighbor(agent, node))
                 {
                     bool isExplored = false;
                     foreach (var item in explored)
@@ -138,7 +139,8 @@ namespace Common
                         if (frontier[i].unitPosition.Equals(child.unitPosition))
                         {
                             isFrontiered = true;
-                            if (child.unitPosition == frontier[i].unitPosition && child.evaluationCost < frontier[i].evaluationCost)
+                            if (child.unitPosition == frontier[i].unitPosition && 
+                                child.evaluationCost < frontier[i].evaluationCost)
                             {
                                 frontier.Remove(frontier[i]);
                                 frontier.Add(child);

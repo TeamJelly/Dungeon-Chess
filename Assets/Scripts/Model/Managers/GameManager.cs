@@ -18,8 +18,9 @@ namespace Model.Managers
         public Room currentRoom = null;
         public Room[,] AllRooms = null;
         public List<Vector2Int>[] pathList = null;
-
         public List<Unit> partyUnits = new List<Unit>();
+        public List<Artifact> artifactBag = new List<Artifact>();
+        public List<Item> itemBag = new List<Item>();
 
         private int gold;
         public int stage;

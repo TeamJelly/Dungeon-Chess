@@ -47,7 +47,7 @@ namespace Model.Effects
         public override bool OnTurnEnd(bool value)
         {
             if (isActivated)
-                Common.UnitAction.RemoveEffect(Owner, this);
+                Common.Command.RemoveEffect(Owner, this);
 
             return value;
         }

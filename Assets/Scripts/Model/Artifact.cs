@@ -8,14 +8,9 @@ namespace Model
     [System.Serializable]
     public class Artifact : Obtainable
     {
-        public Effect antiqueEffect;
-
-        GameObject gameObject;
-       
         public string Name { get; set; }
-        public string Description { get; set; }
         public int Number { get; set; }
-
+        public string Description { get; set; }
         protected string spritePath;
 
         private Sprite sprite;
@@ -33,6 +28,8 @@ namespace Model
             }
         }
 
+        public Vector2Int Position { get; set; }
+
         public virtual void OnAddThisArtifact()
         {
 
@@ -44,16 +41,14 @@ namespace Model
 
         }
 
-        public void AssignTo(Unit unit)
-        {
-            Debug.Log(Name + "을 " + unit.Name + "에게 할당");
-            unit.Antiques.Add(this);
-        }
-
         public Sprite GetImage()
         {
             return Sprite;
         }
-    }
 
+        public void ToBag()
+        {
+            Managers.GameManager.Instance.artifactBag.Add(this);
+        }
+    }
 }

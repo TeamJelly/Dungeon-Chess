@@ -14,6 +14,9 @@ namespace Model.Managers
         // 현재 전투의 모든 유닛을 참조할 수 있습니다.
         public List<Unit> AllUnits = new List<Unit>();
 
+        // 현재 전투의 모든 획득품들을 참조할 수 있습니다.
+        public List<Obtainable> AllObtainables = new List<Obtainable>();
+
         // 현재 턴의 유닛
         public Unit thisTurnUnit;
 
@@ -48,10 +51,10 @@ namespace Model.Managers
             if (GameManager.Instance.currentRoom == null)
             {
                 Unit unit = new Proto_Skeleton();//new M000_Judgement();
-                Common.UnitAction.Summon(unit, new Vector2Int(4, 4));
-                Common.UnitAction.AddEffect(unit, new Model.Effects.E004_Stun(unit));
-                Common.UnitAction.AddEffect(unit, new Model.Effects.E005_Regeneration(unit, 99));
-                Common.UnitAction.AddEffect(unit, new Model.Effects.E021_Barrier(unit, 10));
+                Common.Command.Summon(unit, new Vector2Int(4, 4));
+                Common.Command.AddEffect(unit, new Model.Effects.E004_Stun(unit));
+                Common.Command.AddEffect(unit, new Model.Effects.E005_Regeneration(unit, 99));
+                Common.Command.AddEffect(unit, new Model.Effects.E021_Barrier(unit, 10));
             }
             else if (GameManager.Instance.currentRoom.category == Room.Category.Monster)
             {
@@ -59,26 +62,26 @@ namespace Model.Managers
 
                 if (rand == 0)
                 {
-                    Common.UnitAction.Summon(new Proto_Skeleton(), new Vector2Int(4, 4));
-                    Common.UnitAction.Summon(new Proto_Skeleton(), new Vector2Int(5, 4));
+                    Common.Command.Summon(new Proto_Skeleton(), new Vector2Int(4, 4));
+                    Common.Command.Summon(new Proto_Skeleton(), new Vector2Int(5, 4));
                 }
                 else
                 {
-                    Common.UnitAction.Summon(new Proto_RedSkeleton(), new Vector2Int(4, 4));
+                    Common.Command.Summon(new Proto_RedSkeleton(), new Vector2Int(4, 4));
                 }
             }
             else if (GameManager.Instance.currentRoom.category == Room.Category.Elite)
             {
-                Common.UnitAction.Summon(new Proto_RedSkeleton(), new Vector2Int(6, 7));
-                Common.UnitAction.Summon(new Proto_Skeleton(), new Vector2Int(4, 4));
-                Common.UnitAction.Summon(new Proto_Skeleton(), new Vector2Int(4, 6));
+                Common.Command.Summon(new Proto_RedSkeleton(), new Vector2Int(6, 7));
+                Common.Command.Summon(new Proto_Skeleton(), new Vector2Int(4, 4));
+                Common.Command.Summon(new Proto_Skeleton(), new Vector2Int(4, 6));
             }
             else if (GameManager.Instance.currentRoom.category == Room.Category.Boss)
             {
                 Unit unit = new M000_Judgement();
-                Common.UnitAction.Summon(unit, new Vector2Int(4, 4));
-                Common.UnitAction.AddEffect(unit, new Model.Effects.E004_Stun(unit));
-                Common.UnitAction.AddEffect(unit, new Model.Effects.E005_Regeneration(unit, 99));
+                Common.Command.Summon(unit, new Vector2Int(4, 4));
+                Common.Command.AddEffect(unit, new Model.Effects.E004_Stun(unit));
+                Common.Command.AddEffect(unit, new Model.Effects.E005_Regeneration(unit, 99));
             }
 
             if (GameManager.PartyUnits.Count == 0)
@@ -98,12 +101,11 @@ namespace Model.Managers
                 StartCoroutine(BattleView.SetNonBattleMode());
             }
 
-            //유물 타일 맵 테스트
-            FieldManager.instance.SetObtainableObj(new Artifact_Test(), new Vector2Int(6, 6));
-            FieldManager.instance.SetObtainableObj(new Artifact_Test(), new Vector2Int(10, 5));
-            FieldManager.instance.SetObtainableObj(new Artifact_Test(), new Vector2Int(6, 8));
-            FieldManager.instance.SetObtainableObj(new Artifact_Test(), new Vector2Int(9, 9));
-            FieldManager.instance.SetObtainableObj(new Artifact_Test(), new Vector2Int(6, 4));
+            Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(6, 6));
+            Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(10, 5));
+            Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(6, 8));
+            Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(9, 9));
+            Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(6, 4));
 
             // UI.Battle.IndicatorUI.ShowTileIndicator()
 
@@ -140,7 +142,7 @@ namespace Model.Managers
             int count = 0;
 
             foreach (var unit in GetUnit(alliance))
-                if (Common.UnitAction.GetEffectByNumber(unit, 1) == null && (Common.UnitAction.GetEffectByNumber(unit, 2) == null))
+                if (Common.Command.GetEffectByNumber(unit, 1) == null && (Common.Command.GetEffectByNumber(unit, 2) == null))
                     count++;
 
             return count;
@@ -157,26 +159,18 @@ namespace Model.Managers
             return units;
         }
 
-        /// <summary>
-        /// 모든 유닛 리턴
-        /// </summary>
-        /// <returns></returns>
         public static List<Unit> GetUnit()
         {
             return instance.AllUnits;
         }
-
-        /// <summary>
-        /// 위치의 유닛 리턴
-        /// </summary>
-        /// <param name="position"></param>
-        /// <returns></returns>
+        
         public static Unit GetUnit(Vector2Int position)
         {
             return FieldManager.GetTile(position)?.GetUnit();
         }
 
         Queue<Unit> unitBuffer = new Queue<Unit>();
+
         int bufferSize = 5;
 
         public int UnitBufferSize => bufferSize;

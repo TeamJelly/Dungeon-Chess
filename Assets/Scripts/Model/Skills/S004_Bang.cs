@@ -47,13 +47,13 @@ namespace Model.Skills
                 yield return null;
 
                 // 2단계 : 스킬 적용
-                Common.UnitAction.Damage(targetUnit, damage);
+                Common.Command.Damage(targetUnit, damage);
             }
             else
             {
                 Debug.Log($"{user.Name}가 {Name}스킬을 {target}에 사용!");
             }
-            Common.UnitAction.AddEffect(targetUnit, new Effects.E004_Stun(targetUnit));
+            Common.Command.AddEffect(targetUnit, new Effects.E004_Stun(targetUnit));
 
         }
         public override string GetDescription(Unit user, int level)

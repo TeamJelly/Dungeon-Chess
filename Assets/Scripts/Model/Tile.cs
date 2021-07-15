@@ -13,8 +13,6 @@ namespace Model
 
         public Vector2Int position;
 
-        Obtainable obtainableObject = null;
-
         public enum Category
         {
             Floor   = 'F',
@@ -27,9 +25,9 @@ namespace Model
 
         public Category category;
 
-        public Effect tileEffect;
-
         protected Unit unit = null;
+
+        protected Obtainable obtainable = null;
 
         public bool IsUnitPositionable(Unit unit)
         {
@@ -71,24 +69,24 @@ namespace Model
             return unit;
         }
 
-        public void SetObtainableObj(Obtainable obt)
+        // 타일에 Obtainable Model을 등록한다.
+        public void SetObtainable(Obtainable obt)
         {
-            obtainableObject = obt;
+            obtainable = obt;
         }
 
-        public Obtainable GetObtainableObj()
+        // 타일에서 Obtainable Model을 반환한다.
+        public Obtainable GetObtainable()
         {
-            Obtainable obt = obtainableObject;
-            if(obt != null)
+            return obtainable;
+        }
+
+        public virtual void OnTile(Unit unit)
+        {
+            if (GetObtainable() != null)
             {
-                obtainableObject = null;
+                Common.Command.UnSummon(GetObtainable());
             }
-            return obt;
-        }
-
-        public virtual void OnTile()
-        {
-
         }
     }
 }

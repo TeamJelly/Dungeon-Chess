@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-//Test
 
 namespace Model
 {
@@ -9,14 +8,12 @@ namespace Model
         public string Name { get; set; }
         public int Number { get; set; }
         public string Description { get; set; }
-
         private int turnCount;
         public int TurnCount
         {
             get => turnCount;
             set => turnCount = value;
         }
-
         protected string spritePath;
         private Sprite sprite;
         public Sprite Sprite
@@ -45,7 +42,7 @@ namespace Model
 
         public virtual void OnAddThisEffect()
         {
-            Effect oldEffect = Common.UnitAction.GetEffectByNumber(Owner, Number);
+            Effect oldEffect = Common.Command.GetEffectByNumber(Owner, Number);
 
             if (oldEffect != null)
                 OnOverlapEffect(oldEffect);

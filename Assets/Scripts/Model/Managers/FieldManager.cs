@@ -140,18 +140,7 @@ namespace Model.Managers
             }
         }
 		
-        public void SetObtainableObj(Obtainable obt, Vector2Int pos)
-        {
-            field[pos.x, pos.y].SetObtainableObj(obt);
-            BattleView.MakeObtainableObject(obt, pos);
-        }
 
-        public Obtainable GetObtainableObj(Vector2Int pos)
-        {
-            Obtainable obt = field[pos.x, pos.y].GetObtainableObj();
-            if (obt != null) BattleView.DestroyObtainableObject(obt);
-            return obt;
-        }
         public static Tile[,] GetField()
         {
             return instance.field;

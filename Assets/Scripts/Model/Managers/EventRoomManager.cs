@@ -25,7 +25,7 @@ namespace Model.Managers
         {
             foreach (Unit unit in GameManager.PartyUnits)
             {
-                UnitAction.EnhanceSkill(unit, 0);
+                Command.UpgradeSkill(unit, 0);
             }
 
             MenuManager.instance.GotoStage();

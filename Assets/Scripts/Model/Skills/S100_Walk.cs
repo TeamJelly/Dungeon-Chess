@@ -37,7 +37,7 @@ namespace Model.Skills
         public override List<Vector2Int> GetRelatePositions(Unit user, Vector2Int target)
         {
             if (GetAvailablePositions(user).Contains(target))
-                return Common.PathFind.PathFindAlgorithm(user.Position, target);
+                return Common.PathFind.PathFindAlgorithm(user, user.Position, target);
             else
                 return null;
         }
@@ -111,7 +111,7 @@ namespace Model.Skills
             // 1 단계 : 위치 이동
             {
                 
-                List<Vector2Int> path = Common.PathFind.PathFindAlgorithm(user.Position, target);
+                List<Vector2Int> path = Common.PathFind.PathFindAlgorithm(user, user.Position, target);
 
                 user.animationState = Unit.AnimationState.Move;
                 float moveTime = 0.5f / path.Count;
@@ -119,18 +119,14 @@ namespace Model.Skills
                 for (int i = 1; i < path.Count; i++)
                 {
                     View.VisualEffectView.MakeVisualEffect(user.Position, "Dust");
+                    // 유닛 포지션의 변경은 여러번 일어난다.
                     user.Position = path[i];
-                    //Common.UnitAction.Move(user, path[i]);
                     yield return new WaitForSeconds(moveTime);
                 }
                 user.animationState = Unit.AnimationState.Idle;
             }
-            Common.UnitAction.Move(user,startPosition, target);
-
-            // 2 단계 : 타일 위의 아이템, 유물 습득
-            if(target == user.Position)
-                FieldManager.instance.GetObtainableObj(user.Position)?.AssignTo(user);
-
+            // 실제 타일에 상속되는건 한번이다.
+            Common.Command.Move(user,startPosition, target);
 
             for (int i = user.StateEffects.Count - 1; i >= 0; i--)
                 user.StateEffects[i].BeforeUseSkill(this);

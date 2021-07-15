@@ -159,7 +159,7 @@ namespace View
             setButton.onClick.RemoveAllListeners();
             setButton.onClick.AddListener(() =>
             {
-                Common.UnitAction.AddSkill(GameManager.PartyUnits[u], skill, s);
+                Common.Command.AddSkill(GameManager.PartyUnits[u], skill, s);
                 //.Skills[s] = skill;
                 Disable();
             });
@@ -194,7 +194,7 @@ namespace View
             setButton.onClick.RemoveAllListeners();
             setButton.onClick.AddListener(() =>
             {
-                Common.UnitAction.EnhanceSkill(GameManager.PartyUnits[u], s);
+                Common.Command.UpgradeSkill(GameManager.PartyUnits[u], s);
                 Disable();
             });
             UIEffect.FadeInPanel(ChangeSkillPanel);

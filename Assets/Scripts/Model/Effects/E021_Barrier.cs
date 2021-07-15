@@ -50,7 +50,7 @@ namespace Model.Effects
             value = 0;
 
             if (BarrierCount == 0) 
-                Common.UnitAction.RemoveEffect(Owner, this);
+                Common.Command.RemoveEffect(Owner, this);
 
             return value;
         }

@@ -26,10 +26,10 @@ namespace Model.Effects
         public override bool OnTurnStart(bool value)
         {
             FadeOutTextView.MakeText(Owner.Position + Vector2Int.up, $"재생! ({TurnCount})", Color.green);
-            Common.UnitAction.Heal(Owner, Regen);
+            Common.Command.Heal(Owner, Regen);
 
             if (--TurnCount == 0)
-                Common.UnitAction.RemoveEffect(Owner, this);
+                Common.Command.RemoveEffect(Owner, this);
 
 
             return value;

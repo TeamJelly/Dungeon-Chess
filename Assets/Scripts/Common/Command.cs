@@ -8,7 +8,7 @@ using View;
 
 namespace Common
 {
-    public class UnitAction
+    public class Command
     {
         public static void Die(Unit unit)
         {
@@ -28,22 +28,20 @@ namespace Common
                 BattleController.instance.ThisTurnEnd();
         }
 
-        //개념적 이동
+        // position 이동보다 좀더 확장된 이동
+        // 타일에 유닛의 정보를 기록하고 유닛의 OnMove, 타일의 OnTile 이벤트를 실행시킨다.
         public static void Move(Unit unit, Vector2Int start, Vector2Int target)
         {
-            // BeforeMove();
-
-            //기존 타일 유닛 초기화 Tile.cs로 옮기면 좋을듯
-
             //OnMove는 이동 할때마다 항상 수행되는 이벤트
-            //OnTile은 타일의 특성에 따라 이동이 끝난 후 발동되는 타일의 이벤트
             target = unit.OnMove.before.Invoke(target);
+
             FieldManager.GetTile(start).SetUnit(null);
             FieldManager.GetTile(target).SetUnit(unit);
             unit.Position = target;
             unit.OnMove.after.Invoke(target);
-            FieldManager.GetTile(target).OnTile();
-            // AfterMove();
+
+            //OnTile은 타일의 특성에 따라 이동이 끝난 후 발동되는 타일의 이벤트
+            FieldManager.GetTile(target).OnTile(unit);
         }
 
         public static int Damage(Unit unit, int value)
@@ -117,6 +115,27 @@ namespace Common
             Debug.Log($"{unit.Name} Level Up! ( Lv {unit.Level - 1} > Lv {unit.Level} )");
         }
 
+        
+        public static void AddArtifact(Unit target, Artifact artifact)
+        {
+            artifact.OnAddThisArtifact();
+            target.Artifacts.Add(artifact);
+            FadeOutTextView.MakeText(target.Position + Vector2Int.up, $"+{artifact.Name}", Color.yellow);
+        }
+
+        public static void RemoveArtifact(Unit target, Artifact artifact)
+        {
+            
+            if (target.Artifacts.Contains(artifact))
+            {
+                artifact.OnRemoveThisArtifact();
+                target.Artifacts.Remove(artifact);
+                FadeOutTextView.MakeText(target.Position + Vector2Int.up, $"-{artifact.Name}", Color.yellow);
+            }
+            else
+                Debug.LogError($"{target.Name}이 {artifact.Name}를 소유하고 있지 않습니다.");
+        }
+
         public static Effect GetEffectByNumber(Unit unit, int value)
         {
             Effect effect = null;
@@ -172,14 +191,28 @@ namespace Common
                 Debug.LogError("이미 위치에 유닛이 존재합니다.");
         }
 
+        // 최초 Obatainable 최초 소환
+        public static void Summon(Obtainable obtainable, Vector2Int position)
+        {
+            FieldManager.GetTile(position).SetObtainable(obtainable);
+            obtainable.Position = position;
+            BattleManager.instance.AllObtainables.Add(obtainable);
+            BattleView.MakeObtainableObject(obtainable, position);
+        }
+
         public static void UnSummon(Unit unit)
         {
             BattleView.DestroyUnitObject(unit);
             BattleManager.instance.AllUnits.Remove(unit);
             FieldManager.GetTile(unit.Position).SetUnit(null);
         }
-
-        public static void UnSummonAll()
+        public static void UnSummon(Obtainable obtainable)
+        {
+            FieldManager.GetTile(obtainable.Position).SetObtainable(null);
+            BattleView.DestroyObtainableObject(obtainable);
+        }
+        
+        public static void UnSummonAllUnit()
         {
             List<Unit> units = BattleManager.instance.AllUnits;
             for (int i = units.Count - 1; i >= 0; i--)
@@ -217,7 +250,7 @@ namespace Common
             unit.Skills[index] = null;
         }
 
-        public static void EnhanceSkill(Unit unit, int index)
+        public static void UpgradeSkill(Unit unit, int index)
         {
             if (index >= unit.Skills.Length || index < 0)
             {
@@ -231,5 +264,6 @@ namespace Common
             }
             unit.Skills[index].Upgrade();
         }
+
     }
 }
