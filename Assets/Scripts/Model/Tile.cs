@@ -83,9 +83,11 @@ namespace Model
 
         public virtual void OnTile(Unit unit)
         {
-            if (GetObtainable() != null)
+            if (obtainable != null)
             {
-                Common.Command.UnSummon(GetObtainable());
+                obtainable.ToBag();
+                View.FadeOutTextView.MakeText(unit.Position + Vector2Int.up, $"{obtainable.Name} 획득!", Color.yellow);
+                Common.Command.UnSummon(obtainable);
             }
         }
     }
