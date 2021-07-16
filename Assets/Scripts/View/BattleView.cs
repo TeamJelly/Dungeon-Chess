@@ -59,6 +59,7 @@ namespace View
         /// <returns></returns>
         public static IEnumerator SetNonBattleMode()
         {
+            BattleManager.instance.thisTurnUnit = null;
             GameManager.InBattle = false;
             TurnEndButton.gameObject.SetActive(false);
             UnitControlUI.panel.SetActive(false);
