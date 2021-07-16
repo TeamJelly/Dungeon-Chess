@@ -18,6 +18,7 @@ namespace Model.Managers
         public List<Obtainable> AllObtainables = new List<Obtainable>();
 
         // 현재 턴의 유닛
+        [NonSerialized]
         public Unit thisTurnUnit;
 
         public int turnCount;
