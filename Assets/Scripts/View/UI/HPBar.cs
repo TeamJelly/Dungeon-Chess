@@ -11,7 +11,7 @@ namespace View.UI
         public Slider slider;
         public Image image;
 
-        public Dictionary<UnitAlliance, Color> AllianceToColorDict = new Dictionary<UnitAlliance, Color>
+        public static Dictionary<UnitAlliance, Color> AllianceToColorDict = new Dictionary<UnitAlliance, Color>
         {
             {UnitAlliance.NULL, Color.white },
             {UnitAlliance.Party, new Color(0.3f,0.3f,1) },
