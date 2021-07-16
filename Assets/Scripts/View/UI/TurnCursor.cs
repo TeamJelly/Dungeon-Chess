@@ -17,7 +17,7 @@ namespace View.UI
             }
             else
             {
-                GetComponentInChildren<SpriteRenderer>().color = new Color(1,0,0,0);
+                GetComponentInChildren<SpriteRenderer>().color = new Color(0,0,0,0);
             }
         }
     }
