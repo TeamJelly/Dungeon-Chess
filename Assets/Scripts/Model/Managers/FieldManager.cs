@@ -161,7 +161,7 @@ namespace Model.Managers
             List<Tile> tiles = new List<Tile>();
 
             foreach (Tile tile in GetField())
-                if (tile.IsObtainablePositionable())
+                if (tile.IsPositionable())
                     allBlankTiles.Add(tile);
 
             for (int i = 0; i < count; i++)
