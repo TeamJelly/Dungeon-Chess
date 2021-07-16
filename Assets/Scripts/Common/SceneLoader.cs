@@ -22,7 +22,7 @@ namespace Common
 
         public static void GotoLobby()
         {
-            LoadScene("Lobby");
+            LoadScene("Field");
         }
         public static void GotoMain()
         {
@@ -42,7 +42,7 @@ namespace Common
         public static void GotoBattleRoom()
         {
             GameManager.InBattle = true;
-            LoadScene("Battle");
+            LoadScene("Field");
         }
 
         public static void GotoTreasureRoom()

@@ -50,12 +50,12 @@ namespace Model.Managers
 
             if (GameManager.Instance.currentRoom == null)
             {
-                Unit unit = new Proto_Skeleton();//new M000_Judgement();
+                /*Unit unit = new Proto_Skeleton();//new M000_Judgement();
                 Common.Command.Summon(unit, new Vector2Int(4, 4));
                 Common.Command.AddArtifact(unit, new Model.Artifacts.A000_Test1());
                 Common.Command.AddArtifact(unit, new Model.Artifacts.A000_Test1());
                 Common.Command.AddArtifact(unit, new Model.Artifacts.A000_Test1());
-                Common.Command.AddArtifact(unit, new Model.Artifacts.A000_Test1());
+                Common.Command.AddArtifact(unit, new Model.Artifacts.A000_Test1());*/
                 // Common.Command.AddEffect(unit, new Model.Effects.E004_Stun(unit));
                 // Common.Command.AddEffect(unit, new Model.Effects.E005_Regeneration(unit, 99));
                 // Common.Command.AddEffect(unit, new Model.Effects.E021_Barrier(unit, 10));
@@ -94,7 +94,7 @@ namespace Model.Managers
                 GameManager.PartyUnits.Add(UnitManager.Instance.AllUnits[1]);
                 GameManager.LeaderUnit = GameManager.PartyUnits[0];
             }
-            GameManager.InBattle = true;
+            //GameManager.InBattle = true;
 
             if (GameManager.InBattle)
             {
@@ -102,6 +102,7 @@ namespace Model.Managers
             }
             else
             {
+                GameManager.LeaderUnit.Position = FieldManager.instance.GetStairPosition();
                 StartCoroutine(BattleView.SetNonBattleMode());
             }
 
