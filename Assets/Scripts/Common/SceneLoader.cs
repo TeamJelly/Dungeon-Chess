@@ -1,9 +1,9 @@
 ﻿using Model;
+using Model.Managers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
 namespace Common
 {
     //추후 수정 예정
@@ -41,7 +41,8 @@ namespace Common
 
         public static void GotoBattleRoom()
         {
-            LoadScene("Lobby");
+            GameManager.InBattle = true;
+            LoadScene("Battle");
         }
 
         public static void GotoTreasureRoom()

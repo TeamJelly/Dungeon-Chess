@@ -59,6 +59,7 @@ namespace View
         /// <returns></returns>
         public static IEnumerator SetNonBattleMode()
         {
+            GameManager.InBattle = false;
             TurnEndButton.gameObject.SetActive(false);
             UnitControlUI.panel.SetActive(false);
             if (GameManager.LeaderUnit == null) GameManager.LeaderUnit = GameManager.PartyUnits[0];
