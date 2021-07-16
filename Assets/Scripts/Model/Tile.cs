@@ -29,11 +29,12 @@ namespace Model
 
         protected Obtainable obtainable = null;
 
+        // 인자로 넘긴 해당 유닛이 위치할수 있는지를 검사한다.
         public bool IsUnitPositionable(Unit unit)
         {
             if (HasUnit())
                return false;
-            if (
+            else if (
                     unit.IsFlying == false && // 유닛이 날고있다면 위치 가능하다.
                     (
                         category == Category.Wall ||
@@ -45,18 +46,28 @@ namespace Model
                 return true;
         }
 
+        // 아이템이 위치할수 있는지 검사한다.
+        public bool IsObtainablePositionable()
+        {
+            // 유닛이나 획득물품이 존재하면 false
+            if (HasUnit() || HasObtainable())
+                return false;
+            // 벽이거나 구멍이면 false
+            else if (category != Category.Floor)
+                return false;
+            // 이외의 경우에 가능하다.
+            else
+                return true;
+        }
 
         public bool HasUnit()
         {
             return unit != null;
         }
 
-        public bool HasUnit(Unit unit)
+        public bool HasObtainable()
         {
-            if (this.unit == unit)
-                return true;
-            else
-                return false;
+            return obtainable != null;
         }
 
         public virtual void SetUnit(Unit newUnit)

@@ -15,13 +15,13 @@ namespace View.UI
         public override void OnPointerDown(PointerEventData eventData)
         {
             base.OnPointerDown(eventData);
-            //Debug.Log("Pointer Down");
+            Debug.Log("Pointer Down");
         }
 
         public override void OnPointerUp(PointerEventData eventData)
         {
             base.OnPointerUp(eventData);
-            //Debug.Log("Pointer Up");
+            Debug.Log("Pointer Up");
         }
 
 

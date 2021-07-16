@@ -51,13 +51,13 @@ namespace View.UI
 
         public void ShowPushEffect()
         {
-            DownTransfrom.anchoredPosition = DownTransfrom.anchoredPosition+ new Vector2(0, -2);
+            DownTransfrom.anchoredPosition = DownTransfrom.anchoredPosition+ new Vector2(0, -6);
             FrameImage.sprite = PushedFrameSprite;
         }
 
         public void ShowPopEffect()
         {
-            DownTransfrom.anchoredPosition = DownTransfrom.anchoredPosition + new Vector2(0, 2);
+            DownTransfrom.anchoredPosition = DownTransfrom.anchoredPosition + new Vector2(0, 6);
             FrameImage.sprite = DefaultFrameSprite;
         }
         public virtual void SetInteractable(bool b)
