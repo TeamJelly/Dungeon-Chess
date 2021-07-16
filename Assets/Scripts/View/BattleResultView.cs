@@ -61,12 +61,12 @@ namespace View
                 Common.Command.UnSummonAllUnit();
                 StartCoroutine(BattleView.SetNonBattleMode());
             });
-            UIEffect.FadeInPanel(WinUI, 0.5f);
+            UIEffect.FadeInPanel(WinUI, 2f);
         }
 
         public void EnableDeafeatUI()
         {
-            UIEffect.FadeInPanel(DeafeatUI, 0.5f);
+            UIEffect.FadeInPanel(DeafeatUI, 1f);
         }
     }
 }

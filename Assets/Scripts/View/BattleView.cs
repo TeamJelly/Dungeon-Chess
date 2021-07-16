@@ -59,6 +59,8 @@ namespace View
         /// <returns></returns>
         public static IEnumerator SetNonBattleMode()
         {
+            BattleManager.instance.thisTurnUnit = null;
+            GameManager.InBattle = false;
             TurnEndButton.gameObject.SetActive(false);
             UnitControlUI.panel.SetActive(false);
             if (GameManager.LeaderUnit == null) GameManager.LeaderUnit = GameManager.PartyUnits[0];
@@ -72,7 +74,7 @@ namespace View
                     Vector2Int destination = new Vector2Int(Mathf.Clamp((int)mousepos.x, 0, 15), Mathf.Clamp((int)mousepos.y, 0, 15));
 
                     // 리더 유닛이 해당 타일에 위치가능하다면
-                    if (FieldManager.GetTile(destination).IsUnitPositionable(GameManager.LeaderUnit))
+                    if (FieldManager.GetTile(destination).IsPositionable(GameManager.LeaderUnit))
                     {
                         //리더 유닛 이동 코루틴 실행. 기존 실행되던 코루틴은 정지.
                         instance.StopCoroutine(coroutine);

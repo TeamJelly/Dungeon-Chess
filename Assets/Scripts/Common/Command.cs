@@ -25,6 +25,9 @@ namespace Common
             foreach(Tile tile in tiles)
             {
                 Summon(unit.Artifacts[count], tile.position);
+                Vector3 startPos = new Vector3(unit.Position.x, unit.Position.y, -0.1f);
+                Vector3 target = new Vector3(tile.position.x, tile.position.y, -0.1f);
+                VisualEffectView.MakeDropEffect(startPos,target,unit.Artifacts[count]);
                 count++;
             }
 

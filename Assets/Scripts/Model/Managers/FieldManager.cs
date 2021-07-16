@@ -161,7 +161,7 @@ namespace Model.Managers
             List<Tile> tiles = new List<Tile>();
 
             foreach (Tile tile in GetField())
-                if (tile.IsObtainablePositionable())
+                if (tile.IsPositionable())
                     allBlankTiles.Add(tile);
 
             for (int i = 0; i < count; i++)
@@ -194,29 +194,35 @@ namespace Model.Managers
 
             List<Vector2Int> StairAroundPosition = new List<Vector2Int>();
 
-            for (int y = 0; y < field.GetLength(0); y++)
+            Vector2Int stairPosition = GetStairPosition();
+            foreach (var vector in around)
+            {
+                Vector2Int position = stairPosition + vector;
+
+                if (StairAroundPosition.Contains(position) == false &&
+                    field[position.y, position.x].category != Model.Tile.Category.Hole &&
+                    field[position.y, position.x].category != Model.Tile.Category.Wall &&
+                    field[position.y, position.x].HasUnit() == false)
+                    StairAroundPosition.Add(position);
+                //else
+                //    Debug.LogError($"{x},{y} + {vector}");
+            }
+            return StairAroundPosition;
+        }
+
+        public Vector2Int GetStairPosition()
+        {
+             for (int y = 0; y < field.GetLength(0); y++)
             {
                 for (int x = 0; x < field.GetLength(1); x++)
                 {
                     if (field[y, x].category == Model.Tile.Category.UpStair)
                     {
-                        foreach (var vector in around)
-                        {
-                            Vector2Int position = new Vector2Int(x, y) + vector;
-
-                            if (StairAroundPosition.Contains(position) == false &&
-                                field[position.y, position.x].category != Model.Tile.Category.Hole &&
-                                field[position.y, position.x].category != Model.Tile.Category.Wall &&
-                                field[position.y, position.x].HasUnit() == false)
-                                StairAroundPosition.Add(position);
-                            //else
-                            //    Debug.LogError($"{x},{y} + {vector}");
-                        }
+                        return new Vector2Int(x, y);
                     }
                 }
             }
-
-            return StairAroundPosition;
+            return Vector2Int.zero;
         }
 
         private void Awake()

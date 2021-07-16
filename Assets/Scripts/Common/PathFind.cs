@@ -63,7 +63,7 @@ namespace Common
 
                 foreach (var item in vector2Ints)
                     if (FieldManager.GetTile(item) != null && 
-                        FieldManager.GetTile(item).IsUnitPositionable(agent))
+                        FieldManager.GetTile(item).IsPositionable(agent))
                         neighbor.Add(new Node(item, node));
 
                 return neighbor;

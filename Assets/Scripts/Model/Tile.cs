@@ -30,7 +30,7 @@ namespace Model
         protected Obtainable obtainable = null;
 
         // 인자로 넘긴 해당 유닛이 위치할수 있는지를 검사한다.
-        public bool IsUnitPositionable(Unit unit)
+        public bool IsPositionable(Unit unit)
         {
             if (HasUnit())
                return false;
@@ -46,8 +46,11 @@ namespace Model
                 return true;
         }
 
+
+        //obtainable -> item
+        //Droptem
         // 아이템이 위치할수 있는지 검사한다.
-        public bool IsObtainablePositionable()
+        public bool IsPositionable()
         {
             // 유닛이나 획득물품이 존재하면 false
             if (HasUnit() || HasObtainable())

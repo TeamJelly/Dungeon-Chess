@@ -17,7 +17,7 @@ namespace Model.Managers
                 unit.CurHP += value;
             }
 
-            MenuManager.instance.GotoStage();
+            //MenuManager.instance.GotoStage();
 
         }
 
@@ -28,7 +28,7 @@ namespace Model.Managers
                 Command.UpgradeSkill(unit, 0);
             }
 
-            MenuManager.instance.GotoStage();
+          //  MenuManager.instance.GotoStage();
         }
     }
 }

@@ -12,22 +12,11 @@ namespace Model.Managers
         {
             instance = this;
         }
-        public void StartGame()
-        {
-            SceneLoader.GotoPrepareScene();
-        }
-
         public void GotoMain()
         {
             GameManager.Reset();
             SceneLoader.GotoMain();
         }
-
-        public void GotoStage()
-        {
-            SceneLoader.GotoStage();
-        }
-
         public void GotoLobby()
         {
             SceneLoader.GotoLobby();
