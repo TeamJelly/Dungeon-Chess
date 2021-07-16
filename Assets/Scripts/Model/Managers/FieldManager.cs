@@ -24,41 +24,41 @@ namespace Model.Managers
         // 필드 데이터
         [TextArea(0, 20)]
         public List<string> FieldDatas = new List<string>()
-    {
-        "WWWWWWWWWWWWWWWW\n" +
-        "WWWWWWWWWWWWWWWW\n" +
-        "WWWWWWWWWWWWWWWW\n" +
-        "WWWFFFFFFFFFFWWW\n" +
-        "WWWFFFFFFFFFFWWW\n" +
-        "WWWFFFFFFFFFFWWW\n" +
-        "WWWFFFFFFFFFFWWW\n" +
-        "WWWFFFFFFFFFFWWW\n" +
-        "WWWFFFFFFFFFFWWW\n" +
-        "WWWFFFFFFFFFFWWW\n" +
-        "WWWFFFFFFFFFFWWW\n" +
-        "WWWFSFFFFFFFFWWW\n" +
-        "WWWFFFFFFFFFFWWW\n" +
-        "WWWWWWWWWWWWWWWW\n" +
-        "WWWWWWWWWWWWWWWW\n" +
-        "WWWWWWWWWWWWWWWW"
-        ,
-        "WWWWWWWWWWWWWWWW\n" +
-        "WWWWWWWWWWWWWWWW\n" +
-        "WWFFFFFTTFFFFFWW\n" +
-        "WWFFFFFTTFFFFFWW\n" +
-        "WWFFFFFTTFFFFFWW\n" +
-        "WWFFFFFTTFFFFFWW\n" +
-        "WWFFFFFTTFFFFFWW\n" +
-        "WWTTTTTTTTTTTTWW\n" +
-        "WWTTTTTTTTTTTTWW\n" +
-        "WWFFFFFTTFFFFFWW\n" +
-        "WWFFFFFTTFFFFFWW\n" +
-        "WWFFFFFTTFFFFFWW\n" +
-        "WWFFFFFTTFFFFFWW\n" +
-        "WWFFFFFTTFFFFFWW\n" +
-        "WWWWWWWWWWWWWWWW\n" +
-        "WWWWWWWWWWWWWWWW"
-    };
+        {
+            "WWWWWWWWWWWWWWWW\n" +
+            "WWWWWWWWWWWWWWWW\n" +
+            "WWWWWWWWWWWWWWWW\n" +
+            "WWWFFFFFFFFFFWWW\n" +
+            "WWWFFFFFFFFFFWWW\n" +
+            "WWWFFFFFFFFFFWWW\n" +
+            "WWWFFFFFFFFFFWWW\n" +
+            "WWWFFFFFFFFFFWWW\n" +
+            "WWWFFFFFFFFFFWWW\n" +
+            "WWWFFFFFFFFFFWWW\n" +
+            "WWWFFFFFFFFFFWWW\n" +
+            "WWWFSFFFFFFFFWWW\n" +
+            "WWWFFFFFFFFFFWWW\n" +
+            "WWWWWWWWWWWWWWWW\n" +
+            "WWWWWWWWWWWWWWWW\n" +
+            "WWWWWWWWWWWWWWWW"
+            ,
+            "WWWWWWWWWWWWWWWW\n" +
+            "WWWWWWWWWWWWWWWW\n" +
+            "WWFFFFFTTFFFFFWW\n" +
+            "WWFFFFFTTFFFFFWW\n" +
+            "WWFFFFFTTFFFFFWW\n" +
+            "WWFFFFFTTFFFFFWW\n" +
+            "WWFFFFFTTFFFFFWW\n" +
+            "WWTTTTTTTTTTTTWW\n" +
+            "WWTTTTTTTTTTTTWW\n" +
+            "WWFFFFFTTFFFFFWW\n" +
+            "WWFFFFFTTFFFFFWW\n" +
+            "WWFFFFFTTFFFFFWW\n" +
+            "WWFFFFFTTFFFFFWW\n" +
+            "WWFFFFFTTFFFFFWW\n" +
+            "WWWWWWWWWWWWWWWW\n" +
+            "WWWWWWWWWWWWWWWW"
+        };
 
         public void InitField(string fieldData)
         {
@@ -139,12 +139,44 @@ namespace Model.Managers
                 return instance.field[y, x];
             }
         }
-		
 
         public static Tile[,] GetField()
         {
             return instance.field;
         }
+
+        // 필드에서 position에 가까운 빈(Unit과 Obatainable이 없는) 바닥 타일을 가져옵니다.
+        public static List<Tile> GetBlankFloorTiles(Vector2Int position, int count)
+        {
+            List<Tile> tiles = new List<Tile>();
+
+            return tiles;
+        }
+
+
+        // 필드에서 랜덤한 빈 타일을 가져옵니다.
+        public static List<Tile> GetBlankFloorTiles(int count)
+        {
+            List<Tile> allBlankTiles = new List<Tile>();
+            List<Tile> tiles = new List<Tile>();
+
+            foreach (Tile tile in GetField())
+                if (tile.IsObtainablePositionable())
+                    allBlankTiles.Add(tile);
+
+            for (int i = 0; i < count; i++)
+            {
+                if (allBlankTiles.Count == 0)
+                    return tiles;
+
+                Tile temp = allBlankTiles[Random.Range(0, allBlankTiles.Count)];
+                allBlankTiles.Remove(temp);
+                tiles.Add(temp);
+            }
+
+            return tiles;
+        }
+
         public List<Vector2Int> GetStairAroundPosition()
         {
             List<Vector2Int> around = new List<Vector2Int>()

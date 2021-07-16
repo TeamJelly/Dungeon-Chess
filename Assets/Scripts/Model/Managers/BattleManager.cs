@@ -52,9 +52,13 @@ namespace Model.Managers
             {
                 Unit unit = new Proto_Skeleton();//new M000_Judgement();
                 Common.Command.Summon(unit, new Vector2Int(4, 4));
-                Common.Command.AddEffect(unit, new Model.Effects.E004_Stun(unit));
-                Common.Command.AddEffect(unit, new Model.Effects.E005_Regeneration(unit, 99));
-                Common.Command.AddEffect(unit, new Model.Effects.E021_Barrier(unit, 10));
+                Common.Command.AddArtifact(unit, new Model.Artifacts.A000_Test1());
+                Common.Command.AddArtifact(unit, new Model.Artifacts.A000_Test1());
+                Common.Command.AddArtifact(unit, new Model.Artifacts.A000_Test1());
+                Common.Command.AddArtifact(unit, new Model.Artifacts.A000_Test1());
+                // Common.Command.AddEffect(unit, new Model.Effects.E004_Stun(unit));
+                // Common.Command.AddEffect(unit, new Model.Effects.E005_Regeneration(unit, 99));
+                // Common.Command.AddEffect(unit, new Model.Effects.E021_Barrier(unit, 10));
             }
             else if (GameManager.Instance.currentRoom.category == Room.Category.Monster)
             {
@@ -101,11 +105,11 @@ namespace Model.Managers
                 StartCoroutine(BattleView.SetNonBattleMode());
             }
 
-            Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(6, 6));
-            Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(10, 5));
-            Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(6, 8));
-            Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(9, 9));
-            Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(6, 4));
+            // Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(6, 6));
+            // Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(10, 5));
+            // Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(6, 8));
+            // Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(9, 9));
+            // Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(6, 4));
 
             // UI.Battle.IndicatorUI.ShowTileIndicator()
 

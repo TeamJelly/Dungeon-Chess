@@ -12,14 +12,22 @@ namespace Common
     {
         public static void Die(Unit unit)
         {
-            Debug.Log($"{unit.Name}는(은) 사망했다!");
+            View.FadeOutTextView.MakeText(unit.Position, $"{unit.Name} 사망", Color.red);
 
             unit.Agility = -10;
             unit.Alliance = UnitAlliance.NULL;
 
             View.VisualEffectView.MakeVisualEffect(unit.Position, "Explosion");
-
             UnSummon(unit);
+
+            List<Tile> tiles = FieldManager.GetBlankFloorTiles(unit.Artifacts.Count);
+            int count = 0;
+            foreach(Tile tile in tiles)
+            {
+                Summon(unit.Artifacts[count], tile.position);
+                count++;
+            }
+
             GameManager.RemovePartyUnit(unit); //죽으면 파티유닛에서 박탈.
 
             BattleManager.instance.InitializeUnitBuffer();
@@ -109,10 +117,11 @@ namespace Common
         }
         public static void LevelUp(Unit unit)
         {
+            View.FadeOutTextView.MakeText(unit.Position + Vector2Int.up, "Level Up!", Color.white);
+
             unit.Level++;
             unit.CurEXP = 0;
-            unit.NextEXP = unit.Level * 10;
-            Debug.Log($"{unit.Name} Level Up! ( Lv {unit.Level - 1} > Lv {unit.Level} )");
+            unit.NextEXP = 10 * unit.Level * (unit.Level + 5);            
         }
 
         
@@ -125,7 +134,6 @@ namespace Common
 
         public static void RemoveArtifact(Unit target, Artifact artifact)
         {
-            
             if (target.Artifacts.Contains(artifact))
             {
                 artifact.OnRemoveThisArtifact();
@@ -164,17 +172,6 @@ namespace Common
             }
             else
                 Debug.LogError($"{target.Name}이 {effect.Name}를 소유하고 있지 않습니다.");
-        }
-
-        public static void Summon(Unit unit)
-        {
-            Summon(unit, unit.Position);
-        }
-
-        public static void Summon(List<Unit> units)
-        {
-            foreach (var unit in units)
-                Summon(unit);
         }
 
         public static void Summon(Unit unit, Vector2Int target)
