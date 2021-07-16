@@ -37,6 +37,7 @@ namespace Model
 
         private List<Artifact> artifacts = new List<Artifact>();    // 보유한 유물
         private List<Effect> stateEffects = new List<Effect>();  // 보유한 상태효과
+        private List<Obtainable> droptems = new List<Obtainable>();
 
         private RuntimeAnimatorController animator; // 애니메이터
 
@@ -164,6 +165,23 @@ namespace Model
         public List<Effect> StateEffects { get => stateEffects; set => stateEffects = value; }
         public int MoveCount { get => moveCount; set => moveCount = value; }
         public int CriticalRate { get => criticalRate; set => criticalRate = value; }
+        
+        public virtual List<Obtainable> Droptems {
+            set => droptems = value;
+            get 
+            {
+                List<Obtainable> obtainables = new List<Obtainable>();
+
+                foreach (var item in droptems)
+                    obtainables.Add(item);
+
+                foreach (var item in Artifacts)
+                    obtainables.Add(item);
+
+                return obtainables;
+            }
+        }
+
         public RuntimeAnimatorController Animator
         {
             get
@@ -178,40 +196,5 @@ namespace Model
 
         private bool isFlying = false;
         public bool IsFlying { get => isFlying; set => isFlying = value; }
-
-        /// <summary>
-        /// DB로 부터 초기화
-        /// </summary>
-        ///// <param name="id">DB 키값</param>
-        //protected Unit(int id)
-        //{
-        //    initializeUnitFromDB(id);
-        //    CurHP = MaxHP;
-
-        //    var skillString = descriptor.skills.Split(';');
-
-        //    //descriptor로부터 걷기 추가
-        //    moveSkill = (Skill)Activator.CreateInstance(Type.GetType($"Model.Skills.{descriptor.moveSkill}"));
-
-        //    //descriptor로부터 스킬 추가
-        //    for (int i = 0; i < skillString.Length; i++)
-        //    {
-        //        // Debug.Log(skillString[i]);
-        //        skills[i] = (Skill)Activator.CreateInstance(Type.GetType($"Model.Skills.{skillString[i]}"));
-        //    }
-        //}
-
-        //private void initializeUnitFromDB(int no)
-        //{
-        //    var _descriptor = UnitStorage.Instance[no];
-        //    if (_descriptor != null)
-        //    {
-        //        descriptor = _descriptor.Copy();
-        //    }
-        //    else
-        //    {
-        //        Debug.LogError($"number={no}에 해당하는 유닛이 없습니다.");
-        //    }
-        //}
     }
 }
