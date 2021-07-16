@@ -19,7 +19,6 @@ namespace Common
             SceneManager.LoadScene(sceneName);
         }
 
-
         public static void GotoLobby()
         {
             LoadScene("Field");
@@ -31,14 +30,8 @@ namespace Common
 
         public static void GotoPrepareScene()
         {
-            LoadScene("#002_Preparation");
+           LoadScene("Field");
         }
-
-        public static void GotoStage()
-        {
-            LoadScene("#003_Stage");
-        }
-
         public static void GotoBattleRoom()
         {
             GameManager.InBattle = true;
@@ -47,22 +40,22 @@ namespace Common
 
         public static void GotoTreasureRoom()
         {
-            LoadScene("#005_Treasure");
+             LoadScene("Field");
         }
 
         public static void GotoShopRoom()
         {
-            LoadScene("#006_Shop");
+            LoadScene("Field");
         }
 
         public static void GotoTavernRoom()
         {
-            LoadScene("#007_Tavern");
+           LoadScene("Field");
         }
 
         public static void GotoEventRoom()
         {
-            LoadScene("#008_Event");
+            LoadScene("Field");
         }
 
 
