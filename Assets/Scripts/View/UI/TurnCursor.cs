@@ -10,15 +10,8 @@ namespace View.UI
     {
         void FixedUpdate()
         {
-            if (Model.Managers.BattleManager.instance.thisTurnUnit.Alliance == Model.UnitAlliance.Party)
-                GetComponentInChildren<Image>().color = Color.green;
-            else if (Model.Managers.BattleManager.instance.thisTurnUnit.Alliance == Model.UnitAlliance.Enemy)
-                GetComponentInChildren<Image>().color = Color.red;
-
-            transform.position = 
-                Camera.main.WorldToScreenPoint(
-                    View.BattleView.UnitObjects[Model.Managers.BattleManager.instance.thisTurnUnit].transform.position
-                    + Vector3.up);
+            GetComponentInChildren<SpriteRenderer>().color = HPBar.AllianceToColorDict[Model.Managers.BattleManager.instance.thisTurnUnit.Alliance];
+            transform.position = (Vector3Int)(Model.Managers.BattleManager.instance.thisTurnUnit.Position + Vector2Int.up);
         }
     }
 }
