@@ -130,7 +130,8 @@ namespace Common
         
         public static void AddArtifact(Unit target, Artifact artifact)
         {
-            artifact.OnAddThisArtifact();
+            artifact.Owner = target;
+            artifact.OnAddThisEffect();
             target.Artifacts.Add(artifact);
             FadeOutTextView.MakeText(target.Position + Vector2Int.up, $"+{artifact.Name}", Color.yellow);
         }
@@ -139,7 +140,7 @@ namespace Common
         {
             if (target.Artifacts.Contains(artifact))
             {
-                artifact.OnRemoveThisArtifact();
+                artifact.OnRemoveThisEffect();
                 target.Artifacts.Remove(artifact);
                 FadeOutTextView.MakeText(target.Position + Vector2Int.up, $"-{artifact.Name}", Color.yellow);
             }

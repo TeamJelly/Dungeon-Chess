@@ -53,10 +53,10 @@ namespace Model.Managers
             {
                 Unit unit = new Proto_Skeleton();//new M000_Judgement();
                 Common.Command.Summon(unit, new Vector2Int(4, 4));
-                Common.Command.AddArtifact(unit, new Model.Artifacts.A000_Test1());
-                Common.Command.AddArtifact(unit, new Model.Artifacts.A000_Test1());
-                Common.Command.AddArtifact(unit, new Model.Artifacts.A000_Test1());
-                Common.Command.AddArtifact(unit, new Model.Artifacts.A000_Test1());
+                Common.Command.AddArtifact(unit, new Model.Artifacts.A999_test());
+                Common.Command.AddArtifact(unit, new Model.Artifacts.A999_test());
+                Common.Command.AddArtifact(unit, new Model.Artifacts.A999_test());
+                Common.Command.AddArtifact(unit, new Model.Artifacts.A999_test());
                 // Common.Command.AddEffect(unit, new Model.Effects.E004_Stun(unit));
                 // Common.Command.AddEffect(unit, new Model.Effects.E005_Regeneration(unit, 99));
                 // Common.Command.AddEffect(unit, new Model.Effects.E021_Barrier(unit, 10));
@@ -109,7 +109,7 @@ namespace Model.Managers
 
             // Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(6, 6));
             // Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(10, 5));
-            // Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(6, 8));
+             Common.Command.Summon(new Model.Artifacts.A006_AutoHill(), new Vector2Int(6, 8));
             // Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(9, 9));
             // Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(6, 4));
 

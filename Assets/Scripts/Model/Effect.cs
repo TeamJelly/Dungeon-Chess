@@ -29,6 +29,10 @@ namespace Model
             }
         }
 
+        public Effect()
+        {
+
+        }
         public Effect(Unit owner)
         {
             Owner = owner;

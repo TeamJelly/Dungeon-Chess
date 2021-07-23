@@ -7,9 +7,9 @@ using UnityEngine;
 namespace Model.Artifacts
 {
     
-    public class A000_Test1 : Artifact
+    public class A999_test : Artifact
     {
-        public A000_Test1()
+        public A999_test()
         {
             Name = "test artifact name";
             spritePath = "1bitpack_kenney_1/Artifacts/A001_Helmet";
@@ -20,16 +20,14 @@ namespace Model.Artifacts
             return value - 1;
         }
 
-        public override void OnAddThisArtifact()
+        public override void OnAddThisEffect()
         {
-            
 
-            // base.OnAddThisArtifact();
         }
 
-        public override void OnRemoveThisArtifact()
+        public override void OnRemoveThisEffect()
         {
-            // base.OnRemoveThisArtifact();
+
         }
 
     }

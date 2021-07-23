@@ -155,7 +155,7 @@ namespace Model
         public int Strength { get => strength; set => strength = value; }
         public int MaxHP { get => maxHP; set => maxHP = value; }
         public int Agility { get => agility; set => agility = value; }
-        public int Move { get => move; set => move = value; }
+        public int Move { get => move; set => move = value; } //이동 반경
         public float ActionRate { get => actionRate; set => actionRate = value; }
         public int SkillCount { get => skillCount; set => skillCount = value; }
         public Skill MoveSkill { get => moveSkill; set => moveSkill = value; }
