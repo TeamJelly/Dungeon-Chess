@@ -23,7 +23,7 @@ namespace View
         [SerializeField]
         private Button turnEndButton;
         [SerializeField]
-        private UnitControlUI unitControlUI;
+        private UnitControlView unitControlUI;
         static BattleView instance;
         // public UnitInfoView ThisTurnUnitInfo;
         // public UnitInfoView OtherUnitInfo { get; set; }
@@ -34,7 +34,7 @@ namespace View
         public static Button TurnEndButton => instance.turnEndButton;
         public static Image CurrentUnitPortrait => instance.currentUnitPortrait;
         public static GameObject MainPanel => instance.mainPanel;
-        public static UnitControlUI UnitControlUI => instance.unitControlUI;
+        public static UnitControlView UnitControlUI => instance.unitControlUI;
         public static Dictionary<Unit, GameObject> UnitObjects => instance.unitObjects;
         public static Dictionary<Unit, HPBar> HPBars => instance.hpBars;
         public static Dictionary<Obtainable, GameObject> ObtainableObjects => instance.obtainableObjects;
@@ -48,7 +48,7 @@ namespace View
             //OtherUnitInfo = transform.Find("Panel/OtherUnitInfo").GetComponent<UnitInfoView>();
             //OtherUnitInfo.gameObject.SetActive(false);
             turnEndButton = transform.Find("MainPanel/TurnEndButton").GetComponent<Button>();
-            unitControlUI = GetComponent<UnitControlUI>();
+            unitControlUI = GetComponent<UnitControlView>();
 
             TurnEndButton.gameObject.SetActive(false);
             UnitControlUI.panel.SetActive(false);

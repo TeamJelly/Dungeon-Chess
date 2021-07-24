@@ -28,7 +28,7 @@ namespace View.UI
             if (!properties.interactable) return;
 
             if (toggleOption) pressed = !pressed;
-            else pressed = true;
+            if (!toggleOption) pressed = true;
 
             if (pressed && eventData.button == PointerEventData.InputButton.Left)
             {
@@ -42,6 +42,7 @@ namespace View.UI
             if (!properties.interactable) return;
 
             if (!toggleOption) pressed = false;
+
             if (!pressed && eventData.button == PointerEventData.InputButton.Left)
             {
                 ShowPopEffect();

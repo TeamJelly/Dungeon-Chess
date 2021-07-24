@@ -2,19 +2,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using View.UI;
 
-namespace View.UI
+namespace View
 {
-    public class UnitControlUI : MonoBehaviour
+    public class UnitControlView : MonoBehaviour
     {
         public GameObject panel;
-        //나중에 private로 바꾸기
         public SkillButton[] skillButtons;
         private int skillCount = 4;
+
+        public static UnitControlView instance;
 
         // Start is called before the first frame update
         private void Awake()
         {
+            instance = this;
             InitUI();
         }
 
@@ -38,22 +41,11 @@ namespace View.UI
             for (int i = 0; i < skillCount; i++)
             {
                 SkillButton button = skillButtons[i];
-                //button.MainImage.sprite = unit.Skills[i].Sprite;
-                button.properties.onClick.RemoveAllListeners();
-
-
-                button.properties.onClick.AddListener(() =>
-                {
-                    for (int j = 0; j < skillCount; j++)
-                    {
-                        skillButtons[j].SetInteractable(!button.pressed);
-                    }
-                    button.SetInteractable(true);
-
-                });
             }
+
             skillButtons[0].SetSkill(unit, unit.MoveSkill);
-            for (int i = 0; i < 3; i++)
+
+            for (int i = 0; i < unit.Skills.Length; i++)
             {
                 SkillButton button = skillButtons[i + 1];
                 button.SetSkill(unit, unit.Skills[i]);
