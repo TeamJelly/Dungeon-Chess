@@ -23,7 +23,7 @@ namespace Model.Units
             Move = 3;
             CriticalRate = 5;
 
-            portraitPath = "Helltaker/Azazel/Azazel_portrait";
+            spritePath = "Helltaker/Azazel/Azazel_portrait";
             animatorPath = "Helltaker/Azazel/Azazel_animator";
 
             MoveSkill = new S100_Walk();

@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 namespace Model
 {
     [System.Serializable]
-    public class Item : Obtainable
+    public class Item : Obtainable, Spriteable
     {
         GameObject gameObject;
 
@@ -15,21 +15,7 @@ namespace Model
         public int Number { get; set; }
 
         protected string spritePath;
-
-        private Sprite sprite;
-
-        public Sprite Sprite
-        {
-            set => sprite = value;
-            get
-            {
-                if (sprite == null)
-                {
-                    sprite = Common.Data.LoadSprite(spritePath);
-                }
-                return sprite;
-            }
-        }
+        public Sprite Sprite { get => Common.Data.LoadSprite(spritePath); }
 
         public Vector2Int Position { get; set; }
 

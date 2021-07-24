@@ -32,11 +32,29 @@ namespace Common
             return list;
         }
 
+        private static Sprite[] spritesData;
+
+        private static Sprite[] SpriteData
+        {
+            get
+            {
+                if (spritesData == null)
+                    spritesData = Resources.LoadAll<Sprite>("1bitpack_kenney_1/Tilesheet/colored_transparent_packed");
+                return spritesData;
+            }
+        }
+
         public static Sprite LoadSprite(string path)
         {
             Sprite sprite;
             if (path == "")
                 sprite = Resources.Load<Sprite>("1bitpack_kenney_1/Tilesheet/X");
+            else if (path.Contains("1bitpack_kenney_1/Tilesheet/colored_transparent_packed"))
+            {
+                string [] splited = path.Split('_');
+                int spriteNumber = int.Parse(splited[splited.Length]);
+                sprite = SpriteData[spriteNumber];
+            }
             else
                 sprite = Resources.Load<Sprite>(path);
             return sprite;

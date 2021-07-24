@@ -22,7 +22,7 @@ namespace Model.Units
             Move = 5;
             CriticalRate = 15;
             
-            portraitPath = "Helltaker/Judgement/Judgement_portrait";
+            spritePath = "Helltaker/Judgement/Judgement_portrait";
             animatorPath = "Helltaker/Judgement/Judgement_animator";
 
             MoveSkill = new S100_Walk()

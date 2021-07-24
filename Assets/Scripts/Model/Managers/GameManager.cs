@@ -10,17 +10,26 @@ namespace Model.Managers
 {
     public class GameManager
     {
-        static GameManager instance;
+        private static GameManager instance;
+
+        public static GameManager Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new GameManager();
+                return instance;
+            }
+        }
 
         public Vector2 ScrollRectTransformPosition;
-
         public List<Vector2Int> roomHistory = new List<Vector2Int>();
         public Room currentRoom = null;
         public Room[,] AllRooms = null;
         public List<Vector2Int>[] pathList = null;
         public List<Unit> partyUnits = new List<Unit>();
-        public List<Artifact> artifactBag = new List<Artifact>();
         public List<Item> itemBag = new List<Item>();
+        public List<Artifact> artifactBag = new List<Artifact>();
 
         private int gold;
         public int stage;
@@ -43,16 +52,6 @@ namespace Model.Managers
         { get { return instance.leader; } set => Instance.leader = value; }
 
         public static bool InBattle { get => Instance.inBattle; set => Instance.inBattle = value; }
-
-        public static GameManager Instance
-        {
-            get
-            {
-                if (instance == null)
-                    instance = new GameManager();
-                return instance;
-            }
-        }
 
         GameManager()
         {

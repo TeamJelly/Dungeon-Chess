@@ -10,7 +10,7 @@ namespace View.UI
         public GameObject panel;
         //나중에 private로 바꾸기
         public SkillButton[] skillButtons;
-        private int skillCount = 6;
+        private int skillCount = 4;
 
         // Start is called before the first frame update
         private void Awake()
@@ -53,10 +53,9 @@ namespace View.UI
                 });
             }
             skillButtons[0].SetSkill(unit, unit.MoveSkill);
-            skillButtons[1].SetSkill(unit, unit.PassiveSkill);
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 3; i++)
             {
-                SkillButton button = skillButtons[i + 2];
+                SkillButton button = skillButtons[i + 1];
                 button.SetSkill(unit, unit.Skills[i]);
             }
             RefreshButtons(unit);

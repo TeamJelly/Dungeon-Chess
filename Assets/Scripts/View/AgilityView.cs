@@ -64,10 +64,10 @@ namespace View
             unitObjects.Add(firstObj);
 
             List<Unit> unitBuffer = BattleManager.instance.UnitBuffer.ToList();
-            unitObjects[0].GetComponent<Image>().sprite = BattleManager.instance.thisTurnUnit.Portrait;
+            unitObjects[0].GetComponent<Image>().sprite = BattleManager.instance.thisTurnUnit.Sprite;
             for (int i = 1; i < bufferSize; i++)
             {
-                unitObjects[i].GetComponent<Image>().sprite = unitBuffer[i - 1].Portrait;
+                unitObjects[i].GetComponent<Image>().sprite = unitBuffer[i - 1].Sprite;
             }
 
             UIEffect.FadeInPanel(firstObj.gameObject);

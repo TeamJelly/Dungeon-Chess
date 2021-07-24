@@ -76,7 +76,7 @@ namespace View
             for (int i = 0; i < GameManager.PartyUnits.Count; i++)
             {
                 //유닛 초상화 세팅
-                unitImagies[i].sprite = GameManager.PartyUnits[i].Portrait;
+                unitImagies[i].sprite = GameManager.PartyUnits[i].Sprite;
                 int unitIndex = i;
 
                 //유닛마다의 스킬 패널 세팅

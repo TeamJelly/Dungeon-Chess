@@ -9,7 +9,7 @@ namespace Model
     public enum UnitClass { NULL, Monster, Warrior, Wizard, Priest, Archer };
 
     [Serializable]
-    public class Unit
+    public class Unit : Spriteable
     {
         public enum AnimationState { Idle, Hit, Attack, Move, Heal };
 
@@ -29,8 +29,8 @@ namespace Model
         private float actionRate;                   // 행동가능 퍼센테이지
         private Vector2Int position;                // 위치
         private Skill moveSkill;                    // 이동 스킬
-        private Skill passiveSkill;                 // 패시브 스킬
-        private Skill[] skills = new Skill[4];      // 4가지 스킬
+        // private Skill passiveSkill;                 // 패시브 스킬
+        private Skill[] skills = new Skill[3];      // 4가지 스킬
 
         // 배울수 있는 스킬
         private Skill[] learnableSkill = new Skill[8];
@@ -46,17 +46,8 @@ namespace Model
         public UnitAlliance Alliance { get; set; }  // 진영
         public UnitClass Class { get; set; }        // 직업
 
-        protected string portraitPath = "";
-        private Sprite portrait;
-        public Sprite Portrait
-        {
-            get
-            {
-                if (portrait == null)
-                    portrait = Data.LoadSprite(portraitPath);
-                return portrait;
-            }
-        }
+        protected string spritePath;
+        public Sprite Sprite { get => Common.Data.LoadSprite(spritePath); }
 
         // 유닛 이벤트 모음
         public TimeEventListener<bool> OnBattleStart = new TimeEventListener<bool>();
@@ -153,13 +144,35 @@ namespace Model
 
         public int NextEXP { get => nextEXP; set => nextEXP = value; }
         public int Strength { get => strength; set => strength = value; }
-        public int MaxHP { get => maxHP; set => maxHP = value; }
+        public int MaxHP {
+            get => maxHP; 
+            set
+            {
+                // maxHP가 줄어들어 curHP보다 줄어드는 경우
+                if (curHP > value)
+                {
+                    // MaxHP와 CurHP를 value값으로 맞춰줍니다.
+                    curHP = value;
+                    maxHP = value;
+                }
+                // maxHP가 증가하는 경우 curHP또한 키웁니다.
+                else if (maxHP < value)
+                {
+                    int increasingValue = value - maxHP;
+                    maxHP = value;
+                    curHP = value;
+                }
+                // 그 이외의 경우엔 그냥 maxHP만 value로 조정합니다.
+                else
+                    maxHP = value;
+            }
+        }
         public int Agility { get => agility; set => agility = value; }
         public int Move { get => move; set => move = value; } //이동 반경
         public float ActionRate { get => actionRate; set => actionRate = value; }
         public int SkillCount { get => skillCount; set => skillCount = value; }
         public Skill MoveSkill { get => moveSkill; set => moveSkill = value; }
-        public Skill PassiveSkill { get => passiveSkill; set => passiveSkill = value; }
+        // public Skill PassiveSkill { get => passiveSkill; set => passiveSkill = value; }
         public Skill[] Skills { get => skills; set => skills = value; }
         public List<Artifact> Artifacts { get => artifacts; set => artifacts = value; }
         public List<Effect> StateEffects { get => stateEffects; set => stateEffects = value; }

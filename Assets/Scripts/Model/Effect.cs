@@ -2,32 +2,22 @@
 
 namespace Model
 {
-    public class Effect
+    public class Effect : Spriteable
     {
         public Unit Owner { get; set; }
         public string Name { get; set; }
         public int Number { get; set; }
         public string Description { get; set; }
+
         private int turnCount;
         public int TurnCount
         {
             get => turnCount;
             set => turnCount = value;
         }
+
         protected string spritePath;
-        private Sprite sprite;
-        public Sprite Sprite
-        {
-            set => sprite = value;
-            get
-            {
-                if (sprite == null)
-                {
-                    sprite = Common.Data.LoadSprite(spritePath);
-                }
-                return sprite;
-            }
-        }
+        public Sprite Sprite { get => Common.Data.LoadSprite(spritePath); }
 
         public Effect()
         {

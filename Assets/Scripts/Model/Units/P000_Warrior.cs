@@ -23,7 +23,7 @@ namespace Model.Units
             Move = 2;
             CriticalRate = 10;
 
-            portraitPath = "2179";
+            spritePath = "2179";
             animatorPath = "Helltaker/Lucifer/Lucifer_animator";
 
             MoveSkill = new S100_Walk();

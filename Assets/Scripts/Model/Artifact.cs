@@ -17,7 +17,6 @@ namespace Model
 
         public void ToBag()
         {
-
             Managers.GameManager.Instance.artifactBag.Add(this);
         }
     }

@@ -49,7 +49,7 @@ namespace View.UI
 
             for (int i = 0; i < units.Count; i++)
             {
-                unitImagies.Add(units[i].Portrait);
+                unitImagies.Add(units[i].Sprite);
             }
             nextButton.onClick.AddListener(ShowNextUnit);
             prevButton.onClick.AddListener(ShowPrevUnit);

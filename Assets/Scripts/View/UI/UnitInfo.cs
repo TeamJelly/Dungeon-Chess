@@ -94,7 +94,7 @@ namespace View.UI
         public void UpdateUnitInfo()
         {
             Name.text = unit.Name;
-            Image.sprite = unit.Portrait;
+            Image.sprite = unit.Sprite;
             StatusText.text = $"{unit.Alliance}\n" +
                 $"{unit.Level}\n" +
                 $"{unit.CurHP} <color=#0000ff>+{unit.Armor}</color> /{unit.MaxHP}\n" +

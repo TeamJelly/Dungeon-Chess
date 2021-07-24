@@ -90,7 +90,7 @@ namespace View
         {
             Unit unit = GameManager.PartyUnits[index];
 
-            CurrentUnitPortrait.sprite = unit.Portrait;
+            CurrentUnitPortrait.sprite = unit.Sprite;
 
             IndicatorView.ShowTileIndicator(FieldManager.instance.GetStairAroundPosition(),
                 (Vector2Int position) =>
@@ -129,7 +129,7 @@ namespace View
 
         public static void SetTurnUnitPanel(Unit unit)
         {
-            CurrentUnitPortrait.sprite = unit.Portrait;
+            CurrentUnitPortrait.sprite = unit.Sprite;
 
             TurnEndButton.gameObject.SetActive(true);
             UnitControlUI.panel.SetActive(true);
@@ -230,7 +230,7 @@ namespace View
 
             // 스프라이터 랜더러 추가
             SpriteRenderer spriteRenderer = obObj.AddComponent<SpriteRenderer>();
-            spriteRenderer.sprite = ob.GetImage();
+            spriteRenderer.sprite = ob.Sprite;
 
             ObtainableObjects.Add(ob, obObj);
         }
