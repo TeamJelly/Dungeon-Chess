@@ -51,7 +51,7 @@ namespace UI.Battle
             if (nextUnit.Alliance != UnitAlliance.Party)
             {
                 BattleView.TurnEndButton.gameObject.SetActive(false);
-                BattleView.UnitControlUI.panel.SetActive(false);
+                BattleView.UnitControlView.panel.SetActive(false);
                 AI.Action action = AI.GetAction(nextUnit);
 
                 if (action != null)
@@ -61,7 +61,7 @@ namespace UI.Battle
             else
             {
                 BattleView.TurnEndButton.gameObject.SetActive(true);
-                BattleView.UnitControlUI.panel.SetActive(true);
+                BattleView.UnitControlView.panel.SetActive(true);
             }
         }
 

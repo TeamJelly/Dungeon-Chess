@@ -23,7 +23,7 @@ namespace View
         [SerializeField]
         private Button turnEndButton;
         [SerializeField]
-        private UnitControlView unitControlUI;
+        private UnitControlView unitControlView;
         static BattleView instance;
         // public UnitInfoView ThisTurnUnitInfo;
         // public UnitInfoView OtherUnitInfo { get; set; }
@@ -34,7 +34,7 @@ namespace View
         public static Button TurnEndButton => instance.turnEndButton;
         public static Image CurrentUnitPortrait => instance.currentUnitPortrait;
         public static GameObject MainPanel => instance.mainPanel;
-        public static UnitControlView UnitControlUI => instance.unitControlUI;
+        public static UnitControlView UnitControlView => instance.unitControlView;
         public static Dictionary<Unit, GameObject> UnitObjects => instance.unitObjects;
         public static Dictionary<Unit, HPBar> HPBars => instance.hpBars;
         public static Dictionary<Obtainable, GameObject> ObtainableObjects => instance.obtainableObjects;
@@ -48,10 +48,10 @@ namespace View
             //OtherUnitInfo = transform.Find("Panel/OtherUnitInfo").GetComponent<UnitInfoView>();
             //OtherUnitInfo.gameObject.SetActive(false);
             turnEndButton = transform.Find("MainPanel/TurnEndButton").GetComponent<Button>();
-            unitControlUI = GetComponent<UnitControlView>();
+            unitControlView = GetComponent<UnitControlView>();
 
             TurnEndButton.gameObject.SetActive(false);
-            UnitControlUI.panel.SetActive(false);
+            UnitControlView.panel.SetActive(false);
         }
         /// <summary>
         /// 비전투시에는 리더 유닛만 움직일 수 있음
@@ -62,7 +62,7 @@ namespace View
             BattleManager.instance.thisTurnUnit = null;
             GameManager.InBattle = false;
             TurnEndButton.gameObject.SetActive(false);
-            UnitControlUI.panel.SetActive(false);
+            UnitControlView.panel.SetActive(false);
             if (GameManager.LeaderUnit == null) GameManager.LeaderUnit = GameManager.PartyUnits[0];
             Common.Command.Summon(GameManager.LeaderUnit, GameManager.LeaderUnit.Position);
             IEnumerator coroutine = GameManager.LeaderUnit.MoveSkill.Use(GameManager.LeaderUnit, Vector2Int.zero);
@@ -132,9 +132,9 @@ namespace View
             CurrentUnitPortrait.sprite = unit.Sprite;
 
             TurnEndButton.gameObject.SetActive(true);
-            UnitControlUI.panel.SetActive(true);
+            UnitControlView.panel.SetActive(true);
 
-            UnitControlUI?.UpdateUI(unit);
+            UnitControlView?.UpdateUI(unit);
 
             //if (unit.Category != Category.Party)
             //    ThisTurnUnitInfo?.SetUnitInfo(unit, false);
