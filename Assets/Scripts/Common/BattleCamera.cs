@@ -10,7 +10,7 @@ namespace Common
     public class BattleCamera : MonoBehaviour
     {
         public Vector2 LeftDownLimit;
-        public Vector2 RightUpLimit = new Vector2(16,16);
+        public Vector2 RightUpLimit = new Vector2(16, 16);
 
         private int zoom = 0;
         public int Zoom
@@ -42,10 +42,6 @@ namespace Common
 
         UnityEngine.U2D.PixelPerfectCamera pixelPerfectCamera;
 
-        public float dragSpeed = 15;
-        private Vector3 cameraOrigin;
-        private Vector3 dragOrigin;
-
         private void Awake()
         {
             pixelPerfectCamera = GetComponent<UnityEngine.U2D.PixelPerfectCamera>();
@@ -53,22 +49,51 @@ namespace Common
         }
 
 
+        #if UNITY_EDITOR
+        public float dragSpeed = 15f;
+        private Vector3 cameraOrigin;
+        private Vector3 dragOrigin;
+
+        #elif UNITY_ANDROID
+        private float dragSpeed = 1f;
+        private Vector2 nowPos, prePos;
+        private Vector3 movePos;
+        #endif
+
         void Update()
         {
+            #if UNITY_EDITOR
             // 마우스를 눌렀을때 위치를 기록한다.
             if (Input.GetMouseButtonDown(0))
-            {
+            {               
                 cameraOrigin = Position;
                 dragOrigin = Input.mousePosition;
                 return;
             }
-
             // 마우스를 누르고 있으면 이동한다.
-            if (Input.GetMouseButton(0))
+            else if (Input.GetMouseButton(0))
             {
                 Vector3 vec = Camera.main.ScreenToViewportPoint(Input.mousePosition - dragOrigin);
                 Position = cameraOrigin - new Vector3(vec.x * dragSpeed, vec.y * dragSpeed, 0);
             }
+
+            #elif UNITY_ANDROID
+            if(Input.touchCount == 1)
+            {
+                Touch touch = Input.GetTouch(0);
+                if(touch.phase == TouchPhase.Began)
+                {
+                    prePos = touch.position - touch.deltaPosition;
+                }
+                else if(touch.phase == TouchPhase.Moved)
+                {
+                    nowPos = touch.position - touch.deltaPosition;
+                    movePos = (Vector3)(prePos - nowPos) * Time.deltaTime * dragSpeed;
+                    transform.Translate(movePos); 
+                    prePos = touch.position - touch.deltaPosition;
+                }
+            }
+            #endif
 
             // 축소
             if (Input.mouseScrollDelta.y < 0 && Zoom > 0)
@@ -80,10 +105,10 @@ namespace Common
 
         public Vector2Int[] Resolutions =
         {
-        // new Vector2Int(240, 134),
-        new Vector2Int(320, 180),
-        // new Vector2Int(480, 270)
-    };
+            // new Vector2Int(240, 134),
+            new Vector2Int(320, 180),
+            // new Vector2Int(480, 270)
+        };
 
         public void UpdatePixelCameraZoom()
         {
