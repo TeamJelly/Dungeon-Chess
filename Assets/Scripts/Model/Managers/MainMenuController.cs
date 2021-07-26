@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MainMenuController : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class MainMenuController : MonoBehaviour
     }
     public void Init()
     {
+        panel.gameObject.GetComponent<GridLayoutGroup>().cellSize = panel.rect.size;
         LinkedPanel main = new LinkedPanel();
         LinkedPanel unit = new LinkedPanel();
         LinkedPanel option = new LinkedPanel();
