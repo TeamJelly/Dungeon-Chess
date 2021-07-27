@@ -16,10 +16,14 @@ namespace View.UI
         {
             base.OnPointerDown(eventData);
 
-            SkillButton[] skillButtons = UnitControlView.instance.skillButtons;
-            foreach(var skillButton in skillButtons)
-                skillButton.SetInteractable(!skillButton.pressed);
+            if (!properties.interactable)
+                return;
 
+            // 상호가능함을 반전시킨다.
+            foreach(var skillButton in UnitControlView.instance.skillButtons)
+                skillButton.SetInteractable(!skillButton.properties.interactable);
+    
+            // 나 자신은 상호 가능하게 한다.
             SetInteractable(true);
 
             if (pressed)

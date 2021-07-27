@@ -12,8 +12,8 @@ namespace View.UI
         {
             if (Model.Managers.BattleManager.instance.thisTurnUnit != null)
             {
-                GetComponentInChildren<SpriteRenderer>().color = HPBar.AllianceToColorDict[Model.Managers.BattleManager.instance.thisTurnUnit.Alliance];
-                transform.position = (Vector3Int)(Model.Managers.BattleManager.instance.thisTurnUnit.Position) + Vector3.up + Vector3.back;
+                GetComponentInChildren<SpriteRenderer>().color = Color.green;
+                transform.position = (Vector3Int)(Model.Managers.BattleManager.instance.thisTurnUnit.Position) + Vector3.up + Vector3.back * 2;
             }
             else
             {
