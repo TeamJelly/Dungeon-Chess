@@ -9,7 +9,6 @@ namespace Model.Skills
         {
             Name = "천벌";
             Number = 3;
-            UnitClass = UnitClass.Priest;
             MaxGrade = 3;
             ReuseTime = 0;
             CriticalRate = 0;

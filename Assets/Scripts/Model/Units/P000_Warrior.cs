@@ -11,7 +11,7 @@ namespace Model.Units
         {
             Name = "루시퍼";
             Alliance = UnitAlliance.Party;
-            Class = UnitClass.Warrior;
+            // Class = UnitClass.Warrior;
 
             Level = 1;
             NextEXP = 10;
@@ -23,7 +23,7 @@ namespace Model.Units
             Move = 2;
             CriticalRate = 10;
 
-            spritePath = "2179";
+            // spritePath = "2179";
             animatorPath = "Helltaker/Lucifer/Lucifer_animator";
 
             MoveSkill = new S100_Walk();

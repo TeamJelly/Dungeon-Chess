@@ -10,7 +10,6 @@ namespace Model.Skills
         {
             Name = "마법화살";
             Number = 2;
-            UnitClass = UnitClass.Wizard;
             MaxGrade = 3;
             ReuseTime = 0;
             CriticalRate = 0;

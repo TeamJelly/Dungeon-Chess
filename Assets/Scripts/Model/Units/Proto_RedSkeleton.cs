@@ -22,7 +22,7 @@ namespace Model.Units
             Move = 4;
             CriticalRate = 5;
 
-            spritePath = "Helltaker/RedSkeleton/RedSkeleton_portrait";
+            // spritePath = "Helltaker/RedSkeleton/RedSkeleton_portrait";
             animatorPath = "Helltaker/RedSkeleton/RedSkeleton_animator";
 
             MoveSkill = new S100_Walk()

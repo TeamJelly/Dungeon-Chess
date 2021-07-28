@@ -6,15 +6,116 @@ using System;
 namespace Model
 {
     public enum UnitAlliance { NULL, Party, Neutral, Friendly, Enemy };
-    public enum UnitClass { NULL, Monster, Warrior, Wizard, Priest, Archer };
+    public enum UnitClass {
+        NULL,
+        Monster,
+        Soldier,        // 군인 > 강인한
+        BountyHunter,   // 현상금 사냥꾼 > 치명적인
+        Mercenary,      // 용병 > 계산적인, 치밀한
+        Villeager,      // 시민 > 평범한
+        Thief,          // 도둑 > 재빠른
+        Merchant,       // 상인 > 부유한
+    };
 
     [Serializable]
     public class Unit : Spriteable
     {
+        public Unit() { }
+
+        // 유닛 생성 시스템
+        public Unit(UnitAlliance alliance, int lv = 1)
+        {
+            seed = UnityEngine.Random.Range(0, 10000);
+
+            this.Alliance = alliance;
+            
+            if (Alliance == UnitAlliance.Party)
+                Class = (UnitClass) UnityEngine.Random.Range(2,8);
+            else
+                Class = UnitClass.Monster;
+            
+            Name = Data.GetRandomName(seed);
+            Sprite = Data.GetRandomSprite(seed);
+            MoveSkill = new Model.Skills.S100_Walk();
+            Skills[0] = Data.GetRandomSkill(seed);
+            Skills[1] = Data.GetRandomSkill(seed);
+            Skills[2] = Data.GetRandomSkill(seed);
+
+            // 군인 초기스텟
+            if (Class == UnitClass.Soldier)
+            {
+                MaxHP = 40;
+                Strength = 7;
+                Agility = 10;
+                Move = 3;
+                CriticalRate = 10;
+            }
+            // 현상금 사냥꾼 초기스텟
+            else if (Class == UnitClass.BountyHunter)
+            {
+                MaxHP = 35;
+                Strength = 4;
+                Agility = 10;
+                Move = 3;
+                CriticalRate = 20;
+            }
+            // 용병 초기스텟
+            else if (Class == UnitClass.Mercenary)
+            {
+                MaxHP = 30;
+                Strength = 10;
+                Agility = 10;
+                Move = 3;
+                CriticalRate = 10;
+            }
+            // 시민 초기스텟
+            else if (Class == UnitClass.Villeager)
+            {
+                MaxHP = 45;
+                Strength = 6;
+                Agility = 9;
+                Move = 3;
+                CriticalRate = 10;
+            }
+            // 도둑 초기스텟
+            else if (Class == UnitClass.Thief)
+            {
+                MaxHP = 30;
+                Strength = 10;
+                Agility = 10;
+                Move = 4;
+                CriticalRate = 10;
+            }
+            // 상인 초기스텟
+            else if (Class == UnitClass.Merchant)
+            {
+                MaxHP = 20;
+                Strength = 10;
+                Agility = 10;
+                Move = 3;
+                CriticalRate = 10;
+            }
+            // 그 이외 초기스텟
+            else
+            {
+                MaxHP = 30;
+                Strength = 10;
+                Agility = 10;
+                Move = 3;
+                CriticalRate = 10;
+            }
+
+            Level = lv;
+            
+            CurEXP = 0;
+            NextEXP = 10 * Level * (Level + 5);
+        }
+
         public enum AnimationState { Idle, Hit, Attack, Move, Heal };
 
+        private int seed;
         public string Name { get; set; }            // 이름
-        private int level;
+        private int level = 1;
         private int curEXP;                         // 현재 경험치
         private int nextEXP;                        // 다음 레벨업에 필요한 경험치 
         private int curHP;                          // 현재 체력
@@ -31,10 +132,7 @@ namespace Model
         private Skill moveSkill;                    // 이동 스킬
         // private Skill passiveSkill;                 // 패시브 스킬
         private Skill[] skills = new Skill[3];      // 4가지 스킬
-
         // 배울수 있는 스킬
-        private Skill[] learnableSkill = new Skill[8];
-
         private List<Artifact> artifacts = new List<Artifact>();    // 보유한 유물
         private List<Effect> stateEffects = new List<Effect>();  // 보유한 상태효과
         private List<Obtainable> droptems = new List<Obtainable>();
@@ -46,8 +144,8 @@ namespace Model
         public UnitAlliance Alliance { get; set; }  // 진영
         public UnitClass Class { get; set; }        // 직업
 
-        protected string spritePath;
-        public Sprite Sprite { get => Common.Data.LoadSprite(spritePath); }
+        // protected string spritePath;
+        public Sprite Sprite { get; set;}
 
         // 유닛 이벤트 모음
         public TimeEventListener<bool> OnBattleStart = new TimeEventListener<bool>();
@@ -95,15 +193,55 @@ namespace Model
             }
         }
 
-        // 레벨업 효과 추가 필요
         public int Level {
             get => level;
             set
             {
-                if (level != value)
+                while (level < value)
                 {
                     value = OnLevel.before.Invoke(value);
-                    level = value;
+
+                    level++;
+                    if (Class == UnitClass.Soldier)
+                    {
+                        MaxHP += 9;
+                        Strength += 1;
+                    }
+                    else if (Class == UnitClass.BountyHunter)
+                    {
+                        MaxHP += 1;
+                        Strength += 2;
+                        CriticalRate += 2;
+                    }
+                    else if (Class == UnitClass.Mercenary)
+                    {
+                        MaxHP += 4;
+                        Strength += 2;
+                    }
+                    else if (Class == UnitClass.Villeager)
+                    {
+                        MaxHP += 5;
+                        Strength += 1;
+                        Agility = (level % 2) == 0 ? Agility + 1 : Agility;
+                    }
+                    else if (Class == UnitClass.Thief)
+                    {
+                        Strength += 1;
+                        Agility += 1;
+                        CriticalRate += 2;
+                    }
+                    else if (Class == UnitClass.Merchant)
+                    {
+                        MaxHP += 5;
+                        Strength += 1;
+                        Managers.GameManager.Instance.Gold += 40;
+                    }
+                    else
+                    {
+                        MaxHP += 5;
+                        Strength += 1;
+                    }
+
                     OnLevel.after.Invoke(value);
                 }
             }
@@ -172,7 +310,6 @@ namespace Model
         public float ActionRate { get => actionRate; set => actionRate = value; }
         public int SkillCount { get => skillCount; set => skillCount = value; }
         public Skill MoveSkill { get => moveSkill; set => moveSkill = value; }
-        // public Skill PassiveSkill { get => passiveSkill; set => passiveSkill = value; }
         public Skill[] Skills { get => skills; set => skills = value; }
         public List<Artifact> Artifacts { get => artifacts; set => artifacts = value; }
         public List<Effect> StateEffects { get => stateEffects; set => stateEffects = value; }

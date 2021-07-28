@@ -121,7 +121,7 @@ namespace View
                         break;
                     }
 
-                isActive = isActive && skill.UnitClass == GameManager.PartyUnits[i].Class;
+                // isActive = isActive && skill.UnitClass == GameManager.PartyUnits[i].Class;
                 unitImagies[i].transform.parent.gameObject.SetActive(isActive);
 
             }
