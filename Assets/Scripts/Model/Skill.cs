@@ -10,9 +10,18 @@ namespace Model
     [System.Serializable]
     public class Skill
     {
+        // 스킬 카테고리
+        public enum SkillCategory
+        {
+            Null,
+            Move,
+            NormalAttack,
+            Intermediate,
+            Advanced,
+        }
+
         public enum RangeType // 스킬 사용가능 범위의 종류
         {
-            NULL,
             Fixed,          // 나를 기준으로 범위가 회전하지 않는 스킬.
             Rotate,         // 나를 기준으로 범위가 회전하는 스킬.
         }
@@ -26,9 +35,10 @@ namespace Model
             Friendly,
             Enemy,
         }
+
+        public SkillCategory Category {get; set;}
         public string Name { get; set; }
         public int Number           { get; set; }
-        public UnitClass UnitClass { get; set; }
         public int Grade            { get; set; }
         public int MaxGrade         { get; set; }
         public int ReuseTime        { get; set; }

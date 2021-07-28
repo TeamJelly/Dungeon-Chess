@@ -1,13 +1,10 @@
-﻿using UnityEditor;
-using UnityEngine;
-using Model;
-using Model.Skills;
+﻿using Model.Skills;
 
 namespace Model.Units
 {
     public class M000_Judgement : Unit
     {
-        public M000_Judgement() 
+        public M000_Judgement()
         {
             Name = "저지먼트";
             Alliance = UnitAlliance.Enemy;
@@ -22,7 +19,7 @@ namespace Model.Units
             Move = 5;
             CriticalRate = 15;
             
-            spritePath = "Helltaker/Judgement/Judgement_portrait";
+            // spritePath = "Helltaker/Judgement/Judgement_portrait";
             animatorPath = "Helltaker/Judgement/Judgement_animator";
 
             MoveSkill = new S100_Walk()

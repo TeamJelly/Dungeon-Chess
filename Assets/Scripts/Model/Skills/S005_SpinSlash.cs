@@ -11,7 +11,6 @@ namespace Model.Skills
         {
             Name = "회전베기";
             Number = 5;
-            UnitClass = UnitClass.Warrior;
             MaxGrade = 3;
             ReuseTime = 1;
             CriticalRate = 5;

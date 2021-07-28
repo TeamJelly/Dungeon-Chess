@@ -181,6 +181,7 @@ namespace View
 
             // 스프라이터 랜더러 추가
             SpriteRenderer spriteRenderer = newObj.AddComponent<SpriteRenderer>();
+            spriteRenderer.sprite = unit.Sprite;
 
             // 애니메이터 추가
             Animator animator = newObj.AddComponent<Animator>();

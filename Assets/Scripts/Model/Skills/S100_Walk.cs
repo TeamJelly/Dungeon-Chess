@@ -11,7 +11,6 @@ namespace Model.Skills
         {
             Name = "걷기";
             Number = 100;
-            UnitClass = UnitClass.NULL;
             MaxGrade = 0;
             ReuseTime = 0;
             CriticalRate = 0;

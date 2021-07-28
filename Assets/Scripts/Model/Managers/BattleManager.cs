@@ -91,8 +91,8 @@ namespace Model.Managers
 
             if (GameManager.PartyUnits.Count == 0)
             {
-                GameManager.PartyUnits.Add(UnitManager.Instance.AllUnits[0]);
-                GameManager.PartyUnits.Add(UnitManager.Instance.AllUnits[1]);
+                GameManager.PartyUnits.Add(new Unit(UnitAlliance.Party, 11));
+                GameManager.PartyUnits.Add(new Unit(UnitAlliance.Party, 10));
                 GameManager.LeaderUnit = GameManager.PartyUnits[0];
             }
             GameManager.InBattle = true;

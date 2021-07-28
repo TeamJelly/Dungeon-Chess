@@ -10,7 +10,6 @@ namespace Model.Skills
         {
             Name = "속사";
             Number = 1;
-            UnitClass = UnitClass.Archer;
             MaxGrade = 3;
             ReuseTime = 0;
             CriticalRate = 10;

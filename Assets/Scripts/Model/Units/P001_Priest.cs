@@ -11,7 +11,7 @@ namespace Model.Units
         {
             Name = "아자젤";
             Alliance = UnitAlliance.Party;
-            Class = UnitClass.Priest;
+            // Class = UnitClass.Priest;
 
             Level = 1;
             NextEXP = 10;
@@ -23,7 +23,7 @@ namespace Model.Units
             Move = 3;
             CriticalRate = 5;
 
-            spritePath = "Helltaker/Azazel/Azazel_portrait";
+            // spritePath = "Helltaker/Azazel/Azazel_portrait";
             animatorPath = "Helltaker/Azazel/Azazel_animator";
 
             MoveSkill = new S100_Walk();

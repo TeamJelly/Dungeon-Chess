@@ -12,8 +12,8 @@ namespace View
         public TextMeshProUGUI text;
 
         // Start is called before the first frame update
-
         public static HUDView instance;
+
         private void Awake()
         {
             instance = this;

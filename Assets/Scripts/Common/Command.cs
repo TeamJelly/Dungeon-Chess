@@ -14,7 +14,7 @@ namespace Common
         {
             View.FadeOutTextView.MakeText(unit.Position, $"{unit.Name} 사망", Color.red);
 
-            unit.Agility = -10;
+            // unit.Agility = -10;
             unit.Alliance = UnitAlliance.NULL;
 
             View.VisualEffectView.MakeVisualEffect(unit.Position, "Explosion");
@@ -123,6 +123,7 @@ namespace Common
             View.FadeOutTextView.MakeText(unit.Position + Vector2Int.up, "Level Up!", Color.white);
 
             unit.Level++;
+
             unit.CurEXP = 0;
             unit.NextEXP = 10 * unit.Level * (unit.Level + 5);            
         }

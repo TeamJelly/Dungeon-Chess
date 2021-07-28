@@ -11,7 +11,6 @@ namespace Model.Skills
         {
             Name = "힘의파동";
             Number = 8;
-            UnitClass = UnitClass.Warrior;
             MaxGrade = 5;
             ReuseTime = 4;
             CriticalRate = 5;

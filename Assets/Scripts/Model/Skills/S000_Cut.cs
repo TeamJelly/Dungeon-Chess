@@ -9,7 +9,6 @@ namespace Model.Skills
         {
             Name = "베기";
             Number = 0;
-            UnitClass = UnitClass.Warrior;
             MaxGrade = 3;
             ReuseTime = 0;
             CriticalRate = 5;
