@@ -104,7 +104,8 @@ namespace Model.Managers
             else
             {
                 GameManager.LeaderUnit.Position = FieldManager.instance.GetStairPosition();
-                StartCoroutine(BattleView.SetNonBattleMode());
+                //StartCoroutine(BattleView.SetNonBattleMode());
+                BattleView.SetNonBattleMode();
             }
 
             // Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(6, 6));

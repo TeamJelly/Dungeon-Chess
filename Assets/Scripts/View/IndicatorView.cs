@@ -26,6 +26,8 @@ namespace View
                 if (tileIndicatorParent == null)
                 {
                     tileIndicatorParent = new GameObject("Tile Indicator Parent");
+                    tileIndicatorParent.AddComponent<ScreenTouchManager>().cameraTransform = Camera.main.transform;
+
                 }
 
                 return tileIndicatorParent;

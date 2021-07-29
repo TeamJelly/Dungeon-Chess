@@ -58,7 +58,7 @@ namespace View
         /// 비전투시에는 리더 유닛만 움직일 수 있음
         /// </summary>
         /// <returns></returns>
-        public static IEnumerator SetNonBattleMode()
+        public static void SetNonBattleMode()
         {
             BattleManager.instance.thisTurnUnit = null;
             GameManager.InBattle = false;
@@ -66,7 +66,7 @@ namespace View
             UnitControlView.panel.SetActive(false);
             if (GameManager.LeaderUnit == null) GameManager.LeaderUnit = GameManager.PartyUnits[0];
             Common.Command.Summon(GameManager.LeaderUnit, GameManager.LeaderUnit.Position);
-            IEnumerator coroutine = GameManager.LeaderUnit.MoveSkill.Use(GameManager.LeaderUnit, Vector2Int.zero);
+            /*IEnumerator coroutine = GameManager.LeaderUnit.MoveSkill.Use(GameManager.LeaderUnit, Vector2Int.zero);
 
             Vector3 touchedOrigin = Vector3.zero;
             while (true)
@@ -93,7 +93,7 @@ namespace View
                     }
                 }
                 yield return null;
-            }
+            }*/
         }
 
         public static void SummonPartyUnits(int index = 0)
@@ -199,7 +199,9 @@ namespace View
             UnitObjects.Add(unit, newObj);
 
             // HP 바 생성
-            HPBar newHPBar = Instantiate(instance.hPBarPrefab, MainPanel.transform).GetComponent<HPBar>();
+            GameObject hpBarObj = Instantiate(instance.hPBarPrefab, MainPanel.transform);
+            hpBarObj.transform.SetAsFirstSibling();
+            HPBar newHPBar = hpBarObj.GetComponent<HPBar>();
             newHPBar.Init(unit);
             HPBars.Add(unit, newHPBar);
 

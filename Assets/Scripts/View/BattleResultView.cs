@@ -59,7 +59,8 @@ namespace View
             {
                 UIEffect.FadeOutPanel(WinUI);
                 Common.Command.UnSummonAllUnit();
-                StartCoroutine(BattleView.SetNonBattleMode());
+                //StartCoroutine(BattleView.SetNonBattleMode());
+                BattleView.SetNonBattleMode();
             });
             UIEffect.FadeInPanel(WinUI, 2f);
         }
