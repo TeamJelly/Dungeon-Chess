@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311915, g: 0.3807396, b: 0.35872662, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -10777,6 +10777,7 @@ MonoBehaviour:
   mainPanel: {fileID: 1040489497}
   turnEndButton: {fileID: 1446569517}
   unitControlView: {fileID: 0}
+  animatorController: {fileID: 9100000, guid: 8f7a9171471414520bfcccf964c56d38, type: 2}
 --- !u!114 &984850863
 MonoBehaviour:
   m_ObjectHideFlags: 0
