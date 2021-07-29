@@ -102,18 +102,47 @@ namespace Common
             }
         }
 
-        public static Sprite GetRandomSprite(int seed)
+        public static Sprite GetRandomSprite(UnitSpecies unitSpecies, int seed)
         {
-            int rand = seed % HumanSpriteNumbers.Length;
-            return SpriteData[HumanSpriteNumbers[rand]];
+            int rand = seed % SpeciesToSpriteNumbers[unitSpecies].Count;
+            return SpriteData[SpeciesToSpriteNumbers[unitSpecies][rand]];
         }
 
-        private static int[] HumanSpriteNumbers = {
-            23,24,25,26,27,28,29,30,
-            71,72,73,74,75,76,77,78,
-            119,120,121,122,123,124,125,126,
-            167,168,169,170,171,172,173,174,
-            215,216,217,218,219,220,221,222
+        private static Dictionary<UnitSpecies, List<int>> SpeciesToSpriteNumbers = new Dictionary<UnitSpecies, List<int>>
+        {
+            {
+                UnitSpecies.Human,
+                new List<int>
+                {
+                    23,24,25,26,27,28,29,30,
+                    71,72,73,74,75,76,77,78,
+                    119,120,121,122,123,124,125,126,
+                    167,168,169,170,171,172,173,174,
+                    215,216,217,218,219,220,221,222,
+                    462
+                }
+            },
+            {
+                UnitSpecies.SmallBeast,
+                new List<int>
+                {
+                    263,264,265,266,267,268,269,270,360,361,409,414
+                }
+            },
+            {
+                UnitSpecies.MediumBeast,
+                new List<int>
+                {
+                    364,365,366,408,411
+                }
+            },
+            {
+                UnitSpecies.LargeBeast,
+                new List<int>
+                {
+                    362,363,412,413
+                }
+            }
         };
 
         /// <summary>
@@ -128,7 +157,7 @@ namespace Common
                 sprite = Resources.Load<Sprite>("1bitpack_kenney_1/Tilesheet/X");
             else if (path.Contains("1bitpack_kenney_1/Tilesheet/colored_transparent_packed"))
             {
-                string [] splited = path.Split('_');
+                string[] splited = path.Split('_');
                 int spriteNumber = int.Parse(splited[splited.Length]);
                 sprite = SpriteData[spriteNumber];
             }

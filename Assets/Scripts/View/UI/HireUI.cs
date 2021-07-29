@@ -80,9 +80,9 @@ namespace View.UI
             currentUnit = UnitManager.Instance.AllUnits[index];
             currentUnitImage.sprite = unitImagies[index];
             descriptionText.text =   
-                                $"{currentUnit.Class}\n" +
+                                $"{currentUnit.Species}\n" +
                                 $"{currentUnit.Level}\n" +
-                                $"{currentUnit.CurHP} <color=#0000ff>+{currentUnit.Armor}</color> /{currentUnit.MaxHP}\n" +
+                                $"{currentUnit.CurHP}/{currentUnit.MaxHP}\n" +
                                 $"{currentUnit.CurEXP}/{currentUnit.NextEXP}\n" +
                                 $"{currentUnit.Strength}\n" +
                                 $"{currentUnit.Agility}\n" +
