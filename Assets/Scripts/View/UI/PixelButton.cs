@@ -19,6 +19,8 @@ namespace View.UI
 
         public Button properties;
 
+        public float pushPixel = 6f;
+
         public bool hasImage = false;
         public bool toggleOption = false;
         public bool pressed = false;
@@ -52,13 +54,13 @@ namespace View.UI
 
         public void ShowPushEffect()
         {
-            DownTransfrom.anchoredPosition = DownTransfrom.anchoredPosition+ new Vector2(0, -6);
+            DownTransfrom.anchoredPosition = DownTransfrom.anchoredPosition+ new Vector2(0, -pushPixel);
             FrameImage.sprite = PushedFrameSprite;
         }
 
         public void ShowPopEffect()
         {
-            DownTransfrom.anchoredPosition = DownTransfrom.anchoredPosition + new Vector2(0, 6);
+            DownTransfrom.anchoredPosition = DownTransfrom.anchoredPosition + new Vector2(0, pushPixel);
             FrameImage.sprite = DefaultFrameSprite;
         }
         public virtual void SetInteractable(bool b)

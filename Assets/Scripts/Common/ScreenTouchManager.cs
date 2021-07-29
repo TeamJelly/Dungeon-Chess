@@ -17,6 +17,9 @@ public class ScreenTouchManager : MonoBehaviour, IBeginDragHandler, IDragHandler
     {
         currentPos = Camera.main.ScreenToViewportPoint(eventData.position);
     }
+    private void OnMouseOver() {
+        
+    }
 
     public void OnDrag(PointerEventData eventData)
     {
@@ -28,7 +31,6 @@ public class ScreenTouchManager : MonoBehaviour, IBeginDragHandler, IDragHandler
         nextPos.y = Mathf.Clamp(nextPos.y, LeftDownLimit.y, RightUpLimit.y);
         cameraTransform.position = nextPos;
     }
-
 
     IEnumerator coroutine;
     public void OnPointerClick(PointerEventData eventData)
