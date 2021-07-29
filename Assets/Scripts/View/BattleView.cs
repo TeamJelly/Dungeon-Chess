@@ -39,6 +39,7 @@ namespace View
         public static Dictionary<Unit, GameObject> UnitObjects => instance.unitObjects;
         public static Dictionary<Unit, HPBar> HPBars => instance.hpBars;
         public static Dictionary<Obtainable, GameObject> ObtainableObjects => instance.obtainableObjects;
+        public RuntimeAnimatorController animatorController;
 
         private void Awake()
         {
@@ -179,13 +180,16 @@ namespace View
             // 이벤트 트리거 컴포넌트 추가
             EventTrigger eventTrigger = newObj.AddComponent<EventTrigger>();
 
+            GameObject imgObj = new GameObject("image");
+            imgObj.transform.SetParent(newObj.transform);
+
             // 스프라이터 랜더러 추가
-            SpriteRenderer spriteRenderer = newObj.AddComponent<SpriteRenderer>();
+            SpriteRenderer spriteRenderer = imgObj.AddComponent<SpriteRenderer>();
             spriteRenderer.sprite = unit.Sprite;
 
             // 애니메이터 추가
-            Animator animator = newObj.AddComponent<Animator>();
-            animator.runtimeAnimatorController = unit.Animator;
+            Animator animator = imgObj.AddComponent<Animator>();
+            animator.runtimeAnimatorController = instance.animatorController;
 
             // 이벤트 트리거 설정
             EventTrigger.Entry entry_PointerClick = new EventTrigger.Entry();
