@@ -1,25 +1,29 @@
-﻿// using Model.Skills;
+﻿// using UnityEditor;
+// using UnityEngine;
+// using Model;
+// using Model.Skills;
 
 // namespace Model.Units
 // {
-//     public class M000_Judgement : Unit
+//     public class Proto_Skeleton : Unit
 //     {
-//         public M000_Judgement()
+//         public Proto_Skeleton()
 //         {
-//             Name = "저지먼트";
+//             Name = "스켈레톤";
 //             Alliance = UnitAlliance.Enemy;
+//             Class = Modifier.Monster;
 
 //             Level = 1;
-//             MaxHP = 150;
+//             MaxHP = 10;
 //             CurHP = MaxHP;
 
-//             Strength = 10;
+//             Strength = 30;
 //             Agility = 10;
-//             Move = 5;
-//             CriticalRate = 15;
+//             Move = 4;
+//             CriticalRate = 5;
 
-//             // spritePath = "Helltaker/Judgement/Judgement_portrait";
-//             animatorPath = "Helltaker/Judgement/Judgement_animator";
+//             // spritePath = "Helltaker/Skeleton/Skeleton_portrait";
+//             animatorPath = "Helltaker/Skeleton/Skeleton_animator";
 
 //             MoveSkill = new S100_Walk()
 //             {

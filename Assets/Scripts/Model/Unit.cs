@@ -5,21 +5,42 @@ using System;
 
 namespace Model
 {
-    public enum UnitAlliance { NULL, Party, Neutral, Friendly, Enemy };
+    /// <summary>
+    /// 진영 : 유닛이 속한 진영을 결정한다. 전투중 행동방식을 결정
+    /// </summary>
+    public enum UnitAlliance 
+    { 
+        NULL = -1, 
+        Party, 
+        Enemy, 
+        Neutral, 
+        Friendly, 
+    };
 
-    public enum Species {
-        
+    /// <summary>
+    /// 종족값 : 외형과 시작 스테이터스를 결정한다.
+    /// </summary>
+    public enum UnitSpecies
+    {
+        NULL = -1,
+        Human,          // 인간
+        SmallBeast,     // 소형짐승
+        MediumBeast,    // 중형짐승
+        LargeBeast,     // 대형짐승
     }
 
-    public enum Modifier {
-        NULL,
-        Monster,
-        Soldier,        // 군인 > 강인한
-        BountyHunter,   // 현상금 사냥꾼 > 치명적인
-        Mercenary,      // 용병 > 계산적인, 치밀한
-        Villeager,      // 시민 > 평범한
-        Thief,          // 도둑 > 재빠른
-        Merchant,       // 상인 > 부유한
+    /// <summary>
+    /// 수식어 : 성장 스테이터스를 결정한다.
+    /// </summary>
+    public enum UnitModifier
+    {
+        NULL = -1,      // Weak
+        Tough,          // 군인 > 강인한
+        Deadly,         // 현상금 사냥꾼 > 치명적인
+        Meticulous,     // 용병 > 세심한
+        Righteous,       // 시민 > 옳은, 정의로운
+        Quick,          // 도둑 > 재빠른
+        Rich,           // 상인 > 부유한
     };
 
     [Serializable]
@@ -28,97 +49,68 @@ namespace Model
         public Unit() { }
 
         // 유닛 생성 시스템
-        public Unit(UnitAlliance alliance, int lv = 1)
+        public Unit(UnitAlliance alliance, UnitSpecies species = UnitSpecies.NULL, int lv = 1)
         {
-            seed = UnityEngine.Random.Range(0, 10000);
+            Seed = UnityEngine.Random.Range(0, 10000);
+            Alliance = alliance;
 
-            this.Alliance = alliance;
-            
-            if (Alliance == UnitAlliance.Party)
-                Class = (Modifier) UnityEngine.Random.Range(2,8);
+            if (species == UnitSpecies.NULL)
+                Species = (UnitSpecies)(Seed % 4); // 0 ~ 3
             else
-                Class = Modifier.Monster;
-            
-            Name = Data.GetRandomName(seed);
-            Sprite = Data.GetRandomSprite(seed);
-            MoveSkill = new Model.Skills.S100_Walk();
-            Skills[0] = Data.GetRandomSkill(seed);
-            Skills[1] = Data.GetRandomSkill(seed);
-            Skills[2] = Data.GetRandomSkill(seed);
+                Species = species;
 
-            // 군인 초기스텟
-            if (Class == Modifier.Soldier)
-            {
-                MaxHP = 40;
-                Strength = 7;
-                Agility = 10;
-                Move = 3;
-                CriticalRate = 10;
-            }
-            // 현상금 사냥꾼 초기스텟
-            else if (Class == Modifier.BountyHunter)
+            Modifier = (UnitModifier)(Seed % 6);
+
+            Name = Data.GetRandomName(Seed);
+            Sprite = Data.GetRandomSprite(Species, Seed);
+            MoveSkill = new Model.Skills.S100_Walk();
+            Skills[0] = Data.GetRandomSkill(Seed);
+            // Skills[1] = Data.GetRandomSkill(seed);
+            // Skills[2] = Data.GetRandomSkill(seed);
+
+            // 인간형 초기 스텟
+            if (Species == UnitSpecies.Human)
             {
                 MaxHP = 35;
-                Strength = 4;
-                Agility = 10;
-                Move = 3;
-                CriticalRate = 20;
-            }
-            // 용병 초기스텟
-            else if (Class == Modifier.Mercenary)
-            {
-                MaxHP = 30;
                 Strength = 10;
                 Agility = 10;
                 Move = 3;
                 CriticalRate = 10;
             }
-            // 시민 초기스텟
-            else if (Class == Modifier.Villeager)
-            {
-                MaxHP = 45;
-                Strength = 6;
-                Agility = 9;
-                Move = 3;
-                CriticalRate = 10;
-            }
-            // 도둑 초기스텟
-            else if (Class == Modifier.Thief)
-            {
-                MaxHP = 30;
-                Strength = 10;
-                Agility = 10;
-                Move = 4;
-                CriticalRate = 10;
-            }
-            // 상인 초기스텟
-            else if (Class == Modifier.Merchant)
+            else if (Species == UnitSpecies.SmallBeast)
             {
                 MaxHP = 20;
-                Strength = 10;
-                Agility = 10;
-                Move = 3;
-                CriticalRate = 10;
+                Strength = 12;
+                Agility = 11;
+                Move = 4;
+                CriticalRate = 11;
             }
-            // 그 이외 초기스텟
-            else
+            else if (Species == UnitSpecies.MediumBeast)
             {
                 MaxHP = 30;
-                Strength = 10;
+                Strength = 12;
                 Agility = 10;
                 Move = 3;
-                CriticalRate = 10;
+                CriticalRate = 11;
+            }
+            else if (Species == UnitSpecies.LargeBeast)
+            {
+                MaxHP = 50;
+                Strength = 15;
+                Agility = 12;
+                Move = 2;
+                CriticalRate = 11;
             }
 
             Level = lv;
-            
+
             CurEXP = 0;
             NextEXP = 10 * Level * (Level + 5);
         }
 
         public enum AnimationState { Idle, Hit, Attack, Move, Heal };
 
-        private int seed;
+        private int Seed {get; set;}
         public string Name { get; set; }            // 이름
         private int level = 1;
         private int curEXP;                         // 현재 경험치
@@ -147,10 +139,11 @@ namespace Model
         protected String animatorPath = "";
         public AnimationState animationState = AnimationState.Idle; // 현재 애니메이션 상태
         public UnitAlliance Alliance { get; set; }  // 진영
-        public Modifier Class { get; set; }        // 직업
+        public UnitSpecies Species { get; set; }       // 종족
+        public UnitModifier Modifier { get; set; }      // 수식어
 
         // protected string spritePath;
-        public Sprite Sprite { get; set;}
+        public Sprite Sprite { get; set; }
 
         // 유닛 이벤트 모음
         public TimeEventListener<bool> OnBattleStart = new TimeEventListener<bool>();
@@ -161,7 +154,6 @@ namespace Model
         public TimeEventListener<int> OnCurHP = new TimeEventListener<int>();
         public TimeEventListener<int> OnHeal = new TimeEventListener<int>();
         public TimeEventListener<int> OnDamage = new TimeEventListener<int>();
-        public TimeEventListener<int> OnArmor = new TimeEventListener<int>();
         public TimeEventListener<int> OnLevel = new TimeEventListener<int>();
         public TimeEventListener<int> OnCurEXP = new TimeEventListener<int>();
         public TimeEventListener<Vector2Int> OnPosition = new TimeEventListener<Vector2Int>();
@@ -183,22 +175,8 @@ namespace Model
             }
         }
 
-        // 아머 up 혹은 아머 break 효과 추가 필요
-        public int Armor
+        public int Level
         {
-            get => armor;
-            set
-            {
-                if (armor != value)
-                {
-                    value = OnArmor.before.Invoke(value);
-                    armor = value;
-                    OnArmor.after.Invoke(value);
-                }
-            }
-        }
-
-        public int Level {
             get => level;
             set
             {
@@ -207,44 +185,45 @@ namespace Model
                     value = OnLevel.before.Invoke(value);
 
                     level++;
-                    if (Class == Modifier.Soldier)
+
+                    if (Modifier == UnitModifier.NULL)
+                    {
+                        MaxHP += 5;
+                        Strength += 1;
+                    }
+                    else if (Modifier == UnitModifier.Tough)
                     {
                         MaxHP += 9;
                         Strength += 1;
                     }
-                    else if (Class == Modifier.BountyHunter)
+                    else if (Modifier == UnitModifier.Deadly)
                     {
                         MaxHP += 1;
                         Strength += 2;
                         CriticalRate += 2;
                     }
-                    else if (Class == Modifier.Mercenary)
+                    else if (Modifier == UnitModifier.Meticulous)
                     {
                         MaxHP += 4;
                         Strength += 2;
                     }
-                    else if (Class == Modifier.Villeager)
+                    else if (Modifier == UnitModifier.Righteous)
                     {
                         MaxHP += 5;
                         Strength += 1;
                         Agility = (level % 2) == 0 ? Agility + 1 : Agility;
                     }
-                    else if (Class == Modifier.Thief)
+                    else if (Modifier == UnitModifier.Quick)
                     {
                         Strength += 1;
                         Agility += 1;
                         CriticalRate += 2;
                     }
-                    else if (Class == Modifier.Merchant)
+                    else if (Modifier == UnitModifier.Rich)
                     {
                         MaxHP += 5;
                         Strength += 1;
                         Managers.GameManager.Instance.Gold += 40;
-                    }
-                    else
-                    {
-                        MaxHP += 5;
-                        Strength += 1;
                     }
 
                     OnLevel.after.Invoke(value);
@@ -287,8 +266,9 @@ namespace Model
 
         public int NextEXP { get => nextEXP; set => nextEXP = value; }
         public int Strength { get => strength; set => strength = value; }
-        public int MaxHP {
-            get => maxHP; 
+        public int MaxHP
+        {
+            get => maxHP;
             set
             {
                 // maxHP가 줄어들어 curHP보다 줄어드는 경우
@@ -320,10 +300,11 @@ namespace Model
         public List<Effect> StateEffects { get => stateEffects; set => stateEffects = value; }
         public int MoveCount { get => moveCount; set => moveCount = value; }
         public int CriticalRate { get => criticalRate; set => criticalRate = value; }
-        
-        public virtual List<Obtainable> Droptems {
+
+        public virtual List<Obtainable> Droptems
+        {
             set => droptems = value;
-            get 
+            get
             {
                 List<Obtainable> obtainables = new List<Obtainable>();
 

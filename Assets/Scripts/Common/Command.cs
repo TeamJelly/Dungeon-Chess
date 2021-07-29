@@ -59,30 +59,6 @@ namespace Common
         {
             value = unit.OnDamage.before.Invoke(value);
 
-            if (unit.Armor > 0)
-            {
-                int damagedArmor = unit.Armor - value;
-
-                if (damagedArmor > 0)
-                {
-                    FadeOutTextView.MakeText(unit.Position + Vector2Int.up, "방어함!", Color.red);
-                    FadeOutTextView.MakeText(unit.Position + Vector2Int.up, $"Armor -{value}", Color.red);
-
-                    unit.Armor = damagedArmor;
-                    value = 0;
-                }
-                else
-                {
-                    FadeOutTextView.MakeText(unit.Position + Vector2Int.up, $"Armor -{unit.Armor}", Color.red);
-                    FadeOutTextView.MakeText(unit.Position + Vector2Int.up, $"HP -{-damagedArmor}", Color.red);
-
-                    unit.Armor = 0;
-                    value = -damagedArmor;
-                }
-            }
-            else
-                FadeOutTextView.MakeText(unit.Position + Vector2Int.up, $"HP -{value}", Color.red);
-
             unit.CurHP -= value;
             unit.OnDamage.after.Invoke(value);
 
@@ -90,7 +66,6 @@ namespace Common
 
             if (unit.CurHP <= 0)
                 Die(unit);
-
 
             return value; // 피해량을 리턴
         }
@@ -113,11 +88,6 @@ namespace Common
             return value;
         }
 
-        public static int Armor(Unit unit, int value)
-        {
-            unit.Armor += value;
-            return value;
-        }
         public static void LevelUp(Unit unit)
         {
             View.FadeOutTextView.MakeText(unit.Position + Vector2Int.up, "Level Up!", Color.white);

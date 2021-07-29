@@ -97,7 +97,7 @@ namespace View.UI
             Image.sprite = unit.Sprite;
             StatusText.text = $"{unit.Alliance}\n" +
                 $"{unit.Level}\n" +
-                $"{unit.CurHP} <color=#0000ff>+{unit.Armor}</color> /{unit.MaxHP}\n" +
+                $"{unit.CurHP}/{unit.MaxHP}\n" +
                 $"{unit.CurEXP}/{unit.NextEXP}\n" +
                 $"{unit.Strength}\n" +
                 $"{unit.Agility}\n" +

@@ -49,52 +49,26 @@ namespace Model.Managers
         {
             FieldManager.instance.InitField(FieldManager.instance.FieldDatas[0]);
 
-            if (GameManager.Instance.currentRoom == null)
-            {
-                Unit unit = new Proto_Skeleton();//new M000_Judgement();
-                Common.Command.Summon(unit, new Vector2Int(4, 4));
-                Common.Command.AddArtifact(unit, new Model.Artifacts.A999_test());
-                Common.Command.AddArtifact(unit, new Model.Artifacts.A999_test());
-                Common.Command.AddArtifact(unit, new Model.Artifacts.A999_test());
-                Common.Command.AddArtifact(unit, new Model.Artifacts.A999_test());
-                // Common.Command.AddEffect(unit, new Model.Effects.E004_Stun(unit));
-                // Common.Command.AddEffect(unit, new Model.Effects.E005_Regeneration(unit, 99));
-                // Common.Command.AddEffect(unit, new Model.Effects.E021_Barrier(unit, 10));
-            }
-            else if (GameManager.Instance.currentRoom.category == Room.Category.Monster)
-            {
-                int rand = UnityEngine.Random.Range(0, 2);
+            // 테스팅 적 유닛 소환
+            Unit unit = new Unit(UnitAlliance.Enemy, UnitSpecies.LargeBeast, 10);
 
-                if (rand == 0)
-                {
-                    Common.Command.Summon(new Proto_Skeleton(), new Vector2Int(4, 4));
-                    Common.Command.Summon(new Proto_Skeleton(), new Vector2Int(5, 4));
-                }
-                else
-                {
-                    Common.Command.Summon(new Proto_RedSkeleton(), new Vector2Int(4, 4));
-                }
-            }
-            else if (GameManager.Instance.currentRoom.category == Room.Category.Elite)
-            {
-                Common.Command.Summon(new Proto_RedSkeleton(), new Vector2Int(6, 7));
-                Common.Command.Summon(new Proto_Skeleton(), new Vector2Int(4, 4));
-                Common.Command.Summon(new Proto_Skeleton(), new Vector2Int(4, 6));
-            }
-            else if (GameManager.Instance.currentRoom.category == Room.Category.Boss)
-            {
-                Unit unit = new M000_Judgement();
-                Common.Command.Summon(unit, new Vector2Int(4, 4));
-                Common.Command.AddEffect(unit, new Model.Effects.E004_Stun(unit));
-                Common.Command.AddEffect(unit, new Model.Effects.E005_Regeneration(unit, 99));
-            }
+            unit.MoveSkill.Priority = Common.AI.Priority.NearFromClosestParty;
+            unit.Skills[0].Target = Skill.TargetType.Party;
+
+            Common.Command.Summon(unit, new Vector2Int(4, 4));
+
+            Common.Command.AddArtifact(unit, new Model.Artifacts.A999_test());
+            Common.Command.AddArtifact(unit, new Model.Artifacts.A999_test());
+            Common.Command.AddArtifact(unit, new Model.Artifacts.A999_test());
+            Common.Command.AddArtifact(unit, new Model.Artifacts.A999_test());
 
             if (GameManager.PartyUnits.Count == 0)
             {
-                GameManager.PartyUnits.Add(new Unit(UnitAlliance.Party, 11));
-                GameManager.PartyUnits.Add(new Unit(UnitAlliance.Party, 10));
+                GameManager.PartyUnits.Add(new Unit(UnitAlliance.Party, UnitSpecies.Human));
+                GameManager.PartyUnits.Add(new Unit(UnitAlliance.Party, UnitSpecies.Human));
                 GameManager.LeaderUnit = GameManager.PartyUnits[0];
             }
+
             GameManager.InBattle = true;
 
             if (GameManager.InBattle)
@@ -112,21 +86,6 @@ namespace Model.Managers
              Common.Command.Summon(new Model.Artifacts.A006_AutoHill(), new Vector2Int(6, 8));
             // Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(9, 9));
             // Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(6, 4));
-
-            // UI.Battle.IndicatorUI.ShowTileIndicator()
-
-            //Vector2Int[] party_position = { new Vector2Int(4, 0), new Vector2Int(5, 0), new Vector2Int(3, 0), new Vector2Int(6, 0) };
-
-            //for (int i = 0; i < GameManager.PartyUnits.Count; i++)
-            //{
-            //    // Common.UnitAction.Summon(GameManager.PartyUnits[i], party_position[i]);
-            //    GameManager.PartyUnits[i].ActionRate = 0;
-            //    foreach (var skill in GameManager.PartyUnits[i].Skills)
-            //        if (skill != null)
-            //            skill.CurrentReuseTime = 0;
-            //}
-
-            /***************************************************************************/
         }
 
         public static State CheckGameState()
