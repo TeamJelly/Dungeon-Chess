@@ -15,7 +15,7 @@ namespace Model.Skills
     {
         public int number;
         public string name = "";
-        public UnitClass unitClass;
+        public Modifier unitClass;
         public int grade;
         public int maxLevel;
         public string spritePath;

@@ -11,7 +11,7 @@ namespace Model.Units
         {
               Name = "빨간 스켈레톤";
             Alliance = UnitAlliance.Enemy;
-            Class = UnitClass.Monster;
+            Class = Modifier.Monster;
 
             Level = 1;
             MaxHP = 10;

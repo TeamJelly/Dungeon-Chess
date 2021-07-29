@@ -6,7 +6,12 @@ using System;
 namespace Model
 {
     public enum UnitAlliance { NULL, Party, Neutral, Friendly, Enemy };
-    public enum UnitClass {
+
+    public enum Species {
+        
+    }
+
+    public enum Modifier {
         NULL,
         Monster,
         Soldier,        // 군인 > 강인한
@@ -30,9 +35,9 @@ namespace Model
             this.Alliance = alliance;
             
             if (Alliance == UnitAlliance.Party)
-                Class = (UnitClass) UnityEngine.Random.Range(2,8);
+                Class = (Modifier) UnityEngine.Random.Range(2,8);
             else
-                Class = UnitClass.Monster;
+                Class = Modifier.Monster;
             
             Name = Data.GetRandomName(seed);
             Sprite = Data.GetRandomSprite(seed);
@@ -42,7 +47,7 @@ namespace Model
             Skills[2] = Data.GetRandomSkill(seed);
 
             // 군인 초기스텟
-            if (Class == UnitClass.Soldier)
+            if (Class == Modifier.Soldier)
             {
                 MaxHP = 40;
                 Strength = 7;
@@ -51,7 +56,7 @@ namespace Model
                 CriticalRate = 10;
             }
             // 현상금 사냥꾼 초기스텟
-            else if (Class == UnitClass.BountyHunter)
+            else if (Class == Modifier.BountyHunter)
             {
                 MaxHP = 35;
                 Strength = 4;
@@ -60,7 +65,7 @@ namespace Model
                 CriticalRate = 20;
             }
             // 용병 초기스텟
-            else if (Class == UnitClass.Mercenary)
+            else if (Class == Modifier.Mercenary)
             {
                 MaxHP = 30;
                 Strength = 10;
@@ -69,7 +74,7 @@ namespace Model
                 CriticalRate = 10;
             }
             // 시민 초기스텟
-            else if (Class == UnitClass.Villeager)
+            else if (Class == Modifier.Villeager)
             {
                 MaxHP = 45;
                 Strength = 6;
@@ -78,7 +83,7 @@ namespace Model
                 CriticalRate = 10;
             }
             // 도둑 초기스텟
-            else if (Class == UnitClass.Thief)
+            else if (Class == Modifier.Thief)
             {
                 MaxHP = 30;
                 Strength = 10;
@@ -87,7 +92,7 @@ namespace Model
                 CriticalRate = 10;
             }
             // 상인 초기스텟
-            else if (Class == UnitClass.Merchant)
+            else if (Class == Modifier.Merchant)
             {
                 MaxHP = 20;
                 Strength = 10;
@@ -142,7 +147,7 @@ namespace Model
         protected String animatorPath = "";
         public AnimationState animationState = AnimationState.Idle; // 현재 애니메이션 상태
         public UnitAlliance Alliance { get; set; }  // 진영
-        public UnitClass Class { get; set; }        // 직업
+        public Modifier Class { get; set; }        // 직업
 
         // protected string spritePath;
         public Sprite Sprite { get; set;}
@@ -202,35 +207,35 @@ namespace Model
                     value = OnLevel.before.Invoke(value);
 
                     level++;
-                    if (Class == UnitClass.Soldier)
+                    if (Class == Modifier.Soldier)
                     {
                         MaxHP += 9;
                         Strength += 1;
                     }
-                    else if (Class == UnitClass.BountyHunter)
+                    else if (Class == Modifier.BountyHunter)
                     {
                         MaxHP += 1;
                         Strength += 2;
                         CriticalRate += 2;
                     }
-                    else if (Class == UnitClass.Mercenary)
+                    else if (Class == Modifier.Mercenary)
                     {
                         MaxHP += 4;
                         Strength += 2;
                     }
-                    else if (Class == UnitClass.Villeager)
+                    else if (Class == Modifier.Villeager)
                     {
                         MaxHP += 5;
                         Strength += 1;
                         Agility = (level % 2) == 0 ? Agility + 1 : Agility;
                     }
-                    else if (Class == UnitClass.Thief)
+                    else if (Class == Modifier.Thief)
                     {
                         Strength += 1;
                         Agility += 1;
                         CriticalRate += 2;
                     }
-                    else if (Class == UnitClass.Merchant)
+                    else if (Class == Modifier.Merchant)
                     {
                         MaxHP += 5;
                         Strength += 1;

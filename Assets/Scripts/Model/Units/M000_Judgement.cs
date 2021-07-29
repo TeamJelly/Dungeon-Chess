@@ -8,7 +8,7 @@ namespace Model.Units
         {
             Name = "저지먼트";
             Alliance = UnitAlliance.Enemy;
-            Class = UnitClass.Monster;
+            Class = Modifier.Monster;
 
             Level = 1;
             MaxHP = 150;
