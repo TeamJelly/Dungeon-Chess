@@ -10,6 +10,8 @@ namespace Model
     {
         public Vector2Int Position { get; set; }
 
+        public int price { get; set; }
+
         public Sprite GetImage()
         {
             return Sprite;

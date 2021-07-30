@@ -8,7 +8,7 @@ namespace Model.Artifacts
         public A006_AutoHill()
         {
             Name = "g";
-            spritePath = "1bitpack_kenney_1/Artifacts/A001_Helmet";
+            spritePath = "1bitpack_kenney_1/Tilesheet/colored_transparent_packed_34";
         }
 
         public override void OnAddThisEffect()

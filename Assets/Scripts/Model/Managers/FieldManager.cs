@@ -88,7 +88,13 @@ namespace Model.Managers
                 }
                 else
                 {
-                    field[y, x] = chars[i] == 'D' ?  new DownStairTIle() : new Tile();
+                    if (chars[i] == 'D') field[y, x] = new DownStairTIle();
+                    else if (chars[i] == 'S')
+                    {
+                        field[y, x] = new ShopTile();
+                        Common.Command.Summon(new Model.Artifacts.A006_AutoHill(), new Vector2Int(x, y));
+                    }
+                    else field[y, x] = new Tile();
                     field[y, x].position = new Vector2Int(x,y);
                     field[y, x].category = (Tile.Category)chars[i];
                     x++;

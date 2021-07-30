@@ -158,7 +158,7 @@ namespace Common
             else if (path.Contains("1bitpack_kenney_1/Tilesheet/colored_transparent_packed"))
             {
                 string[] splited = path.Split('_');
-                int spriteNumber = int.Parse(splited[splited.Length]);
+                int spriteNumber = int.Parse(splited[splited.Length - 1]);
                 sprite = SpriteData[spriteNumber];
             }
             else

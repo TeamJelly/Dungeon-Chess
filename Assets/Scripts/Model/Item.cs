@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Model.Managers;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -18,6 +19,7 @@ namespace Model
         public Sprite Sprite { get => Common.Data.LoadSprite(spritePath); }
 
         public Vector2Int Position { get; set; }
+        public int price { get; set; }
 
         public virtual void OnAddThisItem()
         {
