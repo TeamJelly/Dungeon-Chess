@@ -9,9 +9,10 @@ namespace Model.Units
     {
         public P001_Priest()
         {
-            Name = "아자젤";
+            Name = "Azazel";
             Alliance = UnitAlliance.Party;
-            // Class = UnitClass.Priest;
+            Species = UnitSpecies.Human;
+            Modifier = UnitModifier.Deadly;
 
             Level = 1;
             NextEXP = 10;
@@ -23,8 +24,7 @@ namespace Model.Units
             Move = 3;
             CriticalRate = 5;
 
-            // spritePath = "Helltaker/Azazel/Azazel_portrait";
-            animatorPath = "Helltaker/Azazel/Azazel_animator";
+            Sprite = Common.Data.GetRandomSprite(Species, Random.Range(0,10000));
 
             MoveSkill = new S100_Walk();
 

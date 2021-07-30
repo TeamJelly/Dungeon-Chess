@@ -21,41 +21,41 @@ namespace Common
 
         public static void GotoLobby()
         {
-            LoadScene("Field");
+            LoadScene("#1_Field");
         }
         public static void GotoMain()
         {
-            LoadScene("#001_MainMenu");
+            LoadScene("#0_Menu");
         }
 
         public static void GotoPrepareScene()
         {
-           LoadScene("Field");
+           LoadScene("#1_Field");
         }
         public static void GotoBattleRoom()
         {
             GameManager.InBattle = true;
-            LoadScene("Field");
+            LoadScene("#1_Field");
         }
 
         public static void GotoTreasureRoom()
         {
-             LoadScene("Field");
+             LoadScene("#1_Field");
         }
 
         public static void GotoShopRoom()
         {
-            LoadScene("Field");
+            LoadScene("#1_Field");
         }
 
         public static void GotoTavernRoom()
         {
-           LoadScene("Field");
+           LoadScene("#1_Field");
         }
 
         public static void GotoEventRoom()
         {
-            LoadScene("Field");
+            LoadScene("#1_Field");
         }
 
 

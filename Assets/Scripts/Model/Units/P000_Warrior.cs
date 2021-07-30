@@ -9,9 +9,10 @@ namespace Model.Units
     {
         public P000_Warrior()
         {
-            Name = "루시퍼";
+            Name = "Lucifer";
             Alliance = UnitAlliance.Party;
-            // Class = UnitClass.Warrior;
+            Species = UnitSpecies.Human;
+            Modifier = UnitModifier.Meticulous;
 
             Level = 1;
             NextEXP = 10;
@@ -23,11 +24,9 @@ namespace Model.Units
             Move = 2;
             CriticalRate = 10;
 
-            // spritePath = "2179";
-            animatorPath = "Helltaker/Lucifer/Lucifer_animator";
+            Sprite = Common.Data.GetRandomSprite(Species, Random.Range(0,10000));
 
             MoveSkill = new S100_Walk();
-
             Skills[0] = new S000_Cut();
             Skills[1] = new S005_SpinSlash();
         }
