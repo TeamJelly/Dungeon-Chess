@@ -67,9 +67,9 @@ namespace View.UI
         {
             properties.interactable = b;
             if (b)
-                FrameImage.color = new Color(FrameImage.color.r,FrameImage.color.g,FrameImage.color.b,1);
+                FrameImage.color = FrameImage.color + Color.gray - Color.black;
             else
-                FrameImage.color = new Color(FrameImage.color.r,FrameImage.color.g,FrameImage.color.b,0.75f);
+                FrameImage.color = FrameImage.color - Color.gray + Color.black;
         }
 
         private void OnValidate()
