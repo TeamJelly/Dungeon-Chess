@@ -66,6 +66,10 @@ namespace View.UI
         public virtual void SetInteractable(bool b)
         {
             properties.interactable = b;
+            if (b)
+                FrameImage.color = new Color(FrameImage.color.r,FrameImage.color.g,FrameImage.color.b,1);
+            else
+                FrameImage.color = new Color(FrameImage.color.r,FrameImage.color.g,FrameImage.color.b,0.75f);
         }
 
         private void OnValidate()
