@@ -4,33 +4,35 @@ using UnityEngine;
 using Model;
 using Model.Managers;
 using View;
-public class DownStairTIle : Tile
+
+namespace Model.Tiles
 {
-    public override void OnTile(Unit unit)
+    public class DownStairTIle : Tile
     {
-        base.OnTile(unit);
-
-        Debug.Log("!");
-        if(!GameManager.PartyUnits.Contains(unit)) return;
-
-        int partyObjCnt = 0;
-        
-        foreach(Unit party in GameManager.PartyUnits)
+        public override void OnTile(Unit unit)
         {
-            if(BattleView.UnitObjects.ContainsKey(party))
-                partyObjCnt++;
-        }
+            base.OnTile(unit);
 
-        Debug.Log(partyObjCnt);
+            if (!GameManager.PartyUnits.Contains(unit)) return;
 
-        if(partyObjCnt == 1)
-        {
-            StageView.instance.Enable();
-        }
-        else
-        {
-            Common.Command.UnSummon(unit);
+            int partyObjCnt = 0;
+
+            foreach (Unit party in GameManager.PartyUnits)
+            {
+                if (BattleView.UnitObjects.ContainsKey(party))
+                    partyObjCnt++;
+            }
+
+            Debug.Log(partyObjCnt);
+
+            if (partyObjCnt == 1)
+            {
+                StageView.instance.Enable();
+            }
+            else
+            {
+                Common.Command.UnSummon(unit);
+            }
         }
     }
-    
 }

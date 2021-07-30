@@ -21,6 +21,7 @@ namespace Model
             DownStair   = 'D',
             Thorn   = 'T',
             Hole    = 'H',
+            Shop = 'S',
         };
 
         public Category category;

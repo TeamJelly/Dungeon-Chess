@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using View;
+using Model.Tiles;
 
 namespace Model.Managers
 {
