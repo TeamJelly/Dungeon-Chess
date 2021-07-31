@@ -103,6 +103,7 @@ namespace View
 
             CurrentUnitPortrait.sprite = unit.Sprite;
 
+            SystemMessageView.SetMessage($"{unit.Name}을 소환할 위치를 선택하세요");
             IndicatorView.ShowTileIndicator(FieldManager.instance.GetStairAroundPosition(),
                 (Vector2Int position) =>
                 {
@@ -112,6 +113,8 @@ namespace View
                     if (index == GameManager.PartyUnits.Count)
                     {
                         IndicatorView.HideTileIndicator();
+                        SystemMessageView.HideMessage();
+                        SystemMessageView.ReserveMessage("전투 시작!");
                         BattleController.instance.NextTurnStart();
                     }
                     // 전부 소환할때까지 재귀로 돈다.
@@ -186,6 +189,47 @@ namespace View
             // 스프라이터 랜더러 추가
             SpriteRenderer spriteRenderer = imgObj.AddComponent<SpriteRenderer>();
             spriteRenderer.sprite = unit.Sprite;
+
+            Texture2D old = unit.Sprite.texture;
+            Rect rect = unit.Sprite.rect;
+            Texture2D texture = new Texture2D(18,18);
+            texture.filterMode = FilterMode.Point;
+            spriteRenderer.material.mainTexture = texture;
+
+            Debug.Log(old.height + "," + old.width);
+
+            for (int y = 0; y < 18; y++)
+                for (int x = 0; x < 18; x++)
+                    texture.SetPixel(x,y, new Color(0,0,0,0));
+
+            for (int y = 0; y < 16; y++) {
+                for (int x = 0; x < 16; x++) {
+                    Color color = old.GetPixel((int)rect.x + x , (int)rect.y + y);
+                    if (color.a == 0)
+                        continue;
+
+                    color = Color.red;
+                    texture.SetPixel(x+2, y+1, color);
+                    texture.SetPixel(x, y+1, color);
+                    texture.SetPixel(x+1, y+2, color);
+                    texture.SetPixel(x+1, y, color);
+                }
+            }
+
+            for (int y = 0; y < 16; y++) {
+                for (int x = 0; x < 16; x++) {
+                    Color color = old.GetPixel((int)rect.x + x , (int)rect.y + y);
+                    if (color.a == 0)
+                        continue;
+                    texture.SetPixel(x+1, y+1, color);
+                }
+            }
+
+            texture.Apply();
+            
+            rect = new Rect(0, 0, texture.width, texture.height);
+            spriteRenderer.sprite = Sprite.Create(texture, rect, new Vector2(0.5f, 0.5f), 16); 
+
 
             // 애니메이터 추가
             Animator animator = imgObj.AddComponent<Animator>();

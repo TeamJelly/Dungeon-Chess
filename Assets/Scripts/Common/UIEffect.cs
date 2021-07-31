@@ -25,7 +25,7 @@ namespace Common
             panel.GetComponent<MonoBehaviour>().StartCoroutine(FadeOutCoroutine(panel, canvasGroup));
         }
         
-        static IEnumerator FadeInCoroutine(GameObject panel, CanvasGroup canvasGroup, float delayTime = 0, float time = 0.1f)
+        public static IEnumerator FadeInCoroutine(GameObject panel, CanvasGroup canvasGroup, float delayTime = 0, float time = 0.1f)
         {
             float value = 0;
             canvasGroup.alpha = 0;
@@ -41,7 +41,7 @@ namespace Common
             }
             canvasGroup.alpha = 1;
         }
-        static IEnumerator FadeOutCoroutine(GameObject panel, CanvasGroup canvasGroup, float delayTime = 0, float time = 0.1f)
+        public static IEnumerator FadeOutCoroutine(GameObject panel, CanvasGroup canvasGroup, float delayTime = 0, float time = 0.1f)
         {
             float value = time;
             canvasGroup.alpha = 1;
