@@ -11,7 +11,7 @@ namespace Model.Tiles
     {
         public override void OnTile(Unit unit)
         {
-            if(obtainable != null)
+            if(obtainable != null && unit.Alliance == UnitAlliance.Party)
             {
                 Confirm.Enable("Buy?", BuyFunction, CancelFunction);
             }

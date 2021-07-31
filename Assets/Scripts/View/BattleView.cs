@@ -103,6 +103,7 @@ namespace View
 
             CurrentUnitPortrait.sprite = unit.Sprite;
 
+            SystemMessageView.SetMessage($"{unit.Name}을 소환할 위치를 선택하세요");
             IndicatorView.ShowTileIndicator(FieldManager.instance.GetStairAroundPosition(),
                 (Vector2Int position) =>
                 {
@@ -112,6 +113,8 @@ namespace View
                     if (index == GameManager.PartyUnits.Count)
                     {
                         IndicatorView.HideTileIndicator();
+                        SystemMessageView.HideMessage();
+                        SystemMessageView.ReserveMessage("전투 시작!");
                         BattleController.instance.NextTurnStart();
                     }
                     // 전부 소환할때까지 재귀로 돈다.

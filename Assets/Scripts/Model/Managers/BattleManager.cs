@@ -47,6 +47,7 @@ namespace Model.Managers
 
         private void Start()
         {
+
             FieldManager.instance.InitField(FieldManager.instance.FieldDatas[0]);
 
             // 테스팅 적 유닛 소환
