@@ -19,6 +19,11 @@ namespace Common
                 {
                     TextAsset data = Resources.Load<TextAsset>("names");
                     nameData = data.text.Split('\n');
+
+                    foreach (var item in nameData)
+                    {
+                        Debug.Log(item + item.Length);
+                    }
                 }
 
                 return nameData;
@@ -33,7 +38,8 @@ namespace Common
         public static string GetRandomName(int seed)
         {
             int rand = seed % NameData.Length;
-            return NameData[rand];
+            string name = NameData[rand];
+            return name.Substring(0, name.Length -1);
         }
 
         /// <summary>

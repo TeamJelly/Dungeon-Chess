@@ -69,7 +69,7 @@ namespace View
                                         // currentUnit.OnUseSkill.after();
 
                                     }
-                                    else
+                                    if (tileAction != null)
                                     {
                                         tileAction(position);
                                         // 다음 유닛을 소환해야 해서 타일을 자동으로 숨길수가 없다.
@@ -202,6 +202,9 @@ namespace View
         public static void HideTileIndicator()
         {
             TileIndicatorParent.SetActive(false);
+            currentUnit = null;
+            currentSkill = null;
+            tileAction = null;
         }
     }
 }
