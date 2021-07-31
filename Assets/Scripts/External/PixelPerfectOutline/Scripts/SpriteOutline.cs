@@ -82,6 +82,7 @@ public class SpriteOutline : MonoBehaviour
         spriteRenderer.GetPropertyBlock(properties);
 
         Vector4 vector = new Vector4(spriteRect.x, spriteRect.y, spriteRect.width, spriteRect.height);
+        Debug.Log(vector);
         properties.SetVector("_RectPosSize", vector);
         properties.SetVector("_Pivot", pivot);
         properties.SetFloat("_PixelsPerUnit", pixelsPerUnit);
