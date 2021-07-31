@@ -20,10 +20,10 @@ namespace Common
                     TextAsset data = Resources.Load<TextAsset>("names");
                     nameData = data.text.Split('\n');
 
-                    foreach (var item in nameData)
-                    {
-                        Debug.Log(item + item.Length);
-                    }
+                    //foreach (var item in nameData)
+                    //{
+                    //    Debug.Log(item + item.Length);
+                    //}
                 }
 
                 return nameData;

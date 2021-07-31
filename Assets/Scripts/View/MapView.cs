@@ -16,8 +16,8 @@ namespace View
         public GameObject contentPanel;
         public GameObject floorPrefab;
         public GameObject roomPrefab;
-        public GameObject linePrefab;
         public GameObject clearSignPrefab;
+        public RectTransform linePrefab;
 
         public Button[,] AllRoomButtons;
 
@@ -28,7 +28,7 @@ namespace View
 
         public List<Sprite> roomImages;
 
-        public RectTransform linePrefab2;
+        
 
         private void Awake()
         {
@@ -42,7 +42,6 @@ namespace View
         {
             UIEffect.FadeInPanel(panel);
         }
-
         public void Disable()
         {
             UIEffect.FadeOutPanel(panel);
@@ -94,6 +93,11 @@ namespace View
         {
             AllRoomButtons = new Button[AllRooms.GetLength(0), AllRooms.GetLength(1)];
 
+
+            RectTransform rt = (RectTransform)contentPanel.transform;
+            Debug.Log(rt.rect.width);
+            rt.offsetMax = new Vector2(((RectTransform)floorPrefab.transform).rect.width * AllRooms.GetLength(0) - rt.rect.width, rt.offsetMax.y);
+            
             for (int i = 0; i < AllRooms.GetLength(0); i++)
             {
                 GameObject floor = Instantiate(floorPrefab, contentPanel.transform);
@@ -124,7 +128,7 @@ namespace View
                     child.anchorMin =  Vector2.one * 0.5f;
                     child.anchorMax =  Vector2.one * 0.5f;
                     child.pivot = Vector2.one * 0.5f;
-                    child.sizeDelta = Vector2.one * 20;
+                    child.sizeDelta = Vector2.one * 120; //
                     child.anchoredPosition = new Vector2(0, -gap * j + centerHeight  - gap * 0.5f);
                 }
             }
@@ -207,12 +211,12 @@ namespace View
             }
         }
 
-        Vector2 canvasResolution = new Vector2(320,180);
+        Vector2 canvasResolution = new Vector2(1920,1080);
         void DrawLine(Room A, Room B)
         {
             float angle = GetAngle(((RectTransform)AllRoomButtons[A.position.x, A.position.y].transform).position,
                                    ((RectTransform)AllRoomButtons[B.position.x, B.position.y].transform).position);
-            RectTransform line = Instantiate(linePrefab2,contentPanel.transform);
+            RectTransform line = Instantiate(linePrefab,contentPanel.transform);
             line.position = AllRoomButtons[A.position.x,A.position.y].transform.position;
 
             //Debug.Log(((RectTransform)(AllRoomButtons[A.position.x, A.position.y].transform)).position);
@@ -221,14 +225,14 @@ namespace View
             Vector2 posA = AllRoomButtons[A.position.x, A.position.y].transform.position;
             Vector2 posB = AllRoomButtons[B.position.x, B.position.y].transform.position;
 
-            posA.x *= canvasResolution.x / Screen.currentResolution.width;
-            posA.y *= canvasResolution.y / Screen.currentResolution.height;
+           /* posA.x *= canvasResolution.x / Screen.width;
+            posA.y *= canvasResolution.y / Screen.height;
 
-            posB.x *= canvasResolution.x / Screen.currentResolution.width;
-            posB.y *= canvasResolution.y / Screen.currentResolution.height;
+            posB.x *= canvasResolution.x / Screen.width;
+            posB.y *= canvasResolution.y / Screen.height;*/
 
-            float distance = Vector2.Distance(posA,posB);
-            line.sizeDelta = new Vector2(distance , 1);
+            float distance = Vector2.Distance(posA,posB) * canvasResolution.x / Screen.width;
+            line.sizeDelta = new Vector2(distance , 6);
     
             //Debug.Log(distance);
             line.eulerAngles = new Vector3(0, 0, angle);
