@@ -9,12 +9,9 @@ namespace View.UI
     public class Bag : MonoBehaviour
     {
         public GameObject panel;
-
         public GameObject buttonPrefab;
-
         public Transform itemContainer;
         public Transform artifactContainer;
-
         public List<PixelButton> itemSlots;
         public List<PixelButton> artifactSlots;
 

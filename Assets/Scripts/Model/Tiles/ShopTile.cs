@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Model;
 using Model.Managers;
-using View;
+using View.UI;
 
 namespace Model.Tiles
 {
@@ -13,7 +13,7 @@ namespace Model.Tiles
         {
             if(obtainable != null)
             {
-                 OXView.Enable("Buy", BuyFunction, CancelFunction);
+                Confirm.Enable("Buy?", BuyFunction, CancelFunction);
             }
         }
 
@@ -22,26 +22,23 @@ namespace Model.Tiles
             int price = obtainable.price;
             if (GameManager.Instance.Gold < price)
             {
-                Debug.Log("µ· ºÎÁ·.");
-                //µ·ÀÌ ºÎÁ·ÇÕ´Ï´Ù Ã¢ È°¼ºÈ­
+                View.FadeOutTextView.MakeText(unit.Position + Vector2Int.up,"ëˆì´ ë¶€ì¡±í•˜ë‹¤.", Color.red);
             }
             else
             {
                 GameManager.Instance.Gold -= price;
-                obtainable.ToBag();
-                View.FadeOutTextView.MakeText(unit.Position + Vector2Int.up, $"{obtainable.Name} È¹µæ!", Color.yellow);
-                Common.Command.UnSummon(obtainable);
+                base.OnTile(unit);
 
                 Debug.Log("Gold: " + GameManager.Instance.Gold);
                 Debug.Log("Price: " + price);
                 Debug.Log("Buy");
-                OXView.Disable();
+                Confirm.Disable();
             }
         }
 
         void CancelFunction()
         {
-            OXView.Disable();
+            Confirm.Disable();
         }
     }
 }

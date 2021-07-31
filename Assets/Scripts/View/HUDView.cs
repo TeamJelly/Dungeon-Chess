@@ -32,7 +32,7 @@ namespace View
 
         public void EnableMenu()
         {
-            PauseMenuView.instance.Enable();
+            MenuView.instance.Enable();
             //Debug.Log("Menu Enabled");
         }
     }

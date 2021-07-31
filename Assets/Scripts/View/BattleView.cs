@@ -241,7 +241,7 @@ namespace View
         {
 
             // 게임 오브젝트 생성
-            GameObject obObj = new GameObject();
+            GameObject obObj = new GameObject(ob.Name);
             // 위치 지정
             obObj.transform.position = new Vector3(pos.x, pos.y, -0.1f);
 

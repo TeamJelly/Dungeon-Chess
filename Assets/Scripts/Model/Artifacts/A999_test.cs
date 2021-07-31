@@ -12,7 +12,7 @@ namespace Model.Artifacts
         public A999_test()
         {
             Name = "test artifact name";
-            spritePath = "1bitpack_kenney_1/Artifacts/A001_Helmet";
+            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/colored_transparent_packed_31");
         }
 
         public int OnDamage(int value)

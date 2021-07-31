@@ -91,7 +91,8 @@ namespace UI.Battle
 
         public void Win()
         {
-            View.BattleResultView.instance.EnableWinUI();
+            Common.Command.UnSummonAllUnit();
+            BattleView.SetNonBattleMode();
         }
 
         public void Defeat()

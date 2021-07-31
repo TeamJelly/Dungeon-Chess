@@ -9,7 +9,7 @@
         public A002_AGI_S()
         {
             Name = "b";
-            spritePath = "1bitpack_kenney_1/Artifacts/A001_Helmet";
+            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/colored_transparent_packed_31");
         }
 
         public override void OnAddThisEffect()

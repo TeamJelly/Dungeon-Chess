@@ -20,12 +20,12 @@ namespace View
             gameObject.SetActive(false);
         }
         
-        public void Enable(Skill skill)
+        public void Show(Skill skill)
         {
 
         }
 
-        public void Enable(Unit unit)
+        public void Show(Unit unit)
         {
             text.text =
                 "이름: " + unit.Name +

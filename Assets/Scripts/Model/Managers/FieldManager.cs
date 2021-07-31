@@ -92,7 +92,7 @@ namespace Model.Managers
                     else if (chars[i] == 'S')
                     {
                         field[y, x] = new ShopTile();
-                        Common.Command.Summon(new Model.Artifacts.A006_AutoHill(), new Vector2Int(x, y));
+                        Common.Command.Summon(new Model.Artifacts.A006_AutoHeal(), new Vector2Int(x, y));
                     }
                     else field[y, x] = new Tile();
                     field[y, x].position = new Vector2Int(x,y);

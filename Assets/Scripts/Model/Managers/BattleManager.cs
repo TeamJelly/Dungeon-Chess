@@ -50,7 +50,7 @@ namespace Model.Managers
             FieldManager.instance.InitField(FieldManager.instance.FieldDatas[0]);
 
             // 테스팅 적 유닛 소환
-            Unit unit = new Unit(UnitAlliance.Enemy, UnitSpecies.LargeBeast, 10);
+            Unit unit = new Unit(UnitAlliance.Enemy, UnitSpecies.LargeBeast, 1);
 
             unit.MoveSkill.Priority = Common.AI.Priority.NearFromClosestParty;
             unit.Skills[0].Target = Skill.TargetType.Party;
@@ -84,7 +84,7 @@ namespace Model.Managers
 
             // Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(6, 6));
             // Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(10, 5));
-             Common.Command.Summon(new Model.Artifacts.A006_AutoHill(), new Vector2Int(6, 8));
+             Common.Command.Summon(new Model.Artifacts.A006_AutoHeal(), new Vector2Int(6, 8));
             // Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(9, 9));
             // Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(6, 4));
         }

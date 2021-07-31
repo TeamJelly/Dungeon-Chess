@@ -27,7 +27,7 @@ namespace Model.Tiles
 
             if (partyObjCnt == 1)
             {
-                StageView.instance.Enable();
+                MapView.instance.Enable();
             }
             else
             {

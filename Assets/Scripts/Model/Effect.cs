@@ -16,8 +16,7 @@ namespace Model
             set => turnCount = value;
         }
 
-        protected string spritePath;
-        public Sprite Sprite { get => Common.Data.LoadSprite(spritePath); }
+        public Sprite Sprite { get; set; }
 
         public Effect()
         {

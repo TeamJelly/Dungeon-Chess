@@ -12,14 +12,14 @@ namespace Common
     {
         public static void Die(Unit unit)
         {
-            View.FadeOutTextView.MakeText(unit.Position, $"{unit.Name} 사망", Color.red);
+            View.FadeOutTextView.MakeText(unit.Position, unit.Name + " is dead", Color.red);
 
-            // unit.Agility = -10;
             unit.Alliance = UnitAlliance.NULL;
 
             View.VisualEffectView.MakeVisualEffect(unit.Position, "Explosion");
             UnSummon(unit);
 
+            // 소지 유물 뿌리기
             List<Tile> tiles = FieldManager.GetBlankFloorTiles(unit.Artifacts.Count);
             int count = 0;
             foreach(Tile tile in tiles)
@@ -62,6 +62,7 @@ namespace Common
             unit.CurHP -= value;
             unit.OnDamage.after.Invoke(value);
 
+            FadeOutTextView.MakeText(unit.Position + Vector2Int.up, $"HP -{value}", Color.red);
             Debug.Log($"{unit.Name}가(은) {value}만큼 데미지를 입었다! [HP : {unit.CurHP + value}>{unit.CurHP}]");
 
             if (unit.CurHP <= 0)
