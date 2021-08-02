@@ -91,22 +91,32 @@ namespace Common
             return list;
         }
 
-        private static Sprite[] spritesData;
+        private static Sprite[] colored_transparent_packed;
+        private static Sprite[] monochrome_transparent_packed;
 
-        public static Sprite[] SpriteData
+        public static Sprite[] Colored
         {
             get
             {
-                if (spritesData == null)
-                    spritesData = Resources.LoadAll<Sprite>("1bitpack_kenney_1/Tilesheet/colored_transparent_packed");
-                return spritesData;
+                if (colored_transparent_packed == null)
+                    colored_transparent_packed = Resources.LoadAll<Sprite>("1bitpack_kenney_1/Tilesheet/colored_transparent_packed");
+                return colored_transparent_packed;
+            }
+        }
+        public static Sprite[] Monochrome
+        {
+            get
+            {
+                if (monochrome_transparent_packed == null)
+                    monochrome_transparent_packed = Resources.LoadAll<Sprite>("1bitpack_kenney_1/Tilesheet/monochrome_transparent_packed");
+                return monochrome_transparent_packed;
             }
         }
 
         public static Sprite GetRandomSprite(UnitSpecies unitSpecies, int seed)
         {
             int rand = seed % SpeciesToSpriteNumbers[unitSpecies].Count;
-            return SpriteData[SpeciesToSpriteNumbers[unitSpecies][rand]];
+            return Colored[SpeciesToSpriteNumbers[unitSpecies][rand]];
         }
 
         private static Dictionary<UnitSpecies, List<int>> SpeciesToSpriteNumbers = new Dictionary<UnitSpecies, List<int>>
@@ -160,7 +170,13 @@ namespace Common
             {
                 string[] splited = path.Split('_');
                 int spriteNumber = int.Parse(splited[splited.Length - 1]);
-                sprite = SpriteData[spriteNumber];
+                sprite = Colored[spriteNumber];
+            }
+            else if (path.Contains("1bitpack_kenney_1/Tilesheet/monochrome_transparent_packed"))
+            {
+                string[] splited = path.Split('_');
+                int spriteNumber = int.Parse(splited[splited.Length - 1]);
+                sprite = Monochrome[spriteNumber];
             }
             else
                 sprite = Resources.Load<Sprite>(path);

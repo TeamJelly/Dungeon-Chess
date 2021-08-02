@@ -48,25 +48,10 @@ namespace Model
         public AI.Priority Priority { get; set; }
         public TargetType Target { get; set; }
         public RangeType Range { get; set; }
-
-        [SerializeField]
-        protected string spritePath = "";
         public string Description { get; set; }
         public string APData        { get; set; }
         public string RPData        { get; set; }
-
-        private Sprite sprite;
-        public Sprite Sprite
-        {
-            get
-            {
-                if (spritePath == "")
-                    sprite = Resources.Load<Sprite>("1bitpack_kenney_1/Tilesheet/X");
-                else if (sprite == null && spritePath != "")
-                    sprite = Resources.Load<Sprite>(spritePath);
-                return sprite;
-            }
-        }
+        public Sprite Sprite {get; set;}
 
         public virtual bool IsUsable(Unit user)
         {

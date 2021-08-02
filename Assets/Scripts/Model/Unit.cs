@@ -332,5 +332,7 @@ namespace Model
 
         private bool isFlying = false;
         public bool IsFlying { get => isFlying; set => isFlying = value; }
+
+        public Color Color => throw new NotImplementedException();
     }
 }

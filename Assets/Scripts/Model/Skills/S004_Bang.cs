@@ -18,7 +18,7 @@ namespace Model.Skills
             Target = TargetType.Any;
             Range = RangeType.Fixed;
 
-            spritePath = "HandMade/SkillImage/004_강타";
+            Sprite = Common.Data.LoadSprite("HandMade/SkillImage/004_강타");
             Description = 
                 $"선택한 대상에게 X의 데미지를 입히고, 한턴간 기절시킨다.\n\n\n" +
                 $"‘그냥 힘 줘서 때리면 기절 하더라고.’";

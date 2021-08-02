@@ -57,6 +57,7 @@ namespace Model.Managers
             unit.Skills[0].Target = Skill.TargetType.Party;
 
             Common.Command.Summon(unit, new Vector2Int(4, 4));
+            Common.Command.Summon(new Items.I000_Heal(), new Vector2Int(3,3));
 
             Common.Command.AddArtifact(unit, new Model.Artifacts.A999_test());
             Common.Command.AddArtifact(unit, new Model.Artifacts.A999_test());

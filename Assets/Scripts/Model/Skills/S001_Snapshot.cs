@@ -18,7 +18,7 @@ namespace Model.Skills
             Target = TargetType.Any;
             Range = RangeType.Fixed;
 
-            spritePath = "HandMade/SkillImage/001_속사";
+            Sprite = Common.Data.LoadSprite("HandMade/SkillImage/001_속사");
             Description =
                 $"선택한 대상에게 X의 데미지를 준다.\n\n\n" +
                 $"‘느리게 쏘는건 없나요?.’";

@@ -18,6 +18,8 @@ namespace Model
 
         public Sprite Sprite { get; set; }
 
+        public Color Color => throw new System.NotImplementedException();
+
         public Effect()
         {
 

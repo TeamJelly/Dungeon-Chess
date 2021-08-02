@@ -9,7 +9,6 @@ namespace Model.Managers
     public class FieldManager : MonoBehaviour
     {
         public static FieldManager instance;
-
         public Tilemap tileMap;
 
         /// <summary>
@@ -127,6 +126,15 @@ namespace Model.Managers
             else
                 return false;
         }
+        
+        public List<Vector2Int> GetAllPositions()
+        {
+            List<Vector2Int> positions = new List<Vector2Int>();
+            for (int y = 0; y < field.GetLength(0); y++)
+                for (int x = 0; x < field.GetLength(1); x++)
+                    positions.Add(new Vector2Int(x,y));
+            return positions;
+        }
 
         public static Tile GetTile(Vector2Int position)
         {
@@ -218,7 +226,7 @@ namespace Model.Managers
 
         public Vector2Int GetStairPosition()
         {
-             for (int y = 0; y < field.GetLength(0); y++)
+            for (int y = 0; y < field.GetLength(0); y++)
             {
                 for (int x = 0; x < field.GetLength(1); x++)
                 {

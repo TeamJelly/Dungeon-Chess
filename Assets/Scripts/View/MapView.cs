@@ -36,13 +36,13 @@ namespace View
             instance = this;
             roomImages = new List<Sprite>{
                 null,
-                Common.Data.SpriteData[138],
-                Common.Data.SpriteData[712],
-                Common.Data.SpriteData[760],
-                Common.Data.SpriteData[295],
-                Common.Data.SpriteData[398],
-                Common.Data.SpriteData[397],
-                Common.Data.SpriteData[661],
+                Common.Data.Colored[138],
+                Common.Data.Colored[712],
+                Common.Data.Colored[760],
+                Common.Data.Colored[295],
+                Common.Data.Colored[398],
+                Common.Data.Colored[397],
+                Common.Data.Colored[661],
             };
         }
         private void Start()

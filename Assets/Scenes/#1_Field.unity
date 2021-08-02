@@ -8785,7 +8785,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1321821656}
+      - m_Target: {fileID: 0}
         m_MethodName: Hide
         m_Mode: 1
         m_Arguments:
@@ -9728,6 +9728,7 @@ GameObject:
   - component: {fileID: 984850863}
   - component: {fileID: 984850862}
   - component: {fileID: 984850864}
+  - component: {fileID: 984850865}
   m_Layer: 5
   m_Name: BattleCanvas
   m_TagString: Untagged
@@ -9882,6 +9883,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   panel: {fileID: 292819043}
   text: {fileID: 528032083}
+--- !u!114 &984850865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984850856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c81674b96ac35e40bc584ef624e3574, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panel: {fileID: 1836504853}
+  buttonPrefab: {fileID: 1668895321770343510, guid: e159808115b61cc42927b3bdcaebcc5d,
+    type: 3}
+  itemContainer: {fileID: 2053720521}
+  artifactContainer: {fileID: 518788217}
+  itemSlots: []
+  artifactSlots: []
 --- !u!1 &989221846
 GameObject:
   m_ObjectHideFlags: 0
@@ -35400,7 +35420,6 @@ GameObject:
   - component: {fileID: 1321821661}
   - component: {fileID: 1321821655}
   - component: {fileID: 1321821660}
-  - component: {fileID: 1321821656}
   m_Layer: 0
   m_Name: Scripts
   m_TagString: Untagged
@@ -35421,25 +35440,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animators: []
---- !u!114 &1321821656
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1321821654}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c81674b96ac35e40bc584ef624e3574, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  panel: {fileID: 1836504853}
-  buttonPrefab: {fileID: 1668895321770343510, guid: e159808115b61cc42927b3bdcaebcc5d,
-    type: 3}
-  itemContainer: {fileID: 2053720521}
-  artifactContainer: {fileID: 518788217}
-  itemSlots: []
-  artifactSlots: []
 --- !u!114 &1321821657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36666,7 +36666,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1321821656}
+      - m_Target: {fileID: 0}
         m_MethodName: Show
         m_Mode: 1
         m_Arguments:

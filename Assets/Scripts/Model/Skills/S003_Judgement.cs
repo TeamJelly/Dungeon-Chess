@@ -17,7 +17,7 @@ namespace Model.Skills
             Target = TargetType.Any;
             Range = RangeType.Fixed;
 
-            spritePath = "HandMade/SkillImage/003_천벌";
+            Sprite = Common.Data.LoadSprite("HandMade/SkillImage/003_천벌");
             Description =
                 $"두칸 안에 있는 단일 대상에게 [STR*{strToDmg}+GRD*{grdToDmg}]의 데미지를 준다.\n\n\n" +
                 $"‘벼락이 아니라, 신의 심판입니다.’";

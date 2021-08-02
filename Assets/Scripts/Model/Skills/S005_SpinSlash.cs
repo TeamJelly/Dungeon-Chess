@@ -19,7 +19,7 @@ namespace Model.Skills
             Target = TargetType.Any;
             Range = RangeType.Fixed;
 
-            spritePath = "HandMade/SkillImage/005_회전베기";
+            Sprite = Common.Data.LoadSprite("HandMade/SkillImage/005_회전베기");
             Description =
                 $"범위안의 모든 대상에게 X의 데미지를 입힌다.\n\n\n" +
                 $"‘ 회전~ 회오리~’";
