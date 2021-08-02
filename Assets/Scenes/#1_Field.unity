@@ -8411,7 +8411,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &725121191
 RectTransform:
   m_ObjectHideFlags: 0
@@ -61047,15 +61047,6 @@ MonoBehaviour:
   selector: {fileID: 1289245513}
   floors: []
   lines: []
-  roomImages:
-  - {fileID: -3714409817710726143, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
-  - {fileID: 3279467473711108629, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
-  - {fileID: -6404053778309610593, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
-  - {fileID: -5986936575811970920, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
-  - {fileID: -2784276677790117873, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
-  - {fileID: 3360335357785681208, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
-  - {fileID: 8011179097440696663, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
-  - {fileID: 2412317363535826626, guid: cceda1ad674f7a14fa9495327f91e76c, type: 3}
 --- !u!114 &3255219562686038413
 MonoBehaviour:
   m_ObjectHideFlags: 0

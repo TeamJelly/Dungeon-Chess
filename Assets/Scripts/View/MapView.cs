@@ -28,15 +28,23 @@ namespace View
 
         public List<Sprite> roomImages;
 
-        
-
         private void Awake()
         {
             instance = this;
+            roomImages = new List<Sprite>{
+                null,
+                Common.Data.SpriteData[138],
+                Common.Data.SpriteData[712],
+                Common.Data.SpriteData[1043],
+                Common.Data.SpriteData[295],
+                Common.Data.SpriteData[964],
+                Common.Data.SpriteData[388],
+                Common.Data.SpriteData[660],
+            };
         }
         private void Start()
         {
-           InitStageUI(MapManager.instance.AllRooms);
+            InitStageUI(MapManager.instance.AllRooms);
         }
         public void Enable()
         {
@@ -97,7 +105,7 @@ namespace View
             RectTransform rt = (RectTransform)contentPanel.transform;
             Debug.Log(rt.rect.width);
             rt.offsetMax = new Vector2(((RectTransform)floorPrefab.transform).rect.width * AllRooms.GetLength(0) - rt.rect.width, rt.offsetMax.y);
-            
+
             for (int i = 0; i < AllRooms.GetLength(0); i++)
             {
                 GameObject floor = Instantiate(floorPrefab, contentPanel.transform);
@@ -112,7 +120,7 @@ namespace View
                     {
                         //버튼 생성 및 이미지 세팅
                         AllRoomButtons[i, j] = Instantiate(roomPrefab, floor.transform).GetComponent<Button>();
-                        AllRoomButtons[i, j].GetComponent<Image>().sprite = roomImages[room.category.GetHashCode()];
+                        AllRoomButtons[i, j].transform.Find("Image").GetComponent<Image>().sprite = roomImages[room.category.GetHashCode()];
 
                         //각 방의 버튼마다 이벤트 부여
                         AllRoomButtons[i, j].onClick.AddListener(() => MapManager.instance.VisitRoom(room));
@@ -122,14 +130,14 @@ namespace View
 
                 float gap = ((RectTransform)floor.transform).rect.height / floor.transform.childCount;
                 float centerHeight = ((RectTransform)floor.transform).rect.height * 0.5f;
-                for(int j = 0; j < floor.transform.childCount; j++)
+                for (int j = 0; j < floor.transform.childCount; j++)
                 {
                     RectTransform child = (RectTransform)floor.transform.GetChild(j);
-                    child.anchorMin =  Vector2.one * 0.5f;
-                    child.anchorMax =  Vector2.one * 0.5f;
+                    child.anchorMin = Vector2.one * 0.5f;
+                    child.anchorMax = Vector2.one * 0.5f;
                     child.pivot = Vector2.one * 0.5f;
-                    child.sizeDelta = Vector2.one * 120; //
-                    child.anchoredPosition = new Vector2(0, -gap * j + centerHeight  - gap * 0.5f);
+                    // child.sizeDelta = Vector2.one * 120; //
+                    child.anchoredPosition = new Vector2(0, -gap * j + centerHeight - gap * 0.5f);
                 }
             }
 
@@ -215,8 +223,8 @@ namespace View
         {
             float angle = GetAngle(((RectTransform)AllRoomButtons[A.position.x, A.position.y].transform).position,
                                    ((RectTransform)AllRoomButtons[B.position.x, B.position.y].transform).position);
-            RectTransform line = Instantiate(linePrefab,contentPanel.transform);
-            line.position = AllRoomButtons[A.position.x,A.position.y].transform.position;
+            RectTransform line = Instantiate(linePrefab, contentPanel.transform);
+            line.position = AllRoomButtons[A.position.x, A.position.y].transform.position;
 
 
             Vector2 posA = ((RectTransform)AllRoomButtons[A.position.x, A.position.y].transform).anchoredPosition;
@@ -226,12 +234,13 @@ namespace View
             posB.x += B.position.x * 300;
 
             float distance = Vector2.Distance(posA, posB);
-            line.sizeDelta = new Vector2(distance , 6);
-    
+            line.sizeDelta = new Vector2(distance, 40);
+
             line.eulerAngles = new Vector3(0, 0, angle);
             line.SetParent(contentPanel.transform);
             line.SetAsFirstSibling();
         }
+        
         float GetAngle(Vector3 vStart, Vector3 vEnd)
         {
             Vector3 v = vEnd - vStart;
