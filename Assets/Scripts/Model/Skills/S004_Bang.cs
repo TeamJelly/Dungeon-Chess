@@ -10,7 +10,7 @@ namespace Model.Skills
         {
             Name = "강타";
             Number = 4;
-            MaxGrade = 3;
+            MaxLevel = 3;
             ReuseTime = 3;
             CriticalRate = 0;
 
@@ -25,6 +25,10 @@ namespace Model.Skills
 
             APData = "3;010;101;010";
             RPData = "1;1";
+            species.Add(UnitSpecies.Human);
+            species.Add(UnitSpecies.Golem);
+
+            Category = SkillCategory.Intermediate;
         }
 
         private readonly int grdToDmg = 1;
@@ -36,7 +40,7 @@ namespace Model.Skills
             CurReuseTime = ReuseTime;
 
             //10 + 강화 횟수 x 1
-            int damage = 10 + Grade * grdToDmg;
+            int damage = 10 + Level * grdToDmg;
             Unit targetUnit = Managers.BattleManager.GetUnit(target);
             if (targetUnit != null)
             {
@@ -57,7 +61,7 @@ namespace Model.Skills
         }
         public override string GetDescription(Unit user, int level)
         {
-            int damage = 10 + Grade * grdToDmg;
+            int damage = 10 + Level * grdToDmg;
             string str = base.GetDescription(user, level).Replace("X", damage.ToString());
             return str;
         }

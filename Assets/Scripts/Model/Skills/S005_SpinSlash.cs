@@ -11,7 +11,7 @@ namespace Model.Skills
         {
             Name = "회전베기";
             Number = 5;
-            MaxGrade = 3;
+            MaxLevel = 3;
             ReuseTime = 1;
             CriticalRate = 5;
 
@@ -26,6 +26,12 @@ namespace Model.Skills
 
             APData = "1;1";
             RPData = "3;111;101;111";
+
+
+            species.Add(UnitSpecies.Human);
+            species.Add(UnitSpecies.Golem);
+
+            Category = SkillCategory.Advanced;
         }
 
         private readonly int strToDmg = 1;
@@ -38,7 +44,7 @@ namespace Model.Skills
             CurReuseTime = ReuseTime;
 
             //1.0 Strength + 강화 횟수 x 1
-            int damage = user.Strength * strToDmg + Grade + grdToDmg;
+            int damage = user.Strength * strToDmg + Level + grdToDmg;
 
             List<Unit> targetUnits = new List<Unit>();
             foreach (Vector2Int vector in GetRelatePositions(user, user.Position))
@@ -61,7 +67,7 @@ namespace Model.Skills
         }
         public override string GetDescription(Unit user, int level)
         {
-            int damage = user.Strength * strToDmg + Grade + grdToDmg;
+            int damage = user.Strength * strToDmg + Level + grdToDmg;
             string str = base.GetDescription(user, level).Replace("X", damage.ToString());
             return str;
         }

@@ -10,7 +10,7 @@ namespace Model.Skills
         {
             Name = "속사";
             Number = 1;
-            MaxGrade = 3;
+            MaxLevel = 3;
             ReuseTime = 0;
             CriticalRate = 10;
 
@@ -25,6 +25,13 @@ namespace Model.Skills
 
             APData = "7;0001000;0011100;0111110;1110111;0111110;0011100;0001000";
             RPData = "1;1";
+
+
+            species.Add(UnitSpecies.Human);
+            species.Add(UnitSpecies.SmallBeast);
+            species.Add(UnitSpecies.MediumBeast);
+
+            Category = SkillCategory.NormalAttack;
         }
 
         private readonly int strToDmg = 1;
@@ -37,7 +44,7 @@ namespace Model.Skills
             CurReuseTime = ReuseTime;
 
             //Strength + 강화 횟수 x 1
-            int damage = user.Strength * strToDmg + Grade * grdToDmg;
+            int damage = user.Strength * strToDmg + Level * grdToDmg;
 
             Unit targetUnit = Managers.BattleManager.GetUnit(target);
             if (targetUnit != null)
@@ -57,7 +64,7 @@ namespace Model.Skills
         }
         public override string GetDescription(Unit user, int level)
         {
-            int damage = user.Strength * strToDmg + Grade * grdToDmg;
+            int damage = user.Strength * strToDmg + Level * grdToDmg;
             string str = base.GetDescription(user, level).Replace("X", damage.ToString());
             return str;
         }

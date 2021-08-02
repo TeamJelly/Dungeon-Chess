@@ -37,6 +37,8 @@ namespace Common
             return name.Substring(0, name.Length -1);
         }
 
+
+        
         /// <summary>
         /// 스킬 데이터에서 랜덤하게 하나를 뽑습니다.
         /// </summary>
@@ -57,6 +59,49 @@ namespace Common
             return instance;
         }
 
+        public static Skill GetRandomSkill(int seed, UnitSpecies species, Skill.SkillCategory category = Skill.SkillCategory.Null)
+        {
+            if(SpeciesToSkillList[species] == null)
+            {
+                InitSkillDictionary();
+            }
+
+            int idx = seed % SpeciesToSkillList[species].Count;
+            return SpeciesToSkillList[species][idx];
+        }
+
+        static void InitSkillDictionary()
+        {
+            SpeciesToSkillList[UnitSpecies.Golem] = new List<Skill>();
+            SpeciesToSkillList[UnitSpecies.Human] = new List<Skill>();
+            SpeciesToSkillList[UnitSpecies.SmallBeast] = new List<Skill>();
+            SpeciesToSkillList[UnitSpecies.MediumBeast] = new List<Skill>();
+            SpeciesToSkillList[UnitSpecies.LargeBeast] = new List<Skill>();
+            foreach (Skill skill in allSkills)
+            {
+                foreach (UnitSpecies s in skill.species)
+                {
+                    SpeciesToSkillList[s].Add(skill);
+                }
+            }
+        }
+        public static Dictionary<UnitSpecies, List<Skill>> SpeciesToSkillList = new Dictionary<UnitSpecies, List<Skill>>()
+        {
+            { UnitSpecies.Human, new List<Skill>() },
+            { UnitSpecies.Golem, new List<Skill>() },
+            { UnitSpecies.SmallBeast, new List<Skill>() },
+            { UnitSpecies.MediumBeast, new List<Skill>() },
+            { UnitSpecies.LargeBeast, new List<Skill>() },
+        };
+        public static Dictionary<int, List<Skill>> GradeToSkillList = new Dictionary<int, List<Skill>>();
+
+        static List<Skill> allSkills = new List<Skill>()
+        {
+            new S000_Cut(),
+            new S001_Snapshot(),
+            new S004_Bang(),
+            new S005_SpinSlash()
+        };
         private static List<Type> skillData = new List<Type>()
         {
             Type.GetType("Model.Skills.S000_Cut"),
@@ -64,6 +109,12 @@ namespace Common
             Type.GetType("Model.Skills.S002_MagicArrow"),
             Type.GetType("Model.Skills.S003_Judgement"),
         };
+
+        //인간
+        //소형
+        //중형
+        //대형
+        //골렘
 
         /// <summary>
         /// 범위 스키마를 범위 리스트로 해석합니다.

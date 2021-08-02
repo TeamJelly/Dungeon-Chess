@@ -9,7 +9,7 @@ namespace Model.Skills
         {
             Name = "천벌";
             Number = 3;
-            MaxGrade = 3;
+            MaxLevel = 3;
             ReuseTime = 0;
             CriticalRate = 0;
 
@@ -41,7 +41,7 @@ namespace Model.Skills
             CurReuseTime = ReuseTime;
 
             //Strength + 강화 횟수 x 1
-            int damage = user.Strength * strToDmg + Grade * grdToDmg;
+            int damage = user.Strength * strToDmg + Level * grdToDmg;
 
             Unit targetUnit = Managers.BattleManager.GetUnit(target);
             if (targetUnit != null)
