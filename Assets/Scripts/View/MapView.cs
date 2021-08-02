@@ -89,14 +89,15 @@ namespace View
         {
             Transform roomButtonTransform = AllRoomButtons[roomPos.x, roomPos.y].transform;
 
-            //방문한 방은 더욱 어둡게 보이게 함.
-            //Image image = roomButtonTransform.GetComponent<Image>();
-            //Color color = image.color / 4; color.a = 1;
-            //image.color = color;
+            // 방문한 방은 더욱 어둡게 보이게 함.
+            Image image = roomButtonTransform.GetComponent<Image>();
+            Color color = image.color / 4; 
+            color.a = 1;
+            image.color = color;
 
-            //방문 했음을 나타내는 마크 생성
-            Transform t = Instantiate(clearSignPrefab, roomButtonTransform).transform;
-            t.localPosition = Vector2.zero;
+            // //방문 했음을 나타내는 마크 생성
+            // Transform t = Instantiate(clearSignPrefab, roomButtonTransform).transform;
+            // t.localPosition = Vector2.zero;
         }
 
         /// <summary>
@@ -234,6 +235,10 @@ namespace View
             RectTransform line = Instantiate(linePrefab, contentPanel.transform);
             line.position = AllRoomButtons[A.position.x, A.position.y].transform.position;
 
+            if (MapManager.instance.roomHistory.Contains(A.position) && MapManager.instance.roomHistory.Contains(B.position))
+                line.GetComponent<Image>().color = Color.black;
+            else if (MapManager.instance.currentRoom == A)
+                line.GetComponent<Image>().color = Color.white;
 
             Vector2 posA = ((RectTransform)AllRoomButtons[A.position.x, A.position.y].transform).anchoredPosition;
             Vector2 posB = ((RectTransform)AllRoomButtons[B.position.x, B.position.y].transform).anchoredPosition;

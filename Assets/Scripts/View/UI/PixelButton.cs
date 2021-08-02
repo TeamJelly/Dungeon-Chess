@@ -65,19 +65,15 @@ namespace View.UI
         }
         public virtual void SetInteractable(bool b)
         {
+            if (b == properties.interactable)
+                return;
+
             properties.interactable = b;
+
             if (b)
-            {
-                FrameImage.color = Color.white;
-                MainImage.color = Color.white;
-            }
-               
+                FrameImage.color = FrameImage.color + new Color(0.3f, 0.3f, 0.3f, 0);
             else
-            {
-                FrameImage.color = new Color(0.1f, 0.1f, 0.1f, 0.8f);
-                MainImage.color = new Color(0.6f, 0.6f, 0.6f, 0.8f);
-            }
-                
+                FrameImage.color = FrameImage.color - new Color(0.3f, 0.3f, 0.3f, 0);
         }
 
         private void OnValidate()
