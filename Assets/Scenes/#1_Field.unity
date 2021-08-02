@@ -61047,6 +61047,7 @@ MonoBehaviour:
   selector: {fileID: 1289245513}
   floors: []
   lines: []
+  roomImages: []
 --- !u!114 &3255219562686038413
 MonoBehaviour:
   m_ObjectHideFlags: 0

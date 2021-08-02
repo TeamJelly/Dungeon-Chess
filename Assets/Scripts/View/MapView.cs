@@ -64,6 +64,7 @@ namespace View
             //현재 방 위치 표시기 갱신
             selector.SetParent(AllRoomButtons[room.position.x, room.position.y].transform);
             selector.position = AllRoomButtons[room.position.x, room.position.y].transform.position;
+            selector.gameObject.SetActive(true);
 
             //이동 가능한 방 활성화
             Room roomChecker = room.left;
@@ -109,8 +110,10 @@ namespace View
 
             RectTransform rt = (RectTransform)contentPanel.transform;
             Debug.Log(rt.rect.width);
-            rt.offsetMax = new Vector2(((RectTransform)floorPrefab.transform).rect.width * AllRooms.GetLength(0) - rt.rect.width, rt.offsetMax.y);
+            Debug.Log(AllRooms.GetLength(0));
+            rt.offsetMax = new Vector2(((RectTransform)floorPrefab.transform).rect.width * AllRooms.GetLength(0) - rt.rect.width + rt.offsetMin.x, rt.offsetMax.y);
 
+            Debug.Log(rt.rect.width);
             for (int i = 0; i < AllRooms.GetLength(0); i++)
             {
                 GameObject floor = Instantiate(floorPrefab, contentPanel.transform);
@@ -168,7 +171,7 @@ namespace View
             {
                 lines.Add(Instantiate(linePrefab));
             }*/
-            Canvas.ForceUpdateCanvases();
+            //Canvas.ForceUpdateCanvases();
             GenerateLines2();
             //Invoke("GenerateLines", 0.05f);
         }
