@@ -11,7 +11,7 @@ namespace Model.Skills
         {
             Name = "힘의파동";
             Number = 8;
-            MaxGrade = 5;
+            MaxLevel = 5;
             ReuseTime = 4;
             CriticalRate = 5;
 
@@ -155,7 +155,7 @@ namespace Model.Skills
         public override void Upgrade()
         {
             base.Upgrade();
-            RPData = RPDatas[Grade];
+            RPData = RPDatas[Level];
         }
     }
 }

@@ -27,6 +27,7 @@ namespace Model
         SmallBeast,     // 소형짐승
         MediumBeast,    // 중형짐승
         LargeBeast,     // 대형짐승
+        Golem           // 골렘
     }
 
     /// <summary>

@@ -129,7 +129,7 @@ namespace View.UI
             // 스킬이 있다.
             slot.button.interactable = false;
             slot.image.sprite = skill.Sprite;
-            slot.name.text = skill.Grade == 0 ? $"{skill.Name}" : $"{skill.Name} <color=#FF0000>+{skill.Grade}</color>";
+            slot.name.text = skill.Level == 0 ? $"{skill.Name}" : $"{skill.Name} <color=#FF0000>+{skill.Level}</color>";
             slot.count.text = skill.CurReuseTime == 0 ? "" : $"{skill.CurReuseTime}";
 
             // 아무 버튼도 안눌러져 있고, 이 버튼을 누를수 있는 경우

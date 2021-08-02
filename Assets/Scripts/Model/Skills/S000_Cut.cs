@@ -9,7 +9,7 @@ namespace Model.Skills
         {
             Name = "베기";
             Number = 0;
-            MaxGrade = 3;
+            MaxLevel = 3;
             ReuseTime = 0;
             CriticalRate = 5;
 
@@ -24,6 +24,11 @@ namespace Model.Skills
 
             APData = "3;010;101;010";
             RPData = "1;1";
+
+            species.Add(UnitSpecies.Human);
+            species.Add(UnitSpecies.SmallBeast);
+            species.Add(UnitSpecies.MediumBeast);
+            Category = SkillCategory.NormalAttack;
         }
 
         private readonly int strToDmg = 1;
@@ -36,7 +41,7 @@ namespace Model.Skills
             CurReuseTime = ReuseTime;
 
             //Strength + 강화 횟수 x 2
-            int damage = user.Strength * strToDmg + Grade + grdToDmg;
+            int damage = user.Strength * strToDmg + Level + grdToDmg;
 
             Unit targetUnit = Managers.BattleManager.GetUnit(target);
             if (targetUnit != null)

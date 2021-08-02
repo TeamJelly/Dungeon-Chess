@@ -20,6 +20,8 @@ namespace Model
             Advanced,
         }
 
+       
+
         public enum RangeType // 스킬 사용가능 범위의 종류
         {
             Fixed,          // 나를 기준으로 범위가 회전하지 않는 스킬.
@@ -39,8 +41,8 @@ namespace Model
         public SkillCategory Category {get; set;}
         public string Name { get; set; }
         public int Number           { get; set; }
-        public int Grade            { get; set; }
-        public int MaxGrade         { get; set; }
+        public int Level            { get; set; }
+        public int MaxLevel         { get; set; }
         public int ReuseTime        { get; set; }
         public int CurReuseTime     { get; set; }
         public int CriticalRate     { get; set; }
@@ -158,13 +160,13 @@ namespace Model
 
         public virtual void Upgrade()
         {
-            if (MaxGrade > Grade)
-                Grade++;
+            if (MaxLevel > Level)
+                Level++;
         }
 
         public virtual string GetDescription(Unit user)
         {
-            return GetDescription(user, Grade);
+            return GetDescription(user, Level);
         }
 
         public virtual string GetDescription(Unit user, int grade)
