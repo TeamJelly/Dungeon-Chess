@@ -135,7 +135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DownTransfrom: {fileID: 686237712677697679}
   FrameImage: {fileID: 2886984691429896261}
-  MainImage: {fileID: 0}
+  MainImage: {fileID: 1597743215632790967}
   DefaultFrameSprite: {fileID: -619711056627489183, guid: 1aaa6ec8a8a26524aa0bf81d543927bc,
     type: 3}
   PushedFrameSprite: {fileID: -4534884331647366591, guid: 1aaa6ec8a8a26524aa0bf81d543927bc,
