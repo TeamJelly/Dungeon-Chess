@@ -36,11 +36,11 @@ namespace View
                 null,
                 Common.Data.SpriteData[138],
                 Common.Data.SpriteData[712],
-                Common.Data.SpriteData[1043],
+                Common.Data.SpriteData[760],
                 Common.Data.SpriteData[295],
-                Common.Data.SpriteData[964],
-                Common.Data.SpriteData[388],
-                Common.Data.SpriteData[660],
+                Common.Data.SpriteData[398],
+                Common.Data.SpriteData[397],
+                Common.Data.SpriteData[661],
             };
         }
         private void Start()
@@ -154,7 +154,8 @@ namespace View
             {
                 for (int i = 0; i < AllRooms.GetLength(1); i++)
                 {
-                    AllRoomButtons[0, i].SetInteractable(true);
+                    if (AllRooms[0, i].isActivate)
+                        AllRoomButtons[0, i].SetInteractable(true);
                 }
             }
             else // 이전 기록 데이터로 UI 초기화
@@ -248,7 +249,7 @@ namespace View
             line.SetParent(contentPanel.transform);
             line.SetAsFirstSibling();
         }
-        
+
         float GetAngle(Vector3 vStart, Vector3 vEnd)
         {
             Vector3 v = vEnd - vStart;

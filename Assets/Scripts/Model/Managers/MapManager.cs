@@ -27,7 +27,8 @@ namespace Model.Managers
         }// 10층, 각층에는 5개
 
         public int numberOfFloors = 14;
-        public int numberOfRoomsPerOneFloor = 5;
+        public int numberOfRoomsPerOneFloor = 4;
+        public int numberOfPath = 5;
 
         public List<Vector2Int>[] pathList
         {
@@ -76,17 +77,18 @@ namespace Model.Managers
 
             //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 2단계 : 방을 연결한다.
 
-            pathList = new List<Vector2Int>[numberOfRoomsPerOneFloor];
+            pathList = new List<Vector2Int>[numberOfPath];
 
-            for (int i = 0; i < numberOfRoomsPerOneFloor; i++) // 5개의 길
-                AllRooms[0, i].isActivate = true;
+            // for (int i = 0; i < numberOfRoomsPerOneFloor; i++) // 5개의 길
+            //     AllRooms[0, i].isActivate = true;
 
-            for (int i = 0; i < numberOfRoomsPerOneFloor; i++) // 5개의 길
+            for (int i = 0; i < pathList.Length; i++) // 5개의 길
             {
-                int rand;
-                Room currentRoom = AllRooms[0, i];
+                int rand = Random.Range(0, numberOfRoomsPerOneFloor);
+                Room currentRoom = AllRooms[0, rand];
                 pathList[i] = new List<Vector2Int>();
                 pathList[i].Add(currentRoom.position);
+                currentRoom.isActivate = true;
 
                 while (currentRoom.position.x != numberOfFloors - 2) // 층수가 12층이 될때까지 반복
                 {
