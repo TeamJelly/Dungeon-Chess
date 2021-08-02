@@ -211,7 +211,6 @@ namespace View
             }
         }
 
-        Vector2 canvasResolution = new Vector2(1920,1080);
         void DrawLine(Room A, Room B)
         {
             float angle = GetAngle(((RectTransform)AllRoomButtons[A.position.x, A.position.y].transform).position,
@@ -219,22 +218,16 @@ namespace View
             RectTransform line = Instantiate(linePrefab,contentPanel.transform);
             line.position = AllRoomButtons[A.position.x,A.position.y].transform.position;
 
-            //Debug.Log(((RectTransform)(AllRoomButtons[A.position.x, A.position.y].transform)).position);
-           // Debug.Log(((RectTransform)(AllRoomButtons[B.position.x, B.position.y].transform)).position);
-            
-            Vector2 posA = AllRoomButtons[A.position.x, A.position.y].transform.position;
-            Vector2 posB = AllRoomButtons[B.position.x, B.position.y].transform.position;
 
-           /* posA.x *= canvasResolution.x / Screen.width;
-            posA.y *= canvasResolution.y / Screen.height;
+            Vector2 posA = ((RectTransform)AllRoomButtons[A.position.x, A.position.y].transform).anchoredPosition;
+            Vector2 posB = ((RectTransform)AllRoomButtons[B.position.x, B.position.y].transform).anchoredPosition;
 
-            posB.x *= canvasResolution.x / Screen.width;
-            posB.y *= canvasResolution.y / Screen.height;*/
+            posA.x += A.position.x * 300;
+            posB.x += B.position.x * 300;
 
-            float distance = Vector2.Distance(posA,posB) * canvasResolution.x / Screen.width;
+            float distance = Vector2.Distance(posA, posB);
             line.sizeDelta = new Vector2(distance , 6);
     
-            //Debug.Log(distance);
             line.eulerAngles = new Vector3(0, 0, angle);
             line.SetParent(contentPanel.transform);
             line.SetAsFirstSibling();
