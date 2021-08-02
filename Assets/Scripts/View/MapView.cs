@@ -90,9 +90,9 @@ namespace View
             Transform roomButtonTransform = AllRoomButtons[roomPos.x, roomPos.y].transform;
 
             //방문한 방은 더욱 어둡게 보이게 함.
-            Image image = roomButtonTransform.GetComponent<Image>();
-            Color color = image.color / 4; color.a = 1;
-            image.color = color;
+            //Image image = roomButtonTransform.GetComponent<Image>();
+            //Color color = image.color / 4; color.a = 1;
+            //image.color = color;
 
             //방문 했음을 나타내는 마크 생성
             Transform t = Instantiate(clearSignPrefab, roomButtonTransform).transform;
@@ -109,11 +109,10 @@ namespace View
 
 
             RectTransform rt = (RectTransform)contentPanel.transform;
-            Debug.Log(rt.rect.width);
-            Debug.Log(AllRooms.GetLength(0));
+
+            //https://answers.unity.com/questions/888257/access-left-right-top-and-bottom-of-recttransform.html
             rt.offsetMax = new Vector2(((RectTransform)floorPrefab.transform).rect.width * AllRooms.GetLength(0) - rt.rect.width + rt.offsetMin.x, rt.offsetMax.y);
 
-            Debug.Log(rt.rect.width);
             for (int i = 0; i < AllRooms.GetLength(0); i++)
             {
                 GameObject floor = Instantiate(floorPrefab, contentPanel.transform);
@@ -128,7 +127,7 @@ namespace View
                     {
                         //버튼 생성 및 이미지 세팅
                         AllRoomButtons[i, j] = Instantiate(roomPrefab, floor.transform).GetComponent<PixelButton>();
-                        AllRoomButtons[i, j].transform.Find("Image").GetComponent<Image>().sprite = roomImages[room.category.GetHashCode()];
+                        AllRoomButtons[i, j].MainImage.sprite = roomImages[room.category.GetHashCode()];
 
                         //각 방의 버튼마다 이벤트 부여
                         AllRoomButtons[i, j].properties.onClick.AddListener(() => MapManager.instance.VisitRoom(room));
