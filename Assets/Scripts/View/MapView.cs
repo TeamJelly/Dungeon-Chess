@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Common;
+using View.UI;
 
 namespace View
 {
@@ -19,7 +20,7 @@ namespace View
         public GameObject clearSignPrefab;
         public RectTransform linePrefab;
 
-        public Button[,] AllRoomButtons;
+        public PixelButton[,] AllRoomButtons;
 
         public Transform selector;
 
@@ -66,13 +67,17 @@ namespace View
 
             //이동 가능한 방 활성화
             Room roomChecker = room.left;
-            if (roomChecker != null) AllRoomButtons[roomChecker.position.x, roomChecker.position.y].interactable = true;
+
+            if(roomChecker != null)
+                AllRoomButtons[roomChecker.position.x, roomChecker.position.y].SetInteractable(true);
 
             roomChecker = room.center;
-            if (roomChecker != null) AllRoomButtons[roomChecker.position.x, roomChecker.position.y].interactable = true;
+            if (roomChecker != null)
+                AllRoomButtons[roomChecker.position.x, roomChecker.position.y].SetInteractable(true);
 
             roomChecker = room.right;
-            if (roomChecker != null) AllRoomButtons[roomChecker.position.x, roomChecker.position.y].interactable = true;
+            if (roomChecker != null)
+                AllRoomButtons[roomChecker.position.x, roomChecker.position.y].SetInteractable(true);
         }
 
         /// <summary>
@@ -99,7 +104,7 @@ namespace View
         /// <param name="AllRooms">생성할 모든 방에대한 정보를 가져온다.</param>
         public void InitStageUI(Room[,] AllRooms)
         {
-            AllRoomButtons = new Button[AllRooms.GetLength(0), AllRooms.GetLength(1)];
+            AllRoomButtons = new PixelButton[AllRooms.GetLength(0), AllRooms.GetLength(1)];
 
 
             RectTransform rt = (RectTransform)contentPanel.transform;
@@ -119,12 +124,12 @@ namespace View
                     if (room.isActivate)
                     {
                         //버튼 생성 및 이미지 세팅
-                        AllRoomButtons[i, j] = Instantiate(roomPrefab, floor.transform).GetComponent<Button>();
+                        AllRoomButtons[i, j] = Instantiate(roomPrefab, floor.transform).GetComponent<PixelButton>();
                         AllRoomButtons[i, j].transform.Find("Image").GetComponent<Image>().sprite = roomImages[room.category.GetHashCode()];
 
                         //각 방의 버튼마다 이벤트 부여
-                        AllRoomButtons[i, j].onClick.AddListener(() => MapManager.instance.VisitRoom(room));
-                        AllRoomButtons[i, j].interactable = false; //생성된 모든 버튼은 처음에 비활성화.
+                        AllRoomButtons[i, j].properties.onClick.AddListener(() => MapManager.instance.VisitRoom(room));
+                        AllRoomButtons[i, j].SetInteractable(false); //생성된 모든 버튼은 처음에 비활성화.
                     }
                 }
 
@@ -146,7 +151,7 @@ namespace View
             {
                 for (int i = 0; i < AllRooms.GetLength(1); i++)
                 {
-                    AllRoomButtons[0, i].interactable = true;
+                    AllRoomButtons[0, i].SetInteractable(true);
                 }
             }
             else // 이전 기록 데이터로 UI 초기화
