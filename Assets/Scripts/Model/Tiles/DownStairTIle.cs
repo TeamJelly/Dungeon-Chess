@@ -27,6 +27,7 @@ namespace Model.Tiles
 
             if (partyObjCnt == 1)
             {
+                MapView.instance.IsClickBlock = false;
                 MapView.instance.Enable();
             }
             else
