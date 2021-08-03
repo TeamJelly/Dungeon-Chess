@@ -17,7 +17,7 @@ namespace Model.Skills
             Target = TargetType.Any;
             Range = RangeType.Fixed;
 
-            spritePath = "HandMade/SkillImage/000_베기";
+            Sprite = Common.Data.LoadSprite("HandMade/SkillImage/000_베기");
             Description =
                 $"선택한 대상에게 X의 데미지를 준다.\n\n\n" +
                 $"‘반으로 갈라져 죽어버려.’";

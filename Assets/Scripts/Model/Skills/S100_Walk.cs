@@ -19,7 +19,7 @@ namespace Model.Skills
             Target = TargetType.NoUnit;
             Range = RangeType.Fixed;
 
-            spritePath = "";
+            Sprite = Common.Data.LoadSprite("");
             Description = "선택한 위치로 이동한다.";
         }
 

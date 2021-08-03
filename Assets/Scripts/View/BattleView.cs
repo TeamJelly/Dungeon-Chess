@@ -292,6 +292,7 @@ namespace View
             // 스프라이터 랜더러 추가
             SpriteRenderer spriteRenderer = obObj.AddComponent<SpriteRenderer>();
             spriteRenderer.sprite = ob.Sprite;
+            spriteRenderer.color = ob.Color;
 
             ObtainableObjects.Add(ob, obObj);
         }

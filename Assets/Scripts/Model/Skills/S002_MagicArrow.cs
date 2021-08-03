@@ -18,7 +18,7 @@ namespace Model.Skills
             Target = TargetType.Any;
             Range = RangeType.Fixed;
 
-            spritePath = "HandMade/SkillImage/002_마법화살";
+            Sprite = Common.Data.LoadSprite("HandMade/SkillImage/002_마법화살");
             Description =
                 $"선택한 대상에게 X의 데미지를 준다." +
                 $"\n\n\n‘굳이 화살로 만들어서 쏴야하나..?’";

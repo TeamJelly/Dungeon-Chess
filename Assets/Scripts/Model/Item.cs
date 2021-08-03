@@ -7,29 +7,11 @@ using UnityEngine.Tilemaps;
 namespace Model
 {
     [System.Serializable]
-    public class Item : Obtainable, Spriteable
+    public class Item : Skill, Obtainable, Spriteable
     {
-        GameObject gameObject;
-
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public int Number { get; set; }
-
-        protected string spritePath;
-        public Sprite Sprite { get => Common.Data.LoadSprite(spritePath); }
-
         public Vector2Int Position { get; set; }
         public int price { get; set; }
-
-        public virtual void OnAddThisItem()
-        {
-
-        }
-
-        public virtual void OnRemoveThisItem()
-        {
-
-        }
+        public Color Color { get; set; }
 
         public Sprite GetImage()
         {
@@ -40,5 +22,6 @@ namespace Model
         {
             Managers.GameManager.Instance.itemBag.Add(this);
         }
+
     }
 }

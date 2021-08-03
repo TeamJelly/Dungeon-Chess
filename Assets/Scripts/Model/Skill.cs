@@ -20,8 +20,6 @@ namespace Model
             Advanced,
         }
 
-       
-
         public enum RangeType // 스킬 사용가능 범위의 종류
         {
             Fixed,          // 나를 기준으로 범위가 회전하지 않는 스킬.
@@ -38,39 +36,23 @@ namespace Model
             Enemy,
         }
 
-        public SkillCategory Category {get; set;}
+        public SkillCategory Category { get; set; }
         public string Name { get; set; }
-        public int Number           { get; set; }
-        public int Level            { get; set; }
-        public int MaxLevel         { get; set; }
-        public int ReuseTime        { get; set; }
-        public int CurReuseTime     { get; set; }
-        public int CriticalRate     { get; set; }
+        public int Number { get; set; }
+        public int Level { get; set; }
+        public int MaxLevel { get; set; }
+        public int ReuseTime { get; set; }
+        public int CurReuseTime { get; set; }
+        public int CriticalRate { get; set; }
 
         public AI.Priority Priority { get; set; }
         public TargetType Target { get; set; }
         public RangeType Range { get; set; }
-
-        [SerializeField]
-        protected string spritePath = "";
         public string Description { get; set; }
-        public string APData        { get; set; }
-        public string RPData        { get; set; }
-
+        public string APData { get; set; }
+        public string RPData { get; set; }
         public List<UnitSpecies> species = new List<UnitSpecies>();
-
-        private Sprite sprite;
-        public Sprite Sprite
-        {
-            get
-            {
-                if (spritePath == "")
-                    sprite = Resources.Load<Sprite>("1bitpack_kenney_1/Tilesheet/X");
-                else if (sprite == null && spritePath != "")
-                    sprite = Resources.Load<Sprite>(spritePath);
-                return sprite;
-            }
-        }
+        public Sprite Sprite { get; set; }
 
         public virtual bool IsUsable(Unit user)
         {
@@ -157,7 +139,7 @@ namespace Model
             {
                 Vector2Int abs = skillPosition + vector;
                 if (FieldManager.IsInField(abs))
-                positions.Add(abs);
+                    positions.Add(abs);
             }
 
             return positions;

@@ -18,6 +18,9 @@ namespace Model
 
         public Sprite Sprite { get; set; }
 
+        private Color color = Color.white;
+        public Color Color {get => color; set => color = value;}
+
         public Effect()
         {
 

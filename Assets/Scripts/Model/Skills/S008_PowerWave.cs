@@ -19,7 +19,7 @@ namespace Model.Skills
             Target = TargetType.Any;
             Range = RangeType.Rotate;
 
-            spritePath = "HandMade/SkillImage/008_힘의 파동";
+            Sprite = Common.Data.LoadSprite("HandMade/SkillImage/008_힘의 파동");
             Description =
                 $"범위 안에 있는 대상에게 X 데미지를 주고 기절시킨다.\n\n\n " +
                 $"‘  “엑스...칼리버!!! “.’";
