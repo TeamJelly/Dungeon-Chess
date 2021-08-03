@@ -65,7 +65,7 @@ namespace Model
             Name = Data.GetRandomName(Seed);
             Sprite = Data.GetRandomSprite(Species, Seed);
             MoveSkill = new Model.Skills.S100_Walk();
-            Skills[0] = Data.GetRandomSkill(Seed);
+            Skills[0] = Data.GetRandomSkill(Seed,species);
             // Skills[1] = Data.GetRandomSkill(seed);
             // Skills[2] = Data.GetRandomSkill(seed);
 

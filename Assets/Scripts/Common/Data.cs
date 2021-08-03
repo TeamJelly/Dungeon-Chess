@@ -77,11 +77,17 @@ namespace Common
             SpeciesToSkillList[UnitSpecies.SmallBeast] = new List<Skill>();
             SpeciesToSkillList[UnitSpecies.MediumBeast] = new List<Skill>();
             SpeciesToSkillList[UnitSpecies.LargeBeast] = new List<Skill>();
+
+            GradeToSkillList[(int)Skill.SkillCategory.NormalAttack] = new List<Skill>();
+            GradeToSkillList[(int)Skill.SkillCategory.Intermediate] = new List<Skill>();
+            GradeToSkillList[(int)Skill.SkillCategory.Advanced] = new List<Skill>();
             foreach (Skill skill in allSkills)
             {
+                GradeToSkillList[(int)skill.Category].Add(skill);
                 foreach (UnitSpecies s in skill.species)
                 {
                     SpeciesToSkillList[s].Add(skill);
+                    
                 }
             }
         }
