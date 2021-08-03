@@ -56,7 +56,7 @@ namespace Model
             Alliance = alliance;
 
             if (species == UnitSpecies.NULL)
-                Species = (UnitSpecies)(Seed % 4); // 0 ~ 3
+                Species = (UnitSpecies)(Seed % 5); // 0 ~ 3
             else
                 Species = species;
 

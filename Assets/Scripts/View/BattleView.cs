@@ -196,8 +196,6 @@ namespace View
             texture.filterMode = FilterMode.Point;
             spriteRenderer.material.mainTexture = texture;
 
-            Debug.Log(old.height + "," + old.width);
-
             for (int y = 0; y < 18; y++)
                 for (int x = 0; x < 18; x++)
                     texture.SetPixel(x,y, new Color(0,0,0,0));

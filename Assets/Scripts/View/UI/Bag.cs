@@ -33,8 +33,6 @@ namespace View.UI
                 PixelButton newButton = newSlot.GetComponent<PixelButton>();
                 itemSlots.Add(newButton);
             }
-
-            Debug.Log("Bag init");
         }
 
         void UpdateUI()
