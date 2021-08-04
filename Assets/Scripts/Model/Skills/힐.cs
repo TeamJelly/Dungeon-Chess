@@ -30,7 +30,7 @@ namespace Model.Skills
             species.Add(UnitSpecies.MediumBeast);
             species.Add(UnitSpecies.Human);
 
-            Category = SkillCategory.NormalAttack;
+            Category = SkillCategory.Normal;
         }
 
         private float strToDmg = 1;
