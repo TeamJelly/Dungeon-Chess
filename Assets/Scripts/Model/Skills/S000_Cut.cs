@@ -28,7 +28,10 @@ namespace Model.Skills
             species.Add(UnitSpecies.Human);
             species.Add(UnitSpecies.SmallBeast);
             species.Add(UnitSpecies.MediumBeast);
-            Category = SkillCategory.NormalAttack;
+            species.Add(UnitSpecies.LargeBeast);
+            species.Add(UnitSpecies.Golem);
+
+            Category = SkillCategory.Normal;
         }
 
         private readonly int strToDmg = 1;

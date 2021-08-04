@@ -15,7 +15,7 @@ namespace Model
         {
             Null,
             Move,
-            NormalAttack,
+            Normal,
             Intermediate,
             Advanced,
         }

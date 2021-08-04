@@ -34,11 +34,11 @@ namespace Common
         {
             int rand = seed % NameData.Length;
             string name = NameData[rand];
-            return name.Substring(0, name.Length -1);
+            return name.Substring(0, name.Length - 1);
         }
 
 
-        
+
         /// <summary>
         /// 스킬 데이터에서 랜덤하게 하나를 뽑습니다.
         /// </summary>
@@ -53,6 +53,7 @@ namespace Common
         /// <returns></returns>
         public static Skill GetRandomSkill(int seed, Skill.SkillCategory category = Skill.SkillCategory.Null)
         {
+
             Type type = skillData[seed % skillData.Count];
             Skill instance = Activator.CreateInstance(type) as Skill;
 
@@ -61,45 +62,59 @@ namespace Common
 
         public static Skill GetRandomSkill(int seed, UnitSpecies species, Skill.SkillCategory category = Skill.SkillCategory.Null)
         {
-            if(SpeciesToSkillList[species] == null)
-            {
-                InitSkillDictionary();
-            }
-
             int idx = seed % SpeciesToSkillList[species].Count;
             return SpeciesToSkillList[species][idx];
         }
 
-        static void InitSkillDictionary()
+        private static void InitSkillDictionary()
         {
-            SpeciesToSkillList[UnitSpecies.Golem] = new List<Skill>();
-            SpeciesToSkillList[UnitSpecies.Human] = new List<Skill>();
-            SpeciesToSkillList[UnitSpecies.SmallBeast] = new List<Skill>();
-            SpeciesToSkillList[UnitSpecies.MediumBeast] = new List<Skill>();
-            SpeciesToSkillList[UnitSpecies.LargeBeast] = new List<Skill>();
+            speciesToSkillList = new Dictionary<UnitSpecies, List<Skill>>()
+            {
+                { UnitSpecies.Human, new List<Skill>() },
+                { UnitSpecies.Golem, new List<Skill>() },
+                { UnitSpecies.SmallBeast, new List<Skill>() },
+                { UnitSpecies.MediumBeast, new List<Skill>() },
+                { UnitSpecies.LargeBeast, new List<Skill>() },
+            };
+            categoryToSkillList = new Dictionary<Skill.SkillCategory, List<Skill>>()
+            {
+                {Skill.SkillCategory.Move,   new List<Skill>()},
+                {Skill.SkillCategory.Normal, new List<Skill>()},
+                {Skill.SkillCategory.Intermediate, new List<Skill>()},
+                {Skill.SkillCategory.Advanced, new List<Skill>()},
+            };
 
-            GradeToSkillList[(int)Skill.SkillCategory.NormalAttack] = new List<Skill>();
-            GradeToSkillList[(int)Skill.SkillCategory.Intermediate] = new List<Skill>();
-            GradeToSkillList[(int)Skill.SkillCategory.Advanced] = new List<Skill>();
             foreach (Skill skill in allSkills)
             {
-                GradeToSkillList[(int)skill.Category].Add(skill);
+                categoryToSkillList[skill.Category].Add(skill);
                 foreach (UnitSpecies s in skill.species)
-                {
-                    SpeciesToSkillList[s].Add(skill);
-                    
-                }
+                    speciesToSkillList[s].Add(skill);
             }
         }
-        public static Dictionary<UnitSpecies, List<Skill>> SpeciesToSkillList = new Dictionary<UnitSpecies, List<Skill>>()
+
+        private static Dictionary<UnitSpecies, List<Skill>> speciesToSkillList = null;
+
+        public static Dictionary<UnitSpecies, List<Skill>> SpeciesToSkillList
         {
-            { UnitSpecies.Human, new List<Skill>() },
-            { UnitSpecies.Golem, new List<Skill>() },
-            { UnitSpecies.SmallBeast, new List<Skill>() },
-            { UnitSpecies.MediumBeast, new List<Skill>() },
-            { UnitSpecies.LargeBeast, new List<Skill>() },
-        };
-        public static Dictionary<int, List<Skill>> GradeToSkillList = new Dictionary<int, List<Skill>>();
+            get
+            {
+                if (speciesToSkillList == null)
+                    InitSkillDictionary();
+                return speciesToSkillList;
+            }
+        }
+
+        private static Dictionary<Skill.SkillCategory, List<Skill>> categoryToSkillList = null;
+
+        public static Dictionary<Skill.SkillCategory, List<Skill>> CategoryToSkillList
+        {
+            get
+            {
+                if (categoryToSkillList == null)
+                    InitSkillDictionary();
+                return categoryToSkillList;
+            }
+        }
 
         static List<Skill> allSkills = new List<Skill>()
         {
@@ -108,6 +123,7 @@ namespace Common
             new S004_Bang(),
             new S005_SpinSlash()
         };
+
         private static List<Type> skillData = new List<Type>()
         {
             Type.GetType("Model.Skills.S000_Cut"),
