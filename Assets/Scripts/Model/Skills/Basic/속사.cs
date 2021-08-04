@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Model.Skills
+namespace Model.Skills.Basic
 {
-    public class 화염구 : Skill
+    public class 속사 : Skill
     {
-        public 화염구()
+        public 속사()
         {
-            Name = "화염구";
+            Name = "속사";
             //Number = 1;
             MaxLevel = 4;
             ReuseTime = 1;
@@ -21,16 +21,16 @@ namespace Model.Skills
             Sprite = Common.Data.LoadSprite("HandMade/SkillImage/001_속사");
             Description =
                 $"지정한 타일 위의 모든 대상에게 데미지를 준다.\n\n\n" +
-                $"‘화염구 관련 대사.’";
+                $"‘속사 관련 대사.’";
 
             APData = "3;010;101;010";
             RPData = "1;1";
 
+            Category = SkillCategory.Basic;
+
             species.Add(UnitSpecies.SmallBeast);
             species.Add(UnitSpecies.MediumBeast);
             species.Add(UnitSpecies.Human);
-
-            Category = SkillCategory.Normal;
         }
 
         private float strToDmg = 1;

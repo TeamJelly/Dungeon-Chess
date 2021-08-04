@@ -79,7 +79,7 @@ namespace Common
             categoryToSkillList = new Dictionary<Skill.SkillCategory, List<Skill>>()
             {
                 {Skill.SkillCategory.Move,   new List<Skill>()},
-                {Skill.SkillCategory.Normal, new List<Skill>()},
+                {Skill.SkillCategory.Basic, new List<Skill>()},
                 {Skill.SkillCategory.Intermediate, new List<Skill>()},
                 {Skill.SkillCategory.Advanced, new List<Skill>()},
             };

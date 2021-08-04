@@ -31,7 +31,7 @@ namespace Model.Skills
             species.Add(UnitSpecies.SmallBeast);
             species.Add(UnitSpecies.MediumBeast);
 
-            Category = SkillCategory.Normal;
+            Category = SkillCategory.Basic;
         }
 
         private readonly int strToDmg = 1;

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Model.Skills
+namespace Model.Skills.Basic
 {
-    public class 속사 : Skill
+    public class 화염구 : Skill
     {
-        public 속사()
+        public 화염구()
         {
             Name = "화염구";
             //Number = 1;
@@ -30,7 +30,7 @@ namespace Model.Skills
             species.Add(UnitSpecies.MediumBeast);
             species.Add(UnitSpecies.Human);
 
-            Category = SkillCategory.Normal;
+            Category = SkillCategory.Basic;
         }
 
         private float strToDmg = 1;

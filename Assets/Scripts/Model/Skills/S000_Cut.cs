@@ -31,7 +31,7 @@ namespace Model.Skills
             species.Add(UnitSpecies.LargeBeast);
             species.Add(UnitSpecies.Golem);
 
-            Category = SkillCategory.Normal;
+            Category = SkillCategory.Basic;
         }
 
         private readonly int strToDmg = 1;

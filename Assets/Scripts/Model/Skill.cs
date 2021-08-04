@@ -13,9 +13,9 @@ namespace Model
         // 스킬 카테고리
         public enum SkillCategory
         {
-            Null,
+            Null = -1,
             Move,
-            Normal,
+            Basic,
             Intermediate,
             Advanced,
         }
@@ -28,10 +28,10 @@ namespace Model
 
         public enum TargetType // 스킬의 대상
         {
-            NULL,
+            NULL = -1,
             Any,            // 모든 타일에 사용가능
             NoUnit,         // 유닛이 없는 곳에만 사용가능, 이동 혹은 소환류 스킬에 사용
-            Party,
+            Party,          // 
             Friendly,
             Enemy,
         }
