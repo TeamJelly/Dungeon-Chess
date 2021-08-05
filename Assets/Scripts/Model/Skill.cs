@@ -17,7 +17,7 @@ namespace Model
     }
 
     [System.Serializable]
-    public class Skill
+    public class Skill : Spriteable
     {
         // 스킬 카테고리
 
@@ -32,31 +32,39 @@ namespace Model
             NULL = -1,
             Any,            // 모든 타일에 사용가능
             NoUnit,         // 유닛이 없는 곳에만 사용가능, 이동 혹은 소환류 스킬에 사용
-            Party,          // 
-            Friendly,
-            Enemy,
+            Friendly,       // 우호적인 유닛에 사용가능 (AI 용)
+            Hostile,        // 적대적인 유닛에 사용가능 (AI 용)
         }
 
         public SkillCategory Category { get; set; }
         public string Name { get; set; }
-        public int Number { get; set; }
-        public int Level { get; set; }
-        public int MaxLevel { get; set; }
-        public int ReuseTime { get; set; }
-        public int CriticalRate { get; set; }
-
+        public int [] ReuseTime { get; set; }
         public AI.Priority Priority { get; set; }
         public TargetType Target { get; set; }
         public RangeType Range { get; set; }
-        public string Description { get; set; }
-        public string APData { get; set; }
-        public string RPData { get; set; }
+        public string [] APData { get; set; }
+        public string [] RPData { get; set; }
         public List<UnitSpecies> species = new List<UnitSpecies>();
         public Sprite Sprite { get; set; }
+        public Color Color { get; set; }
+        public string Description { get; set; }
+
+        /// <summary>
+        /// 유닛 레벨을 스킬레벨로 전환시켜준다.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public virtual int GetSLV (Unit user)
+        {
+            return 0;
+        }
 
         public virtual bool IsUsable(Unit user)
         {
-            if (!user.IsSkilled && !user.WaitingSkills.ContainsKey(this))
+            // 이번턴에 스킬을 사용하지 않고,
+            // 이 스킬이 현재 대기중이지 않고,
+            // 스킬 레벨이 음수가 아니라면 사용가능하다.
+            if (!user.IsSkilled && !user.WaitingSkills.ContainsKey(this) && GetSLV(user) >= 0)
                 return true;
             else
                 return false;
@@ -74,36 +82,31 @@ namespace Model
 
             if (APData == null) return positions;
 
-            foreach (var position in Common.Data.ParseRangeData(APData))
+            foreach (var position in Common.Data.ParseRangeData(APData[GetSLV(user)]))
             {
                 Vector2Int abs = userPosition + position;
+                Unit unit = BattleManager.GetUnit(abs);
 
                 // 맵밖에 넘어간다면 사용불가
                 if (!FieldManager.IsInField(abs))
                     continue;
-
                 // 모든 타일에 사용가능
                 if (Target == TargetType.Any)
                     positions.Add(abs);
                 // 유닛 없음타일에만 사용가능
-                else if (Target == TargetType.NoUnit &&
-                    FieldManager.GetTile(abs).HasUnit())
-                    positions.Add(abs);
-                // 파티 유닛에만 사용 가능
-                else if (Target == TargetType.Party &&
-                    FieldManager.GetTile(abs).HasUnit() &&
-                    BattleManager.GetUnit(abs).Alliance == UnitAlliance.Party)
+                else if (Target == TargetType.NoUnit && unit == null)
                     positions.Add(abs);
                 // 우호적인 유닛에 사용 가능
-                else if (Target == TargetType.Friendly &&
-                    FieldManager.GetTile(abs).HasUnit() && (
-                    BattleManager.GetUnit(abs).Alliance == UnitAlliance.Friendly ||
-                    BattleManager.GetUnit(abs).Alliance == UnitAlliance.Party))
+                else if (Target == TargetType.Friendly && unit != null && 
+                    ((user.Alliance == UnitAlliance.Party && 
+                    (unit.Alliance == UnitAlliance.Party || unit.Alliance == UnitAlliance.Friendly)) ||
+                    (user.Alliance == UnitAlliance.Enemy && unit.Alliance == UnitAlliance.Enemy)))
                     positions.Add(abs);
                 // 적대적인 유닛에 사용 가능
-                else if (Target == TargetType.Enemy &&
-                    FieldManager.GetTile(abs).HasUnit() &&
-                    BattleManager.GetUnit(abs).Alliance == UnitAlliance.Enemy)
+                else if (Target == TargetType.Hostile && unit != null &&
+                    ((user.Alliance == UnitAlliance.Enemy &&
+                    (unit.Alliance == UnitAlliance.Party || unit.Alliance == UnitAlliance.Friendly)) ||
+                    (user.Alliance == UnitAlliance.Party && unit.Alliance == UnitAlliance.Enemy)))
                     positions.Add(abs);
                 // 어디에도 속하지 않으면 false
                 else
@@ -135,7 +138,7 @@ namespace Model
 
             if (RPData == null || !GetAvailablePositions(user).Contains(skillPosition)) return positions;
 
-            foreach (var vector in Common.Data.ParseRangeData(RPData))
+            foreach (var vector in Common.Data.ParseRangeData(RPData[GetSLV(user)]))
             {
                 Vector2Int abs = skillPosition + vector;
                 if (FieldManager.IsInField(abs))
@@ -145,30 +148,14 @@ namespace Model
             return positions;
         }
 
-        public virtual void CalculateDamage(Unit user)
-        {
-
-        }
-
         public virtual IEnumerator Use(Unit user, Vector2Int target)
         {
             Debug.LogError(Name + " 스킬을 " + target + "에 사용!");
-            user.WaitingSkills.Add(this, ReuseTime);
+            user.WaitingSkills.Add(this, ReuseTime[GetSLV(user)]);
             yield return null;
         }
 
-        public virtual void Upgrade()
-        {
-            if (MaxLevel > Level)
-                Level++;
-        }
-
         public virtual string GetDescription(Unit user)
-        {
-            return GetDescription(user, Level);
-        }
-
-        public virtual string GetDescription(Unit user, int grade)
         {
             return Description;
         }

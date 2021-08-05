@@ -98,7 +98,8 @@ namespace Common
                     continue;
 
                 // 재사용 대기시간이 가장 긴, 사용할수 있는 스킬을 찾는다.
-                if (skill.IsUsable(user) && skill.ReuseTime >= reuseTime && GetTargetPosition(user, skill) != null)
+                if (skill.IsUsable(user) && skill.ReuseTime[skill.GetSLV(user)] >= reuseTime
+                 && GetTargetPosition(user, skill) != null)
                     skillToUse = skill;
             }
 

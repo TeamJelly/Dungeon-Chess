@@ -40,7 +40,7 @@ namespace UI.Battle
             foreach (var skill in new List<Skill>(nextUnit.WaitingSkills.Keys))
             {
                 nextUnit.WaitingSkills[skill] -= 1;
-                if (nextUnit.WaitingSkills[skill] <= 0)
+                if (nextUnit.WaitingSkills[skill] < 0)
                     nextUnit.WaitingSkills.Remove(skill);
             }
             

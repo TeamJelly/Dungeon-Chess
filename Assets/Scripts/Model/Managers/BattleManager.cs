@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using Model.Units;
 using View;
 
 namespace Model.Managers
@@ -53,8 +52,9 @@ namespace Model.Managers
             // 테스팅 적 유닛 소환
             Unit unit = new Unit(UnitAlliance.Enemy, UnitSpecies.LargeBeast, 1);
 
+            unit.Skills[SkillCategory.Basic] = new Skills.Basic.할퀴기();
             unit.Skills[SkillCategory.Move].Priority = Common.AI.Priority.NearFromClosestParty;
-            unit.Skills[SkillCategory.Basic].Target = Skill.TargetType.Party;
+            unit.Skills[SkillCategory.Basic].Target = Skill.TargetType.Hostile;
 
             Common.Command.Summon(unit, new Vector2Int(4, 4));
             Common.Command.Summon(new Items.I000_Heal(), new Vector2Int(3,3));

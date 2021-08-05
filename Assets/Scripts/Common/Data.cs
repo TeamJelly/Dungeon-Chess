@@ -154,6 +154,63 @@ namespace Common
             return list;
         }
 
+        /// <summary>
+        /// range data string을 제작한다.
+        /// </summary>
+        /// <param name="option">1 : 마름모, 2 : 십자가, 3 : 정사각형, 4 : X 자</param>
+        /// <param name="range">중앙으로부터 확장되는 횟수</param>
+        /// <returns></returns>
+        public static string MakeRangeData(int option, int range)
+        {
+            // 가로세로 길이
+            int size = 1 + range * 2;
+            char[,] arr = new char[size, size];
+
+            for (int i = 0; i < arr.GetLength(0); i++)
+                for (int j = 0; j < arr.GetLength(1); j++)
+                    arr[i,j] = '0';
+
+            arr[range,range] = '1';
+
+            if (option == 1) // 마름모꼴로 확장
+            {
+                for (int i = 0; i < arr.GetLength(0); i++)
+                    for (int j = 0; j < arr.GetLength(1); j++)
+                        if (Math.Abs(range - i) + Math.Abs(range - j) <= range)
+                            arr[i, j] = '1';
+            }
+            else if (option == 2) // 십자가꼴로 확장
+            {
+                for (int i = 0; i < arr.GetLength(0); i++)
+                    for (int j = 0; j < arr.GetLength(1); j++)
+                        if (i == range || j == range)
+                            arr[i, j] = '1';
+            }
+            else if (option == 3) // 정사각형꼴로 확장
+            {
+                for (int i = 0; i < arr.GetLength(0); i++)
+                    for (int j = 0; j < arr.GetLength(1); j++)
+                        arr[i, j] = '1';
+            }
+            else if (option == 4) // X꼴로 확장
+            {
+                for (int i = 0; i < arr.GetLength(0); i++)
+                    for (int j = 0; j < arr.GetLength(1); j++)
+                        if (i == j || i == (range * 2 - j))
+                            arr[i, j] = '1';
+            }
+            // 배열을 하나의 문자열로 전환
+            string str = "" + size;
+            for (int i = 0; i < arr.GetLength(0); i++)
+            {
+                str += ";";
+                for (int j = 0; j < arr.GetLength(1); j++)
+                    str += arr[i,j];
+            }
+
+            return str;
+        }
+
         private static Sprite[] colored_transparent_packed;
         private static Sprite[] monochrome_transparent_packed;
 

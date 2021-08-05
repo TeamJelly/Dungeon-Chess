@@ -44,6 +44,7 @@ namespace View.UI
             }
 
             MainImage.sprite = CurrentSkill.Sprite;
+            MainImage.color = currentSkill.Color;
         }
 
         public override void SetInteractable(bool boolean)

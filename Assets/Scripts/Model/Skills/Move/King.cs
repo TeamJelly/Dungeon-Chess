@@ -10,21 +10,16 @@ namespace Model.Skills.Move
         public King()
         {
             Name = "King's Move";
-
-            // Number = 100;
-
-            MaxLevel = 0;
-            ReuseTime = 0;
-            CriticalRate = 0;
-
+            Category = SkillCategory.Move;
             Priority = Common.AI.Priority.NULL;
             Target = TargetType.NoUnit;
             Range = RangeType.Fixed;
 
             Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/colored_transparent_packed_1053");
+            Color = Color.white;
             Description = "킹의 움직임으로 이동한다.";
 
-            Category = SkillCategory.Move;
+            ReuseTime = new int[4] { 0, 0, 0, 0 };
 
             species.Add(UnitSpecies.Human);
             species.Add(UnitSpecies.SmallBeast);
@@ -51,11 +46,6 @@ namespace Model.Skills.Move
                 return null;
         }
 
-        /// <summary>
-        /// 걷기의 이동 가능한 범위를 계산합니다.
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
         public override List<Vector2Int> GetAvailablePositions(Unit user, Vector2Int userPosition)
         {
             List<Vector2Int> positions = new List<Vector2Int>();        // 이동가능한 모든 위치를 저장
@@ -103,44 +93,36 @@ namespace Model.Skills.Move
 
         public override IEnumerator Use(Unit user, Vector2Int target)
         {
-            if (target == user.Position)
-            {
-                Debug.LogWarning($"{user.Name}가 제자리로 이동을 실행했습니다.");
-                yield break;
-            }                
+            // 필요 변수 계산
+            int SLV = GetSLV(user);
 
-            for (int i = user.StateEffects.Count - 1; i >= 0; i--)
-                user.StateEffects[i].BeforeUseSkill(this);
-
-            // 0 단계 : 로그 출력, 스킬 소모 기록
-            Debug.Log($"{user.Name}가 {Name}스킬을 {target}에 사용!");
+            // 스킬 소모 기록
             user.IsMoved = true;
-            user.WaitingSkills.Add(this, ReuseTime);
+            user.WaitingSkills.Add(this, ReuseTime[SLV]);
+
+            Debug.Log($"{user.Name}가 {Name}스킬을 {target}에 사용!");
+
+            if (target == user.Position)
+                yield break;
 
             Vector2Int startPosition = user.Position;
             // 1 단계 : 위치 이동
+            List<Vector2Int> path = Common.PathFind.PathFindAlgorithm(user, user.Position, target);
+
+            user.animationState = Unit.AnimationState.Move;
+            float moveTime = 0.5f / path.Count;
+
+            for (int i = 1; i < path.Count; i++)
             {
-                
-                List<Vector2Int> path = Common.PathFind.PathFindAlgorithm(user, user.Position, target);
-
-                user.animationState = Unit.AnimationState.Move;
-                float moveTime = 0.5f / path.Count;
-
-                for (int i = 1; i < path.Count; i++)
-                {
-                    View.VisualEffectView.MakeVisualEffect(user.Position, "Dust");
-                    // 유닛 포지션의 변경은 여러번 일어난다.
-                    user.Position = path[i];
-                    yield return new WaitForSeconds(moveTime);
-                }
-                user.animationState = Unit.AnimationState.Idle;
+                View.VisualEffectView.MakeVisualEffect(user.Position, "Dust");
+                // 유닛 포지션의 변경은 여러번 일어난다.
+                user.Position = path[i];
+                yield return new WaitForSeconds(moveTime);
             }
+            user.animationState = Unit.AnimationState.Idle;
+
             // 실제 타일에 상속되는건 한번이다.
             Common.Command.Move(user,startPosition, target);
-
-            for (int i = user.StateEffects.Count - 1; i >= 0; i--)
-                user.StateEffects[i].BeforeUseSkill(this);
         }
     }
 }
-

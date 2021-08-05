@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Common;
-using Model.Units;
 namespace Model.Managers
 {
     public class UnitManager
@@ -21,8 +20,10 @@ namespace Model.Managers
 
         UnitManager()
         {
-            AllUnits.Add(new P001_Priest());
-            AllUnits.Add(new P000_Warrior());
+            AllUnits.Add(new Unit(UnitAlliance.Party, UnitSpecies.Human, 1));
+            AllUnits.Add(new Unit(UnitAlliance.Party, UnitSpecies.Human, 1));
+            // AllUnits.Add(new P001_Priest());
+            // AllUnits.Add(new P000_Warrior());
         }
 
         public static void Reset()

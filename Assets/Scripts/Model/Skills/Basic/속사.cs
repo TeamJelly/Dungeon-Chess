@@ -6,88 +6,72 @@ namespace Model.Skills.Basic
 {
     public class 속사 : Skill
     {
+        private float[] strToDam;
+        private int[] fixedDam;
         public 속사()
         {
             Name = "속사";
-            //Number = 1;
-            MaxLevel = 4;
-            ReuseTime = 1;
-            CriticalRate = 10;
-
+            Category = SkillCategory.Basic;
             Priority = Common.AI.Priority.NULL;
             Target = TargetType.Any;
             Range = RangeType.Fixed;
 
-            Sprite = Common.Data.LoadSprite("HandMade/SkillImage/001_속사");
-            Description =
-                $"지정한 타일 위의 모든 대상에게 데미지를 준다.\n\n\n" +
-                $"‘속사 관련 대사.’";
+            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/monochrome_transparent_packed_324");
+            Color = Color.yellow;
 
-            APData = "3;010;101;010";
-            RPData = "1;1";
-
-            Category = SkillCategory.Basic;
+            ReuseTime = new int[4] { 1, 1, 0, 0 };
+            APData = new string[4]
+            {
+                Common.Data.MakeRangeData(1, 3),
+                Common.Data.MakeRangeData(1, 3),
+                Common.Data.MakeRangeData(1, 3),
+                Common.Data.MakeRangeData(1, 3),
+            };
+            RPData = new string[4]
+            {
+                Common.Data.MakeRangeData(1, 0),
+                Common.Data.MakeRangeData(1, 0),
+                Common.Data.MakeRangeData(1, 0),
+                Common.Data.MakeRangeData(1, 0),
+            };
+            strToDam = new float[4] { 1.0f, 1.5f, 2.0f, 2.5f };
 
             species.Add(UnitSpecies.SmallBeast);
             species.Add(UnitSpecies.MediumBeast);
             species.Add(UnitSpecies.Human);
         }
 
-        private float strToDmg = 1;
-
-        public override void Upgrade()
-        {
-            base.Upgrade();
-
-            switch (Level)
-            {
-                case 1:
-                    strToDmg = 1;
-                    ReuseTime = 1;
-                    break;
-                case 2:
-                    strToDmg = 1.5f;
-                    ReuseTime = 1;
-                    break;
-                case 3:
-                    strToDmg = 1.5f;
-                    ReuseTime = 0;
-                    break;
-                case 4:
-                    strToDmg = 2;
-                    ReuseTime = 0;
-                    break;
-            }
-        }
         public override IEnumerator Use(Unit user, Vector2Int target)
         {
-            // 0 단계 : 로그 출력, 스킬 소모 기록, 필요 변수 계산
+            // 필요 변수 계산
+            int SLV = GetSLV(user);
+            bool isCri = Random.Range(0, 100) < user.CriRate;
+            int damage = (int)(user.Strength * strToDam[SLV]);
+            if (isCri) damage *= 2;
+            
+            // 스킬 소모 기록
             user.IsSkilled = true;
-            user.WaitingSkills.Add(this, ReuseTime);
+            user.WaitingSkills.Add(this, ReuseTime[SLV]);
 
-            int damage = (int)(user.Strength * strToDmg);
-
+            // 스킬 실행
             Unit targetUnit = Model.Managers.BattleManager.GetUnit(target);
             if (targetUnit != null)
             {
                 Debug.Log($"{user.Name}가 {Name}스킬을 {targetUnit.Name}에 사용!");
 
-                // 1단계 : 스킬 애니메이션 재생 및 화면 갱신.
-                yield return null;
-
-                // 2단계 : 스킬 적용
                 Common.Command.Damage(targetUnit, damage);
             }
             else
-            {
                 Debug.Log($"{user.Name}가 {Name}스킬을 {target}에 사용!");
-            }
+
+            yield return null;
         }
-        public override string GetDescription(Unit user, int level)
+        public override string GetDescription(Unit user)
         {
-            int damage = (int)(user.Strength * strToDmg);
-            string str = base.GetDescription(user, level).Replace("X", damage.ToString());
-            return str;
+            int SLV = GetSLV(user);
+            int damage = (int)(user.Strength * strToDam[SLV]);
+
+            return $"지정한 대상에게 {damage}만큼 데미지를 준다.";
         }
     }
 }

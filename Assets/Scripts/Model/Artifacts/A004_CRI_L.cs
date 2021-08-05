@@ -14,12 +14,12 @@
 
         public override void OnAddThisEffect()
         {
-            Owner.CriticalRate += increasingValue;
+            Owner.CriRate += increasingValue;
         }
 
         public override void OnRemoveThisEffect()
         {
-            Owner.CriticalRate -= increasingValue;
+            Owner.CriRate -= increasingValue;
         }
     }
 }

@@ -78,7 +78,7 @@ namespace Model
                 Strength = 10;
                 Agility = 10;
                 Mobility = 3;
-                CriticalRate = 10;
+                CriRate = 10;
             }
             else if (Species == UnitSpecies.SmallBeast)
             {
@@ -86,7 +86,7 @@ namespace Model
                 Strength = 12;
                 Agility = 11;
                 Mobility = 4;
-                CriticalRate = 11;
+                CriRate = 11;
             }
             else if (Species == UnitSpecies.MediumBeast)
             {
@@ -94,7 +94,7 @@ namespace Model
                 Strength = 12;
                 Agility = 10;
                 Mobility = 3;
-                CriticalRate = 11;
+                CriRate = 11;
             }
             else if (Species == UnitSpecies.LargeBeast)
             {
@@ -102,7 +102,7 @@ namespace Model
                 Strength = 15;
                 Agility = 12;
                 Mobility = 2;
-                CriticalRate = 11;
+                CriRate = 11;
             }
 
             Level = lv;
@@ -124,7 +124,7 @@ namespace Model
         private int strength;                       // 힘
         private int agility;                        // 민첩
         private int mobility;                           // 이동력
-        private int criticalRate;                 // 치명타 율
+        private int criRate;                 // 치명타 율
         private float actionRate;                   // 행동가능 퍼센테이지
         private Vector2Int position;                // 위치
         private Dictionary<SkillCategory, Skill> skills = new Dictionary<SkillCategory, Skill>()
@@ -203,7 +203,7 @@ namespace Model
                     {
                         MaxHP += 1;
                         Strength += 2;
-                        CriticalRate += 2;
+                        CriRate += 2;
                     }
                     else if (Modifier == UnitModifier.Meticulous)
                     {
@@ -220,7 +220,7 @@ namespace Model
                     {
                         Strength += 1;
                         Agility += 1;
-                        CriticalRate += 2;
+                        CriRate += 2;
                     }
                     else if (Modifier == UnitModifier.Rich)
                     {
@@ -307,7 +307,7 @@ namespace Model
         public Dictionary<Skill, int> WaitingSkills { get => waitingSkills; set => waitingSkills = value; }
         public List<Artifact> Artifacts { get => artifacts; set => artifacts = value; }
         public List<Effect> StateEffects { get => stateEffects; set => stateEffects = value; }
-        public int CriticalRate { get => criticalRate; set => criticalRate = value; }
+        public int CriRate { get => criRate; set => criRate = value; }
 
         public virtual List<Obtainable> Droptems
         {

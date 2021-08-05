@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using View;
+using Model;
 
 public class ScreenTouchManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerClickHandler
 {
@@ -48,7 +49,7 @@ public class ScreenTouchManager : MonoBehaviour, IBeginDragHandler, IDragHandler
             {
                 //리더 유닛 이동 코루틴 실행. 기존 실행되던 코루틴은 정지.
                 if (coroutine != null) StopCoroutine(coroutine);
-                coroutine = GameManager.LeaderUnit.Skills[Model.SkillCategory.Move].Use(GameManager.LeaderUnit, tileIdx);
+                coroutine = move(GameManager.LeaderUnit, tileIdx);
                 StartCoroutine(coroutine);
             }
         }
@@ -56,5 +57,27 @@ public class ScreenTouchManager : MonoBehaviour, IBeginDragHandler, IDragHandler
         {
             IndicatorView.TileIndicators[tileIdx.x, tileIdx.y].GetComponent<EventTrigger>().OnPointerClick(null);
         }
+    }
+
+    IEnumerator move(Unit user, Vector2Int target)
+    {
+        Vector2Int startPosition = user.Position;
+        // 1 단계 : 위치 이동
+        List<Vector2Int> path = Common.PathFind.PathFindAlgorithm(user, user.Position, target);
+
+        user.animationState = Unit.AnimationState.Move;
+        float moveTime = 0.5f / path.Count;
+
+        for (int i = 1; i < path.Count; i++)
+        {
+            View.VisualEffectView.MakeVisualEffect(user.Position, "Dust");
+            // 유닛 포지션의 변경은 여러번 일어난다.
+            user.Position = path[i];
+            yield return new WaitForSeconds(moveTime);
+        }
+        user.animationState = Unit.AnimationState.Idle;
+
+        // 실제 타일에 상속되는건 한번이다.
+        Common.Command.Move(user,startPosition, target);
     }
 }
