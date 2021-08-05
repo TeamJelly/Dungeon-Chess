@@ -53,8 +53,8 @@ namespace Model.Managers
             // 테스팅 적 유닛 소환
             Unit unit = new Unit(UnitAlliance.Enemy, UnitSpecies.LargeBeast, 1);
 
-            unit.MoveSkill.Priority = Common.AI.Priority.NearFromClosestParty;
-            unit.Skills[0].Target = Skill.TargetType.Party;
+            unit.Skills[SkillCategory.Move].Priority = Common.AI.Priority.NearFromClosestParty;
+            unit.Skills[SkillCategory.Basic].Target = Skill.TargetType.Party;
 
             Common.Command.Summon(unit, new Vector2Int(4, 4));
             Common.Command.Summon(new Items.I000_Heal(), new Vector2Int(3,3));

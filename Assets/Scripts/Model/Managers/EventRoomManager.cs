@@ -21,14 +21,14 @@ namespace Model.Managers
 
         }
 
-        public void UpgradeSkill()
-        {
-            foreach (Unit unit in GameManager.PartyUnits)
-            {
-                Command.UpgradeSkill(unit, 0);
-            }
+        // public void UpgradeSkill()
+        // {
+        //     foreach (Unit unit in GameManager.PartyUnits)
+        //     {
+        //         Command.UpgradeSkill(unit, 0);
+        //     }
 
-          //  MenuManager.instance.GotoStage();
-        }
+        //   //  MenuManager.instance.GotoStage();
+        // }
     }
 }

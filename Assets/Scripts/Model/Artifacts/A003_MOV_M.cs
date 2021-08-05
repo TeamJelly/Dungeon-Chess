@@ -14,12 +14,12 @@
 
         public override void OnAddThisEffect()
         {
-            Owner.Move += increasingValue;
+            Owner.Mobility += increasingValue;
         }
 
         public override void OnRemoveThisEffect()
         {
-            Owner.Move -= increasingValue;
+            Owner.Mobility -= increasingValue;
         }
     }
 }

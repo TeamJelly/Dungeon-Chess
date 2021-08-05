@@ -20,8 +20,8 @@ namespace Model.Effects
         {
             base.OnAddThisEffect();
 
-            Owner.MoveCount = 0;
-            Owner.SkillCount = 0;
+            Owner.IsMoved = true;
+            Owner.IsSkilled = true;
 
             Owner.OnTurnEnd.after.AddListener(OnTurnEnd);
             Owner.OnTurnStart.before.AddListener(OnTurnStart);
@@ -37,8 +37,8 @@ namespace Model.Effects
         {
             FadeOutTextView.MakeText(Owner.Position + Vector2Int.up, $"기절!", Color.red);
 
-            Owner.MoveCount = 0;
-            Owner.SkillCount = 0;
+            Owner.IsMoved = true;
+            Owner.IsSkilled = true;
             isActivated = true;
 
             return value;

@@ -27,7 +27,7 @@ namespace Model.Skills
         {
             if (GetAvailablePositions(user).Count == 0)
                 return false;
-            if (user.MoveCount > 0 && CurReuseTime == 0)
+            if (!user.IsSkilled && !user.IsMoved && user.WaitingSkills[this] == 0)
                 return true;
             else
                 return false;
@@ -55,7 +55,7 @@ namespace Model.Skills
 
             old_frontier.Add(userPosition);
 
-            for (int i = 0; i < user.Move; i++)
+            for (int i = 0; i < user.Mobility; i++)
             {
                 foreach (var position in old_frontier)
                 {
@@ -104,8 +104,9 @@ namespace Model.Skills
 
             // 0 단계 : 로그 출력, 스킬 소모 기록
             Debug.Log($"{user.Name}가 {Name}스킬을 {target}에 사용!");
-            user.MoveCount--;
-            CurReuseTime = ReuseTime;
+            user.IsMoved = true;
+            user.WaitingSkills[this] = ReuseTime;
+
             Vector2Int startPosition = user.Position;
             // 1 단계 : 위치 이동
             {

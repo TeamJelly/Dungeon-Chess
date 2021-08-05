@@ -21,14 +21,14 @@ namespace Model.Units
 
             Strength = 10;
             Agility = 11;
-            Move = 2;
+            Mobility = 2;
             CriticalRate = 10;
 
             Sprite = Common.Data.GetRandomSprite(Species, Random.Range(0,10000));
 
-            MoveSkill = new Skills.Move.Pawn();
-            Skills[0] = new S000_Cut();
-            Skills[1] = new S005_SpinSlash();
+            Skills[SkillCategory.Move] = new Skills.Move.Pawn();
+            Skills[SkillCategory.Basic] = new S000_Cut();
+            Skills[SkillCategory.Intermediate] = new S005_SpinSlash();
         }
     }
 }

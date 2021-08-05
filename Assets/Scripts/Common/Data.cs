@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Model;
-using Model.Skills;
+using Model.Skills.Move;
+using Model.Skills.Basic;
 using System;
 
 namespace Common
@@ -37,33 +38,19 @@ namespace Common
             return name.Substring(0, name.Length - 1);
         }
 
-
-
-        /// <summary>
-        /// 스킬 데이터에서 랜덤하게 하나를 뽑습니다.
-        /// </summary>
-        /// <param name="seed"></param>
-        /// <param name="option">
-        /// option 0 : 전체스킬 중에서 랜덤 스킬 반환
-        /// option 1 : 이동스킬 중에서 랜덤 스킬 반환
-        /// option 2 : 일반공격 중에서 랜덤 스킬 반환
-        /// option 3 : 중급스킬 중에서 랜덤 스킬 반환
-        /// option 4 : 고급스킬 중에서 랜덤 스킬 반환
-        /// </param>
-        /// <returns></returns>
-        public static Skill GetRandomSkill(int seed, Skill.SkillCategory category = Skill.SkillCategory.Null)
+        public static Skill GetRandomSkill(int seed, UnitSpecies species, SkillCategory category)
         {
+            List<Skill> skills = new List<Skill>();
+            
+            foreach(Skill skill in allSkills)
+                if (skill.species.Contains(species) && skill.Category == category)
+                    skills.Add(skill);
+            
+            if (skills.Count == 0)
+                return allSkills[0];
 
-            Type type = skillData[seed % skillData.Count];
-            Skill instance = Activator.CreateInstance(type) as Skill;
-
-            return instance;
-        }
-
-        public static Skill GetRandomSkill(int seed, UnitSpecies species, Skill.SkillCategory category = Skill.SkillCategory.Null)
-        {
-            int idx = seed % SpeciesToSkillList[species].Count;
-            return SpeciesToSkillList[species][idx];
+            int idx = seed % skills.Count;
+            return skills[idx];
         }
 
         private static void InitSkillDictionary()
@@ -76,12 +63,12 @@ namespace Common
                 { UnitSpecies.MediumBeast, new List<Skill>() },
                 { UnitSpecies.LargeBeast, new List<Skill>() },
             };
-            categoryToSkillList = new Dictionary<Skill.SkillCategory, List<Skill>>()
+            categoryToSkillList = new Dictionary<SkillCategory, List<Skill>>()
             {
-                {Skill.SkillCategory.Move,   new List<Skill>()},
-                {Skill.SkillCategory.Basic, new List<Skill>()},
-                {Skill.SkillCategory.Intermediate, new List<Skill>()},
-                {Skill.SkillCategory.Advanced, new List<Skill>()},
+                {SkillCategory.Move,   new List<Skill>()},
+                {SkillCategory.Basic, new List<Skill>()},
+                {SkillCategory.Intermediate, new List<Skill>()},
+                {SkillCategory.Advanced, new List<Skill>()},
             };
 
             foreach (Skill skill in allSkills)
@@ -104,9 +91,9 @@ namespace Common
             }
         }
 
-        private static Dictionary<Skill.SkillCategory, List<Skill>> categoryToSkillList = null;
+        private static Dictionary<SkillCategory, List<Skill>> categoryToSkillList = null;
 
-        public static Dictionary<Skill.SkillCategory, List<Skill>> CategoryToSkillList
+        public static Dictionary<SkillCategory, List<Skill>> CategoryToSkillList
         {
             get
             {
@@ -118,18 +105,21 @@ namespace Common
 
         static List<Skill> allSkills = new List<Skill>()
         {
-            new S000_Cut(),
-            new S001_Snapshot(),
-            new S004_Bang(),
-            new S005_SpinSlash()
-        };
+            // Move 스킬
+            new Pawn(),
+            new Knight(),
+            new Bishop(),
+            new Rook(),
+            new Queen(),
+            new King(),
 
-        private static List<Type> skillData = new List<Type>()
-        {
-            Type.GetType("Model.Skills.S000_Cut"),
-            Type.GetType("Model.Skills.S001_Snapshot"),
-            Type.GetType("Model.Skills.S002_MagicArrow"),
-            Type.GetType("Model.Skills.S003_Judgement"),
+            // Basic 스킬
+            new 베기(),
+            new 속사(),
+            new 할퀴기(),
+            new 화염구(),
+            new 힐(),
+
         };
 
         //인간

@@ -95,7 +95,7 @@ namespace View.UI
                                 $"{currentUnit.CurHP}/{currentUnit.MaxHP}\n" +
                                 $"{currentUnit.Strength}\n" +
                                 $"{currentUnit.Agility}\n" +
-                                $"{currentUnit.Move}";
+                                $"{currentUnit.Mobility}";
 
             // if (hasCurrentUnitInParty)
             // {

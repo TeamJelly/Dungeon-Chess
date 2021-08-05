@@ -7,18 +7,19 @@ using UnityEngine;
 
 namespace Model
 {
+    public enum SkillCategory
+    {
+        Null = -1,
+        Move,
+        Basic,
+        Intermediate,
+        Advanced,
+    }
+
     [System.Serializable]
     public class Skill
     {
         // 스킬 카테고리
-        public enum SkillCategory
-        {
-            Null = -1,
-            Move,
-            Basic,
-            Intermediate,
-            Advanced,
-        }
 
         public enum RangeType // 스킬 사용가능 범위의 종류
         {
@@ -42,7 +43,6 @@ namespace Model
         public int Level { get; set; }
         public int MaxLevel { get; set; }
         public int ReuseTime { get; set; }
-        public int CurReuseTime { get; set; }
         public int CriticalRate { get; set; }
 
         public AI.Priority Priority { get; set; }
@@ -56,7 +56,7 @@ namespace Model
 
         public virtual bool IsUsable(Unit user)
         {
-            if (user.SkillCount > 0 && CurReuseTime == 0)
+            if (!user.IsSkilled && !user.WaitingSkills.ContainsKey(this))
                 return true;
             else
                 return false;
@@ -153,7 +153,7 @@ namespace Model
         public virtual IEnumerator Use(Unit user, Vector2Int target)
         {
             Debug.LogError(Name + " 스킬을 " + target + "에 사용!");
-            CurReuseTime = ReuseTime;
+            user.WaitingSkills.Add(this, ReuseTime);
             yield return null;
         }
 

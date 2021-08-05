@@ -94,8 +94,8 @@ namespace Model.Skills
         public override IEnumerator Use(Unit user, Vector2Int target)
         {
             // 0 단계 : 로그 출력, 스킬 소모 기록, 필요 변수 계산
-            user.SkillCount--;
-            CurReuseTime = ReuseTime;
+            user.IsSkilled = true;
+            user.WaitingSkills[this] = ReuseTime;
 
             //Strength x 2.0 
             int damage = user.Strength * strToDmg;

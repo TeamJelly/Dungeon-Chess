@@ -194,49 +194,49 @@ namespace Common
             }
         }
 
-        public static void AddSkill(Unit unit, Skill newSkill, int index)
-        {
-            if (index >= unit.Skills.Length || index < 0)
-            {
-                Debug.LogError("스킬 슬롯을 범위를 벗어났습니다.");
-                return;
-            }
+        // public static void AddSkill(Unit unit, Skill newSkill, int index)
+        // {
+        //     if (index >= unit.Skills.Length || index < 0)
+        //     {
+        //         Debug.LogError("스킬 슬롯을 범위를 벗어났습니다.");
+        //         return;
+        //     }
 
-            RemoveSkill(unit, index);
-            unit.Skills[index] = newSkill;
-            // unit.IsModified = true;
-        }
+        //     RemoveSkill(unit, index);
+        //     unit.Skills[index] = newSkill;
+        //     // unit.IsModified = true;
+        // }
 
-        public static void RemoveSkill(Unit unit, int index)
-        {
-            if (index >= unit.Skills.Length || index < 0)
-            {
-                Debug.LogError("스킬 슬롯을 범위를 벗어났습니다.");
-                return;
-            }
-            if (unit.Skills[index] == null)
-            {
-                Debug.LogError("제거할 스킬이 없습니다.");
-                return;
-            }
+        // public static void RemoveSkill(Unit unit, int index)
+        // {
+        //     if (index >= unit.Skills.Length || index < 0)
+        //     {
+        //         Debug.LogError("스킬 슬롯을 범위를 벗어났습니다.");
+        //         return;
+        //     }
+        //     if (unit.Skills[index] == null)
+        //     {
+        //         Debug.LogError("제거할 스킬이 없습니다.");
+        //         return;
+        //     }
 
-            unit.Skills[index] = null;
-        }
+        //     unit.Skills[index] = null;
+        // }
 
-        public static void UpgradeSkill(Unit unit, int index)
-        {
-            if (index >= unit.Skills.Length || index < 0)
-            {
-                Debug.LogError("스킬 슬롯을 범위를 벗어났습니다.");
-                return;
-            }
-            if (unit.Skills[index] == null)
-            {
-                Debug.LogError("업그레이드 할 스킬이 없습니다.");
-                return;
-            }
-            unit.Skills[index].Upgrade();
-        }
+        // public static void UpgradeSkill(Unit unit, int index)
+        // {
+        //     if (index >= unit.Skills.Length || index < 0)
+        //     {
+        //         Debug.LogError("스킬 슬롯을 범위를 벗어났습니다.");
+        //         return;
+        //     }
+        //     if (unit.Skills[index] == null)
+        //     {
+        //         Debug.LogError("업그레이드 할 스킬이 없습니다.");
+        //         return;
+        //     }
+        //     unit.Skills[index].Upgrade();
+        // }
 
     }
 }

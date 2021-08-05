@@ -48,7 +48,7 @@ public class ScreenTouchManager : MonoBehaviour, IBeginDragHandler, IDragHandler
             {
                 //리더 유닛 이동 코루틴 실행. 기존 실행되던 코루틴은 정지.
                 if (coroutine != null) StopCoroutine(coroutine);
-                coroutine = GameManager.LeaderUnit.MoveSkill.Use(GameManager.LeaderUnit, tileIdx);
+                coroutine = GameManager.LeaderUnit.Skills[Model.SkillCategory.Move].Use(GameManager.LeaderUnit, tileIdx);
                 StartCoroutine(coroutine);
             }
         }

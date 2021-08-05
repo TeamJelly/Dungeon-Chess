@@ -43,13 +43,11 @@ namespace View
                 SkillButton button = skillButtons[i];
             }
 
-            skillButtons[0].SetSkill(unit, unit.MoveSkill);
+            skillButtons[0].SetSkill(unit, unit.Skills[SkillCategory.Move]);
+            skillButtons[1].SetSkill(unit, unit.Skills[SkillCategory.Basic]);
+            skillButtons[2].SetSkill(unit, unit.Skills[SkillCategory.Intermediate]);
+            skillButtons[3].SetSkill(unit, unit.Skills[SkillCategory.Advanced]);
 
-            for (int i = 0; i < unit.Skills.Length; i++)
-            {
-                SkillButton button = skillButtons[i + 1];
-                button.SetSkill(unit, unit.Skills[i]);
-            }
             RefreshButtons(unit);
         }
 

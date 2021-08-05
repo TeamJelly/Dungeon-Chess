@@ -33,14 +33,17 @@ namespace UI.Battle
             
             // 턴시작시 유닛 값들 초기화
             nextUnit.ActionRate = 0;
-            nextUnit.MoveCount = 1;
-            nextUnit.SkillCount = 1;
+            nextUnit.IsMoved = false;
+            nextUnit.IsSkilled = false;
 
             // 턴 시작시 스킬쿨 줄어듬
-            foreach (var skill in nextUnit.Skills)
-                if (skill != null && skill.CurReuseTime != 0)
-                    skill.CurReuseTime--;
-
+            foreach (var skill in new List<Skill>(nextUnit.WaitingSkills.Keys))
+            {
+                nextUnit.WaitingSkills[skill] -= 1;
+                if (nextUnit.WaitingSkills[skill] <= 0)
+                    nextUnit.WaitingSkills.Remove(skill);
+            }
+            
             nextUnit.OnTurnStart.before.Invoke(false);
             nextUnit.OnTurnStart.after.Invoke(true);
 

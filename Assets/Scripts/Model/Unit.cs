@@ -2,19 +2,20 @@
 using System.Collections.Generic;
 using Common;
 using System;
+using Model;
 
 namespace Model
 {
     /// <summary>
     /// 진영 : 유닛이 속한 진영을 결정한다. 전투중 행동방식을 결정
     /// </summary>
-    public enum UnitAlliance 
-    { 
-        NULL = -1, 
-        Party, 
-        Enemy, 
-        Neutral, 
-        Friendly, 
+    public enum UnitAlliance
+    {
+        NULL = -1,
+        Party,
+        Enemy,
+        Neutral,
+        Friendly,
     };
 
     /// <summary>
@@ -64,10 +65,11 @@ namespace Model
 
             Name = Data.GetRandomName(Seed);
             Sprite = Data.GetRandomSprite(Species, Seed);
-            MoveSkill = new Model.Skills.Move.Pawn();
-            Skills[0] = Data.GetRandomSkill(Seed, species);
-            // Skills[1] = Data.GetRandomSkill(seed);
-            // Skills[2] = Data.GetRandomSkill(seed);
+
+            Skills[SkillCategory.Move] = Data.GetRandomSkill(Seed, species, SkillCategory.Move);
+            Skills[SkillCategory.Basic] = Data.GetRandomSkill(Seed, species, SkillCategory.Basic);
+            Skills[SkillCategory.Intermediate] = Data.GetRandomSkill(Seed, species, SkillCategory.Intermediate);
+            Skills[SkillCategory.Advanced] = Data.GetRandomSkill(Seed, species, SkillCategory.Advanced);
 
             // 인간형 초기 스텟
             if (Species == UnitSpecies.Human)
@@ -75,7 +77,7 @@ namespace Model
                 MaxHP = 35;
                 Strength = 10;
                 Agility = 10;
-                Move = 3;
+                Mobility = 3;
                 CriticalRate = 10;
             }
             else if (Species == UnitSpecies.SmallBeast)
@@ -83,7 +85,7 @@ namespace Model
                 MaxHP = 20;
                 Strength = 12;
                 Agility = 11;
-                Move = 4;
+                Mobility = 4;
                 CriticalRate = 11;
             }
             else if (Species == UnitSpecies.MediumBeast)
@@ -91,7 +93,7 @@ namespace Model
                 MaxHP = 30;
                 Strength = 12;
                 Agility = 10;
-                Move = 3;
+                Mobility = 3;
                 CriticalRate = 11;
             }
             else if (Species == UnitSpecies.LargeBeast)
@@ -99,7 +101,7 @@ namespace Model
                 MaxHP = 50;
                 Strength = 15;
                 Agility = 12;
-                Move = 2;
+                Mobility = 2;
                 CriticalRate = 11;
             }
 
@@ -111,7 +113,7 @@ namespace Model
 
         public enum AnimationState { Idle, Hit, Attack, Move, Heal };
 
-        private int Seed {get; set;}
+        private int Seed { get; set; }
         public string Name { get; set; }            // 이름
         private int level = 1;
         private int curEXP;                         // 현재 경험치
@@ -121,22 +123,22 @@ namespace Model
         private int armor;                          // 방어도 (추가 체력)
         private int strength;                       // 힘
         private int agility;                        // 민첩
-        private int move;                           // 이동력
-        private int moveCount;                      // 이동가능 횟수
-        private int skillCount;                     // 스킬가능 횟수
+        private int mobility;                           // 이동력
         private int criticalRate;                 // 치명타 율
         private float actionRate;                   // 행동가능 퍼센테이지
         private Vector2Int position;                // 위치
-        private Skill moveSkill;                    // 이동 스킬
-        // private Skill passiveSkill;                 // 패시브 스킬
-        private Skill[] skills = new Skill[3];      // 4가지 스킬
-        // 배울수 있는 스킬
+        private Dictionary<SkillCategory, Skill> skills = new Dictionary<SkillCategory, Skill>()
+        {
+            {SkillCategory.Move, null},
+            {SkillCategory.Basic, null},
+            {SkillCategory.Intermediate, null},
+            {SkillCategory.Advanced, null}
+        };
+        private Dictionary<Skill, int> waitingSkills = new Dictionary<Skill, int>();
         private List<Artifact> artifacts = new List<Artifact>();    // 보유한 유물
         private List<Effect> stateEffects = new List<Effect>();  // 보유한 상태효과
         private List<Obtainable> droptems = new List<Obtainable>();
-
         private RuntimeAnimatorController animator; // 애니메이터
-
         protected String animatorPath = "";
         public AnimationState animationState = AnimationState.Idle; // 현재 애니메이션 상태
         public UnitAlliance Alliance { get; set; }  // 진영
@@ -292,14 +294,19 @@ namespace Model
             }
         }
         public int Agility { get => agility; set => agility = value; }
-        public int Move { get => move; set => move = value; } //이동 반경
+        public int Mobility { get => mobility; set => mobility = value; } //이동 반경
         public float ActionRate { get => actionRate; set => actionRate = value; }
-        public int SkillCount { get => skillCount; set => skillCount = value; }
-        public Skill MoveSkill { get => moveSkill; set => moveSkill = value; }
-        public Skill[] Skills { get => skills; set => skills = value; }
+        public bool IsSkilled { get; set; }
+        public bool IsMoved { get; set; }
+        public Dictionary<SkillCategory, Skill> Skills
+        {
+            get => skills;
+            set => skills = value;
+        }
+
+        public Dictionary<Skill, int> WaitingSkills { get => waitingSkills; set => waitingSkills = value; }
         public List<Artifact> Artifacts { get => artifacts; set => artifacts = value; }
         public List<Effect> StateEffects { get => stateEffects; set => stateEffects = value; }
-        public int MoveCount { get => moveCount; set => moveCount = value; }
         public int CriticalRate { get => criticalRate; set => criticalRate = value; }
 
         public virtual List<Obtainable> Droptems

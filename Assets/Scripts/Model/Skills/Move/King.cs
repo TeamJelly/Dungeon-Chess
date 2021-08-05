@@ -5,11 +5,11 @@ using Model.Managers;
 
 namespace Model.Skills.Move
 {
-    public class Pawn : Skill
+    public class King : Skill
     {
-        public Pawn()
+        public King()
         {
-            Name = "Pawn's Move";
+            Name = "King's Move";
 
             // Number = 100;
 
@@ -21,8 +21,8 @@ namespace Model.Skills.Move
             Target = TargetType.NoUnit;
             Range = RangeType.Fixed;
 
-            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/colored_transparent_packed_1049");
-            Description = "폰의 움직임으로 이동한다.";
+            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/colored_transparent_packed_1053");
+            Description = "킹의 움직임으로 이동한다.";
 
             Category = SkillCategory.Move;
 
