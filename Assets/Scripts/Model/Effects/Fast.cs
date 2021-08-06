@@ -4,23 +4,8 @@ using View;
 
 namespace Model.Effects
 {
-
     public class Fast : Effect
     {
-        private int barrierCount;
-
-        public int BarrierCount
-        {
-            get => barrierCount;
-            set => barrierCount = value;
-        }
-
-        /// <summary>
-        /// 배리어
-        /// </summary>
-        /// <param name="owner">효과 소유자</param>
-        /// <param name="barrierCount">배리어의 개수</param>
-        /// <param name="turnCount">배리어의 지속 턴 수</param>
         public Fast(Unit owner, int turnCount) : base(owner, turnCount)
         {
             
