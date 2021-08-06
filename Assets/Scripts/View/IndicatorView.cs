@@ -11,13 +11,11 @@ namespace View
     public class IndicatorView : MonoBehaviour
     {
         public static IndicatorView instance;
-
         private void Awake()
         {
             instance = this;
             tileIndicators = null;
         }
-
         private static GameObject tileIndicatorParent;
         public static GameObject TileIndicatorParent
         {
@@ -172,6 +170,7 @@ namespace View
             curAvlPositions = positions;
             curPosition = null;
             tileAction = action;
+            TileIndicatorParent.SetActive(true);
             UpdateTileIndicator(curPosition);
         }
 
