@@ -30,10 +30,10 @@ namespace Model.Skills.Basic
             };
             RPData = new string[4]
             {
-                Common.Data.MakeRangeData(1, 0),
-                Common.Data.MakeRangeData(1, 0),
-                Common.Data.MakeRangeData(1, 0),
-                Common.Data.MakeRangeData(1, 0),
+                Common.Data.MakeRangeData(2, 1),
+                Common.Data.MakeRangeData(2, 1),
+                Common.Data.MakeRangeData(2, 1),
+                Common.Data.MakeRangeData(2, 1),
             };
             strToDam = new float[4] { 1.0f, 1.5f, 1.5f, 2.0f };
             fixedDam = new int[4] { 10, 10, 10, 20 };

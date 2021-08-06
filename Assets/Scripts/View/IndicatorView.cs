@@ -27,7 +27,6 @@ namespace View
                 {
                     tileIndicatorParent = new GameObject("Tile Indicator Parent");
                     tileIndicatorParent.AddComponent<ScreenTouchManager>().cameraTransform = Camera.main.transform;
-
                 }
 
                 return tileIndicatorParent;
@@ -164,10 +163,10 @@ namespace View
         }
 
         /// <summary>
-        /// 파티 소환에 사용
+        /// 파티 소환, 에 사용
         /// </summary>
-        /// <param name="positions"></param>
-        /// <param name="action"></param>
+        /// <param name="positions">사용가능한 위치</param>
+        /// <param name="action">두번째 클릭시 발동되는 함수</param>
         public static void ShowTileIndicator(List<Vector2Int> positions, Action<Vector2Int> action)
         {
             currentSkill = null;
