@@ -30,8 +30,6 @@ namespace Model.Skills.Move
 
         public override bool IsUsable(Unit user)
         {
-            if (GetAvailablePositions(user).Count == 0)
-                return false;
             if (!user.IsSkilled && !user.IsMoved && !user.WaitingSkills.ContainsKey(this))
                 return true;
             else

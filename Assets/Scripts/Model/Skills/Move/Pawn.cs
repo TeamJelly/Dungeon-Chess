@@ -19,7 +19,7 @@ namespace Model.Skills.Move
             Color = Color.white;
             Description = "폰의 움직임으로 이동한다.";
 
-            ReuseTime = new int[4] { 0, 0, 0, 0 };
+            ReuseTime = new int[1] { 0 };
 
             species.Add(UnitSpecies.Human);
             species.Add(UnitSpecies.SmallBeast);
@@ -30,8 +30,6 @@ namespace Model.Skills.Move
 
         public override bool IsUsable(Unit user)
         {
-            if (GetAvailablePositions(user).Count == 0)
-                return false;
             if (!user.IsSkilled && !user.IsMoved && !user.WaitingSkills.ContainsKey(this))
                 return true;
             else

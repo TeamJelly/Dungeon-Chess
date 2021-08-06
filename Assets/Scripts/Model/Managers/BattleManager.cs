@@ -66,8 +66,12 @@ namespace Model.Managers
 
             if (GameManager.PartyUnits.Count == 0)
             {
-                GameManager.PartyUnits.Add(new Unit(UnitAlliance.Party, UnitSpecies.Human));
-                GameManager.PartyUnits.Add(new Unit(UnitAlliance.Party, UnitSpecies.Human));
+                unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
+                unit.Skills[SkillCategory.Move] = new Skills.Move.Rook();
+                GameManager.PartyUnits.Add(unit);
+                unit = new Unit(UnitAlliance.Party, UnitSpecies.Human);
+                unit.Skills[SkillCategory.Move] = new Skills.Move.Bishop();
+                GameManager.PartyUnits.Add(unit);
                 GameManager.LeaderUnit = GameManager.PartyUnits[0];
 
                 Common.Command.AddEffect(GameManager.LeaderUnit,new Model.Effects.Poison(GameManager.LeaderUnit,3));

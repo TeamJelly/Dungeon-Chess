@@ -15,11 +15,11 @@ namespace Model.Skills.Move
             Target = TargetType.NoUnit;
             Range = RangeType.Fixed;
 
-            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/colored_transparent_packed_1050");
+            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/colored_transparent_packed_1051");
             Color = Color.white;
             Description = "비숍의 움직임으로 이동한다.";
 
-            ReuseTime = new int[4] { 0, 0, 0, 0 };
+            ReuseTime = new int[1] { 0 };
 
             species.Add(UnitSpecies.Human);
             species.Add(UnitSpecies.SmallBeast);
@@ -30,8 +30,6 @@ namespace Model.Skills.Move
 
         public override bool IsUsable(Unit user)
         {
-            if (GetAvailablePositions(user).Count == 0)
-                return false;
             if (!user.IsSkilled && !user.IsMoved && !user.WaitingSkills.ContainsKey(this))
                 return true;
             else
