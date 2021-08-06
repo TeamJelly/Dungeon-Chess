@@ -20,6 +20,8 @@ namespace Model.Managers
         // 현재 전투의 모든 타일
         public Tile[,] field;
 
+        public List<Vector2Int> allTilesPosition = new List<Vector2Int>();
+
         // 필드 데이터 (주의! 마지막에 개행 안붙힘)
         [TextArea(0, 20)]
         public List<string> FieldDatas = new List<string>()
@@ -79,10 +81,12 @@ namespace Model.Managers
                     else field[y, x] = new Tile();
                     field[y, x].position = new Vector2Int(x,y);
                     field[y, x].category = (Tile.Category)chars[i];
+                    allTilesPosition.Add(new Vector2Int(x, y));
                     x++;
                 }
-            }
 
+               
+            }
             UpdateTileMap();
         }
 

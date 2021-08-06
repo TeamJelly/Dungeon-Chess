@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using View.UI;
 
 namespace Model
 {
@@ -101,6 +102,7 @@ namespace Model
             if (obtainable != null)
             {
                 obtainable.ToBag();
+                Bag.instance.UpdateUI();
                 View.FadeOutTextView.MakeText(unit.Position + Vector2Int.up, $"{obtainable.Name} 획득!", Color.yellow);
                 Common.Command.UnSummon(obtainable);
             }

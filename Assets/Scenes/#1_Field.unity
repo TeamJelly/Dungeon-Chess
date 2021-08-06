@@ -35855,6 +35855,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 11400000, guid: 3d4931740aaee4b4993ecad9384a4b2f, type: 2}
   tileBasesChar: 4600570055004400540048005300
+  allTilesPosition: []
   FieldDatas:
   - 'WWWWWWWWWWWWWWWW
 

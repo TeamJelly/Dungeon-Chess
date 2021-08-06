@@ -26,8 +26,9 @@ namespace View
             skillButtons = new SkillButton[skillCount];
             for (int i = 0; i < skillCount; i++)
             {
-                skillButtons[i] = panel.transform.GetChild(i).GetComponent<SkillButton>();
-                skillButtons[i].toggleOption = true;
+                SkillButton newButton = panel.transform.GetChild(i).GetComponent<SkillButton>();
+                newButton.Init();
+                skillButtons[i] = newButton;
             }
         }
 
@@ -63,6 +64,12 @@ namespace View
                 }
                 button.SetInteractable(true);
             }
+        }
+
+        public void ToggleAllButtons()
+        {
+            foreach (var skillButton in skillButtons)
+                skillButton.SetInteractable(!skillButton.properties.interactable);
         }
     }
 }

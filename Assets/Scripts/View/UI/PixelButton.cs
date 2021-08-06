@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -25,6 +26,8 @@ namespace View.UI
         public bool toggleOption = false;
         public bool pressed = false;
 
+        public UnityAction OnPushButton;
+        public UnityAction OnPopButton;
         public virtual void OnPointerDown(PointerEventData eventData)
         {
             if (!properties.interactable) return;
@@ -36,6 +39,8 @@ namespace View.UI
             {
                 ShowPushEffect();
             }
+            if (pressed) OnPushButton?.Invoke();
+            else OnPopButton?.Invoke();
 
         }
 

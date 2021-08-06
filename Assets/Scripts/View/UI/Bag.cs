@@ -1,4 +1,5 @@
 ﻿using Model;
+using Model.Artifacts;
 using Model.Managers;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,6 +18,12 @@ namespace View.UI
 
         Sprite emptySprite;
 
+        public static Bag instance;
+
+        private void Awake()
+        {
+            instance = this;
+        }
         private void Start()
         {
             InitUI();
@@ -31,30 +38,78 @@ namespace View.UI
             {
                 GameObject newSlot = Instantiate(buttonPrefab, itemContainer);
                 PixelButton newButton = newSlot.GetComponent<PixelButton>();
+                newButton.toggleOption = true;
                 itemSlots.Add(newButton);
             }
         }
 
-        void UpdateUI()
+        void UpdateItemSlots()
         {
-            //아이템 슬롯 갱신. 새 아이템 들어왔을 경우 고려.
             for (int i = 0; i < 3; i++)
             {
-                itemSlots[i].properties.onClick.RemoveAllListeners();// 리스너 중복 적용 방지.
-
+                //아이템 슬롯 인덱스보다 보유 아이템 수가 클때
                 if (GameManager.Instance.itemBag.Count > i)
                 {
                     itemSlots[i].MainImage.sprite = GameManager.Instance.itemBag[i].Sprite;
-                }
+                    itemSlots[i].SetInteractable(true);
 
-                else itemSlots[i].MainImage.sprite = emptySprite;
-                int idx = i;
-                itemSlots[i].properties.onClick.AddListener(() =>
-                {
-                    itemSlots[idx].properties.onClick.RemoveAllListeners();// 가방 열고서 쓴다음 리스너 제거
-                    itemSlots[idx].MainImage.sprite = emptySprite;
-                });
+                    int idx = i;
+
+                    //버튼 눌렸을 시 이벤트 추가
+                    itemSlots[i].OnPushButton = () =>
+                    {
+                        UnitControlView.instance.ToggleAllButtons();
+                        ToggleAllSlots();
+                        itemSlots[idx].SetInteractable(true);
+                        //사용 가능 타일 보여주기
+                        IndicatorView.ShowTileIndicator(FieldManager.instance.allTilesPosition, (pos) =>
+                        {
+                            Tile tile = FieldManager.GetTile(pos);
+                            //타일 위에 유닛 있으면 해당 유닛에 아이템 사용
+                            if (tile.HasUnit())
+                            {
+                                GameManager.Instance.itemBag[idx].Use(tile.GetUnit());
+                            }
+                            ResetSlot(itemSlots[idx]);
+                            IndicatorView.HideTileIndicator();
+                        });
+                    };
+
+                    itemSlots[i].OnPopButton = () =>
+                    {
+                        UnitControlView.instance.ToggleAllButtons();
+                        ToggleAllSlots();
+                        itemSlots[idx].SetInteractable(true);
+                        IndicatorView.HideTileIndicator();
+                    };
+                }
+                else ResetSlot(itemSlots[i]);
+
             }
+        }
+
+        void ResetSlot(PixelButton button)
+        {
+            button.OnPushButton = null;
+            button.SetInteractable(false);
+            button.MainImage.sprite = emptySprite;
+        }
+        void DisableSlot(PixelButton button)
+        {
+            button.SetInteractable(false);
+        }
+        public void ToggleAllSlots()
+        {
+            foreach (var slot in itemSlots)
+                slot.SetInteractable(!slot.properties.interactable && slot.OnPushButton != null);
+
+            foreach (var slot in artifactSlots)
+                slot.SetInteractable(!slot.properties.interactable);
+        }
+        public void UpdateUI()
+        {
+            //아이템 슬롯 갱신. 새 아이템 들어왔을 경우 고려.
+            UpdateItemSlots();
 
             //유물 슬롯 갱신. 새 유물 들어왔을 경우 고려.
             //개수가 늘어났다는 것은 기존 유물들 포함해서 더 추가가 되었다는 의미.
@@ -65,20 +120,42 @@ namespace View.UI
                 Debug.Log("Updated");
                 for (int i = artifactSlots.Count; i < GameManager.Instance.artifactBag.Count; i++)
                 {
-                    GameObject newSlot = Instantiate(buttonPrefab, artifactContainer);
-                    PixelButton newButton = newSlot.GetComponent<PixelButton>();
-
-                    Artifact artifact = GameManager.Instance.artifactBag[i];
-                    newButton.MainImage.sprite = artifact.Sprite;
-
-
                     int idx = i;
-                    newButton.properties.onClick.AddListener(() =>
+                    GameObject newSlot = Instantiate(buttonPrefab, artifactContainer);
+                   
+                    Artifact artifact = GameManager.Instance.artifactBag[idx];
+                    
+                    PixelButton newButton = newSlot.GetComponent<PixelButton>();
+                    newButton.MainImage.sprite = artifact.Sprite;
+                    newButton.toggleOption = true;
+                    newButton.OnPushButton = () =>
                     {
-                        //artifactSlots.Remove(newButton);
-                        //GameManager.Instance.artifactBag.Remove(artifact);
-                        //Destroy(newButton.gameObject);
-                    });
+                        UnitControlView.instance.ToggleAllButtons();
+                        ToggleAllSlots();
+                        artifactSlots[idx].SetInteractable(true);
+                        Debug.Log("Pushed Artifact Button");
+                        IndicatorView.ShowTileIndicator(FieldManager.instance.allTilesPosition, (pos) =>
+                         {
+                             Debug.Log("Tile Clicked");
+                             Tile tile = FieldManager.GetTile(pos);
+                             if (tile.HasUnit())
+                             {
+                                 Common.Command.AddArtifact(tile.GetUnit(), artifact);
+                             }
+                             artifactSlots.Remove(newButton);
+                             GameManager.Instance.artifactBag.Remove(artifact);
+                             Destroy(newButton.gameObject);
+                             IndicatorView.HideTileIndicator();
+                         });
+                    };
+                    newButton.OnPopButton = () =>
+                    {
+                        UnitControlView.instance.ToggleAllButtons();
+                        ToggleAllSlots();
+                        artifactSlots[idx].SetInteractable(true);
+                        IndicatorView.HideTileIndicator();
+                    };
+
                     artifactSlots.Add(newButton);
                 }
             }

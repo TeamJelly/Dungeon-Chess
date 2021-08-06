@@ -5,7 +5,7 @@ using View;
 namespace Model.Effects
 {
 
-    public class Quick : Effect
+    public class Fast : Effect
     {
         private int barrierCount;
 
@@ -21,7 +21,7 @@ namespace Model.Effects
         /// <param name="owner">효과 소유자</param>
         /// <param name="barrierCount">배리어의 개수</param>
         /// <param name="turnCount">배리어의 지속 턴 수</param>
-        public Quick(Unit owner, int turnCount) : base(owner, turnCount)
+        public Fast(Unit owner, int turnCount) : base(owner, turnCount)
         {
             
             Name = "신속";

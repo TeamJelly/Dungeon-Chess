@@ -23,5 +23,9 @@ namespace Model
             Managers.GameManager.Instance.itemBag.Add(this);
         }
 
+        public virtual void Use(Unit unit)
+        {
+
+        }
     }
 }
