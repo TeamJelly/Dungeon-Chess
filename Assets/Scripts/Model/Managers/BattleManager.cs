@@ -70,6 +70,20 @@ namespace Model.Managers
                 GameManager.PartyUnits.Add(unit);
                 unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
                 GameManager.PartyUnits.Add(unit);
+                unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
+                GameManager.PartyUnits.Add(unit);
+                unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
+                GameManager.PartyUnits.Add(unit);
+                unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
+                GameManager.PartyUnits.Add(unit);
+                unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
+                GameManager.PartyUnits.Add(unit);
+                unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
+                GameManager.PartyUnits.Add(unit);
+                unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
+                GameManager.PartyUnits.Add(unit);
+                unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
+                GameManager.PartyUnits.Add(unit);
                 GameManager.LeaderUnit = GameManager.PartyUnits[0];
 
                 Common.Command.AddEffect(GameManager.LeaderUnit,new Model.Effects.Poison(GameManager.LeaderUnit,3));

@@ -20,42 +20,25 @@ namespace Model.Managers
         // 현재 전투의 모든 타일
         public Tile[,] field;
 
-        // 필드 데이터
+        // 필드 데이터 (주의! 마지막에 개행 안붙힘)
         [TextArea(0, 20)]
         public List<string> FieldDatas = new List<string>()
         {
-            "WWWWWWWWWWWWWWWW\n" +
-            "WWWWWWWWWWWWWWWW\n" +
-            "WWWWWWWWWWWWWWWW\n" +
-            "WWWFFFFFFFFFFWWW\n" +
-            "WWWFFFFFFFFFFWWW\n" +
-            "WWWFFFFFFFFFFWWW\n" +
-            "WWWFFFFFFFFFFWWW\n" +
-            "WWWFFFFFFFFFFWWW\n" +
-            "WWWFFFFFFFFFFWWW\n" +
-            "WWWFFFFFFFFFFWWW\n" +
-            "WWWFFFFFFFFFFWWW\n" +
-            "WWWFSFFFFFFFFWWW\n" +
-            "WWWFFFFFFFFFFWWW\n" +
-            "WWWWWWWWWWWWWWWW\n" +
-            "WWWWWWWWWWWWWWWW\n" +
-            "WWWWWWWWWWWWWWWW"
-            ,
-            "WWWWWWWWWWWWWWWW\n" +
-            "WWWWWWWWWWWWWWWW\n" +
-            "WWFFFFFTTFFFFFWW\n" +
-            "WWFFFFFTTFFFFFWW\n" +
-            "WWFFFFFTTFFFFFWW\n" +
-            "WWFFFFFTTFFFFFWW\n" +
-            "WWFFFFFTTFFFFFWW\n" +
-            "WWTTTTTTTTTTTTWW\n" +
-            "WWTTTTTTTTTTTTWW\n" +
-            "WWFFFFFTTFFFFFWW\n" +
-            "WWFFFFFTTFFFFFWW\n" +
-            "WWFFFFFTTFFFFFWW\n" +
-            "WWFFFFFTTFFFFFWW\n" +
-            "WWFFFFFTTFFFFFWW\n" +
-            "WWWWWWWWWWWWWWWW\n" +
+            "WWWWWWWWWWWWWWWW\n"+
+            "WFFFFFFFFFFFFFFW\n"+
+            "WFFFFFFFFFFFFFFW\n"+
+            "WFFFFFSSSFFFFDFW\n"+
+            "WFFFFFSSSFFFFFFW\n"+
+            "WFFFFFSSSFFFFFFW\n"+
+            "WFFFFFFFFFFFFFFW\n"+
+            "WFFFFFFFFFFFFFFW\n"+
+            "WFFFFFFFFFFFFFFW\n"+
+            "WFFFFFFFFFFFFFFW\n"+
+            "WFFFFFFFUFFFFFFW\n"+
+            "WFFFFFFFFFFFFFFW\n"+
+            "WFFFFFFFFFFFFFFW\n"+
+            "WFFFFFFFFFFFFFFW\n"+
+            "WFFFFFFFFFFFFFFW\n"+
             "WWWWWWWWWWWWWWWW"
         };
 
