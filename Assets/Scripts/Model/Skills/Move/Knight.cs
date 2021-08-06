@@ -39,28 +39,20 @@ namespace Model.Skills.Move
 
         public override List<Vector2Int> GetAvailablePositions(Unit user, Vector2Int userPosition)
         {
-            List<Vector2Int> positions = new List<Vector2Int>(){userPosition};
+            List<Vector2Int> positions = new List<Vector2Int>();
             Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
-            bool[] canGo = { true, true, true, true };
 
             for (int i = 1; i <= user.Mobility; i++)
-            {
-                for (int b = 0; b < directions.GetLength(0); b++)
-                {
-                    Vector2Int temp;
-                    temp = userPosition + directions[b] * (2 * i - 1);
-                    if (canGo[b] && FieldManager.IsInField(temp) && FieldManager.GetTile(temp).IsPositionable(user))
-                        positions.Add(temp);
-                    else
-                        canGo[b] = false;
+                foreach (var direction1 in directions)
+                    foreach (var direction2 in directions)
+                    {
+                        if (direction1 == direction2 || direction1 == -direction2)
+                            continue;
 
-                    temp = userPosition + directions[b] * 2 * i;
-                    if (canGo[b] && FieldManager.IsInField(temp) && FieldManager.GetTile(temp).IsPositionable(user))
-                        positions.Add(temp);
-                    else
-                        canGo[b] = false;
-                }               
-            }
+                        Vector2Int temp = userPosition + direction1 * (i+1) + direction2 * i;
+                        if (FieldManager.IsInField(temp) && FieldManager.GetTile(temp).IsPositionable(user))
+                            positions.Add(temp);
+                    }
 
             return positions;
         }
@@ -76,27 +68,26 @@ namespace Model.Skills.Move
 
             Debug.Log($"{user.Name}가 {Name}스킬을 {target}에 사용!");
 
-            if (target == user.Position)
-                yield break;
-
             Vector2Int startPosition = user.Position;
-            // 1 단계 : 위치 이동
-            List<Vector2Int> path = Common.PathFind.PathFindAlgorithm(user, user.Position, target);
+            // // 1 단계 : 위치 이동
+            // List<Vector2Int> path = Common.PathFind.PathFindAlgorithm(user, user.Position, target);
 
-            user.animationState = Unit.AnimationState.Move;
-            float moveTime = 0.5f / path.Count;
+            // user.animationState = Unit.AnimationState.Move;
+            // float moveTime = 0.5f / path.Count;
 
-            for (int i = 1; i < path.Count; i++)
-            {
-                View.VisualEffectView.MakeVisualEffect(user.Position, "Dust");
-                // 유닛 포지션의 변경은 여러번 일어난다.
-                user.Position = path[i];
-                yield return new WaitForSeconds(moveTime);
-            }
-            user.animationState = Unit.AnimationState.Idle;
+            // for (int i = 1; i < path.Count; i++)
+            // {
+            //     // 유닛 포지션의 변경은 여러번 일어난다.
+            //     user.Position = path[i];
+            //     yield return new WaitForSeconds(moveTime);
+            // }
+            // user.animationState = Unit.AnimationState.Idle;
 
             // 실제 타일에 상속되는건 한번이다.
+            View.VisualEffectView.MakeVisualEffect(user.Position, "Dust");
             Common.Command.Move(user,startPosition, target);
+
+            yield return null;
         }
     }
 }

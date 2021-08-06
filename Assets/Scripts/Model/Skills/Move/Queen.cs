@@ -49,45 +49,36 @@ namespace Model.Skills.Move
 
         public override List<Vector2Int> GetAvailablePositions(Unit user, Vector2Int userPosition)
         {
-            List<Vector2Int> positions = new List<Vector2Int>();        // 이동가능한 모든 위치를 저장
-            List<Vector2Int> new_frontier = new List<Vector2Int>();     // 새로 추가한 외곽 위치를 저장
-            List<Vector2Int> old_frontier = new List<Vector2Int>();     // 이전번에 추가한 외곽 위치를 저장
-            Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
+            List<Vector2Int> positions = new List<Vector2Int>();
+            Vector2Int[] directions = { 
+                Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right,
+                Vector2Int.up + Vector2Int.right, Vector2Int.up + Vector2Int.left, 
+                Vector2Int.down + Vector2Int.right, Vector2Int.down + Vector2Int.left
+            };
+            
+            bool[] canGo = new bool[directions.Length];
+            for (int i = 0; i < canGo.Length; i++)
+                canGo[i] = true;
 
-            old_frontier.Add(userPosition);
-
-            for (int i = 0; i < user.Mobility; i++)
+            for (int i = 1; i <= user.Mobility; i++)
             {
-                foreach (var position in old_frontier)
+                for (int b = 0; b < directions.GetLength(0); b++)
                 {
-                    // 4방위를 탐색
-                    foreach (var direction in directions)
-                    {
-                        Vector2Int temp = position + direction;
+                    Vector2Int temp;
+                    temp = userPosition + directions[b] * (2 * i - 1);
+                    if (canGo[b] && FieldManager.IsInField(temp) && FieldManager.GetTile(temp).IsPositionable(user))
+                        positions.Add(temp);
+                    else
+                        canGo[b] = false;
 
-                        if (
-                            // 전에 추가한 위치가 아니고
-                            !positions.Contains(temp) &&
-                            // 맵 범위 안이고
-                            FieldManager.IsInField(temp) &&
-                            // 타일에 이 유닛이 위치할수 있으면
-                            FieldManager.GetTile(temp).IsPositionable(user)
-                            )
-                        {
-                            // 이동가능한 위치로 추가한다.
-                            new_frontier.Add(temp);                
-                            positions.Add(temp);
-                        }
-                    }
-                }
-
-                // old와 new를 스왑한다.
-                old_frontier.Clear();
-                old_frontier.AddRange(new_frontier);
-
-                // new는 초기화 시킨다.
-                new_frontier.Clear();
+                    temp = userPosition + directions[b] * 2 * i;
+                    if (canGo[b] && FieldManager.IsInField(temp) && FieldManager.GetTile(temp).IsPositionable(user))
+                        positions.Add(temp);
+                    else
+                        canGo[b] = false;
+                }               
             }
+            
 
             return positions;
         }

@@ -67,10 +67,8 @@ namespace Model.Managers
             if (GameManager.PartyUnits.Count == 0)
             {
                 unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
-                unit.Skills[SkillCategory.Move] = new Skills.Move.Rook();
                 GameManager.PartyUnits.Add(unit);
-                unit = new Unit(UnitAlliance.Party, UnitSpecies.Human);
-                unit.Skills[SkillCategory.Move] = new Skills.Move.Bishop();
+                unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
                 GameManager.PartyUnits.Add(unit);
                 GameManager.LeaderUnit = GameManager.PartyUnits[0];
 

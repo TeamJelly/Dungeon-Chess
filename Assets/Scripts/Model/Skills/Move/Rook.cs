@@ -48,9 +48,12 @@ namespace Model.Skills.Move
 
         public override List<Vector2Int> GetAvailablePositions(Unit user, Vector2Int userPosition)
         {
-            List<Vector2Int> positions = new List<Vector2Int>(){userPosition};
+            List<Vector2Int> positions = new List<Vector2Int>();
             Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
-            bool[] canGo = { true, true, true, true };
+
+            bool[] canGo = new bool[directions.Length];
+            for (int i = 0; i < canGo.Length; i++)
+                canGo[i] = true;
 
             for (int i = 1; i <= user.Mobility; i++)
             {

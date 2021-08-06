@@ -54,17 +54,23 @@ namespace Common
             {
                 List<Node> neighbor = new List<Node>();
 
-                Vector2Int[] vector2Ints = {
-                    node.unitPosition + Vector2Int.up,
-                    node.unitPosition + Vector2Int.down,
-                    node.unitPosition + Vector2Int.right,
-                    node.unitPosition + Vector2Int.left,
+                Vector2Int[] UDLR = {Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right};
+                Vector2Int[] diagonals = {
+                    Vector2Int.up + Vector2Int.left, Vector2Int.up + Vector2Int.right,
+                    Vector2Int.down + Vector2Int.left, Vector2Int.down + Vector2Int.right
                 };
 
-                foreach (var item in vector2Ints)
-                    if (FieldManager.GetTile(item) != null && 
-                        FieldManager.GetTile(item).IsPositionable(agent))
-                        neighbor.Add(new Node(item, node));
+                List<Vector2Int> positions = new List<Vector2Int>();
+
+                foreach (Vector2Int vector in UDLR)
+                    positions.Add(node.unitPosition + vector);
+
+                foreach (Vector2Int vector in diagonals)
+                    positions.Add(node.unitPosition + vector);
+
+                foreach (Vector2Int position in positions)
+                    if (FieldManager.IsInField(position) && FieldManager.GetTile(position).IsPositionable(agent))
+                        neighbor.Add(new Node(position, node));
 
                 return neighbor;
             }

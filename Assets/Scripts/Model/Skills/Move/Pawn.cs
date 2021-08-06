@@ -62,14 +62,9 @@ namespace Model.Skills.Move
                     {
                         Vector2Int temp = position + direction;
 
-                        if (
-                            // 전에 추가한 위치가 아니고
-                            !positions.Contains(temp) &&
-                            // 맵 범위 안이고
+                        if (!positions.Contains(temp) &&
                             FieldManager.IsInField(temp) &&
-                            // 타일에 이 유닛이 위치할수 있으면
-                            FieldManager.GetTile(temp).IsPositionable(user)
-                            )
+                            FieldManager.GetTile(temp).IsPositionable(user))
                         {
                             // 이동가능한 위치로 추가한다.
                             new_frontier.Add(temp);                
@@ -85,6 +80,8 @@ namespace Model.Skills.Move
                 // new는 초기화 시킨다.
                 new_frontier.Clear();
             }
+
+            positions.Remove(userPosition);
 
             return positions;
         }

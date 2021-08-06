@@ -49,7 +49,10 @@ namespace Model.Skills.Move
             List<Vector2Int> positions = new List<Vector2Int>();        // 이동가능한 모든 위치를 저장
             List<Vector2Int> new_frontier = new List<Vector2Int>();     // 새로 추가한 외곽 위치를 저장
             List<Vector2Int> old_frontier = new List<Vector2Int>();     // 이전번에 추가한 외곽 위치를 저장
-            Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
+            Vector2Int[] directions = { 
+                Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right, Vector2Int.up + Vector2Int.right,
+                Vector2Int.up + Vector2Int.left, Vector2Int.down + Vector2Int.right, Vector2Int.down + Vector2Int.left
+            };
 
             old_frontier.Add(userPosition);
 
