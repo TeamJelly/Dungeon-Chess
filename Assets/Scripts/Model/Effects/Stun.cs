@@ -4,9 +4,9 @@ using View;
 
 namespace Model.Effects
 {
-    public class E004_Stun : Effect
+    public class Stun : Effect
     {
-        public E004_Stun(Unit owner) : base(owner)
+        public Stun(Unit owner) : base(owner)
         {
             Number = 4;
             Name = "기절";
@@ -23,14 +23,14 @@ namespace Model.Effects
             Owner.IsMoved = true;
             Owner.IsSkilled = true;
 
-            Owner.OnTurnEnd.after.AddListener(OnTurnEnd);
             Owner.OnTurnStart.before.AddListener(OnTurnStart);
+            Owner.OnTurnEnd.after.AddListener(OnTurnEnd);
         }
 
         public override void OnRemoveThisEffect()
         {
-            Owner.OnTurnEnd.after.RemoveListener(OnTurnEnd);
             Owner.OnTurnStart.before.RemoveListener(OnTurnStart);
+            Owner.OnTurnEnd.after.RemoveListener(OnTurnEnd);
         }
 
         public override bool OnTurnStart(bool value)

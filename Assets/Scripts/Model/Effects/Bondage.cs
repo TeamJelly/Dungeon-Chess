@@ -1,0 +1,70 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEditor;
+using UnityEngine;
+using View;
+
+namespace Model.Effects
+{
+    public class Bondage : Effect
+    {
+        public Bondage(Unit owner) : base(owner)
+        {
+            Number = 4;
+            Name = "속박";
+            Description = "유닛이 한 턴동안 움직이지 못합니다.";
+        }
+
+        // 이미 기절 효과가 발동 됨을 기록한다.
+        bool isActivated = false;
+
+        public override void OnAddThisEffect()
+        {
+            base.OnAddThisEffect();
+
+            Owner.IsMoved = true;
+
+            Owner.OnTurnStart.before.AddListener(OnTurnStart);
+            Owner.OnTurnEnd.after.AddListener(OnTurnEnd);
+        }
+
+        public override void OnRemoveThisEffect()
+        {
+            Owner.OnTurnStart.before.RemoveListener(OnTurnStart);
+            Owner.OnTurnEnd.after.RemoveListener(OnTurnEnd);
+        }
+
+        public override bool OnTurnStart(bool value)
+        {
+            FadeOutTextView.MakeText(Owner.Position + Vector2Int.up, $"속박!", Color.red);
+
+            Owner.IsMoved = true;
+            isActivated = true;
+
+            return value;
+        }
+
+        public override bool OnTurnEnd(bool value)
+        {
+            if (isActivated)
+                Common.Command.RemoveEffect(Owner, this);
+
+            return value;
+        }
+    }
+}
+public class Restraint : MonoBehaviour
+{
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}

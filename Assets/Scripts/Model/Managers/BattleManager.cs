@@ -69,6 +69,8 @@ namespace Model.Managers
                 GameManager.PartyUnits.Add(new Unit(UnitAlliance.Party, UnitSpecies.Human));
                 GameManager.PartyUnits.Add(new Unit(UnitAlliance.Party, UnitSpecies.Human));
                 GameManager.LeaderUnit = GameManager.PartyUnits[0];
+
+                Common.Command.AddEffect(GameManager.LeaderUnit,new Model.Effects.Poison(GameManager.LeaderUnit,3));
             }
 
             GameManager.InBattle = true;

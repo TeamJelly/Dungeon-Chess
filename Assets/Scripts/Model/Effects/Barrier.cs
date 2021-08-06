@@ -5,7 +5,7 @@ using View;
 namespace Model.Effects
 {
 
-    public class E021_Barrier : Effect
+    public class Barrier : Effect
     {
         private int barrierCount;
 
@@ -21,7 +21,7 @@ namespace Model.Effects
         /// <param name="owner">효과 소유자</param>
         /// <param name="barrierCount">배리어의 개수</param>
         /// <param name="turnCount">배리어의 지속 턴 수</param>
-        public E021_Barrier(Unit owner, int barrierCount) : base(owner)
+        public Barrier(Unit owner, int barrierCount) : base(owner)
         {
             Number = 21;
             Name = "배리어";
