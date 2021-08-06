@@ -954,7 +954,7 @@ PrefabInstance:
     - target: {fileID: 1543491313210720493, guid: 0a70838d67dcbd544bab9851f326f606,
         type: 3}
       propertyPath: m_Name
-      value: AttackSkillButton1
+      value: SkillButton2
       objectReference: {fileID: 0}
     - target: {fileID: 3165754390160651498, guid: 0a70838d67dcbd544bab9851f326f606,
         type: 3}
@@ -8049,7 +8049,7 @@ PrefabInstance:
     - target: {fileID: 1543491313210720493, guid: 0a70838d67dcbd544bab9851f326f606,
         type: 3}
       propertyPath: m_Name
-      value: AttackSkillButton3
+      value: SkillButton4
       objectReference: {fileID: 0}
     - target: {fileID: 3165754390160651498, guid: 0a70838d67dcbd544bab9851f326f606,
         type: 3}
@@ -36069,7 +36069,7 @@ PrefabInstance:
     - target: {fileID: 1543491313210720493, guid: 0a70838d67dcbd544bab9851f326f606,
         type: 3}
       propertyPath: m_Name
-      value: AttackSkillButton2
+      value: SkillButton3
       objectReference: {fileID: 0}
     - target: {fileID: 3165754390160651498, guid: 0a70838d67dcbd544bab9851f326f606,
         type: 3}
@@ -61053,7 +61053,7 @@ PrefabInstance:
     - target: {fileID: 1543491313210720493, guid: 0a70838d67dcbd544bab9851f326f606,
         type: 3}
       propertyPath: m_Name
-      value: MoveSkillButton
+      value: SkillButton1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a70838d67dcbd544bab9851f326f606, type: 3}
