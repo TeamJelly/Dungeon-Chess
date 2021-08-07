@@ -14,9 +14,9 @@ namespace Model
         
         public static Dictionary<ArtifactGrade, Color> GradeToColor = new Dictionary<ArtifactGrade, Color>()
         {
-            {ArtifactGrade.Common , Color.gray},
-            {ArtifactGrade.Rare , Color.cyan},
-            {ArtifactGrade.Legend , Color.green}
+            {ArtifactGrade.Common , new Color(0.5f,0.5f,0.5f,0.8f)},
+            {ArtifactGrade.Rare , new Color(8/255f,209/255f,176/255f,0.8f)},
+            {ArtifactGrade.Legend , new Color(255/255f,0/255f,132/255f,0.8f)}
         };
 
         public void ToBag()
