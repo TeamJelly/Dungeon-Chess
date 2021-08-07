@@ -5,17 +5,19 @@ using UnityEngine.Tilemaps;
 
 namespace Model
 {
-   // [System.Serializable]
-    public class Artifact : Effect, Obtainable 
+    public class Artifact : Effect, Obtainable
     {
+        public enum ArtifactGrade { Common, Rare, Legend }
         public Vector2Int Position { get; set; }
-
-        public int price { get; set; }
-
-        public Sprite GetImage()
+        public ArtifactGrade Grade { get; set; }
+        public int Price { get; set; }
+        
+        public static Dictionary<ArtifactGrade, Color> GradeToColor = new Dictionary<ArtifactGrade, Color>()
         {
-            return Sprite;
-        }
+            {ArtifactGrade.Common , Color.gray},
+            {ArtifactGrade.Rare , Color.cyan},
+            {ArtifactGrade.Legend , Color.green}
+        };
 
         public void ToBag()
         {

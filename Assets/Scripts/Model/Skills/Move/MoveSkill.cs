@@ -29,7 +29,7 @@ namespace Model.Skills.Move
             if (GetAvailablePositions(user).Contains(target))
                 return Common.PathFind.PathFindAlgorithm(user, user.Position, target);
             else
-                return null;
+                return new List<Vector2Int>();
         }
 
         public override IEnumerator Use(Unit user, Vector2Int target)

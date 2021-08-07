@@ -113,13 +113,13 @@ namespace View
         public delegate List<Vector2Int> TileRelatedPositionsFunc (Vector2Int targetPosition);
         private static TileRelatedPositionsFunc TileRelativeFunc = null;
 
-        public static void ChangeTileIndicatorColor(List<Vector2Int> positions, Color color)
+        private static void ChangeTileIndicatorColor(List<Vector2Int> positions, Color color)
         {
             foreach (var position in positions)
                 ChangeTileIndicatorColor(position, color);
         }
 
-        public static void ChangeTileIndicatorColor(Vector2Int position, Color color)
+        private static void ChangeTileIndicatorColor(Vector2Int position, Color color)
         {
             if (FieldManager.IsInField(position))
                 TileIndicators[position.x, position.y].GetComponent<SpriteRenderer>().color = color;
@@ -137,15 +137,16 @@ namespace View
             UpdateSkillIndicator();
         }
 
-        public static void UpdateSkillIndicator(Vector2Int? position = null)
+        private static void UpdateSkillIndicator(Vector2Int? position = null)
         {
-            List<Vector2Int> RelatedPosition = position != null ? RelatedPosition = currentSkill.GetRelatePositions(currentUnit, (Vector2Int)position) : new List<Vector2Int>();
+            List<Vector2Int> RelatedPosition = position != null ? currentSkill.GetRelatePositions(currentUnit, (Vector2Int)position) : new List<Vector2Int>();
             curPosition = position;
 
             for (int i = 0; i < TileIndicators.GetLength(0); i++)
                 for (int j = 0; j < TileIndicators.GetLength(1); j++)
                 {
                     Vector2Int tempPosition = new Vector2Int(i, j);
+
                     if (RelatedPosition.Contains(tempPosition))
                         ChangeTileIndicatorColor(tempPosition, instance.subPossibleColor);
                     else if (curAvlPositions.Contains(tempPosition))
@@ -163,11 +164,14 @@ namespace View
             }
         }
 
+        private static List<Vector2Int> defaultFunc(Vector2Int position) => new List<Vector2Int>();
+
         /// <summary>
         /// 파티 소환, 에 사용
         /// </summary>
         /// <param name="positions">사용가능한 위치</param>
         /// <param name="action">두번째 클릭시 발동되는 함수</param>
+        /// <param name="tileRelativeFunc">관련 타일 계산 함수 </param>
         public static void ShowTileIndicator(List<Vector2Int> positions, Action<Vector2Int> action, TileRelatedPositionsFunc tileRelativeFunc = null)
         {
             currentUnit = null;
@@ -175,14 +179,14 @@ namespace View
             curPosition = null;
             curAvlPositions = positions;
             tileAction = action;
-            TileRelativeFunc = tileRelativeFunc == null ? (Vector2Int position) => new List<Vector2Int>() : tileRelativeFunc;
+            TileRelativeFunc = tileRelativeFunc == null ? defaultFunc : tileRelativeFunc;
             TileIndicatorParent.SetActive(true);
             UpdateTileIndicator();
         }
 
         private static void UpdateTileIndicator(Vector2Int? position = null)
         {
-            List<Vector2Int> RelatedPosition = position != null ? RelatedPosition = TileRelativeFunc((Vector2Int)position) : new List<Vector2Int>();
+            List<Vector2Int> RelatedPosition = position != null ? TileRelativeFunc((Vector2Int)position) : new List<Vector2Int>();
             curPosition = position;
 
             for (int i = 0; i < TileIndicators.GetLength(0); i++)

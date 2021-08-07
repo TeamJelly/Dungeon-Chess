@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface Buyable
 {
-    int price{ get; set; }
+    int Price{ get; set; }
 }

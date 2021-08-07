@@ -190,58 +190,10 @@ namespace View
             SpriteRenderer spriteRenderer = imgObj.AddComponent<SpriteRenderer>();
             spriteRenderer.sprite = unit.Sprite;
 
-            Texture2D old = unit.Sprite.texture;
-            Rect rect = unit.Sprite.rect;
-            Texture2D texture = new Texture2D(18,18);
-            texture.filterMode = FilterMode.Point;
-            spriteRenderer.material.mainTexture = texture;
-
-            for (int y = 0; y < 18; y++)
-                for (int x = 0; x < 18; x++)
-                    texture.SetPixel(x,y, new Color(0,0,0,0));
-
-            for (int y = 0; y < 16; y++) {
-                for (int x = 0; x < 16; x++) {
-                    Color color = old.GetPixel((int)rect.x + x , (int)rect.y + y);
-                    if (color.a == 0)
-                        continue;
-
-                    color = Color.red;
-                    texture.SetPixel(x+2, y+1, color);
-                    texture.SetPixel(x, y+1, color);
-                    texture.SetPixel(x+1, y+2, color);
-                    texture.SetPixel(x+1, y, color);
-                }
-            }
-
-            for (int y = 0; y < 16; y++) {
-                for (int x = 0; x < 16; x++) {
-                    Color color = old.GetPixel((int)rect.x + x , (int)rect.y + y);
-                    if (color.a == 0)
-                        continue;
-                    texture.SetPixel(x+1, y+1, color);
-                }
-            }
-
-            texture.Apply();
-            
-            rect = new Rect(0, 0, texture.width, texture.height);
-            spriteRenderer.sprite = Sprite.Create(texture, rect, new Vector2(0.5f, 0.5f), 16); 
-
-
             // 애니메이터 추가
             Animator animator = imgObj.AddComponent<Animator>();
             animator.runtimeAnimatorController = instance.animatorController;
 
-            // 이벤트 트리거 설정
-            EventTrigger.Entry entry_PointerClick = new EventTrigger.Entry();
-            entry_PointerClick.eventID = EventTriggerType.PointerClick;
-            entry_PointerClick.callback.AddListener((data) =>
-            {
-//                OtherUnitInfo.gameObject.SetActive(true);
-//                OtherUnitInfo.SetUnitInfo(unit, false);
-            });
-            eventTrigger.triggers.Add(entry_PointerClick);
             UnitObjects.Add(unit, newObj);
 
             // HP 바 생성
@@ -281,7 +233,6 @@ namespace View
 
         public static void MakeObtainableObject(Obtainable ob, Vector2Int pos)
         {
-
             // 게임 오브젝트 생성
             GameObject obObj = new GameObject(ob.Name);
             // 위치 지정
@@ -289,17 +240,28 @@ namespace View
 
             // 스프라이터 랜더러 추가
             SpriteRenderer spriteRenderer = obObj.AddComponent<SpriteRenderer>();
-            spriteRenderer.sprite = ob.Sprite;
-            spriteRenderer.color = ob.Color;
+            
+            if (ob.GetType().BaseType == typeof(Artifact))
+            {
+                Artifact artifact = (Artifact) ob;
+                spriteRenderer.sprite = MakeOutline(ob.Sprite, ob.Color, Artifact.GradeToColor[artifact.Grade]);
+            }
+            else 
+            {
+                spriteRenderer.sprite = ob.Sprite;
+                spriteRenderer.color = ob.Color;
+            }
 
             ObtainableObjects.Add(ob, obObj);
         }
+
         public static void DestroyObtainableObject(Obtainable ob)
         {
             GameObject obObj = ObtainableObjects[ob];
             ObtainableObjects.Remove(ob);
             Destroy(obObj);
         }
+
         public static void DestroyUnitObject(Unit unit)
         {
             GameObject unitObj = UnitObjects[unit];
@@ -314,6 +276,47 @@ namespace View
             unit.OnCurHP.after.RemoveAllListeners();
 
             // AgilityViewer.instance.DestroyObject(unit);
+        }
+
+        public static Sprite MakeOutline(Sprite value, Color inline, Color outline)
+        {
+            Texture2D old = value.texture;
+            Rect rect = value.rect;
+            Texture2D texture = new Texture2D(18,18);
+            texture.filterMode = FilterMode.Point;
+
+            for (int y = 0; y < 18; y++)
+                for (int x = 0; x < 18; x++)
+                    texture.SetPixel(x,y, new Color(0,0,0,0));
+
+            for (int y = 0; y < 16; y++)
+                for (int x = 0; x < 16; x++)
+                {
+                    Color color = old.GetPixel((int)rect.x + x , (int)rect.y + y);
+
+                    if (color.a == 0)
+                        continue;
+
+                    color = outline;
+                    texture.SetPixel(x+2, y+1, color);
+                    texture.SetPixel(x, y+1, color);
+                    texture.SetPixel(x+1, y+2, color);
+                    texture.SetPixel(x+1, y, color);
+                }
+
+            for (int y = 0; y < 16; y++)
+                for (int x = 0; x < 16; x++)
+                {
+                    Color color = old.GetPixel((int)rect.x + x , (int)rect.y + y);
+                    if (color.a == 0)
+                        continue;
+                    texture.SetPixel(x+1, y+1, inline);
+                }
+
+            texture.Apply();
+            rect = new Rect(0, 0, texture.width, texture.height);
+
+            return Sprite.Create(texture, rect, new Vector2(0.5f, 0.5f), 16);
         }
     }
 }

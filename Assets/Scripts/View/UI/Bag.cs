@@ -62,17 +62,21 @@ namespace View.UI
                         ToggleAllSlots();
                         itemSlots[idx].SetInteractable(true);
                         //사용 가능 타일 보여주기
-                        IndicatorView.ShowTileIndicator(FieldManager.instance.allTilesPosition, (pos) =>
-                        {
-                            Tile tile = FieldManager.GetTile(pos);
-                            //타일 위에 유닛 있으면 해당 유닛에 아이템 사용
-                            if (tile.HasUnit())
+                        IndicatorView.ShowTileIndicator(
+                            FieldManager.instance.allTilesPosition,
+                            (pos) =>
                             {
-                                GameManager.Instance.itemBag[idx].Use(tile.GetUnit());
-                            }
-                            ResetSlot(itemSlots[idx]);
-                            IndicatorView.HideTileIndicator();
-                        });
+                                Tile tile = FieldManager.GetTile(pos);
+                                //타일 위에 유닛 있으면 해당 유닛에 아이템 사용
+                                if (tile.HasUnit())
+                                {
+                                    GameManager.Instance.itemBag[idx].Use(tile.GetUnit());
+                                }
+                                ResetSlot(itemSlots[idx]);
+                                IndicatorView.HideTileIndicator();
+                            },
+                            GameManager.Instance.itemBag[idx].GetRelatePositions
+                        );
                     };
 
                     itemSlots[i].OnPopButton = () =>
@@ -84,7 +88,6 @@ namespace View.UI
                     };
                 }
                 else ResetSlot(itemSlots[i]);
-
             }
         }
 
@@ -134,19 +137,22 @@ namespace View.UI
                         ToggleAllSlots();
                         artifactSlots[idx].SetInteractable(true);
                         Debug.Log("Pushed Artifact Button");
-                        IndicatorView.ShowTileIndicator(FieldManager.instance.allTilesPosition, (pos) =>
-                         {
-                             Debug.Log("Tile Clicked");
-                             Tile tile = FieldManager.GetTile(pos);
-                             if (tile.HasUnit())
-                             {
-                                 Common.Command.AddArtifact(tile.GetUnit(), artifact);
-                             }
-                             artifactSlots.Remove(newButton);
-                             GameManager.Instance.artifactBag.Remove(artifact);
-                             Destroy(newButton.gameObject);
-                             IndicatorView.HideTileIndicator();
-                         });
+                        IndicatorView.ShowTileIndicator(
+                            FieldManager.instance.allTilesPosition, 
+                            (pos) =>
+                            {
+                                Debug.Log("Tile Clicked");
+                                Tile tile = FieldManager.GetTile(pos);
+                                if (tile.HasUnit())
+                                {
+                                    Common.Command.AddArtifact(tile.GetUnit(), artifact);
+                                }
+                                artifactSlots.Remove(newButton);
+                                GameManager.Instance.artifactBag.Remove(artifact);
+                                Destroy(newButton.gameObject);
+                                IndicatorView.HideTileIndicator();
+                            }
+                        );
                     };
                     newButton.OnPopButton = () =>
                     {

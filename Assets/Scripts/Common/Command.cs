@@ -25,8 +25,8 @@ namespace Common
             foreach(Tile tile in tiles)
             {
                 Summon(unit.Artifacts[count], tile.position);
-                Vector3 startPos = new Vector3(unit.Position.x, unit.Position.y, -0.1f);
-                Vector3 target = new Vector3(tile.position.x, tile.position.y, -0.1f);
+                Vector3 startPos = new Vector3(unit.Position.x, unit.Position.y, 0.1f);
+                Vector3 target = new Vector3(tile.position.x, tile.position.y, 0.1f);
                 VisualEffectView.MakeDropEffect(startPos,target,unit.Artifacts[count]);
                 count++;
             }
@@ -103,7 +103,7 @@ namespace Common
         public static void AddArtifact(Unit target, Artifact artifact)
         {
             artifact.Owner = target;
-            artifact.OnAddThisEffect();
+            artifact.OnAdd();
             target.Artifacts.Add(artifact);
             FadeOutTextView.MakeText(target.Position + Vector2Int.up, $"+{artifact.Name}", Color.yellow);
         }
@@ -112,7 +112,7 @@ namespace Common
         {
             if (target.Artifacts.Contains(artifact))
             {
-                artifact.OnRemoveThisEffect();
+                artifact.OnRemove();
                 target.Artifacts.Remove(artifact);
                 FadeOutTextView.MakeText(target.Position + Vector2Int.up, $"-{artifact.Name}", Color.yellow);
             }
@@ -120,20 +120,20 @@ namespace Common
                 Debug.LogError($"{target.Name}이 {artifact.Name}를 소유하고 있지 않습니다.");
         }
 
-        public static Effect GetEffectByNumber(Unit unit, int value)
-        {
-            Effect effect = null;
+        // public static Effect GetEffectByNumber(Unit unit, int value)
+        // {
+        //     Effect effect = null;
 
-            foreach (var stateEffect in unit.StateEffects)
-                if (stateEffect.Number == value)
-                    effect = stateEffect;
+        //     foreach (var stateEffect in unit.StateEffects)
+        //         if (stateEffect.Number == value)
+        //             effect = stateEffect;
 
-            return effect;
-        }
+        //     return effect;
+        // }
 
         public static void AddEffect(Unit target, Effect effect)
         {
-            effect.OnAddThisEffect();
+            effect.OnAdd();
             target.StateEffects.Add(effect);
             FadeOutTextView.MakeText(target.Position + Vector2Int.up, $"+{effect.Name}", Color.yellow);
         }
@@ -142,7 +142,7 @@ namespace Common
         {
             if (target.StateEffects.Contains(effect))
             {
-                effect.OnRemoveThisEffect();
+                effect.OnRemove();
                 target.StateEffects.Remove(effect);
                 FadeOutTextView.MakeText(target.Position + Vector2Int.up, $"-{effect.Name}", Color.yellow);
             }

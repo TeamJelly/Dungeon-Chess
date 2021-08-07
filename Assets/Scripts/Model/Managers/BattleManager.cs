@@ -59,10 +59,10 @@ namespace Model.Managers
             Common.Command.Summon(unit, new Vector2Int(4, 4));
             Common.Command.Summon(new Items.Heal(), new Vector2Int(3,3));
 
-            Common.Command.AddArtifact(unit, new Model.Artifacts.A999_test());
-            Common.Command.AddArtifact(unit, new Model.Artifacts.A999_test());
-            Common.Command.AddArtifact(unit, new Model.Artifacts.A999_test());
-            Common.Command.AddArtifact(unit, new Model.Artifacts.A999_test());
+            Common.Command.AddArtifact(unit, new Model.Artifacts.test());
+            Common.Command.AddArtifact(unit, new Model.Artifacts.test());
+            Common.Command.AddArtifact(unit, new Model.Artifacts.test());
+            Common.Command.AddArtifact(unit, new Model.Artifacts.test());
 
             if (GameManager.PartyUnits.Count == 0)
             {
@@ -87,6 +87,7 @@ namespace Model.Managers
                 GameManager.LeaderUnit = GameManager.PartyUnits[0];
 
                 Common.Command.AddEffect(GameManager.LeaderUnit,new Model.Effects.Poison(GameManager.LeaderUnit,3));
+                Common.Command.AddEffect(GameManager.LeaderUnit,new Model.Effects.Poison(GameManager.LeaderUnit,3));
             }
 
             GameManager.InBattle = true;
@@ -104,7 +105,7 @@ namespace Model.Managers
 
             // Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(6, 6));
             // Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(10, 5));
-             Common.Command.Summon(new Model.Artifacts.A006_AutoHeal(), new Vector2Int(6, 8));
+            Common.Command.Summon(new Model.Artifacts.AutoHeal(), new Vector2Int(6, 8));
             // Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(9, 9));
             // Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(6, 4));
         }
@@ -128,8 +129,7 @@ namespace Model.Managers
             int count = 0;
 
             foreach (var unit in GetUnit(alliance))
-                if (Common.Command.GetEffectByNumber(unit, 1) == null && (Common.Command.GetEffectByNumber(unit, 2) == null))
-                    count++;
+                count++;
 
             return count;
         }

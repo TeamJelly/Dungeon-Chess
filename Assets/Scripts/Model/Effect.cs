@@ -16,7 +16,7 @@ namespace Model
             set => turnCount = value;
         }
 
-        public Sprite Sprite { get; set; }
+        public virtual Sprite Sprite { get; set; }
 
         private Color color = Color.white;
         public Color Color {get => color; set => color = value;}
@@ -36,12 +36,18 @@ namespace Model
             TurnCount = turnCount;
         }
 
-        public virtual void OnAddThisEffect()
+        public virtual void OnAdd()
         {
-            Effect oldEffect = Common.Command.GetEffectByNumber(Owner, Number);
+            Effect oldEffect = null;
+            foreach (var effect in Owner.StateEffects)
+                if (effect.GetType() == this.GetType())
+                {
+                    oldEffect = effect;
+                    break;
+                }
 
             if (oldEffect != null)
-                OnOverlapEffect(oldEffect);
+                OnOverlap(oldEffect);
 
             Debug.Log($"{Owner.Name}에게 {Name} 효과 추가됨");
         }
@@ -49,22 +55,13 @@ namespace Model
         /// <summary>
         /// 효과의 중복 검사와 중복 처리를 해준다.
         /// </summary>
-        public virtual void OnOverlapEffect(Effect oldEffect)
+        public virtual void OnOverlap(Effect oldEffect)
         {
             Owner.StateEffects.Remove(oldEffect);
+            Debug.Log($"{Owner.Name}에게 {Name} 효과 중복됨");
         }
 
-        public virtual void OnRemoveThisEffect()
-        {
-
-        }
-
-        public virtual void OnBattleStart()
-        {
-
-        }
-
-        public virtual void OnBattleEnd()
+        public virtual void OnRemove()
         {
 
         }
@@ -79,54 +76,14 @@ namespace Model
             return value;
         }
 
-        public virtual void BeforeMove()
-        {
-
-        }
-
-        public virtual void AfterMove()
-        {
-
-        }
-
-        public virtual void BeforeUseSkill(Skill skill)
-        {
-
-        }
-
-        public virtual void AfterUseSkill()
-        {
-
-        }
-
-        public virtual int BeforeGetDamage(int value)
+        public virtual int BeforeGetDam(int value)
         {
             return value;
         }
 
-        public virtual int AfterGetDamamge(int value)
+        public virtual int AfterGetDam(int value)
         {
             return value;
-        }
-
-        public virtual void OnGetOtherEffect()
-        {
-
-        }
-
-        public virtual void BeforeUseItem()
-        {
-
-        }
-
-        public virtual void AfterUseItem()
-        {
-
-        }
-
-        public virtual void BeforeUnitDie()
-        {
-
         }
     }
 }

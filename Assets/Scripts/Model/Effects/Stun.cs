@@ -16,9 +16,9 @@ namespace Model.Effects
         // 이미 기절 효과가 발동 됨을 기록한다.
         bool isActivated = false;
 
-        public override void OnAddThisEffect()
+        public override void OnAdd()
         {
-            base.OnAddThisEffect();
+            base.OnAdd();
 
             Owner.IsMoved = true;
             Owner.IsSkilled = true;
@@ -27,7 +27,7 @@ namespace Model.Effects
             Owner.OnTurnEnd.after.AddListener(OnTurnEnd);
         }
 
-        public override void OnRemoveThisEffect()
+        public override void OnRemove()
         {
             Owner.OnTurnStart.before.RemoveListener(OnTurnStart);
             Owner.OnTurnEnd.after.RemoveListener(OnTurnEnd);

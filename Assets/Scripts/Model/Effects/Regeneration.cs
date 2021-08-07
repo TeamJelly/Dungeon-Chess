@@ -16,16 +16,16 @@ namespace Model.Effects
             Description = $"턴을 시작할때 체력 10을 회복합니다. 남은 턴 : {turnCount}";
         }
 
-        public override void OnAddThisEffect()
+        public override void OnAdd()
         {
-            base.OnAddThisEffect();
+            base.OnAdd();
             Owner.OnTurnStart.before.AddListener(OnTurnStart);
             Owner.OnTurnEnd.after.AddListener(OnTurnEnd);
             Debug.Log($"{Owner.Name}에게 {Name}효과 {TurnCount}턴 동안 추가됨");
         }
-        public override void OnRemoveThisEffect()
+        public override void OnRemove()
         {
-            base.OnRemoveThisEffect();
+            base.OnRemove();
             Owner.OnTurnStart.before.RemoveListener(OnTurnStart);
             Owner.OnTurnEnd.after.RemoveListener(OnTurnEnd);
         }

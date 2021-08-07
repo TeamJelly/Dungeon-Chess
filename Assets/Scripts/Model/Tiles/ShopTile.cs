@@ -19,7 +19,7 @@ namespace Model.Tiles
 
         void BuyFunction()
         {
-            int price = obtainable.price;
+            int price = obtainable.Price;
             if (GameManager.Instance.Gold < price)
             {
                 View.FadeOutTextView.MakeText(unit.Position + Vector2Int.up,"돈이 부족하다.", Color.red);

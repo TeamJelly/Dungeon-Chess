@@ -29,21 +29,21 @@ namespace Model.Effects
             BarrierCount = barrierCount;
         }
 
-        public override void OnAddThisEffect()
+        public override void OnAdd()
         {
-            base.OnAddThisEffect();
+            base.OnAdd();
 
-            Owner.OnDamage.before.AddListener(BeforeGetDamage);
+            Owner.OnDamage.before.AddListener(BeforeGetDam);
         }
 
-        public override void OnRemoveThisEffect()
+        public override void OnRemove()
         {
-            base.OnRemoveThisEffect();
+            base.OnRemove();
 
-            Owner.OnDamage.before.RemoveListener(BeforeGetDamage);
+            Owner.OnDamage.before.RemoveListener(BeforeGetDam);
         }
 
-        public override int BeforeGetDamage(int value)
+        public override int BeforeGetDam(int value)
         {
             FadeOutTextView.MakeText(Owner.Position + Vector2Int.up, $"배리어! ({--barrierCount})", Color.yellow);
             // 데미지 무효화

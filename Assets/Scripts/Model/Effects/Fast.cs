@@ -13,9 +13,9 @@ namespace Model.Effects
             Description = $"이동거리가 늘어납니다. 남은 턴 : {turnCount}";
         }
        
-        public override void OnAddThisEffect()
+        public override void OnAdd()
         {
-            base.OnAddThisEffect();
+            base.OnAdd();
 
             Debug.Log("Mobility" + Owner.Mobility);
             Owner.Mobility += 2;
@@ -26,9 +26,9 @@ namespace Model.Effects
             Owner.OnTurnEnd.before.AddListener(OnTurnEnd);
         }
 
-        public override void OnRemoveThisEffect()
+        public override void OnRemove()
         {
-            base.OnRemoveThisEffect();
+            base.OnRemove();
             Owner.Mobility -= 2;
             Debug.Log("Mobility" + Owner.Mobility);
             Owner.OnTurnStart.before.RemoveListener(OnTurnStart);
