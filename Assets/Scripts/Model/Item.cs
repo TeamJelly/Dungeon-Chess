@@ -7,16 +7,10 @@ using UnityEngine.Tilemaps;
 namespace Model
 {
     [System.Serializable]
-    public class Item : Skill, Obtainable, Spriteable
+    public class Item : Skill, Obtainable
     {
         public Vector2Int Position { get; set; }
         public int price { get; set; }
-        public Color Color { get; set; }
-
-        public Sprite GetImage()
-        {
-            return Sprite;
-        }
 
         public void ToBag()
         {

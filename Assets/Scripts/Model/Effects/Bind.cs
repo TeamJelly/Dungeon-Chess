@@ -7,9 +7,9 @@ using View;
 
 namespace Model.Effects
 {
-    public class Bondage : Effect
+    public class Bind : Effect
     {
-        public Bondage(Unit owner) : base(owner)
+        public Bind(Unit owner) : base(owner)
         {
             Number = 4;
             Name = "속박";
