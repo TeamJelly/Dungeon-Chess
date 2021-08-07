@@ -4,22 +4,21 @@ using UnityEngine;
 
 namespace Model.Skills.Basic
 {
-    public class 힐 : Skill
+    public class Snapshot : BasicSkill
     {
-        private int[] fixedHeal;
-
-        public 힐()
+        private float[] strToDam;
+        private int[] fixedDam;
+        public Snapshot() : base()
         {
-            Name = "힐";
-            Category = SkillCategory.Basic;
+            Name = "속사";
             Priority = Common.AI.Priority.NULL;
             Target = TargetType.Any;
             Range = RangeType.Fixed;
 
-            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/monochrome_transparent_packed_563");
-            Color = Color.green;
+            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/monochrome_transparent_packed_324");
+            Color = Color.yellow;
 
-            ReuseTime = new int[4] { 2, 2, 1, 1 };
+            ReuseTime = new int[4] { 1, 1, 0, 0 };
             APData = new string[4]
             {
                 Common.Data.MakeRangeData(1, 3),
@@ -34,23 +33,20 @@ namespace Model.Skills.Basic
                 Common.Data.MakeRangeData(1, 0),
                 Common.Data.MakeRangeData(1, 0),
             };
-            fixedHeal = new int[4] { 10, 15, 25, 30 };
+            strToDam = new float[4] { 1.0f, 1.5f, 2.0f, 2.5f };
 
-            species.Add(UnitSpecies.Human);
             species.Add(UnitSpecies.SmallBeast);
             species.Add(UnitSpecies.MediumBeast);
-            species.Add(UnitSpecies.LargeBeast);
-            species.Add(UnitSpecies.Golem);
+            species.Add(UnitSpecies.Human);
         }
-
 
         public override IEnumerator Use(Unit user, Vector2Int target)
         {
             // 필요 변수 계산
             int SLV = GetSLV(user);
             bool isCri = Random.Range(0, 100) < user.CriRate;
-            int heal = fixedHeal[SLV];
-            if (isCri) heal *= 2;
+            int damage = (int)(user.Strength * strToDam[SLV]);
+            if (isCri) damage *= 2;
             
             // 스킬 소모 기록
             user.IsSkilled = true;
@@ -62,20 +58,19 @@ namespace Model.Skills.Basic
             {
                 Debug.Log($"{user.Name}가 {Name}스킬을 {targetUnit.Name}에 사용!");
 
-                Common.Command.Heal(targetUnit, heal);
+                Common.Command.Damage(targetUnit, damage);
             }
             else
                 Debug.Log($"{user.Name}가 {Name}스킬을 {target}에 사용!");
-            
+
             yield return null;
         }
-        
         public override string GetDescription(Unit user)
         {
             int SLV = GetSLV(user);
-            int heal = fixedHeal[SLV];
-            
-            return $"지정한 타일 위의 모든 대상에게 {heal}만큼 데미지를 준다.";
+            int damage = (int)(user.Strength * strToDam[SLV]);
+
+            return $"지정한 대상에게 {damage}만큼 데미지를 준다.";
         }
     }
 }

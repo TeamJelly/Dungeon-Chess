@@ -4,22 +4,21 @@ using UnityEngine;
 
 namespace Model.Skills.Basic
 {
-    public class 할퀴기 : Skill
+    public class Slash : BasicSkill
     {
         private float[] strToDam;
         private int[] fixedDam;
-        public 할퀴기()
+        public Slash() : base()
         {
-            Name = "할퀴기";
-            Category = SkillCategory.Basic;
+            Name = "베기";
             Priority = Common.AI.Priority.NULL;
-            Target = TargetType.Hostile;
+            Target = TargetType.Any;
             Range = RangeType.Fixed;
 
-            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/monochrome_transparent_packed_553");
+            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/monochrome_transparent_packed_551");
             Color = Color.red;
 
-            ReuseTime = new int[4] { 0, 0, 0, 0 };
+            ReuseTime = new int[4] { 0, 0, 0, 0};
             APData = new string[4]
             {
                 Common.Data.MakeRangeData(1, 1),
@@ -34,12 +33,12 @@ namespace Model.Skills.Basic
                 Common.Data.MakeRangeData(1, 0),
                 Common.Data.MakeRangeData(1, 0),
             };
-            strToDam = new float[4] { 1.0f, 1.5f, 1.5f, 2.0f };
+            strToDam = new float[4] { 1.5f, 2.0f, 2.5f, 3.0f };
             fixedDam = new int[4] { 0, 0, 0, 0 };
 
             species.Add(UnitSpecies.SmallBeast);
             species.Add(UnitSpecies.MediumBeast);
-            species.Add(UnitSpecies.LargeBeast);
+            species.Add(UnitSpecies.Human);
         }
 
         public override IEnumerator Use(Unit user, Vector2Int target)
@@ -47,7 +46,7 @@ namespace Model.Skills.Basic
             // 필요 변수 계산
             int SLV = GetSLV(user);
             bool isCri = Random.Range(0, 100) < user.CriRate;
-            int damage = (int)(user.Strength * strToDam[SLV]);
+            int damage = (int)(fixedDam[SLV] + user.Strength * strToDam[SLV]);
             if (isCri) damage *= 2;
             
             // 스킬 소모 기록
@@ -63,8 +62,6 @@ namespace Model.Skills.Basic
             }
             else
                 Debug.Log($"{user.Name}가 {Name}스킬을 {target}에 사용!");
-
-            View.VisualEffectView.MakeVisualEffect(target, "Scratch");
 
             yield return null;
         }

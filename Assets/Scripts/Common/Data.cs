@@ -114,11 +114,11 @@ namespace Common
             new King(),
 
             // Basic 스킬
-            new 베기(),
-            new 속사(),
-            new 할퀴기(),
-            new 화염구(),
-            new 힐(),
+            new Fireball(),
+            new Heal(),
+            new Scratch(),
+            new Fireball(),
+            new Snapshot(),
 
         };
 

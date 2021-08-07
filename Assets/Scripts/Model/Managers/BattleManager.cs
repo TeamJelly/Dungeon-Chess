@@ -52,7 +52,7 @@ namespace Model.Managers
             // 테스팅 적 유닛 소환
             Unit unit = new Unit(UnitAlliance.Enemy, UnitSpecies.LargeBeast, 1);
 
-            unit.Skills[SkillCategory.Basic] = new Skills.Basic.할퀴기();
+            unit.Skills[SkillCategory.Basic] = new Skills.Basic.Slash();
             unit.Skills[SkillCategory.Move].Priority = Common.AI.Priority.NearFromClosestParty;
             unit.Skills[SkillCategory.Basic].Target = Skill.TargetType.Hostile;
 

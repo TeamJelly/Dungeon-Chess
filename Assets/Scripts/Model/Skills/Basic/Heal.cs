@@ -4,28 +4,27 @@ using UnityEngine;
 
 namespace Model.Skills.Basic
 {
-    public class 베기 : Skill
+    public class Heal : BasicSkill
     {
-        private float[] strToDam;
-        private int[] fixedDam;
-        public 베기()
+        private int[] fixedHeal;
+
+        public Heal() : base()
         {
-            Name = "베기";
-            Category = SkillCategory.Basic;
+            Name = "힐";
             Priority = Common.AI.Priority.NULL;
             Target = TargetType.Any;
             Range = RangeType.Fixed;
 
-            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/monochrome_transparent_packed_551");
-            Color = Color.red;
+            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/monochrome_transparent_packed_563");
+            Color = Color.green;
 
-            ReuseTime = new int[4] { 0, 0, 0, 0};
+            ReuseTime = new int[4] { 2, 2, 1, 1 };
             APData = new string[4]
             {
-                Common.Data.MakeRangeData(1, 1),
-                Common.Data.MakeRangeData(1, 1),
-                Common.Data.MakeRangeData(1, 1),
-                Common.Data.MakeRangeData(1, 1),
+                Common.Data.MakeRangeData(1, 3),
+                Common.Data.MakeRangeData(1, 3),
+                Common.Data.MakeRangeData(1, 3),
+                Common.Data.MakeRangeData(1, 3),
             };
             RPData = new string[4]
             {
@@ -34,21 +33,23 @@ namespace Model.Skills.Basic
                 Common.Data.MakeRangeData(1, 0),
                 Common.Data.MakeRangeData(1, 0),
             };
-            strToDam = new float[4] { 1.5f, 2.0f, 2.5f, 3.0f };
-            fixedDam = new int[4] { 0, 0, 0, 0 };
+            fixedHeal = new int[4] { 10, 15, 25, 30 };
 
+            species.Add(UnitSpecies.Human);
             species.Add(UnitSpecies.SmallBeast);
             species.Add(UnitSpecies.MediumBeast);
-            species.Add(UnitSpecies.Human);
+            species.Add(UnitSpecies.LargeBeast);
+            species.Add(UnitSpecies.Golem);
         }
+
 
         public override IEnumerator Use(Unit user, Vector2Int target)
         {
             // 필요 변수 계산
             int SLV = GetSLV(user);
             bool isCri = Random.Range(0, 100) < user.CriRate;
-            int damage = (int)(fixedDam[SLV] + user.Strength * strToDam[SLV]);
-            if (isCri) damage *= 2;
+            int heal = fixedHeal[SLV];
+            if (isCri) heal *= 2;
             
             // 스킬 소모 기록
             user.IsSkilled = true;
@@ -59,20 +60,21 @@ namespace Model.Skills.Basic
             if (targetUnit != null)
             {
                 Debug.Log($"{user.Name}가 {Name}스킬을 {targetUnit.Name}에 사용!");
-                Common.Command.Damage(targetUnit, damage);
+
+                Common.Command.Heal(targetUnit, heal);
             }
             else
                 Debug.Log($"{user.Name}가 {Name}스킬을 {target}에 사용!");
-
+            
             yield return null;
         }
-
+        
         public override string GetDescription(Unit user)
         {
             int SLV = GetSLV(user);
-            int damage = (int)(fixedDam[SLV] + user.Strength * strToDam[SLV]);
-
-            return $"지정한 대상에게 {damage}만큼 데미지를 준다.";
+            int heal = fixedHeal[SLV];
+            
+            return $"지정한 타일 위의 모든 대상에게 {heal}만큼 데미지를 준다.";
         }
     }
 }
