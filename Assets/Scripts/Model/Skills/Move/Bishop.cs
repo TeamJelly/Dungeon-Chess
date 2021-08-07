@@ -50,7 +50,7 @@ namespace Model.Skills.Move
                         positions.Add(temp);
                     else
                         canGo[b] = false;
-                }               
+                }
             }
 
             foreach(var i in new List<Vector2Int>{ Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right })

@@ -13,7 +13,6 @@ public class ScreenTouchManager : MonoBehaviour, IBeginDragHandler, IDragHandler
     public Transform cameraTransform;
     public float dragSpeed = 15f;
     Vector3 currentPos = Vector3.zero;
-
     Vector2 longClickPos = Vector2.zero;
 
     public void OnBeginDrag(PointerEventData eventData)

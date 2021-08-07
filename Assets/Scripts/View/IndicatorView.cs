@@ -110,6 +110,8 @@ namespace View
         public static Action<Vector2Int> tileAction;
         private static List<Vector2Int> curAvlPositions;
         private static Vector2Int? curPosition;
+        public delegate List<Vector2Int> TileRelatedPositionsFunc (Vector2Int targetPosition);
+        private static TileRelatedPositionsFunc TileRelativeFunc = null;
 
         public static void ChangeTileIndicatorColor(List<Vector2Int> positions, Color color)
         {
@@ -127,8 +129,10 @@ namespace View
         {
             currentUnit = user;
             currentSkill = skill;
-            curAvlPositions = currentSkill.GetAvailablePositions(currentUnit);
             curPosition = null;
+            curAvlPositions = currentSkill.GetAvailablePositions(currentUnit);
+            tileAction = null;
+            TileRelativeFunc = null;
             TileIndicatorParent.SetActive(true);
             UpdateSkillIndicator();
         }
@@ -136,12 +140,13 @@ namespace View
         public static void UpdateSkillIndicator(Vector2Int? position = null)
         {
             List<Vector2Int> RelatedPosition = position != null ? RelatedPosition = currentSkill.GetRelatePositions(currentUnit, (Vector2Int)position) : new List<Vector2Int>();
+            curPosition = position;
 
             for (int i = 0; i < TileIndicators.GetLength(0); i++)
                 for (int j = 0; j < TileIndicators.GetLength(1); j++)
                 {
                     Vector2Int tempPosition = new Vector2Int(i, j);
-                    if (RelatedPosition != null && RelatedPosition.Contains(tempPosition))
+                    if (RelatedPosition.Contains(tempPosition))
                         ChangeTileIndicatorColor(tempPosition, instance.subPossibleColor);
                     else if (curAvlPositions.Contains(tempPosition))
                         ChangeTileIndicatorColor(tempPosition, instance.inBoundaryColor);
@@ -149,13 +154,12 @@ namespace View
                         ChangeTileIndicatorColor(tempPosition, instance.outBoundaryColor);
                 }
 
-            curPosition = position;
-            if (curPosition != null)
+            if (position != null)
             {
-                if (curAvlPositions.Contains((Vector2Int)curPosition))
-                    ChangeTileIndicatorColor((Vector2Int)curPosition, instance.possibleColor);
+                if (curAvlPositions.Contains((Vector2Int)position))
+                    ChangeTileIndicatorColor((Vector2Int)position, instance.possibleColor);
                 else
-                    ChangeTileIndicatorColor((Vector2Int)curPosition, instance.impossibleColor);
+                    ChangeTileIndicatorColor((Vector2Int)position, instance.impossibleColor);
             }
         }
 
@@ -164,30 +168,36 @@ namespace View
         /// </summary>
         /// <param name="positions">사용가능한 위치</param>
         /// <param name="action">두번째 클릭시 발동되는 함수</param>
-        public static void ShowTileIndicator(List<Vector2Int> positions, Action<Vector2Int> action)
+        public static void ShowTileIndicator(List<Vector2Int> positions, Action<Vector2Int> action, TileRelatedPositionsFunc tileRelativeFunc = null)
         {
+            currentUnit = null;
             currentSkill = null;
-            curAvlPositions = positions;
             curPosition = null;
+            curAvlPositions = positions;
             tileAction = action;
+            TileRelativeFunc = tileRelativeFunc == null ? (Vector2Int position) => new List<Vector2Int>() : tileRelativeFunc;
             TileIndicatorParent.SetActive(true);
-            UpdateTileIndicator(curPosition);
+            UpdateTileIndicator();
         }
 
         private static void UpdateTileIndicator(Vector2Int? position = null)
         {
+            List<Vector2Int> RelatedPosition = position != null ? RelatedPosition = TileRelativeFunc((Vector2Int)position) : new List<Vector2Int>();
+            curPosition = position;
+
             for (int i = 0; i < TileIndicators.GetLength(0); i++)
                 for (int j = 0; j < TileIndicators.GetLength(1); j++)
                 {
                     Vector2Int tempPosition = new Vector2Int(i, j);
-                    if (curAvlPositions.Contains(tempPosition))
+                    if (RelatedPosition.Contains(tempPosition))
+                        ChangeTileIndicatorColor(tempPosition, instance.subPossibleColor);
+                    else if (curAvlPositions.Contains(tempPosition))
                         ChangeTileIndicatorColor(tempPosition, instance.inBoundaryColor);
                     else
                         ChangeTileIndicatorColor(tempPosition, instance.outBoundaryColor);
                 }
 
-            curPosition = position;
-            if (curPosition != null)
+            if (position != null)
             {
                 if (curAvlPositions.Contains((Vector2Int)position))
                     ChangeTileIndicatorColor((Vector2Int)position, instance.possibleColor);

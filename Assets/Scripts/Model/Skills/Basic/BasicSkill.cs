@@ -15,9 +15,9 @@ namespace Model.Skills.Basic
         {
             if (user.Level == 1)
                 return 1;
-            else if (2 <= user.Level || user.Level < 4)
+            else if (2 <= user.Level && user.Level < 4)
                 return 2;
-            else if (4 <= user.Level || user.Level < 7)
+            else if (4 <= user.Level && user.Level < 7)
                 return 3;
             else if (7 <= user.Level)
                 return 4;
