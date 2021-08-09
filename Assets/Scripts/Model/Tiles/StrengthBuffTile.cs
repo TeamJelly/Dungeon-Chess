@@ -9,20 +9,22 @@ namespace Model.Tiles
     public class StrengthBuffTile : Tile
     {
         public int strength = 3;
-        public override void SetUnit(Unit newUnit)
+
+        public override void OnTile(Unit unit)
         {
-            if (newUnit == null)
+            base.OnTile(unit);
+            FadeOutTextView.MakeText(unit.Position + Vector2Int.up, $"STR +{strength}", Color.green);
+            unit.Strength += strength;
+
+            Vector2Int RemoveBuffCallback(Vector2Int v)
             {
                 FadeOutTextView.MakeText(unit.Position + Vector2Int.up, $"STR -{strength}", Color.green);
                 unit.Strength -= strength;
+                unit.OnMove.after.RemoveListener(RemoveBuffCallback);
+                return v;
             }
-            else
-            {
-                FadeOutTextView.MakeText(newUnit.Position + Vector2Int.up, $"STR +{strength}", Color.green);
-                newUnit.Strength += strength;
-            }
-
-            unit = newUnit;
+            unit.OnMove.after.AddListener(RemoveBuffCallback);
         }
+        
     }
 }
