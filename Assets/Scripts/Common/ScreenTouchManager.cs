@@ -57,7 +57,7 @@ public class ScreenTouchManager : MonoBehaviour, IBeginDragHandler, IDragHandler
                 StartCoroutine(coroutine);
             }
         }
-        else
+        else if(IndicatorView.TileIndicatorParent.activeSelf)
         {
             IndicatorView.TileIndicators[tileIdx.x, tileIdx.y].GetComponent<EventTrigger>().OnPointerClick(null);
         }
@@ -107,7 +107,7 @@ public class ScreenTouchManager : MonoBehaviour, IBeginDragHandler, IDragHandler
     
     IEnumerator LongClick(Vector2 target)
     {
-        Debug.Log("롱클릭 시작" + longClickPos);
+        //Debug.Log("롱클릭 시작" + longClickPos);
 
         yield return new WaitForSeconds(1f);
 

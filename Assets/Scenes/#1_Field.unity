@@ -35854,7 +35854,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e8a15957e4aaa30468023ab628883104, type: 2}
   - {fileID: 0}
   - {fileID: 11400000, guid: 3d4931740aaee4b4993ecad9384a4b2f, type: 2}
-  tileBasesChar: 4600570055004400540048005300
+  - {fileID: 11400000, guid: 5694b3eb6f7227a4daf26edaf96e1779, type: 2}
+  - {fileID: 11400000, guid: 08f4a0d9721093649b576d762ff95173, type: 2}
+  - {fileID: 11400000, guid: 25ea00e469a2ab647aa751219b7a8a42, type: 2}
+  tileBasesChar: 46005700550044005400480053004c0052004b00
   allTilesPosition: []
   FieldDatas:
   - 'WWWWWWWWWWWWWWWW
@@ -35871,7 +35874,7 @@ MonoBehaviour:
 
     WWWFFFFFFFFFFWWW
 
-    WWWFFFFFFFFFFWWW
+    WWWFFFLLLLTTTWWW
 
     WWWFFFFFFFFFFWWW
 
@@ -35881,7 +35884,7 @@ MonoBehaviour:
 
     WWWFFFFFFFFFFWWW
 
-    WWWFFFFFFFFFFWWW
+    WWWFFFRRRKKFFWWW
 
     WWWWWWWWWWWWWWWW
 

@@ -65,27 +65,43 @@ namespace Model.Managers
 
             for (int i = 0; i < fieldData.Length; i++)
             {
-                if (chars[i] == '\n')
+                 switch(chars[i])
                 {
-                    x = 0;
-                    y--;
-                }
-                else
-                {
-                    if (chars[i] == 'D') field[y, x] = new DownStairTIle();
-                    else if (chars[i] == 'S')
-                    {
+                    case '\n':
+                        x = 0;
+                        y--;
+                        continue; // for 문의 continue
+                    case 'D':
+                        field[y, x] = new DownStairTIle();
+                        break;
+                    case 'S':
                         field[y, x] = new ShopTile();
-                        Common.Command.Summon(new Model.Artifacts.test(), new Vector2Int(x, y));
-                    }
-                    else field[y, x] = new Tile();
-                    field[y, x].position = new Vector2Int(x,y);
-                    field[y, x].category = (Tile.Category)chars[i];
-                    allTilesPosition.Add(new Vector2Int(x, y));
-                    x++;
+                        //Common.Command.Summon(new Model.Artifacts.test(), new Vector2Int(x, y));
+                        Common.Command.Summon(new Model.Items.Key(), new Vector2Int(x, y));
+                        break;
+                    case 'T':
+                        field[y, x] = new DamageTile();
+                        break;
+                    case 'L':
+                        field[y, x] = new HealBuffTile();
+                        break;
+                    case 'R':
+                        field[y, x] = new StrengthBuffTile();
+                        break;
+                    case 'K':
+                        field[y, x] = new LockedDoorTile();
+                        break;
+                    default:
+                        field[y, x] = new Tile();
+                        break;
+
                 }
 
-               
+                field[y, x].position = new Vector2Int(x, y);
+                field[y, x].category = (Tile.Category)chars[i];
+                allTilesPosition.Add(new Vector2Int(x, y));
+                x++;
+
             }
             UpdateTileMap();
         }
@@ -103,6 +119,12 @@ namespace Model.Managers
             }
         }
 
+        public void UpdateTile(Tile tile)
+        {
+            char c = (char)tile.category;
+            int i = tileBasesChar.IndexOf(c);
+            tileMap.SetTile(new Vector3Int(tile.position.x,tile.position.y, 0), tileBases[i]);
+        }
         public static bool IsInField(Vector2Int position)
         {
             if (position.x >= 0 &&
@@ -203,6 +225,7 @@ namespace Model.Managers
                 if (StairAroundPosition.Contains(position) == false &&
                     field[position.y, position.x].category != Model.Tile.Category.Hole &&
                     field[position.y, position.x].category != Model.Tile.Category.Wall &&
+                    field[position.y, position.x].category != Model.Tile.Category.Locked &&
                     field[position.y, position.x].HasUnit() == false)
                     StairAroundPosition.Add(position);
                 //else

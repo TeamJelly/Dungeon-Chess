@@ -11,9 +11,11 @@ namespace Model.Items
             Target = TargetType.Any;
         }
 
-        public override void Use(Unit unit)
+        public override void Use(Tile tile)
         {
-            Common.Command.Heal(unit,10);
+            Unit unit = tile.GetUnit();
+            if (unit != null)
+                Common.Command.Heal(unit,10);
         }
     }
 }

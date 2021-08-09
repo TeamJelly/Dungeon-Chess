@@ -24,9 +24,6 @@ namespace Model
             return positions;
         }
 
-        public virtual void Use(Unit unit)
-        {
-
-        }
+        public virtual void Use(Tile tile) { }
     }
 }

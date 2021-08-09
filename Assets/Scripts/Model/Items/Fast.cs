@@ -11,9 +11,11 @@ namespace Model.Items
             Target = TargetType.Any;
         }
 
-        public override void Use(Unit unit)
+        public override void Use(Tile tile)
         {
-            Common.Command.AddEffect(unit, new Effects.Fast(unit,3));
+            Unit unit = tile.GetUnit();
+            if (unit != null)
+                Common.Command.AddEffect(unit, new Effects.Fast(unit,3));
         }
     }
 }

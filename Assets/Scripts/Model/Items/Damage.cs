@@ -8,9 +8,11 @@ namespace Model.Items
             Color = UnityEngine.Color.red;
             Target = TargetType.Any;
         }
-        public override void Use(Unit unit)
+        public override void Use(Tile tile)
         {
-            Common.Command.Damage(unit, 10);
+            Unit unit = tile.GetUnit();
+            if (unit != null)
+                Common.Command.Damage(unit, 10);
         }
     }
 }

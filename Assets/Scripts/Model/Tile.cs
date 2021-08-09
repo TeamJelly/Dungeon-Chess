@@ -23,6 +23,10 @@ namespace Model
             Thorn   = 'T',
             Hole    = 'H',
             Shop = 'S',
+            Heal = 'L',
+            Strength = 'R',
+            Locked = 'K'
+
         };
 
         public Category category;
@@ -30,6 +34,9 @@ namespace Model
         protected Unit unit = null;
 
         protected Obtainable obtainable = null;
+
+
+        public Tile() { }
 
         // 인자로 넘긴 해당 유닛이 위치할수 있는지를 검사한다.
         public bool IsPositionable(Unit unit)
@@ -58,7 +65,7 @@ namespace Model
             if (HasUnit() || HasObtainable())
                 return false;
             // 벽이거나 구멍이면 false
-            else if (category != Category.Floor)
+            else if (category == Category.Wall || category == Category.Hole || category == Category.Locked)
                 return false;
             // 이외의 경우에 가능하다.
             else

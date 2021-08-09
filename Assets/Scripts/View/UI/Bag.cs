@@ -68,10 +68,7 @@ namespace View.UI
                             {
                                 Tile tile = FieldManager.GetTile(pos);
                                 //타일 위에 유닛 있으면 해당 유닛에 아이템 사용
-                                if (tile.HasUnit())
-                                {
-                                    GameManager.Instance.itemBag[idx].Use(tile.GetUnit());
-                                }
+                                GameManager.Instance.itemBag[idx].Use(tile);
                                 ResetSlot(itemSlots[idx]);
                                 IndicatorView.HideTileIndicator();
                             },
@@ -143,10 +140,7 @@ namespace View.UI
                             {
                                 Debug.Log("Tile Clicked");
                                 Tile tile = FieldManager.GetTile(pos);
-                                if (tile.HasUnit())
-                                {
-                                    Common.Command.AddArtifact(tile.GetUnit(), artifact);
-                                }
+                                Common.Command.AddArtifact(tile, artifact);
                                 artifactSlots.Remove(newButton);
                                 GameManager.Instance.artifactBag.Remove(artifact);
                                 Destroy(newButton.gameObject);
