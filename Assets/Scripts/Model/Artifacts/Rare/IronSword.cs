@@ -8,7 +8,7 @@
         public IronSword()
         {
             Name = "강철 대검";
-            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/colored_transparent_packed_31");
+            Sprite = Common.Data.Colored[416];
             Grade = ArtifactGrade.Legend;
             Description = "공격력 +2";
         }

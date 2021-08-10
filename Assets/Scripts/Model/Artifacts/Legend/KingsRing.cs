@@ -6,7 +6,7 @@
         public KingsRing()
         {
             Name = "왕의 반지";
-            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/colored_transparent_packed_31");
+            Sprite = Common.Data.Colored[333];
             Grade = ArtifactGrade.Rare;
             Description = "상점 물품을 50% 가격으로 구매한다.";
         }

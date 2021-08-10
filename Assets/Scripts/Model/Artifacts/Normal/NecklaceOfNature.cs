@@ -8,8 +8,8 @@
         protected int increasingValue = 1;
         public NecklaceOfNature()
         {
-            Name = "AGI_S";
-            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/colored_transparent_packed_31");
+            Name = "자연의 목걸이";
+            Sprite = Common.Data.Colored[330];
             Grade = ArtifactGrade.Normal;
             Description = "행동력 +1";
         }

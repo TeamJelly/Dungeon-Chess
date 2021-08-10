@@ -9,7 +9,7 @@
         public CopperRing()
         {
             Name = "구리 반지";
-            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/colored_transparent_packed_31");
+            Sprite = Common.Data.Colored[330];
             Grade = ArtifactGrade.Normal;
             Description = "치명률 +5%";
         }

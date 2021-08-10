@@ -5,7 +5,7 @@
         public NecklaceOfExperience()
         {
             Name = "경험의 목걸이";
-            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/colored_transparent_packed_31");
+            Sprite = Common.Data.Colored[428];
             Grade = ArtifactGrade.Normal;
             Description = "경험치 획득량 +10%";
         }

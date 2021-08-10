@@ -17,9 +17,7 @@ namespace Model
         }
 
         public virtual Sprite Sprite { get; set; }
-
-        private Color color = Color.white;
-        public Color Color {get => color; set => color = value;}
+        public Color Color {get; set;}
 
         public Effect()
         {

@@ -244,12 +244,16 @@ namespace View
             if (ob.GetType().BaseType == typeof(Artifact))
             {
                 Artifact artifact = (Artifact) ob;
-                spriteRenderer.sprite = MakeOutline(ob.Sprite, ob.Color, Artifact.GradeToColor[artifact.Grade]);
+                if (ob.Color != new Color(0,0,0,0))
+                    spriteRenderer.sprite = MakeOutline(ob.Sprite, ob.Color, Artifact.GradeToColor[artifact.Grade]);
+                else
+                    spriteRenderer.sprite = MakeOutline(ob.Sprite, Artifact.GradeToColor[artifact.Grade]);
             }
             else 
             {
                 spriteRenderer.sprite = ob.Sprite;
-                spriteRenderer.color = ob.Color;
+                if (ob.Color != new Color(0,0,0,0))
+                    spriteRenderer.color = ob.Color;
             }
 
             ObtainableObjects.Add(ob, obObj);
@@ -276,6 +280,47 @@ namespace View
             unit.OnCurHP.after.RemoveAllListeners();
 
             // AgilityViewer.instance.DestroyObject(unit);
+        }
+
+        public static Sprite MakeOutline(Sprite value, Color outline)
+        {
+            Texture2D old = value.texture;
+            Rect rect = value.rect;
+            Texture2D texture = new Texture2D(18,18);
+            texture.filterMode = FilterMode.Point;
+
+            for (int y = 0; y < 18; y++)
+                for (int x = 0; x < 18; x++)
+                    texture.SetPixel(x,y, new Color(0,0,0,0));
+
+            for (int y = 0; y < 16; y++)
+                for (int x = 0; x < 16; x++)
+                {
+                    Color color = old.GetPixel((int)rect.x + x , (int)rect.y + y);
+
+                    if (color.a == 0)
+                        continue;
+
+                    color = outline;
+                    texture.SetPixel(x+2, y+1, color);
+                    texture.SetPixel(x, y+1, color);
+                    texture.SetPixel(x+1, y+2, color);
+                    texture.SetPixel(x+1, y, color);
+                }
+
+            for (int y = 0; y < 16; y++)
+                for (int x = 0; x < 16; x++)
+                {
+                    Color color = old.GetPixel((int)rect.x + x , (int)rect.y + y);
+                    if (color.a == 0)
+                        continue;
+                    texture.SetPixel(x+1, y+1, color);
+                }
+
+            texture.Apply();
+            rect = new Rect(0, 0, texture.width, texture.height);
+
+            return Sprite.Create(texture, rect, new Vector2(0.5f, 0.5f), 16);
         }
 
         public static Sprite MakeOutline(Sprite value, Color inline, Color outline)

@@ -9,7 +9,7 @@
         public TastyChesse()
         {
             Name = "맛좋은 치즈";
-            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/colored_transparent_packed_801");
+            Sprite = Common.Data.Colored[801];
             Grade = ArtifactGrade.Normal;
             Description = "최대체력 +5";
         }

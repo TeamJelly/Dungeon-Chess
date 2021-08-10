@@ -9,7 +9,7 @@
         public FreshMeat()
         {
             Name = "신선한 고기";
-            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/colored_transparent_packed_31");
+            Sprite = Common.Data.Colored[800];
             Grade = ArtifactGrade.Rare;
             Description = "최대체력 +10";
         }

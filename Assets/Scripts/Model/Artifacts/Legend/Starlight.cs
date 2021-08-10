@@ -9,7 +9,7 @@
         public Starlight()
         {
             Name = "별의 목걸이";
-            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/colored_transparent_packed_31");
+            Sprite = Common.Data.Colored[429];
             Grade = ArtifactGrade.Legend;
             Description = "행동력 +3";
         }

@@ -9,8 +9,7 @@ namespace Model.Items
     {
         public Key()
         {
-            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/monochrome_transparent_packed_559");
-            Color = UnityEngine.Color.cyan;
+            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/colored_transparent_packed_559");
             Target = TargetType.Any;
             //Debug.Log("!");
         }

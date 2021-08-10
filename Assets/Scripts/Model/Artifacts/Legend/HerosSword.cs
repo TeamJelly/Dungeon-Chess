@@ -10,7 +10,7 @@
         public HerosSword()
         {
             Name = "영웅의 검";
-            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/colored_transparent_packed_31");
+            Sprite = Common.Data.Colored[464];
             Grade = ArtifactGrade.Rare;
             Description = "공격력 +3";
         }

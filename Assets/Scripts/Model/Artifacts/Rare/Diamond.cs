@@ -6,7 +6,7 @@
         public Diamond()
         {
             Name = "다이아몬드";
-            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/colored_transparent_packed_31");
+            Sprite = Common.Data.Colored[214];
             Grade = ArtifactGrade.Rare;
             Description = "골드 +200";
         }

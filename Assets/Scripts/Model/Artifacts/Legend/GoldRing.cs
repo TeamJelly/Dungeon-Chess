@@ -9,7 +9,7 @@
         public GoldRing()
         {
             Name = "금 반지";
-            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/colored_transparent_packed_31"); 
+            Sprite = Common.Data.Colored[332];
             Grade = ArtifactGrade.Legend;
             Description = "치명률 +15%";
         }

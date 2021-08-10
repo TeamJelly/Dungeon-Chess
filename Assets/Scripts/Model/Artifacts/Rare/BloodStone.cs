@@ -6,7 +6,7 @@ namespace Model.Artifacts.Rare
         public BloodStone()
         {
             Name = "혈석";
-            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/colored_transparent_packed_31");
+            Sprite = Common.Data.Colored[513];
             Grade = ArtifactGrade.Rare;
             Description = "매턴 종료시 체력회복 +1";
         }

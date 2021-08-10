@@ -9,7 +9,7 @@
         public ACoin()
         {
             Name = "동전 한 닢";
-            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/colored_transparent_packed_31");
+            Sprite = Common.Data.Colored[213];
             Grade = ArtifactGrade.Normal;
             Description = "골드 +100";
         }

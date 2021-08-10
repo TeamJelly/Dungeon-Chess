@@ -9,7 +9,7 @@
         public WoodenClub()
         {
             Name = "나무 몽둥이";
-            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/colored_transparent_packed_31");
+            Sprite = Common.Data.Colored[127];
             Grade = ArtifactGrade.Normal;
             Description = "공격력 +1";
         }
