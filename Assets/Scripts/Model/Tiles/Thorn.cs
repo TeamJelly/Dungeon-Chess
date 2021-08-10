@@ -7,7 +7,7 @@ using View;
 
 namespace Model.Tiles
 {
-    public class DamageTile : Tile
+    public class Thorn : Tile
     {
         public int damage = 3;
         public override void OnTile(Unit unit)

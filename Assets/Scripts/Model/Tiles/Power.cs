@@ -6,7 +6,7 @@ using View;
 
 namespace Model.Tiles
 {
-    public class StrengthBuffTile : Tile
+    public class Power : Tile
     {
         public int strength = 3;
 

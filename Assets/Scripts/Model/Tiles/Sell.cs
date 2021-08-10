@@ -7,7 +7,7 @@ using View.UI;
 
 namespace Model.Tiles
 {
-    public class ShopTile : Tile
+    public class Sell : Tile
     {
         public override void OnTile(Unit unit)
         {

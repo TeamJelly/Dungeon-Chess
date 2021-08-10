@@ -16,17 +16,17 @@ namespace Model
 
         public enum Category
         {
-            Floor   = 'F',
-            Wall    = 'W',
-            UpStair   = 'U',
-            DownStair   = 'D',
-            Thorn   = 'T',
-            Hole    = 'H',
-            Shop = 'S',
-            Heal = 'L',
-            Strength = 'R',
-            Locked = 'K'
-
+            Floor       = 'F',
+            Wall        = 'W',
+            Back        = 'B',
+            Next        = 'N',
+            Thorn       = 'T',
+            Void        = 'V',
+            Sell        = 'S',
+            Heal        = 'H',
+            Power       = 'P',
+            Locked      = 'L',
+            UnLocked    = 'U',
         };
 
         public Category category;
@@ -47,7 +47,8 @@ namespace Model
                     unit.IsFlying == false && // 유닛이 날고있다면 위치 가능하다.
                     (
                         category == Category.Wall ||
-                        category == Category.Hole
+                        category == Category.Void ||
+                        category == Category.Locked
                     )
                 )
                 return false;
@@ -65,7 +66,7 @@ namespace Model
             if (HasUnit() || HasObtainable())
                 return false;
             // 벽이거나 구멍이면 false
-            else if (category == Category.Wall || category == Category.Hole || category == Category.Locked)
+            else if (category == Category.Wall || category == Category.Void || category == Category.Locked)
                 return false;
             // 이외의 경우에 가능하다.
             else

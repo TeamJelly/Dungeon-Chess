@@ -23,26 +23,27 @@ namespace Model.Managers
         public List<Vector2Int> allTilesPosition = new List<Vector2Int>();
 
         // 필드 데이터 (주의! 마지막에 개행 안붙힘)
-        [TextArea(0, 20)]
-        public List<string> FieldDatas = new List<string>()
+        //[TextArea(0, 20)]
+        private List<string> fieldDatas = new List<string>()
         {
             "WWWWWWWWWWWWWWWW\n"+
+            "WPHPPFFFFFSSSLNW\n"+
+            "WPPHPFFFFFSSSLLW\n"+
+            "WFHFFFFFFFFFFFFW\n"+
             "WFFFFFFFFFFFFFFW\n"+
             "WFFFFFFFFFFFFFFW\n"+
-            "WFFFFFSSSFFFFDFW\n"+
-            "WFFFFFSSSFFFFFFW\n"+
-            "WFFFFFSSSFFFFFFW\n"+
+            "WTTTTTTTTTTTTTTW\n"+
+            "WFFFFFFFFFFFFFFW\n"+
+            "WFFFFFWWFFFFFFFW\n"+
+            "WFFFFFWWFFFFFFFW\n"+
             "WFFFFFFFFFFFFFFW\n"+
             "WFFFFFFFFFFFFFFW\n"+
             "WFFFFFFFFFFFFFFW\n"+
-            "WFFFFFFFFFFFFFFW\n"+
-            "WFFFFFFFUFFFFFFW\n"+
-            "WFFFFFFFFFFFFFFW\n"+
-            "WFFFFFFFFFFFFFFW\n"+
-            "WFFFFFFFFFFFFFFW\n"+
+            "WFBFFFFFFFFFFFFW\n"+
             "WFFFFFFFFFFFFFFW\n"+
             "WWWWWWWWWWWWWWWW"
         };
+        public List<string> FieldDatas { get => fieldDatas; set => fieldDatas = value; }
 
         public void InitField(string fieldData)
         {
@@ -58,40 +59,42 @@ namespace Model.Managers
 
             // 전체 길이를 row로 나눈거를 올림한다. \n이 있으므로 값을 하나 빼주면 열의 개수이다.
             col = (fieldData.Length + row - 1) / row - 1;
-
             field = new Tile[row, col];
 
             int x = 0, y = row - 1;
-
             for (int i = 0; i < fieldData.Length; i++)
             {
-                 switch(chars[i])
+                switch(chars[i])
                 {
                     case '\n':
                         x = 0;
                         y--;
                         continue; // for 문의 continue
-                    case 'D':
-                        field[y, x] = new DownStairTIle();
+                    case 'N':
+                        field[y, x] = new Next();
                         break;
                     case 'S':
-                        field[y, x] = new ShopTile();
-                        //Common.Command.Summon(new Model.Artifacts.test(), new Vector2Int(x, y));
+                        field[y, x] = new Sell();
                         Common.Command.Summon(new Model.Items.Key(), new Vector2Int(x, y));
                         break;
                     case 'T':
-                        field[y, x] = new DamageTile();
+                        field[y, x] = new Thorn();
+                        break;
+                    case 'H':
+                        field[y, x] = new Heal();
+                        break;
+                    case 'P':
+                        field[y, x] = new Power();
                         break;
                     case 'L':
-                        field[y, x] = new HealBuffTile();
-                        break;
-                    case 'R':
-                        field[y, x] = new StrengthBuffTile();
-                        break;
-                    case 'K':
-                        field[y, x] = new LockedDoorTile();
+                        field[y, x] = new Locked();
                         break;
                     default:
+                    case 'F':
+                    case 'W':
+                    case 'U':
+                    case 'V':
+                    case 'B':
                         field[y, x] = new Tile();
                         break;
 
@@ -99,6 +102,9 @@ namespace Model.Managers
 
                 field[y, x].position = new Vector2Int(x, y);
                 field[y, x].category = (Tile.Category)chars[i];
+
+                Debug.Log($"{y}, {x} : {field[y, x].category}");
+
                 allTilesPosition.Add(new Vector2Int(x, y));
                 x++;
 
@@ -112,6 +118,7 @@ namespace Model.Managers
             {
                 for (int x = 0; x < field.GetLength(1); x++)
                 {
+                    Debug.Log($"{y}, {x} : {field[y, x].category}");
                     char c = (char)field[y, x].category;
                     int i = tileBasesChar.IndexOf(c);
                     tileMap.SetTile(new Vector3Int(x, y, 0), tileBases[i]);
@@ -125,6 +132,7 @@ namespace Model.Managers
             int i = tileBasesChar.IndexOf(c);
             tileMap.SetTile(new Vector3Int(tile.position.x,tile.position.y, 0), tileBases[i]);
         }
+        
         public static bool IsInField(Vector2Int position)
         {
             if (position.x >= 0 &&
@@ -223,7 +231,7 @@ namespace Model.Managers
                 Vector2Int position = stairPosition + vector;
 
                 if (StairAroundPosition.Contains(position) == false &&
-                    field[position.y, position.x].category != Model.Tile.Category.Hole &&
+                    field[position.y, position.x].category != Model.Tile.Category.Void &&
                     field[position.y, position.x].category != Model.Tile.Category.Wall &&
                     field[position.y, position.x].category != Model.Tile.Category.Locked &&
                     field[position.y, position.x].HasUnit() == false)
@@ -240,7 +248,7 @@ namespace Model.Managers
             {
                 for (int x = 0; x < field.GetLength(1); x++)
                 {
-                    if (field[y, x].category == Model.Tile.Category.UpStair)
+                    if (field[y, x].category == Model.Tile.Category.Back)
                     {
                         return new Vector2Int(x, y);
                     }

@@ -6,13 +6,13 @@ using View;
 
 namespace Model.Tiles
 {
-    public class LockedDoorTile : Tile
+    public class Locked : Tile
     {
         public object TileManager { get; private set; }
 
         public void Unlock()
         {
-            category = Category.Floor;
+            category = Category.UnLocked;
             FieldManager.instance.UpdateTile(this);
         }
     }

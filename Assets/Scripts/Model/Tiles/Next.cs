@@ -7,7 +7,7 @@ using View;
 
 namespace Model.Tiles
 {
-    public class DownStairTIle : Tile
+    public class Next : Tile
     {
         public override void OnTile(Unit unit)
         {

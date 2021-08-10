@@ -6,7 +6,7 @@ using View;
 
 namespace Model.Tiles
 {
-    public class HealBuffTile : Tile
+    public class Heal : Tile
     {
         public int heal = 3;
         public override void OnTile(Unit newUnit)

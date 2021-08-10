@@ -16,9 +16,9 @@ namespace Model.Items
 
         public override void Use(Tile tile)
         {
-            if(tile.GetType().Equals(Type.GetType("Model.Tiles.LockedDoorTile")))
+            if (tile.GetType() == typeof(Tiles.Locked))
             {
-                ((LockedDoorTile)tile).Unlock();
+                ((Locked)tile).Unlock();
             }
         }
     }
