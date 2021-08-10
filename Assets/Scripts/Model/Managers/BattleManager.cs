@@ -105,7 +105,7 @@ namespace Model.Managers
 
             // Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(6, 6));
             // Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(10, 5));
-            Common.Command.Summon(new Model.Artifacts.AutoHeal(), new Vector2Int(6, 8));
+            Common.Command.Summon(new Model.Artifacts.Rare.BloodStone(), new Vector2Int(6, 8));
             // Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(9, 9));
             // Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(6, 4));
         }
