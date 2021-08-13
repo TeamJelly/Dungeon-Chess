@@ -35,8 +35,12 @@ namespace Common
 
             BattleManager.instance.InitializeUnitBuffer();
 
-            if (BattleManager.CheckGameState() != BattleManager.State.Continue)
+            //if (BattleManager.CheckGameState() != BattleManager.State.Continue)
+            if (GameManager.InBattle)
                 BattleController.instance.ThisTurnEnd();
+
+            else if (BattleManager.instance.thisTurnUnit == unit) 
+                BattleManager.instance.thisTurnUnit = null;
         }
 
         // position 이동보다 좀더 확장된 이동
