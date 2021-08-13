@@ -55,47 +55,6 @@ namespace View
             TurnEndButton.gameObject.SetActive(false);
             UnitControlView.panel.SetActive(false);
         }
-        /// <summary>
-        /// 비전투시에는 리더 유닛만 움직일 수 있음
-        /// </summary>
-        /// <returns></returns>
-        public static void SetNonBattleMode()
-        {
-            BattleManager.instance.thisTurnUnit = null;
-            GameManager.InBattle = false;
-            TurnEndButton.gameObject.SetActive(false);
-            UnitControlView.panel.SetActive(false);
-            if (GameManager.LeaderUnit == null) GameManager.LeaderUnit = GameManager.PartyUnits[0];
-            Common.Command.Summon(GameManager.LeaderUnit, GameManager.LeaderUnit.Position);
-            /*IEnumerator coroutine = GameManager.LeaderUnit.MoveSkill.Use(GameManager.LeaderUnit, Vector2Int.zero);
-
-            Vector3 touchedOrigin = Vector3.zero;
-            while (true)
-            {
-                if(Input.GetMouseButtonDown(0))
-                {
-                    touchedOrigin = Input.mousePosition;
-                }
-                if (Input.GetMouseButtonUp(0))
-                {
-                    if (Input.mousePosition == touchedOrigin)
-                    {
-                        Vector3 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition) + Vector3.one * 0.5f;
-                        Vector2Int destination = new Vector2Int(Mathf.Clamp((int)mousepos.x, 0, 15), Mathf.Clamp((int)mousepos.y, 0, 15));
-
-                        // 리더 유닛이 해당 타일에 위치가능하다면
-                        if (FieldManager.GetTile(destination).IsPositionable(GameManager.LeaderUnit))
-                        {
-                            //리더 유닛 이동 코루틴 실행. 기존 실행되던 코루틴은 정지.
-                            instance.StopCoroutine(coroutine);
-                            coroutine = GameManager.LeaderUnit.MoveSkill.Use(GameManager.LeaderUnit, destination);
-                            instance.StartCoroutine(coroutine);
-                        }
-                    }
-                }
-                yield return null;
-            }*/
-        }
 
         public static void SummonPartyUnits(int index = 0)
         {
@@ -148,7 +107,7 @@ namespace View
             TurnEndButton.gameObject.SetActive(true);
             UnitControlView.panel.SetActive(true);
 
-            UnitControlView?.UpdateUI(unit);
+            UnitControlView?.UpdateSkillButtons(unit);
 
             //if (unit.Category != Category.Party)
             //    ThisTurnUnitInfo?.SetUnitInfo(unit, false);
@@ -242,7 +201,13 @@ namespace View
             SpriteRenderer spriteRenderer = obObj.AddComponent<SpriteRenderer>();
             
             if (ob.GetType().BaseType == typeof(Artifact))
-                spriteRenderer.sprite = ob.Sprite;
+            {
+                Artifact artifact = (Artifact) ob;
+                if (ob.Color != new Color(0,0,0,0))
+                    spriteRenderer.sprite = MakeOutline(ob.Sprite, ob.Color, Artifact.GradeToColor[artifact.Grade]);
+                else
+                    spriteRenderer.sprite = MakeOutline(ob.Sprite, Artifact.GradeToColor[artifact.Grade]);
+            }
             else 
             {
                 spriteRenderer.sprite = ob.Sprite;
@@ -274,6 +239,88 @@ namespace View
             unit.OnCurHP.after.RemoveAllListeners();
 
             // AgilityViewer.instance.DestroyObject(unit);
+        }
+
+        public static Sprite MakeOutline(Sprite value, Color outline)
+        {
+            Texture2D old = value.texture;
+            Rect rect = value.rect;
+            Texture2D texture = new Texture2D(18,18);
+            texture.filterMode = FilterMode.Point;
+
+            for (int y = 0; y < 18; y++)
+                for (int x = 0; x < 18; x++)
+                    texture.SetPixel(x,y, new Color(0,0,0,0));
+
+            for (int y = 0; y < 16; y++)
+                for (int x = 0; x < 16; x++)
+                {
+                    Color color = old.GetPixel((int)rect.x + x , (int)rect.y + y);
+
+                    if (color.a == 0)
+                        continue;
+
+                    color = outline;
+                    texture.SetPixel(x+2, y+1, color);
+                    texture.SetPixel(x, y+1, color);
+                    texture.SetPixel(x+1, y+2, color);
+                    texture.SetPixel(x+1, y, color);
+                }
+
+            for (int y = 0; y < 16; y++)
+                for (int x = 0; x < 16; x++)
+                {
+                    Color color = old.GetPixel((int)rect.x + x , (int)rect.y + y);
+                    if (color.a == 0)
+                        continue;
+                    texture.SetPixel(x+1, y+1, color);
+                }
+
+            texture.Apply();
+            rect = new Rect(0, 0, texture.width, texture.height);
+
+            return Sprite.Create(texture, rect, new Vector2(0.5f, 0.5f), 16);
+        }
+
+        public static Sprite MakeOutline(Sprite value, Color inline, Color outline)
+        {
+            Texture2D old = value.texture;
+            Rect rect = value.rect;
+            Texture2D texture = new Texture2D(18,18);
+            texture.filterMode = FilterMode.Point;
+
+            for (int y = 0; y < 18; y++)
+                for (int x = 0; x < 18; x++)
+                    texture.SetPixel(x,y, new Color(0,0,0,0));
+
+            for (int y = 0; y < 16; y++)
+                for (int x = 0; x < 16; x++)
+                {
+                    Color color = old.GetPixel((int)rect.x + x , (int)rect.y + y);
+
+                    if (color.a == 0)
+                        continue;
+
+                    color = outline;
+                    texture.SetPixel(x+2, y+1, color);
+                    texture.SetPixel(x, y+1, color);
+                    texture.SetPixel(x+1, y+2, color);
+                    texture.SetPixel(x+1, y, color);
+                }
+
+            for (int y = 0; y < 16; y++)
+                for (int x = 0; x < 16; x++)
+                {
+                    Color color = old.GetPixel((int)rect.x + x , (int)rect.y + y);
+                    if (color.a == 0)
+                        continue;
+                    texture.SetPixel(x+1, y+1, inline);
+                }
+
+            texture.Apply();
+            rect = new Rect(0, 0, texture.width, texture.height);
+
+            return Sprite.Create(texture, rect, new Vector2(0.5f, 0.5f), 16);
         }
     }
 }

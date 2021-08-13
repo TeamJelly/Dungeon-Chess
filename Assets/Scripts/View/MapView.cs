@@ -51,11 +51,7 @@ namespace View
         }
         public void Enable()
         {
-            if (IsClickBlock)
-                blockPanel.SetActive(true);
-            else
-                blockPanel.SetActive(false);
-            
+            blockPanel.SetActive(GameManager.InBattle);
             UIEffect.FadeInPanel(panel);
         }
         public void Disable()
@@ -113,8 +109,6 @@ namespace View
         /// <param name="AllRooms">생성할 모든 방에대한 정보를 가져온다.</param>
         public void InitStageUI(Room[,] AllRooms)
         {
-            IsClickBlock = true;
-
             AllRoomButtons = new PixelButton[AllRooms.GetLength(0), AllRooms.GetLength(1)];
 
             RectTransform rt = (RectTransform)contentPanel.transform;

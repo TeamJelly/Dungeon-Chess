@@ -11,6 +11,7 @@ namespace Model.Items
         {
             Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/colored_transparent_packed_559");
             Target = TargetType.Any;
+            Color = Color.white;
             //Debug.Log("!");
         }
 

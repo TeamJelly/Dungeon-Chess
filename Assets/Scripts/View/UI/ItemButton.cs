@@ -1,21 +1,28 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using Model;
+using Model.Managers;
 
 namespace View.UI
 {
 
-    public class SkillButton : PixelButton
+    public class ItemButton : PixelButton
     {
 
-        public Skill CurrentSkill => currentSkill;
-        Skill currentSkill = null;
-        Unit currentUnit = null;
+        public Item CurrentItem => currentItem;
+        Item currentItem = null;
 
         public void Init()
         {
             toggleOption = true;
-            OnPushButton = () => View.IndicatorView.ShowSkillIndicator(currentUnit, currentSkill);
+            OnPushButton = () => View.IndicatorView.ShowTileIndicator(FieldManager.instance.allTilesPosition, (v) =>
+            {
+                currentItem.Use(FieldManager.GetTile(v));
+                GameManager.Instance.itemBag.Remove(currentItem);
+
+                UnitControlView.instance.UpdateItemButtons();
+                IndicatorView.HideTileIndicator();
+            });
             OnPopButton = () => View.IndicatorView.HideTileIndicator();
         }
         public override void OnPointerDown(PointerEventData eventData)
@@ -29,24 +36,23 @@ namespace View.UI
             SetInteractable(true);
         }
 
-        public void SetSkill(Unit unit, Skill skill)
+        public void SetItem(Item item)
         {
-            currentSkill = skill;
-            currentUnit = unit;
+            currentItem = item;
 
-            if (skill == null)
+            if (item == null)
             {
                 MainImage.sprite = null; // 나중에 빈 이미지로 교체하기
                 return;
             }
 
-            MainImage.sprite = CurrentSkill.Sprite;
-            MainImage.color = currentSkill.Color;
+            MainImage.sprite = currentItem.Sprite;
+            MainImage.color = currentItem.Color;
         }
 
         public override void SetInteractable(bool boolean)
         {
-            properties.interactable = boolean && CurrentSkill != null && CurrentSkill.IsUsable(currentUnit);
+            properties.interactable = boolean && CurrentItem != null;
             FrameImage.color = properties.interactable ? Color.white : Color.grey;
         }
 
