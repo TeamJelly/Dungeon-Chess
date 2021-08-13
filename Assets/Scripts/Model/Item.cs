@@ -13,6 +13,11 @@ namespace Model
 
         public void BelongTo(Unit unit)
         {
+            if(unit.Alliance == UnitAlliance.Enemy)
+            {
+                unit.Belongings.Add(this);
+                return;
+            }
             if (GameManager.Instance.itemBag.Count == 3) return;
 
             GameManager.Instance.itemBag.Add(this);
