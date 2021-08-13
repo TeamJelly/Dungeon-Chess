@@ -92,10 +92,18 @@ namespace UI.Battle
             }
         }
 
+        public static void SetBattleMode(bool b)
+        {
+            BattleManager.instance.thisTurnUnit = null;
+            GameManager.InBattle = b;
+            BattleView.TurnEndButton.gameObject.SetActive(b);
+            UnitControlView.instance.skillPanel.SetActive(b);
+        }
+
         public void Win()
         {
-            Common.Command.UnSummonAllUnit();
-            BattleView.SetNonBattleMode();
+            //Common.Command.UnSummonAllUnit();
+            SetBattleMode(false);
         }
 
         public void Defeat()

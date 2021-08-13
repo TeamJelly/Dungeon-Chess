@@ -5,5 +5,5 @@ public interface Obtainable : Spriteable, Buyable
 {
     string Name{get; set;}
     Vector2Int Position{get; set;}
-    void ToBag();
+    void BelongTo(Unit unit);
 }

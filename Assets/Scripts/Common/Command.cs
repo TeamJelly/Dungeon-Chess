@@ -107,11 +107,11 @@ namespace Common
             target.Artifacts.Add(artifact);
             FadeOutTextView.MakeText(target.Position + Vector2Int.up, $"+{artifact.Name}", Color.yellow);
         }
-        public static void AddArtifact(Tile tile, Artifact artifact)
+        /*public static void AddArtifact(Tile tile, Artifact artifact)
         {
             if (tile.HasUnit()) 
                 AddArtifact(tile.GetUnit(), artifact);
-        }
+        }*/
         public static void RemoveArtifact(Unit target, Artifact artifact)
         {
             if (target.Artifacts.Contains(artifact))
