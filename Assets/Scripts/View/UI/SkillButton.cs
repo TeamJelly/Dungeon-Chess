@@ -24,6 +24,7 @@ namespace View.UI
             if (!properties.interactable) return;
             // 상호가능함을 반전시킨다.
             UnitControlView.instance.ToggleAllButtons();
+            Bag.instance.ToggleAllSlots();
 
             // 나 자신은 상호 가능하게 한다.
             SetInteractable(true);

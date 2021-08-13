@@ -20,14 +20,14 @@ namespace Common
             UnSummon(unit);
 
             // 소지 유물 뿌리기
-            List<Tile> tiles = FieldManager.GetBlankFloorTiles(unit.Belongings.Count);
+            List<Tile> tiles = FieldManager.GetBlankFloorTiles(unit.Artifacts.Count);
             int count = 0;
             foreach(Tile tile in tiles)
             {
-                Summon(unit.Belongings[count], tile.position);
+                Summon(unit.Artifacts[count], tile.position);
                 Vector3 startPos = new Vector3(unit.Position.x, unit.Position.y, 0.1f);
                 Vector3 target = new Vector3(tile.position.x, tile.position.y, 0.1f);
-                VisualEffectView.MakeDropEffect(startPos,target,unit.Belongings[count]);
+                VisualEffectView.MakeDropEffect(startPos,target,unit.Artifacts[count]);
                 count++;
             }
 
@@ -35,12 +35,8 @@ namespace Common
 
             BattleManager.instance.InitializeUnitBuffer();
 
-            //if (BattleManager.CheckGameState() != BattleManager.State.Continue)
-            if (GameManager.InBattle)
+            if (BattleManager.CheckGameState() != BattleManager.State.Continue)
                 BattleController.instance.ThisTurnEnd();
-
-            else if (BattleManager.instance.thisTurnUnit == unit) 
-                BattleManager.instance.thisTurnUnit = null;
         }
 
         // position 이동보다 좀더 확장된 이동
@@ -108,20 +104,20 @@ namespace Common
         {
             artifact.Owner = target;
             artifact.OnAdd();
-            target.Belongings.Add(artifact);
+            target.Artifacts.Add(artifact);
             FadeOutTextView.MakeText(target.Position + Vector2Int.up, $"+{artifact.Name}", Color.yellow);
         }
-        /*public static void AddArtifact(Tile tile, Artifact artifact)
+        public static void AddArtifact(Tile tile, Artifact artifact)
         {
             if (tile.HasUnit()) 
                 AddArtifact(tile.GetUnit(), artifact);
-        }*/
+        }
         public static void RemoveArtifact(Unit target, Artifact artifact)
         {
-            if (target.Belongings.Contains(artifact))
+            if (target.Artifacts.Contains(artifact))
             {
                 artifact.OnRemove();
-                target.Belongings.Remove(artifact);
+                target.Artifacts.Remove(artifact);
                 FadeOutTextView.MakeText(target.Position + Vector2Int.up, $"-{artifact.Name}", Color.yellow);
             }
             else

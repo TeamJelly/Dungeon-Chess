@@ -12,6 +12,20 @@ namespace Model
         public ArtifactGrade Grade { get; set; }
         public int Price { get; set; }
         
+
+        public Sprite sprite;
+
+        public override Sprite Sprite { 
+            get 
+            {
+                if (Color != new Color(0,0,0,0))
+                    return Common.Data.MakeOutline(sprite, Color, Artifact.GradeToColor[Grade]); 
+                else
+                    return Common.Data.MakeOutline(sprite, Artifact.GradeToColor[Grade]);
+            }            
+            set => sprite = value;
+        }
+
         public static Dictionary<ArtifactGrade, Color> GradeToColor = new Dictionary<ArtifactGrade, Color>()
         {
             {ArtifactGrade.Normal , new Color(0.5f,0.5f,0.5f,0.8f)},
@@ -19,12 +33,10 @@ namespace Model
             {ArtifactGrade.Legend , new Color(255/255f,0/255f,132/255f,0.8f)}
         };
 
-        public void BelongTo(Unit unit)
+        public void ToBag()
         {
-            Common.Command.AddArtifact(unit, this);
-            Common.Command.UnSummon(this);
-            //Managers.GameManager.Instance.artifactBag.Add(this);
-            //Debug.Log("GetArtifact");
+            Managers.GameManager.Instance.artifactBag.Add(this);
+            Debug.Log("GetArtifact");
         }
     }
 }

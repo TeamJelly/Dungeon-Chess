@@ -135,7 +135,7 @@ namespace Model
             {SkillCategory.Advanced, null}
         };
         private Dictionary<Skill, int> waitingSkills = new Dictionary<Skill, int>();
-        private List<Obtainable> belongings = new List<Obtainable>();    // 보유한 유물 및 아이템
+        private List<Artifact> artifacts = new List<Artifact>();    // 보유한 유물
         private List<Effect> stateEffects = new List<Effect>();  // 보유한 상태효과
         private List<Obtainable> droptems = new List<Obtainable>();
         private RuntimeAnimatorController animator; // 애니메이터
@@ -305,7 +305,7 @@ namespace Model
         }
 
         public Dictionary<Skill, int> WaitingSkills { get => waitingSkills; set => waitingSkills = value; }
-        public List<Obtainable> Belongings { get => belongings; set => belongings = value; }
+        public List<Artifact> Artifacts { get => artifacts; set => artifacts = value; }
         public List<Effect> StateEffects { get => stateEffects; set => stateEffects = value; }
         public int CriRate { get => criRate; set => criRate = value; }
 
@@ -319,7 +319,7 @@ namespace Model
                 foreach (var item in droptems)
                     obtainables.Add(item);
 
-                foreach (var item in Belongings)
+                foreach (var item in Artifacts)
                     obtainables.Add(item);
 
                 return obtainables;

@@ -1,7 +1,5 @@
-﻿using Model.Managers;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using View;
 
 namespace Model
 {
@@ -11,19 +9,9 @@ namespace Model
         public Vector2Int Position { get; set; }
         public int Price { get; set; }
 
-        public void BelongTo(Unit unit)
+        public void ToBag()
         {
-            if(unit.Alliance == UnitAlliance.Enemy)
-            {
-                unit.Belongings.Add(this);
-                return;
-            }
-            if (GameManager.Instance.itemBag.Count == 3) return;
-
-            GameManager.Instance.itemBag.Add(this);
-            Common.Command.UnSummon(this);
-            View.FadeOutTextView.MakeText(unit.Position + Vector2Int.up, $"{Name} 획득!", Color.yellow);
-            UnitControlView.instance.UpdateItemButtons();
+            Managers.GameManager.Instance.itemBag.Add(this);
         }
 
         public virtual List<Vector2Int> GetRelatePositions(Vector2Int position)

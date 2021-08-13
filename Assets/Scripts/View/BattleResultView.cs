@@ -9,7 +9,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Common;
-using UI.Battle;
 
 namespace View
 {
@@ -61,7 +60,7 @@ namespace View
                 UIEffect.FadeOutPanel(WinUI);
                 Common.Command.UnSummonAllUnit();
                 //StartCoroutine(BattleView.SetNonBattleMode());
-                BattleController.SetBattleMode(false);
+                BattleView.SetNonBattleMode();
             });
             UIEffect.FadeInPanel(WinUI, 2f);
         }

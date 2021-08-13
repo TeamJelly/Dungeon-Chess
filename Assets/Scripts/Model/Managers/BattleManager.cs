@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using View;
-using UI.Battle;
 
 namespace Model.Managers
 {
@@ -58,13 +57,12 @@ namespace Model.Managers
             unit.Skills[SkillCategory.Basic].Target = Skill.TargetType.Hostile;
 
             Common.Command.Summon(unit, new Vector2Int(4, 4));
-           
+            Common.Command.Summon(new Items.Heal(), new Vector2Int(3,3));
 
             Common.Command.AddArtifact(unit, new Model.Artifacts.test());
             Common.Command.AddArtifact(unit, new Model.Artifacts.test());
             Common.Command.AddArtifact(unit, new Model.Artifacts.test());
             Common.Command.AddArtifact(unit, new Model.Artifacts.test());
-            Common.Command.Summon(new Items.Heal(), new Vector2Int(3, 3));
 
             if (GameManager.PartyUnits.Count == 0)
             {
@@ -86,15 +84,24 @@ namespace Model.Managers
                 GameManager.PartyUnits.Add(unit);
                 unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
                 GameManager.PartyUnits.Add(unit);
-                //GameManager.LeaderUnit = GameManager.PartyUnits[0];
+                GameManager.LeaderUnit = GameManager.PartyUnits[0];
 
-               // Common.Command.AddEffect(GameManager.LeaderUnit,new Model.Effects.Poison(GameManager.LeaderUnit,3));
-               // Common.Command.AddEffect(GameManager.LeaderUnit,new Model.Effects.Poison(GameManager.LeaderUnit,3));
+                Common.Command.AddEffect(GameManager.LeaderUnit,new Model.Effects.Poison(GameManager.LeaderUnit,3));
+                Common.Command.AddEffect(GameManager.LeaderUnit,new Model.Effects.Poison(GameManager.LeaderUnit,3));
             }
 
-            BattleController.SetBattleMode(true);
-            BattleView.TurnEndButton.gameObject.SetActive(false);
-            BattleView.SummonPartyUnits();// 파티 유닛 최초 소환
+            GameManager.InBattle = true;
+
+            if (GameManager.InBattle)
+            {
+                BattleView.SummonPartyUnits();// 파티 유닛 최초 소환
+            }
+            else
+            {
+                GameManager.LeaderUnit.Position = FieldManager.instance.GetStairPosition();
+                //StartCoroutine(BattleView.SetNonBattleMode());
+                BattleView.SetNonBattleMode();
+            }
 
             // Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(6, 6));
             // Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(10, 5));

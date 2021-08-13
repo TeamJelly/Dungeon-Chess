@@ -34,6 +34,7 @@ namespace Model.Managers
         private int gold;
         public int stage;
 
+        Unit leader;
 
         bool inBattle = false;
         public int Gold
@@ -48,6 +49,8 @@ namespace Model.Managers
         }
         public static List<Unit> PartyUnits { get => Instance.partyUnits; }
 
+        public static Unit LeaderUnit 
+        { get { return instance.leader; } set => Instance.leader = value; }
 
         public static bool InBattle { get => Instance.inBattle; set => Instance.inBattle = value; }
 
@@ -71,6 +74,11 @@ namespace Model.Managers
         public static void RemovePartyUnit(Unit unit)
         {
             PartyUnits.Remove(unit);
+            if(unit == LeaderUnit)
+            {
+                if(PartyUnits.Count != 0) LeaderUnit = PartyUnits[0];
+                else LeaderUnit = null;
+            }
         }
     }
 }
