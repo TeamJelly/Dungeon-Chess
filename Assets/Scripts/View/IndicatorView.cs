@@ -60,7 +60,7 @@ namespace View
                                         // currentUnit.OnUseSkill.before();
 
                                         instance.StartCoroutine(currentSkill.Use(currentUnit, position));
-                                        BattleView.UnitControlView.RefreshButtons(currentUnit);
+                                        BattleView.UnitControlView.RefreshButtons();
                                         HideTileIndicator();
 
                                         // currentUnit.OnUseSkill.after();

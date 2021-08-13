@@ -50,7 +50,7 @@ public class UnitInfoUI : MonoBehaviour
             gameObject.transform.SetParent(Skills);
         }
 
-        foreach (Artifact artifact in unit.Artifacts)
+        foreach (Artifact artifact in unit.Belongings)
         {
             GameObject gameObject = Instantiate(infoBox, Belongings);
 

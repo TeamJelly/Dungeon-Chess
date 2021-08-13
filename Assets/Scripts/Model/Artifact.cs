@@ -33,10 +33,12 @@ namespace Model
             {ArtifactGrade.Legend , new Color(255/255f,0/255f,132/255f,0.8f)}
         };
 
-        public void ToBag()
+        public void BelongTo(Unit unit)
         {
-            Managers.GameManager.Instance.artifactBag.Add(this);
-            Debug.Log("GetArtifact");
+            Common.Command.AddArtifact(unit, this);
+            Common.Command.UnSummon(this);
+            //Managers.GameManager.Instance.artifactBag.Add(this);
+            //Debug.Log("GetArtifact");
         }
     }
 }

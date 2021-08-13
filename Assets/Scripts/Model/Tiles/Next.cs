@@ -4,6 +4,7 @@ using UnityEngine;
 using Model;
 using Model.Managers;
 using View;
+using UI.Battle;
 
 namespace Model.Tiles
 {
@@ -33,6 +34,8 @@ namespace Model.Tiles
             else
             {
                 Common.Command.UnSummon(unit);
+                BattleManager.instance.thisTurnUnit = null;
+                if (GameManager.InBattle) BattleController.instance.NextTurnStart();
             }
         }
     }

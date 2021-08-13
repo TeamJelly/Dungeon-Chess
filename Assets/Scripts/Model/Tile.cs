@@ -109,10 +109,8 @@ namespace Model
         {
             if (obtainable != null)
             {
-                obtainable.ToBag();
-                Bag.instance.UpdateUI();
-                View.FadeOutTextView.MakeText(unit.Position + Vector2Int.up, $"{obtainable.Name} 획득!", Color.yellow);
-                Common.Command.UnSummon(obtainable);
+                obtainable.BelongTo(unit);
+                //Bag.instance.UpdateUI();
             }
         }
     }
