@@ -9316,7 +9316,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &877247613
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10438,9 +10438,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1056051626}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edeb584b81b3ae64b9dfdd9d97d389ab, type: 3}
+  m_Script: {fileID: 11500000, guid: a90b48cfd1d85d541afc6922ae460cb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: {fileID: 1923418962}
+  Image: {fileID: 2010470336}
+  Description: {fileID: 605067465}
 --- !u!1 &1110094368
 GameObject:
   m_ObjectHideFlags: 0
@@ -35889,9 +35892,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1369105313}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edeb584b81b3ae64b9dfdd9d97d389ab, type: 3}
+  m_Script: {fileID: 11500000, guid: a90b48cfd1d85d541afc6922ae460cb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: {fileID: 800964655}
+  Image: {fileID: 1732055532}
+  Description: {fileID: 768678326}
 --- !u!1001 &1372747218
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36056,7 +36062,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileMap: {fileID: 0}
   tileBases:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 8d26b6da8e4a9784fac2876a60e5c215, type: 2}
   - {fileID: 11400000, guid: 6367e85228148e940a01758ece259ab3, type: 2}
   - {fileID: 11400000, guid: 767b7a6d27c28b7449fabc1decb69732, type: 2}
   - {fileID: 11400000, guid: 3457463e790c13746886d8ddaf4eda5d, type: 2}
@@ -36263,7 +36269,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.74509805, g: 0.74509805, b: 0.74509805, a: 0.39215687}
+  m_Color: {r: 0.19215688, g: 0.19215688, b: 0.19215688, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -37692,7 +37698,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.74509805, g: 0.74509805, b: 0.74509805, a: 0.39215687}
+  m_Color: {r: 0.19215688, g: 0.19215688, b: 0.19215688, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -37960,7 +37966,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -20, y: -20}
+  m_SizeDelta: {x: -30, y: -30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1732055532
 MonoBehaviour:
@@ -37975,7 +37981,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -38380,7 +38386,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1804398339}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52751434be51da945996b4d7a8928b09, type: 3}
+  m_Script: {fileID: 11500000, guid: f51ccf11bdb521e46a2a69f97067267d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Name: {fileID: 1351092136}
@@ -58185,8 +58191,6 @@ MonoBehaviour:
   cameraTransform: {fileID: 426805479}
   dragSpeed: 15
   isDraging: 0
-  infoUI: {fileID: 877247612}
-  unitInfoUI: {fileID: 1804398343}
 --- !u!114 &1995548204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58334,7 +58338,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -20, y: -20}
+  m_SizeDelta: {x: -30, y: -30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2010470336
 MonoBehaviour:
@@ -58349,7 +58353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -60847,6 +60851,7 @@ GameObject:
   - component: {fileID: 3255219562686038412}
   - component: {fileID: 3255219562686038413}
   - component: {fileID: 3255219562686038414}
+  - component: {fileID: 3255219562686038416}
   m_Layer: 5
   m_Name: PopupCanvas
   m_TagString: Untagged
@@ -60928,6 +60933,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   panel: {fileID: 1541887682245636682}
   slider: {fileID: 1541887682116251952}
+--- !u!114 &3255219562686038416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3255219562686038411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdcc13f1e590ee84e901badffd419aad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoPanel: {fileID: 877247612}
+  unitInfo: {fileID: 1804398343}
+  tileInfo: {fileID: 1369105317}
+  simpleInfo: {fileID: 1056051630}
 --- !u!114 &4508508707663762832
 MonoBehaviour:
   m_ObjectHideFlags: 0
