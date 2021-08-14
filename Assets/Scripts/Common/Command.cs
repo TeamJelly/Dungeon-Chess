@@ -102,7 +102,6 @@ namespace Common
             unit.CurEXP = 0;
             unit.NextEXP = 10 * unit.Level * (unit.Level + 5);            
         }
-
         
         public static void AddArtifact(Unit target, Artifact artifact)
         {
@@ -111,11 +110,7 @@ namespace Common
             target.Belongings.Add(artifact);
             FadeOutTextView.MakeText(target.Position + Vector2Int.up, $"+{artifact.Name}", Color.yellow);
         }
-        /*public static void AddArtifact(Tile tile, Artifact artifact)
-        {
-            if (tile.HasUnit()) 
-                AddArtifact(tile.GetUnit(), artifact);
-        }*/
+
         public static void RemoveArtifact(Unit target, Artifact artifact)
         {
             if (target.Belongings.Contains(artifact))
@@ -167,6 +162,8 @@ namespace Common
                 FieldManager.GetTile(target).SetUnit(unit);
                 BattleManager.instance.AllUnits.Add(unit);
                 BattleView.MakeUnitObject(unit);
+
+                FieldManager.GetTile(target).OnTile(unit);
             }
             else
                 Debug.LogError("이미 위치에 유닛이 존재합니다.");

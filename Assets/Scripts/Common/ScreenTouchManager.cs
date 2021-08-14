@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using View;
 using Model;
+using View.UI;
 
 public class ScreenTouchManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
 {

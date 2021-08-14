@@ -6,6 +6,7 @@ namespace Model.Items
     {
         public Heal()
         {
+            Name = "힐 포션";
             Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/monochrome_transparent_packed_705");
             Color = UnityEngine.Color.green;
             Target = TargetType.Any;
