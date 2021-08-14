@@ -7,7 +7,7 @@ using View;
 using Model;
 using View.UI;
 
-public class ScreenTouchManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
+public class ScreenTouchManager : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
 {
     public Vector2 LeftDownLimit = Vector2.zero;
     public Vector2 RightUpLimit = new Vector2(16, 16);
@@ -16,20 +16,14 @@ public class ScreenTouchManager : MonoBehaviour, IBeginDragHandler, IDragHandler
     Vector3 currentPos = Vector3.zero;
     Vector2 longClickPos = Vector2.zero;
 
+    public bool isDraging = false;
+
     public GameObject infoUI;
     public UnitInfoUI unitInfoUI;
 
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        currentPos = Camera.main.ScreenToViewportPoint(eventData.position);
-    }
-    private void OnMouseOver()
-    {
-        
-    }
-
     public void OnDrag(PointerEventData eventData)
     {
+        // 롱클릭 갱신용 위치
         longClickPos = eventData.position;
 
         Vector3 currentPos_bef = currentPos;
@@ -40,10 +34,23 @@ public class ScreenTouchManager : MonoBehaviour, IBeginDragHandler, IDragHandler
         nextPos.y = Mathf.Clamp(nextPos.y, LeftDownLimit.y, RightUpLimit.y);
         cameraTransform.position = nextPos;
     }
+    
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        currentPos = Camera.main.ScreenToViewportPoint(eventData.position);
+        isDraging = true;
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        isDraging = false;
+    }
 
     IEnumerator coroutine = null;
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (isDraging) return;
+
         Vector3 mousepos = Camera.main.ScreenToWorldPoint(eventData.position) + Vector3.one * 0.5f;
 
         if (mousepos.x < LeftDownLimit.x || mousepos.x >= RightUpLimit.x || mousepos.y < LeftDownLimit.y || mousepos.y >= RightUpLimit.y) return;
@@ -57,7 +64,6 @@ public class ScreenTouchManager : MonoBehaviour, IBeginDragHandler, IDragHandler
         }
         else if (!GameManager.InBattle)
         {
-
             if (coroutine != null) return;
 
             if (FieldManager.GetTile(tileIdx).HasUnit())
@@ -74,7 +80,6 @@ public class ScreenTouchManager : MonoBehaviour, IBeginDragHandler, IDragHandler
                 StartCoroutine(coroutine);
             }
         }
-
     }
 
     IEnumerator move(Unit user, Vector2Int target)
@@ -109,9 +114,10 @@ public class ScreenTouchManager : MonoBehaviour, IBeginDragHandler, IDragHandler
         Debug.Log("pointer down");
         if (longclick == null)
         {
-            Vector2 mousepos = eventData.position;
-            longClickPos = mousepos;
-            longclick = LongClick(mousepos);
+            // 롱클릭 시작 위치
+            Vector2 longClickStart = eventData.position;
+            longClickPos = longClickStart;
+            longclick = LongClick(longClickStart);
             StartCoroutine(longclick);
         }
     }
@@ -127,16 +133,18 @@ public class ScreenTouchManager : MonoBehaviour, IBeginDragHandler, IDragHandler
     
     IEnumerator LongClick(Vector2 target)
     {
-        //Debug.Log("롱클릭 시작" + longClickPos);
-
         yield return new WaitForSeconds(1f);
-
-        Debug.Log(target +", "+ longClickPos + ", "+ (target - longClickPos).magnitude);
 
         if ((target - longClickPos).magnitude < Screen.width / 10)
         {
             Vector3 mousepos = Camera.main.ScreenToWorldPoint(target) + Vector3.one * 0.5f;
             Vector2Int tileIdx = new Vector2Int((int)mousepos.x,(int)mousepos.y);
+            if (FieldManager.IsInField(tileIdx))
+            {
+                Tile tile = FieldManager.GetTile(tileIdx);
+
+            }
+
             Unit unit = BattleManager.GetUnit(tileIdx);
             if (unit != null)
             {
@@ -145,4 +153,5 @@ public class ScreenTouchManager : MonoBehaviour, IBeginDragHandler, IDragHandler
             }
         }
     }
+
 }
