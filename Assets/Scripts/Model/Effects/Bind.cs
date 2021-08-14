@@ -10,7 +10,6 @@ namespace Model.Effects
     {
         public Bind(Unit owner) : base(owner)
         {
-            Number = 4;
             Name = "속박";
             Description = "유닛이 한 턴동안 움직이지 못합니다.";
         }

@@ -11,7 +11,6 @@ namespace Model
         public Vector2Int Position { get; set; }
         public ArtifactGrade Grade { get; set; }
         public int Price { get; set; }
-        
 
         public Sprite sprite;
 
@@ -24,6 +23,11 @@ namespace Model
                     return Common.Data.MakeOutline(sprite, Artifact.GradeToColor[Grade]);
             }            
             set => sprite = value;
+        }
+        
+        public override void OnOverlap(Effect oldEffect)
+        {
+            // nothing
         }
 
         public static Dictionary<ArtifactGrade, Color> GradeToColor = new Dictionary<ArtifactGrade, Color>()

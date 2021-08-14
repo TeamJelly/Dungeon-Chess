@@ -10,7 +10,7 @@ namespace Model.Skills.Basic
         private int[] fixedDam;
         public Slash() : base()
         {
-            Name = "베기";
+            Name = "Slash";
             Priority = Common.AI.Priority.NULL;
             Target = TargetType.Any;
             Range = RangeType.Fixed;

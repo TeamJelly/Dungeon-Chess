@@ -118,10 +118,10 @@ namespace Model.Managers
             {
                 for (int x = 0; x < field.GetLength(1); x++)
                 {
-                    Debug.Log($"{y}, {x} : {field[y, x].category}");
                     char c = (char)field[y, x].category;
                     int i = tileBasesChar.IndexOf(c);
-                    tileMap.SetTile(new Vector3Int(x, y, 0), tileBases[i]);
+                    Vector3Int position = new Vector3Int(x, y, 0);
+                    tileMap.SetTile(position, tileBases[i]);
                 }
             }
         }

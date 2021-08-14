@@ -7,10 +7,15 @@ using View.UI;
 namespace Model
 {
     [System.Serializable]
-    public class Tile
+    public class Tile : Infoable
     {
-        public int number;
-        public string name;
+        public string Name { get => category.ToString() + " tile"; }
+
+        public Sprite Sprite { get => Model.Managers.FieldManager.instance.tileMap.GetSprite(new Vector3Int(position.x, position.y, 0)); }
+
+        public Color Color { get; set; }
+
+        public string Description { get; set; }
 
         public Vector2Int position;
 

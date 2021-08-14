@@ -1,9 +1,8 @@
 ﻿using Model;
 using UnityEngine;
 
-public interface Obtainable : Spriteable, Buyable
+public interface Obtainable : Infoable, Buyable
 {
-    string Name{get; set;}
     Vector2Int Position{get; set;}
     void BelongTo(Unit unit);
 }

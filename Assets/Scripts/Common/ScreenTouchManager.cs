@@ -18,9 +18,6 @@ public class ScreenTouchManager : MonoBehaviour, IDragHandler, IBeginDragHandler
 
     public bool isDraging = false;
 
-    public GameObject infoUI;
-    public UnitInfoUI unitInfoUI;
-
     public void OnDrag(PointerEventData eventData)
     {
         // 롱클릭 갱신용 위치
@@ -141,15 +138,17 @@ public class ScreenTouchManager : MonoBehaviour, IDragHandler, IBeginDragHandler
             Vector2Int tileIdx = new Vector2Int((int)mousepos.x,(int)mousepos.y);
             if (FieldManager.IsInField(tileIdx))
             {
+                InfoView.instance.infoPanel.SetActive(true);
                 Tile tile = FieldManager.GetTile(tileIdx);
+                InfoView.Show(tile);
 
-            }
+                Unit unit = tile.GetUnit();
+                if (unit != null)
+                    InfoView.Show(unit);
 
-            Unit unit = BattleManager.GetUnit(tileIdx);
-            if (unit != null)
-            {
-                infoUI.SetActive(true);
-                unitInfoUI.SetUnit(unit);
+                Obtainable obtainable = tile.GetObtainable();
+                if (obtainable != null)
+                    InfoView.Show(obtainable);
             }
         }
     }

@@ -11,7 +11,7 @@ namespace Model.Skills.Basic
 
         public Fireball() : base()
         {
-            Name = "화염구";
+            Name = "Fire Ball";
             Priority = Common.AI.Priority.NULL;
             Target = TargetType.Any;
             Range = RangeType.Fixed;

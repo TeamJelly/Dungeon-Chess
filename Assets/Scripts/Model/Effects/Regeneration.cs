@@ -11,7 +11,6 @@ namespace Model.Effects
 
         public Regeneration(Unit owner, int turnCount) : base(owner, turnCount)
         {
-            Number = 5;
             Name = "재생";
             Description = $"턴을 시작할때 체력 10을 회복합니다. 남은 턴 : {turnCount}";
         }

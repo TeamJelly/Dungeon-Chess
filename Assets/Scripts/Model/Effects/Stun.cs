@@ -8,7 +8,6 @@ namespace Model.Effects
     {
         public Stun(Unit owner) : base(owner)
         {
-            Number = 4;
             Name = "기절";
             Description = "유닛이 한 턴동안 행동하지 못합니다.";
         }

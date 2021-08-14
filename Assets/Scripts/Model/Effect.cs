@@ -2,11 +2,12 @@
 
 namespace Model
 {
-    public class Effect : Spriteable
+    public class Effect : Infoable
     {
         public Unit Owner { get; set; }
         public string Name { get; set; }
-        public int Number { get; set; }
+        public virtual Sprite Sprite { get; set; }
+        public Color Color {get; set;}
         public string Description { get; set; }
 
         private int turnCount;
@@ -15,9 +16,6 @@ namespace Model
             get => turnCount;
             set => turnCount = value;
         }
-
-        public virtual Sprite Sprite { get; set; }
-        public Color Color {get; set;}
 
         public Effect()
         {

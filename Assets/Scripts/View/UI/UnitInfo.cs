@@ -1,153 +1,109 @@
-﻿// using System.Collections;
-// using System.Collections.Generic;
-// using TMPro;
-// using UnityEngine;
-// using UnityEngine.EventSystems;
-// using UnityEngine.UI;
-// using Model;
-// using View;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using Model;
 
-// namespace View.UI
-// {
-//     public class UnitInfo : MonoBehaviour
-//     {
-//         [SerializeField]
-//         private TextMeshProUGUI Name;
-//         [SerializeField]
-//         private Image Image;
-//         [SerializeField]
-//         private TextMeshProUGUI StatusText;
-//         [SerializeField]
-//         private SkillSlotUI[] Skills;
-//         [SerializeField]
-//         private Button currentPushedButton;
-//         [SerializeField]
-//         private Unit unit;
-//         [SerializeField]
-//         private bool interactable;
-//         [SerializeField]
-//         private Sprite noSprite;
-//         [SerializeField]
-//         private TextMeshProUGUI EffectsText;
+namespace View.UI
+{
+    public class UnitInfo : MonoBehaviour
+    {
+        public TextMeshProUGUI Name;
+        public Image Portrait;
+        public TextMeshProUGUI Status;
 
-//         [System.Serializable]
-//         private class SkillSlotUI
-//         {
-//             public Transform transform;
-//             public TextMeshProUGUI name;
-//             public TextMeshProUGUI count;
-//             public Image image;
-//             public Button button;
+        public RectTransform Skills;
+        public RectTransform Belongings;
+        public RectTransform Effects;
 
-//             public SkillSlotUI(Transform _transform)
-//             {
-//                 transform = _transform;
-//                 button = _transform.GetComponent<Button>();
-//                 image = _transform.Find("Image").GetComponent<Image>();
-//                 name = _transform.Find("Name").GetComponent<TextMeshProUGUI>();
-//                 count = _transform.Find("Image/Count").GetComponent<TextMeshProUGUI>();
-//             }
-//         }
+        public GameObject infoBox;
 
-//         Sprite NoSkill
-//         {
-//             get
-//             {
-//                 if (noSprite == null)
-//                     noSprite = Resources.Load<Sprite>("1bitpack_kenney_1/Tilesheet/-");
-//                 return noSprite;
-//             }
-//         }
+        public void SetUnit(Unit unit)
+        {
+            Name.text = $"{unit.Modifier} {unit.Name}";
+            Portrait.sprite = unit.Sprite;
+            Status.text = $"{unit.Level}\n{unit.CurHP}/{unit.MaxHP}\n{unit.CurEXP}/{unit.NextEXP}\n{unit.Strength}\n{unit.Agility}\n{unit.Mobility}";
 
-//         public Button CurrentPushedButton { get => currentPushedButton; set => currentPushedButton = value; }
-//         public Unit Unit { get => unit; set => unit = value; }
+            Transform[] childList = Skills.transform.GetComponentsInChildren<Transform>();
+            for (int i = 1; i < childList.Length; i++)
+                Destroy(childList[i].gameObject);
+            Skills.sizeDelta = Vector2.zero;
+            childList = Belongings.transform.GetComponentsInChildren<Transform>();
+            for (int i = 1; i < childList.Length; i++)
+                Destroy(childList[i].gameObject);
+            childList = Effects.transform.GetComponentsInChildren<Transform>();
+            Belongings.sizeDelta = Vector2.zero;
+            for (int i = 1; i < childList.Length; i++)
+                Destroy(childList[i].gameObject);
+            Effects.sizeDelta = Vector2.zero;
 
-//         private void Awake()
-//         {
-//             Name = transform.Find("Name").GetComponent<TextMeshProUGUI>();
-//             Image = transform.Find("ImagePanel/Image").GetComponent<Image>();
-//             StatusText = transform.Find("Status/ParameterText").GetComponent<TextMeshProUGUI>();
+            foreach (Skill skill in unit.Skills.Values)
+            {
+                GameObject gameObject = Instantiate(infoBox, Skills);
 
-//             Skills[0] = new SkillSlotUI(transform.Find("SkillPanel/SkillIconPanel/Skill1"));
-//             Skills[1] = new SkillSlotUI(transform.Find("SkillPanel/SkillIconPanel/Skill2"));
-//             Skills[2] = new SkillSlotUI(transform.Find("SkillPanel/SkillIconPanel/Skill3"));
-//             Skills[3] = new SkillSlotUI(transform.Find("SkillPanel/SkillIconPanel/Skill4"));
-//             EffectsText = transform.Find("EffectsText").GetComponent<TextMeshProUGUI>();
-//         }
+                Image image = gameObject.transform.Find("Image").GetComponent<Image>();
+                image.sprite = skill.Sprite;
+                if (image.color != new Color(0, 0, 0, 0))
+                    image.color = skill.Color;
 
-//         public void SetUnitInfo(Unit unit, bool interactable)
-//         {
-//             this.unit = unit;
-//             this.interactable = interactable;
+                Rect rect = gameObject.GetComponent<RectTransform>().rect;
+                Skills.sizeDelta = Skills.rect.size + new Vector2(rect.width, 0);
+                gameObject.transform.SetParent(Skills);
 
-//             UpdateUnitInfo();
-//         }
+                Button button = gameObject.GetComponent<Button>();
+                button.onClick.AddListener(() => InfoView.Show(unit, skill));
+            }
 
-//         public void UpdateUnitInfo()
-//         {
-//             Name.text = unit.Name;
-//             Image.sprite = unit.Sprite;
-//             StatusText.text = $"{unit.Alliance}\n" +
-//                 $"{unit.Level}\n" +
-//                 $"{unit.CurHP}/{unit.MaxHP}\n" +
-//                 $"{unit.CurEXP}/{unit.NextEXP}\n" +
-//                 $"{unit.Strength}\n" +
-//                 $"{unit.Agility}\n" +
-//                 $"{unit.Move}";
+            foreach (Obtainable obtainable in unit.Belongings)
+            {
+                GameObject gameObject = Instantiate(infoBox, Belongings);
 
-//             string EffectList = "";
-//             foreach (var effect in unit.StateEffects)
-//                 EffectList += $"({effect.Name})";
+                Image image = gameObject.transform.Find("Image").GetComponent<Image>();
+                image.sprite = obtainable.Sprite;
 
-//             EffectsText.text = EffectList;
+                Rect rect = gameObject.GetComponent<RectTransform>().rect;
+                Belongings.sizeDelta = Belongings.rect.size + new Vector2(rect.width, 0);
+                gameObject.transform.SetParent(Belongings);
 
-//             SetSkillSlot(Move, unit.MoveSkill);
+                Button button = gameObject.GetComponent<Button>();
+                button.onClick.AddListener(() => InfoView.Show(obtainable));
+            }
 
-//             for (int i = 0; i < unit.Skills.Length; i++)
-//                 SetSkillSlot(Skills[i], unit.Skills[i]);
-//         }
+            foreach (Effect effect in unit.StateEffects)
+            {
+                GameObject gameObject = Instantiate(infoBox, Effects);
 
-//         private void SetSkillSlot(SkillSlotUI slot, Skill skill)
-//         {
-//             // 스킬이 없을 경우
-//             if (skill == null)
-//             {
-//                 slot.button.interactable = false;
-//                 slot.image.sprite = NoSkill;
-//                 slot.name.text = "";
-//                 slot.count.text = "";
-//                 return;
-//             }
-//             // 스킬이 있다.
-//             slot.button.interactable = false;
-//             slot.image.sprite = skill.Sprite;
-//             slot.name.text = skill.Level == 0 ? $"{skill.Name}" : $"{skill.Name} <color=#FF0000>+{skill.Level}</color>";
-//             slot.count.text = skill.CurReuseTime == 0 ? "" : $"{skill.CurReuseTime}";
+                Image image = gameObject.transform.Find("Image").GetComponent<Image>();
+                image.sprite = effect.Sprite;
 
-//             // 아무 버튼도 안눌러져 있고, 이 버튼을 누를수 있는 경우
-//             if (currentPushedButton == null && skill.IsUsable(unit) && interactable == true)
-//             {
-//                 slot.button.interactable = true;
-//                 slot.button.onClick.RemoveAllListeners();
-//                 slot.button.onClick.AddListener(() =>
-//                 {
-//                     View.IndicatorView.ShowSkillIndicator(unit, skill);
-//                     currentPushedButton = slot.button;
-//                     UpdateUnitInfo();
-//                 });
-//             }
-//             // 이미 이 버튼이 눌려있는 경우
-//             else if (currentPushedButton == slot.button)
-//             {
-//                 slot.button.interactable = true;
-//                 slot.button.onClick.RemoveAllListeners();
-//                 slot.button.onClick.AddListener(() =>
-//                 {
-//                     View.IndicatorView.HideTileIndicator();
-//                     currentPushedButton = null;
-//                     UpdateUnitInfo();
-//                 });
-//             }
-//         }
-//     }
-// }
+                Rect rect = gameObject.GetComponent<RectTransform>().rect;
+                Effects.sizeDelta = Effects.rect.size + new Vector2(rect.width, 0);
+                gameObject.transform.SetParent(Effects);
+
+                Button button = gameObject.GetComponent<Button>();
+                button.onClick.AddListener(() => InfoView.Show(effect));
+            }
+        }
+
+        private void OnValidate()
+        {
+            Name = transform.Find("Name/Text").GetComponent<TextMeshProUGUI>();
+            Status = transform.Find("Status/Parameter").GetComponent<TextMeshProUGUI>();
+            Portrait = transform.Find("Portrait/Image").GetComponent<Image>();
+
+            Skills = transform.Find("Skills/Viewport/Content").GetComponent<RectTransform>();
+            Skills.sizeDelta = Vector2.zero;
+
+            Belongings = transform.Find("Belongings/Viewport/Content").GetComponent<RectTransform>();
+            Belongings.sizeDelta = Vector2.zero;
+
+            Effects = transform.Find("Effects/Viewport/Content").GetComponent<RectTransform>();
+            Effects.sizeDelta = Vector2.zero;
+
+            infoBox = Resources.Load<GameObject>("Prefabs/UI/InfoBox");
+        }
+
+    }
+
+}

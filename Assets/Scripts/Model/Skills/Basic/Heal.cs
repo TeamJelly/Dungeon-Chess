@@ -10,7 +10,7 @@ namespace Model.Skills.Basic
 
         public Heal() : base()
         {
-            Name = "힐";
+            Name = "Heal";
             Priority = Common.AI.Priority.NULL;
             Target = TargetType.Any;
             Range = RangeType.Fixed;

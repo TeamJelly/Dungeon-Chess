@@ -23,7 +23,6 @@ namespace Model.Effects
         /// <param name="turnCount">배리어의 지속 턴 수</param>
         public Barrier(Unit owner, int barrierCount) : base(owner)
         {
-            Number = 21;
             Name = "배리어";
             Description = $"보호막의 수({barrierCount}) 만큼 공격의 데미지를 무효화 한다.";
             BarrierCount = barrierCount;

@@ -17,7 +17,7 @@ namespace Model
     }
 
     [System.Serializable]
-    public class Skill : Spriteable
+    public class Skill : Infoable
     {
         // 스킬 카테고리
 
@@ -157,7 +157,7 @@ namespace Model
 
         public virtual string GetDescription(Unit user)
         {
-            return Description;
+            return "스킬 설명";
         }
     }
 }

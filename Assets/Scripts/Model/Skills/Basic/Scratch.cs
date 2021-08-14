@@ -10,7 +10,7 @@ namespace Model.Skills.Basic
         private int[] fixedDam;
         public Scratch() : base()
         {
-            Name = "할퀴기";
+            Name = "Scratch";
             Priority = Common.AI.Priority.NULL;
             Target = TargetType.Hostile;
             Range = RangeType.Fixed;

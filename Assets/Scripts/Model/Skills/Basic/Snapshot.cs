@@ -10,7 +10,7 @@ namespace Model.Skills.Basic
         private int[] fixedDam;
         public Snapshot() : base()
         {
-            Name = "속사";
+            Name = "Snap Shot";
             Priority = Common.AI.Priority.NULL;
             Target = TargetType.Any;
             Range = RangeType.Fixed;

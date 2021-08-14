@@ -13,7 +13,6 @@ namespace Model.Effects
 
         public Poison(Unit owner, int turnCount) : base(owner, turnCount)
         {
-            Number = 5;
             Name = "독";
             Description = $"턴을 시작할때 체력 10을 차감합니다. 남은 턴 : {turnCount}";
         }
