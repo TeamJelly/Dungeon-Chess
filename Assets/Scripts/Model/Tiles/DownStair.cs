@@ -5,11 +5,18 @@ using Model;
 using Model.Managers;
 using View;
 using UI.Battle;
+using UnityEngine.Tilemaps;
 
 namespace Model.Tiles
 {
-    public class Next : Tile
+    public class DownStair : Tile
     {
+        public DownStair()
+        {
+            TileBase = Resources.Load<TileBase>("1bitpack_kenney_1/Tilesheet/TileBases/stair_down");
+            category = TileCategory.DownStair;
+        }
+
         public override void OnTile(Unit unit)
         {
             base.OnTile(unit);

@@ -4,11 +4,18 @@ using UnityEngine;
 using Model;
 using Model.Managers;
 using View.UI;
+using UnityEngine.Tilemaps;
 
 namespace Model.Tiles
 {
     public class Sell : Tile
     {
+        public Sell()
+        {
+            TileBase = Resources.Load<TileBase>("1bitpack_kenney_1/Tilesheet/TileBases/Sell");
+            category = TileCategory.Sell;
+        }
+
         public override void OnTile(Unit unit)
         {
             if(obtainable != null && unit.Alliance == UnitAlliance.Party)

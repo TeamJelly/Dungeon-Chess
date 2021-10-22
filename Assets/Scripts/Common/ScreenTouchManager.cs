@@ -57,7 +57,7 @@ public class ScreenTouchManager : MonoBehaviour, IDragHandler, IBeginDragHandler
 
         if (IndicatorView.TileIndicatorParent.activeSelf)
         {
-            IndicatorView.TileIndicators[tileIdx.x, tileIdx.y].GetComponent<EventTrigger>().OnPointerClick(null);
+            IndicatorView.TileIndicators[tileIdx.y, tileIdx.x].GetComponent<EventTrigger>().OnPointerClick(null);
         }
         else if (!GameManager.InBattle)
         {
@@ -108,7 +108,7 @@ public class ScreenTouchManager : MonoBehaviour, IDragHandler, IBeginDragHandler
     IEnumerator longclick = null;
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("pointer down");
+        // Debug.Log("pointer down");
         if (longclick == null)
         {
             // 롱클릭 시작 위치

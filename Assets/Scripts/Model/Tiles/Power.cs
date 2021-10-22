@@ -3,11 +3,18 @@ using UnityEngine;
 using Model;
 using Model.Managers;
 using View;
+using UnityEngine.Tilemaps;
 
 namespace Model.Tiles
 {
     public class Power : Tile
     {
+        public Power()
+        {
+            TileBase = Resources.Load<TileBase>("1bitpack_kenney_1/Tilesheet/TileBases/Strength");
+            category = TileCategory.Power;
+        }
+
         public int strength = 3;
 
         public override void OnTile(Unit unit)

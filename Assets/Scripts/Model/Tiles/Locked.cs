@@ -1,18 +1,20 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using Model;
+﻿using UnityEngine;
 using Model.Managers;
-using View;
+using UnityEngine.Tilemaps;
 
 namespace Model.Tiles
 {
     public class Locked : Tile
     {
-        public object TileManager { get; private set; }
+        public Locked()
+        {
+            TileBase = Resources.Load<TileBase>("1bitpack_kenney_1/Tilesheet/TileBases/Locked");
+            category = TileCategory.Locked;
+        }
 
         public void Unlock()
         {
-            category = Category.UnLocked;
+            category = TileCategory.UnLocked;
             FieldManager.instance.UpdateTile(this);
         }
     }

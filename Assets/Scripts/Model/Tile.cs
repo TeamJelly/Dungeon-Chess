@@ -1,11 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Tilemaps;
-using View.UI;
 
 namespace Model
 {
+    public enum TileCategory
+    {
+        Floor,
+        Wall,
+        UpStair,
+        DownStair,
+        Thorn,
+        Hole,
+        Sell,
+        Heal,
+        Power,
+        Locked,
+        UnLocked,
+    };
+
+
     [System.Serializable]
     public class Tile : Infoable
     {
@@ -13,35 +26,19 @@ namespace Model
 
         public Sprite Sprite { get => Model.Managers.FieldManager.instance.tileMap.GetSprite(new Vector3Int(position.x, position.y, 0)); }
 
+        public TileBase TileBase { get; set; }
+        
+        public TileCategory category;
+
         public Color Color { get; set; }
 
         public string Description { get; set; }
 
         public Vector2Int position;
 
-        public enum Category
-        {
-            Floor       = 'F',
-            Wall        = 'W',
-            Back        = 'B',
-            Next        = 'N',
-            Thorn       = 'T',
-            Void        = 'V',
-            Sell        = 'S',
-            Heal        = 'H',
-            Power       = 'P',
-            Locked      = 'L',
-            UnLocked    = 'U',
-        };
-
-        public Category category;
-
         protected Unit unit = null;
 
         protected Obtainable obtainable = null;
-
-
-        public Tile() { }
 
         // 인자로 넘긴 해당 유닛이 위치할수 있는지를 검사한다.
         public bool IsPositionable(Unit unit)
@@ -51,9 +48,9 @@ namespace Model
             else if (
                     unit.IsFlying == false && // 유닛이 날고있다면 위치 가능하다.
                     (
-                        category == Category.Wall ||
-                        category == Category.Void ||
-                        category == Category.Locked
+                        category == TileCategory.Wall ||
+                        category == TileCategory.Hole ||
+                        category == TileCategory.Locked
                     )
                 )
                 return false;
@@ -71,7 +68,7 @@ namespace Model
             if (HasUnit() || HasObtainable())
                 return false;
             // 벽이거나 구멍이면 false
-            else if (category == Category.Wall || category == Category.Void || category == Category.Locked)
+            else if (category == TileCategory.Wall || category == TileCategory.Hole || category == TileCategory.Locked)
                 return false;
             // 이외의 경우에 가능하다.
             else

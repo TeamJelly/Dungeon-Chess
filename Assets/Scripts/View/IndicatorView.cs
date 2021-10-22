@@ -40,13 +40,13 @@ namespace View
                 {
                     tileIndicators = new GameObject[FieldManager.GetField().GetLength(0), FieldManager.GetField().GetLength(1)];
 
-                    for (int i = 0; i < tileIndicators.GetLength(0); i++)
-                        for (int j = 0; j < tileIndicators.GetLength(1); j++)
+                    for (int y = 0; y < tileIndicators.GetLength(0); y++)
+                        for (int x = 0; x < tileIndicators.GetLength(1); x++)
                         {
-                            tileIndicators[i, j] = Instantiate(instance.tileIndicatorPrefab, new Vector3(i, j, -1), Quaternion.identity, TileIndicatorParent.transform);
+                            tileIndicators[y, x] = Instantiate(instance.tileIndicatorPrefab, new Vector3(x, y, -1), Quaternion.identity, TileIndicatorParent.transform);
 
-                            EventTrigger eventTrigger = tileIndicators[i, j].GetComponent<EventTrigger>();
-                            Vector2Int position = new Vector2Int(i, j);
+                            EventTrigger eventTrigger = tileIndicators[y, x].GetComponent<EventTrigger>();
+                            Vector2Int position = new Vector2Int(x, y);
 
                             EventTrigger.Entry entry = new EventTrigger.Entry();
                             entry.eventID = EventTriggerType.PointerClick;
@@ -122,7 +122,7 @@ namespace View
         private static void ChangeTileIndicatorColor(Vector2Int position, Color color)
         {
             if (FieldManager.IsInField(position))
-                TileIndicators[position.x, position.y].GetComponent<SpriteRenderer>().color = color;
+                TileIndicators[position.y, position.x].GetComponent<SpriteRenderer>().color = color;
         }
 
         public static void ShowSkillIndicator(Unit user, Skill skill)
@@ -142,10 +142,10 @@ namespace View
             List<Vector2Int> RelatedPosition = position != null ? currentSkill.GetRelatePositions(currentUnit, (Vector2Int)position) : new List<Vector2Int>();
             curPosition = position;
 
-            for (int i = 0; i < TileIndicators.GetLength(0); i++)
-                for (int j = 0; j < TileIndicators.GetLength(1); j++)
+            for (int y = 0; y < TileIndicators.GetLength(0); y++)
+                for (int x = 0; x < TileIndicators.GetLength(1); x++)
                 {
-                    Vector2Int tempPosition = new Vector2Int(i, j);
+                    Vector2Int tempPosition = new Vector2Int(x, y);
 
                     if (RelatedPosition.Contains(tempPosition))
                         ChangeTileIndicatorColor(tempPosition, instance.subPossibleColor);
@@ -189,10 +189,10 @@ namespace View
             List<Vector2Int> RelatedPosition = position != null ? TileRelativeFunc((Vector2Int)position) : new List<Vector2Int>();
             curPosition = position;
 
-            for (int i = 0; i < TileIndicators.GetLength(0); i++)
-                for (int j = 0; j < TileIndicators.GetLength(1); j++)
+            for (int y = 0; y < TileIndicators.GetLength(0); y++)
+                for (int x = 0; x < TileIndicators.GetLength(1); x++)
                 {
-                    Vector2Int tempPosition = new Vector2Int(i, j);
+                    Vector2Int tempPosition = new Vector2Int(x, y);
                     if (RelatedPosition.Contains(tempPosition))
                         ChangeTileIndicatorColor(tempPosition, instance.subPossibleColor);
                     else if (curAvlPositions.Contains(tempPosition))

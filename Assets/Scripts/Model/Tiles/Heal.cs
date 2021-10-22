@@ -1,14 +1,19 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using Model;
-using Model.Managers;
-using View;
+using UnityEngine.Tilemaps;
 
 namespace Model.Tiles
 {
     public class Heal : Tile
     {
+        public Heal()
+        {
+            TileBase = Resources.Load<TileBase>("1bitpack_kenney_1/Tilesheet/TileBases/Heal");
+            category = TileCategory.Heal;
+        }
+        
         public int heal = 3;
+
         public override void OnTile(Unit newUnit)
         {
             base.OnTile(newUnit);

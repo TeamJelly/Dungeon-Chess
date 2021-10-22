@@ -47,8 +47,25 @@ namespace Model.Managers
 
         private void Start()
         {
+            FieldManager.FieldData temp = new FieldManager.FieldData(16, 16,
+            "WL WL WL WL WL WL WL WL WL WL WL WL WL WL WL WL \n" +
+            "WL PW HL PW PW FR FR FR FR FR SL SL SL LK DS WL \n" +
+            "WL PW PW HL PW FR FR FR FR FR SL SL SL LK LK WL \n" +
+            "WL FR HL FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+            "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+            "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+            "WL TN TN TN TN TN TN TN TN TN TN TN TN TN TN WL \n" +
+            "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+            "WL FR FR FR FR FR WL WL FR FR FR FR FR FR FR WL \n" +
+            "WL FR FR FR FR FR WL WL FR FR FR FR FR FR FR WL \n" +
+            "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+            "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+            "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+            "WL FR US FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+            "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+            "WL WL WL WL WL WL WL WL WL WL WL WL WL WL WL WL ");
 
-            FieldManager.instance.InitField(FieldManager.instance.FieldDatas[0]);
+            FieldManager.instance.InitField(temp);
 
             // 테스팅 적 유닛 소환
             Unit unit = new Unit(UnitAlliance.Enemy, UnitSpecies.LargeBeast, 1);
@@ -59,7 +76,6 @@ namespace Model.Managers
 
             Common.Command.Summon(unit, new Vector2Int(4, 4));
            
-
             Common.Command.AddArtifact(unit, new Model.Artifacts.test());
             Common.Command.AddArtifact(unit, new Model.Artifacts.test());
             Common.Command.AddArtifact(unit, new Model.Artifacts.test());
