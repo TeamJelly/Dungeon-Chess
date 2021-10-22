@@ -61,6 +61,8 @@ namespace Model.Managers
 
         public void InitField(FieldData fieldData)
         {
+            ScreenTouchManager.instance.RightUpLimit = new Vector2(fieldData.width, fieldData.height);
+
             this.fieldData = fieldData;
 
             char[] chars = fieldData.fieldStrData.ToCharArray();
@@ -76,7 +78,9 @@ namespace Model.Managers
                     while (chars[index] == ' ' || chars[index] == '\n')
                         index++;
                     char c1 = chars[index];
+
                     index++;
+
                     while (chars[index] == ' ' || chars[index] == '\n')
                         index++;
                     char c2 = chars[index];
@@ -130,8 +134,8 @@ namespace Model.Managers
         {
             if (position.x >= 0 &&
                 position.y >= 0 &&
-                position.x < instance.field.GetLength(0) &&
-                position.y < instance.field.GetLength(1))
+                position.y < instance.field.GetLength(0) &&
+                position.x < instance.field.GetLength(1))
                 return true;
             else
                 return false;
@@ -237,8 +241,6 @@ namespace Model.Managers
                     field[position.y, position.x].HasUnit() == false)
                     {
                         StairAroundPosition.Add(position);
-                        Debug.Log(position);
-
                     }
                 //else
                 //    Debug.LogError($"{x},{y} + {vector}");

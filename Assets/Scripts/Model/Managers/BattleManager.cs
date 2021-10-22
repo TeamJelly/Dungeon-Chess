@@ -47,7 +47,7 @@ namespace Model.Managers
 
         private void Start()
         {
-            FieldManager.FieldData temp = new FieldManager.FieldData(16, 16,
+            FieldManager.FieldData temp = new FieldManager.FieldData(10, 20,
             "WL WL WL WL WL WL WL WL WL WL WL WL WL WL WL WL \n" +
             "WL PW HL PW PW FR FR FR FR FR SL SL SL LK DS WL \n" +
             "WL PW PW HL PW FR FR FR FR FR SL SL SL LK LK WL \n" +

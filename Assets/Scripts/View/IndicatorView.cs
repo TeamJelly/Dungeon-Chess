@@ -40,6 +40,8 @@ namespace View
                 {
                     tileIndicators = new GameObject[FieldManager.GetField().GetLength(0), FieldManager.GetField().GetLength(1)];
 
+                    Debug.Log(tileIndicators.GetLength(0) + ", " + tileIndicators.GetLength(1));
+
                     for (int y = 0; y < tileIndicators.GetLength(0); y++)
                         for (int x = 0; x < tileIndicators.GetLength(1); x++)
                         {
@@ -52,6 +54,8 @@ namespace View
                             entry.eventID = EventTriggerType.PointerClick;
                             entry.callback.AddListener((data) =>
                             {
+                                Debug.Log("indicator" + position);
+
                                 // 현재 눌러놓은 위치와 동일하다면, 
                                 if (curAvlPositions.Contains(position) && curPosition == position)
                                 {
@@ -203,6 +207,7 @@ namespace View
 
             if (position != null)
             {
+                Debug.Log("hello" + position);
                 if (curAvlPositions.Contains((Vector2Int)position))
                     ChangeTileIndicatorColor((Vector2Int)position, instance.possibleColor);
                 else

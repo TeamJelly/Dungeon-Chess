@@ -9,8 +9,12 @@ using View.UI;
 
 public class ScreenTouchManager : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
 {
+    public static ScreenTouchManager instance;
+
+    private void Awake() => instance = this;
+
     public Vector2 LeftDownLimit = Vector2.zero;
-    public Vector2 RightUpLimit = new Vector2(16, 16);
+    public Vector2 RightUpLimit;
     public Transform cameraTransform;
     public float dragSpeed = 15f;
     Vector3 currentPos = Vector3.zero;
@@ -54,6 +58,8 @@ public class ScreenTouchManager : MonoBehaviour, IDragHandler, IBeginDragHandler
 
         //Vector2Int selectedTileIdx = new Vector2Int(Mathf.Clamp((int)mousepos.x, 0, 15), Mathf.Clamp((int)mousepos.y, 0, 15));
         Vector2Int tileIdx = new Vector2Int((int)mousepos.x,(int)mousepos.y);
+
+        Debug.Log(tileIdx);
 
         if (IndicatorView.TileIndicatorParent.activeSelf)
         {
@@ -108,7 +114,8 @@ public class ScreenTouchManager : MonoBehaviour, IDragHandler, IBeginDragHandler
     IEnumerator longclick = null;
     public void OnPointerDown(PointerEventData eventData)
     {
-        // Debug.Log("pointer down");
+        Debug.Log("pointer down");
+        
         if (longclick == null)
         {
             // 롱클릭 시작 위치
