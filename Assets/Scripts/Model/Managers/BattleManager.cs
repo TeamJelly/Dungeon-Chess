@@ -47,10 +47,10 @@ namespace Model.Managers
 
         private void Start()
         {
-            FieldManager.FieldData temp = new FieldManager.FieldData(10, 20,
+            FieldManager.FieldData temp = new FieldManager.FieldData(16, 16,
             "WL WL WL WL WL WL WL WL WL WL WL WL WL WL WL WL \n" +
             "WL PW HL PW PW FR FR FR FR FR SL SL SL LK DS WL \n" +
-            "WL PW PW HL PW FR FR FR FR FR SL SL SL LK LK WL \n" +
+            "WL PW PW HL PW FR FR FR FR FR SL SL SL LK FR WL \n" +
             "WL FR HL FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
             "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
             "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
@@ -68,7 +68,7 @@ namespace Model.Managers
             FieldManager.instance.InitField(temp);
 
             // 테스팅 적 유닛 소환
-            Unit unit = new Unit(UnitAlliance.Enemy, UnitSpecies.LargeBeast, 1);
+            Unit unit = new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1);
 
             unit.Skills[SkillCategory.Basic] = new Skills.Basic.Slash();
             unit.Skills[SkillCategory.Move].Priority = Common.AI.Priority.NearFromClosestParty;
@@ -84,31 +84,38 @@ namespace Model.Managers
 
             if (GameManager.PartyUnits.Count == 0)
             {
-                unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
+                unit = new Unit(UnitAlliance.Party, UnitSpecies.Human);
                 GameManager.PartyUnits.Add(unit);
-                unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
+                unit = new Unit(UnitAlliance.Party, UnitSpecies.Human);
                 GameManager.PartyUnits.Add(unit);
-                unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
+                unit = new Unit(UnitAlliance.Party, UnitSpecies.Human);
                 GameManager.PartyUnits.Add(unit);
-                unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
+                unit = new Unit(UnitAlliance.Party, UnitSpecies.Human);
                 GameManager.PartyUnits.Add(unit);
-                unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
-                GameManager.PartyUnits.Add(unit);
-                unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
-                GameManager.PartyUnits.Add(unit);
-                unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
-                GameManager.PartyUnits.Add(unit);
-                unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
-                GameManager.PartyUnits.Add(unit);
-                unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
-                GameManager.PartyUnits.Add(unit);
+                // unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
+                // GameManager.PartyUnits.Add(unit);
+                // unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
+                // GameManager.PartyUnits.Add(unit);
+                // unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
+                // GameManager.PartyUnits.Add(unit);
+                // unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
+                // GameManager.PartyUnits.Add(unit);
+                // unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
+                // GameManager.PartyUnits.Add(unit);
+                // unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
+                // GameManager.PartyUnits.Add(unit);
                 //GameManager.LeaderUnit = GameManager.PartyUnits[0];
 
-               // Common.Command.AddEffect(GameManager.LeaderUnit,new Model.Effects.Poison(GameManager.LeaderUnit,3));
-               // Common.Command.AddEffect(GameManager.LeaderUnit,new Model.Effects.Poison(GameManager.LeaderUnit,3));
+                Common.Command.AddEffect(unit,new Model.Effects.Poison(unit,3));
+                Common.Command.AddEffect(unit,new Model.Effects.Regeneration(unit,3));
             }
 
             BattleController.SetBattleMode(true);
+
+            // 게임 시작시 재사용대기시간 초기화
+            foreach (Unit _unit in GameManager.PartyUnits)
+                _unit.WaitingSkills.Clear();
+
             BattleView.TurnEndButton.gameObject.SetActive(false);
             BattleView.SummonPartyUnits();// 파티 유닛 최초 소환
 

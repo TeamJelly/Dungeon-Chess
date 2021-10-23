@@ -162,8 +162,8 @@ namespace Model.Managers
             else
             {
                 //맵 범위 안으로 값 조정
-                x = Mathf.Clamp(x, 0, instance.field.GetLength(0));
-                y = Mathf.Clamp(y, 0, instance.field.GetLength(1));
+                x = Mathf.Clamp(x, 0, instance.field.GetLength(1));
+                y = Mathf.Clamp(y, 0, instance.field.GetLength(0));
                 return instance.field[y, x];
             }
         }
@@ -231,7 +231,7 @@ namespace Model.Managers
             {
                 Vector2Int position = stairPosition + vector;
 
-                Debug.Log(position + " " + FieldManager.IsInField(position));
+                // Debug.Log(position + " " + FieldManager.IsInField(position));
 
                 if (FieldManager.IsInField(position) == true &&
                     StairAroundPosition.Contains(position) == false &&

@@ -40,7 +40,7 @@ namespace View
                 {
                     tileIndicators = new GameObject[FieldManager.GetField().GetLength(0), FieldManager.GetField().GetLength(1)];
 
-                    Debug.Log(tileIndicators.GetLength(0) + ", " + tileIndicators.GetLength(1));
+                    // Debug.Log(tileIndicators.GetLength(0) + ", " + tileIndicators.GetLength(1));
 
                     for (int y = 0; y < tileIndicators.GetLength(0); y++)
                         for (int x = 0; x < tileIndicators.GetLength(1); x++)

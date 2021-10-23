@@ -77,6 +77,8 @@ namespace Common
 
         public static int Heal(Unit unit, int value)
         {
+            Debug.Log(unit.Name + ", " + value);
+
             value = unit.OnHeal.before.Invoke(value);
 
             // 최대체력 이상으로 회복하지 않습니다.
