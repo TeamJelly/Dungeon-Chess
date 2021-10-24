@@ -15,14 +15,44 @@ namespace Common
 
         public static FieldData LoadFieldData()
         {
-            string jsonStr = File.ReadAllText(Application.dataPath + "/Resources/FieldData.json");
-            return JsonUtility.FromJson<FieldData>(jsonStr);             
+            try
+            {
+                string jsonStr = File.ReadAllText(Application.dataPath + "/Resources/Data/Field/Data.json");
+                return JsonUtility.FromJson<FieldData>(jsonStr);
+            }
+            catch
+            {
+                FieldData temp = new FieldData(16, 16,
+                "WL WL WL WL WL WL WL WL WL WL WL WL WL WL WL WL \n" +
+                "WL PW HL PW PW FR FR FR FR FR SL SL SL LK WL WL \n" +
+                "WL PW PW HL PW FR FR FR FR FR SL SL SL LK FR WL \n" +
+                "WL FR HL FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+                "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+                "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+                "WL TN TN TN TN TN TN TN TN TN TN TN TN TN TN WL \n" +
+                "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+                "WL FR FR FR FR FR WL WL FR FR FR FR FR FR FR WL \n" +
+                "WL FR FR FR FR FR WL WL FR FR FR FR FR FR FR WL \n" +
+                "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+                "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+                "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+                "WL US US FR FR DS DS FR FR FR FR FR FR FR FR WL \n" +
+                "WL US US FR FR DS DS FR FR FR FR FR FR FR FR WL \n" +
+                "WL WL WL WL WL WL WL WL WL WL WL WL WL WL WL WL ");
+
+                SaveFieldData(temp);
+
+                return temp;
+            }
         }
 
         public static void SaveFieldData(FieldData fieldData)
         {
+            DirectoryInfo directoryInfo = new DirectoryInfo(Application.dataPath + "/Resources/Data/Field/");
+            if (!directoryInfo.Exists) directoryInfo.Create();
+
             string jsonStr = JsonUtility.ToJson(fieldData);
-            File.WriteAllText(Application.dataPath + "/Resources/FieldData.json", jsonStr);
+            File.WriteAllText(Application.dataPath + "/Resources/Data/Field/Data.json", jsonStr);
         }
 
         private static string[] nameData;
