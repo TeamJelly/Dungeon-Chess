@@ -13,7 +13,6 @@ namespace View
     {
         public static MapView instance;
 
-        public bool IsClickBlock;
         public GameObject blockPanel;
         public GameObject panel;
         public GameObject contentPanel;

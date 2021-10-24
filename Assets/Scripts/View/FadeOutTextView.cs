@@ -31,6 +31,7 @@ namespace View
         public static void MakeText(FadeOutText fadeOutText)
         {
             instance.WaitingQueue.Enqueue(fadeOutText);
+            PlayText();
         }
 
         public static void MakeText(Unit unit, string text, Color color)

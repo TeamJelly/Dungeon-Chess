@@ -86,14 +86,9 @@ namespace Model.Managers
 
             if (GameManager.PartyUnits.Count == 0)
             {
-                unit = new Unit(UnitAlliance.Party, UnitSpecies.Human);
-                GameManager.PartyUnits.Add(unit);
-                unit = new Unit(UnitAlliance.Party, UnitSpecies.Human);
-                GameManager.PartyUnits.Add(unit);
-                unit = new Unit(UnitAlliance.Party, UnitSpecies.Human);
-                GameManager.PartyUnits.Add(unit);
-                unit = new Unit(UnitAlliance.Party, UnitSpecies.Human);
-                GameManager.PartyUnits.Add(unit);
+                GameManager.PartyUnits.Add(new Unit(UnitAlliance.Party, UnitSpecies.Human));
+                GameManager.PartyUnits.Add(new Unit(UnitAlliance.Party, UnitSpecies.Human));
+
                 // unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
                 // GameManager.PartyUnits.Add(unit);
                 // unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
@@ -108,6 +103,12 @@ namespace Model.Managers
                 // GameManager.PartyUnits.Add(unit);
                 //GameManager.LeaderUnit = GameManager.PartyUnits[0];
 
+                unit = new Unit(UnitAlliance.Party, UnitSpecies.Human);
+                GameManager.PartyUnits.Add(unit);
+                Common.Command.AddArtifact(unit, new Artifacts.Rare.BloodStone());
+                Common.Command.AddArtifact(unit, new Artifacts.Rare.BloodStone());
+                Common.Command.AddArtifact(unit, new Artifacts.Rare.BloodStone());
+                Common.Command.AddArtifact(unit, new Artifacts.Rare.BloodStone());
                 Common.Command.AddEffect(unit,new Model.Effects.Poison(unit,3));
                 Common.Command.AddEffect(unit,new Model.Effects.Regeneration(unit,3));
             }

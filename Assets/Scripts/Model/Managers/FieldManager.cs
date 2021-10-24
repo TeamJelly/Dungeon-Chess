@@ -12,11 +12,11 @@ namespace Model.Managers
         public static FieldManager instance;
         public Tilemap tileMap;
 
-        /// <summary>
-        /// Tile.cs의 Category와 똑같이 사용해야 작동한다.
-        /// </summary>
-        public List<TileBase> tileBases;
-        public List<char> tileBasesChar;
+        // /// <summary>
+        // /// Tile.cs의 Category와 똑같이 사용해야 작동한다.
+        // /// </summary>
+        // public List<TileBase> tileBases;
+        // public List<char> tileBasesChar;
 
         // 현재 전투의 모든 타일
         public Tile[,] field;

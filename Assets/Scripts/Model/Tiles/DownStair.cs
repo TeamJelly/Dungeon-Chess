@@ -21,29 +21,49 @@ namespace Model.Tiles
         {
             base.OnTile(unit);
 
-            if (!GameManager.PartyUnits.Contains(unit)) return;
+            int downStairUnitCount = 0;
 
-            int partyObjCnt = 0;
-
-            foreach (Unit party in GameManager.PartyUnits)
+            foreach (Unit partyUnit in GameManager.PartyUnits)
+                if (FieldManager.GetTile(partyUnit.Position).category == TileCategory.DownStair)
+                    downStairUnitCount++;
+            
+            if (downStairUnitCount == GameManager.PartyUnits.Count)
             {
-                if (BattleView.UnitObjects.ContainsKey(party))
-                    partyObjCnt++;
-            }
-
-            Debug.Log(partyObjCnt);
-
-            if (partyObjCnt == 1)
-            {
-                MapView.instance.IsClickBlock = false;
+                foreach (Unit partyUnit in GameManager.PartyUnits)
+                {
+                    Common.Command.UnSummon(partyUnit);
+                }                                    
                 MapView.instance.Enable();
             }
-            else
-            {
-                Common.Command.UnSummon(unit);
-                BattleManager.instance.thisTurnUnit = null;
-                if (GameManager.InBattle) BattleController.instance.NextTurnStart();
-            }
         }
+
+        // public override void OnTile(Unit unit)
+        // {
+        //     base.OnTile(unit);
+
+        //     if (!GameManager.PartyUnits.Contains(unit)) return;
+
+        //     int partyObjCnt = 0;
+
+        //     foreach (Unit party in GameManager.PartyUnits)
+        //     {
+        //         if (BattleView.UnitObjects.ContainsKey(party))
+        //             partyObjCnt++;
+        //     }
+
+        //     Debug.Log(partyObjCnt);
+
+        //     if (partyObjCnt == 1)
+        //     {
+        //         MapView.instance.IsClickBlock = false;
+        //         MapView.instance.Enable();
+        //     }
+        //     else
+        //     {
+        //         Common.Command.UnSummon(unit);
+        //         BattleManager.instance.thisTurnUnit = null;
+        //         if (GameManager.InBattle) BattleController.instance.NextTurnStart();
+        //     }
+        // }
     }
 }
