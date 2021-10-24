@@ -31,7 +31,7 @@ namespace Model.Effects
 
         public override bool OnTurnStart(bool value)
         {
-            FadeOutTextView.MakeText(Owner.Position + Vector2Int.up, $"재생! ({TurnCount})", Color.green);
+            FadeOutTextView.MakeText(Owner, $"+Regen ({TurnCount})", Color.green);
             Common.Command.Heal(Owner, Regen);
 
             return value;

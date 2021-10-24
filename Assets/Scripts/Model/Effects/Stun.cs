@@ -34,7 +34,7 @@ namespace Model.Effects
 
         public override bool OnTurnStart(bool value)
         {
-            FadeOutTextView.MakeText(Owner.Position + Vector2Int.up, $"기절!", Color.red);
+            FadeOutTextView.MakeText(Owner, $"+Stun", Color.red);
 
             Owner.IsMoved = true;
             Owner.IsSkilled = true;

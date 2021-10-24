@@ -18,7 +18,7 @@ namespace Model
 
             GameManager.Instance.itemBag.Add(this);
             Common.Command.UnSummon(this);
-            View.FadeOutTextView.MakeText(unit.Position + Vector2Int.up, $"{Name} 획득!", Color.yellow);
+            View.FadeOutTextView.MakeText(unit, $"+{Name}", Color.yellow);
             UnitControlView.instance.UpdateItemButtons();                
         }
 

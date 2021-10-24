@@ -36,7 +36,7 @@ namespace Model.Effects
         }
         public override bool OnTurnStart(bool value)
         {
-            FadeOutTextView.MakeText(Owner.Position + Vector2Int.up, $"신속 효과! ({TurnCount})", Color.green);
+            FadeOutTextView.MakeText(Owner, $"+Fast ({TurnCount})", Color.green);
             return value;
         }
         public override bool OnTurnEnd(bool value)

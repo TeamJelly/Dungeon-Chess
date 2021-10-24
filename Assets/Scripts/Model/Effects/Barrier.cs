@@ -44,7 +44,7 @@ namespace Model.Effects
 
         public override int BeforeGetDam(int value)
         {
-            FadeOutTextView.MakeText(Owner.Position + Vector2Int.up, $"배리어! ({--barrierCount})", Color.yellow);
+            FadeOutTextView.MakeText(Owner, $"+Barrier ({--barrierCount})", Color.yellow);
             // 데미지 무효화
             value = 0;
 

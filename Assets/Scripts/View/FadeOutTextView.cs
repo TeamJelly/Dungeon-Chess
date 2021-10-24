@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Model;
 
 namespace View
 {
@@ -14,7 +15,7 @@ namespace View
 
         public class FadeOutText
         {
-            public Vector2Int position;
+            public Unit unit;
             public string text;
             public Color color;
         }
@@ -30,17 +31,26 @@ namespace View
         public static void MakeText(FadeOutText fadeOutText)
         {
             instance.WaitingQueue.Enqueue(fadeOutText);
-
-            if (instance.isCoroutineRunning == false)
-                instance.StartCoroutine(instance.StartTextCoroutine());
         }
 
-        public static void MakeText(Vector2Int position, string text, Color color)
+        public static void MakeText(Unit unit, string text, Color color)
         {
-            MakeText(new FadeOutText() { position = position, text = text, color = color });
+            MakeText(new FadeOutText() { unit = unit, text = text, color = color });
         }
 
-        IEnumerator StartTextCoroutine()
+        public static void PlayText()
+        {
+            if (instance.isCoroutineRunning == false)
+                instance.StartCoroutine(instance.TextCoroutine());
+        }
+
+        public static void StopText()
+        {
+            if (instance.isCoroutineRunning == true)
+                instance.StopCoroutine(instance.TextCoroutine());
+        }
+
+        IEnumerator TextCoroutine()
         {
             isCoroutineRunning = true;
 
@@ -50,7 +60,7 @@ namespace View
                 GameObject gameObject = Instantiate(instance.prefab);
                 gameObject.GetComponentInChildren<TextMeshPro>().text = line.text;
                 gameObject.GetComponentInChildren<TextMeshPro>().color = line.color;
-                gameObject.transform.position = new Vector3(line.position.x, line.position.y);
+                gameObject.transform.position = new Vector3(line.unit.Position.x, line.unit.Position.y + 1);
                 yield return new WaitForSeconds(1f);
             }
 

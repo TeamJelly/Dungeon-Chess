@@ -62,7 +62,7 @@ namespace Model
         //obtainable -> item
         //Droptem
         // 아이템이 위치할수 있는지 검사한다.
-        public bool IsPositionable()
+        public bool IsItemPositionable()
         {
             // 유닛이나 획득물품이 존재하면 false
             if (HasUnit() || HasObtainable())

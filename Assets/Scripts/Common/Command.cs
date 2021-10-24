@@ -12,24 +12,28 @@ namespace Common
     {
         public static void Die(Unit unit)
         {
-            View.FadeOutTextView.MakeText(unit.Position, unit.Name + " is dead", Color.red);
+            View.FadeOutTextView.MakeText(unit, unit.Name + " is dead", Color.red);
 
             unit.Alliance = UnitAlliance.NULL;
 
             View.VisualEffectView.MakeVisualEffect(unit.Position, "Explosion");
             UnSummon(unit);
 
-            // 소지 유물 뿌리기
-            List<Tile> tiles = FieldManager.GetBlankFloorTiles(unit.Belongings.Count);
-            int count = 0;
-            foreach(Tile tile in tiles)
-            {
-                Summon(unit.Belongings[count], tile.position);
-                Vector3 startPos = new Vector3(unit.Position.x, unit.Position.y, 0.1f);
-                Vector3 target = new Vector3(tile.position.x, tile.position.y, 0.1f);
-                VisualEffectView.MakeDropEffect(startPos,target,unit.Belongings[count]);
-                count++;
-            }
+            // // 소지 유물 뿌리기
+            // List<Tile> tiles = FieldManager.GetBlankFloorTiles(unit.Belongings.Count);
+            // int count = 0;
+            // foreach(Tile tile in tiles)
+            // {
+            //     Summon(unit.Belongings[count], tile.position);
+            //     Vector3 startPos = new Vector3(unit.Position.x, unit.Position.y, 0.1f);
+            //     Vector3 target = new Vector3(tile.position.x, tile.position.y, 0.1f);
+            //     VisualEffectView.MakeDropEffect(startPos,target,unit.Belongings[count]);
+            //     count++;
+            // }
+            
+            // 사망시 갖고있는 템중에 하나 떨굼
+            if (unit.Belongings.Count != 0)
+                Summon(unit.Belongings[Random.Range(0, unit.Belongings.Count)], unit.Position);
 
             GameManager.RemovePartyUnit(unit); //죽으면 파티유닛에서 박탈.
 
@@ -66,7 +70,7 @@ namespace Common
             unit.CurHP -= value;
             unit.OnDamage.after.Invoke(value);
 
-            FadeOutTextView.MakeText(unit.Position + Vector2Int.up, $"HP -{value}", Color.red);
+            FadeOutTextView.MakeText(unit, $"HP -{value}", Color.red);
             Debug.Log($"{unit.Name}가(은) {value}만큼 데미지를 입었다! [HP : {unit.CurHP + value}>{unit.CurHP}]");
 
             if (unit.CurHP <= 0)
@@ -88,7 +92,7 @@ namespace Common
             unit.CurHP += value;
             unit.OnHeal.after.Invoke(value);
 
-            FadeOutTextView.MakeText(unit.Position + Vector2Int.up, $"HP +{value}", Color.green);
+            FadeOutTextView.MakeText(unit, $"HP +{value}", Color.green);
 
             Debug.Log($"{unit.Name}가(은) {value}만큼 회복했다! [HP : {unit.CurHP}>{unit.CurHP + value}]");
 
@@ -97,7 +101,7 @@ namespace Common
 
         public static void LevelUp(Unit unit)
         {
-            View.FadeOutTextView.MakeText(unit.Position + Vector2Int.up, "Level Up!", Color.white);
+            View.FadeOutTextView.MakeText(unit, "Level Up!", Color.white);
 
             unit.Level++;
 
@@ -110,7 +114,7 @@ namespace Common
             artifact.Owner = target;
             artifact.OnAdd();
             target.Belongings.Add(artifact);
-            FadeOutTextView.MakeText(target.Position + Vector2Int.up, $"+{artifact.Name}", Color.yellow);
+            FadeOutTextView.MakeText(target, $"+{artifact.Name}", Color.yellow);
         }
 
         public static void RemoveArtifact(Unit target, Artifact artifact)
@@ -119,7 +123,7 @@ namespace Common
             {
                 artifact.OnRemove();
                 target.Belongings.Remove(artifact);
-                FadeOutTextView.MakeText(target.Position + Vector2Int.up, $"-{artifact.Name}", Color.yellow);
+                FadeOutTextView.MakeText(target, $"-{artifact.Name}", Color.yellow);
             }
             else
                 Debug.LogError($"{target.Name}이 {artifact.Name}를 소유하고 있지 않습니다.");
@@ -140,7 +144,7 @@ namespace Common
         {
             effect.OnAdd();
             target.StateEffects.Add(effect);
-            FadeOutTextView.MakeText(target.Position + Vector2Int.up, $"+{effect.Name}", Color.yellow);
+            FadeOutTextView.MakeText(target, $"+{effect.Name}", Color.yellow);
         }
 
         public static void RemoveEffect(Unit target, Effect effect)
@@ -149,7 +153,7 @@ namespace Common
             {
                 effect.OnRemove();
                 target.StateEffects.Remove(effect);
-                FadeOutTextView.MakeText(target.Position + Vector2Int.up, $"-{effect.Name}", Color.yellow);
+                FadeOutTextView.MakeText(target, $"-{effect.Name}", Color.yellow);
             }
             else
                 Debug.LogError($"{target.Name}이 {effect.Name}를 소유하고 있지 않습니다.");

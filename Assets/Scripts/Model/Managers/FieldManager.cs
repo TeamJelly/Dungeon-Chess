@@ -173,15 +173,6 @@ namespace Model.Managers
             return instance.field;
         }
 
-        // 필드에서 position에 가까운 빈(Unit과 Obatainable이 없는) 바닥 타일을 가져옵니다.
-        public static List<Tile> GetBlankFloorTiles(Vector2Int position, int count)
-        {
-            List<Tile> tiles = new List<Tile>();
-
-            return tiles;
-        }
-
-
         // 필드에서 랜덤한 빈 타일을 가져옵니다.
         public static List<Tile> GetBlankFloorTiles(int count)
         {
@@ -189,7 +180,7 @@ namespace Model.Managers
             List<Tile> tiles = new List<Tile>();
 
             foreach (Tile tile in GetField())
-                if (tile.IsPositionable())
+                if (tile.IsItemPositionable())
                     allBlankTiles.Add(tile);
 
             for (int i = 0; i < count; i++)
@@ -205,62 +196,74 @@ namespace Model.Managers
             return tiles;
         }
 
-        public List<Vector2Int> GetStairAroundPosition()
+        // public List<Vector2Int> GetStairAroundPosition()
+        // {
+        //     List<Vector2Int> around = new List<Vector2Int>()
+        //     {
+        //         new Vector2Int(-1, -1),
+        //         new Vector2Int(-1,  0),
+        //         new Vector2Int(-1,  1),
+        //         new Vector2Int( 0, -1),
+        //         new Vector2Int( 0,  0),
+        //         new Vector2Int( 0,  1),
+        //         new Vector2Int( 1, -1),
+        //         new Vector2Int( 1,  0),
+        //         new Vector2Int( 1,  1)
+        //     };
+
+        //     List<Vector2Int> StairAroundPosition = new List<Vector2Int>();
+
+        //     Vector2Int stairPosition = GetStairPosition();
+
+        //     Debug.Log(stairPosition);
+
+
+        //     foreach (var vector in around)
+        //     {
+        //         Vector2Int position = stairPosition + vector;
+
+        //         // Debug.Log(position + " " + FieldManager.IsInField(position));
+
+        //         if (FieldManager.IsInField(position) == true &&
+        //             StairAroundPosition.Contains(position) == false &&
+        //             field[position.y, position.x].category != Model.TileCategory.Hole &&
+        //             field[position.y, position.x].category != Model.TileCategory.Wall &&
+        //             field[position.y, position.x].category != Model.TileCategory.Locked &&
+        //             field[position.y, position.x].HasUnit() == false)
+        //         {
+        //             StairAroundPosition.Add(position);
+        //         }
+        //         //else
+        //         //    Debug.LogError($"{x},{y} + {vector}");
+        //     }
+        //     return StairAroundPosition;
+        // }
+
+        // public Vector2Int GetStairPosition()
+        // {
+        //     for (int y = 0; y < field.GetLength(0); y++)
+        //     {
+        //         for (int x = 0; x < field.GetLength(1); x++)
+        //         {
+        //             if (field[y, x].category == Model.TileCategory.UpStair)
+        //             {
+        //                 return new Vector2Int(x, y);
+        //             }
+        //         }
+        //     }
+        //     return Vector2Int.zero;
+        // }
+
+        public List<Vector2Int> GetTileCategoryPositions(Model.TileCategory category)
         {
-            List<Vector2Int> around = new List<Vector2Int>()
-            {
-                new Vector2Int(-1, -1),
-                new Vector2Int(-1,  0),
-                new Vector2Int(-1,  1),
-                new Vector2Int( 0, -1),
-                new Vector2Int( 0,  0),
-                new Vector2Int( 0,  1),
-                new Vector2Int( 1, -1),
-                new Vector2Int( 1,  0),
-                new Vector2Int( 1,  1)
-            };
+            List<Vector2Int> positions = new List<Vector2Int>();
 
-            List<Vector2Int> StairAroundPosition = new List<Vector2Int>();
-
-            Vector2Int stairPosition = GetStairPosition();
-
-            Debug.Log(stairPosition);
-            
-
-            foreach (var vector in around)
-            {
-                Vector2Int position = stairPosition + vector;
-
-                // Debug.Log(position + " " + FieldManager.IsInField(position));
-
-                if (FieldManager.IsInField(position) == true &&
-                    StairAroundPosition.Contains(position) == false &&
-                    field[position.y, position.x].category != Model.TileCategory.Hole &&
-                    field[position.y, position.x].category != Model.TileCategory.Wall &&
-                    field[position.y, position.x].category != Model.TileCategory.Locked &&
-                    field[position.y, position.x].HasUnit() == false)
-                    {
-                        StairAroundPosition.Add(position);
-                    }
-                //else
-                //    Debug.LogError($"{x},{y} + {vector}");
-            }
-            return StairAroundPosition;
-        }
-
-        public Vector2Int GetStairPosition()
-        {
             for (int y = 0; y < field.GetLength(0); y++)
-            {
                 for (int x = 0; x < field.GetLength(1); x++)
-                {
-                    if (field[y, x].category == Model.TileCategory.UpStair)
-                    {
-                        return new Vector2Int(x, y);
-                    }
-                }
-            }
-            return Vector2Int.zero;
+                    if (field[y, x].category == category)
+                        positions.Add(field[y,x].position);
+
+            return positions;
         }
 
         private void Awake()

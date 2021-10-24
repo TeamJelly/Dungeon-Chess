@@ -4,14 +4,26 @@ using UnityEngine;
 using Model;
 using Model.Skills.Move;
 using Model.Skills.Basic;
+using static Model.Managers.FieldManager;
 using System;
+using System.IO;
 
 namespace Common
 {
     public class Data
     {
-        
 
+        public static FieldData LoadFieldData()
+        {
+            string jsonStr = File.ReadAllText(Application.dataPath + "/Resources/FieldData.json");
+            return JsonUtility.FromJson<FieldData>(jsonStr);             
+        }
+
+        public static void SaveFieldData(FieldData fieldData)
+        {
+            string jsonStr = JsonUtility.ToJson(fieldData);
+            File.WriteAllText(Application.dataPath + "/Resources/FieldData.json", jsonStr);
+        }
 
         private static string[] nameData;
 

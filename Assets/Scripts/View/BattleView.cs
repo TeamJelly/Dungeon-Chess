@@ -58,30 +58,47 @@ namespace View
 
         public static void SummonPartyUnits(int index = 0)
         {
-            Unit unit = GameManager.PartyUnits[index];
+            List<Vector2Int> positions = FieldManager.instance.GetTileCategoryPositions(TileCategory.UpStair);     
+            List<Unit> units = GameManager.PartyUnits;
 
-            CurrentUnitPortrait.sprite = unit.Sprite;
-
-            SystemMessageView.SetMessage($"{unit.Name}을 소환할 위치를 선택하세요");
-            IndicatorView.ShowTileIndicator(FieldManager.instance.GetStairAroundPosition(),
-                (Vector2Int position) =>
-                {
-                    Common.Command.Summon(unit, position);
-                    index++;
-
-                    if (index == GameManager.PartyUnits.Count)
-                    {
-                        IndicatorView.HideTileIndicator();
-                        SystemMessageView.HideMessage();
-                        SystemMessageView.ReserveMessage("전투 시작!");
-                        BattleController.instance.NextTurnStart();
-                    }
-                    // 전부 소환할때까지 재귀로 돈다.
-                    else
-                        SummonPartyUnits(index);
-                }
-            );
+            for (int i = 0; i < GameManager.PartyUnits.Count; i++)
+            {
+                Common.Command.Summon(units[i], positions[i]);
+            }
+            
+            IndicatorView.HideTileIndicator();
+            SystemMessageView.HideMessage();
+            SystemMessageView.ReserveMessage("전투 시작!");
+            BattleController.instance.NextTurnStart();
         }
+
+        // public static void SummonPartyUnits(int index = 0)
+        // {
+        //     Unit unit = GameManager.PartyUnits[index];
+
+        //     CurrentUnitPortrait.sprite = unit.Sprite;
+
+        //     SystemMessageView.SetMessage($"{unit.Name}을 소환할 위치를 선택하세요");
+
+        //     IndicatorView.ShowTileIndicator(FieldManager.instance.GetTileCategoryPositions(TileCategory.UpStair),
+        //         (Vector2Int position) =>
+        //         {
+        //             Common.Command.Summon(unit, position);
+        //             index++;
+
+        //             if (index == GameManager.PartyUnits.Count)
+        //             {
+        //                 IndicatorView.HideTileIndicator();
+        //                 SystemMessageView.HideMessage();
+        //                 SystemMessageView.ReserveMessage("전투 시작!");
+        //                 BattleController.instance.NextTurnStart();
+        //             }
+        //             // 전부 소환할때까지 재귀로 돈다.
+        //             else
+        //                 SummonPartyUnits(index);
+        //         }
+        //     );
+        // }
 
         private void Update()
         {

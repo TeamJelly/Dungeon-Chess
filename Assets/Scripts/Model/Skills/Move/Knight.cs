@@ -22,6 +22,15 @@ namespace Model.Skills.Move
             species.Add(UnitSpecies.Golem);
         }
 
+        public override List<Vector2Int> GetRelatePositions(Unit user, Vector2Int target)
+        {
+            List<Vector2Int> list = new List<Vector2Int>();
+
+            list.Add(target);
+
+            return list;
+        }
+
         public override List<Vector2Int> GetAvailablePositions(Unit user, Vector2Int userPosition)
         {
             List<Vector2Int> positions = new List<Vector2Int>();
