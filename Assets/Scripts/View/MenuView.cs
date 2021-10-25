@@ -20,7 +20,7 @@ namespace View
         }
         public void GiveUp()
         {
-            BattleResultView.instance.EnableDeafeatUI();
+            // BattleResultView.instance.EnableDeafeatUI();
             Disable();
         }
         public void ExitGame()

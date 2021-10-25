@@ -10,7 +10,7 @@ namespace Model.Managers
         // Start is called before the first frame update
         void Start()
         {
-            View.BattleResultView.instance.EnableWinUI();
+            // View.BattleResultView.instance.EnableWinUI();
         }
     }
 }

@@ -170,6 +170,9 @@ namespace Common
                 BattleView.MakeUnitObject(unit);
 
                 FieldManager.GetTile(target).OnTile(unit);
+
+                // 유닛 소환시 DownStair Button 활성화 검사
+                Model.Tiles.DownStair.CheckPartyDownStair();
             }
             else
                 Debug.LogError("이미 위치에 유닛이 존재합니다.");
@@ -189,6 +192,9 @@ namespace Common
             BattleView.DestroyUnitObject(unit);
             BattleManager.instance.AllUnits.Remove(unit);
             FieldManager.GetTile(unit.Position).SetUnit(null);
+
+            // 유닛 소환해제시 DownStair Button 활성화 검사
+            Model.Tiles.DownStair.CheckPartyDownStair();
         }
         public static void UnSummon(Obtainable obtainable)
         {

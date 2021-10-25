@@ -24,8 +24,11 @@ namespace View
         [SerializeField]
         private Button turnEndButton;
         [SerializeField]
+        private Button downStairButton; 
+
+        [SerializeField]
         private UnitControlView unitControlView;
-        static BattleView instance;
+        public static BattleView instance;
         // public UnitInfoView ThisTurnUnitInfo;
         // public UnitInfoView OtherUnitInfo { get; set; }
 
@@ -39,6 +42,8 @@ namespace View
         public static Dictionary<Unit, GameObject> UnitObjects => instance.unitObjects;
         public static Dictionary<Unit, HPBar> HPBars => instance.hpBars;
         public static Dictionary<Obtainable, GameObject> ObtainableObjects => instance.obtainableObjects;
+        public static Button DownStairButton => instance.downStairButton;
+
         public RuntimeAnimatorController animatorController;
 
         private void Awake()
@@ -53,6 +58,8 @@ namespace View
             unitControlView = GetComponent<UnitControlView>();
 
             TurnEndButton.gameObject.SetActive(false);
+            DownStairButton.gameObject.SetActive(false);
+            
             UnitControlView.panel.SetActive(false);
         }
 

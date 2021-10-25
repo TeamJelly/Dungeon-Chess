@@ -48,15 +48,18 @@ namespace View
         {
             InitStageUI(MapManager.instance.AllRooms);
         }
+
         public void Enable()
         {
-            blockPanel.SetActive(GameManager.InBattle);
+            blockPanel.SetActive(!Model.Tiles.DownStair.CheckPartyDownStair());
             UIEffect.FadeInPanel(panel);
         }
+
         public void Disable()
         {
             UIEffect.FadeOutPanel(panel);
         }
+
         /// <summary>
         /// 이용 가능한 방 및 현재 방 표시
         /// </summary>

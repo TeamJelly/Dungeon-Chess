@@ -50,17 +50,21 @@ namespace UI.Battle
             // 유닛정보창 초기화
             BattleView.SetTurnUnitPanel(nextUnit);
 
+            // 매턴 시작시 DownStair Button 활성화 검사
+            Model.Tiles.DownStair.CheckPartyDownStair();
+
             // 파티원이 아닌 AI라면 자동 행동 실행
             if (nextUnit.Alliance != UnitAlliance.Party)
             {
                 BattleView.TurnEndButton.gameObject.SetActive(false);
-                BattleView.UnitControlView.panel.SetActive(false);
+                BattleView.DownStairButton.gameObject.SetActive(false);
+                // BattleView.UnitControlView.panel.SetActive(false);
+
                 AI.Action action = AI.GetAction(nextUnit);
 
                 if (action != null)
                     action.Invoke();
             }
-
             else
             {
                 BattleView.TurnEndButton.gameObject.SetActive(true);
@@ -102,13 +106,13 @@ namespace UI.Battle
 
         public void Win()
         {
-            //Common.Command.UnSummonAllUnit();
+            BattleView.DownStairButton.gameObject.SetActive(true);
             SetBattleMode(false);
         }
 
         public void Defeat()
         {
-            View.BattleResultView.instance.EnableDeafeatUI();
+            // View.BattleResultView.instance.EnableDeafeatUI();
         }
     }
 }
