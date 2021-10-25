@@ -19,6 +19,26 @@ namespace View.UI
 
         public GameObject infoBox;
 
+        public void SetNone()
+        {
+            Name.text = "No Unit";
+            Portrait.sprite = null;
+            Status.text = "";
+
+            Transform[] childList = Skills.transform.GetComponentsInChildren<Transform>();
+            for (int i = 1; i < childList.Length; i++)
+                Destroy(childList[i].gameObject);
+            Skills.sizeDelta = Vector2.zero;
+            childList = Belongings.transform.GetComponentsInChildren<Transform>();
+            for (int i = 1; i < childList.Length; i++)
+                Destroy(childList[i].gameObject);
+            childList = Effects.transform.GetComponentsInChildren<Transform>();
+            Belongings.sizeDelta = Vector2.zero;
+            for (int i = 1; i < childList.Length; i++)
+                Destroy(childList[i].gameObject);
+            Effects.sizeDelta = Vector2.zero;
+        }
+
         public void SetUnit(Unit unit)
         {
             Name.text = $"{unit.Modifier} {unit.Name}";

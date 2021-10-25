@@ -5,10 +5,10 @@ namespace Model.Artifacts.Rare
     {
         public BloodStone()
         {
-            Name = "혈석";
+            Name = "Blood Stone";
             Sprite = Common.Data.Colored[513];
             Grade = ArtifactGrade.Rare;
-            Description = "매턴 종료시 체력회복 +1";
+            Description = "턴 종료시 체력을 1 회복한다.";
         }
 
         public override void OnAdd()

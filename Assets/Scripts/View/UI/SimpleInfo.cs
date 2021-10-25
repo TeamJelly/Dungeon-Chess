@@ -9,16 +9,18 @@ namespace View.UI
     public class SimpleInfo : MonoBehaviour
     {
         public TextMeshProUGUI Name;
+        public TextMeshProUGUI Type;
         public Image Image;
         public TextMeshProUGUI Description;
 
         public void Set(Infoable infoable)
         {
-            Set(infoable.Name, infoable.Sprite, infoable.Color, infoable.Description);
+            Set(infoable.Name, infoable.Type, infoable.Sprite, infoable.Color, infoable.Description);
         }
-        public void Set(string name, Sprite sprite, Color color, string description)
+        public void Set(string name, string type, Sprite sprite, Color color, string description)
         {
             Name.text = name;
+            Type.text = type;
             
             Image.sprite = sprite;
             if (color != new Color(0,0,0,0))

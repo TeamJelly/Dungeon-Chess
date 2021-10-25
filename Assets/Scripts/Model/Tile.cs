@@ -34,6 +34,8 @@ namespace Model
 
         public string Description { get; set; }
 
+        public string Type => "Tile";
+
         public Vector2Int position;
 
         protected Unit unit = null;

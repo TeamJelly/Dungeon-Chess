@@ -19,6 +19,20 @@ namespace View
         {
             instance = this;
         }
+
+        public static void Hide()
+        {
+            InitNull();
+            instance.infoPanel.SetActive(false);
+        }
+
+        public static void InitNull()
+        {
+            instance.unitInfo.SetNone();
+            instance.tileInfo.Set("None", "None", null, Color.black, "None");
+            instance.simpleInfo.Set("None", "None", null, Color.black, "None");
+        }
+
         public static void Show(Unit unit)
         {
             instance.unitInfo.SetUnit(unit);
@@ -33,7 +47,7 @@ namespace View
         }
         public static void Show(Unit user, Skill skill)
         {
-            instance.simpleInfo.Set(skill.Name, skill.Sprite, skill.Color, skill.GetDescription(user));
+            instance.simpleInfo.Set(skill.Name, skill.Type, skill.Sprite, skill.Color, skill.GetDescription(user));
         }
         public static void Show(Effect effect)
         {
@@ -43,5 +57,7 @@ namespace View
         {
             instance.simpleInfo.Set(obtainable);
         }
+
+
     }
 }

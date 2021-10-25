@@ -17,6 +17,8 @@ namespace Model
             set => turnCount = value;
         }
 
+        public virtual string Type => "Effect";
+
         public Effect()
         {
 

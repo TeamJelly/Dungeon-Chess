@@ -48,6 +48,7 @@ namespace Model
         public Sprite Sprite { get; set; }
         public Color Color { get; set; }
         public string Description { get; set; }
+        public string Type => "Skill";
 
         /// <summary>
         /// 유닛 레벨을 스킬레벨로 전환시켜준다.

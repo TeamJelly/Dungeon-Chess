@@ -11,6 +11,7 @@ namespace Model
         public Vector2Int Position { get; set; }
         public ArtifactGrade Grade { get; set; }
         public int Price { get; set; }
+        public override string Type => "Artifact";
 
         public Sprite sprite;
 
