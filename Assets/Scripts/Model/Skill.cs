@@ -54,7 +54,7 @@ namespace Model
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public virtual int GetSLV (Unit user)
+        public virtual int GetSLV(Unit user)
         {
             return 0;
         }
