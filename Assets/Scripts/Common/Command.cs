@@ -59,6 +59,8 @@ namespace Common
             unit.Position = target;
             unit.OnMove.after.Invoke(target);
 
+            Model.Tiles.DownStair.CheckPartyDownStair();
+
             //OnTile은 타일의 특성에 따라 이동이 끝난 후 발동되는 타일의 이벤트
             FieldManager.GetTile(target).OnTile(unit);
         }

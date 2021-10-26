@@ -8,7 +8,13 @@ public class Sprite2
 
     public Sprite Sprite { get => sprite; set => sprite = value; }
 
-    public Color InlineColor;
+    Sprite2(int spriteNum, Color inlineColor, Color outlineColor)
+    {
+        InlineColor = inlineColor;
+        OutlineColor = outlineColor;
+    }
 
-    public Color OutlineColor;
+    public Color InlineColor {get; set;}
+    public Color OutlineColor {get; set;}
+
 }

@@ -30,6 +30,7 @@ namespace Model.Tiles
                 unit.OnMove.after.RemoveListener(RemoveBuffCallback);
                 return v;
             }
+            
             unit.OnMove.after.AddListener(RemoveBuffCallback);
         }
         

@@ -12,33 +12,40 @@ namespace Common
 {
     public class Data
     {
-
         public static FieldData LoadFieldData()
         {
             try
             {
                 string jsonStr = File.ReadAllText(Application.dataPath + "/Resources/Data/Field/Data.json");
+
+                Debug.Log("load" + jsonStr);
+
                 return JsonUtility.FromJson<FieldData>(jsonStr);
             }
             catch
             {
-                FieldData temp = new FieldData(16, 16,
-                "WL WL WL WL WL WL WL WL WL WL WL WL WL WL WL WL \n" +
-                "WL PW HL PW PW FR FR FR FR FR SL SL SL LK WL WL \n" +
-                "WL PW PW HL PW FR FR FR FR FR SL SL SL LK FR WL \n" +
-                "WL FR HL FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
-                "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
-                "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
-                "WL TN TN TN TN TN TN TN TN TN TN TN TN TN TN WL \n" +
-                "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
-                "WL FR FR FR FR FR WL WL FR FR FR FR FR FR FR WL \n" +
-                "WL FR FR FR FR FR WL WL FR FR FR FR FR FR FR WL \n" +
-                "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
-                "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
-                "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
-                "WL US US FR FR DS DS FR FR FR FR FR FR FR FR WL \n" +
-                "WL US US FR FR DS DS FR FR FR FR FR FR FR FR WL \n" +
-                "WL WL WL WL WL WL WL WL WL WL WL WL WL WL WL WL ");
+                // Debug.Log("no save file in path");
+                // return null;
+
+                FieldData temp = new FieldData(
+                    16, 16,
+                    "WL WL WL WL WL WL WL WL WL WL WL WL WL WL WL WL \n" +
+                    "WL PW HL PW PW FR FR FR FR FR SL SL SL LK WL WL \n" +
+                    "WL PW PW HL PW FR FR FR FR FR SL SL SL LK FR WL \n" +
+                    "WL FR HL FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+                    "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+                    "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+                    "WL TN TN TN TN TN TN TN TN TN TN TN TN TN TN WL \n" +
+                    "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+                    "WL FR FR FR FR FR WL WL FR FR FR FR FR FR FR WL \n" +
+                    "WL FR FR FR FR FR WL WL FR FR FR FR FR FR FR WL \n" +
+                    "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+                    "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+                    "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+                    "WL US US FR FR DS DS FR FR FR FR FR FR FR FR WL \n" +
+                    "WL US US FR FR DS DS FR FR FR FR FR FR FR FR WL \n" +
+                    "WL WL WL WL WL WL WL WL WL WL WL WL WL WL WL WL \n"
+                );
 
                 SaveFieldData(temp);
 
@@ -52,6 +59,9 @@ namespace Common
             if (!directoryInfo.Exists) directoryInfo.Create();
 
             string jsonStr = JsonUtility.ToJson(fieldData);
+            
+            jsonStr.Replace("\n", "\\r\\n");
+            
             File.WriteAllText(Application.dataPath + "/Resources/Data/Field/Data.json", jsonStr);
         }
 

@@ -3,7 +3,6 @@ using Model.Managers;
 using Model;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using View;
 
@@ -58,7 +57,7 @@ namespace UI.Battle
             {
                 BattleView.TurnEndButton.gameObject.SetActive(false);
                 BattleView.DownStairButton.gameObject.SetActive(false);
-                // BattleView.UnitControlView.panel.SetActive(false);
+                BattleView.UnitControlView.panel.SetActive(false);
 
                 AI.Action action = AI.GetAction(nextUnit);
 
