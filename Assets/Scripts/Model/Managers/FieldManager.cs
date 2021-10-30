@@ -108,12 +108,13 @@ namespace Model.Managers
                     else if ($"{c1}{c2}" == "UL")   // UnLocked
                         field[y,x] = new UnLocked();
                     else
-                        field[y,x] = new Tile();
+                        field[y,x] = new Floor();
 
                     field[y, x].position = new Vector2Int(x, y);
                     index++;
                 }
             }
+            
 
             UpdateTileMap();
         }

@@ -63,12 +63,15 @@ namespace View
             UnitControlView.panel.SetActive(false);
         }
 
-        public static void SummonPartyUnits(int index = 0)
+        public static void SummonPartyUnits()
         {
             List<Vector2Int> positions = FieldManager.instance.GetTileCategoryPositions(TileCategory.UpStair);     
             List<Unit> units = GameManager.PartyUnits;
 
-            for (int i = 0; i < GameManager.PartyUnits.Count; i++)
+            if (units.Count > positions.Count)
+                Debug.LogError("Upstair 부족!! 소환할 곳이 없음!");
+            
+            for (int i = 0; i < units.Count; i++)
             {
                 Common.Command.Summon(units[i], positions[i]);
             }

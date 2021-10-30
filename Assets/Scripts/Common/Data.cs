@@ -12,11 +12,19 @@ namespace Common
 {
     public class Data
     {
+
+
         public static FieldData LoadFieldData()
         {
             try
             {
+                TextAsset[] Starts = Resources.LoadAll<TextAsset>("/Data/Field/Start");
+                TextAsset[] Neutrals = Resources.LoadAll<TextAsset>("/Data/Field/Neutral");
+                TextAsset[] Ends = Resources.LoadAll<TextAsset>("/Data/Field/End");
+               
                 string jsonStr = File.ReadAllText(Application.dataPath + "/Resources/Data/Field/Data.json");
+
+                jsonStr = jsonStr.Replace("\n", "");
 
                 Debug.Log("load" + jsonStr);
 
@@ -60,7 +68,8 @@ namespace Common
 
             string jsonStr = JsonUtility.ToJson(fieldData);
             
-            jsonStr.Replace("\n", "\\r\\n");
+            jsonStr = jsonStr.Replace("\\n", "\n");
+            Debug.Log("json Replace " + jsonStr);
             
             File.WriteAllText(Application.dataPath + "/Resources/Data/Field/Data.json", jsonStr);
         }
