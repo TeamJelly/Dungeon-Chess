@@ -21,10 +21,12 @@ namespace View
         float imageGap = 0;
 
         public static AgilityView instance;
+        
         private void Awake()
         {
             instance = this;
         }
+
         public void Init(int _bufferSize)
         {
             bufferSize = _bufferSize + 1;
