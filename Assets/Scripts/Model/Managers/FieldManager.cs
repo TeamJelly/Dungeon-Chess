@@ -67,6 +67,8 @@ namespace Model.Managers
 
             char[] chars = fieldData.fieldStrData.ToCharArray();
 
+            //Dictionary<Vector2Int, chunk>
+
             field = new Tile[fieldData.height, fieldData.width];
 
             int index = 0;

@@ -15,6 +15,7 @@ namespace Model
 
         public Sprite sprite;
 
+        public Artifact() { }
         public override Sprite Sprite { 
             get 
             {
@@ -44,6 +45,36 @@ namespace Model
             Common.Command.UnSummon(this);
             //Managers.GameManager.Instance.artifactBag.Add(this);
             //Debug.Log("GetArtifact");
+
+            Clone<Artifacts.Normal.ACoin>();
+        }
+
+        public Artifact Clone <T>() where T : Artifact, new()
+        {
+            T clone = new T();
+
+            clone.Position = Position;
+            clone.Grade = Grade;
+            clone.Price = Price;
+            clone.sprite = sprite;
+
+
+
+            return clone;
         }
     }
+
+    /*
+             public Unit Owner { get; set; }
+        public string Name { get; set; }
+        public virtual Sprite Sprite { get; set; }
+        public Color Color {get; set;}
+        public string Description { get; set; }
+
+        private int turnCount;
+        public int TurnCount
+        {
+            get => turnCount;
+            set => turnCount = value;
+        }*/
 }

@@ -1,4 +1,5 @@
 ﻿using Common;
+using UnityEngine;
 namespace Model.Artifacts.Rare
 {
     public class BloodStone : Artifact
@@ -13,12 +14,12 @@ namespace Model.Artifacts.Rare
 
         public override void OnAdd()
         {
-            Owner.OnTurnStart.after.AddListener(ArtifactFunction);
+            Owner.OnTurnEnd.after.AddListener(ArtifactFunction);
         }
 
         public override void OnRemove()
         {
-            Owner.OnTurnStart.after.RemoveListener(ArtifactFunction);
+            Owner.OnTurnEnd.after.RemoveListener(ArtifactFunction);
         }
 
         bool ArtifactFunction(bool b)

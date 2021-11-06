@@ -36,6 +36,7 @@ namespace View
         public static void Show(Unit unit)
         {
             instance.unitInfo.SetUnit(unit);
+            DungeonEditor.instance.SetUnit(unit);
         }
         public static void Show(Tile tile)
         {

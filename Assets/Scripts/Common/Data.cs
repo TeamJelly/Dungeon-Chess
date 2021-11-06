@@ -167,6 +167,15 @@ namespace Common
             }
         }
 
+        public static List<Artifact> AllArtifacts = new List<Artifact>()
+        {
+            new Model.Artifacts.Normal.LeatherBoots(),
+            new Model.Artifacts.Normal.ACoin(),
+            new Model.Artifacts.Normal.CopperRing(),
+            new Model.Artifacts.Rare.BloodStone(),
+        };
+        public static List<Skill> AllSkills => allSkills;
+
         static List<Skill> allSkills = new List<Skill>()
         {
             // Move 스킬

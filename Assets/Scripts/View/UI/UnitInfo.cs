@@ -19,6 +19,8 @@ namespace View.UI
 
         public GameObject infoBox;
 
+
+
         public void SetNone()
         {
             Name.text = "No Unit";
@@ -73,6 +75,8 @@ namespace View.UI
 
                 Button button = gameObject.GetComponent<Button>();
                 button.onClick.AddListener(() => InfoView.Show(unit, skill));
+
+               
             }
 
             foreach (Obtainable obtainable in unit.Belongings)
@@ -88,6 +92,20 @@ namespace View.UI
 
                 Button button = gameObject.GetComponent<Button>();
                 button.onClick.AddListener(() => InfoView.Show(obtainable));
+
+                if(DungeonEditor.enabledEditMode)
+                {
+                    Button modifyButton = gameObject.transform.Find("ModifyButton").GetComponent<Button>();
+
+                    modifyButton.gameObject.SetActive(true);
+                    modifyButton.gameObject.GetComponentInChildren<Text>().text = "-";
+                    modifyButton.onClick.AddListener(() =>
+                    {
+                        Common.Command.RemoveArtifact(unit, (Artifact)obtainable);
+                        InfoView.instance.unitInfo.SetUnit(unit);
+                    });
+                }
+                
             }
 
             foreach (Effect effect in unit.StateEffects)
@@ -105,6 +123,9 @@ namespace View.UI
                 button.onClick.AddListener(() => InfoView.Show(effect));
             }
         }
+
+
+        
 
         private void OnValidate()
         {
