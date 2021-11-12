@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Model;
+using Model.Managers;
 
 namespace View.UI
 {
@@ -60,40 +61,86 @@ namespace View.UI
                 Destroy(childList[i].gameObject);
             Effects.sizeDelta = Vector2.zero;
 
-            foreach (Skill skill in unit.Skills.Values)
-            {
-                GameObject gameObject = Instantiate(infoBox, Skills);
 
-                Image image = gameObject.transform.Find("Image").GetComponent<Image>();
+            // 이동 스킬
+            GameObject gameObject = Instantiate(infoBox, Skills);
+
+            Image image = gameObject.transform.Find("Image").GetComponent<Image>();
+            image.sprite = unit.MoveSkill.Sprite;
+            if (image.color != new Color(0, 0, 0, 0))
+                image.color = unit.MoveSkill.Color;
+
+            Rect rect = gameObject.GetComponent<RectTransform>().rect;
+            Skills.sizeDelta = Skills.rect.size + new Vector2(rect.width, 0);
+            gameObject.transform.SetParent(Skills);
+
+            Button button = gameObject.GetComponent<Button>();
+            button.onClick.AddListener(() => InfoView.Show(unit, unit.MoveSkill));
+
+            // 이동 스킬 삭제버튼
+            if (DungeonEditor.enabledEditMode)
+            {
+                Button modifyButton = gameObject.transform.Find("ModifyButton").GetComponent<Button>();
+
+                modifyButton.gameObject.SetActive(true);
+                modifyButton.gameObject.GetComponentInChildren<Text>().text = "-";
+                modifyButton.onClick.AddListener(() =>
+                {
+                    Common.Command.RemoveSkill(unit, unit.MoveSkill);
+                    InfoView.instance.unitInfo.SetUnit(unit);                    
+                    if(unit == BattleManager.instance.thisTurnUnit)
+                        BattleView.UnitControlView.UpdateSkillButtons(unit);
+                });
+            }
+
+            // 공격 스킬
+            foreach (Skill skill in unit.Skills)
+            {
+                gameObject = Instantiate(infoBox, Skills);
+
+                image = gameObject.transform.Find("Image").GetComponent<Image>();
                 image.sprite = skill.Sprite;
                 if (image.color != new Color(0, 0, 0, 0))
                     image.color = skill.Color;
 
-                Rect rect = gameObject.GetComponent<RectTransform>().rect;
+                rect = gameObject.GetComponent<RectTransform>().rect;
                 Skills.sizeDelta = Skills.rect.size + new Vector2(rect.width, 0);
                 gameObject.transform.SetParent(Skills);
 
-                Button button = gameObject.GetComponent<Button>();
+                button = gameObject.GetComponent<Button>();
                 button.onClick.AddListener(() => InfoView.Show(unit, skill));
 
-               
+                if (DungeonEditor.enabledEditMode)
+                {
+                    Button modifyButton = gameObject.transform.Find("ModifyButton").GetComponent<Button>();
+
+                    modifyButton.gameObject.SetActive(true);
+                    modifyButton.gameObject.GetComponentInChildren<Text>().text = "-";
+                    modifyButton.onClick.AddListener(() =>
+                    {
+                        Common.Command.RemoveSkill(unit, skill);
+                        InfoView.instance.unitInfo.SetUnit(unit);
+                        if(unit == BattleManager.instance.thisTurnUnit)
+                            BattleView.UnitControlView.UpdateSkillButtons(unit);
+                    });
+                }
             }
 
             foreach (Obtainable obtainable in unit.Belongings)
             {
-                GameObject gameObject = Instantiate(infoBox, Belongings);
+                gameObject = Instantiate(infoBox, Belongings);
 
-                Image image = gameObject.transform.Find("Image").GetComponent<Image>();
+                image = gameObject.transform.Find("Image").GetComponent<Image>();
                 image.sprite = obtainable.Sprite;
 
-                Rect rect = gameObject.GetComponent<RectTransform>().rect;
+                rect = gameObject.GetComponent<RectTransform>().rect;
                 Belongings.sizeDelta = Belongings.rect.size + new Vector2(rect.width, 0);
                 gameObject.transform.SetParent(Belongings);
 
-                Button button = gameObject.GetComponent<Button>();
+                button = gameObject.GetComponent<Button>();
                 button.onClick.AddListener(() => InfoView.Show(obtainable));
 
-                if(DungeonEditor.enabledEditMode)
+                if (DungeonEditor.enabledEditMode)
                 {
                     Button modifyButton = gameObject.transform.Find("ModifyButton").GetComponent<Button>();
 
@@ -103,29 +150,31 @@ namespace View.UI
                     {
                         Common.Command.RemoveArtifact(unit, (Artifact)obtainable);
                         InfoView.instance.unitInfo.SetUnit(unit);
+                        if(unit == BattleManager.instance.thisTurnUnit)
+                            BattleView.UnitControlView.UpdateSkillButtons(unit);
                     });
                 }
-                
+
             }
 
             foreach (Effect effect in unit.StateEffects)
             {
-                GameObject gameObject = Instantiate(infoBox, Effects);
+                gameObject = Instantiate(infoBox, Effects);
 
-                Image image = gameObject.transform.Find("Image").GetComponent<Image>();
+                image = gameObject.transform.Find("Image").GetComponent<Image>();
                 image.sprite = effect.Sprite;
 
-                Rect rect = gameObject.GetComponent<RectTransform>().rect;
+                rect = gameObject.GetComponent<RectTransform>().rect;
                 Effects.sizeDelta = Effects.rect.size + new Vector2(rect.width, 0);
                 gameObject.transform.SetParent(Effects);
 
-                Button button = gameObject.GetComponent<Button>();
+                button = gameObject.GetComponent<Button>();
                 button.onClick.AddListener(() => InfoView.Show(effect));
             }
         }
 
 
-        
+
 
         private void OnValidate()
         {

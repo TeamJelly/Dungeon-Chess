@@ -30,7 +30,7 @@ namespace Common
             //     VisualEffectView.MakeDropEffect(startPos,target,unit.Belongings[count]);
             //     count++;
             // }
-            
+
             // 사망시 갖고있는 템중에 하나 떨굼
             if (unit.Belongings.Count != 0)
                 Summon(unit.Belongings[Random.Range(0, unit.Belongings.Count)], unit.Position);
@@ -43,7 +43,7 @@ namespace Common
             if (GameManager.InBattle)
                 BattleController.instance.ThisTurnEnd();
 
-            else if (BattleManager.instance.thisTurnUnit == unit) 
+            else if (BattleManager.instance.thisTurnUnit == unit)
                 BattleManager.instance.thisTurnUnit = null;
         }
 
@@ -108,9 +108,9 @@ namespace Common
             unit.Level++;
 
             unit.CurEXP = 0;
-            unit.NextEXP = 10 * unit.Level * (unit.Level + 5);            
+            unit.NextEXP = 10 * unit.Level * (unit.Level + 5);
         }
-        
+
         public static void AddArtifact(Unit target, Artifact artifact)
         {
             artifact.Owner = target;
@@ -203,7 +203,7 @@ namespace Common
             FieldManager.GetTile(obtainable.Position).SetObtainable(null);
             BattleView.DestroyObtainableObject(obtainable);
         }
-        
+
         public static void UnSummonAllUnit()
         {
             List<Unit> units = BattleManager.instance.AllUnits;
@@ -213,34 +213,51 @@ namespace Common
             }
         }
 
-        // public static void AddSkill(Unit unit, Skill newSkill, int index)
-        // {
-        //     if (index >= unit.Skills.Length || index < 0)
-        //     {
-        //         Debug.LogError("스킬 슬롯을 범위를 벗어났습니다.");
-        //         return;
-        //     }
+        public static void AddSkill(Unit unit, Skill newSkill)
+        {
+            if (typeof(Model.Skills.Move.MoveSkill).IsInstanceOfType(newSkill))
+            {
+                RemoveSkill(unit, unit.MoveSkill);
+                unit.MoveSkill = newSkill as Model.Skills.Move.MoveSkill;
+            }
+            else if (unit.Skills.Count < 3 && !unit.Skills.Contains(newSkill))
+            {
+                unit.Skills.Add(newSkill);
+            }
+            else
+                Debug.LogError($"{newSkill.Name} 스킬을 배울 수 없습니다.");
+        }
 
-        //     RemoveSkill(unit, index);
-        //     unit.Skills[index] = newSkill;
-        //     // unit.IsModified = true;
-        // }
+        public static void EnhanceSkill(Unit unit, Skill skill)
+        {
+            if (unit.MoveSkill == skill || unit.Skills.Contains(skill))
+                unit.EnhancedSkills.Add(skill, true);
+            else
+                Debug.LogError($"{skill.Name}은 현재 소유한 스킬이 아닙니다. 강화할수 없습니다.");
+        }
 
-        // public static void RemoveSkill(Unit unit, int index)
-        // {
-        //     if (index >= unit.Skills.Length || index < 0)
-        //     {
-        //         Debug.LogError("스킬 슬롯을 범위를 벗어났습니다.");
-        //         return;
-        //     }
-        //     if (unit.Skills[index] == null)
-        //     {
-        //         Debug.LogError("제거할 스킬이 없습니다.");
-        //         return;
-        //     }
+        public static void RemoveSkill(Unit unit, Skill skill)
+        {
+            // 대기중인 스킬에 존재한다면, 미리 삭제해준다.
+            if (unit.WaitingSkills.ContainsKey(skill))
+                unit.WaitingSkills.Remove(skill);
 
-        //     unit.Skills[index] = null;
-        // }
+            // 강화한 스킬 리스트에 존재한다면, 삭제해줍니다.
+            if (unit.EnhancedSkills.ContainsKey(skill))
+                unit.EnhancedSkills.Remove(skill);
+
+            // 스킬 삭제
+            if (unit.MoveSkill == skill)
+            {
+                unit.MoveSkill = new Model.Skills.Move.MoveSkill();
+            }
+            else if (unit.Skills.Contains(skill))
+            {
+                unit.Skills.Remove(skill);
+            }
+            else
+                Debug.LogError($"{skill.Name}현재 소유한 스킬이 아닙니다. 삭제할 수 없습니다.");
+        }
 
         // public static void UpgradeSkill(Unit unit, int index)
         // {

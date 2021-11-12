@@ -33,6 +33,7 @@ namespace View
         void InitUI()
         {
             skillButtons = new SkillButton[skillCount];
+            
             for (int i = 0; i < skillCount; i++)
             {
                 SkillButton newButton = skillPanel.transform.GetChild(i).GetComponent<SkillButton>();
@@ -56,11 +57,14 @@ namespace View
         {
             //스킬(아이템, 이동 포함) 이미지 갱신
             //버튼 이벤트 등록
+            for (int i = 0; i < 4; i++)
+                skillButtons[i].SetSkill(null, null);
 
-            skillButtons[0].SetSkill(unit, unit.Skills[SkillCategory.Move]);
-            skillButtons[1].SetSkill(unit, unit.Skills[SkillCategory.Basic]);
-            skillButtons[2].SetSkill(unit, unit.Skills[SkillCategory.Intermediate]);
-            skillButtons[3].SetSkill(unit, unit.Skills[SkillCategory.Advanced]);
+            skillButtons[0].SetSkill(unit, unit.MoveSkill); 
+
+            for (int i = 0; i < 3 && i < unit.Skills.Count; i++)
+                skillButtons[i+1].SetSkill(unit, unit.Skills[i]);
+          
 
             RefreshButtons();
         }

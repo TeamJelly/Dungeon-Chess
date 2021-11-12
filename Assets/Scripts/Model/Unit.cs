@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Common;
 using System;
 using Model;
+using Model.Skills.Move;
 
 namespace Model
 {
@@ -66,10 +67,10 @@ namespace Model
             Name = Data.GetRandomName(Seed);
             Sprite = Data.GetRandomSprite(Species, Seed);
 
-            Skills[SkillCategory.Move] = Data.GetRandomSkill(Seed, species, SkillCategory.Move);
-            Skills[SkillCategory.Basic] = Data.GetRandomSkill(Seed, species, SkillCategory.Basic);
-            Skills[SkillCategory.Intermediate] = Data.GetRandomSkill(Seed, species, SkillCategory.Intermediate);
-            Skills[SkillCategory.Advanced] = Data.GetRandomSkill(Seed, species, SkillCategory.Advanced);
+            MoveSkill = Data.GetRandomSkill(Seed, species, SkillCategory.Move) as Model.Skills.Move.MoveSkill;
+            Skills.Add(Data.GetRandomSkill(Seed, species, SkillCategory.Basic));
+            Skills.Add(Data.GetRandomSkill(Seed, species, SkillCategory.Intermediate));
+            Skills.Add(Data.GetRandomSkill(Seed, species, SkillCategory.Advanced));
 
             // 인간형 초기 스텟
             if (Species == UnitSpecies.Human)
@@ -127,14 +128,20 @@ namespace Model
         private int criRate;                 // 치명타 율
         private float actionRate;                   // 행동가능 퍼센테이지
         private Vector2Int position;                // 위치
-        private Dictionary<SkillCategory, Skill> skills = new Dictionary<SkillCategory, Skill>()
-        {
-            {SkillCategory.Move, null},
-            {SkillCategory.Basic, null},
-            {SkillCategory.Intermediate, null},
-            {SkillCategory.Advanced, null}
-        };
+
+        // 레거시 코드
+        // private Dictionary<SkillCategory, Skill> skills = new Dictionary<SkillCategory, Skill>()
+        // {
+        //     {SkillCategory.Move, null},
+        //     {SkillCategory.Basic, null},
+        //     {SkillCategory.Intermediate, null},
+        //     {SkillCategory.Advanced, null}
+        // };
+
+        private MoveSkill moveSkill = new MoveSkill();
+        private List<Skill> skills = new List<Skill>();
         private Dictionary<Skill, int> waitingSkills = new Dictionary<Skill, int>();
+        private Dictionary<Skill, bool> enhancedSkills = new Dictionary<Skill, bool>();
         private List<Obtainable> belongings = new List<Obtainable>();    // 보유한 유물 및 아이템
         private List<Effect> stateEffects = new List<Effect>();  // 보유한 상태효과
         private List<Obtainable> droptems = new List<Obtainable>();
@@ -298,13 +305,11 @@ namespace Model
         public float ActionRate { get => actionRate; set => actionRate = value; }
         public bool IsSkilled { get; set; }
         public bool IsMoved { get; set; }
-        public Dictionary<SkillCategory, Skill> Skills
-        {
-            get => skills;
-            set => skills = value;
-        }
 
+        public MoveSkill MoveSkill { get => moveSkill; set => moveSkill = value; }
+        public List<Skill> Skills { get => skills; set => skills = value; }
         public Dictionary<Skill, int> WaitingSkills { get => waitingSkills; set => waitingSkills = value; }
+        public Dictionary<Skill, bool> EnhancedSkills { get => enhancedSkills; set => enhancedSkills = value; }
         public List<Obtainable> Belongings { get => belongings; set => belongings = value; }
         public List<Effect> StateEffects { get => stateEffects; set => stateEffects = value; }
         public int CriRate { get => criRate; set => criRate = value; }

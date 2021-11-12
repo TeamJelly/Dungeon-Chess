@@ -37,6 +37,7 @@ namespace View.UI
             if (skill == null)
             {
                 MainImage.sprite = null; // 나중에 빈 이미지로 교체하기
+                MainImage.color = Color.black;
                 return;
             }
 

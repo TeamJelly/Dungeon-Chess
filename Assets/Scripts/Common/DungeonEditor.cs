@@ -110,8 +110,7 @@ public class DungeonEditor : MonoBehaviour
             modifyButton.gameObject.GetComponentInChildren<Text>().text = "+";
             modifyButton.onClick.AddListener(() => 
             {
-                currentUnit.Skills.Remove(skill.Category);
-                currentUnit.Skills.Add(skill.Category, skill);
+                Common.Command.AddSkill(currentUnit, skill);
                 InfoView.instance.unitInfo.SetUnit(currentUnit);
 
                 if(currentUnit == BattleManager.instance.thisTurnUnit)
@@ -119,8 +118,8 @@ public class DungeonEditor : MonoBehaviour
             });
         }
 
-        //Artifact Ãß°¡ÇÏ±â ±¸ÇöÁß.
-        //±×·¯·Á¸é ¸ðµç ArtifactÀÇ Á¤º¸¸¦ ¾Ë¾Æ¾ß ÇÔ.
+        //Artifact ï¿½ß°ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
+        //ï¿½×·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Artifactï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë¾Æ¾ï¿½ ï¿½ï¿½.
         //
         foreach (Artifact artifact in Common.Data.AllArtifacts)
         {

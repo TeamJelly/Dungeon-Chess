@@ -71,9 +71,9 @@ namespace Model.Managers
 
             // 테스팅 적 유닛 소환
             Unit unit = new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1);
-            unit.Skills[SkillCategory.Basic] = new Skills.Basic.Slash();
-            unit.Skills[SkillCategory.Move].Priority = Common.AI.Priority.NearFromClosestParty;
-            unit.Skills[SkillCategory.Basic].Target = Skill.TargetType.Hostile;
+            unit.MoveSkill.Priority = Common.AI.Priority.NearFromClosestParty;
+            unit.Skills[0] = new Skills.Basic.Slash();
+            unit.Skills[0].Target = Skill.TargetType.Hostile;
 
             Common.Command.Summon(unit, new Vector2Int(4, 4));
            
