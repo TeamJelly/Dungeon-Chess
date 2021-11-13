@@ -6,10 +6,12 @@ using Model;
 using View;
 using Model.Managers;
 using System;
+using UI.Battle;
 
 public class DungeonEditor : MonoBehaviour
 {
     public GameObject unitAttributeController;
+    [Header("Unit Editor")]
     public Button button_saveUnit;
     public Button button_lvlUp;
     public Button button_resetLv;
@@ -19,6 +21,9 @@ public class DungeonEditor : MonoBehaviour
     public Button button_STRDown;
     public Button button_MOVUp;
     public Button button_MOVDown;
+
+    public Button button_summonUnit;
+    public Button button_unsummonUnit;
 
 
     public GameObject infoBox;
@@ -33,6 +38,8 @@ public class DungeonEditor : MonoBehaviour
     public static bool enabledEditMode = false;
 
     [Space(10)]
+
+    Tile currentTile = null;
     Unit currentUnit = null;
     private void Awake()
     {
@@ -41,6 +48,7 @@ public class DungeonEditor : MonoBehaviour
         Init();
         button_lvlUp.onClick.AddListener(() =>
         {
+            if (currentUnit == null) return;
             Common.Command.LevelUp(currentUnit);
             InfoView.instance.unitInfo.SetUnit(currentUnit);
         });
@@ -50,42 +58,83 @@ public class DungeonEditor : MonoBehaviour
         });*/
         button_HPUp.onClick.AddListener(() =>
         {
+            if (currentUnit == null) return;
             Common.Command.Heal(currentUnit, 10);
             InfoView.instance.unitInfo.SetUnit(currentUnit);
         });
         button_HPDown.onClick.AddListener(() =>
         {
+            if (currentUnit == null) return;
             Common.Command.Damage(currentUnit, 10);
             InfoView.instance.unitInfo.SetUnit(currentUnit);
         });
         button_STRUp.onClick.AddListener(() =>
         {
+            if (currentUnit == null) return;
             currentUnit.Strength++;
             InfoView.instance.unitInfo.SetUnit(currentUnit);
         });
         button_STRDown.onClick.AddListener(() =>
         {
+            if (currentUnit == null) return;
             currentUnit.Strength--;
             if (currentUnit.Strength < 0) currentUnit.Strength = 0;
             InfoView.instance.unitInfo.SetUnit(currentUnit);
         });
         button_MOVUp.onClick.AddListener(() =>
         {
+            if (currentUnit == null) return;
             currentUnit.Mobility++;
             InfoView.instance.unitInfo.SetUnit(currentUnit);
         });
         button_MOVDown.onClick.AddListener(() =>
         {
+            if (currentUnit == null) return;
             currentUnit.Mobility--;
             if (currentUnit.Mobility < 0) currentUnit.Mobility = 0;
             InfoView.instance.unitInfo.SetUnit(currentUnit);
         });
-    }
-    public void SetUnit(Unit unit)
-    {
-        currentUnit = unit;
+
+        /*button_saveUnit.onClick.AddListener(() =>
+        {
+            if (currentUnit == null) return;
+            Common.Data.SaveUnitData(currentUnit);
+        });
+        button_summonUnit.onClick.AddListener(() =>
+        {
+            if(currentUnit != null)
+            {
+                Common.Command.UnSummon(currentUnit);
+                GameManager.RemovePartyUnit(currentUnit); //죽으면 파티유닛에서 박탈.
+            }
+            //currentUnit = Common.Data.LoadUnitData();
+            Common.Command.Summon(currentUnit, currentTile.position);
+            InfoView.instance.unitInfo.SetUnit(currentUnit);
+            BattleManager.instance.InitializeUnitBuffer();
+
+        });*/
+
+        //소환 해제 함수 정리 필요.
+        button_unsummonUnit.onClick.AddListener(() =>
+        {
+            if (currentUnit == null) return;
+            Common.Command.UnSummon(currentUnit);
+            GameManager.RemovePartyUnit(currentUnit); //죽으면 파티유닛에서 박탈.
+            BattleManager.instance.InitializeUnitBuffer();
+            if (GameManager.InBattle)
+                BattleController.instance.ThisTurnEnd();
+            else if (BattleManager.instance.thisTurnUnit == currentUnit)
+                BattleManager.instance.thisTurnUnit = null;
+            currentUnit = null;
+            InfoView.instance.unitInfo.SetNone();
+        });
     }
 
+    public void SetTile(Tile tile)
+    {
+        currentTile = tile;
+        currentUnit = tile?.GetUnit();
+    }
 
     public void Init()
     {
@@ -102,7 +151,12 @@ public class DungeonEditor : MonoBehaviour
             Skills.sizeDelta = Skills.rect.size + new Vector2(rect.width, 0);
 
             Button button = gameObject.GetComponent<Button>();
-            button.onClick.AddListener(() => InfoView.Show(currentUnit, skill));
+
+            button.onClick.AddListener(() =>
+            {
+                if (currentUnit == null) InfoView.Show(skill);
+                else InfoView.Show(currentUnit, skill);
+            });
 
             Button modifyButton = gameObject.transform.Find("ModifyButton").GetComponent<Button>();
 
@@ -110,6 +164,7 @@ public class DungeonEditor : MonoBehaviour
             modifyButton.gameObject.GetComponentInChildren<Text>().text = "+";
             modifyButton.onClick.AddListener(() => 
             {
+                if (currentUnit == null) return;
                 Common.Command.AddSkill(currentUnit, skill);
                 InfoView.instance.unitInfo.SetUnit(currentUnit);
 
@@ -118,9 +173,6 @@ public class DungeonEditor : MonoBehaviour
             });
         }
 
-        //Artifact �߰��ϱ� ������.
-        //�׷����� ��� Artifact�� ������ �˾ƾ� ��.
-        //
         foreach (Artifact artifact in Common.Data.AllArtifacts)
         {
             GameObject gameObject = Instantiate(infoBox, Artifacts);
@@ -142,6 +194,7 @@ public class DungeonEditor : MonoBehaviour
             modifyButton.gameObject.GetComponentInChildren<Text>().text = "+";
             modifyButton.onClick.AddListener(() =>
             {
+                if (currentUnit == null) return;
                 Artifact copied = Activator.CreateInstance(artifact.GetType()) as Artifact;
                 Common.Command.AddArtifact(currentUnit, copied);
                 InfoView.instance.unitInfo.SetUnit(currentUnit);
@@ -155,7 +208,7 @@ public class DungeonEditor : MonoBehaviour
             enabledEditMode = !enabledEditMode;
             unitAttributeController.gameObject.SetActive(enabledEditMode);
 
-            if(InfoView.instance.infoPanel.activeSelf)
+            if(currentUnit != null)
                 InfoView.instance.unitInfo.SetUnit(currentUnit);
 
         }

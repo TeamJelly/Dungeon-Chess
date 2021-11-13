@@ -7,7 +7,7 @@ using Model.Skills.Basic;
 using static Model.Managers.FieldManager;
 using System;
 using System.IO;
-
+using System.Runtime.Serialization.Formatters.Binary;
 namespace Common
 {
     public class Data
@@ -74,6 +74,36 @@ namespace Common
             File.WriteAllText(Application.dataPath + "/Resources/Data/Field/Data.json", jsonStr);
         }
 
+        //유닛 저장 불러오기 실험중
+        //현재 객체 자체를 바이너리 직렬화로 저장 시도
+        //Vector2Int 등 유니티 기본 타입들 serializable이 아니라서 불가능.
+        public static void SaveUnitData(Unit unit)
+        {
+            DirectoryInfo directoryInfo = new DirectoryInfo(Application.dataPath + "/Resources/Data/Unit/");
+            if (!directoryInfo.Exists) directoryInfo.Create();
+
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Create(Application.dataPath + "/Resources/Data/Unit/" + unit.Name);
+            bf.Serialize(file, unit);
+            file.Close();
+        }
+        public static Unit LoadUnitData(string name)
+        {
+            Unit unit = null;
+            DirectoryInfo directoryInfo = new DirectoryInfo(Application.dataPath + "/Resources/Data/Unit/");
+            if (!directoryInfo.Exists) directoryInfo.Create();
+
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(Application.dataPath + "/Resources/Data/Unit/" + name, FileMode.Open);
+
+            if(file != null && file.Length > 0)
+            {
+                unit = (Unit)bf.Deserialize(file);
+            }
+            file.Close();
+
+            return unit;
+        }
         private static string[] nameData;
 
         public static string[] NameData

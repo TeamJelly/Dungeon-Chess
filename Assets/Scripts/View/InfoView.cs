@@ -31,16 +31,17 @@ namespace View
             instance.unitInfo.SetNone();
             instance.tileInfo.Set("None", "None", null, Color.black, "None");
             instance.simpleInfo.Set("None", "None", null, Color.black, "None");
+            DungeonEditor.instance.SetTile(null);
         }
 
         public static void Show(Unit unit)
         {
             instance.unitInfo.SetUnit(unit);
-            DungeonEditor.instance.SetUnit(unit);
         }
         public static void Show(Tile tile)
         {
             instance.tileInfo.Set(tile);
+            DungeonEditor.instance.SetTile(tile);
         }
         public static void Show(Skill skill)
         {
