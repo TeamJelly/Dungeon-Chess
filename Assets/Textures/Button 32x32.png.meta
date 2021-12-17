@@ -83,6 +83,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -92,11 +94,11 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: -1
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -114,9 +116,12 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 0
   platformSettings:
   - serializedVersion: 3
@@ -588,6 +593,27 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Button 16x16_18: 2789283356966904837
+      Button 16x16_3: -5913615384380763287
+      Button 16x16_8: -4913853463894955111
+      Button 16x16_6: -6535755057457109292
+      Button 16x16_15: -661139170732207335
+      Button 16x16_19: -1311372160934104496
+      Button 16x16_2: -2967420753229415777
+      Button 16x16_10: -2778914863641193835
+      Button 16x16_4: 6728816855829378758
+      Button 16x16_12: -5596058468926784171
+      Button 16x16_1: -3365026510449541564
+      Button 16x16_14: 5547540614175124585
+      Button 16x16_5: -367297571359391035
+      Button 16x16_11: 2158072300971651936
+      Button 16x16_0: 2086001136419137212
+      Button 16x16_13: 7482848846922347399
+      Button 16x16_17: -7890370100148128943
+      Button 16x16_9: 890131817929682334
+      Button 16x16_16: -8247204729951361319
+      Button 16x16_7: -7557933213817748184
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
