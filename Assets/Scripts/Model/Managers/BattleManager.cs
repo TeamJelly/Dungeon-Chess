@@ -65,9 +65,12 @@ namespace Model.Managers
             // "WL US US FR FR DS DS FR FR FR FR FR FR FR FR WL \n" +
             // "WL WL WL WL WL WL WL WL WL WL WL WL WL WL WL WL ");
 
-            FieldManager.FieldData temp = Common.Data.LoadFieldData();
-
-            FieldManager.instance.InitField(temp);
+            //FieldManager.FieldData temp1 = Common.Data.LoadFieldData();
+            // FieldManager.FieldData temp2 = Common.Data.LoadFieldData();
+            //FieldManager.FieldData temp = FieldManager.instance.Merge2FieldData(temp1, temp2, new Vector2Int(temp1.width,temp1.height));
+            Chunk chunk = new Chunk();
+            chunk.GenerateMap();
+            FieldManager.instance.InitField(chunk.GetFieldData());
 
             // 테스팅 적 유닛 소환
             Unit unit = new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1);

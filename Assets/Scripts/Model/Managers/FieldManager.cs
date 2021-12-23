@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Model.Tiles;
+using System.Linq;
+using System.Text;
 
 namespace Model.Managers
 {
@@ -46,6 +48,13 @@ namespace Model.Managers
                 this.fieldStrData = str;
             }
 
+            public FieldData(int width, int height)
+            {
+                this.width = width;
+                this.height = height;
+                this.fieldStrData = string.Concat(Enumerable.Repeat("FL", width * height));
+            }
+
             // 행과 열의 개수
             public int width, height;
             public string fieldStrData;
@@ -60,14 +69,72 @@ namespace Model.Managers
         FieldData fieldData;
         Chunk chunk;
 
-        
+        public FieldData Merge2FieldData(FieldData f1, FieldData f2, Vector2Int pivot)
+        {
+            f1.fieldStrData = f1.fieldStrData.Replace(" ", "");
+            f1.fieldStrData = f1.fieldStrData.Replace("\n", "");
+            f2.fieldStrData = f2.fieldStrData.Replace(" ", "");
+            f2.fieldStrData = f2.fieldStrData.Replace("\n", "");
+
+            int left = Mathf.Min(0, pivot.x);
+            int right = Mathf.Max(pivot.x + f2.width, 0 + f1.width);
+            int width = right - left;
+            int up = Mathf.Min(0, pivot.y);
+            int down = Mathf.Max(pivot.y + f2.height, 0 + f1.height);
+
+            int height = down - up;
+
+            Debug.Log(width + "," + height);
+            FieldData newFieldData = new FieldData(width, height, string.Concat(Enumerable.Repeat("FL", width * height)));
+
+            Vector2Int start_f1 = new Vector2Int();
+            start_f1.x = Mathf.Max(0, -pivot.x);
+            start_f1.y = Mathf.Max(0, -pivot.y);
+            StringBuilder sb = new StringBuilder(newFieldData.fieldStrData);
+            for (int y = 0; y < f1.height; y++)
+                for (int x = 0; x < f1.width; x++)
+                {
+                    sb[((y + start_f1.y) * newFieldData.width + (x + start_f1.x)) * 2] = f1.fieldStrData[(y * f1.width + x) * 2];
+                    sb[((y + start_f1.y) * newFieldData.width + (x + start_f1.x)) * 2 + 1] = f1.fieldStrData[(y * f1.width + x) * 2 + 1];
+                }
+                    
+
+            
+
+            Vector2Int start_f2 = new Vector2Int();
+            start_f2.x = Mathf.Max(0, pivot.x);
+            start_f2.y = Mathf.Max(0, pivot.y);
+
+            for (int y = 0; y < f2.height; y++)
+                for (int x = 0; x < f2.width; x++)
+                {
+                    sb[((y + start_f2.y) * newFieldData.width + (x + start_f2.x)) * 2] = f2.fieldStrData[(y * f2.width + x) * 2];
+                    sb[((y + start_f2.y) * newFieldData.width + (x + start_f2.x)) * 2 + 1] = f2.fieldStrData[(y * f2.width + x) * 2 + 1];
+                }
+
+            newFieldData.fieldStrData = sb.ToString();
+
+            string s = "";
+            for(int i = 0; i < newFieldData.fieldStrData.Length; i++)
+            {
+                if(i % 64 == 0)
+                {
+                    s += "\n";
+                }
+                s += newFieldData.fieldStrData[i];
+            }
+            Debug.Log(s);
+            return newFieldData;
+        }
+
         public void InitField(FieldData fieldData)
         {
             //Chunk 테스트.
-            chunk = new Chunk();
+            /*chunk = new Chunk();
             chunk.GenerateMap();
 
             Tile[,] field1 = chunk.GetAllFields();
+
 
             field = new Tile[field1.GetLength(0) + 2, field1.GetLength(1)];
             for (int y = 0; y < field1.GetLength(0); y++)
@@ -88,7 +155,9 @@ namespace Model.Managers
             ScreenTouchManager.instance.RightUpLimit = new Vector2(12, 12);
             //this.fieldData = fieldData;
             UpdateTileMap();
-            return;
+            return;*/
+
+
 
             ScreenTouchManager.instance.RightUpLimit = new Vector2(fieldData.width, fieldData.height);
 

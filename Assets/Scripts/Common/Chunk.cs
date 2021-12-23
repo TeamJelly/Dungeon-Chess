@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using Model;
 using static Model.Managers.FieldManager;
 using Model.Tiles;
+using Model.Managers;
+using System.Text;
 
 public class Chunk
 {
@@ -126,6 +128,7 @@ public class Chunk
     class Tile4x4
     {
         public Tile[,] field;
+        public FieldData fieldData;
         public Tile4x4(int x, int y)
         {
             pos = new Vector2Int(x, y);
@@ -133,8 +136,8 @@ public class Chunk
         public void SetFieldData(FieldData fieldData)
         {
             field = new Tile[4, 4];
-
-            char[] chars = fieldData.fieldStrData.ToCharArray();
+            this.fieldData = fieldData;
+            /*char[] chars = fieldData.fieldStrData.ToCharArray();
             int index = 0;
             for (int y = 0; y < 4; y++)
             {
@@ -178,7 +181,7 @@ public class Chunk
                     field[y, x].position = new Vector2Int(x + 4 * pos.x, y + 4 * pos.y);
                     index++;
                 }
-            }
+            }*/
         }
         public Tile GetField(Vector2Int p)
         {
@@ -383,6 +386,39 @@ public class Chunk
         return TileBoxies[index_tile4x4.y, index_tile4x4.x].GetField(index_field);
     }*/
 
+    public FieldData GetFieldData()
+    {
+        FieldData result = new FieldData(size * 4, size * 4);
+
+        for (int i = 0; i < size; i++)
+        {
+            for (int j = 0; j < size; j++)
+            {
+                result = FieldManager.instance.Merge2FieldData(result, TileBoxies[i, j].fieldData, new Vector2Int(j * 4, i * 4));
+            }
+        }
+        FieldData platform = new FieldData(size * 4, 2);
+
+        StringBuilder sb = new StringBuilder(platform.fieldStrData);
+        sb[0] = 'U';
+        sb[1] = 'S';
+        sb[2] = 'U';
+        sb[3] = 'S';
+        sb[4] = 'U';
+        sb[5] = 'S';
+        sb[6] = 'U';
+        sb[7] = 'S';
+        //sb[8 * size - 3] = 'S';
+        //sb[2 * size - 2] = 'U';
+        //sb[2 * size - 1] = 'S';
+        //sb[2 * size - 0] = 'U';
+        //sb[2 * size + 1] = 'S';
+        //sb[2 * size + 2] = 'U';
+        //sb[2 * size + 3] = 'S';
+        platform.fieldStrData = sb.ToString();
+        result = FieldManager.instance.Merge2FieldData(result, platform,new Vector2Int(0, result.height));
+        return result;
+    }
     public Tile[,] GetAllFields()
     {
         int scale = size * 4;
