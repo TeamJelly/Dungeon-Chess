@@ -7,13 +7,11 @@ public class ChunkTest : MonoBehaviour
 {
     public class Tile4x4
     {
-        public Tile4x4(int id) { ID = id; }
+        public Tile4x4(int x ,int y)
+        {
+            pos = new Vector2Int(x, y);
+        }
         public bool visited = false;
-        public int ID;
-        //public TileBox up = null;
-        //public TileBox down = null;
-        //public TileBox left = null;
-        //public TileBox right = null;
         public List<Vector2Int> availableDirections = new List<Vector2Int>();
 
         public Vector2Int pos;
@@ -31,41 +29,6 @@ public class ChunkTest : MonoBehaviour
     public void Start()
     {
         GenerateMap();
-
-        /*for (int i = 0; i < size; i++)
-        {
-            for(int j = 0; j < size; j++)
-            {
-               // Debug.Log(TileBoxs[i, j].ID + "===============");
-                if(i > 0)
-                {
-                    TileBoxies[i,j].up = TileBoxies[i - 1, j];
-                   // Debug.Log(TileBoxs[i, j].up.ID);
-                }
-                if(i < 3)
-                {
-                    TileBoxies[i, j].down = TileBoxies[i + 1, j];
-                  //  Debug.Log(TileBoxs[i, j].down.ID);
-                }
-                if (j > 0)
-                {
-                    TileBoxies[i, j].left = TileBoxies[i, j - 1];
-                  //  Debug.Log(TileBoxs[i, j].left.ID);
-                }
-                if (j < 3)
-                {
-                    TileBoxies[i, j].right = TileBoxies[i, j + 1];
-                  //  Debug.Log(TileBoxs[i, j].right.ID);
-                }
-                TileBox tempTileBox = TileBoxies[i, j];
-                //buttons[i * size + j].GetComponent<Button>().onClick.AddListener(() => ChangeTileBox(tempTileBox));
-
-                int r = Random.Range(0, 6);
-                int rot = Random.Range(0, size) * 90;
-                buttons[i * size + j].sprite = sprites[r];
-                buttons[i * size + j].transform.rotation = new Quaternion(0, 0, rot, 0);
-            }
-        }*/
     }
     public void GenerateMap()
     {
@@ -81,8 +44,7 @@ public class ChunkTest : MonoBehaviour
         {
             for (int x = 0; x < size; x++)
             {
-                Tile4x4 tile = new Tile4x4(y * size + x);
-                tile.pos = new Vector2Int(x, y);
+                Tile4x4 tile = new Tile4x4(x, y);
 
                 Debug.Log("tile" + tile.pos);
 
@@ -222,41 +184,4 @@ public class ChunkTest : MonoBehaviour
             }
         }
     }
-
-    /*public void ChangeTileBox(TileBox TileBox)
-    {
-        TileBox emptyTileBox = null;
-        if(TileBox.up != null && TileBox.up.isEmpty)
-        {
-            emptyTileBox = TileBox.up;
-        }
-        if (TileBox.down != null && TileBox.down.isEmpty)
-        {
-            emptyTileBox = TileBox.down;
-        }
-        if (TileBox.left != null && TileBox.left.isEmpty)
-        {
-            emptyTileBox = TileBox.left;
-        }
-        if (TileBox.right != null && TileBox.right.isEmpty)
-        {
-            emptyTileBox = TileBox.right;
-        }
-        //Debug.Log(TileBox.ID);
-        if (emptyTileBox != null)
-        {
-            Sprite tempImg = buttons[TileBox.ID].sprite;
-            buttons[TileBox.ID].sprite = buttons[emptyTileBox.ID].sprite;
-            buttons[emptyTileBox.ID].sprite = tempImg;
-
-            //int tempID = TileBox.ID;
-            //TileBox.ID = emptyTileBox.ID;
-            //emptyTileBox.ID = tempID;
-
-            TileBox.isEmpty = true;
-            emptyTileBox.isEmpty = false;
-            
-        }
-        
-    }*/
 }
