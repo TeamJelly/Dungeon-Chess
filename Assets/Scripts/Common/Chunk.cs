@@ -245,7 +245,7 @@ public class Chunk
         }
 
         Vector2Int nextPos;
-        Tile4x4 currentTile = TileBoxies[size - 1, size / 2];
+        Tile4x4 currentTile = TileBoxies[size - 1, 0];
 
         currentTile.path_ID += 4;
 
