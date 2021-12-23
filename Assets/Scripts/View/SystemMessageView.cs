@@ -24,7 +24,7 @@ namespace View
             Common.UIEffect.FadeInPanel(instance.panel);
         }
 
-        public static void HideMessage()
+        public static void  HideMessage()
         {
             instance.text.alpha = 0;
             Common.UIEffect.FadeOutPanel(instance.panel);

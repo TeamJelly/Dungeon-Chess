@@ -217,14 +217,14 @@ public class Chunk
         directions.Add(new Vector2Int(-1, 0));
 
         TileBoxies = new Tile4x4[size, size];
-        //Å¸ÀÏ »ý¼º
+        //Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         for (int y = 0; y < size; y++)
         {
             for (int x = 0; x < size; x++)
             {
                 Tile4x4 tile = new Tile4x4(x, y);
 
-                Debug.Log("tile" + tile.pos);
+                // Debug.Log("tile" + tile.pos);
 
                 int idx = 0;
                 foreach (var direction in directions)
@@ -235,7 +235,7 @@ public class Chunk
                         tile.availableDirections.Add(direction);
 
                         idx += (int)Mathf.Pow(2, directions.IndexOf(direction));
-                        Debug.Log(direction);
+                        // Debug.Log(direction);
                     }
                 }
 
@@ -254,7 +254,7 @@ public class Chunk
         int visited_count = 1;
         int all_tile_count = size * size;
 
-        // ¿Ï·áµÉ¶§±îÁö ¹Ýº¹
+        // ï¿½Ï·ï¿½É¶ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ýºï¿½
         while (true)
         {
             currentTile.visited = true;
@@ -265,24 +265,24 @@ public class Chunk
                     currentTile.availableDirections.RemoveAt(i);
             }
 
-            //´õ ÀÌ»ó °¥ ¹æÇâÀÌ ¾øÀ» ¶§
+            //ï¿½ï¿½ ï¿½Ì»ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
             if (currentTile.availableDirections.Count == 0)
             {
-                //¸ðµç Å¸ÀÏÀÌ ÇÒ´ç µÇ¾úÀ» ¶§
+                //ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½Ò´ï¿½ ï¿½Ç¾ï¿½ï¿½ï¿½ ï¿½ï¿½
                 if (visited_count == all_tile_count)
                     break; // end
 
-                //ÀÌÀü Å¸ÀÏ·Î µ¹¾Æ°¨
+                //ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½Ï·ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½
                 else
                 {
                     currentTile = visited_Tiles.Pop();
                 }
             }
 
-            //°¥ ¼ö ÀÖ´Â ¹æÇâ Áß ÇÏ³ª¸¦ ¼±ÅÃ.
+            //ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ï³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
             else
             {
-                //¹æÇâ ¼±ÅÃÇÏ°í ÇöÀç Å¸ÀÏ¿¡¼­ ÇØ´ç ¹æÇâ Á¦°Å
+                //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½Ï¿ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
                 Vector2Int direction = currentTile.availableDirections[Random.Range(0, currentTile.availableDirections.Count)];
 
@@ -290,18 +290,18 @@ public class Chunk
                 currentTile.availableDirections.Remove(direction);
                 currentTile.path_ID += (int)Mathf.Pow(2, directions.IndexOf(direction));
 
-                //stack¿¡ push ÈÄ Å¸ÀÏ ÀÌµ¿.
+                //stackï¿½ï¿½ push ï¿½ï¿½ Å¸ï¿½ï¿½ ï¿½Ìµï¿½.
                 visited_Tiles.Push(currentTile);
                 visited_count++;
-                Debug.Log(currentTile.pos + "," + direction + "," + currentTile.path_ID);
-                Debug.Log(currentTile.availableDirections.ToArray());
+                // Debug.Log(currentTile.pos + "," + direction + "," + currentTile.path_ID);
+                // Debug.Log(currentTile.availableDirections.ToArray());
                 currentTile = TileBoxies[nextPos.y, nextPos.x];
                 currentTile.path_ID += (int)Mathf.Pow(2, directions.IndexOf(-direction));
-                Debug.Log("reverse direction add" + currentTile.pos + ", " + currentTile.path_ID + "," + directions.IndexOf(-direction));
+                // Debug.Log("reverse direction add" + currentTile.pos + ", " + currentTile.path_ID + "," + directions.IndexOf(-direction));
             }
         }
 
-        Debug.Log("--------------");
+        // Debug.Log("--------------");
         for (int y = 0; y < size; y++)
         {
             for (int x = 0; x < size; x++)
@@ -310,35 +310,35 @@ public class Chunk
 
                 foreach (var direction in directions)
                 {
-                    // ±æÀÌ´Ù > º®À» ¼¼¿ì¸é ¾ÈµÊ
-                    // ±æÀÌ ¾Æ´Ï´Ù. 
-                    //      ±× ¹æÇâ¿¡ Å¸ÀÏÀÌ ¾ø´Ù.                      > º® ÀÖ¾îµµ µÇ°í ¾ø¾îµµ µÊ
-                    //      ±× ¹æÇâ¿¡ ÀÖ´Â Å¸ÀÏÀÌ º®À» ¼¼¿ö³ù´Ù.        > º® ÀÖ¾îµµ µÇ°í ¾ø¾îµµ µÊ
-                    //      ±× ¹æÇâ¿¡ ÀÖ´Â Å¸ÀÏÀÌ ¾ÆÁ÷ º®À» ¾È¼¼¿ö³ù´Ù. > º®À» ¼¼¿ö¾ß ÇÔ
+                    // ï¿½ï¿½ï¿½Ì´ï¿½ > ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Èµï¿½
+                    // ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Ï´ï¿½. 
+                    //      ï¿½ï¿½ ï¿½ï¿½ï¿½â¿¡ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.                      > ï¿½ï¿½ ï¿½Ö¾îµµ ï¿½Ç°ï¿½ ï¿½ï¿½ï¿½îµµ ï¿½ï¿½
+                    //      ï¿½ï¿½ ï¿½ï¿½ï¿½â¿¡ ï¿½Ö´ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.        > ï¿½ï¿½ ï¿½Ö¾îµµ ï¿½Ç°ï¿½ ï¿½ï¿½ï¿½îµµ ï¿½ï¿½
+                    //      ï¿½ï¿½ ï¿½ï¿½ï¿½â¿¡ ï¿½Ö´ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½È¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½. > ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 
-                    // ±æÀÌ´Ù > º®À» ¼¼¿ì¸é ¾ÈµÊ
+                    // ï¿½ï¿½ï¿½Ì´ï¿½ > ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Èµï¿½
                     if ((tile.path_ID & (int)Mathf.Pow(2, directions.IndexOf(direction))) != 0)
                         continue;
-                    // ±æÀÌ ¾Æ´Ï´Ù. 
+                    // ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Ï´ï¿½. 
                     else
                     {
                         Vector2Int v = tile.pos + direction;
 
-                        //      ±× ¹æÇâ¿¡ Å¸ÀÏÀÌ ¾ø´Ù.                      > º® ÀÖ¾îµµ µÇ°í ¾ø¾îµµ µÊ
+                        //      ï¿½ï¿½ ï¿½ï¿½ï¿½â¿¡ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.                      > ï¿½ï¿½ ï¿½Ö¾îµµ ï¿½Ç°ï¿½ ï¿½ï¿½ï¿½îµµ ï¿½ï¿½
                         if (v.x < 0 || v.x >= size || v.y < 0 || v.y >= size)
                         {
                             tile.wall_ID += Random.Range(0, 2) * (int)Mathf.Pow(2, directions.IndexOf(direction));
                             continue;
                         }
 
-                        Debug.Log(v);
+                        // Debug.Log(v);
                         Tile4x4 next = TileBoxies[v.y, v.x];
-                        //      ±× ¹æÇâ¿¡ ÀÖ´Â Å¸ÀÏÀÌ º®À» ¼¼¿ö³ù´Ù.        > º® ÀÖ¾îµµ µÇ°í ¾ø¾îµµ µÊ
+                        //      ï¿½ï¿½ ï¿½ï¿½ï¿½â¿¡ ï¿½Ö´ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.        > ï¿½ï¿½ ï¿½Ö¾îµµ ï¿½Ç°ï¿½ ï¿½ï¿½ï¿½îµµ ï¿½ï¿½
                         if ((next.wall_ID & (int)Mathf.Pow(2, directions.IndexOf(-direction))) != 0)
                         {
                             tile.wall_ID += Random.Range(0, 2) * (int)Mathf.Pow(2, directions.IndexOf(direction));
                         }
-                        //      ±× ¹æÇâ¿¡ ÀÖ´Â Å¸ÀÏÀÌ ¾ÆÁ÷ º®À» ¾È¼¼¿ö³ù´Ù. > º®À» ¼¼¿ö¾ß ÇÔ
+                        //      ï¿½ï¿½ ï¿½ï¿½ï¿½â¿¡ ï¿½Ö´ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½È¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½. > ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
                         else
                         {
                             tile.wall_ID += (int)Mathf.Pow(2, directions.IndexOf(direction));
@@ -357,7 +357,7 @@ public class Chunk
 
                 tile.SetFieldData(fieldDataSet[15 - tile.wall_ID]);
                 //buttons[i * size + j].sprite = sprites[15 - tile.wall_ID];
-                Debug.Log(tile.path_ID);
+                // Debug.Log(tile.path_ID);
             }
         }
     }
@@ -397,7 +397,7 @@ public class Chunk
                 result = FieldManager.instance.Merge2FieldData(result, TileBoxies[i, j].fieldData, new Vector2Int(j * 4, i * 4));
             }
         }
-        FieldData platform = new FieldData(size * 4, 2);
+        FieldData platform = new FieldData(size * 4, 2, 'W', 'L');
 
         StringBuilder sb = new StringBuilder(platform.fieldStrData);
         sb[0] = 'U';
@@ -408,6 +408,7 @@ public class Chunk
         sb[5] = 'S';
         sb[6] = 'U';
         sb[7] = 'S';
+        
         //sb[8 * size - 3] = 'S';
         //sb[2 * size - 2] = 'U';
         //sb[2 * size - 1] = 'S';

@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using View;
 using Model;
 using View.UI;
+using DG.Tweening;
 
 public class ScreenTouchManager : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
 {
@@ -21,6 +22,12 @@ public class ScreenTouchManager : MonoBehaviour, IDragHandler, IBeginDragHandler
     Vector2 longClickPos = Vector2.zero;
 
     public bool isDraging = false;
+
+    public void Move(Vector2Int position)
+    {
+        cameraTransform.DOMove(new Vector3(position.x, position.y, cameraTransform.position.z), 0.1f);
+    }
+
 
     public void OnDrag(PointerEventData eventData)
     {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using DG.Tweening;
 
 namespace Common
 {
@@ -21,6 +22,11 @@ namespace Common
                 zoom = value;
                 UpdatePixelCameraZoom();
             }
+        }
+
+        public void Move(Vector2Int position)
+        {
+            DOTween.To(() => Position, temp => Position = temp, position, 0.1f);
         }
 
         public Vector3 Position
@@ -46,8 +52,10 @@ namespace Common
         {
             pixelPerfectCamera = GetComponent<UnityEngine.U2D.PixelPerfectCamera>();
             UpdatePixelCameraZoom();
+            instance = this;
         }
 
+        public static BattleCamera instance;
 
         #if UNITY_EDITOR
         public float dragSpeed = 15f;

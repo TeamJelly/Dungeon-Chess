@@ -55,6 +55,16 @@ namespace Model.Managers
                 this.fieldStrData = string.Concat(Enumerable.Repeat("FL", width * height));
             }
 
+            /// <summary>
+            /// c1c2 문자를 넣은 맵을 생성합니다.
+            /// </summary>
+            public FieldData(int width, int height, char c1, char c2)
+            {
+                this.width = width;
+                this.height = height;
+                this.fieldStrData = string.Concat(Enumerable.Repeat(c1+""+c2, width * height));
+            }
+
             // 행과 열의 개수
             public int width, height;
             public string fieldStrData;
@@ -62,7 +72,7 @@ namespace Model.Managers
             public void ToJson(FieldData fieldData)
             {
                 string jsonStr = JsonUtility.ToJson(fieldData);
-                Debug.Log(jsonStr);
+                // Debug.Log(jsonStr);
             }
         }
 
@@ -84,7 +94,7 @@ namespace Model.Managers
 
             int height = down - up;
 
-            Debug.Log(width + "," + height);
+            // Debug.Log(width + "," + height);
             FieldData newFieldData = new FieldData(width, height, string.Concat(Enumerable.Repeat("FL", width * height)));
 
             Vector2Int start_f1 = new Vector2Int();
@@ -114,16 +124,16 @@ namespace Model.Managers
 
             newFieldData.fieldStrData = sb.ToString();
 
-            string s = "";
-            for(int i = 0; i < newFieldData.fieldStrData.Length; i++)
-            {
-                if(i % 64 == 0)
-                {
-                    s += "\n";
-                }
-                s += newFieldData.fieldStrData[i];
-            }
-            Debug.Log(s);
+            // string s = "";
+            // for(int i = 0; i < newFieldData.fieldStrData.Length; i++)
+            // {
+            //     if(i % fi == 0)
+            //     {
+            //         s += "\n";
+            //     }
+            //     s += newFieldData.fieldStrData[i];
+            // }
+            // Debug.Log(s);
             return newFieldData;
         }
 

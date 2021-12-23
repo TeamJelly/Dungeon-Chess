@@ -29,6 +29,8 @@ namespace UI.Battle
             // 다음 턴의 유닛을 받아 시작한다.
             Unit nextUnit = BattleManager.GetNextTurnUnit();
             BattleManager.SetNextTurnUnit(nextUnit);
+            Debug.Log("내턴입니다." + nextUnit.Name);
+            ScreenTouchManager.instance.Move(nextUnit.Position);
             
             // 턴시작시 유닛 값들 초기화
             nextUnit.ActionRate = 0;

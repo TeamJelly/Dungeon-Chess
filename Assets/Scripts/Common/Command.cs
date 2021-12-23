@@ -83,7 +83,7 @@ namespace Common
 
         public static int Heal(Unit unit, int value)
         {
-            Debug.Log(unit.Name + ", " + value);
+            // Debug.Log(unit.Name + ", " + value);
 
             value = unit.OnHeal.before.Invoke(value);
 
