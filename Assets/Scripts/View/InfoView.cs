@@ -18,6 +18,7 @@ namespace View
         private void Awake()
         {
             instance = this;
+            infoPanel.SetActive(false);
         }
 
         public static void Hide()

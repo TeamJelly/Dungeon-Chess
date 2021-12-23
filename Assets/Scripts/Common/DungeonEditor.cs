@@ -25,13 +25,10 @@ public class DungeonEditor : MonoBehaviour
     public Button button_summonUnit;
     public Button button_unsummonUnit;
 
-
     public GameObject infoBox;
     public RectTransform Skills;
     public RectTransform Artifacts;
     public RectTransform Effects;
-
-
 
     public static DungeonEditor instance;
 
@@ -41,9 +38,11 @@ public class DungeonEditor : MonoBehaviour
 
     Tile currentTile = null;
     Unit currentUnit = null;
+    
     private void Awake()
     {
         instance = this;
+        unitAttributeController.SetActive(false);
 
         Init();
         button_lvlUp.onClick.AddListener(() =>
