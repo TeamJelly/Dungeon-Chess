@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Model;
 
 public class ChunkTest : MonoBehaviour
 {
     public class Tile4x4
     {
+        Tile[,] tiles;
         public Tile4x4(int x ,int y)
         {
             pos = new Vector2Int(x, y);
@@ -16,7 +18,9 @@ public class ChunkTest : MonoBehaviour
 
         public Vector2Int pos;
         public int path_ID = 0;
-        public int wall_ID = 0; 
+        public int wall_ID = 0;
+
+        
     }
 
     public bool isClear = false;

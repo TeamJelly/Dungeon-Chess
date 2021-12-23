@@ -58,9 +58,38 @@ namespace Model.Managers
         }
 
         FieldData fieldData;
+        Chunk chunk;
 
+        
         public void InitField(FieldData fieldData)
         {
+            //Chunk 테스트.
+            chunk = new Chunk();
+            chunk.GenerateMap();
+
+            Tile[,] field1 = chunk.GetAllFields();
+
+            field = new Tile[field1.GetLength(0) + 2, field1.GetLength(1)];
+            for (int y = 0; y < field1.GetLength(0); y++)
+            {
+                for (int x = 0; x < field1.GetLength(1); x++)
+                {
+                    field[y + 2, x] = field1[y, x];
+                }
+            }
+            for (int y = 0; y < 2; y++)
+            {
+                for (int x = 0; x < field1.GetLength(1); x++)
+                {
+                    field[y, x] = new Floor();
+                }
+            }
+
+            ScreenTouchManager.instance.RightUpLimit = new Vector2(12, 12);
+            //this.fieldData = fieldData;
+            UpdateTileMap();
+            return;
+
             ScreenTouchManager.instance.RightUpLimit = new Vector2(fieldData.width, fieldData.height);
 
             this.fieldData = fieldData;
