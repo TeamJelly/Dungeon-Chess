@@ -63,9 +63,9 @@ namespace Model.Skills.Move
             Debug.Log($"{user.Name}가 {Name}스킬을 {target}에 사용!");
 
             Vector2Int startPosition = user.Position;
-
             View.VisualEffectView.MakeVisualEffect(user.Position, "Dust");
             Common.Command.Move(user,startPosition, target);
+            ScreenTouchManager.instance.Move(user.Position);
 
             yield return null;
         }

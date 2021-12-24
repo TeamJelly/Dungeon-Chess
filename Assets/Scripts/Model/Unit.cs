@@ -69,8 +69,9 @@ namespace Model
 
             MoveSkill = Data.GetRandomSkill(Seed, species, SkillCategory.Move) as Model.Skills.Move.MoveSkill;
             Skills.Add(Data.GetRandomSkill(Seed, species, SkillCategory.Basic));
-            Skills.Add(Data.GetRandomSkill(Seed, species, SkillCategory.Intermediate));
-            Skills.Add(Data.GetRandomSkill(Seed, species, SkillCategory.Advanced));
+
+            // Skills.Add(Data.GetRandomSkill(Seed, species, SkillCategory.Intermediate));
+            // Skills.Add(Data.GetRandomSkill(Seed, species, SkillCategory.Advanced));
 
             // 인간형 초기 스텟
             if (Species == UnitSpecies.Human)

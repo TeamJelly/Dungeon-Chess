@@ -74,16 +74,29 @@ namespace Model.Managers
 
             // 테스팅 적 유닛 소환
             Unit unit = new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1);
+            unit.MoveSkill = new Skills.Move.Rook();
             unit.MoveSkill.Priority = Common.AI.Priority.NearFromClosestParty;
-            unit.Skills[0] = new Skills.Basic.Slash();
             unit.Skills[0].Target = Skill.TargetType.Hostile;
+            Common.Command.Summon(unit, new Vector2Int(10, 4));
 
-            Common.Command.Summon(unit, new Vector2Int(4, 4));
-           
-            Common.Command.AddArtifact(unit, new Model.Artifacts.test());
-            Common.Command.AddArtifact(unit, new Model.Artifacts.test());
-            Common.Command.AddArtifact(unit, new Model.Artifacts.test());
-            Common.Command.AddArtifact(unit, new Model.Artifacts.test());
+            unit = new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1);
+            unit.MoveSkill = new Skills.Move.Knight();
+            unit.MoveSkill.Priority = Common.AI.Priority.NearFromClosestParty;
+            unit.Skills[0].Target = Skill.TargetType.Hostile;
+            Common.Command.Summon(unit, new Vector2Int(10, 11));
+
+            unit = new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1);
+            unit.MoveSkill = new Skills.Move.Queen();
+            unit.MoveSkill.Priority = Common.AI.Priority.NearFromClosestParty;
+            unit.Skills[0].Target = Skill.TargetType.Hostile;
+            Common.Command.Summon(unit, new Vector2Int(5, 4));
+
+            // unit.Skills[0] = new Skills.Basic.Slash();
+            // Common.Command.AddArtifact(unit, new Model.Artifacts.test());
+            // Common.Command.AddArtifact(unit, new Model.Artifacts.test());
+            // Common.Command.AddArtifact(unit, new Model.Artifacts.test());
+            // Common.Command.AddArtifact(unit, new Model.Artifacts.test());
+
             Common.Command.Summon(new Items.Heal(), new Vector2Int(3, 3));
             Common.Command.Damage(unit, 20);
 

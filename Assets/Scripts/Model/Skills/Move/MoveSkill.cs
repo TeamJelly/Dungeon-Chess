@@ -58,6 +58,7 @@ namespace Model.Skills.Move
                 View.VisualEffectView.MakeVisualEffect(user.Position, "Dust");
                 // 유닛 포지션의 변경은 여러번 일어난다.
                 user.Position = path[i];
+                ScreenTouchManager.instance.Move(path[i]);
                 yield return new WaitForSeconds(moveTime);
             }
             user.animationState = Unit.AnimationState.Idle;
