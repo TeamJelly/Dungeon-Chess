@@ -77,11 +77,17 @@ namespace Model.Managers
             unit.MoveSkill = new Skills.Move.Rook();
             unit.MoveSkill.Priority = Common.AI.Priority.NearFromClosestParty;
             unit.Skills[0].Target = Skill.TargetType.Hostile;
-            Common.Command.Summon(unit, new Vector2Int(10, 4));
+            Common.Command.Summon(unit, new Vector2Int(9, 11));
 
             unit = new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1);
             unit.MoveSkill = new Skills.Move.Knight();
-            unit.MoveSkill.Priority = Common.AI.Priority.NearFromClosestParty;
+            unit.MoveSkill.Priority = Common.AI.Priority.NearFromPartys;
+            unit.Skills[0].Target = Skill.TargetType.Hostile;
+            Common.Command.Summon(unit, new Vector2Int(9, 12));
+
+            unit = new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1);
+            unit.MoveSkill = new Skills.Move.Knight();
+            unit.MoveSkill.Priority = Common.AI.Priority.NearFromPartys;
             unit.Skills[0].Target = Skill.TargetType.Hostile;
             Common.Command.Summon(unit, new Vector2Int(10, 11));
 
@@ -89,7 +95,7 @@ namespace Model.Managers
             unit.MoveSkill = new Skills.Move.Queen();
             unit.MoveSkill.Priority = Common.AI.Priority.NearFromClosestParty;
             unit.Skills[0].Target = Skill.TargetType.Hostile;
-            Common.Command.Summon(unit, new Vector2Int(5, 4));
+            Common.Command.Summon(unit, new Vector2Int(10, 12));
 
             // unit.Skills[0] = new Skills.Basic.Slash();
             // Common.Command.AddArtifact(unit, new Model.Artifacts.test());

@@ -22,9 +22,9 @@ namespace Model.Skills.Move
             species.Add(UnitSpecies.Golem);
         }
 
-        public override List<Vector2Int> GetAvailablePositions(Unit user, Vector2Int userPosition)
+        public override List<Vector2Int> GetUsePositions(Unit user, Vector2Int userPosition)
         {
-            List<Vector2Int> positions = new List<Vector2Int>();        // 이동가능한 모든 위치를 저장
+            List<Vector2Int> positions = new List<Vector2Int>() { userPosition };        // 이동가능한 모든 위치를 저장
             List<Vector2Int> new_frontier = new List<Vector2Int>();     // 새로 추가한 외곽 위치를 저장
             List<Vector2Int> old_frontier = new List<Vector2Int>();     // 이전번에 추가한 외곽 위치를 저장
             Vector2Int[] directions = { 
@@ -45,11 +45,11 @@ namespace Model.Skills.Move
 
                         if (
                             // 전에 추가한 위치가 아니고
-                            !positions.Contains(temp) &&
+                            !positions.Contains(temp)
                             // 맵 범위 안이고
-                            FieldManager.IsInField(temp) &&
+                            && FieldManager.IsInField(temp)
                             // 타일에 이 유닛이 위치할수 있으면
-                            FieldManager.GetTile(temp).IsPositionable(user)
+                            && FieldManager.GetTile(temp).IsPositionable(user)
                             )
                         {
                             // 이동가능한 위치로 추가한다.

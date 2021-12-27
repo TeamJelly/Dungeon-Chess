@@ -142,7 +142,7 @@ namespace Model
         private MoveSkill moveSkill = new MoveSkill();
         private List<Skill> skills = new List<Skill>();
         private Dictionary<Skill, int> waitingSkills = new Dictionary<Skill, int>();
-        private Dictionary<Skill, bool> enhancedSkills = new Dictionary<Skill, bool>();
+        private Dictionary<Skill, int> enhancedSkills = new Dictionary<Skill, int>();
         private List<Obtainable> belongings = new List<Obtainable>();    // 보유한 유물 및 아이템
         private List<Effect> stateEffects = new List<Effect>();  // 보유한 상태효과
         private List<Obtainable> droptems = new List<Obtainable>();
@@ -309,8 +309,18 @@ namespace Model
 
         public MoveSkill MoveSkill { get => moveSkill; set => moveSkill = value; }
         public List<Skill> Skills { get => skills; set => skills = value; }
+
+        /// <summary>
+        /// 대기중인 스킬과 현재 남은 대기 턴수를 알려줍니다. 
+        /// </summary>
+        /// <value> 남은 대기 턴수 </value>
         public Dictionary<Skill, int> WaitingSkills { get => waitingSkills; set => waitingSkills = value; }
-        public Dictionary<Skill, bool> EnhancedSkills { get => enhancedSkills; set => enhancedSkills = value; }
+
+        /// <summary>
+        /// 강화한 스킬과 스킬의 강화레벨을 알려줍니다.
+        /// </summary>
+        /// <value> 스킬의 레벨 </value>
+        public Dictionary<Skill, int> EnhancedSkills { get => enhancedSkills; set => enhancedSkills = value; }
         public List<Obtainable> Belongings { get => belongings; set => belongings = value; }
         public List<Effect> StateEffects { get => stateEffects; set => stateEffects = value; }
         public int CriRate { get => criRate; set => criRate = value; }

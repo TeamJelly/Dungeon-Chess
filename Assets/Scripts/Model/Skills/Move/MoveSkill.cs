@@ -10,7 +10,7 @@ namespace Model.Skills.Move
         public MoveSkill()
         {
             Category = SkillCategory.Move;
-            Target = TargetType.NoUnit;
+            Target = TargetType.Posable;
             Range = RangeType.Fixed;
 
             ReuseTime = new int[1] { 0 };            
@@ -26,7 +26,7 @@ namespace Model.Skills.Move
 
         public override List<Vector2Int> GetRelatePositions(Unit user, Vector2Int target)
         {
-            if (GetAvailablePositions(user).Contains(target))
+            if (GetAvlUsePositions(user).Contains(target))
                 return Common.PathFind.PathFindAlgorithm(user, user.Position, target);
             else
                 return new List<Vector2Int>();

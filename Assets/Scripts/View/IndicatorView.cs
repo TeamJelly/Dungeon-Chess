@@ -134,7 +134,7 @@ namespace View
             currentUnit = user;
             currentSkill = skill;
             curPosition = null;
-            curAvlPositions = currentSkill.GetAvailablePositions(currentUnit);
+            curAvlPositions = currentSkill.GetAvlUsePositions(currentUnit);
             tileAction = null;
             TileRelativeFunc = null;
             TileIndicatorParent.SetActive(true);

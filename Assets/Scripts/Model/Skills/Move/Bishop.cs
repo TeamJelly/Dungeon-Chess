@@ -22,9 +22,9 @@ namespace Model.Skills.Move
             species.Add(UnitSpecies.Golem);
         }
 
-        public override List<Vector2Int> GetAvailablePositions(Unit user, Vector2Int userPosition)
+        public override List<Vector2Int> GetUsePositions(Unit user, Vector2Int userPosition)
         {
-            List<Vector2Int> positions = new List<Vector2Int>();
+            List<Vector2Int> positions = new List<Vector2Int>() { userPosition };
             Vector2Int[] directions = { 
                 Vector2Int.up + Vector2Int.right, Vector2Int.up + Vector2Int.left, 
                 Vector2Int.down + Vector2Int.right, Vector2Int.down + Vector2Int.left
@@ -40,13 +40,13 @@ namespace Model.Skills.Move
                 {
                     Vector2Int temp;
                     temp = userPosition + directions[b] * (2 * i - 1);
-                    if (canGo[b] && FieldManager.IsInField(temp) && FieldManager.GetTile(temp).IsPositionable(user))
+                    if (canGo[b] && FieldManager.IsInField(temp) /*&& FieldManager.GetTile(temp).IsPositionable(user)*/)
                         positions.Add(temp);
                     else
                         canGo[b] = false;
 
                     temp = userPosition + directions[b] * 2 * i;
-                    if (canGo[b] && FieldManager.IsInField(temp) && FieldManager.GetTile(temp).IsPositionable(user))
+                    if (canGo[b] && FieldManager.IsInField(temp) /*&& FieldManager.GetTile(temp).IsPositionable(user)*/)
                         positions.Add(temp);
                     else
                         canGo[b] = false;

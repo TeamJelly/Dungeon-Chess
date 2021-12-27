@@ -140,12 +140,12 @@ namespace Common
             // 이동 가능한 위치
             List<Vector2Int> MoveablePositions = new List<Vector2Int>();
             MoveablePositions.Add(user.Position);
-            MoveablePositions.AddRange(user.MoveSkill.GetAvailablePositions(user));
+            MoveablePositions.AddRange(user.MoveSkill.GetAvlUsePositions(user));
 
             foreach (var moveablePosition in MoveablePositions)
             {
                 // 이동 후 그 위치에서 스킬이 가능한 위치 리스트를 찾는다.
-                List<Vector2Int> SkillablePositions = skill.GetAvailablePositions(user, moveablePosition);
+                List<Vector2Int> SkillablePositions = skill.GetAvlUsePositions(user, moveablePosition);
 
                 // 스킬을 사용가능한 위치를 순회하면서
                 foreach (var skillablePosition in SkillablePositions)
@@ -171,7 +171,7 @@ namespace Common
             List<Vector2Int> TargetedMovablePositions = new List<Vector2Int>();
 
             // 이동가능한 모든 위치들
-            List<Vector2Int> MoveablePositions = user.MoveSkill.GetAvailablePositions(user);
+            List<Vector2Int> MoveablePositions = user.MoveSkill.GetAvlUsePositions(user);
             // 현재위치도 일단 추가;;
             MoveablePositions.Add(user.Position);
 
@@ -179,7 +179,7 @@ namespace Common
             foreach (var moveablePosition in MoveablePositions)
             {
                 // 이 위치에서 스킬을 사용가능한 위치들을 찾는다.
-                List<Vector2Int> SkillablePositions = skill.GetAvailablePositions(user, moveablePosition);
+                List<Vector2Int> SkillablePositions = skill.GetAvlUsePositions(user, moveablePosition);
 
                 // 스킬을 사용할 수 있는 위치에 타겟위치가 포함된다면 리스트에 추가한다.
                 if (SkillablePositions.Contains(targetPosition))
@@ -222,16 +222,13 @@ namespace Common
                 else if (priority == Priority.SmallerCurHP &&
                     BattleManager.GetUnit(targetPosition).CurHP > BattleManager.GetUnit(positions[i]).CurHP)
                     targetPosition = positions[i];
-                // 타게 우선수누이가 파티들의 평균위치로부터 멀거나 가까운 위치이다.
+                // 타겟 우선순위가 파티들의 평균위치로부터 멀거나 가까운 위치이다.
                 else if (priority == Priority.NearFromPartys || priority == Priority.FarFromPartys)
                 {
-                    Vector2 averagePosition = new Vector2();
                     List<Unit> partyUnits = BattleManager.GetUnit(UnitAlliance.Party);
-
+                    Vector2Int averagePosition = new Vector2Int();
                     foreach (var unit in partyUnits)
                         averagePosition += unit.Position;
-
-                    // 파티원들의 평균 위치
                     averagePosition /= partyUnits.Count;
 
                     if (priority == Priority.NearFromPartys &&
@@ -241,13 +238,12 @@ namespace Common
                         (targetPosition - averagePosition).magnitude < (positions[i] - averagePosition).magnitude)
                         targetPosition = positions[i];
                 }
+                // 타겟 우선순위가 가장가까운 파티원으로부터 멀거나 가까운 위치이다.
                 else if (priority == Priority.NearFromClosestParty || priority == Priority.FarFromClosestParty)
                 {
                     List<Unit> partyUnits = BattleManager.GetUnit(UnitAlliance.Party);
-
                     Unit closestUnit = partyUnits[0];
                     float distance = (user.Position - partyUnits[0].Position).magnitude;
-
                     foreach (var unit in partyUnits)
                         if (distance > (user.Position - unit.Position).magnitude)
                             closestUnit = unit;
@@ -304,9 +300,49 @@ namespace Common
         {
             if (user.MoveSkill.IsUsable(user) == true)
             {
-                List<Vector2Int> MovePositions = user.MoveSkill.GetAvailablePositions(user);
+                // 자기 자신의 위치 추가
+                List<Vector2Int> MovePositions = user.MoveSkill.GetAvlUsePositions(user);
                 MovePositions.Add(user.Position);
-                return GetPriorityPosition(user, MovePositions, user.MoveSkill.Priority);
+
+                Priority priority = user.MoveSkill.Priority;
+                List<Vector2Int> path;
+
+                if (priority == Priority.NearFromPartys)
+                {
+                    List<Unit> partyUnits = BattleManager.GetUnit(UnitAlliance.Party);
+                    Vector2Int averagePosition = new Vector2Int();
+                    foreach (var unit in partyUnits)
+                        averagePosition += unit.Position;
+                    averagePosition /= partyUnits.Count;
+
+                    Vector2Int dest = PathFind.GetClosestPositionableDest(user, averagePosition).position;
+                    path = PathFind.PathFindAlgorithm(user, user.MoveSkill, user.Position, dest);
+                    
+                    if (path != null)
+                        return path[1];
+                    else
+                        return null;
+                }
+                // 타겟 우선순위가 가장가까운 파티원으로부터 멀거나 가까운 위치이다.
+                else if (priority == Priority.NearFromClosestParty)
+                {
+                    List<Unit> partyUnits = BattleManager.GetUnit(UnitAlliance.Party);
+                    Unit closestUnit = partyUnits[0];
+                    float distance = (user.Position - partyUnits[0].Position).magnitude;
+                    foreach (var unit in partyUnits)
+                        if (distance > (user.Position - unit.Position).magnitude)
+                            closestUnit = unit;
+
+                    Vector2Int dest = PathFind.GetClosestPositionableDest(user, closestUnit.Position).position;
+                    path = PathFind.PathFindAlgorithm(user, user.MoveSkill, user.Position, dest);
+
+                    if (path != null)
+                        return path[1];
+                    else
+                        return null;
+                }
+                else
+                    return GetPriorityPosition(user, MovePositions, user.MoveSkill.Priority);
             }
             else
                 return null;

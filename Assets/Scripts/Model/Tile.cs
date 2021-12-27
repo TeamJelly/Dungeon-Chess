@@ -46,11 +46,13 @@ namespace Model
         public bool IsPositionable(Unit unit)
         {
             if (HasUnit())
-               return false;
+                return false;
+            else if (category == TileCategory.Wall)
+                return false;
             else if (
-                    unit.IsFlying == false && // 유닛이 날고있다면 위치 가능하다.
+                    unit.IsFlying == false && // 유닛이 날고있지 않다면, 벽 구멍 잠금타일은 갈수 없다.
                     (
-                        category == TileCategory.Wall ||
+//                        category == TileCategory.Wall ||
                         category == TileCategory.Hole ||
                         category == TileCategory.Locked
                     )
@@ -59,7 +61,6 @@ namespace Model
             else
                 return true;
         }
-
 
         //obtainable -> item
         //Droptem

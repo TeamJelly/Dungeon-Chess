@@ -31,7 +31,7 @@ namespace Model
         {
             NULL = -1,
             Any,            // 모든 타일에 사용가능
-            NoUnit,         // 유닛이 없는 곳에만 사용가능, 이동 혹은 소환류 스킬에 사용
+            Posable,        // 위치 가능한 타일에만 사용가능, 이동 혹은 소환류 스킬에 사용
             Friendly,       // 우호적인 유닛에 사용가능 (AI 용)
             Hostile,        // 적대적인 유닛에 사용가능 (AI 용)
         }
@@ -57,7 +57,10 @@ namespace Model
         /// <returns></returns>
         public virtual int GetSLV(Unit user)
         {
-            return 0;
+            if (user.EnhancedSkills.ContainsKey(this))
+                return user.EnhancedSkills[this];
+            else
+                return 0;
         }
 
         public virtual bool IsUsable(Unit user)
@@ -71,44 +74,63 @@ namespace Model
                 return false;
         }
 
+
+        /// <summary>
+        /// 해당 위치가 실제로 사용가능한지를 제외하고 스킬 사용 위치값만 계산한다.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="userPosition"></param>
+        /// <returns></returns>
+        public virtual List<Vector2Int> GetUsePositions(Unit user, Vector2Int userPosition)
+        {
+            List<Vector2Int> positions = new List<Vector2Int>();
+
+            if (APData != null)
+            {
+                foreach (var position in Common.Data.ParseRangeData(APData[GetSLV(user)]))
+                {
+                    Vector2Int abs = userPosition + position;
+                    positions.Add(abs);
+                }
+            }
+            return positions;
+        }
+
         /// <summary>
         /// user가 userPosition에 있을때 스킬사 용가능한 위치들을 반환한다.
         /// </summary>
         /// <param name="user">스킬 사용자</param>
         /// <param name="userPosition">스킬 사용자의 위치</param>
         /// <returns>사용 가능한 스킬 위치들</returns>
-        public virtual List<Vector2Int> GetAvailablePositions(Unit user, Vector2Int userPosition)
+        public virtual List<Vector2Int> GetAvlUsePositions(Unit user, Vector2Int userPosition)
         {
             List<Vector2Int> positions = new List<Vector2Int>();
 
-            if (APData == null) return positions;
-
-            foreach (var position in Common.Data.ParseRangeData(APData[GetSLV(user)]))
+            foreach (var position in GetUsePositions(user, userPosition))
             {
-                Vector2Int abs = userPosition + position;
-                Unit unit = BattleManager.GetUnit(abs);
+                Unit unit = BattleManager.GetUnit(position);
 
                 // 맵밖에 넘어간다면 사용불가
-                if (!FieldManager.IsInField(abs))
+                if (!FieldManager.IsInField(position))
                     continue;
                 // 모든 타일에 사용가능
                 if (Target == TargetType.Any)
-                    positions.Add(abs);
+                    positions.Add(position);
                 // 유닛 없음타일에만 사용가능
-                else if (Target == TargetType.NoUnit && unit == null)
-                    positions.Add(abs);
+                else if (Target == TargetType.Posable && FieldManager.GetTile(position).IsPositionable(user))
+                    positions.Add(position);
                 // 우호적인 유닛에 사용 가능
                 else if (Target == TargetType.Friendly && unit != null && 
                     ((user.Alliance == UnitAlliance.Party && 
                     (unit.Alliance == UnitAlliance.Party || unit.Alliance == UnitAlliance.Friendly)) ||
                     (user.Alliance == UnitAlliance.Enemy && unit.Alliance == UnitAlliance.Enemy)))
-                    positions.Add(abs);
+                    positions.Add(position);
                 // 적대적인 유닛에 사용 가능
                 else if (Target == TargetType.Hostile && unit != null &&
                     ((user.Alliance == UnitAlliance.Enemy &&
                     (unit.Alliance == UnitAlliance.Party || unit.Alliance == UnitAlliance.Friendly)) ||
                     (user.Alliance == UnitAlliance.Party && unit.Alliance == UnitAlliance.Enemy)))
-                    positions.Add(abs);
+                    positions.Add(position);
                 // 어디에도 속하지 않으면 false
                 else
                     continue;
@@ -122,9 +144,9 @@ namespace Model
         /// </summary>
         /// <param name="user">스킬 사용자 유닛</param>
         /// <returns>사용가능한 스킬 위치들</returns>
-        public virtual List<Vector2Int> GetAvailablePositions(Unit user)
+        public virtual List<Vector2Int> GetAvlUsePositions(Unit user)
         {
-            return GetAvailablePositions(user, user.Position);
+            return GetAvlUsePositions(user, user.Position);
         }
 
         /// <summary>
@@ -137,7 +159,7 @@ namespace Model
         {
             List<Vector2Int> positions = new List<Vector2Int>();
 
-            if (RPData == null || !GetAvailablePositions(user).Contains(skillPosition)) return positions;
+            if (RPData == null || !GetAvlUsePositions(user).Contains(skillPosition)) return positions;
 
             foreach (var vector in Common.Data.ParseRangeData(RPData[GetSLV(user)]))
             {

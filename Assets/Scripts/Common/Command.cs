@@ -231,7 +231,12 @@ namespace Common
         public static void EnhanceSkill(Unit unit, Skill skill)
         {
             if (unit.MoveSkill == skill || unit.Skills.Contains(skill))
-                unit.EnhancedSkills.Add(skill, true);
+            {
+                if (unit.EnhancedSkills.ContainsKey(skill))
+                    unit.EnhancedSkills[skill] = unit.EnhancedSkills[skill] + 1;
+                else
+                    unit.EnhancedSkills.Add(skill, 1);
+            }
             else
                 Debug.LogError($"{skill.Name}은 현재 소유한 스킬이 아닙니다. 강화할수 없습니다.");
         }

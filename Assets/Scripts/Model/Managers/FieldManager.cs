@@ -268,18 +268,28 @@ namespace Model.Managers
 
         public static Tile GetTile(int x, int y)
         {
-            Debug.Log("타일을 불러온다." + x  + ", " + y);
+            // Debug.Log("타일을 불러온다." + x  + ", " + y);
 
             if (IsInField(new Vector2Int(x, y)))
                 return instance.field[y, x];
             else
             {
-                Debug.Log("타일이 없어요.");
+                // Debug.Log("타일이 없어요.");
                 return null;
-                //맵 범위 안으로 값 조정
-                // x = Mathf.Clamp(x, 0, instance.field.GetLength(1));
-                // y = Mathf.Clamp(y, 0, instance.field.GetLength(0));
-                // return instance.field[y, x];
+            }
+        }
+
+        public static Tile GetTileClamp(Vector2Int position) => GetTileClamp(position.x, position.y);
+
+        public static Tile GetTileClamp(int x, int y)
+        {
+            if (IsInField(new Vector2Int(x, y)))
+                return instance.field[y, x];
+            else
+            {
+                x = Mathf.Clamp(x, 0, instance.field.GetLength(1));
+                y = Mathf.Clamp(y, 0, instance.field.GetLength(0));
+                return instance.field[y, x];
             }
         }
 

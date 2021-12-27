@@ -31,9 +31,9 @@ namespace Model.Skills.Move
             return list;
         }
 
-        public override List<Vector2Int> GetAvailablePositions(Unit user, Vector2Int userPosition)
+        public override List<Vector2Int> GetUsePositions(Unit user, Vector2Int userPosition)
         {
-            List<Vector2Int> positions = new List<Vector2Int>();
+            List<Vector2Int> positions = new List<Vector2Int>() { userPosition };
             Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
 
             for (int i = 1; i <= user.Mobility; i++)
@@ -44,7 +44,8 @@ namespace Model.Skills.Move
                             continue;
 
                         Vector2Int temp = userPosition + direction1 * (i+1) + direction2 * i;
-                        if (FieldManager.IsInField(temp) && FieldManager.GetTile(temp).IsPositionable(user))
+                        if (FieldManager.IsInField(temp) 
+                            && FieldManager.GetTile(temp).IsPositionable(user))
                             positions.Add(temp);
                     }
 
