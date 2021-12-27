@@ -13528,12 +13528,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileIndicatorPrefab: {fileID: 4462922396805816717, guid: 316a856634a04434c9c6fd0b6d18cffb,
     type: 3}
-  possibleColor: {r: 0, g: 0, b: 1, a: 0.5}
-  subPossibleColor: {r: 0, g: 0.5, b: 1, a: 0.5}
-  impossibleColor: {r: 1, g: 0, b: 0, a: 0.5}
+  possibleCursorColor: {r: 0, g: 0, b: 1, a: 0.5}
+  relatedColor: {r: 0, g: 0.5, b: 1, a: 0.5}
+  sklRangeColor: {r: 1, g: 1, b: 0, a: 0.5}
+  impossibleCursorColor: {r: 1, g: 0, b: 0, a: 0.5}
   subImpossibleColor: {r: 1, g: 0, b: 1, a: 0.5}
-  inBoundaryColor: {r: 0, g: 1, b: 0, a: 0.5}
-  outBoundaryColor: {r: 1, g: 1, b: 1, a: 0.5}
+  sklAvlColor: {r: 0, g: 1, b: 0, a: 0.5}
+  sklNotAvlColor: {r: 1, g: 1, b: 1, a: 0.5}
 --- !u!114 &984850864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92428,6 +92429,7 @@ GameObject:
   - component: {fileID: 3255219562686038413}
   - component: {fileID: 3255219562686038414}
   - component: {fileID: 3255219562686038416}
+  - component: {fileID: 6298739100550349378}
   m_Layer: 5
   m_Name: PopupCanvas
   m_TagString: Untagged
@@ -92641,6 +92643,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panel: {fileID: 7733578242247880439}
+--- !u!114 &6298739100550349378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3255219562686038411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d905948ba14913459eebe13047d5fb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileIndicatorPrefab: {fileID: 0}
+  possibleCursorColor: {r: 0, g: 0, b: 1, a: 0.5}
+  relatedColor: {r: 0, g: 0.5, b: 1, a: 0.5}
+  sklRangeColor: {r: 1, g: 1, b: 0, a: 0.5}
+  impossibleCursorColor: {r: 1, g: 0, b: 0, a: 0.5}
+  subImpossibleColor: {r: 1, g: 0, b: 1, a: 0.5}
+  sklAvlColor: {r: 0, g: 1, b: 0, a: 0.5}
+  sklNotAvlColor: {r: 1, g: 1, b: 1, a: 0.5}
 --- !u!222 &6891632697180942520
 CanvasRenderer:
   m_ObjectHideFlags: 0
