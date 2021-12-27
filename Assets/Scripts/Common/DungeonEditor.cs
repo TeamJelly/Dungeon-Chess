@@ -200,6 +200,21 @@ public class DungeonEditor : MonoBehaviour
             });
         }
     }
+
+    public void SaveUnit()
+    {
+        Common.Data.Save_Unit_Serializable_Data(currentUnit);
+    }
+    public void ShowUnitList()
+    {
+        List<Common.ScrollData> list = Common.ScrollUI.MakeDataList(Application.dataPath + "/Resources/Data/Unit/", new[] { "*.json" }, (filePath) =>
+        {
+            Unit_Serializable u = Common.Data.Load_Unit_Serializable_Data(filePath);
+            currentUnit.Set_From_Serializable(u);
+            //이후에 ui 및 hp 바 업데이트, 등 해줘야 함.
+        });
+        Common.ScrollUI.instance.EnableUI(list);
+    }
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.F1))

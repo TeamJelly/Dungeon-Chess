@@ -77,32 +77,47 @@ namespace Common
         //유닛 저장 불러오기 실험중
         //현재 객체 자체를 바이너리 직렬화로 저장 시도
         //Vector2Int 등 유니티 기본 타입들 serializable이 아니라서 불가능.
-        public static void SaveUnitData(Unit unit)
+        public static void Save_Unit_Serializable_Data(Unit unit)
         {
             DirectoryInfo directoryInfo = new DirectoryInfo(Application.dataPath + "/Resources/Data/Unit/");
             if (!directoryInfo.Exists) directoryInfo.Create();
 
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Create(Application.dataPath + "/Resources/Data/Unit/" + unit.Name);
+            string jsonStr = JsonUtility.ToJson(unit.Get_Serializable());
+            File.WriteAllText(Application.dataPath + "/Resources/Data/Unit/" + unit.Name + ".json", jsonStr);
+            
+            
+            /*BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Create(Application.dataPath + "/Resources/Data/Unit/" + unit.Name + ".unit");
             bf.Serialize(file, unit);
-            file.Close();
+            file.Close();*/
         }
-        public static Unit LoadUnitData(string name)
+        public static Unit_Serializable Load_Unit_Serializable_Data(string dataPath)
         {
-            Unit unit = null;
+            
+            string jsonStr = File.ReadAllText(dataPath);
+
+            jsonStr = jsonStr.Replace("\n", "");
+            Unit_Serializable u = JsonUtility.FromJson<Unit_Serializable>(jsonStr);
+            return u;
+            //Unit unit = new Unit();
+            //unit.Set_From_Serializable(u);
+            /*
             DirectoryInfo directoryInfo = new DirectoryInfo(Application.dataPath + "/Resources/Data/Unit/");
             if (!directoryInfo.Exists) directoryInfo.Create();
 
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.dataPath + "/Resources/Data/Unit/" + name, FileMode.Open);
+            FileStream file = File.Open(Application.dataPath + "/Resources/Data/Unit/" + name, FileMode.Open);*/
 
-            if(file != null && file.Length > 0)
+            /*BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(dataPath, FileMode.Open);
+
+            if (file != null && file.Length > 0)
             {
                 unit = (Unit)bf.Deserialize(file);
             }
-            file.Close();
+            file.Close();*/
 
-            return unit;
+            //return unit;
         }
         private static string[] nameData;
 

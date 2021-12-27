@@ -74,7 +74,6 @@ namespace Common
 
             FadeOutTextView.MakeText(unit, $"HP -{value}", Color.red);
             Debug.Log($"{unit.Name}가(은) {value}만큼 데미지를 입었다! [HP : {unit.CurHP + value}>{unit.CurHP}]");
-
             if (unit.CurHP <= 0)
                 Die(unit);
 

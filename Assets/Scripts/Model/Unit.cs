@@ -147,7 +147,7 @@ namespace Model
         private List<Effect> stateEffects = new List<Effect>();  // 보유한 상태효과
         private List<Obtainable> droptems = new List<Obtainable>();
         private RuntimeAnimatorController animator; // 애니메이터
-        protected String animatorPath = "";
+        protected string animatorPath = "";
         public AnimationState animationState = AnimationState.Idle; // 현재 애니메이션 상태
         public UnitAlliance Alliance { get; set; }  // 진영
         public UnitSpecies Species { get; set; }       // 종족
@@ -359,5 +359,141 @@ namespace Model
 
         public Color Color => throw new NotImplementedException();
 
+        public Unit_Serializable Get_Serializable()
+        {
+            Unit_Serializable u = new Unit_Serializable
+            {
+                Seed = Seed,
+                Name = Name,
+                level = level,
+                curEXP = curEXP,
+                nextEXP = nextEXP,
+                curHP = curHP,
+                maxHP = maxHP,
+                armor = armor,
+                strength = strength,
+                agility = agility,
+                mobility = mobility,
+                criRate = criRate,
+                actionRate = actionRate,
+                positionX = position.x,
+                positionY = position.y,
+                moveSkill = Data.AllSkills.IndexOf(moveSkill),
+                animatorPath = animatorPath,
+                animationState = (int)animationState,
+                Alliance = (int)Alliance,
+                Species = (int)Species,
+                Modifier = (int)Modifier,
+                Sprite = 1,
+                IsSkilled = IsSkilled,
+                IsMoved = IsMoved,
+                IsFlying = IsFlying,
+                //ColorR = Color.r,
+                //ColorG = Color.g,
+                //ColorB = Color.b
+            };
+
+            foreach(Skill s in skills)
+            {
+                u.skills.Add(Data.AllSkills.IndexOf(s));
+            }
+            foreach (Skill s in waitingSkills.Keys)
+            {
+                u.waitingSkills.Add(Data.AllSkills.IndexOf(s), waitingSkills[s]);
+            }
+            foreach (Skill s in enhancedSkills.Keys)
+            {
+                u.enhancedSkills.Add(Data.AllSkills.IndexOf(s), waitingSkills[s]);
+            }
+            foreach (Effect e in stateEffects)
+            {
+                u.stateEffects.Add(e.ToString());
+            }
+            return u;
+        }
+
+        public void Set_From_Serializable(Unit_Serializable u)
+        {
+            Seed = u.Seed;
+            Name = u.Name;
+            level = u.level;
+            curEXP = u.curEXP;
+            nextEXP = u.nextEXP;
+            curHP = u.curHP;
+            maxHP = u.maxHP;
+            armor = u.armor;
+            strength = u.strength;
+            agility = u.agility;
+            mobility = u.mobility;
+            criRate = u.criRate;
+            actionRate = u.actionRate;
+            position.x = u.positionX;
+            position.y = u.positionY;
+            moveSkill = (MoveSkill)Data.AllSkills[u.moveSkill];
+            animatorPath = u.animatorPath;
+            animationState = (AnimationState)u.animationState;
+            Alliance = (UnitAlliance)u.Alliance;
+            Species = (UnitSpecies)u.Species;
+            Modifier = (UnitModifier)u.Modifier;
+            //Sprite = u.1;
+            IsSkilled = u.IsSkilled;
+            IsMoved = u.IsMoved;
+            isFlying = u.IsFlying;
+
+            foreach (int s in u.skills)
+            {
+                skills.Add(Data.AllSkills[s]);
+            }
+            foreach (int s in u.waitingSkills.Keys)
+            {
+                waitingSkills.Add(Data.AllSkills[s], u.waitingSkills[s]);
+            }
+            foreach (int s in u.enhancedSkills.Keys)
+            {
+                enhancedSkills.Add(Data.AllSkills[s], u.waitingSkills[s]);
+            }
+            foreach (string e in u.stateEffects)
+            {
+                stateEffects.Add((Effect)Activator.CreateInstance(Type.GetType(e)));
+            }
+        }
+    }
+
+    public class Unit_Serializable
+    {
+        public int Seed;
+        public string Name;                        // 이름
+        public int level = 1;
+        public int curEXP;                         // 현재 경험치
+        public int nextEXP;                        // 다음 레벨업에 필요한 경험치 
+        public int curHP;                          // 현재 체력
+        public int maxHP;                          // 최대 체력
+        public int armor;                          // 방어도 (추가 체력)
+        public int strength;                       // 힘
+        public int agility;                        // 민첩
+        public int mobility;                           // 이동력
+        public int criRate;                 // 치명타 율
+        public float actionRate;                   // 행동가능 퍼센테이지
+        public int positionX;                // 위치X
+        public int positionY;                // 위치Y
+        public int moveSkill;
+        public List<int> skills = new List<int>();                  
+        public Dictionary<int, int> waitingSkills = new Dictionary<int, int>();
+        public Dictionary<int, int> enhancedSkills = new Dictionary<int, int>();
+        public List<string> stateEffects = new List<string>();  // 보유한 상태효과
+        public string animatorPath = "";
+        public int animationState;
+        public int Alliance;
+        public int Species;
+        public int Modifier;
+        public int Sprite;
+        public bool IsSkilled;
+        public bool IsMoved;
+        public bool IsFlying;
+        public float ColorR;
+        public float ColorG;
+        public float ColorB;
+
+        public Unit_Serializable() { }
     }
 }
