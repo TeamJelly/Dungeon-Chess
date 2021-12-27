@@ -22,7 +22,43 @@ namespace Model.Skills.Move
             species.Add(UnitSpecies.Golem);
         }
 
-        public override List<Vector2Int> GetUsePositions(Unit user, Vector2Int userPosition)
+        public override List<Vector2Int> GetUseRange(Unit user, Vector2Int userPosition)
+        {
+            List<Vector2Int> positions = new List<Vector2Int>() { userPosition };
+            Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
+
+            bool[] canGo = new bool[directions.Length];
+            for (int i = 0; i < canGo.Length; i++)
+                canGo[i] = true;
+
+            for (int i = 1; i <= user.Mobility; i++)
+            {
+                for (int b = 0; b < directions.GetLength(0); b++)
+                {
+                    Vector2Int temp;
+                    temp = userPosition + directions[b] * (2 * i - 1);
+                    if (canGo[b] 
+                        && FieldManager.IsInField(temp) 
+                        //&& FieldManager.GetTile(temp).IsPositionable(user)
+                        )
+                        positions.Add(temp);
+                    else
+                        canGo[b] = false;
+
+                    temp = userPosition + directions[b] * 2 * i;
+                    if (canGo[b] 
+                        && FieldManager.IsInField(temp)
+                        //&& FieldManager.GetTile(temp).IsPositionable(user)
+                        )
+                        positions.Add(temp);
+                    else
+                        canGo[b] = false;
+                }               
+            }
+
+            return positions;
+        }
+        public override List<Vector2Int> GetAvlPositions(Unit user, Vector2Int userPosition)
         {
             List<Vector2Int> positions = new List<Vector2Int>() { userPosition };
             Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };

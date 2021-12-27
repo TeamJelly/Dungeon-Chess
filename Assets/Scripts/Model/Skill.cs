@@ -74,14 +74,13 @@ namespace Model
                 return false;
         }
 
-
         /// <summary>
         /// 해당 위치가 실제로 사용가능한지를 제외하고 스킬 사용 위치값만 계산한다.
         /// </summary>
         /// <param name="user"></param>
         /// <param name="userPosition"></param>
         /// <returns></returns>
-        public virtual List<Vector2Int> GetUsePositions(Unit user, Vector2Int userPosition)
+        public virtual List<Vector2Int> GetUseRange(Unit user, Vector2Int userPosition)
         {
             List<Vector2Int> positions = new List<Vector2Int>();
 
@@ -102,11 +101,11 @@ namespace Model
         /// <param name="user">스킬 사용자</param>
         /// <param name="userPosition">스킬 사용자의 위치</param>
         /// <returns>사용 가능한 스킬 위치들</returns>
-        public virtual List<Vector2Int> GetAvlUsePositions(Unit user, Vector2Int userPosition)
+        public virtual List<Vector2Int> GetAvlPositions(Unit user, Vector2Int userPosition)
         {
             List<Vector2Int> positions = new List<Vector2Int>();
 
-            foreach (var position in GetUsePositions(user, userPosition))
+            foreach (var position in GetUseRange(user, userPosition))
             {
                 Unit unit = BattleManager.GetUnit(position);
 
@@ -146,7 +145,7 @@ namespace Model
         /// <returns>사용가능한 스킬 위치들</returns>
         public virtual List<Vector2Int> GetAvlUsePositions(Unit user)
         {
-            return GetAvlUsePositions(user, user.Position);
+            return GetAvlPositions(user, user.Position);
         }
 
         /// <summary>

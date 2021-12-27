@@ -31,7 +31,28 @@ namespace Model.Skills.Move
             return list;
         }
 
-        public override List<Vector2Int> GetUsePositions(Unit user, Vector2Int userPosition)
+        public override List<Vector2Int> GetUseRange(Unit user, Vector2Int userPosition)
+        {
+            List<Vector2Int> positions = new List<Vector2Int>() { userPosition };
+            Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
+
+            for (int i = 1; i <= user.Mobility; i++)
+                foreach (var direction1 in directions)
+                    foreach (var direction2 in directions)
+                    {
+                        if (direction1 == direction2 || direction1 == -direction2)
+                            continue;
+
+                        Vector2Int temp = userPosition + direction1 * (i+1) + direction2 * i;
+                        if (FieldManager.IsInField(temp) 
+                            //&& FieldManager.GetTile(temp).IsPositionable(user)
+                            )
+                            positions.Add(temp);
+                    }
+
+            return positions;
+        }
+        public override List<Vector2Int> GetAvlPositions(Unit user, Vector2Int userPosition)
         {
             List<Vector2Int> positions = new List<Vector2Int>() { userPosition };
             Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };

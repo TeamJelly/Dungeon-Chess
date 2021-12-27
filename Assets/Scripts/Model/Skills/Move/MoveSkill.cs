@@ -41,7 +41,7 @@ namespace Model.Skills.Move
             user.IsMoved = true;
             user.WaitingSkills.Add(this, ReuseTime[SLV]);
 
-            Debug.Log($"{user.Name}가 {Name}스킬을 {target}에 사용!");
+            Debug.Log($"{user.Name}가 {Name}스킬을 {Priority}우선으로 {target}에 사용!");
 
             if (target == user.Position)
                 yield break;

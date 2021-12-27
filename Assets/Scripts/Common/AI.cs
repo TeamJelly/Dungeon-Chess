@@ -145,7 +145,7 @@ namespace Common
             foreach (var moveablePosition in MoveablePositions)
             {
                 // 이동 후 그 위치에서 스킬이 가능한 위치 리스트를 찾는다.
-                List<Vector2Int> SkillablePositions = skill.GetAvlUsePositions(user, moveablePosition);
+                List<Vector2Int> SkillablePositions = skill.GetAvlPositions(user, moveablePosition);
 
                 // 스킬을 사용가능한 위치를 순회하면서
                 foreach (var skillablePosition in SkillablePositions)
@@ -179,7 +179,7 @@ namespace Common
             foreach (var moveablePosition in MoveablePositions)
             {
                 // 이 위치에서 스킬을 사용가능한 위치들을 찾는다.
-                List<Vector2Int> SkillablePositions = skill.GetAvlUsePositions(user, moveablePosition);
+                List<Vector2Int> SkillablePositions = skill.GetAvlPositions(user, moveablePosition);
 
                 // 스킬을 사용할 수 있는 위치에 타겟위치가 포함된다면 리스트에 추가한다.
                 if (SkillablePositions.Contains(targetPosition))

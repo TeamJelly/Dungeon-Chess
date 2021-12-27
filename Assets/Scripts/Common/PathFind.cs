@@ -56,11 +56,11 @@ namespace Common
             {
                 List<Node> neighbor = new List<Node>();
                 
-                List<Vector2Int> positions = moveSkill.GetAvlUsePositions(agent, center.unitPosition);
+                List<Vector2Int> positions = moveSkill.GetAvlPositions(agent, center.unitPosition);
 
                 foreach(Vector2Int position in positions)
                 {
-                    Debug.Log(center.unitPosition + "?? " + position);
+                    // Debug.Log(center.unitPosition + "?? " + position);
                     neighbor.Add(new Node(position, center));
                 }
 

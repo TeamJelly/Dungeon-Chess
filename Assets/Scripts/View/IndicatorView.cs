@@ -97,17 +97,21 @@ namespace View
         GameObject tileIndicatorPrefab;
 
         [SerializeField]
-        Color possibleColor = new Color(0, 0, 1, 0.5f); // blue
+        Color possibleCursorColor = new Color(0, 0, 1, 0.5f); // blue
         [SerializeField]
-        Color subPossibleColor = new Color(0, 0.5f, 1, 0.5f); // cyan
+        Color relatedColor = new Color(0, 0.5f, 1, 0.5f); // cyan
         [SerializeField]
-        Color impossibleColor = new Color(1, 0, 0, 0.5f); // red
+        Color sklRangeColor = new Color(1f, 1f, 0, 0.5f); // yello
+
+        [SerializeField]
+        Color impossibleCursorColor = new Color(1, 0, 0, 0.5f); // red
         [SerializeField]
         Color subImpossibleColor = new Color(1, 0, 1, 0.5f); // magenta
+
         [SerializeField]
-        Color inBoundaryColor = new Color(0, 1, 0, 0.5f); // green
+        Color sklAvlColor = new Color(0, 1, 0, 0.5f); // green
         [SerializeField]
-        Color outBoundaryColor = new Color(1, 1, 1, 0.5f); // white
+        Color sklNotAvlColor = new Color(1, 1, 1, 0.5f); // white
 
         private static Skill currentSkill;
         private static Unit currentUnit;
@@ -144,6 +148,15 @@ namespace View
         private static void UpdateSkillIndicator(Vector2Int? position = null)
         {
             List<Vector2Int> RelatedPosition = position != null ? currentSkill.GetRelatePositions(currentUnit, (Vector2Int)position) : new List<Vector2Int>();
+            List<Vector2Int> sklUseRange = currentSkill.GetUseRange(currentUnit, currentUnit.Position);
+
+            Debug.Log(sklUseRange.Count);
+
+            foreach (var item in sklUseRange)
+            {
+                Debug.Log(item);
+            }
+
             curPosition = position;
 
             for (int y = 0; y < TileIndicators.GetLength(0); y++)
@@ -152,19 +165,21 @@ namespace View
                     Vector2Int tempPosition = new Vector2Int(x, y);
 
                     if (RelatedPosition.Contains(tempPosition))
-                        ChangeTileIndicatorColor(tempPosition, instance.subPossibleColor);
+                        ChangeTileIndicatorColor(tempPosition, instance.relatedColor);
                     else if (curAvlPositions.Contains(tempPosition))
-                        ChangeTileIndicatorColor(tempPosition, instance.inBoundaryColor);
+                        ChangeTileIndicatorColor(tempPosition, instance.sklAvlColor);
+                    else if (sklUseRange.Contains(tempPosition))
+                        ChangeTileIndicatorColor(tempPosition, instance.sklRangeColor);
                     else
-                        ChangeTileIndicatorColor(tempPosition, instance.outBoundaryColor);
+                        ChangeTileIndicatorColor(tempPosition, instance.sklNotAvlColor);
                 }
 
             if (position != null)
             {
                 if (curAvlPositions.Contains((Vector2Int)position))
-                    ChangeTileIndicatorColor((Vector2Int)position, instance.possibleColor);
+                    ChangeTileIndicatorColor((Vector2Int)position, instance.possibleCursorColor);
                 else
-                    ChangeTileIndicatorColor((Vector2Int)position, instance.impossibleColor);
+                    ChangeTileIndicatorColor((Vector2Int)position, instance.impossibleCursorColor);
             }
         }
 
@@ -198,20 +213,20 @@ namespace View
                 {
                     Vector2Int tempPosition = new Vector2Int(x, y);
                     if (RelatedPosition.Contains(tempPosition))
-                        ChangeTileIndicatorColor(tempPosition, instance.subPossibleColor);
+                        ChangeTileIndicatorColor(tempPosition, instance.relatedColor);
                     else if (curAvlPositions.Contains(tempPosition))
-                        ChangeTileIndicatorColor(tempPosition, instance.inBoundaryColor);
+                        ChangeTileIndicatorColor(tempPosition, instance.sklAvlColor);
                     else
-                        ChangeTileIndicatorColor(tempPosition, instance.outBoundaryColor);
+                        ChangeTileIndicatorColor(tempPosition, instance.sklNotAvlColor);
                 }
 
             if (position != null)
             {
                 Debug.Log("hello" + position);
                 if (curAvlPositions.Contains((Vector2Int)position))
-                    ChangeTileIndicatorColor((Vector2Int)position, instance.possibleColor);
+                    ChangeTileIndicatorColor((Vector2Int)position, instance.possibleCursorColor);
                 else
-                    ChangeTileIndicatorColor((Vector2Int)position, instance.impossibleColor);
+                    ChangeTileIndicatorColor((Vector2Int)position, instance.impossibleCursorColor);
             }
         }
 
