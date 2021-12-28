@@ -378,7 +378,7 @@ namespace Model
                 actionRate = actionRate,
                 positionX = position.x,
                 positionY = position.y,
-                moveSkill = Data.AllSkills.IndexOf(moveSkill),
+                moveSkill = moveSkill.ToString(),
                 animatorPath = animatorPath,
                 animationState = (int)animationState,
                 Alliance = (int)Alliance,
@@ -394,15 +394,15 @@ namespace Model
 
             foreach(Skill s in skills)
             {
-                u.skills.Add(Data.AllSkills.IndexOf(s));
+                u.skills.Add(s.ToString());
             }
             foreach (Skill s in waitingSkills.Keys)
             {
-                u.waitingSkills.Add(Data.AllSkills.IndexOf(s), waitingSkills[s]);
+                u.waitingSkills.Add(s.ToString(), waitingSkills[s]);
             }
             foreach (Skill s in enhancedSkills.Keys)
             {
-                u.enhancedSkills.Add(Data.AllSkills.IndexOf(s), enhancedSkills[s]);
+                u.enhancedSkills.Add(s.ToString(), enhancedSkills[s]);
             }
             for (int i = 0; i < stateEffects.Count; i++)
             {
@@ -438,7 +438,7 @@ namespace Model
             actionRate = u.actionRate;
             position.x = u.positionX;
             position.y = u.positionY;
-            moveSkill = (MoveSkill)Data.AllSkills[u.moveSkill];
+            moveSkill = (MoveSkill)Data.AllSkills[Type.GetType(u.moveSkill)];
             animatorPath = u.animatorPath;
             animationState = (AnimationState)u.animationState;
             Alliance = (UnitAlliance)u.Alliance;
@@ -469,18 +469,18 @@ namespace Model
             }
 
 
-            foreach (int s in u.skills)
+            foreach (string s in u.skills)
             {
-                Common.Command.AddSkill(this, Data.AllSkills[s]);
+                Common.Command.AddSkill(this, Data.AllSkills[Type.GetType(s)]);
                 //skills.Add(Data.AllSkills[s]);
             }
-            foreach (int s in u.waitingSkills.Keys)
+            foreach (string s in u.waitingSkills.Keys)
             {
-                waitingSkills.Add(Data.AllSkills[s], u.waitingSkills[s]);
+                waitingSkills.Add(Data.AllSkills[Type.GetType(s)], u.waitingSkills[s]);
             }
-            foreach (int s in u.enhancedSkills.Keys)
+            foreach (string s in u.enhancedSkills.Keys)
             {
-                enhancedSkills.Add(Data.AllSkills[s], u.enhancedSkills[s]);
+                enhancedSkills.Add(Data.AllSkills[Type.GetType(s)], u.enhancedSkills[s]);
             }
 
             for (int i = 0; i < u.stateEffects.Count; i++)
@@ -517,10 +517,10 @@ namespace Model
         public float actionRate;                   // 행동가능 퍼센테이지
         public int positionX;                // 위치X
         public int positionY;                // 위치Y
-        public int moveSkill;
-        public List<int> skills = new List<int>();                  
-        public Dictionary<int, int> waitingSkills = new Dictionary<int, int>();
-        public Dictionary<int, int> enhancedSkills = new Dictionary<int, int>();
+        public string moveSkill;
+        public List<string> skills = new List<string>();                  
+        public Dictionary<string, int> waitingSkills = new Dictionary<string, int>();
+        public Dictionary<string, int> enhancedSkills = new Dictionary<string, int>();
         public List<string> stateEffects = new List<string>();  // 보유한 상태효과
         public List<int> stateEffects_count = new List<int>();  // 보유한 상태효과
         public List<string> belongings = new List<string>();  // 보유한 유물

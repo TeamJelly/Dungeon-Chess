@@ -137,7 +137,7 @@ public class DungeonEditor : MonoBehaviour
 
     public void Init()
     {
-        foreach (Skill skill in Common.Data.AllSkills)
+        foreach (Skill skill in Common.Data.AllSkills.Values)
         {
             GameObject gameObject = Instantiate(infoBox, Skills);
 

@@ -72,30 +72,31 @@ namespace Model.Managers
             chunk.GenerateMap();
             FieldManager.instance.InitField(chunk.GetFieldData());
 
+
             // 테스팅 적 유닛 소환
             Unit unit = new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1);
-            unit.MoveSkill = new Skills.Move.Rook();
+            unit.MoveSkill = (Skills.Move.MoveSkill)Common.Data.AllSkills[typeof(Skills.Move.Rook)];//new Skills.Move.Rook();
             unit.MoveSkill.Priority = Common.AI.Priority.NearFromPartys;
             unit.Mobility = 1;
             unit.Skills[0].Target = Skill.TargetType.Hostile;
             Common.Command.Summon(unit, new Vector2Int(9, 11));
 
             unit = new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1);
-            unit.MoveSkill = new Skills.Move.Pawn();
+            unit.MoveSkill = (Skills.Move.MoveSkill)Common.Data.AllSkills[typeof(Skills.Move.Pawn)];
             unit.MoveSkill.Priority = Common.AI.Priority.NearFromPartys;
             unit.Mobility = 1;
             unit.Skills[0].Target = Skill.TargetType.Hostile;
             Common.Command.Summon(unit, new Vector2Int(9, 12));
 
             unit = new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1);
-            unit.MoveSkill = new Skills.Move.Knight();
+            unit.MoveSkill = (Skills.Move.MoveSkill)Common.Data.AllSkills[typeof(Skills.Move.Knight)];
             unit.MoveSkill.Priority = Common.AI.Priority.NearFromPartys;
             unit.Mobility = 1;
             unit.Skills[0].Target = Skill.TargetType.Hostile;
             Common.Command.Summon(unit, new Vector2Int(10, 11));
 
             unit = new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1);
-            unit.MoveSkill = new Skills.Move.Queen();
+            unit.MoveSkill = (Skills.Move.MoveSkill)Common.Data.AllSkills[typeof(Skills.Move.Queen)];
             unit.MoveSkill.Priority = Common.AI.Priority.NearFromPartys;
             unit.Mobility = 1;
             unit.Skills[0].Target = Skill.TargetType.Hostile;

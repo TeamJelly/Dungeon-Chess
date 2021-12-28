@@ -8,6 +8,8 @@ using static Model.Managers.FieldManager;
 using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Linq;
+
 namespace Common
 {
     public class Data
@@ -151,12 +153,12 @@ namespace Common
         {
             List<Skill> skills = new List<Skill>();
             
-            foreach(Skill skill in allSkills)
+            foreach(Skill skill in AllSkills.Values)
                 if (skill.species.Contains(species) && skill.Category == category)
                     skills.Add(skill);
             
             if (skills.Count == 0)
-                return allSkills[0];
+                return AllSkills.Values.ToArray()[0];
 
             int idx = seed % skills.Count;
             return skills[idx];
@@ -180,7 +182,7 @@ namespace Common
                 {SkillCategory.Advanced, new List<Skill>()},
             };
 
-            foreach (Skill skill in allSkills)
+            foreach (Skill skill in AllSkills.Values)
             {
                 categoryToSkillList[skill.Category].Add(skill);
                 foreach (UnitSpecies s in skill.species)
@@ -219,25 +221,21 @@ namespace Common
             new Model.Artifacts.Normal.CopperRing(),
             new Model.Artifacts.Rare.BloodStone(),
         };
-        public static List<Skill> AllSkills => allSkills;
-
-        static List<Skill> allSkills = new List<Skill>()
+        public static Dictionary<Type, Skill> AllSkills { get; } = new Dictionary<Type, Skill>()
         {
             // Move 스킬
-            new Pawn(),
-            new Knight(),
-            new Bishop(),
-            new Rook(),
-            new Queen(),
-            new King(),
+            { typeof(Pawn), new Pawn() },
+            { typeof(Knight), new Knight() },
+            { typeof(King), new King() },
+            { typeof(Bishop), new Bishop() },
+            { typeof(Queen), new Queen() },
+            { typeof(Rook), new Rook() },
 
-            // Basic 스킬
-            new Fireball(),
-            new Heal(),
-            new Scratch(),
-            new Fireball(),
-            new Snapshot(),
-
+            { typeof(Heal), new Heal() },
+            { typeof(Scratch), new Scratch() },
+            { typeof(Fireball), new Fireball() },
+            { typeof(Snapshot), new Snapshot() },
+            { typeof(Slash), new Slash() }
         };
 
         //인간
