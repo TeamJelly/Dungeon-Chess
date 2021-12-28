@@ -8,7 +8,7 @@ namespace Model.Effects
 {
     public class Bind : Effect
     {
-        public Bind(Unit owner) : base(owner)
+        public Bind() : base()
         {
             Name = "속박";
             Description = "유닛이 한 턴동안 움직이지 못합니다.";
@@ -17,9 +17,9 @@ namespace Model.Effects
         // 이미 기절 효과가 발동 됨을 기록한다.
         bool isActivated = false;
 
-        public override void OnAdd()
+        public override void OnAdd(Unit owner)
         {
-            base.OnAdd();
+            base.OnAdd(owner);
 
             Owner.IsMoved = true;
 

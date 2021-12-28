@@ -14,8 +14,9 @@
             Description = "치명률 +15%";
         }
 
-        public override void OnAdd()
+        public override void OnAdd(Unit owner)
         {
+            base.OnAdd(owner);
             Owner.CriRate += increasingValue;
         }
 

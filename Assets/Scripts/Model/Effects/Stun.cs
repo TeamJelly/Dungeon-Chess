@@ -6,7 +6,7 @@ namespace Model.Effects
 {
     public class Stun : Effect
     {
-        public Stun(Unit owner) : base(owner)
+        public Stun() : base()
         {
             Name = "기절";
             Description = "유닛이 한 턴동안 행동하지 못합니다.";
@@ -15,9 +15,9 @@ namespace Model.Effects
         // 이미 기절 효과가 발동 됨을 기록한다.
         bool isActivated = false;
 
-        public override void OnAdd()
+        public override void OnAdd(Unit owner)
         {
-            base.OnAdd();
+            base.OnAdd(owner);
 
             Owner.IsMoved = true;
             Owner.IsSkilled = true;

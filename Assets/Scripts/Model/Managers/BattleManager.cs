@@ -132,12 +132,14 @@ namespace Model.Managers
 
                 unit = new Unit(UnitAlliance.Party, UnitSpecies.Human);
                 GameManager.PartyUnits.Add(unit);
-                Common.Command.AddArtifact(unit, new Artifacts.Rare.BloodStone());
-                Common.Command.AddArtifact(unit, new Artifacts.Rare.BloodStone());
-                Common.Command.AddArtifact(unit, new Artifacts.Rare.BloodStone());
-                Common.Command.AddArtifact(unit, new Artifacts.Rare.BloodStone());
-                Common.Command.AddEffect(unit,new Model.Effects.Poison(unit,3));
-                Common.Command.AddEffect(unit,new Model.Effects.Regeneration(unit,3));
+                Common.Command.AddArtifact(unit, Common.Data.GetRandomArtifact(0, Artifact.ArtifactGrade.Normal));
+                Common.Command.AddArtifact(unit, Common.Data.GetRandomArtifact(1, Artifact.ArtifactGrade.Normal));
+                Common.Command.AddArtifact(unit, Common.Data.GetRandomArtifact(2, Artifact.ArtifactGrade.Normal));
+                Common.Command.AddArtifact(unit, Common.Data.GetRandomArtifact(3, Artifact.ArtifactGrade.Normal));
+                Common.Command.AddArtifact(unit, Common.Data.GetRandomArtifact(4, Artifact.ArtifactGrade.Normal));
+
+                Common.Command.AddEffect(unit,new Model.Effects.Poison());
+                Common.Command.AddEffect(unit,new Model.Effects.Regeneration());
             }
 
             BattleController.SetBattleMode(true);

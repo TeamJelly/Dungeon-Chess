@@ -2,7 +2,7 @@ namespace Model.Items
 {
     class Damage : Item
     {
-        Damage()
+        public Damage()
         {
             Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/monochrome_transparent_packed_705");
             Color = UnityEngine.Color.red;

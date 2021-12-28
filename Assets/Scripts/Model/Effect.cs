@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Model
 {
@@ -19,23 +20,22 @@ namespace Model
 
         public virtual string Type => "Effect";
 
-        public Effect()
-        {
+        //public Effect()
+        //{
+        //}
+        //public Effect(Unit owner)
+        //{
+        //    Owner = owner;
+        //}
+        //public Effect(Unit owner, int turnCount)
+        //{
+        //    Owner = owner;
+        //    TurnCount = turnCount;
+        //}
 
-        }
-        public Effect(Unit owner)
+        public virtual void OnAdd(Unit owner)
         {
             Owner = owner;
-        }
-
-        public Effect(Unit owner, int turnCount)
-        {
-            Owner = owner;
-            TurnCount = turnCount;
-        }
-
-        public virtual void OnAdd()
-        {
             Effect oldEffect = null;
             foreach (var effect in Owner.StateEffects)
                 if (effect.GetType() == this.GetType())
@@ -82,6 +82,13 @@ namespace Model
         public virtual int AfterGetDam(int value)
         {
             return value;
+        }
+
+        public Artifact Clone()
+        {
+            Type t = GetType();
+
+            return Activator.CreateInstance(t) as Artifact;
         }
     }
 }

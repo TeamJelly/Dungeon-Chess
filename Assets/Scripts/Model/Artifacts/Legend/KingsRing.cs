@@ -10,15 +10,5 @@
             Grade = ArtifactGrade.Rare;
             Description = "상점 물품을 50% 가격으로 구매한다.";
         }
-
-        public override void OnAdd()
-        {
-
-        }
-
-        public override void OnRemove()
-        {
-
-        }
     }
 }

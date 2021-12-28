@@ -21,16 +21,17 @@ namespace Model.Effects
         /// <param name="owner">효과 소유자</param>
         /// <param name="barrierCount">배리어의 개수</param>
         /// <param name="turnCount">배리어의 지속 턴 수</param>
-        public Barrier(Unit owner, int barrierCount) : base(owner)
+        public Barrier() : base()
         {
             Name = "배리어";
             Description = $"보호막의 수({barrierCount}) 만큼 공격의 데미지를 무효화 한다.";
             BarrierCount = barrierCount;
         }
 
-        public override void OnAdd()
+        public override void OnAdd(Unit owner)
         {
-            base.OnAdd();
+            barrierCount = 3;
+            base.OnAdd(owner);
 
             Owner.OnDamage.before.AddListener(BeforeGetDam);
         }

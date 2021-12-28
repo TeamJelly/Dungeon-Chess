@@ -14,8 +14,9 @@
             Description = "행동력 +1";
         }
 
-        public override void OnAdd()
+        public override void OnAdd(Unit owner)
         {
+            base.OnAdd(owner);
             Owner.Agility += increasingValue;
         }
 

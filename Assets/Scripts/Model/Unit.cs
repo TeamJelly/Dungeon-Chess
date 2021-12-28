@@ -115,7 +115,7 @@ namespace Model
 
         public enum AnimationState { Idle, Hit, Attack, Move, Heal };
 
-        private int Seed { get; set; }
+        public int Seed { get; set; }
         public string Name { get; set; }            // 이름
         private int level = 1;
         private int curEXP;                         // 현재 경험치
@@ -485,10 +485,7 @@ namespace Model
 
             for (int i = 0; i < u.stateEffects.Count; i++)
             {
-                if(u.stateEffects_count[i] > 0)
-                    Common.Command.AddEffect(this, (Effect)Activator.CreateInstance(Type.GetType(u.stateEffects[i]),this, u.stateEffects_count[i]));
-                
-                else Common.Command.AddEffect(this, (Effect)Activator.CreateInstance(Type.GetType(u.stateEffects[i]), this));
+                Common.Command.AddEffect(this, (Effect)Activator.CreateInstance(Type.GetType(u.stateEffects[i])));
             }
 
             foreach (string o in u.belongings)

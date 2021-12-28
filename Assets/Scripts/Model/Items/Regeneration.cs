@@ -4,7 +4,7 @@ namespace Model.Items
 {
     class Regeneration : Item
     {
-        Regeneration()
+        public Regeneration()
         {
             Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/monochrome_transparent_packed_705");
             Color = UnityEngine.Color.green;
@@ -14,7 +14,7 @@ namespace Model.Items
         {
             Unit unit = tile.GetUnit();
             if (unit != null)
-                Common.Command.AddEffect(unit, new Effects.Regeneration(unit, 3));
+                Common.Command.AddEffect(unit, new Effects.Regeneration());
         }
     }
 }

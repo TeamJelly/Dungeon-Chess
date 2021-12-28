@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System;
 
 namespace Model
 {
@@ -45,22 +46,7 @@ namespace Model
             Common.Command.UnSummon(this);
             //Managers.GameManager.Instance.artifactBag.Add(this);
             //Debug.Log("GetArtifact");
-
-            Clone<Artifacts.Normal.ACoin>();
-        }
-
-        public Artifact Clone <T>() where T : Artifact, new()
-        {
-            T clone = new T();
-
-            clone.Position = Position;
-            clone.Grade = Grade;
-            clone.Price = Price;
-            clone.sprite = sprite;
-
-
-
-            return clone;
+            //Clone<Artifacts.Normal.ACoin>();
         }
     }
 

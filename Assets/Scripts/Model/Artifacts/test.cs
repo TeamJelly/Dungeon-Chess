@@ -20,16 +20,6 @@ namespace Model.Artifacts
         {
             return value - 1;
         }
-
-        public override void OnAdd()
-        {
-            
-        }
-
-        public override void OnRemove()
-        {
-
-        }
     }
 
 }

@@ -97,12 +97,51 @@ namespace Common
             unit.NextEXP = 10 * unit.Level * (unit.Level + 5);
         }
 
+        /// <summary>
+        /// 땅에 있는걸 줍는다.
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="obtainable"></param>
+        public static void GetObtainable(Unit target, Obtainable obtainable)
+        {
+            if (obtainable.ToString().Contains("Artifacts"))
+            {
+                AddArtifact(target, (Artifact)obtainable);
+                UnSummon(obtainable);
+            }
+            else if (obtainable.ToString().Contains("Items"))
+            {
+                if (target.Alliance == UnitAlliance.Party && GameManager.Instance.itemBag.Count == 3)
+                    return;
+                else
+                {
+                    AddItem((Item)obtainable);
+                    UnSummon(obtainable);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 필드랑 관련없이 유물을 얻는다.
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="artifact"></param>
         public static void AddArtifact(Unit target, Artifact artifact)
         {
-            artifact.Owner = target;
-            artifact.OnAdd();
+            //artifact.Owner = target;
+            artifact.OnAdd(target);
             target.Belongings.Add(artifact);
             FadeOutTextView.MakeText(target, $"+{artifact.Name}", Color.yellow);
+        }
+
+        /// <summary>
+        /// 공용 가방에 아이템을 추가한다.
+        /// </summary>
+        /// <param name="item"></param>
+        public static void AddItem(Item item)
+        {
+            GameManager.Instance.itemBag.Add(item);
+            UnitControlView.instance.UpdateItemButtons();
         }
 
         public static void RemoveArtifact(Unit target, Artifact artifact)
@@ -130,7 +169,7 @@ namespace Common
 
         public static void AddEffect(Unit target, Effect effect)
         {
-            effect.OnAdd();
+            effect.OnAdd(target);
             target.StateEffects.Add(effect);
             FadeOutTextView.MakeText(target, $"+{effect.Name}", Color.yellow);
         }

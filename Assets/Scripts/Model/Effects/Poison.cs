@@ -11,15 +11,16 @@ namespace Model.Effects
 
         public int Damage { get => damage; }
 
-        public Poison(Unit owner, int turnCount) : base(owner, turnCount)
+        public Poison() : base()
         {
             Name = "독";
-            Description = $"턴을 시작할때 체력 10을 차감합니다. 남은 턴 : {turnCount}";
+            Description = $"턴을 시작할때 체력 10을 차감합니다. 남은 턴 : {TurnCount}";
         }
 
-        public override void OnAdd()
+        public override void OnAdd(Unit owner)
         {
-            base.OnAdd();
+            TurnCount = 3;
+            base.OnAdd(owner);
 
             Debug.Log($"{Owner.Name}에게 {Name}효과 {TurnCount}턴 동안 추가됨");
             Owner.OnTurnStart.before.AddListener(OnTurnStart);

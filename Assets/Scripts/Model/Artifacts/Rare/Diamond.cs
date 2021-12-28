@@ -10,16 +10,6 @@
             Grade = ArtifactGrade.Rare;
             Description = "골드 +200";
         }
-
-        public override void OnAdd()
-        {
-
-        }
-
-        public override void OnRemove()
-        {
-
-        }
         bool ArtifactFunction(bool b)
         {
             //기능 구현

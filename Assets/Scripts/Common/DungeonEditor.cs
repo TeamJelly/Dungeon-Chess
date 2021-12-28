@@ -118,6 +118,7 @@ public class DungeonEditor : MonoBehaviour
         {
             if (currentUnit == null) return;
             Common.Command.UnSummon(currentUnit);
+
             currentUnit = null;
             InfoView.instance.unitInfo.SetNone();
         });
@@ -188,7 +189,7 @@ public class DungeonEditor : MonoBehaviour
             modifyButton.onClick.AddListener(() =>
             {
                 if (currentUnit == null) return;
-                Artifact copied = Activator.CreateInstance(artifact.GetType()) as Artifact;
+                Artifact copied = artifact.Clone();
                 Common.Command.AddArtifact(currentUnit, copied);
                 InfoView.instance.unitInfo.SetUnit(currentUnit);
             });

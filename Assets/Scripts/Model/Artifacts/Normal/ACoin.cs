@@ -13,10 +13,5 @@
             Grade = ArtifactGrade.Normal;
             Description = "골드 +100";
         }
-
-        public override void OnAdd()
-        {
-            
-        }
     }
 }

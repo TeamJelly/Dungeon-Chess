@@ -208,12 +208,17 @@ namespace Common
         {
             get
             {
+                
                 if (categoryToSkillList == null)
                     InitSkillDictionary();
                 return categoryToSkillList;
             }
         }
 
+        /// <summary>
+        /// 랜덤 아티펙트 생성시 사용할 리스트
+        /// Clone 해서 사용
+        /// </summary>
         public static List<Artifact> AllArtifacts = new List<Artifact>()
         {
             new Model.Artifacts.Normal.LeatherBoots(),
@@ -221,6 +226,55 @@ namespace Common
             new Model.Artifacts.Normal.CopperRing(),
             new Model.Artifacts.Rare.BloodStone(),
         };
+
+
+        public static Artifact GetRandomArtifact(int seed, Artifact.ArtifactGrade grade)
+        {
+            List<Artifact> list = (from artifact in AllArtifacts
+                                  where artifact.Grade == grade
+                                  select artifact).ToList();
+
+            Artifact t = list[seed % list.Count].Clone();
+
+            return t;
+        }
+
+        /// <summary>
+        /// 랜덤 아이템 생성시 사용할 리스트
+        /// Clone 해서 사용
+        /// </summary>
+        public static List<Item> AllItems = new List<Item>()
+        {
+            new Model.Items.Barrior(),
+            new Model.Items.Bind(),
+            new Model.Items.Damage(),
+            new Model.Items.Fast(),
+            new Model.Items.Heal(),
+            new Model.Items.Key(),
+            new Model.Items.Poison(),
+            new Model.Items.Regeneration(),
+            new Model.Items.Stun(),
+        };
+
+        /// <summary>
+        /// 랜덤 이펙트 생성시 사용할 리스트
+        /// Clone 해서 사용
+        /// </summary>
+        public static List<Effect> AllEffects = new List<Effect>()
+        {
+            new Model.Effects.Barrier(),
+            new Model.Effects.Bind(),
+            new Model.Effects.Fast(),
+            new Model.Effects.Poison(),
+            new Model.Effects.Regeneration(),
+            new Model.Effects.Stun(),
+        };
+
+        public static List<Artifact> NomalArtifacts = new List<Artifact>();
+        public static List<Artifact> RareArtifacts = new List<Artifact>();
+        public static List<Artifact> LegendArtifacts = new List<Artifact>();
+
+
         public static Dictionary<Type, Skill> AllSkills { get; } = new Dictionary<Type, Skill>()
         {
             // Move 스킬

@@ -6,16 +6,17 @@ namespace Model.Effects
 {
     public class Fast : Effect
     {
-        public Fast(Unit owner, int turnCount) : base(owner, turnCount)
+        public Fast() : base()
         {
             
             Name = "신속";
-            Description = $"이동거리가 늘어납니다. 남은 턴 : {turnCount}";
+            Description = $"이동거리가 늘어납니다. 남은 턴 : {TurnCount}";
         }
        
-        public override void OnAdd()
+        public override void OnAdd(Unit owner)
         {
-            base.OnAdd();
+            TurnCount = 3;
+            base.OnAdd(owner);
 
             Debug.Log("Mobility" + Owner.Mobility);
             Owner.Mobility += 2;

@@ -9,16 +9,6 @@
             Grade = ArtifactGrade.Normal;
             Description = "경험치 획득량 +10%";
         }
-
-        public override void OnAdd()
-        {
-
-        }
-
-        public override void OnRemove()
-        {
-
-        }
         bool ArtifactFunction(bool b)
         {
             //기능 구현

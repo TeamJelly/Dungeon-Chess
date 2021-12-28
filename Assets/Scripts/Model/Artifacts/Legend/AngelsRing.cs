@@ -9,15 +9,5 @@
             Grade = ArtifactGrade.Legend;
             Description = "타일의 효과를 무시하고 움직인다.";
         }
-
-        public override void OnAdd()
-        {
-
-        }
-
-        public override void OnRemove()
-        {
-
-        }
     }
 }

@@ -9,15 +9,16 @@ namespace Model.Effects
 
         public int Regen { get => regen; }
 
-        public Regeneration(Unit owner, int turnCount) : base(owner, turnCount)
+        public Regeneration() : base()
         {
             Name = "재생";
-            Description = $"턴을 시작할때 체력 10을 회복합니다. 남은 턴 : {turnCount}";
+            Description = $"턴을 시작할때 체력 10을 회복합니다. 남은 턴 : {TurnCount}";
         }
 
-        public override void OnAdd()
+        public override void OnAdd(Unit owner)
         {
-            base.OnAdd();
+            TurnCount = 3;
+            base.OnAdd(owner);
             Owner.OnTurnStart.before.AddListener(OnTurnStart);
             Owner.OnTurnEnd.after.AddListener(OnTurnEnd);
             Debug.Log($"{Owner.Name}에게 {Name}효과 {TurnCount}턴 동안 추가됨");

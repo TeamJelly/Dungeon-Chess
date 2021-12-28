@@ -4,7 +4,7 @@ namespace Model.Items
 {
     class Barrior : Item
     {
-        Barrior()
+        public Barrior()
         {
             Name = "배리어 스크롤";
             Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/monochrome_transparent_packed_705");
@@ -16,7 +16,7 @@ namespace Model.Items
         {
             Unit unit = tile.GetUnit();
             if (unit != null)
-                Common.Command.AddEffect(unit, new Barrier(unit, 3));
+                Common.Command.AddEffect(unit, new Barrier());
         }
     }
 }

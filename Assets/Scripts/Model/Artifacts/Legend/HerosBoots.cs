@@ -14,8 +14,9 @@
             Description = "이동력 +3";
         }
 
-        public override void OnAdd()
+        public override void OnAdd(Unit owner)
         {
+            base.OnAdd(owner);
             Owner.Mobility += increasingValue;
         }
 

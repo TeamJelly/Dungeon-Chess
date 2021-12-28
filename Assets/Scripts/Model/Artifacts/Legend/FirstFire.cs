@@ -10,15 +10,5 @@
             Grade = ArtifactGrade.Normal;
             Description = "매턴 몬스터 체력 1% 감소";
         }
-
-        public override void OnAdd()
-        {
-
-        }
-
-        public override void OnRemove()
-        {
-
-        }
     }
 }

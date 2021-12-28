@@ -114,7 +114,8 @@ namespace Model
         {
             if (obtainable != null)
             {
-                obtainable.BelongTo(unit);
+                Common.Command.GetObtainable(unit, obtainable);
+                //obtainable.BelongTo(unit);
                 //Bag.instance.UpdateUI();
             }
         }
