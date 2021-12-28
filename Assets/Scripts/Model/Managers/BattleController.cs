@@ -78,10 +78,14 @@ namespace UI.Battle
             IndicatorView.HideTileIndicator();
             //Viewer.battle.ThisTurnUnitInfo.CurrentPushedButton = null;
 
+
             Unit thisTurnUnit = BattleManager.instance.thisTurnUnit;
 
-            thisTurnUnit.OnTurnEnd.before.Invoke(true);
-            thisTurnUnit.OnTurnEnd.after.Invoke(false);
+            if(thisTurnUnit != null)
+            {
+                thisTurnUnit.OnTurnEnd.before.Invoke(true);
+                thisTurnUnit.OnTurnEnd.after.Invoke(false);
+            }
 
             switch (BattleManager.CheckGameState())
             {

@@ -13,12 +13,8 @@ namespace Common
         public static void Die(Unit unit)
         {
             View.FadeOutTextView.MakeText(unit, unit.Name + " is dead", Color.red);
-
-            unit.Alliance = UnitAlliance.NULL;
-
             View.VisualEffectView.MakeVisualEffect(unit.Position, "Explosion");
             UnSummon(unit);
-
             // // 소지 유물 뿌리기
             // List<Tile> tiles = FieldManager.GetBlankFloorTiles(unit.Belongings.Count);
             // int count = 0;
@@ -30,21 +26,12 @@ namespace Common
             //     VisualEffectView.MakeDropEffect(startPos,target,unit.Belongings[count]);
             //     count++;
             // }
-
             // 사망시 갖고있는 템중에 하나 떨굼
             if (unit.Belongings.Count != 0)
                 Summon(unit.Belongings[Random.Range(0, unit.Belongings.Count)], unit.Position);
 
-            GameManager.RemovePartyUnit(unit); //죽으면 파티유닛에서 박탈.
-
-            BattleManager.instance.InitializeUnitBuffer();
-
             //if (BattleManager.CheckGameState() != BattleManager.State.Continue)
-            if (GameManager.InBattle)
-                BattleController.instance.ThisTurnEnd();
 
-            else if (BattleManager.instance.thisTurnUnit == unit)
-                BattleManager.instance.thisTurnUnit = null;
         }
 
         // position 이동보다 좀더 확장된 이동
@@ -168,6 +155,10 @@ namespace Common
                 unit.Position = target;
                 FieldManager.GetTile(target).SetUnit(unit);
                 BattleManager.instance.AllUnits.Add(unit);
+
+                if (unit.Alliance == UnitAlliance.Party)
+                    GameManager.AddPartyUnit(unit);
+
                 BattleView.MakeUnitObject(unit);
 
                 FieldManager.GetTile(target).OnTile(unit);
@@ -190,12 +181,34 @@ namespace Common
 
         public static void UnSummon(Unit unit)
         {
+            if(unit.Alliance == UnitAlliance.Party)
+                GameManager.RemovePartyUnit(unit); //죽으면 파티유닛에서 박탈.
             BattleView.DestroyUnitObject(unit);
             BattleManager.instance.AllUnits.Remove(unit);
+            BattleManager.instance.InitializeUnitBuffer();
+
             FieldManager.GetTile(unit.Position).SetUnit(null);
 
             // 유닛 소환해제시 DownStair Button 활성화 검사
             Model.Tiles.DownStair.CheckPartyDownStair();
+
+            //적 전멸 -> (승리조건 검사 목적), 내가 죽음 -> (턴을 다음 유닛으로 넘길 목적)
+            if (GameManager.InBattle)
+            {
+                if(BattleManager.GetUnit(UnitAlliance.Enemy).Count == 0)
+                    BattleController.instance.ThisTurnEnd();
+
+                else if (BattleManager.instance.thisTurnUnit == unit)
+                {
+                    BattleManager.instance.thisTurnUnit = null;
+                    BattleController.instance.ThisTurnEnd();
+                }
+            }
+                
+
+            //비전투시 유닛 표시기 비활성화
+            else if (BattleManager.instance.thisTurnUnit == unit)
+                BattleManager.instance.thisTurnUnit = null;
         }
         public static void UnSummon(Obtainable obtainable)
         {

@@ -118,12 +118,6 @@ public class DungeonEditor : MonoBehaviour
         {
             if (currentUnit == null) return;
             Common.Command.UnSummon(currentUnit);
-            GameManager.RemovePartyUnit(currentUnit); //죽으면 파티유닛에서 박탈.
-            BattleManager.instance.InitializeUnitBuffer();
-            if (GameManager.InBattle)
-                BattleController.instance.ThisTurnEnd();
-            else if (BattleManager.instance.thisTurnUnit == currentUnit)
-                BattleManager.instance.thisTurnUnit = null;
             currentUnit = null;
             InfoView.instance.unitInfo.SetNone();
         });

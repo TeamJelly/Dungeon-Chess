@@ -64,12 +64,14 @@ namespace Model.Managers
 
         public static void AddPartyUnit(Unit unit)
         {
+            if (PartyUnits.Contains(unit)) return;
             PartyUnits.Add(unit);
             unit.Alliance = UnitAlliance.Party;
         }
 
         public static void RemovePartyUnit(Unit unit)
         {
+            if (!PartyUnits.Contains(unit)) return;
             PartyUnits.Remove(unit);
         }
     }
