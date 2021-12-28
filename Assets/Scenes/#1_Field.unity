@@ -93147,7 +93147,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d905948ba14913459eebe13047d5fb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileIndicatorPrefab: {fileID: 0}
+  tileIndicatorPrefab: {fileID: 4462922396805816717, guid: 316a856634a04434c9c6fd0b6d18cffb,
+    type: 3}
   possibleCursorColor: {r: 0, g: 0, b: 1, a: 0.5}
   relatedColor: {r: 0, g: 0.5, b: 1, a: 0.5}
   sklRangeColor: {r: 1, g: 1, b: 0, a: 0.5}
