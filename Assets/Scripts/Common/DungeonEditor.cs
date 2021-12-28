@@ -210,7 +210,13 @@ public class DungeonEditor : MonoBehaviour
         List<Common.ScrollData> list = Common.ScrollUI.MakeDataList(Application.dataPath + "/Resources/Data/Unit/", new[] { "*.json" }, (filePath) =>
         {
             Unit_Serializable u = Common.Data.Load_Unit_Serializable_Data(filePath);
-            currentUnit.Set_From_Serializable(u);
+
+            Vector2Int position = currentTile.position;
+            if (currentUnit != null) Common.Command.UnSummon(currentUnit);
+            currentUnit = new Unit(u);
+            currentUnit.Position = position;
+            Common.Command.Summon(currentUnit, currentUnit.Position);
+
             //이후에 ui 및 hp 바 업데이트, 등 해줘야 함.
         });
         Common.ScrollUI.instance.EnableUI(list);

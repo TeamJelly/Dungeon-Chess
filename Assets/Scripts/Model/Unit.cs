@@ -384,7 +384,6 @@ namespace Model
                 Alliance = (int)Alliance,
                 Species = (int)Species,
                 Modifier = (int)Modifier,
-                Sprite = 1,
                 IsSkilled = IsSkilled,
                 IsMoved = IsMoved,
                 IsFlying = IsFlying,
@@ -403,15 +402,25 @@ namespace Model
             }
             foreach (Skill s in enhancedSkills.Keys)
             {
-                u.enhancedSkills.Add(Data.AllSkills.IndexOf(s), waitingSkills[s]);
+                u.enhancedSkills.Add(Data.AllSkills.IndexOf(s), enhancedSkills[s]);
             }
-            foreach (Effect e in stateEffects)
+            for (int i = 0; i < stateEffects.Count; i++)
             {
-                u.stateEffects.Add(e.ToString());
+                u.stateEffects.Add(stateEffects[i].ToString());
+                u.stateEffects_count.Add(stateEffects[i].TurnCount);
+            }
+
+            foreach(Obtainable o in belongings)
+            {
+                u.belongings.Add(o.ToString());
             }
             return u;
         }
 
+        public Unit(Unit_Serializable u)
+        {
+            Set_From_Serializable(u);
+        }
         public void Set_From_Serializable(Unit_Serializable u)
         {
             Seed = u.Seed;
@@ -440,9 +449,30 @@ namespace Model
             IsMoved = u.IsMoved;
             isFlying = u.IsFlying;
 
+            skills.Clear();
+            waitingSkills.Clear();
+            enhancedSkills.Clear();
+            stateEffects.Clear();
+            belongings.Clear();
+
+            foreach (Skill s in skills)
+            {
+                Common.Command.RemoveSkill(this, s);
+            }
+            foreach (Effect e in stateEffects)
+            {
+                Common.Command.RemoveEffect(this, e);
+            }
+            foreach (Obtainable o in belongings)
+            {
+                Common.Command.RemoveArtifact(this, (Artifact)o);
+            }
+
+
             foreach (int s in u.skills)
             {
-                skills.Add(Data.AllSkills[s]);
+                Common.Command.AddSkill(this, Data.AllSkills[s]);
+                //skills.Add(Data.AllSkills[s]);
             }
             foreach (int s in u.waitingSkills.Keys)
             {
@@ -450,12 +480,23 @@ namespace Model
             }
             foreach (int s in u.enhancedSkills.Keys)
             {
-                enhancedSkills.Add(Data.AllSkills[s], u.waitingSkills[s]);
+                enhancedSkills.Add(Data.AllSkills[s], u.enhancedSkills[s]);
             }
-            foreach (string e in u.stateEffects)
+
+            for (int i = 0; i < u.stateEffects.Count; i++)
             {
-                stateEffects.Add((Effect)Activator.CreateInstance(Type.GetType(e)));
+                if(u.stateEffects_count[i] > 0)
+                    Common.Command.AddEffect(this, (Effect)Activator.CreateInstance(Type.GetType(u.stateEffects[i]),this, u.stateEffects_count[i]));
+                
+                else Common.Command.AddEffect(this, (Effect)Activator.CreateInstance(Type.GetType(u.stateEffects[i]), this));
             }
+
+            foreach (string o in u.belongings)
+            {
+                Common.Command.AddArtifact(this, (Artifact)Activator.CreateInstance(Type.GetType(o)));
+            }
+            Sprite = Data.GetRandomSprite(Species, Seed);
+
         }
     }
 
@@ -481,12 +522,13 @@ namespace Model
         public Dictionary<int, int> waitingSkills = new Dictionary<int, int>();
         public Dictionary<int, int> enhancedSkills = new Dictionary<int, int>();
         public List<string> stateEffects = new List<string>();  // 보유한 상태효과
+        public List<int> stateEffects_count = new List<int>();  // 보유한 상태효과
+        public List<string> belongings = new List<string>();  // 보유한 유물
         public string animatorPath = "";
         public int animationState;
         public int Alliance;
         public int Species;
         public int Modifier;
-        public int Sprite;
         public bool IsSkilled;
         public bool IsMoved;
         public bool IsFlying;
