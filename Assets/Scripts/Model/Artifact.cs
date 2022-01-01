@@ -28,10 +28,10 @@ namespace Model
             set => sprite = value;
         }
         
-        public override void OnOverlap(Effect oldEffect)
-        {
-            // nothing
-        }
+        // public override void OnOverlap()
+        // {
+        //     // nothing
+        // }
 
         public static Dictionary<ArtifactGrade, Color> GradeToColor = new Dictionary<ArtifactGrade, Color>()
         {
@@ -40,15 +40,16 @@ namespace Model
             {ArtifactGrade.Legend , new Color(255/255f,0/255f,132/255f,0.8f)}
         };
 
-        public void BelongTo(Unit unit)
-        {
-            Common.Command.AddArtifact(unit, this);
-            Common.Command.UnSummon(this);
-            //Managers.GameManager.Instance.artifactBag.Add(this);
-            //Debug.Log("GetArtifact");
-            //Clone<Artifacts.Normal.ACoin>();
-        }
+        // public void BelongTo(Unit unit)
+        // {
+        //     Common.Command.AddArtifact(unit, this);
+        //     Common.Command.UnSummon(this);
+        //     //Managers.GameManager.Instance.artifactBag.Add(this);
+        //     //Debug.Log("GetArtifact");
+        //     //Clone<Artifacts.Normal.ACoin>();
+        // }
     }
+
 
     /*
              public Unit Owner { get; set; }

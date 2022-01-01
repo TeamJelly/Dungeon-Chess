@@ -234,7 +234,7 @@ namespace Common
                                   where artifact.Grade == grade
                                   select artifact).ToList();
 
-            Artifact t = list[seed % list.Count].Clone();
+            Artifact t = list[seed % list.Count].Clone() as Artifact;
 
             return t;
         }

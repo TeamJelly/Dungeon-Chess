@@ -189,8 +189,38 @@ public class DungeonEditor : MonoBehaviour
             modifyButton.onClick.AddListener(() =>
             {
                 if (currentUnit == null) return;
-                Artifact copied = artifact.Clone();
+                Artifact copied = artifact.Clone() as Artifact;
                 Common.Command.AddArtifact(currentUnit, copied);
+                InfoView.instance.unitInfo.SetUnit(currentUnit);
+            });
+        }
+
+        foreach (Effect effect in Common.Data.AllEffects)
+        {
+            GameObject gameObject = Instantiate(infoBox, Effects);
+
+            Image image = gameObject.transform.Find("Image").GetComponent<Image>();
+            image.sprite = effect.Sprite;
+            //if (image.color != new Color(0, 0, 0, 0))
+            //image.color = Color.white;
+
+            Rect rect = gameObject.GetComponent<RectTransform>().rect;
+            Effects.sizeDelta = Effects.rect.size + new Vector2(rect.width, 0);
+
+            Button button = gameObject.GetComponent<Button>();
+            button.onClick.AddListener(() => InfoView.Show(effect));
+
+            Button modifyButton = gameObject.transform.Find("ModifyButton").GetComponent<Button>();
+
+            modifyButton.gameObject.SetActive(true);
+            modifyButton.gameObject.GetComponentInChildren<Text>().text = "+";
+            modifyButton.onClick.AddListener(() =>
+            {
+                if (currentUnit == null)
+                    return;
+
+                Effect copied = effect.Clone() as Effect;
+                Common.Command.AddEffect(currentUnit, copied);
                 InfoView.instance.unitInfo.SetUnit(currentUnit);
             });
         }

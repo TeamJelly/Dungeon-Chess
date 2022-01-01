@@ -33,29 +33,16 @@ namespace Model
         //    TurnCount = turnCount;
         //}
 
-        public virtual void OnAdd(Unit owner)
+        public virtual void OnAdd()
         {
-            Owner = owner;
-            Effect oldEffect = null;
-            foreach (var effect in Owner.StateEffects)
-                if (effect.GetType() == this.GetType())
-                {
-                    oldEffect = effect;
-                    break;
-                }
-
-            if (oldEffect != null)
-                OnOverlap(oldEffect);
-
             Debug.Log($"{Owner.Name}에게 {Name} 효과 추가됨");
         }
 
         /// <summary>
         /// 효과의 중복 검사와 중복 처리를 해준다.
         /// </summary>
-        public virtual void OnOverlap(Effect oldEffect)
+        public virtual void OnOverlap()
         {
-            Owner.StateEffects.Remove(oldEffect);
             Debug.Log($"{Owner.Name}에게 {Name} 효과 중복됨");
         }
 
@@ -84,11 +71,11 @@ namespace Model
             return value;
         }
 
-        public Artifact Clone()
+        public object Clone()
         {
             Type t = GetType();
 
-            return Activator.CreateInstance(t) as Artifact;
+            return Activator.CreateInstance(t);
         }
     }
 }

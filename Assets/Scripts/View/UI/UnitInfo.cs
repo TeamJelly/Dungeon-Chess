@@ -150,8 +150,8 @@ namespace View.UI
                     {
                         Common.Command.RemoveArtifact(unit, (Artifact)obtainable);
                         InfoView.instance.unitInfo.SetUnit(unit);
-                        if(unit == BattleManager.instance.thisTurnUnit)
-                            BattleView.UnitControlView.UpdateSkillButtons(unit);
+                        // if(unit == BattleManager.instance.thisTurnUnit)
+                        //     BattleView.UnitControlView.UpdateSkillButtons(unit);
                     });
                 }
 
@@ -170,6 +170,20 @@ namespace View.UI
 
                 button = gameObject.GetComponent<Button>();
                 button.onClick.AddListener(() => InfoView.Show(effect));
+
+                
+                if (DungeonEditor.enabledEditMode)
+                {
+                    Button modifyButton = gameObject.transform.Find("ModifyButton").GetComponent<Button>();
+
+                    modifyButton.gameObject.SetActive(true);
+                    modifyButton.gameObject.GetComponentInChildren<Text>().text = "-";
+                    modifyButton.onClick.AddListener(() =>
+                    {
+                        Common.Command.RemoveEffect(unit, effect);
+                        InfoView.instance.unitInfo.SetUnit(unit);
+                    });
+                }
             }
         }
 

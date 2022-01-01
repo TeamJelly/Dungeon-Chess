@@ -15,10 +15,8 @@ namespace Model.Effects
         // 이미 기절 효과가 발동 됨을 기록한다.
         bool isActivated = false;
 
-        public override void OnAdd(Unit owner)
+        public override void OnAdd()
         {
-            base.OnAdd(owner);
-
             Owner.IsMoved = true;
             Owner.IsSkilled = true;
 

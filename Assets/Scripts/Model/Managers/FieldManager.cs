@@ -91,7 +91,6 @@ namespace Model.Managers
             int width = right - left;
             int up = Mathf.Min(0, pivot.y);
             int down = Mathf.Max(pivot.y + f2.height, 0 + f1.height);
-
             int height = down - up;
 
             // Debug.Log(width + "," + height);
@@ -107,9 +106,6 @@ namespace Model.Managers
                     sb[((y + start_f1.y) * newFieldData.width + (x + start_f1.x)) * 2] = f1.fieldStrData[(y * f1.width + x) * 2];
                     sb[((y + start_f1.y) * newFieldData.width + (x + start_f1.x)) * 2 + 1] = f1.fieldStrData[(y * f1.width + x) * 2 + 1];
                 }
-                    
-
-            
 
             Vector2Int start_f2 = new Vector2Int();
             start_f2.x = Mathf.Max(0, pivot.x);
@@ -134,6 +130,7 @@ namespace Model.Managers
             //     s += newFieldData.fieldStrData[i];
             // }
             // Debug.Log(s);
+
             return newFieldData;
         }
 

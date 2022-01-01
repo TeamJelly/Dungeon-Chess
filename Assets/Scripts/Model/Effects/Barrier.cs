@@ -28,11 +28,9 @@ namespace Model.Effects
             BarrierCount = barrierCount;
         }
 
-        public override void OnAdd(Unit owner)
+        public override void OnAdd()
         {
-            barrierCount = 3;
-            base.OnAdd(owner);
-
+            barrierCount = 1;
             Owner.OnDamage.before.AddListener(BeforeGetDam);
         }
 

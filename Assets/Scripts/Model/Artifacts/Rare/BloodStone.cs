@@ -12,9 +12,8 @@ namespace Model.Artifacts.Rare
             Description = "턴 종료시 체력을 1 회복한다.";
         }
 
-        public override void OnAdd(Unit owner)
+        public override void OnAdd()
         {
-            base.OnAdd(owner);
             Owner.OnTurnEnd.after.AddListener(ArtifactFunction);
         }
 

@@ -14,9 +14,8 @@
             Description = "공격력 +1";
         }
 
-        public override void OnAdd(Unit owner)
+        public override void OnAdd()
         {
-            base.OnAdd(owner);
             Owner.Strength += increasingValue;
         }
 

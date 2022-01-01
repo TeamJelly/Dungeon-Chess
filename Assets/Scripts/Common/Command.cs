@@ -121,19 +121,7 @@ namespace Common
             }
         }
 
-        /// <summary>
-        /// 필드랑 관련없이 유물을 얻는다.
-        /// </summary>
-        /// <param name="target"></param>
-        /// <param name="artifact"></param>
-        public static void AddArtifact(Unit target, Artifact artifact)
-        {
-            //artifact.Owner = target;
-            artifact.OnAdd(target);
-            target.Belongings.Add(artifact);
-            FadeOutTextView.MakeText(target, $"+{artifact.Name}", Color.yellow);
-        }
-
+        
         /// <summary>
         /// 공용 가방에 아이템을 추가한다.
         /// </summary>
@@ -142,6 +130,27 @@ namespace Common
         {
             GameManager.Instance.itemBag.Add(item);
             UnitControlView.instance.UpdateItemButtons();
+        }
+
+
+        /// <summary>
+        /// 필드랑 관련없이 유물을 얻는다.
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="artifact"></param>
+        public static void AddArtifact(Unit target, Artifact artifact)
+        {
+            // 아티펙트의 주인은 target이다.
+            artifact.Owner = target;
+
+            // 추가 시점 능력 호출
+            artifact.OnAdd();
+
+            // 소지품에 추가
+            target.Belongings.Add(artifact);
+
+            // 로그 출력
+            FadeOutTextView.MakeText(target, $"+{artifact.Name}", Color.yellow);
         }
 
         public static void RemoveArtifact(Unit target, Artifact artifact)
@@ -169,9 +178,29 @@ namespace Common
 
         public static void AddEffect(Unit target, Effect effect)
         {
-            effect.OnAdd(target);
-            target.StateEffects.Add(effect);
-            FadeOutTextView.MakeText(target, $"+{effect.Name}", Color.yellow);
+            Effect oldEffect = null;
+            foreach (var stateEffect in target.StateEffects)
+                if (effect.GetType() == stateEffect.GetType())
+                {
+                    oldEffect = stateEffect;
+                    break;
+                }
+
+            // 새로운 Effect를 추가해준다.
+            if (oldEffect == null)
+            {
+                effect.Owner = target;
+                effect.OnAdd();
+                target.StateEffects.Add(effect);
+                FadeOutTextView.MakeText(target, $"+{effect.Name}", Color.yellow);
+            }
+            // oldEffect가 이미 존재한다면 새로 들어온 new effect는 배제하고 oldEffect.OnOverlap 함수로 처리해준다.
+            else
+            {
+                oldEffect.OnOverlap();
+                FadeOutTextView.MakeText(target, $"-+{effect.Name}", Color.yellow);
+            }
+
         }
 
         public static void RemoveEffect(Unit target, Effect effect)
