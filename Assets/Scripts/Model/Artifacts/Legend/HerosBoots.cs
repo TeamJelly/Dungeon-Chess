@@ -8,7 +8,7 @@
         protected int increasingValue = 3;
         public HerosBoots()
         {
-            Name = "영웅의 장화";
+            Name = "Heros Boots";
             Sprite = Common.Data.Colored[87];
             Grade = ArtifactGrade.Legend;
             Description = "이동력 +3";

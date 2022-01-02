@@ -9,7 +9,7 @@
         protected int increasingValue = 2;
         public HerosSword()
         {
-            Name = "영웅의 검";
+            Name = "Heros Sword";
             Sprite = Common.Data.Colored[464];
             Grade = ArtifactGrade.Rare;
             Description = "공격력 +3";

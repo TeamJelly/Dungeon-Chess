@@ -8,7 +8,7 @@
         protected int increasingValue = 3;
         public GoldRing()
         {
-            Name = "금 반지";
+            Name = "Golden Ring";
             Sprite = Common.Data.Colored[332];
             Grade = ArtifactGrade.Legend;
             Description = "치명률 +15%";

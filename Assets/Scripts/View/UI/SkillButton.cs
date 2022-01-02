@@ -1,16 +1,17 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using Model;
+using TMPro;
 
 namespace View.UI
 {
 
     public class SkillButton : PixelButton
     {
-
         public Skill CurrentSkill => currentSkill;
         Skill currentSkill = null;
         Unit currentUnit = null;
+        public TextMeshProUGUI LeftCount;
 
         public void Init()
         {
@@ -47,6 +48,11 @@ namespace View.UI
 
         public override void SetInteractable(bool boolean)
         {
+            if (currentSkill != null && currentUnit.WaitingSkills.ContainsKey(currentSkill))
+                LeftCount.text = (currentUnit.WaitingSkills[currentSkill] + 1).ToString();
+            else
+                LeftCount.text = "";
+
             properties.interactable = boolean && CurrentSkill != null && CurrentSkill.IsUsable(currentUnit);
             FrameImage.color = properties.interactable ? Color.white : Color.grey;
         }

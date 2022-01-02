@@ -5,7 +5,7 @@
         protected int increasingValue;
         public FirstFire()
         {
-            Name = "DecreaseMonsterHP";
+            Name = "First Fire";
             Sprite = Common.Data.Colored[494];
             Grade = ArtifactGrade.Normal;
             Description = "매턴 몬스터 체력 1% 감소";
