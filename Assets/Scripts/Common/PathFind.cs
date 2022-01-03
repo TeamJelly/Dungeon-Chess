@@ -104,10 +104,10 @@ namespace Common
                 }
                 totalPath.Reverse();
 
-                string path = "";
-                foreach (var position in totalPath)
-                    path += position + " > ";                    
-                Debug.Log("path : " + path);
+                // string path = "";
+                // foreach (var position in totalPath)
+                //     path += position + " > ";                    
+                // Debug.Log("path : " + path);
 
                 return totalPath;
             }

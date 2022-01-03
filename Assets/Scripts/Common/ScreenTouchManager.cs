@@ -66,7 +66,7 @@ public class ScreenTouchManager : MonoBehaviour, IDragHandler, IBeginDragHandler
         //Vector2Int selectedTileIdx = new Vector2Int(Mathf.Clamp((int)mousepos.x, 0, 15), Mathf.Clamp((int)mousepos.y, 0, 15));
         Vector2Int tileIdx = new Vector2Int((int)mousepos.x,(int)mousepos.y);
 
-        Debug.Log(tileIdx);
+        // Debug.Log(tileIdx);
 
         if (IndicatorView.TileIndicatorParent.activeSelf)
         {
@@ -121,7 +121,7 @@ public class ScreenTouchManager : MonoBehaviour, IDragHandler, IBeginDragHandler
     IEnumerator longclick = null;
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("pointer down");
+        // Debug.Log("pointer down");
         
         if (longclick == null)
         {

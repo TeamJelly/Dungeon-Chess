@@ -41,6 +41,7 @@ namespace Model
         public int [] ReuseTime { get; set; }
         public AI.Priority Priority { get; set; }
         public TargetType Target { get; set; }
+        public TargetType AITarget { get; set; }
         public RangeType Range { get; set; }
         public string [] APData { get; set; }
         public string [] RPData { get; set; }
@@ -120,6 +121,11 @@ namespace Model
         public virtual List<Vector2Int> GetAvlPositions(Unit user, Vector2Int userPosition)
         {
             List<Vector2Int> positions = new List<Vector2Int>();
+
+            TargetType Target = this.Target;
+
+            if (user.Alliance != UnitAlliance.Party && AITarget != TargetType.NULL)
+                Target = this.AITarget;
 
             foreach (var position in GetUseRange(user, userPosition))
             {

@@ -13,6 +13,7 @@ namespace Model.Skills.Basic
             Name = "Snap Shot";
             Priority = Common.AI.Priority.NULL;
             Target = TargetType.Any;
+            AITarget = TargetType.Hostile;
             Range = RangeType.Fixed;
 
             SpriteNumber = 324;

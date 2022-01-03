@@ -12,7 +12,8 @@ namespace Model.Skills.Basic
         {
             Name = "Scratch";
             Priority = Common.AI.Priority.NULL;
-            Target = TargetType.Hostile;
+            Target = TargetType.Any;
+            AITarget = TargetType.Hostile;
             Range = RangeType.Fixed;
 
             SpriteNumber = 553;

@@ -14,6 +14,7 @@ namespace Model.Skills.Basic
             Name = "Fire Ball";
             Priority = Common.AI.Priority.NULL;
             Target = TargetType.Any;
+            AITarget = TargetType.Hostile;
             Range = RangeType.Fixed;
 
             SpriteNumber = 555;

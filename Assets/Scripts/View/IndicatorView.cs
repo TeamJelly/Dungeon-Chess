@@ -54,7 +54,7 @@ namespace View
                             entry.eventID = EventTriggerType.PointerClick;
                             entry.callback.AddListener((data) =>
                             {
-                                Debug.Log("indicator" + position);
+                                // Debug.Log("indicator" + position);
 
                                 // 현재 눌러놓은 위치와 동일하다면, 
                                 if (curAvlPositions.Contains(position) && curPosition == position)
@@ -149,13 +149,6 @@ namespace View
         {
             List<Vector2Int> RelatedPosition = position != null ? currentSkill.GetRelatePositions(currentUnit, (Vector2Int)position) : new List<Vector2Int>();
             List<Vector2Int> sklUseRange = currentSkill.GetUseRange(currentUnit, currentUnit.Position);
-
-            Debug.Log(sklUseRange.Count);
-
-            foreach (var item in sklUseRange)
-            {
-                Debug.Log(item);
-            }
 
             curPosition = position;
 

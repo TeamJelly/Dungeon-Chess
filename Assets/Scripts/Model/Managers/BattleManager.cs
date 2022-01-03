@@ -76,37 +76,23 @@ namespace Model.Managers
             // 테스팅 적 유닛 소환
             Unit unit = new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1);
             unit.MoveSkill = (Skills.Move.MoveSkill)Common.Data.AllSkills[typeof(Skills.Move.Rook)];//new Skills.Move.Rook();
-            unit.MoveSkill.Priority = Common.AI.Priority.NearFromPartys;
             unit.Mobility = 1;
-            unit.Skills[0].Target = Skill.TargetType.Hostile;
             Common.Command.Summon(unit, new Vector2Int(9, 11));
 
             unit = new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1);
             unit.MoveSkill = (Skills.Move.MoveSkill)Common.Data.AllSkills[typeof(Skills.Move.Pawn)];
-            unit.MoveSkill.Priority = Common.AI.Priority.NearFromPartys;
             unit.Mobility = 1;
-            unit.Skills[0].Target = Skill.TargetType.Hostile;
             Common.Command.Summon(unit, new Vector2Int(9, 12));
 
             unit = new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1);
             unit.MoveSkill = (Skills.Move.MoveSkill)Common.Data.AllSkills[typeof(Skills.Move.Knight)];
-            unit.MoveSkill.Priority = Common.AI.Priority.NearFromPartys;
             unit.Mobility = 1;
-            unit.Skills[0].Target = Skill.TargetType.Hostile;
             Common.Command.Summon(unit, new Vector2Int(10, 11));
 
             unit = new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1);
             unit.MoveSkill = (Skills.Move.MoveSkill)Common.Data.AllSkills[typeof(Skills.Move.Queen)];
-            unit.MoveSkill.Priority = Common.AI.Priority.NearFromPartys;
             unit.Mobility = 1;
-            unit.Skills[0].Target = Skill.TargetType.Hostile;
             Common.Command.Summon(unit, new Vector2Int(10, 12));
-
-            // unit.Skills[0] = new Skills.Basic.Slash();
-            // Common.Command.AddArtifact(unit, new Model.Artifacts.test());
-            // Common.Command.AddArtifact(unit, new Model.Artifacts.test());
-            // Common.Command.AddArtifact(unit, new Model.Artifacts.test());
-            // Common.Command.AddArtifact(unit, new Model.Artifacts.test());
 
             Common.Command.Summon(new Items.Heal(), new Vector2Int(3, 3));
             Common.Command.Damage(unit, 20);
@@ -116,30 +102,16 @@ namespace Model.Managers
                 GameManager.PartyUnits.Add(new Unit(UnitAlliance.Party, UnitSpecies.Human));
                 GameManager.PartyUnits.Add(new Unit(UnitAlliance.Party, UnitSpecies.Human));
 
-                // unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
-                // GameManager.PartyUnits.Add(unit);
-                // unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
-                // GameManager.PartyUnits.Add(unit);
-                // unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
-                // GameManager.PartyUnits.Add(unit);
-                // unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
-                // GameManager.PartyUnits.Add(unit);
-                // unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
-                // GameManager.PartyUnits.Add(unit);
-                // unit = new Unit(UnitAlliance.Party, UnitSpecies.Human){Mobility = 2};
-                // GameManager.PartyUnits.Add(unit);
-                //GameManager.LeaderUnit = GameManager.PartyUnits[0];
-
                 unit = new Unit(UnitAlliance.Party, UnitSpecies.Human);
                 GameManager.PartyUnits.Add(unit);
-                Common.Command.AddArtifact(unit, Common.Data.GetRandomArtifact(0, Artifact.ArtifactGrade.Normal));
-                Common.Command.AddArtifact(unit, Common.Data.GetRandomArtifact(1, Artifact.ArtifactGrade.Normal));
-                Common.Command.AddArtifact(unit, Common.Data.GetRandomArtifact(2, Artifact.ArtifactGrade.Normal));
-                Common.Command.AddArtifact(unit, Common.Data.GetRandomArtifact(3, Artifact.ArtifactGrade.Normal));
-                Common.Command.AddArtifact(unit, Common.Data.GetRandomArtifact(4, Artifact.ArtifactGrade.Normal));
+                // Common.Command.AddArtifact(unit, Common.Data.GetRandomArtifact(0, Artifact.ArtifactGrade.Normal));
+                // Common.Command.AddArtifact(unit, Common.Data.GetRandomArtifact(1, Artifact.ArtifactGrade.Normal));
+                // Common.Command.AddArtifact(unit, Common.Data.GetRandomArtifact(2, Artifact.ArtifactGrade.Normal));
+                // Common.Command.AddArtifact(unit, Common.Data.GetRandomArtifact(3, Artifact.ArtifactGrade.Normal));
+                // Common.Command.AddArtifact(unit, Common.Data.GetRandomArtifact(4, Artifact.ArtifactGrade.Normal));
 
-                Common.Command.AddEffect(unit,new Model.Effects.Poison());
-                Common.Command.AddEffect(unit,new Model.Effects.Regeneration());
+                // Common.Command.AddEffect(unit,new Model.Effects.Poison());
+                // Common.Command.AddEffect(unit,new Model.Effects.Regeneration());
             }
 
             BattleController.SetBattleMode(true);
@@ -149,12 +121,6 @@ namespace Model.Managers
 
             BattleView.TurnEndButton.gameObject.SetActive(false);
             BattleView.SummonPartyUnits();// 파티 유닛 최초 소환            
-            
-            // Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(6, 6));
-            // Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(10, 5));
-            Common.Command.Summon(new Model.Artifacts.Rare.BloodStone(), new Vector2Int(6, 8));
-            // Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(9, 9));
-            // Common.Command.Summon(new Model.Artifacts.A000_Test1(), new Vector2Int(6, 4));
 
             // 모든 처리가 끝난 뒤에 애니메이션 재생 가능
             FadeOutTextView.PlayText();

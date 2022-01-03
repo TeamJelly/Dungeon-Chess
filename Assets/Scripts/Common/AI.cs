@@ -21,8 +21,8 @@ namespace Common
             NearFromMe,             // 나에게 가까운 곳을 우선으로 사용
             FarFromMe,              // 나에게 먼곳을 우선으로 사용
 
-            BiggerCurHP,        // 현재HP가 높은 유닛을 우선으로 사용
-            SmallerCurHP,       // 현재HP가 낮은 유닛을 우선으로 사용
+            BiggerCurHP,            // 현재HP가 높은 유닛을 우선으로 사용
+            SmallerCurHP,           // 현재HP가 낮은 유닛을 우선으로 사용
 
             NearFromPartys,         // 파티들에게 가까운 곳을 우선으로 사용
             FarFromPartys,          // 파티들에게 먼곳을 우선으로 사용

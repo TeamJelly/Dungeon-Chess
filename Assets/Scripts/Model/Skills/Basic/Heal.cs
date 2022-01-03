@@ -11,8 +11,9 @@ namespace Model.Skills.Basic
         public Heal() : base()
         {
             Name = "Heal";
-            Priority = Common.AI.Priority.NULL;
+            Priority = Common.AI.Priority.SmallerCurHP;
             Target = TargetType.Any;
+            AITarget = TargetType.Friendly;
             Range = RangeType.Fixed;
 
             SpriteNumber = 563;

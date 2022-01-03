@@ -11,8 +11,10 @@ namespace Model.Skills.Move
         {
             Category = SkillCategory.Move;
             Target = TargetType.Posable;
-            Range = RangeType.Fixed;
+            AITarget = TargetType.Posable;
+            Priority = Common.AI.Priority.NearFromPartys;
 
+            Range = RangeType.Fixed;
             ReuseTime = new int[1] { 0 };            
         }
 
