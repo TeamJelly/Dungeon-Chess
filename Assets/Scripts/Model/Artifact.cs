@@ -14,19 +14,18 @@ namespace Model
         public int Price { get; set; }
         public override string Type => "Artifact";
 
-        public Sprite sprite;
-
         public Artifact() { }
-        public override Sprite Sprite { 
-            get 
-            {
-                if (Color != new Color(0,0,0,0))
-                    return Common.Data.MakeOutline(sprite, Color, Artifact.GradeToColor[Grade]); 
-                else
-                    return Common.Data.MakeOutline(sprite, Artifact.GradeToColor[Grade]);
-            }            
-            set => sprite = value;
-        }
+
+        // public override Sprite Sprite { 
+        //     get 
+        //     {
+        //         if (Color != new Color(0,0,0,0))
+        //             return Common.Data.MakeOutline(sprite, Color, Artifact.GradeToColor[Grade]); 
+        //         else
+        //             return Common.Data.MakeOutline(sprite, Artifact.GradeToColor[Grade]);
+        //     }            
+        //     set => sprite = value;
+        // }
         
         // public override void OnOverlap()
         // {

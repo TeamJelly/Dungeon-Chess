@@ -8,10 +8,13 @@
         protected int increasingValue = 2;
         public NecklaceOfLife()
         {
-            Name = "생명의 목걸이";
-            Sprite = Common.Data.Colored[427];
+            Name = "Necklace Of Life";
             Grade = ArtifactGrade.Rare;
             Description = "행동력 +2";
+
+            SpriteNumber = 427;
+            InColor = UnityEngine.Color.red;
+            OutColor = UnityEngine.Color.clear;
         }
 
         public override void OnAdd()

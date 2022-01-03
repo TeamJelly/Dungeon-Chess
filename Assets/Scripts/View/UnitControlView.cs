@@ -65,7 +65,6 @@ namespace View
             for (int i = 0; i < 3 && i < unit.Skills.Count; i++)
                 skillButtons[i+1].SetSkill(unit, unit.Skills[i]);
           
-
             RefreshButtons();
         }
 

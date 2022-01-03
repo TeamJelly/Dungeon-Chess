@@ -20,8 +20,6 @@ namespace View.UI
 
         public GameObject infoBox;
 
-
-
         public void SetNone()
         {
             Name.text = "No Unit";
@@ -67,8 +65,6 @@ namespace View.UI
 
             Image image = gameObject.transform.Find("Image").GetComponent<Image>();
             image.sprite = unit.MoveSkill.Sprite;
-            if (image.color != new Color(0, 0, 0, 0))
-                image.color = unit.MoveSkill.Color;
 
             Rect rect = gameObject.GetComponent<RectTransform>().rect;
             Skills.sizeDelta = Skills.rect.size + new Vector2(rect.width, 0);
@@ -100,8 +96,8 @@ namespace View.UI
 
                 image = gameObject.transform.Find("Image").GetComponent<Image>();
                 image.sprite = skill.Sprite;
-                if (image.color != new Color(0, 0, 0, 0))
-                    image.color = skill.Color;
+                // if (image.color != new Color(0, 0, 0, 0))
+                //     image.color = skill.Color;
 
                 rect = gameObject.GetComponent<RectTransform>().rect;
                 Skills.sizeDelta = Skills.rect.size + new Vector2(rect.width, 0);

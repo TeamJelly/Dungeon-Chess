@@ -8,10 +8,13 @@
         protected int increasingValue = 1;
         public LeatherBoots()
         {
-            Name = "가죽 장화";
-            Sprite = Common.Data.Colored[39];
+            Name = "Leather Boots";
             Grade = ArtifactGrade.Normal;
             Description = "이동력 +1";
+
+            SpriteNumber = 39;
+            InColor = UnityEngine.Color.gray;
+            OutColor = UnityEngine.Color.clear;
         }
 
         public override void OnAdd()

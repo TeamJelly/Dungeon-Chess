@@ -11,10 +11,14 @@ namespace Model.Effects
 
         public int Damage { get => damage; }
 
-        public Poison() : base()
+        public Poison()
         {
-            Name = "독";
+            Name = "Poison";
             Description = $"턴을 시작할때 체력 10을 차감합니다. 남은 턴 : {TurnCount}";
+
+            SpriteNumber = 562;
+            InColor = Color.magenta;
+            OutColor = Color.clear;
         }
 
         public override void OnAdd()

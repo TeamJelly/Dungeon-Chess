@@ -6,10 +6,14 @@ namespace Model.Effects
 {
     public class Stun : Effect
     {
-        public Stun() : base()
+        public Stun()
         {
-            Name = "기절";
+            Name = "Stun";
             Description = "유닛이 한 턴동안 행동하지 못합니다.";
+
+            SpriteNumber = 454;
+            InColor = Color.gray;
+            OutColor = Color.clear;
         }
 
         // 이미 기절 효과가 발동 됨을 기록한다.

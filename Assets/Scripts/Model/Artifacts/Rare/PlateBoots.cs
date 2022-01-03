@@ -8,10 +8,13 @@
         protected int increasingValue = 2;
         public PlateBoots()
         {
-            Name = "판금 장화";
-            Sprite = Common.Data.Colored[39];
+            Name = "Plate Boots";
             Grade = ArtifactGrade.Rare;
             Description = "이동력 +2";
+
+            SpriteNumber = 39;
+            InColor = UnityEngine.Color.gray;
+            OutColor = UnityEngine.Color.clear;
         }
 
         public override void OnAdd()

@@ -8,10 +8,13 @@
         protected int increasingValue = 15;
         public LegenaryApple()
         {
-            Name = "전설의 사과";
-            Sprite = Common.Data.Colored[896];
+            Name = "Legenary Apple";
             Grade = ArtifactGrade.Legend;
             Description = "최대체력 +15";
+
+            SpriteNumber = 896;
+            InColor = UnityEngine.Color.yellow;
+            OutColor = UnityEngine.Color.clear;
         }
 
         public override void OnAdd()

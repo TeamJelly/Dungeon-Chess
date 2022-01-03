@@ -9,9 +9,12 @@
         public HerosBoots()
         {
             Name = "Heros Boots";
-            Sprite = Common.Data.Colored[87];
             Grade = ArtifactGrade.Legend;
             Description = "이동력 +3";
+
+            SpriteNumber = 87;
+            InColor = UnityEngine.Color.cyan;
+            OutColor = UnityEngine.Color.clear;
         }
 
         public override void OnAdd()

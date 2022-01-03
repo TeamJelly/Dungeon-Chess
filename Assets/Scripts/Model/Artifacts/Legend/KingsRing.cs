@@ -5,10 +5,13 @@
         protected int increasingValue;
         public KingsRing()
         {
-            Name = "왕의 반지";
-            Sprite = Common.Data.Colored[333];
-            Grade = ArtifactGrade.Rare;
+            Name = "King's Ring";
+            Grade = ArtifactGrade.Legend;
             Description = "상점 물품을 50% 가격으로 구매한다.";
+
+            SpriteNumber = 333;
+            InColor = UnityEngine.Color.yellow;
+            OutColor = UnityEngine.Color.clear;
         }
     }
 }

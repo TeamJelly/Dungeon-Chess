@@ -11,8 +11,10 @@ namespace Model.Skills.Move
         {
             Name = "Pawn's Move";
 
-            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/colored_transparent_packed_1049");
-            Color = Color.white;
+            SpriteNumber = 1049;
+            InColor = Color.white;
+            OutColor = Color.clear;
+
             Description = "폰의 움직임으로 이동한다.";
 
             species.Add(UnitSpecies.Human);

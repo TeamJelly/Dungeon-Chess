@@ -45,10 +45,26 @@ namespace Model
         public string [] APData { get; set; }
         public string [] RPData { get; set; }
         public List<UnitSpecies> species = new List<UnitSpecies>();
-        public Sprite Sprite { get; set; }
-        public Color Color { get; set; }
+        
+        public Sprite Sprite
+        {
+            get
+            {
+                if (sprite == null)
+                    sprite = Data.MakeSprite(SpriteNumber, InColor, OutColor);
+                return sprite;
+            }
+            // set => sprite = value;
+        }
+
+        private Sprite sprite;
+        public int SpriteNumber { get; set; }
+        public Color InColor { get; set; }
+        public Color OutColor { get; set; }
+        
         public string Description { get; set; }
         public string Type => "Skill";
+
 
         /// <summary>
         /// 유닛 레벨을 스킬레벨로 전환시켜준다.

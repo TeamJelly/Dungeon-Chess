@@ -11,8 +11,10 @@ namespace Model.Skills.Move
         {
             Name = "Knight's Move";
 
-            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/colored_transparent_packed_1054");
-            Color = Color.white;
+            SpriteNumber = 1054;
+            InColor = Color.white;
+            OutColor = Color.clear;
+
             Description = "나이트의 움직임으로 이동한다.";
 
             species.Add(UnitSpecies.Human);

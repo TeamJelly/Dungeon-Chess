@@ -15,8 +15,9 @@ namespace Model.Skills.Basic
             Target = TargetType.Any;
             Range = RangeType.Fixed;
 
-            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/monochrome_transparent_packed_563");
-            Color = Color.green;
+            SpriteNumber = 563;
+            InColor = Color.green;
+            OutColor = Color.clear;
 
             ReuseTime = new int[4] { 2, 2, 1, 1 };
             APData = new string[4]

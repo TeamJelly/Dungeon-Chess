@@ -6,11 +6,14 @@ namespace Model.Effects
 {
     public class Fast : Effect
     {
-        public Fast() : base()
-        {
-            
-            Name = "신속";
+        public Fast()
+        {   
+            Name = "Fast";
             Description = $"이동거리가 늘어납니다. 남은 턴 : {TurnCount}";
+
+            SpriteNumber = 1040;
+            InColor = Color.blue;
+            OutColor = Color.clear;
         }
        
         public override void OnAdd()

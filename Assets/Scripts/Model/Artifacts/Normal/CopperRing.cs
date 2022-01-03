@@ -8,10 +8,13 @@
         protected int increasingValue = 1;
         public CopperRing()
         {
-            Name = "구리 반지";
-            Sprite = Common.Data.Colored[330];
+            Name = "Copper Ring";
             Grade = ArtifactGrade.Normal;
             Description = "치명률 +5%";
+
+            SpriteNumber = 330;
+            InColor = UnityEngine.Color.gray;
+            OutColor = UnityEngine.Color.clear;
         }
 
         public override void OnAdd()

@@ -8,10 +8,13 @@
         protected int increasingValue = 1;
         public NecklaceOfNature()
         {
-            Name = "자연의 목걸이";
-            Sprite = Common.Data.Colored[330];
+            Name = "Necklace Of Nature";
             Grade = ArtifactGrade.Normal;
             Description = "행동력 +1";
+
+            SpriteNumber = 330;
+            InColor = UnityEngine.Color.green;
+            OutColor = UnityEngine.Color.clear;
         }
 
         public override void OnAdd()

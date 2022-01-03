@@ -6,9 +6,12 @@
         public FirstFire()
         {
             Name = "First Fire";
-            Sprite = Common.Data.Colored[494];
-            Grade = ArtifactGrade.Normal;
+            Grade = ArtifactGrade.Legend;
             Description = "매턴 몬스터 체력 1% 감소";
+
+            SpriteNumber = 662;
+            InColor = UnityEngine.Color.yellow;
+            OutColor = UnityEngine.Color.clear;
         }
     }
 }

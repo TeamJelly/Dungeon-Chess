@@ -9,10 +9,12 @@ namespace Model.Items
     {
         public Key()
         {
-            Name = "열쇠";
-            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/colored_transparent_packed_559");
+            Name = "Key";
             Target = TargetType.Any;
-            Color = Color.white;
+
+            SpriteNumber = 559;
+            InColor = Color.white;
+            OutColor = Color.clear;
             //Debug.Log("!");
         }
 

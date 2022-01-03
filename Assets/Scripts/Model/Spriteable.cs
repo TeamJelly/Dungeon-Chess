@@ -5,5 +5,7 @@ using UnityEngine;
 public interface Spriteable
 {
     Sprite Sprite {get;}
-    Color Color {get;}
+    int SpriteNumber {get;}
+    Color InColor {get;}
+    Color OutColor {get;}
 }

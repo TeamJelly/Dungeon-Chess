@@ -7,11 +7,9 @@ namespace Model
     {
         public Unit Owner { get; set; }
         public string Name { get; set; }
-        public virtual Sprite Sprite { get; set; }
-        public Color Color {get; set;}
         public string Description { get; set; }
-
         private int turnCount;
+
         public int TurnCount
         {
             get => turnCount;
@@ -19,6 +17,22 @@ namespace Model
         }
 
         public virtual string Type => "Effect";
+
+        public Sprite Sprite
+        {
+            get
+            {
+                if (sprite == null)
+                    sprite = Common.Data.MakeSprite(SpriteNumber, InColor, OutColor);
+                return sprite;
+            }
+            // set => sprite = value;
+        }
+
+        private Sprite sprite;
+        public int SpriteNumber { get; set; }
+        public Color InColor { get; set; }
+        public Color OutColor { get; set; }
 
         //public Effect()
         //{

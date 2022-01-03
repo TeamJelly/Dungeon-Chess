@@ -12,7 +12,7 @@ namespace Model.Artifacts
         public test()
         {
             Name = "test";
-            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/colored_transparent_packed_31");
+            // Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/colored_transparent_packed_31");
             Grade = ArtifactGrade.Normal;
         }
 

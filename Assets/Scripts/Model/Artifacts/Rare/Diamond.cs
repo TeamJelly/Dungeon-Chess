@@ -5,10 +5,13 @@
         protected int increasingValue;
         public Diamond()
         {
-            Name = "다이아몬드";
-            Sprite = Common.Data.Colored[214];
+            Name = "Diamond";
             Grade = ArtifactGrade.Rare;
             Description = "골드 +200";
+
+            SpriteNumber = 214;
+            InColor = UnityEngine.Color.cyan;
+            OutColor = UnityEngine.Color.clear;
         }
         bool ArtifactFunction(bool b)
         {

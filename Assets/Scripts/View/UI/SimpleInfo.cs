@@ -15,18 +15,19 @@ namespace View.UI
 
         public void Set(Infoable infoable)
         {
-            Set(infoable.Name, infoable.Type, infoable.Sprite, infoable.Color, infoable.Description);
+            Set(infoable.Name, infoable.Type, infoable.Sprite, infoable.Description);
         }
-        public void Set(string name, string type, Sprite sprite, Color color, string description)
+
+        public void Set(string name, string type, Sprite sprite, string description)
         {
             Name.text = name;
             Type.text = type;
-            
+
             Image.sprite = sprite;
-            if (color != new Color(0,0,0,0))
-                Image.color = color;
-            else
-                Image.color = Color.white;
+            // if (color != new Color(0,0,0,0))
+            //     Image.color = color;
+            // else
+            Image.color = Color.white;
 
             Description.text = description;
         }

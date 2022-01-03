@@ -3,15 +3,18 @@
     /// <summary>
     /// 공격력 증가 소 + 1
     /// </summary>
-    public class WoodenClub : Artifact
+    public class WoodClub : Artifact
     {
         protected int increasingValue = 1;
-        public WoodenClub()
+        public WoodClub()
         {
-            Name = "나무 몽둥이";
-            Sprite = Common.Data.Colored[127];
+            Name = "Wood Club";
             Grade = ArtifactGrade.Normal;
             Description = "공격력 +1";
+
+            SpriteNumber = 127;
+            InColor = UnityEngine.Color.gray;
+            OutColor = UnityEngine.Color.clear;
         }
 
         public override void OnAdd()

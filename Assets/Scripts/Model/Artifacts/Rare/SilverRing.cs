@@ -8,10 +8,13 @@
         protected int increasingValue = 2;
         public SilverRing()
         {
-            Name = "은 반지";
-            Sprite = Common.Data.Colored[331];
+            Name = "Silver Ring";
             Grade = ArtifactGrade.Rare;
             Description = "치명률 +10%";
+
+            SpriteNumber = 331;
+            InColor = UnityEngine.Color.gray;
+            OutColor = UnityEngine.Color.clear;
         }
 
         public override void OnAdd()

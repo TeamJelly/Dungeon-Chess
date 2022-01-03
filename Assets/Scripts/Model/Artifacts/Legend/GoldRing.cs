@@ -9,9 +9,12 @@
         public GoldRing()
         {
             Name = "Golden Ring";
-            Sprite = Common.Data.Colored[332];
-            Grade = ArtifactGrade.Legend;
+            Grade = ArtifactGrade.Legend;            
             Description = "치명률 +15%";
+
+            SpriteNumber = 332;
+            InColor = UnityEngine.Color.yellow;
+            OutColor = UnityEngine.Color.clear;
         }
 
         public override void OnAdd()

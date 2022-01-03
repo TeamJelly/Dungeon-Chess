@@ -138,8 +138,6 @@ public class DungeonEditor : MonoBehaviour
 
             Image image = gameObject.transform.Find("Image").GetComponent<Image>();
             image.sprite = skill.Sprite;
-            if (image.color != new Color(0, 0, 0, 0))
-                image.color = skill.Color;
 
             Rect rect = gameObject.GetComponent<RectTransform>().rect;
             Skills.sizeDelta = Skills.rect.size + new Vector2(rect.width, 0);

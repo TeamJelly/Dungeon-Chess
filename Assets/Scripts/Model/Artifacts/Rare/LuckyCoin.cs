@@ -5,10 +5,13 @@
         protected int increasingValue;
         public LuckyCoin()
         {
-            Name = "행운의 동전";
-            Sprite = Common.Data.Colored[184];
+            Name = "Lucky Coin";
             Grade = ArtifactGrade.Rare;
             Description = "돈 획득량 +1%";
+
+            SpriteNumber = 184;
+            InColor = UnityEngine.Color.yellow;
+            OutColor = UnityEngine.Color.clear;
         }
         bool ArtifactFunction(bool b)
         {

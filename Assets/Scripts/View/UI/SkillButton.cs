@@ -38,12 +38,12 @@ namespace View.UI
             if (skill == null)
             {
                 MainImage.sprite = null; // 나중에 빈 이미지로 교체하기
-                MainImage.color = Color.black;
+                MainImage.color = Color.clear;
                 return;
             }
 
             MainImage.sprite = CurrentSkill.Sprite;
-            MainImage.color = currentSkill.Color;
+            MainImage.color = Color.white;
         }
 
         public override void SetInteractable(bool boolean)

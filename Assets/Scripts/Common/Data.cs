@@ -393,6 +393,7 @@ namespace Common
                 return colored_transparent_packed;
             }
         }
+
         public static Sprite[] Monochrome
         {
             get
@@ -409,7 +410,7 @@ namespace Common
             return Colored[SpeciesToSpriteNumbers[unitSpecies][rand]];
         }
 
-        private static Dictionary<UnitSpecies, List<int>> SpeciesToSpriteNumbers = new Dictionary<UnitSpecies, List<int>>
+        public static Dictionary<UnitSpecies, List<int>> SpeciesToSpriteNumbers = new Dictionary<UnitSpecies, List<int>>
         {
             {
                 UnitSpecies.Human,
@@ -451,28 +452,59 @@ namespace Common
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static Sprite LoadSprite(string path)
-        {
-            Sprite sprite;
-            if (path == "")
-                sprite = Resources.Load<Sprite>("1bitpack_kenney_1/Tilesheet/X");
-            else if (path.Contains("1bitpack_kenney_1/Tilesheet/colored_transparent_packed"))
-            {
-                string[] splited = path.Split('_');
-                int spriteNumber = int.Parse(splited[splited.Length - 1]);
-                sprite = Colored[spriteNumber];
-            }
-            else if (path.Contains("1bitpack_kenney_1/Tilesheet/monochrome_transparent_packed"))
-            {
-                string[] splited = path.Split('_');
-                int spriteNumber = int.Parse(splited[splited.Length - 1]);
-                sprite = Monochrome[spriteNumber];
-            }
-            else
-                sprite = Resources.Load<Sprite>(path);
-            return sprite;
-        }
+        // public static Sprite LoadSprite(string path)
+        // {
+        //     Sprite sprite;
+        //     if (path == "")
+        //         sprite = Resources.Load<Sprite>("1bitpack_kenney_1/Tilesheet/X");
+        //     else if (path.Contains("1bitpack_kenney_1/Tilesheet/colored_transparent_packed"))
+        //     {
+        //         string[] splited = path.Split('_');
+        //         int spriteNumber = int.Parse(splited[splited.Length - 1]);
+        //         sprite = Colored[spriteNumber];
+        //     }
+        //     else if (path.Contains("1bitpack_kenney_1/Tilesheet/monochrome_transparent_packed"))
+        //     {
+        //         string[] splited = path.Split('_');
+        //         int spriteNumber = int.Parse(splited[splited.Length - 1]);
+        //         sprite = Monochrome[spriteNumber];
+        //     }
+        //     else
+        //         sprite = Resources.Load<Sprite>(path);
+        //     return sprite;
+        // }
 
+
+        /// <summary>
+        /// 스프라이트 번호로 부터 모노크롬 이미지를 받아 안쪽을 inColor, 바깥쪽을 outColor로 칠해준다.
+        /// </summary>
+        /// <param name="spriteNumber">스프라이트 번호</param>
+        /// <param name="inColor">안쪽 색</param>
+        /// <param name="outColor">바깥쪽 색</param>
+        /// <returns></returns>
+        public static Sprite MakeSprite(int spriteNumber, Color inColor, Color outColor)
+        {
+            Texture2D old = Monochrome[spriteNumber].texture;
+            Rect rect = Monochrome[spriteNumber].rect;
+
+            Texture2D new_texture = new Texture2D(16, 16);
+            new_texture.filterMode = FilterMode.Point;
+
+            for (int y = 0; y < 16; y++)
+                for (int x = 0; x < 16; x++)
+                {
+                    Color color = old.GetPixel((int)rect.x + x , (int)rect.y + y);
+                    if (color.a == 0)
+                        new_texture.SetPixel(x, y, outColor);
+                    else
+                        new_texture.SetPixel(x, y, inColor);
+                }
+
+            new_texture.Apply();
+            rect = new Rect(0, 0, new_texture.width, new_texture.height);
+
+            return Sprite.Create(new_texture, rect, new Vector2(0.5f, 0.5f), 16);
+        }
         
         public static Sprite MakeOutline(Sprite value, Color outline)
         {

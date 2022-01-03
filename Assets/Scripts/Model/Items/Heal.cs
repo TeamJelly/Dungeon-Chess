@@ -6,10 +6,12 @@ namespace Model.Items
     {
         public Heal()
         {
-            Name = "힐 포션";
-            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/monochrome_transparent_packed_705");
-            Color = UnityEngine.Color.green;
+            Name = "Heal Potion";
             Target = TargetType.Any;
+
+            SpriteNumber = 705;
+            InColor = UnityEngine.Color.green;
+            OutColor = UnityEngine.Color.clear;
         }
 
         public override void Use(Tile tile)

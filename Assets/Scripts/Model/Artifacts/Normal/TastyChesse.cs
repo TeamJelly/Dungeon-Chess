@@ -8,10 +8,13 @@
         protected int increasingValue = 5;
         public TastyChesse()
         {
-            Name = "맛좋은 치즈";
-            Sprite = Common.Data.Colored[801];
+            Name = "Tasty Chesse";
             Grade = ArtifactGrade.Normal;
             Description = "최대체력 +5";
+
+            SpriteNumber = 801;
+            InColor = UnityEngine.Color.yellow;
+            OutColor = UnityEngine.Color.clear;
         }
 
         public override void OnAdd()

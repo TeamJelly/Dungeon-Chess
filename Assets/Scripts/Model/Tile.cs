@@ -24,8 +24,6 @@ namespace Model
     {
         public string Name { get => category.ToString() + " tile"; }
 
-        public Sprite Sprite { get => Model.Managers.FieldManager.instance.tileMap.GetSprite(new Vector3Int(position.x, position.y, 0)); }
-
         public TileBase TileBase { get; set; }
         
         public TileCategory category;
@@ -35,6 +33,14 @@ namespace Model
         public string Description { get; set; }
 
         public string Type => "Tile";
+
+        public Sprite Sprite { get => Model.Managers.FieldManager.instance.tileMap.GetSprite(new Vector3Int(position.x, position.y, 0)); }
+
+        public int SpriteNumber => throw new System.NotImplementedException();
+
+        public Color InColor => throw new System.NotImplementedException();
+
+        public Color OutColor => throw new System.NotImplementedException();
 
         public Vector2Int position;
 

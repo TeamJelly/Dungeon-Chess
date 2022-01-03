@@ -232,8 +232,8 @@ namespace View
             else 
             {
                 spriteRenderer.sprite = ob.Sprite;
-                if (ob.Color != new Color(0,0,0,0))
-                    spriteRenderer.color = ob.Color;
+                // if (ob.Color != new Color(0,0,0,0))
+                //     spriteRenderer.color = ob.Color;
             }
 
             ObtainableObjects.Add(ob, obObj);

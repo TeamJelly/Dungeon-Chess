@@ -8,10 +8,13 @@
         protected int increasingValue = 100;
         public ACoin()
         {
-            Name = "동전 한 닢";
-            Sprite = Common.Data.Colored[213];
+            Name = "A Coin";
             Grade = ArtifactGrade.Normal;
             Description = "골드 +100";
+
+            SpriteNumber = 213;
+            InColor = UnityEngine.Color.yellow;
+            OutColor = UnityEngine.Color.clear;
         }
     }
 }

@@ -10,9 +10,12 @@
         public HerosSword()
         {
             Name = "Heros Sword";
-            Sprite = Common.Data.Colored[464];
-            Grade = ArtifactGrade.Rare;
+            Grade = ArtifactGrade.Legend;
             Description = "공격력 +3";
+
+            SpriteNumber = 464;
+            InColor = UnityEngine.Color.cyan;
+            OutColor = UnityEngine.Color.clear;
         }
 
         public override void OnAdd()

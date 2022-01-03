@@ -8,10 +8,14 @@ namespace Model.Effects
 {
     public class Bind : Effect
     {
-        public Bind() : base()
+        public Bind()
         {
-            Name = "속박";
+            Name = "Bind";
             Description = "유닛이 한 턴동안 움직이지 못합니다.";
+
+            SpriteNumber = 1044;
+            InColor = Color.red;
+            OutColor = Color.clear;
         }
 
         // 이미 기절 효과가 발동 됨을 기록한다.

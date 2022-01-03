@@ -4,11 +4,15 @@
     {
         public NecklaceOfExperience()
         {
-            Name = "경험의 목걸이";
-            Sprite = Common.Data.Colored[428];
+            Name = "Necklace Of Experience";
             Grade = ArtifactGrade.Normal;
             Description = "경험치 획득량 +10%";
+
+            SpriteNumber = 428;
+            InColor = UnityEngine.Color.yellow;
+            OutColor = UnityEngine.Color.clear;
         }
+
         bool ArtifactFunction(bool b)
         {
             //기능 구현

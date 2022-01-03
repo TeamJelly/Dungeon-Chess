@@ -65,7 +65,9 @@ namespace Model
             Modifier = (UnitModifier)(Seed % 6);
 
             Name = Data.GetRandomName(Seed);
-            Sprite = Data.GetRandomSprite(Species, Seed);
+            SpriteNumber = Data.SpeciesToSpriteNumbers[Species][Seed % Data.SpeciesToSpriteNumbers[Species].Count];
+            InColor = new Color(0.9f, 0.9f, 0.9f);
+            OutColor = Color.clear;
 
             MoveSkill = Data.GetRandomSkill(Seed, species, SkillCategory.Move) as Model.Skills.Move.MoveSkill;
             Skills.Add(Data.GetRandomSkill(Seed, species, SkillCategory.Basic));
@@ -154,7 +156,22 @@ namespace Model
         public UnitModifier Modifier { get; set; }      // 수식어
 
         // protected string spritePath;
-        public Sprite Sprite { get; set; }
+        public Sprite Sprite
+        {
+            get
+            {
+                if (sprite == null)
+                    sprite = Common.Data.MakeSprite(SpriteNumber, InColor, OutColor);
+                return sprite;
+            }
+            // set => sprite = value;
+        }
+
+        private Sprite sprite;
+        public int SpriteNumber { get; set; }
+        public Color InColor { get; set; }
+        public Color OutColor { get; set; }
+
 
         // 유닛 이벤트 모음
         public TimeEventListener<bool> OnBattleStart = new TimeEventListener<bool>();
@@ -356,9 +373,6 @@ namespace Model
 
         private bool isFlying = false;
         public bool IsFlying { get => isFlying; set => isFlying = value; }
-
-        public Color Color => throw new NotImplementedException();
-
         public Unit_Serializable Get_Serializable()
         {
             Unit_Serializable u = new Unit_Serializable
@@ -387,9 +401,18 @@ namespace Model
                 IsSkilled = IsSkilled,
                 IsMoved = IsMoved,
                 IsFlying = IsFlying,
-                //ColorR = Color.r,
-                //ColorG = Color.g,
-                //ColorB = Color.b
+                
+                SpriteNumber = SpriteNumber,
+                
+                InColorR = InColor.r,
+                InColorG = InColor.g,
+                InColorB = InColor.b,
+                InColorA = InColor.a, 
+
+                OutColorR = OutColor.r,
+                OutColorG = OutColor.g,
+                OutColorB = OutColor.b,
+                OutColorA = OutColor.a,
             };
 
             foreach(Skill s in skills)
@@ -449,6 +472,10 @@ namespace Model
             IsMoved = u.IsMoved;
             isFlying = u.IsFlying;
 
+            SpriteNumber = u.SpriteNumber;
+            InColor = new Color(u.InColorR, u.InColorG, u.InColorB, u.InColorA);
+            OutColor = new Color(u.OutColorR, u.OutColorG, u.OutColorB, u.OutColorA);
+
             skills.Clear();
             waitingSkills.Clear();
             enhancedSkills.Clear();
@@ -492,8 +519,6 @@ namespace Model
             {
                 Common.Command.AddArtifact(this, (Artifact)Activator.CreateInstance(Type.GetType(o)));
             }
-            Sprite = Data.GetRandomSprite(Species, Seed);
-
         }
     }
 
@@ -529,9 +554,10 @@ namespace Model
         public bool IsSkilled;
         public bool IsMoved;
         public bool IsFlying;
-        public float ColorR;
-        public float ColorG;
-        public float ColorB;
+
+        public int SpriteNumber;
+        public float InColorR, InColorG, InColorB, InColorA;
+        public float OutColorR, OutColorG, OutColorB, OutColorA;
 
         public Unit_Serializable() { }
     }

@@ -30,8 +30,8 @@ namespace View
         public static void InitNull()
         {
             instance.unitInfo.SetNone();
-            instance.tileInfo.Set("None", "None", null, Color.black, "None");
-            instance.simpleInfo.Set("None", "None", null, Color.black, "None");
+            instance.tileInfo.Set("None", "None", null, "None");
+            instance.simpleInfo.Set("None", "None", null, "None");
             DungeonEditor.instance.SetTile(null);
         }
 
@@ -50,7 +50,7 @@ namespace View
         }
         public static void Show(Unit user, Skill skill)
         {
-            instance.simpleInfo.Set(skill.Name, skill.Type, skill.Sprite, skill.Color, skill.GetDescription(user));
+            instance.simpleInfo.Set(skill.Name, skill.Type, skill.Sprite, skill.GetDescription(user));
         }
         public static void Show(Effect effect)
         {

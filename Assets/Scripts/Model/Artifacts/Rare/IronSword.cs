@@ -8,9 +8,9 @@
         public IronSword()
         {
             Name = "강철 대검";
-            Sprite = Common.Data.Colored[416];
             Grade = ArtifactGrade.Legend;
             Description = "공격력 +2";
+
         }
 
         public override void OnAdd()

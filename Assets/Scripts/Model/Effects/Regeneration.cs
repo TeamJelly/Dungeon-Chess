@@ -9,10 +9,14 @@ namespace Model.Effects
 
         public int Regen { get => regen; }
 
-        public Regeneration() : base()
+        public Regeneration()
         {
-            Name = "재생";
+            Name = "Regeneration";
             Description = $"턴을 시작할때 체력 10을 회복합니다. 남은 턴 : {TurnCount}";
+
+            SpriteNumber = 563;
+            InColor = Color.green;
+            OutColor = Color.clear;
         }
 
         public override void OnAdd()

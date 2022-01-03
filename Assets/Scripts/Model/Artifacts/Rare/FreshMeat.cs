@@ -8,10 +8,13 @@
         protected int increasingValue = 10;
         public FreshMeat()
         {
-            Name = "신선한 고기";
-            Sprite = Common.Data.Colored[800];
+            Name = "Fresh Meat";
             Grade = ArtifactGrade.Rare;
             Description = "최대체력 +10";
+
+            SpriteNumber = 800;
+            InColor = UnityEngine.Color.red;
+            OutColor = UnityEngine.Color.clear;
         }
 
         public override void OnAdd()

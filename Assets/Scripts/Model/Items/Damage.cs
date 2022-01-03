@@ -4,9 +4,12 @@ namespace Model.Items
     {
         public Damage()
         {
-            Sprite = Common.Data.LoadSprite("1bitpack_kenney_1/Tilesheet/monochrome_transparent_packed_705");
-            Color = UnityEngine.Color.red;
+            Name = "Damage Potion";
             Target = TargetType.Any;
+
+            SpriteNumber = 705;
+            InColor = UnityEngine.Color.red;
+            OutColor = UnityEngine.Color.clear;
         }
         public override void Use(Tile tile)
         {
