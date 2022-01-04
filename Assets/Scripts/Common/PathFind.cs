@@ -124,7 +124,7 @@ namespace Common
         /// <param name="unit">목적지에 가는 주체</param>
         /// <param name="dest">목적지</param>
         /// <returns></returns>
-        public static Tile GetClosestPositionableDest(Unit unit, Vector2Int dest)
+        public static Tile GetClosestReachableDest(Unit unit, Vector2Int dest)
         {
             Tile curTile = FieldManager.GetTileClamp(dest);
 
@@ -137,7 +137,7 @@ namespace Common
             {
                 if (frontier.Count == 0)
                 {
-                    Debug.Log("빈 타일이 존재하지 않음");
+                    // Debug.Log("빈 타일이 존재하지 않음");
                     return null;
                 }
 
@@ -145,7 +145,8 @@ namespace Common
                 visited.Add(curTile);
                 frontier.RemoveAt(0);
 
-                if (curTile.IsPositionable(unit))
+                // if (curTile.IsPositionable(unit))
+                if (PathFindAlgorithm(unit, unit.MoveSkill, unit.Position, curTile.position) != null)
                     return curTile;
 
                 foreach (Vector2Int direction in directions)
@@ -170,8 +171,8 @@ namespace Common
         {            
             if (FieldManager.GetTile(to) == null || FieldManager.GetTile(to).HasUnit())
             {
-                Debug.LogWarning("길찾기 알고리즘 오류");
-                // return null;
+                // Debug.LogWarning("길찾기 알고리즘 오류");
+                return null;
             }
 
             Node node = new Node(from, to);
@@ -184,7 +185,7 @@ namespace Common
             {
                 if (frontier.Count == 0)
                 {
-                    Debug.Log("목적지에 갈수 있는 길이 존재하지 않습니다.");
+                    // Debug.Log("목적지에 갈수 있는 길이 존재하지 않습니다.");
                     return null; // 답이 없음.
                 }
 

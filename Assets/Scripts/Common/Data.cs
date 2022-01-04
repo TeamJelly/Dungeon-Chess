@@ -270,6 +270,21 @@ namespace Common
             new Model.Effects.Stun(),
         };
 
+        public static List<Tile> AllTiles = new List<Tile>()
+        {
+            new Model.Tiles.DownStair(),
+            new Model.Tiles.Floor(),
+            new Model.Tiles.Heal(),
+            new Model.Tiles.Hole(),
+            new Model.Tiles.Locked(),
+            new Model.Tiles.Power(),
+            new Model.Tiles.Sell(),
+            new Model.Tiles.Thorn(),
+            new Model.Tiles.UnLocked(),
+            new Model.Tiles.UpStair(),
+            new Model.Tiles.Wall()
+        };
+
         public static List<Artifact> NomalArtifacts = new List<Artifact>();
         public static List<Artifact> RareArtifacts = new List<Artifact>();
         public static List<Artifact> LegendArtifacts = new List<Artifact>();

@@ -11,6 +11,8 @@ using UI.Battle;
 public class DungeonEditor : MonoBehaviour
 {
     public GameObject unitAttributeController;
+    public GameObject battleFieldController;
+
     [Header("Unit Editor")]
     public Button button_saveUnit;
     public Button button_lvlUp;
@@ -30,11 +32,22 @@ public class DungeonEditor : MonoBehaviour
     public RectTransform Artifacts;
     public RectTransform Effects;
 
+    
+    [Space(5)]
+
+    [Header("Battle Editor")]
+    public RectTransform ListBar;
+
+    public RectTransform ListSelectedCursor;
+
+    public int selectedIndex;
+
+
+
+
     public static DungeonEditor instance;
 
     public static bool enabledEditMode = false;
-
-    [Space(10)]
 
     Tile currentTile = null;
     Unit currentUnit = null;
@@ -43,8 +56,10 @@ public class DungeonEditor : MonoBehaviour
     {
         instance = this;
         unitAttributeController.SetActive(false);
+        battleFieldController.SetActive(false);
 
-        Init();
+        InitUnitInfoController();
+
         button_lvlUp.onClick.AddListener(() =>
         {
             if (currentUnit == null) return;
@@ -130,7 +145,7 @@ public class DungeonEditor : MonoBehaviour
         currentUnit = tile?.GetUnit();
     }
 
-    public void Init()
+    public void InitUnitInfoController()
     {
         foreach (Skill skill in Common.Data.AllSkills.Values)
         {
@@ -228,6 +243,7 @@ public class DungeonEditor : MonoBehaviour
     {
         Common.Data.Save_Unit_Serializable_Data(currentUnit);
     }
+
     public void ShowUnitList()
     {
         List<Common.ScrollData> list = Common.ScrollUI.MakeDataList(Application.dataPath + "/Resources/Data/Unit/", new[] { "*.json" }, (filePath) =>
@@ -244,12 +260,210 @@ public class DungeonEditor : MonoBehaviour
         });
         Common.ScrollUI.instance.EnableUI(list);
     }
+
+    public void SetCursor(int num)
+    {
+        if (num < 0 || ListBar.childCount <= num)
+        {
+            selectedIndex = -1;
+            ListSelectedCursor.gameObject.SetActive(false);
+        }
+        else
+        {
+            selectedIndex = num;
+            ListSelectedCursor.gameObject.SetActive(true);
+            ListSelectedCursor.position = ListBar.GetChild(num).GetComponent<RectTransform>().position;
+        }
+    }
+
+    public void SetUnitList()
+    {
+        Transform[] childList = ListBar.transform.GetComponentsInChildren<Transform>();
+        for (int i = 1; i < childList.Length; i++)
+            Destroy(childList[i].gameObject);
+        ListBar.sizeDelta = Vector2.zero;
+
+        var Units = Resources.LoadAll<TextAsset>("Data/Unit");
+        Debug.Log(Units.Length);
+
+        selectedIndex = -1;
+        ListSelectedCursor.gameObject.SetActive(false);
+
+        for (int i = 0; i < Units.Length; i++)
+        {
+            GameObject gameObject = Instantiate(infoBox, ListBar);
+
+            TMPro.TextMeshProUGUI TMP = gameObject.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>();
+            TMP.gameObject.SetActive(true);
+            TMP.text = Units[i].name;
+
+            // Image image = gameObject.transform.Find("Image").GetComponent<Image>();
+            // image.sprite = Units[i].Sprite;
+
+            RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
+            rectTransform.sizeDelta = new Vector2(150, 150);
+            ListBar.sizeDelta = ListBar.rect.size + new Vector2(150, 0);
+
+            Button button = gameObject.GetComponent<Button>();
+
+            Image Background = gameObject.GetComponent<Image>();
+            Color oldColor = Background.color;
+
+            int temp = i;
+
+            button.onClick.AddListener(() => 
+            {
+                if (selectedIndex == temp)
+                {
+                    SetCursor(-1);
+                }
+                else
+                    SetCursor(temp);
+            });
+        }
+    }
+    public void SetTileList()
+    {
+        Transform[] childList = ListBar.transform.GetComponentsInChildren<Transform>();
+        for (int i = 1; i < childList.Length; i++)
+            Destroy(childList[i].gameObject);
+        ListBar.sizeDelta = Vector2.zero;
+
+        var Tiles = Common.Data.AllTiles;
+        selectedIndex = -1;
+        ListSelectedCursor.gameObject.SetActive(false);
+
+        for (int i = 0; i < Tiles.Count; i++)
+        {
+            GameObject gameObject = Instantiate(infoBox, ListBar);
+
+            TMPro.TextMeshProUGUI TMP = gameObject.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>();
+            TMP.gameObject.SetActive(true);
+            TMP.text = Tiles[i].Name;
+
+            // Image image = gameObject.transform.Find("Image").GetComponent<Image>();
+            // image.sprite = Tiles[i].Sprite;
+
+            RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
+            rectTransform.sizeDelta = new Vector2(150, 150);
+            ListBar.sizeDelta = ListBar.rect.size + new Vector2(150, 0);
+
+            Button button = gameObject.GetComponent<Button>();
+
+            Image Background = gameObject.GetComponent<Image>();
+            Color oldColor = Background.color;
+
+            int temp = i;
+
+            button.onClick.AddListener(() => 
+            {
+                if (selectedIndex == temp)
+                {
+                    SetCursor(-1);
+                }
+                else
+                    SetCursor(temp);
+            });
+        }
+    }
+
+    public void SetArtifactList()
+    {
+        Transform[] childList = ListBar.transform.GetComponentsInChildren<Transform>();
+        for (int i = 1; i < childList.Length; i++)
+            Destroy(childList[i].gameObject);
+        ListBar.sizeDelta = Vector2.zero;
+
+        var Artifacts = Common.Data.AllArtifacts;
+        selectedIndex = -1;
+        ListSelectedCursor.gameObject.SetActive(false);
+
+        for (int i = 0; i < Artifacts.Count; i++)
+        {
+            GameObject gameObject = Instantiate(infoBox, ListBar);
+
+            TMPro.TextMeshProUGUI TMP = gameObject.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>();
+            TMP.gameObject.SetActive(true);
+            TMP.text = Artifacts[i].Name;
+
+            Image image = gameObject.transform.Find("Image").GetComponent<Image>();
+            image.sprite = Artifacts[i].Sprite;
+
+            RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
+            rectTransform.sizeDelta = new Vector2(150, 150);
+            ListBar.sizeDelta = ListBar.rect.size + new Vector2(150, 0);
+
+            Button button = gameObject.GetComponent<Button>();
+
+            Image Background = gameObject.GetComponent<Image>();
+            Color oldColor = Background.color;
+
+            int temp = i;
+
+            button.onClick.AddListener(() => 
+            {
+                if (selectedIndex == temp)
+                {
+                    SetCursor(-1);
+                }
+                else
+                    SetCursor(temp);
+            });
+        }
+    }
+
+    public void SetItemList()
+    {
+        Transform[] childList = ListBar.transform.GetComponentsInChildren<Transform>();
+        for (int i = 1; i < childList.Length; i++)
+            Destroy(childList[i].gameObject);
+        ListBar.sizeDelta = Vector2.zero;
+
+        var Items = Common.Data.AllItems;
+        selectedIndex = -1;
+        ListSelectedCursor.gameObject.SetActive(false);
+
+        for (int i = 0; i < Items.Count; i++)
+        {
+            GameObject gameObject = Instantiate(infoBox, ListBar);
+
+            TMPro.TextMeshProUGUI TMP = gameObject.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>();
+            TMP.gameObject.SetActive(true);
+            TMP.text = Items[i].Name;
+
+            Image image = gameObject.transform.Find("Image").GetComponent<Image>();
+            image.sprite = Items[i].Sprite;
+
+            RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
+            rectTransform.sizeDelta = new Vector2(150, 150);
+            ListBar.sizeDelta = ListBar.rect.size + new Vector2(150, 0);
+
+            Button button = gameObject.GetComponent<Button>();
+
+            Image Background = gameObject.GetComponent<Image>();
+            Color oldColor = Background.color;
+
+            int temp = i;
+
+            button.onClick.AddListener(() => 
+            {
+                if (selectedIndex == temp)
+                {
+                    SetCursor(-1);
+                }
+                else
+                    SetCursor(temp);
+            });
+        }
+    }
+
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.F1))
         {
             enabledEditMode = !enabledEditMode;
             unitAttributeController.gameObject.SetActive(enabledEditMode);
+            battleFieldController.gameObject.SetActive(enabledEditMode);
 
             if(currentUnit != null)
                 InfoView.instance.unitInfo.SetUnit(currentUnit);

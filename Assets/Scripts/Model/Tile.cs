@@ -34,7 +34,7 @@ namespace Model
 
         public string Type => "Tile";
 
-        public Sprite Sprite { get => Model.Managers.FieldManager.instance.tileMap.GetSprite(new Vector3Int(position.x, position.y, 0)); }
+        public Sprite Sprite { get => Model.Managers.FieldManager.instance.tileMap.GetSprite(new Vector3Int(position.x, position.y, 0));}
 
         public int SpriteNumber => throw new System.NotImplementedException();
 
