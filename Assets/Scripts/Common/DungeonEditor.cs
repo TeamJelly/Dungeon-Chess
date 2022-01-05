@@ -32,7 +32,7 @@ public class DungeonEditor : MonoBehaviour
     public RectTransform Artifacts;
     public RectTransform Effects;
 
-    
+
     [Space(5)]
 
     [Header("Battle Editor")]
@@ -42,7 +42,7 @@ public class DungeonEditor : MonoBehaviour
 
     public int selectedIndex;
 
-
+    public object selectedObject;
 
 
     public static DungeonEditor instance;
@@ -51,7 +51,7 @@ public class DungeonEditor : MonoBehaviour
 
     Tile currentTile = null;
     Unit currentUnit = null;
-    
+
     private void Awake()
     {
         instance = this;
@@ -169,13 +169,13 @@ public class DungeonEditor : MonoBehaviour
 
             modifyButton.gameObject.SetActive(true);
             modifyButton.gameObject.GetComponentInChildren<Text>().text = "+";
-            modifyButton.onClick.AddListener(() => 
+            modifyButton.onClick.AddListener(() =>
             {
                 if (currentUnit == null) return;
                 Common.Command.AddSkill(currentUnit, skill);
                 InfoView.instance.unitInfo.SetUnit(currentUnit);
 
-                if(currentUnit == BattleManager.instance.thisTurnUnit)
+                if (currentUnit == BattleManager.instance.thisTurnUnit)
                     BattleView.UnitControlView.UpdateSkillButtons(currentUnit);
             });
         }
@@ -283,7 +283,7 @@ public class DungeonEditor : MonoBehaviour
             Destroy(childList[i].gameObject);
         ListBar.sizeDelta = Vector2.zero;
 
-        var Units = Resources.LoadAll<TextAsset>("Data/Unit");
+        TextAsset[] Units = Resources.LoadAll<TextAsset>("Data/Unit");
         Debug.Log(Units.Length);
 
         selectedIndex = -1;
@@ -311,14 +311,17 @@ public class DungeonEditor : MonoBehaviour
 
             int temp = i;
 
-            button.onClick.AddListener(() => 
+            button.onClick.AddListener(() =>
             {
                 if (selectedIndex == temp)
                 {
                     SetCursor(-1);
                 }
                 else
+                {
                     SetCursor(temp);
+                    selectedObject = Units[temp];
+                }
             });
         }
     }
@@ -355,14 +358,17 @@ public class DungeonEditor : MonoBehaviour
 
             int temp = i;
 
-            button.onClick.AddListener(() => 
+            button.onClick.AddListener(() =>
             {
                 if (selectedIndex == temp)
                 {
                     SetCursor(-1);
                 }
                 else
+                {
                     SetCursor(temp);
+                    selectedObject = Tiles[temp];
+                }
             });
         }
     }
@@ -400,14 +406,17 @@ public class DungeonEditor : MonoBehaviour
 
             int temp = i;
 
-            button.onClick.AddListener(() => 
+            button.onClick.AddListener(() =>
             {
                 if (selectedIndex == temp)
                 {
                     SetCursor(-1);
                 }
                 else
+                {
                     SetCursor(temp);
+                    selectedObject = Artifacts[temp];
+                }
             });
         }
     }
@@ -445,14 +454,17 @@ public class DungeonEditor : MonoBehaviour
 
             int temp = i;
 
-            button.onClick.AddListener(() => 
+            button.onClick.AddListener(() =>
             {
                 if (selectedIndex == temp)
                 {
                     SetCursor(-1);
                 }
                 else
+                {
                     SetCursor(temp);
+                    selectedObject = Items[temp];
+                }
             });
         }
     }
@@ -465,7 +477,7 @@ public class DungeonEditor : MonoBehaviour
             unitAttributeController.gameObject.SetActive(enabledEditMode);
             battleFieldController.gameObject.SetActive(enabledEditMode);
 
-            if(currentUnit != null)
+            if (currentUnit != null)
                 InfoView.instance.unitInfo.SetUnit(currentUnit);
 
         }

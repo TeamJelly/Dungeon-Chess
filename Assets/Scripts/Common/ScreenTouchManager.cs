@@ -42,7 +42,7 @@ public class ScreenTouchManager : MonoBehaviour, IDragHandler, IBeginDragHandler
         nextPos.y = Mathf.Clamp(nextPos.y, LeftDownLimit.y, RightUpLimit.y);
         cameraTransform.position = nextPos;
     }
-    
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         currentPos = Camera.main.ScreenToViewportPoint(eventData.position);
@@ -64,7 +64,7 @@ public class ScreenTouchManager : MonoBehaviour, IDragHandler, IBeginDragHandler
         if (mousepos.x < LeftDownLimit.x || mousepos.x >= RightUpLimit.x || mousepos.y < LeftDownLimit.y || mousepos.y >= RightUpLimit.y) return;
 
         //Vector2Int selectedTileIdx = new Vector2Int(Mathf.Clamp((int)mousepos.x, 0, 15), Mathf.Clamp((int)mousepos.y, 0, 15));
-        Vector2Int tileIdx = new Vector2Int((int)mousepos.x,(int)mousepos.y);
+        Vector2Int tileIdx = new Vector2Int((int)mousepos.x, (int)mousepos.y);
 
         // Debug.Log(tileIdx);
 
@@ -122,7 +122,7 @@ public class ScreenTouchManager : MonoBehaviour, IDragHandler, IBeginDragHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         // Debug.Log("pointer down");
-        
+
         if (longclick == null)
         {
             // 롱클릭 시작 위치
@@ -141,7 +141,7 @@ public class ScreenTouchManager : MonoBehaviour, IDragHandler, IBeginDragHandler
             longclick = null;
         }
     }
-    
+
     IEnumerator LongClick(Vector2 target)
     {
         yield return new WaitForSeconds(1f);
@@ -149,7 +149,7 @@ public class ScreenTouchManager : MonoBehaviour, IDragHandler, IBeginDragHandler
         if ((target - longClickPos).magnitude < Screen.width / 10)
         {
             Vector3 mousepos = Camera.main.ScreenToWorldPoint(target) + Vector3.one * 0.5f;
-            Vector2Int tileIdx = new Vector2Int((int)mousepos.x,(int)mousepos.y);
+            Vector2Int tileIdx = new Vector2Int((int)mousepos.x, (int)mousepos.y);
             if (FieldManager.IsInField(tileIdx))
             {
                 InfoView.instance.infoPanel.SetActive(true);
