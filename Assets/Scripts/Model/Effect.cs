@@ -85,11 +85,11 @@ namespace Model
             return value;
         }
 
-        public object Clone()
+        public Effect Clone()
         {
             Type t = GetType();
 
-            return Activator.CreateInstance(t);
+            return Activator.CreateInstance(t) as Effect;
         }
     }
 }

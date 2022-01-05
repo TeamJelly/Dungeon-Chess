@@ -7,6 +7,7 @@ using View;
 using Model.Managers;
 using System;
 using UI.Battle;
+using System.Linq;
 
 public class DungeonEditor : MonoBehaviour
 {
@@ -283,19 +284,20 @@ public class DungeonEditor : MonoBehaviour
             Destroy(childList[i].gameObject);
         ListBar.sizeDelta = Vector2.zero;
 
-        TextAsset[] Units = Resources.LoadAll<TextAsset>("Data/Unit");
-        Debug.Log(Units.Length);
+        string[] filters = new[] { "*.json" };
+        string[] UnitPaths = filters.SelectMany(f => System.IO.Directory.GetFiles(Application.dataPath + "/Resources/Data/Unit/", f)).ToArray();
+
 
         selectedIndex = -1;
         ListSelectedCursor.gameObject.SetActive(false);
 
-        for (int i = 0; i < Units.Length; i++)
+        for (int i = 0; i < UnitPaths.Length; i++)
         {
             GameObject gameObject = Instantiate(infoBox, ListBar);
 
             TMPro.TextMeshProUGUI TMP = gameObject.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>();
             TMP.gameObject.SetActive(true);
-            TMP.text = Units[i].name;
+            TMP.text = UnitPaths[i];
 
             // Image image = gameObject.transform.Find("Image").GetComponent<Image>();
             // image.sprite = Units[i].Sprite;
@@ -320,7 +322,7 @@ public class DungeonEditor : MonoBehaviour
                 else
                 {
                     SetCursor(temp);
-                    selectedObject = Units[temp];
+                    selectedObject = UnitPaths[temp];
                 }
             });
         }

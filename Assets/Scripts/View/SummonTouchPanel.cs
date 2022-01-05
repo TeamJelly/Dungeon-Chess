@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Model;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -28,12 +29,23 @@ namespace View
             // Debug.Log("vec3" + pos);
             // Debug.Log("vec2" + tileIdx);
 
-            if (Model.Managers.FieldManager.IsInField(tileIdx) && DungeonEditor.instance.selectedIndex > 0)
+            if (Model.Managers.FieldManager.IsInField(tileIdx) && DungeonEditor.instance.selectedIndex >= 0)
             {
-                // if (DungeonEditor.instance.selectedObject.GetType().Name.Contains("Unit"))
-                //     Common.Command.Summon()
+                Debug.Log(DungeonEditor.instance.selectedObject);
+
+                if (DungeonEditor.instance.selectedObject is string)
+                {
+                    Unit_Serializable u = Common.Data.Load_Unit_Serializable_Data((string) DungeonEditor.instance.selectedObject);
+                    Unit unit = new Unit(u);
+                    Common.Command.Summon(unit, tileIdx);
+                }
+                else if (DungeonEditor.instance.selectedObject is Item)
+                    Common.Command.Summon(((Item) DungeonEditor.instance.selectedObject).Clone(), tileIdx);
+                else if (DungeonEditor.instance.selectedObject is Artifact)
+                    Common.Command.Summon(((Artifact) DungeonEditor.instance.selectedObject).Clone(), tileIdx);
+                // if (DungeonEditor.instance.selectedObject is Tile)
+                //     Common.Command.Summon((Unit) DungeonEditor.instance.selectedObject, tileIdx);
             }
         }
     }
-
 }

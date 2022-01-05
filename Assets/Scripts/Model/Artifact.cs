@@ -39,6 +39,14 @@ namespace Model
             {ArtifactGrade.Legend , new Color(255/255f,0/255f,132/255f,0.8f)}
         };
 
+        
+        public new Artifact Clone()
+        {
+            Type t = GetType();
+
+            return Activator.CreateInstance(t) as Artifact;
+        }
+
         // public void BelongTo(Unit unit)
         // {
         //     Common.Command.AddArtifact(unit, this);
