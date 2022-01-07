@@ -23,7 +23,7 @@ namespace Common
                 TextAsset[] Starts = Resources.LoadAll<TextAsset>("/Data/Field/Start");
                 TextAsset[] Neutrals = Resources.LoadAll<TextAsset>("/Data/Field/Neutral");
                 TextAsset[] Ends = Resources.LoadAll<TextAsset>("/Data/Field/End");
-               
+
                 string jsonStr = File.ReadAllText(Application.dataPath + "/Resources/Data/Field/Data.json");
 
                 jsonStr = jsonStr.Replace("\n", "");
@@ -69,10 +69,10 @@ namespace Common
             if (!directoryInfo.Exists) directoryInfo.Create();
 
             string jsonStr = JsonUtility.ToJson(fieldData);
-            
+
             jsonStr = jsonStr.Replace("\\n", "\n");
             Debug.Log("json Replace " + jsonStr);
-            
+
             File.WriteAllText(Application.dataPath + "/Resources/Data/Field/Data.json", jsonStr);
         }
 
@@ -86,8 +86,8 @@ namespace Common
 
             string jsonStr = JsonUtility.ToJson(unit.Get_Serializable());
             File.WriteAllText(Application.dataPath + "/Resources/Data/Unit/" + unit.Name + ".json", jsonStr);
-            
-            
+
+
             /*BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Create(Application.dataPath + "/Resources/Data/Unit/" + unit.Name + ".unit");
             bf.Serialize(file, unit);
@@ -95,7 +95,7 @@ namespace Common
         }
         public static Unit_Serializable Load_Unit_Serializable_Data(string dataPath)
         {
-            
+
             string jsonStr = File.ReadAllText(dataPath);
 
             jsonStr = jsonStr.Replace("\n", "");
@@ -152,11 +152,11 @@ namespace Common
         public static Skill GetRandomSkill(int seed, UnitSpecies species, SkillCategory category)
         {
             List<Skill> skills = new List<Skill>();
-            
-            foreach(Skill skill in AllSkills.Values)
+
+            foreach (Skill skill in AllSkills.Values)
                 if (skill.species.Contains(species) && skill.Category == category)
                     skills.Add(skill);
-            
+
             if (skills.Count == 0)
                 return AllSkills.Values.ToArray()[0];
 
@@ -174,13 +174,6 @@ namespace Common
                 { UnitSpecies.MediumBeast, new List<Skill>() },
                 { UnitSpecies.LargeBeast, new List<Skill>() },
             };
-            categoryToSkillList = new Dictionary<SkillCategory, List<Skill>>()
-            {
-                {SkillCategory.Move,   new List<Skill>()},
-                {SkillCategory.Basic, new List<Skill>()},
-                {SkillCategory.Intermediate, new List<Skill>()},
-                {SkillCategory.Advanced, new List<Skill>()},
-            };
 
             foreach (Skill skill in AllSkills.Values)
             {
@@ -191,7 +184,6 @@ namespace Common
         }
 
         private static Dictionary<UnitSpecies, List<Skill>> speciesToSkillList = null;
-
         public static Dictionary<UnitSpecies, List<Skill>> SpeciesToSkillList
         {
             get
@@ -203,12 +195,11 @@ namespace Common
         }
 
         private static Dictionary<SkillCategory, List<Skill>> categoryToSkillList = null;
-
         public static Dictionary<SkillCategory, List<Skill>> CategoryToSkillList
         {
             get
             {
-                
+
                 if (categoryToSkillList == null)
                     InitSkillDictionary();
                 return categoryToSkillList;
@@ -231,8 +222,8 @@ namespace Common
         public static Artifact GetRandomArtifact(int seed, Artifact.ArtifactGrade grade)
         {
             List<Artifact> list = (from artifact in AllArtifacts
-                                  where artifact.Grade == grade
-                                  select artifact).ToList();
+                                   where artifact.Grade == grade
+                                   select artifact).ToList();
 
             Artifact t = list[seed % list.Count].Clone() as Artifact;
 
@@ -290,21 +281,21 @@ namespace Common
         public static List<Artifact> LegendArtifacts = new List<Artifact>();
 
 
-        public static Dictionary<Type, Skill> AllSkills { get; } = new Dictionary<Type, Skill>()
+        public static List<Skill> AllSkills { get; } = new List<Skill>()
         {
             // Move 스킬
-            { typeof(Pawn), new Pawn() },
-            { typeof(Knight), new Knight() },
-            { typeof(King), new King() },
-            { typeof(Bishop), new Bishop() },
-            { typeof(Queen), new Queen() },
-            { typeof(Rook), new Rook() },
+            new Pawn(),
+            new Knight(),
+            new King(),
+            new Bishop() ,
+            new Queen() ,
+            new Rook() ,
 
-            { typeof(Heal), new Heal() },
-            { typeof(Scratch), new Scratch() },
-            { typeof(Fireball), new Fireball() },
-            { typeof(Snapshot), new Snapshot() },
-            { typeof(Slash), new Slash() }
+            new Heal() ,
+            new Scratch() ,
+            new Fireball() ,
+            new Snapshot() ,
+            new Slash(),
         };
 
         //인간
@@ -353,9 +344,9 @@ namespace Common
 
             for (int i = 0; i < arr.GetLength(0); i++)
                 for (int j = 0; j < arr.GetLength(1); j++)
-                    arr[i,j] = '0';
+                    arr[i, j] = '0';
 
-            arr[range,range] = '1';
+            arr[range, range] = '1';
 
             if (option == 1) // 마름모꼴로 확장
             {
@@ -390,7 +381,7 @@ namespace Common
             {
                 str += ";";
                 for (int j = 0; j < arr.GetLength(1); j++)
-                    str += arr[i,j];
+                    str += arr[i, j];
             }
 
             return str;
@@ -508,7 +499,7 @@ namespace Common
             for (int y = 0; y < 16; y++)
                 for (int x = 0; x < 16; x++)
                 {
-                    Color color = old.GetPixel((int)rect.x + x , (int)rect.y + y);
+                    Color color = old.GetPixel((int)rect.x + x, (int)rect.y + y);
                     if (color.a == 0)
                         new_texture.SetPixel(x, y, outColor);
                     else
@@ -520,40 +511,40 @@ namespace Common
 
             return Sprite.Create(new_texture, rect, new Vector2(0.5f, 0.5f), 16);
         }
-        
+
         public static Sprite MakeOutline(Sprite value, Color outline)
         {
             Texture2D old = value.texture;
             Rect rect = value.rect;
-            Texture2D texture = new Texture2D(18,18);
+            Texture2D texture = new Texture2D(18, 18);
             texture.filterMode = FilterMode.Point;
 
             for (int y = 0; y < 18; y++)
                 for (int x = 0; x < 18; x++)
-                    texture.SetPixel(x,y, new Color(0,0,0,0));
+                    texture.SetPixel(x, y, new Color(0, 0, 0, 0));
 
             for (int y = 0; y < 16; y++)
                 for (int x = 0; x < 16; x++)
                 {
-                    Color color = old.GetPixel((int)rect.x + x , (int)rect.y + y);
+                    Color color = old.GetPixel((int)rect.x + x, (int)rect.y + y);
 
                     if (color.a == 0)
                         continue;
 
                     color = outline;
-                    texture.SetPixel(x+2, y+1, color);
-                    texture.SetPixel(x, y+1, color);
-                    texture.SetPixel(x+1, y+2, color);
-                    texture.SetPixel(x+1, y, color);
+                    texture.SetPixel(x + 2, y + 1, color);
+                    texture.SetPixel(x, y + 1, color);
+                    texture.SetPixel(x + 1, y + 2, color);
+                    texture.SetPixel(x + 1, y, color);
                 }
 
             for (int y = 0; y < 16; y++)
                 for (int x = 0; x < 16; x++)
                 {
-                    Color color = old.GetPixel((int)rect.x + x , (int)rect.y + y);
+                    Color color = old.GetPixel((int)rect.x + x, (int)rect.y + y);
                     if (color.a == 0)
                         continue;
-                    texture.SetPixel(x+1, y+1, color);
+                    texture.SetPixel(x + 1, y + 1, color);
                 }
 
             texture.Apply();
@@ -566,35 +557,35 @@ namespace Common
         {
             Texture2D old = value.texture;
             Rect rect = value.rect;
-            Texture2D texture = new Texture2D(18,18);
+            Texture2D texture = new Texture2D(18, 18);
             texture.filterMode = FilterMode.Point;
 
             for (int y = 0; y < 18; y++)
                 for (int x = 0; x < 18; x++)
-                    texture.SetPixel(x,y, new Color(0,0,0,0));
+                    texture.SetPixel(x, y, new Color(0, 0, 0, 0));
 
             for (int y = 0; y < 16; y++)
                 for (int x = 0; x < 16; x++)
                 {
-                    Color color = old.GetPixel((int)rect.x + x , (int)rect.y + y);
+                    Color color = old.GetPixel((int)rect.x + x, (int)rect.y + y);
 
                     if (color.a == 0)
                         continue;
 
                     color = outline;
-                    texture.SetPixel(x+2, y+1, color);
-                    texture.SetPixel(x, y+1, color);
-                    texture.SetPixel(x+1, y+2, color);
-                    texture.SetPixel(x+1, y, color);
+                    texture.SetPixel(x + 2, y + 1, color);
+                    texture.SetPixel(x, y + 1, color);
+                    texture.SetPixel(x + 1, y + 2, color);
+                    texture.SetPixel(x + 1, y, color);
                 }
 
             for (int y = 0; y < 16; y++)
                 for (int x = 0; x < 16; x++)
                 {
-                    Color color = old.GetPixel((int)rect.x + x , (int)rect.y + y);
+                    Color color = old.GetPixel((int)rect.x + x, (int)rect.y + y);
                     if (color.a == 0)
                         continue;
-                    texture.SetPixel(x+1, y+1, inline);
+                    texture.SetPixel(x + 1, y + 1, inline);
                 }
 
             texture.Apply();

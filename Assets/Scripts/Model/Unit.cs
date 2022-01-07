@@ -401,13 +401,13 @@ namespace Model
                 IsSkilled = IsSkilled,
                 IsMoved = IsMoved,
                 IsFlying = IsFlying,
-                
+
                 SpriteNumber = SpriteNumber,
-                
+
                 InColorR = InColor.r,
                 InColorG = InColor.g,
                 InColorB = InColor.b,
-                InColorA = InColor.a, 
+                InColorA = InColor.a,
 
                 OutColorR = OutColor.r,
                 OutColorG = OutColor.g,
@@ -415,9 +415,11 @@ namespace Model
                 OutColorA = OutColor.a,
             };
 
-            foreach(Skill s in skills)
+            foreach (Skill s in skills)
             {
                 u.skills.Add(s.ToString());
+                u.skill_waitingTimes(s.WaitingTime);
+                u.skill_levels();
             }
             foreach (Skill s in waitingSkills.Keys)
             {
@@ -430,10 +432,10 @@ namespace Model
             for (int i = 0; i < stateEffects.Count; i++)
             {
                 u.stateEffects.Add(stateEffects[i].ToString());
-                u.stateEffects_count.Add(stateEffects[i].TurnCount);
+                // u.stateEffects_count.Add(stateEffects[i].TurnCount);
             }
 
-            foreach(Obtainable o in belongings)
+            foreach (Obtainable o in belongings)
             {
                 u.belongings.Add(o.ToString());
             }
@@ -498,8 +500,7 @@ namespace Model
 
             foreach (string s in u.skills)
             {
-                Common.Command.AddSkill(this, Data.AllSkills[Type.GetType(s)]);
-                //skills.Add(Data.AllSkills[s]);
+                Common.Command.AddSkill(this, (Skill)Activator.CreateInstance(Type.GetType(s)));
             }
             foreach (string s in u.waitingSkills.Keys)
             {
@@ -540,7 +541,7 @@ namespace Model
         public int positionX;                // 위치X
         public int positionY;                // 위치Y
         public string moveSkill;
-        public List<string> skills = new List<string>();                  
+        public List<string> skills = new List<string>();
         public Dictionary<string, int> waitingSkills = new Dictionary<string, int>();
         public Dictionary<string, int> enhancedSkills = new Dictionary<string, int>();
         public List<string> stateEffects = new List<string>();  // 보유한 상태효과

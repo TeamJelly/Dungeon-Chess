@@ -11,9 +11,7 @@ namespace Model
     {
         Null = -1,
         Move,
-        Basic,
-        Intermediate,
-        Advanced,
+        Attack
     }
 
     [System.Serializable]
@@ -36,17 +34,24 @@ namespace Model
             Hostile,        // 적대적인 유닛에 사용가능 (AI 용)
         }
 
+        // 스킬에 대한 변수
+        public Unit User { get; set; }
         public SkillCategory Category { get; set; }
         public string Name { get; set; }
-        public int [] ReuseTime { get; set; }
+        public int Level { get; set; }
+
+        // 레벨에 따라 달라지기 쉬운 변수
+        public int[] ReuseTime { get; set; }
+        public string[] APData { get; set; }
+        public string[] RPData { get; set; }
+
+        // 스킬의 속성, 타입
         public AI.Priority Priority { get; set; }
         public TargetType Target { get; set; }
         public TargetType AITarget { get; set; }
         public RangeType Range { get; set; }
-        public string [] APData { get; set; }
-        public string [] RPData { get; set; }
         public List<UnitSpecies> species = new List<UnitSpecies>();
-        
+
         public Sprite Sprite
         {
             get
@@ -62,7 +67,7 @@ namespace Model
         public int SpriteNumber { get; set; }
         public Color InColor { get; set; }
         public Color OutColor { get; set; }
-        
+
         public string Description { get; set; }
         public string Type => "Skill";
 
@@ -72,20 +77,20 @@ namespace Model
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public virtual int GetSLV(Unit user)
-        {
-            if (user.EnhancedSkills.ContainsKey(this))
-                return user.EnhancedSkills[this];
-            else
-                return 0;
-        }
+        // public virtual int GetSLV(Unit user)
+        // {
+        //     if (user.EnhancedSkills.ContainsKey(this))
+        //         return user.EnhancedSkills[this];
+        //     else
+        //         return 0;
+        // }
 
-        public virtual bool IsUsable(Unit user)
+        public virtual bool IsUsable()
         {
             // 이번턴에 스킬을 사용하지 않고,
             // 이 스킬이 현재 대기중이지 않고,
             // 스킬 레벨이 음수가 아니라면 사용가능하다.
-            if (!user.IsSkilled && !user.WaitingSkills.ContainsKey(this) && GetSLV(user) >= 0)
+            if (!User.IsSkilled && !User.WaitingSkills.ContainsKey(this) && Level >= 0)
                 return true;
             else
                 return false;
@@ -94,7 +99,6 @@ namespace Model
         /// <summary>
         /// 해당 위치가 실제로 사용가능한지를 제외하고 스킬 사용 위치값만 계산한다.
         /// </summary>
-        /// <param name="user"></param>
         /// <param name="userPosition"></param>
         /// <returns></returns>
         public virtual List<Vector2Int> GetUseRange(Unit user, Vector2Int userPosition)
@@ -103,7 +107,7 @@ namespace Model
 
             if (APData != null)
             {
-                foreach (var position in Common.Data.ParseRangeData(APData[GetSLV(user)]))
+                foreach (var position in Common.Data.ParseRangeData(APData[Level]))
                 {
                     Vector2Int abs = userPosition + position;
                     positions.Add(abs);
@@ -113,21 +117,20 @@ namespace Model
         }
 
         /// <summary>
-        /// user가 userPosition에 있을때 스킬사 용가능한 위치들을 반환한다.
+        /// user가 userPosition에 있을때 스킬 사용가능한 위치들을 반환한다.
         /// </summary>
-        /// <param name="user">스킬 사용자</param>
         /// <param name="userPosition">스킬 사용자의 위치</param>
         /// <returns>사용 가능한 스킬 위치들</returns>
-        public virtual List<Vector2Int> GetAvlPositions(Unit user, Vector2Int userPosition)
+        public virtual List<Vector2Int> GetAvlPositions(Vector2Int userPosition)
         {
             List<Vector2Int> positions = new List<Vector2Int>();
 
             TargetType Target = this.Target;
 
-            if (user.Alliance != UnitAlliance.Party && AITarget != TargetType.NULL)
+            if (User.Alliance != UnitAlliance.Party && AITarget != TargetType.NULL)
                 Target = this.AITarget;
 
-            foreach (var position in GetUseRange(user, userPosition))
+            foreach (var position in GetUseRange(User, userPosition))
             {
                 Unit unit = BattleManager.GetUnit(position);
 
@@ -138,19 +141,19 @@ namespace Model
                 if (Target == TargetType.Any)
                     positions.Add(position);
                 // 유닛 없음타일에만 사용가능
-                else if (Target == TargetType.Posable && FieldManager.GetTile(position).IsPositionable(user))
+                else if (Target == TargetType.Posable && FieldManager.GetTile(position).IsPositionable(User))
                     positions.Add(position);
                 // 우호적인 유닛에 사용 가능
-                else if (Target == TargetType.Friendly && unit != null && 
-                    ((user.Alliance == UnitAlliance.Party && 
-                    (unit.Alliance == UnitAlliance.Party || unit.Alliance == UnitAlliance.Friendly)) ||
-                    (user.Alliance == UnitAlliance.Enemy && unit.Alliance == UnitAlliance.Enemy)))
+                else if (Target == TargetType.Friendly && unit != null &&
+                    ((User.Alliance == UnitAlliance.Party &&
+                    (User.Alliance == UnitAlliance.Party || unit.Alliance == UnitAlliance.Friendly)) ||
+                    (User.Alliance == UnitAlliance.Enemy && unit.Alliance == UnitAlliance.Enemy)))
                     positions.Add(position);
                 // 적대적인 유닛에 사용 가능
                 else if (Target == TargetType.Hostile && unit != null &&
-                    ((user.Alliance == UnitAlliance.Enemy &&
-                    (unit.Alliance == UnitAlliance.Party || unit.Alliance == UnitAlliance.Friendly)) ||
-                    (user.Alliance == UnitAlliance.Party && unit.Alliance == UnitAlliance.Enemy)))
+                    ((User.Alliance == UnitAlliance.Enemy &&
+                    (User.Alliance == UnitAlliance.Party || unit.Alliance == UnitAlliance.Friendly)) ||
+                    (User.Alliance == UnitAlliance.Party && unit.Alliance == UnitAlliance.Enemy)))
                     positions.Add(position);
                 // 어디에도 속하지 않으면 false
                 else
@@ -165,24 +168,25 @@ namespace Model
         /// </summary>
         /// <param name="user">스킬 사용자 유닛</param>
         /// <returns>사용가능한 스킬 위치들</returns>
-        public virtual List<Vector2Int> GetAvlUsePositions(Unit user)
+        public virtual List<Vector2Int> GetAvlUsePositions()
         {
-            return GetAvlPositions(user, user.Position);
+            return GetAvlPositions(User.Position);
         }
 
         /// <summary>
-        /// 스킬이 범위로 영향을 미칠시 그 범위를 보여줍니다.
+        /// 스킬과 관련된 위치를 보여줍니다.
         /// </summary>
         /// <param name="user">스킬 사용자 유닛</param>
         /// <param name="skillPosition">스킬을 사용하는 위치</param>
         /// <returns>스킬이 영향을 미치는 위치</returns>
-        public virtual List<Vector2Int> GetRelatePositions(Unit user, Vector2Int skillPosition)
+        public virtual List<Vector2Int> GetRelatePositions(Vector2Int skillPosition)
         {
             List<Vector2Int> positions = new List<Vector2Int>();
 
-            if (RPData == null || !GetAvlUsePositions(user).Contains(skillPosition)) return positions;
+            // 관련된 범위를 표현하는게 가능하지 않은 경우
+            if (RPData == null || !GetAvlUsePositions().Contains(skillPosition)) return positions;
 
-            foreach (var vector in Common.Data.ParseRangeData(RPData[GetSLV(user)]))
+            foreach (var vector in Common.Data.ParseRangeData(RPData[Level]))
             {
                 Vector2Int abs = skillPosition + vector;
                 if (FieldManager.IsInField(abs))
@@ -192,16 +196,22 @@ namespace Model
             return positions;
         }
 
-        public virtual IEnumerator Use(Unit user, Vector2Int target)
+        public virtual IEnumerator Use(Vector2Int target)
         {
             Debug.LogError(Name + " 스킬을 " + target + "에 사용!");
-            user.WaitingSkills.Add(this, ReuseTime[GetSLV(user)]);
+            User.WaitingSkills.Add(this, ReuseTime[Level]);
             yield return null;
         }
 
-        public virtual string GetDescription(Unit user)
+        public virtual void Upgrade()
+        {
+            Level++;
+        }
+
+        public virtual string GetDescription()
         {
             return "스킬 설명";
         }
+
     }
 }

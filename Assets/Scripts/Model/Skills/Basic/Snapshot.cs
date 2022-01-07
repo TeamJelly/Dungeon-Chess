@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Model.Skills.Basic
 {
-    public class Snapshot : BasicSkill
+    public class Snapshot : Skill
     {
         private float[] strToDam;
         private int[] fixedDam;
@@ -49,7 +49,7 @@ namespace Model.Skills.Basic
             bool isCri = Random.Range(0, 100) < user.CriRate;
             int damage = (int)(user.Strength * strToDam[SLV]);
             if (isCri) damage *= 2;
-            
+
             // 스킬 소모 기록
             user.IsSkilled = true;
             user.WaitingSkills.Add(this, ReuseTime[SLV]);

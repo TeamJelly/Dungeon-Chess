@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Model.Skills.Basic
 {
-    public class Heal : BasicSkill
+    public class Heal : Skill
     {
         private int[] fixedHeal;
 
@@ -52,7 +52,7 @@ namespace Model.Skills.Basic
             bool isCri = Random.Range(0, 100) < user.CriRate;
             int heal = fixedHeal[SLV];
             if (isCri) heal *= 2;
-            
+
             // 스킬 소모 기록
             user.IsSkilled = true;
             user.WaitingSkills.Add(this, ReuseTime[SLV]);
@@ -67,15 +67,15 @@ namespace Model.Skills.Basic
             }
             else
                 Debug.Log($"{user.Name}가 {Name}스킬을 {target}에 사용!");
-            
+
             yield return null;
         }
-        
+
         public override string GetDescription(Unit user)
         {
             int SLV = GetSLV(user);
             int heal = fixedHeal[SLV];
-            
+
             return $"지정한 타일 위의 모든 대상에게 {heal}만큼 데미지를 준다.";
         }
     }
