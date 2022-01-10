@@ -9,9 +9,10 @@ namespace Model
 {
     public enum SkillCategory
     {
-        Null = -1,
+        NULL = -1,
         Move,
-        Attack
+        Player,
+        Enemy
     }
 
     [System.Serializable]
@@ -214,5 +215,6 @@ namespace Model
             return "스킬 설명";
         }
 
+        public Skill Clone() => System.Activator.CreateInstance(GetType()) as Skill;
     }
 }

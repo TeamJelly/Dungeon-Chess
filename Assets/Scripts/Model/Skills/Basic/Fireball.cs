@@ -21,24 +21,6 @@ namespace Model.Skills.Basic
             InColor = Color.red;
             OutColor = Color.clear;
 
-            ReuseTime = new int[4] { 1, 1, 0, 0 };
-            APData = new string[4]
-            {
-                Common.Data.MakeRangeData(1, 2),
-                Common.Data.MakeRangeData(1, 2),
-                Common.Data.MakeRangeData(1, 2),
-                Common.Data.MakeRangeData(1, 2),
-            };
-            RPData = new string[4]
-            {
-                Common.Data.MakeRangeData(2, 1),
-                Common.Data.MakeRangeData(2, 1),
-                Common.Data.MakeRangeData(2, 1),
-                Common.Data.MakeRangeData(2, 1),
-            };
-            strToDam = new float[4] { 1.0f, 1.5f, 1.5f, 2.0f };
-            fixedDam = new int[4] { 10, 10, 10, 20 };
-
             species.Add(UnitSpecies.SmallBeast);
             species.Add(UnitSpecies.MediumBeast);
             species.Add(UnitSpecies.Human);
@@ -75,6 +57,28 @@ namespace Model.Skills.Basic
             int damage = (int)(fixedDam[SLV] + User.Strength * strToDam[SLV]);
 
             return $"지정한 타일 위의 모든 대상에게 {damage}만큼 데미지를 준다.";
+        }
+
+        public override void OnUpgrade(int level)
+        {
+            
+            ReuseTime = new int[4] { 1, 1, 0, 0 };
+            APData = new string[4]
+            {
+                Common.Data.MakeRangeData(1, 2),
+                Common.Data.MakeRangeData(1, 2),
+                Common.Data.MakeRangeData(1, 2),
+                Common.Data.MakeRangeData(1, 2),
+            };
+            RPData = new string[4]
+            {
+                Common.Data.MakeRangeData(2, 1),
+                Common.Data.MakeRangeData(2, 1),
+                Common.Data.MakeRangeData(2, 1),
+                Common.Data.MakeRangeData(2, 1),
+            };
+            strToDam = new float[4] { 1.0f, 1.5f, 1.5f, 2.0f };
+            fixedDam = new int[4] { 10, 10, 10, 20 };
         }
     }
 }

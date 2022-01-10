@@ -148,7 +148,7 @@ public class DungeonEditor : MonoBehaviour
 
     public void InitUnitInfoController()
     {
-        foreach (Skill skill in Common.Data.AllSkills.Values)
+        foreach (Skill skill in Common.Data.AllSkills)
         {
             GameObject gameObject = Instantiate(infoBox, Skills);
 
@@ -203,7 +203,7 @@ public class DungeonEditor : MonoBehaviour
             modifyButton.onClick.AddListener(() =>
             {
                 if (currentUnit == null) return;
-                Artifact copied = artifact.Clone() as Artifact;
+                Artifact copied = artifact.Clone();
                 Common.Command.AddArtifact(currentUnit, copied);
                 InfoView.instance.unitInfo.SetUnit(currentUnit);
             });
@@ -233,7 +233,7 @@ public class DungeonEditor : MonoBehaviour
                 if (currentUnit == null)
                     return;
 
-                Effect copied = effect.Clone() as Effect;
+                Effect copied = effect.Clone();
                 Common.Command.AddEffect(currentUnit, copied);
                 InfoView.instance.unitInfo.SetUnit(currentUnit);
             });

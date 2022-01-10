@@ -69,8 +69,15 @@ namespace Model
             InColor = new Color(0.9f, 0.9f, 0.9f);
             OutColor = Color.clear;
 
-            MoveSkill = Data.GetRandomSkill(Seed, species, SkillCategory.Move) as Model.Skills.Move.MoveSkill;
-            Skills.Add(Data.GetRandomSkill(Seed, species, SkillCategory.Basic));
+            Common.Command.AddSkill(this, Data.GetRandomSkill(Seed, species, SkillCategory.Move));
+            Common.Command.AddSkill(this, Data.GetRandomSkill(Seed, species, SkillCategory.Player));
+            Common.Command.AddSkill(this, Data.GetRandomSkill(Seed, species, SkillCategory.Player));
+            Common.Command.AddSkill(this, Data.GetRandomSkill(Seed, species, SkillCategory.Player));
+
+            // MoveSkill = Data.GetRandomSkill(Seed, species, SkillCategory.Move) as Model.Skills.Move.MoveSkill;
+            // Skills.Add(Data.GetRandomSkill(Seed, species, SkillCategory.Attack));
+            // Skills.Add(Data.GetRandomSkill(Seed, species, SkillCategory.Attack));
+            // Skills.Add(Data.GetRandomSkill(Seed, species, SkillCategory.Attack));
 
             // Skills.Add(Data.GetRandomSkill(Seed, species, SkillCategory.Intermediate));
             // Skills.Add(Data.GetRandomSkill(Seed, species, SkillCategory.Advanced));

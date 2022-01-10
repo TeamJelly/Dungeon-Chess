@@ -38,11 +38,10 @@ namespace UI.Battle
             nextUnit.IsSkilled = false;
 
             // 턴 시작시 스킬쿨 줄어듬
-            foreach (var skill in new List<Skill>(nextUnit.WaitingSkills.Keys))
+            foreach (var skill in nextUnit.Skills)
             {
-                nextUnit.WaitingSkills[skill] -= 1;
-                if (nextUnit.WaitingSkills[skill] < 0)
-                    nextUnit.WaitingSkills.Remove(skill);
+                if (skill.WaitingTime > 0)
+                    skill.WaitingTime--;
             }
             
             nextUnit.OnTurnStart.before.Invoke(false);

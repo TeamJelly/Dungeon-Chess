@@ -316,7 +316,7 @@ namespace Common
                     averagePosition /= partyUnits.Count;
 
                     Vector2Int dest = PathFind.GetClosestReachableDest(user, averagePosition).position;
-                    path = PathFind.PathFindAlgorithm(user, user.MoveSkill, user.Position, dest);
+                    path = PathFind.PathFindAlgorithm(user.MoveSkill, user.Position, dest);
 
                     if (path != null)
                         return path[1];
@@ -334,7 +334,7 @@ namespace Common
                             closestUnit = unit;
 
                     Vector2Int dest = PathFind.GetClosestReachableDest(user, closestUnit.Position).position;
-                    path = PathFind.PathFindAlgorithm(user, user.MoveSkill, user.Position, dest);
+                    path = PathFind.PathFindAlgorithm(user.MoveSkill, user.Position, dest);
 
                     if (path != null)
                         return path[1];

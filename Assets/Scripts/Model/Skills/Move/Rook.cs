@@ -24,7 +24,7 @@ namespace Model.Skills.Move
             species.Add(UnitSpecies.Golem);
         }
 
-        public override List<Vector2Int> GetUseRange(Unit user, Vector2Int userPosition)
+        public override List<Vector2Int> GetUseRange(Vector2Int userPosition)
         {
             List<Vector2Int> positions = new List<Vector2Int>() { userPosition };
             Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
@@ -33,7 +33,7 @@ namespace Model.Skills.Move
             for (int i = 0; i < canGo.Length; i++)
                 canGo[i] = true;
 
-            for (int i = 1; i <= user.Mobility; i++)
+            for (int i = 1; i <= User.Mobility; i++)
             {
                 for (int b = 0; b < directions.GetLength(0); b++)
                 {
@@ -60,7 +60,7 @@ namespace Model.Skills.Move
 
             return positions;
         }
-        public override List<Vector2Int> GetAvlPositions(Unit user, Vector2Int userPosition)
+        public override List<Vector2Int> GetAvlPositions(Vector2Int userPosition)
         {
             List<Vector2Int> positions = new List<Vector2Int>() { userPosition };
             Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
@@ -69,7 +69,7 @@ namespace Model.Skills.Move
             for (int i = 0; i < canGo.Length; i++)
                 canGo[i] = true;
 
-            for (int i = 1; i <= user.Mobility; i++)
+            for (int i = 1; i <= User.Mobility; i++)
             {
                 for (int b = 0; b < directions.GetLength(0); b++)
                 {
@@ -77,7 +77,7 @@ namespace Model.Skills.Move
                     temp = userPosition + directions[b] * (2 * i - 1);
                     if (canGo[b] 
                         && FieldManager.IsInField(temp) 
-                        && FieldManager.GetTile(temp).IsPositionable(user))
+                        && FieldManager.GetTile(temp).IsPositionable(User))
                         positions.Add(temp);
                     else
                         canGo[b] = false;
@@ -85,7 +85,7 @@ namespace Model.Skills.Move
                     temp = userPosition + directions[b] * 2 * i;
                     if (canGo[b] 
                         && FieldManager.IsInField(temp)
-                        && FieldManager.GetTile(temp).IsPositionable(user))
+                        && FieldManager.GetTile(temp).IsPositionable(User))
                         positions.Add(temp);
                     else
                         canGo[b] = false;

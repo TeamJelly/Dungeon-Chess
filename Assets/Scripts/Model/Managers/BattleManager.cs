@@ -75,22 +75,23 @@ namespace Model.Managers
 
             // 테스팅 적 유닛 소환
             Unit unit = new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1);
-            unit.MoveSkill = (Skills.Move.MoveSkill)Common.Data.AllSkills[typeof(Skills.Move.Rook)];//new Skills.Move.Rook();
+
+            Common.Command.AddSkill(unit, new Skills.Move.Rook());
             unit.Mobility = 1;
             Common.Command.Summon(unit, new Vector2Int(9, 11));
 
             unit = new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1);
-            unit.MoveSkill = (Skills.Move.MoveSkill)Common.Data.AllSkills[typeof(Skills.Move.Pawn)];
+            Common.Command.AddSkill(unit, new Skills.Move.Pawn());
             unit.Mobility = 1;
             Common.Command.Summon(unit, new Vector2Int(9, 12));
 
             unit = new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1);
-            unit.MoveSkill = (Skills.Move.MoveSkill)Common.Data.AllSkills[typeof(Skills.Move.Knight)];
+            Common.Command.AddSkill(unit, new Skills.Move.Knight());
             unit.Mobility = 1;
             Common.Command.Summon(unit, new Vector2Int(10, 11));
 
             unit = new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1);
-            unit.MoveSkill = (Skills.Move.MoveSkill)Common.Data.AllSkills[typeof(Skills.Move.Queen)];
+            Common.Command.AddSkill(unit, new Skills.Move.Queen());
             unit.Mobility = 1;
             Common.Command.Summon(unit, new Vector2Int(10, 12));
 
@@ -117,7 +118,9 @@ namespace Model.Managers
             BattleController.SetBattleMode(true);
 
             // 게임 시작시 재사용대기시간 초기화
-            foreach (Unit _unit in GameManager.PartyUnits) _unit.WaitingSkills.Clear();
+            foreach (Unit _unit in GameManager.PartyUnits)
+                foreach (Skill skill in _unit.Skills)
+                    skill.WaitingTime = 0;
 
             BattleView.TurnEndButton.gameObject.SetActive(false);
             BattleView.SummonPartyUnits();// 파티 유닛 최초 소환            

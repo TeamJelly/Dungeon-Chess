@@ -128,6 +128,9 @@ namespace Common
         /// <param name="item"></param>
         public static void AddItem(Item item)
         {
+            if (Data.AllItems.Contains(item))
+                item = item.Clone();
+
             GameManager.Instance.itemBag.Add(item);
             UnitControlView.instance.UpdateItemButtons();
         }
@@ -140,6 +143,9 @@ namespace Common
         /// <param name="artifact"></param>
         public static void AddArtifact(Unit target, Artifact artifact)
         {
+            if (Data.AllArtifacts.Contains(artifact))
+                artifact = artifact.Clone();
+
             // 아티펙트의 주인은 target이다.
             artifact.Owner = target;
 
@@ -178,6 +184,9 @@ namespace Common
 
         public static void AddEffect(Unit target, Effect effect)
         {
+            if (Data.AllEffects.Contains(effect))
+                effect = effect.Clone();
+
             Effect oldEffect = null;
             foreach (var stateEffect in target.StateEffects)
                 if (effect.GetType() == stateEffect.GetType())
@@ -273,7 +282,6 @@ namespace Common
                 }
             }
 
-
             //비전투시 유닛 표시기 비활성화
             else if (BattleManager.instance.thisTurnUnit == unit)
                 BattleManager.instance.thisTurnUnit = null;
@@ -295,41 +303,54 @@ namespace Common
 
         public static void AddSkill(Unit unit, Skill newSkill)
         {
-            if (typeof(Model.Skills.Move.MoveSkill).IsInstanceOfType(newSkill))
+            if (Data.AllSkills.Contains(newSkill))
+                newSkill = newSkill.Clone();
+
+            if (newSkill is Model.Skills.Move.MoveSkill)
             {
                 RemoveSkill(unit, unit.MoveSkill);
                 unit.MoveSkill = newSkill as Model.Skills.Move.MoveSkill;
+                newSkill.User = unit;
             }
             else if (unit.Skills.Count < 3 && !unit.Skills.Contains(newSkill))
             {
                 unit.Skills.Add(newSkill);
+                newSkill.User = unit;
             }
             else
                 Debug.LogError($"{newSkill.Name} 스킬을 배울 수 없습니다.");
         }
 
-        public static void EnhanceSkill(Unit unit, Skill skill)
+        /// <summary>
+        /// 스킬의 레벨을 1 올린다.
+        /// </summary>
+        /// <param name="skill"></param>
+        public static void UpgradeSkill(Skill skill)
         {
-            if (unit.MoveSkill == skill || unit.Skills.Contains(skill))
-            {
-                if (unit.EnhancedSkills.ContainsKey(skill))
-                    unit.EnhancedSkills[skill] = unit.EnhancedSkills[skill] + 1;
-                else
-                    unit.EnhancedSkills.Add(skill, 1);
-            }
-            else
-                Debug.LogError($"{skill.Name}은 현재 소유한 스킬이 아닙니다. 강화할수 없습니다.");
+            skill.Level++;
+            skill.OnUpgrade(skill.Level);
+        }
+
+        /// <summary>
+        /// 스킬의 레벨을 level로 올린다.
+        /// </summary>
+        /// <param name="skill"></param>
+        /// <param name="level"></param>
+        public static void UpgradeSkill(Skill skill, int level)
+        {
+            skill.Level = level;
+            skill.OnUpgrade(skill.Level);
         }
 
         public static void RemoveSkill(Unit unit, Skill skill)
         {
             // 대기중인 스킬에 존재한다면, 미리 삭제해준다.
-            if (unit.WaitingSkills.ContainsKey(skill))
-                unit.WaitingSkills.Remove(skill);
+            // if (unit.WaitingSkills.ContainsKey(skill))
+            //     unit.WaitingSkills.Remove(skill);
 
             // 강화한 스킬 리스트에 존재한다면, 삭제해줍니다.
-            if (unit.EnhancedSkills.ContainsKey(skill))
-                unit.EnhancedSkills.Remove(skill);
+            // if (unit.EnhancedSkills.ContainsKey(skill))
+            //     unit.EnhancedSkills.Remove(skill);
 
             // 스킬 삭제
             if (unit.MoveSkill == skill)

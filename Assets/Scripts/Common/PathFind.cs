@@ -52,11 +52,11 @@ namespace Common
                 return temp;
             }
 
-            public static List<Node> GetAvilableNeighbor(Model.Unit agent, MoveSkill moveSkill, Node center)
+            public static List<Node> GetAvilableNeighbor(/*Model.Unit agent,*/ MoveSkill moveSkill, Node center)
             {
                 List<Node> neighbor = new List<Node>();
                 
-                List<Vector2Int> positions = moveSkill.GetAvlPositions(agent, center.unitPosition);
+                List<Vector2Int> positions = moveSkill.GetAvlPositions(center.unitPosition);
 
                 foreach(Vector2Int position in positions)
                 {
@@ -146,7 +146,7 @@ namespace Common
                 frontier.RemoveAt(0);
 
                 // if (curTile.IsPositionable(unit))
-                if (PathFindAlgorithm(unit, unit.MoveSkill, unit.Position, curTile.position) != null)
+                if (PathFindAlgorithm(/*unit,*/ unit.MoveSkill, unit.Position, curTile.position) != null)
                     return curTile;
 
                 foreach (Vector2Int direction in directions)
@@ -167,7 +167,7 @@ namespace Common
         /// <param name="from">시작위치</param>
         /// <param name="to">목적지</param>
         /// <returns></returns>
-        public static List<Vector2Int> PathFindAlgorithm(Model.Unit agent, MoveSkill moveSkill, Vector2Int from, Vector2Int to)
+        public static List<Vector2Int> PathFindAlgorithm(/*Model.Unit agent,*/ MoveSkill moveSkill, Vector2Int from, Vector2Int to)
         {            
             if (FieldManager.GetTile(to) == null || FieldManager.GetTile(to).HasUnit())
             {
@@ -197,7 +197,7 @@ namespace Common
 
                 explored.Add(node); // add node.State to explored
 
-                foreach (var neighbor in Node.GetAvilableNeighbor(agent, moveSkill, node))
+                foreach (var neighbor in Node.GetAvilableNeighbor(/*agent,*/ moveSkill, node))
                 {
                     bool isExplored = false;
                     foreach (var item in explored)

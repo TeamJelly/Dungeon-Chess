@@ -149,19 +149,27 @@ namespace Common
             return name.Substring(0, name.Length - 1);
         }
 
-        public static Skill GetRandomSkill(int seed, UnitSpecies species, SkillCategory category)
+        /// <summary>
+        /// 랜덤한 스킬을 받는다. 조건을 부여할수 있다.
+        /// </summary>
+        /// <param name="seed">랜덤 시드 번호..</param>
+        /// <param name="species">종족</param>
+        /// <param name="type">부모 클래스</param>
+        /// <returns></returns>
+        public static Skill GetRandomSkill(int seed, UnitSpecies species = UnitSpecies.NULL, SkillCategory skillCategory = SkillCategory.NULL)
         {
             List<Skill> skills = new List<Skill>();
 
-            foreach (Skill skill in AllSkills.Values)
-                if (skill.species.Contains(species) && skill.Category == category)
+            foreach (Skill skill in AllSkills)
+                if ((skill.species.Contains(species) || species == UnitSpecies.NULL) &&
+                    (skill.Category == skillCategory || skillCategory == SkillCategory.NULL))
                     skills.Add(skill);
 
             if (skills.Count == 0)
-                return AllSkills.Values.ToArray()[0];
+                return AllSkills[0].Clone();
 
             int idx = seed % skills.Count;
-            return skills[idx];
+            return skills[idx].Clone();
         }
 
         private static void InitSkillDictionary()
@@ -175,7 +183,7 @@ namespace Common
                 { UnitSpecies.LargeBeast, new List<Skill>() },
             };
 
-            foreach (Skill skill in AllSkills.Values)
+            foreach (Skill skill in AllSkills)
             {
                 categoryToSkillList[skill.Category].Add(skill);
                 foreach (UnitSpecies s in skill.species)
