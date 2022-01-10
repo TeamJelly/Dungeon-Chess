@@ -47,8 +47,9 @@ namespace View
 
                     else if (DungeonEditor.instance.selectedObject is Artifact)
                         Common.Command.Summon(((Artifact)DungeonEditor.instance.selectedObject).Clone(), tileIdx);
-                    // if (DungeonEditor.instance.selectedObject is Tile)
-                    //     Common.Command.Summon((Unit) DungeonEditor.instance.selectedObject, tileIdx);
+                    if (DungeonEditor.instance.selectedObject is Tile)
+                        Model.Managers.FieldManager.instance.tileMap.SetTile(new Vector3Int(tileIdx.x, tileIdx.y, 0), ((Tile)(DungeonEditor.instance.selectedObject)).TileBase);
+                         //Common.Command.Summon((Unit) DungeonEditor.instance.selectedObject, tileIdx);
                 }
             }
 

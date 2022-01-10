@@ -126,6 +126,19 @@ public class DungeonEditor : MonoBehaviour
 
         });*/
     }
+    private void Start()
+    {
+        InitTilesInData();
+    }
+    void InitTilesInData()
+    {
+        var Tiles = Common.Data.AllTiles;
+        for (int i = 0; i < Tiles.Count; i++)
+        {
+            Tiles[i].position = new Vector2Int(-10, i);
+            FieldManager.instance.tileMap.SetTile(new Vector3Int(-10, i, 0), Tiles[i].TileBase);
+        }
+    }
 
     public void SetTile(Tile tile)
     {
@@ -325,8 +338,9 @@ public class DungeonEditor : MonoBehaviour
             TMP.gameObject.SetActive(true);
             TMP.text = Tiles[i].Name;
 
-            // Image image = gameObject.transform.Find("Image").GetComponent<Image>();
-            // image.sprite = Tiles[i].Sprite;
+            Image image = gameObject.transform.Find("Image").GetComponent<Image>();
+            image.sprite = Tiles[i].Sprite;
+
 
             RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
             rectTransform.sizeDelta = new Vector2(150, 150);
