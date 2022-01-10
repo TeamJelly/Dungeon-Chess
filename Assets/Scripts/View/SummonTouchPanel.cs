@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Model;
@@ -48,7 +49,13 @@ namespace View
                     else if (DungeonEditor.instance.selectedObject is Artifact)
                         Common.Command.Summon(((Artifact)DungeonEditor.instance.selectedObject).Clone(), tileIdx);
                     if (DungeonEditor.instance.selectedObject is Tile)
-                        Model.Managers.FieldManager.instance.tileMap.SetTile(new Vector3Int(tileIdx.x, tileIdx.y, 0), ((Tile)(DungeonEditor.instance.selectedObject)).TileBase);
+                    {
+                        Vector3Int tilePosition = new Vector3Int(tileIdx.x, tileIdx.y, 0);
+                        Model.Managers.FieldManager.instance.field[tileIdx.y, tileIdx.x] = (Tile)Activator.CreateInstance(Type.GetType(DungeonEditor.instance.selectedObject.ToString()));
+                        Model.Managers.FieldManager.instance.field[tileIdx.y, tileIdx.x].position = tileIdx;
+                        Model.Managers.FieldManager.instance.tileMap.SetTile(tilePosition, ((Tile)(DungeonEditor.instance.selectedObject)).TileBase);
+                    }
+                        
                          //Common.Command.Summon((Unit) DungeonEditor.instance.selectedObject, tileIdx);
                 }
             }
