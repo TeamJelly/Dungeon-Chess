@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Model.Skills.Basic
 {
-    public class Slash : BasicSkill
+    public class Slash : Skill
     {
         private float[] strToDam;
         private int[] fixedDam;

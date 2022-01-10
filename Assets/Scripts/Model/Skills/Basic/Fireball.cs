@@ -44,35 +44,35 @@ namespace Model.Skills.Basic
             species.Add(UnitSpecies.Human);
         }
 
-        public override IEnumerator Use(Unit user, Vector2Int target)
+        public override IEnumerator Use(Vector2Int target)
         {
             // 필요 변수 계산
-            int SLV = GetSLV(user);
-            bool isCri = Random.Range(0, 100) < user.CriRate;
-            int damage = (int)(fixedDam[SLV] + user.Strength * strToDam[SLV]);
+            int SLV = Level;
+            bool isCri = Random.Range(0, 100) < User.CriRate;
+            int damage = (int)(fixedDam[SLV] + User.Strength * strToDam[SLV]);
             if (isCri) damage *= 2;
 
             // 스킬 소모 기록
-            user.IsSkilled = true;
-            user.WaitingSkills.Add(this, ReuseTime[SLV]);
+            User.IsSkilled = true;
+            User.WaitingSkills.Add(this, ReuseTime[SLV]);
 
             // 스킬 실행
             Unit targetUnit = Model.Managers.BattleManager.GetUnit(target);
             if (targetUnit != null)
             {
-                Debug.Log($"{user.Name}가 {Name}스킬을 {targetUnit.Name}에 사용!");
+                Debug.Log($"{User.Name}가 {Name}스킬을 {targetUnit.Name}에 사용!");
                 Common.Command.Damage(targetUnit, damage);
             }
             else
-                Debug.Log($"{user.Name}가 {Name}스킬을 {target}에 사용!");
+                Debug.Log($"{User.Name}가 {Name}스킬을 {target}에 사용!");
 
             yield return null;
         }
 
-        public override string GetDescription(Unit user)
+        public override string GetDescription()
         {
-            int SLV = GetSLV(user);
-            int damage = (int)(fixedDam[SLV] + user.Strength * strToDam[SLV]);
+            int SLV = Level;
+            int damage = (int)(fixedDam[SLV] + User.Strength * strToDam[SLV]);
 
             return $"지정한 타일 위의 모든 대상에게 {damage}만큼 데미지를 준다.";
         }

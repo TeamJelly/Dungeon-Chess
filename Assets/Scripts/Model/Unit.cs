@@ -331,13 +331,13 @@ namespace Model
         /// 대기중인 스킬과 현재 남은 대기 턴수를 알려줍니다. 
         /// </summary>
         /// <value> 남은 대기 턴수 </value>
-        public Dictionary<Skill, int> WaitingSkills { get => waitingSkills; set => waitingSkills = value; }
-
+        // public Dictionary<Skill, int> WaitingSkills { get => waitingSkills; set => waitingSkills = value; }
         /// <summary>
         /// 강화한 스킬과 스킬의 강화레벨을 알려줍니다.
         /// </summary>
         /// <value> 스킬의 레벨 </value>
-        public Dictionary<Skill, int> EnhancedSkills { get => enhancedSkills; set => enhancedSkills = value; }
+        // public Dictionary<Skill, int> EnhancedSkills { get => enhancedSkills; set => enhancedSkills = value; }
+
         public List<Obtainable> Belongings { get => belongings; set => belongings = value; }
         public List<Effect> StateEffects { get => stateEffects; set => stateEffects = value; }
         public int CriRate { get => criRate; set => criRate = value; }
@@ -393,8 +393,10 @@ namespace Model
                 positionX = position.x,
                 positionY = position.y,
                 moveSkill = moveSkill.ToString(),
-                animatorPath = animatorPath,
-                animationState = (int)animationState,
+
+                // animatorPath = animatorPath,
+                // animationState = (int)animationState,
+
                 Alliance = (int)Alliance,
                 Species = (int)Species,
                 Modifier = (int)Modifier,
@@ -418,17 +420,17 @@ namespace Model
             foreach (Skill s in skills)
             {
                 u.skills.Add(s.ToString());
-                u.skill_waitingTimes(s.WaitingTime);
-                u.skill_levels();
+                u.skill_levels.Add(s.Level);
+                u.skill_waitingTimes.Add(s.WaitingTime);
             }
-            foreach (Skill s in waitingSkills.Keys)
-            {
-                u.waitingSkills.Add(s.ToString(), waitingSkills[s]);
-            }
-            foreach (Skill s in enhancedSkills.Keys)
-            {
-                u.enhancedSkills.Add(s.ToString(), enhancedSkills[s]);
-            }
+            // foreach (Skill s in waitingSkills.Keys)
+            // {
+            //     u.waitingSkills.Add(s.ToString(), waitingSkills[s]);
+            // }
+            // foreach (Skill s in enhancedSkills.Keys)
+            // {
+            //     u.enhancedSkills.Add(s.ToString(), enhancedSkills[s]);
+            // }
             for (int i = 0; i < stateEffects.Count; i++)
             {
                 u.stateEffects.Add(stateEffects[i].ToString());
@@ -461,15 +463,21 @@ namespace Model
             mobility = u.mobility;
             criRate = u.criRate;
             actionRate = u.actionRate;
+
             position.x = u.positionX;
             position.y = u.positionY;
-            moveSkill = (MoveSkill)Data.AllSkills[Type.GetType(u.moveSkill)];
-            animatorPath = u.animatorPath;
-            animationState = (AnimationState)u.animationState;
+
+            moveSkill = Activator.CreateInstance(Type.GetType(u.moveSkill)) as MoveSkill;
+
+            // animatorPath = u.animatorPath;
+            // animationState = (AnimationState)u.animationState;
+
             Alliance = (UnitAlliance)u.Alliance;
             Species = (UnitSpecies)u.Species;
             Modifier = (UnitModifier)u.Modifier;
+
             //Sprite = u.1;
+
             IsSkilled = u.IsSkilled;
             IsMoved = u.IsMoved;
             isFlying = u.IsFlying;
@@ -497,18 +505,12 @@ namespace Model
                 Common.Command.RemoveArtifact(this, (Artifact)o);
             }
 
-
-            foreach (string s in u.skills)
+            for (int i = 0; i < u.skills.Count; i++)
             {
-                Common.Command.AddSkill(this, (Skill)Activator.CreateInstance(Type.GetType(s)));
-            }
-            foreach (string s in u.waitingSkills.Keys)
-            {
-                waitingSkills.Add(Data.AllSkills[Type.GetType(s)], u.waitingSkills[s]);
-            }
-            foreach (string s in u.enhancedSkills.Keys)
-            {
-                enhancedSkills.Add(Data.AllSkills[Type.GetType(s)], u.enhancedSkills[s]);
+                Skill skl = (Skill)Activator.CreateInstance(Type.GetType(u.skills[i]));
+                Common.Command.UpgradeSkill(skl, u.skill_levels[i]);
+                skl.WaitingTime = u.skill_waitingTimes[i];
+                Common.Command.AddSkill(this, skl);
             }
 
             for (int i = 0; i < u.stateEffects.Count; i++)
@@ -542,13 +544,20 @@ namespace Model
         public int positionY;                // 위치Y
         public string moveSkill;
         public List<string> skills = new List<string>();
-        public Dictionary<string, int> waitingSkills = new Dictionary<string, int>();
-        public Dictionary<string, int> enhancedSkills = new Dictionary<string, int>();
+        public List<int> skill_levels = new List<int>();
+        public List<int> skill_waitingTimes = new List<int>();
+
+        // public Dictionary<string, int> waitingSkills = new Dictionary<string, int>();
+        // public Dictionary<string, int> enhancedSkills = new Dictionary<string, int>();
         public List<string> stateEffects = new List<string>();  // 보유한 상태효과
-        public List<int> stateEffects_count = new List<int>();  // 보유한 상태효과
+
+        // public List<int> stateEffects_count = new List<int>();  // 보유한 상태효과
+
         public List<string> belongings = new List<string>();  // 보유한 유물
-        public string animatorPath = "";
-        public int animationState;
+
+        // public string animatorPath = "";
+        // public int animationState;
+
         public int Alliance;
         public int Species;
         public int Modifier;

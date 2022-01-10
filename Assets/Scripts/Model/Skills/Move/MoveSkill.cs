@@ -15,12 +15,12 @@ namespace Model.Skills.Move
             Priority = Common.AI.Priority.NearFromPartys;
 
             Range = RangeType.Fixed;
-            ReuseTime = new int[1] { 0 };            
+            ReuseTime = 0;
         }
 
-        public override bool IsUsable(Unit user)
+        public override bool IsUsable()
         {
-            if (!user.IsSkilled && !user.IsMoved && !user.WaitingSkills.ContainsKey(this))
+            if (!User.IsSkilled && !User.IsMoved && WaitingTime == 0)
                 return true;
             else
                 return false;
@@ -66,7 +66,7 @@ namespace Model.Skills.Move
             user.animationState = Unit.AnimationState.Idle;
 
             // 실제 타일에 상속되는건 한번이다.
-            Common.Command.Move(user,startPosition, target);
+            Common.Command.Move(user, startPosition, target);
         }
     }
 }

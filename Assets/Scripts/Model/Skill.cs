@@ -39,19 +39,23 @@ namespace Model
         public SkillCategory Category { get; set; }
         public string Name { get; set; }
         public int Level { get; set; }
-
-        // 레벨에 따라 달라지기 쉬운 변수
-        public int[] ReuseTime { get; set; }
-        public string[] APData { get; set; }
-        public string[] RPData { get; set; }
+        public int WaitingTime { get; set; } // 현재 스킬 쿨타임
+        public int ReuseTime { get; set; } // 재사용 대기시간
+        public string APData { get; set; }
+        public string RPData { get; set; }
 
         // 스킬의 속성, 타입
         public AI.Priority Priority { get; set; }
         public TargetType Target { get; set; }
         public TargetType AITarget { get; set; }
         public RangeType Range { get; set; }
+
         public List<UnitSpecies> species = new List<UnitSpecies>();
 
+        public int SpriteNumber { get; set; }
+        public Color InColor { get; set; }
+        public Color OutColor { get; set; }
+        private Sprite sprite;
         public Sprite Sprite
         {
             get
@@ -60,37 +64,17 @@ namespace Model
                     sprite = Data.MakeSprite(SpriteNumber, InColor, OutColor);
                 return sprite;
             }
-            // set => sprite = value;
         }
-
-        private Sprite sprite;
-        public int SpriteNumber { get; set; }
-        public Color InColor { get; set; }
-        public Color OutColor { get; set; }
 
         public string Description { get; set; }
         public string Type => "Skill";
-
-
-        /// <summary>
-        /// 유닛 레벨을 스킬레벨로 전환시켜준다.
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        // public virtual int GetSLV(Unit user)
-        // {
-        //     if (user.EnhancedSkills.ContainsKey(this))
-        //         return user.EnhancedSkills[this];
-        //     else
-        //         return 0;
-        // }
 
         public virtual bool IsUsable()
         {
             // 이번턴에 스킬을 사용하지 않고,
             // 이 스킬이 현재 대기중이지 않고,
             // 스킬 레벨이 음수가 아니라면 사용가능하다.
-            if (!User.IsSkilled && !User.WaitingSkills.ContainsKey(this) && Level >= 0)
+            if (!User.IsSkilled && WaitingTime == 0)
                 return true;
             else
                 return false;
@@ -101,13 +85,13 @@ namespace Model
         /// </summary>
         /// <param name="userPosition"></param>
         /// <returns></returns>
-        public virtual List<Vector2Int> GetUseRange(Unit user, Vector2Int userPosition)
+        public virtual List<Vector2Int> GetUseRange(Vector2Int userPosition)
         {
             List<Vector2Int> positions = new List<Vector2Int>();
 
             if (APData != null)
             {
-                foreach (var position in Common.Data.ParseRangeData(APData[Level]))
+                foreach (var position in Common.Data.ParseRangeData(APData))
                 {
                     Vector2Int abs = userPosition + position;
                     positions.Add(abs);
@@ -130,7 +114,7 @@ namespace Model
             if (User.Alliance != UnitAlliance.Party && AITarget != TargetType.NULL)
                 Target = this.AITarget;
 
-            foreach (var position in GetUseRange(User, userPosition))
+            foreach (var position in GetUseRange(userPosition))
             {
                 Unit unit = BattleManager.GetUnit(position);
 
@@ -186,7 +170,7 @@ namespace Model
             // 관련된 범위를 표현하는게 가능하지 않은 경우
             if (RPData == null || !GetAvlUsePositions().Contains(skillPosition)) return positions;
 
-            foreach (var vector in Common.Data.ParseRangeData(RPData[Level]))
+            foreach (var vector in Common.Data.ParseRangeData(RPData))
             {
                 Vector2Int abs = skillPosition + vector;
                 if (FieldManager.IsInField(abs))
@@ -199,13 +183,30 @@ namespace Model
         public virtual IEnumerator Use(Vector2Int target)
         {
             Debug.LogError(Name + " 스킬을 " + target + "에 사용!");
-            User.WaitingSkills.Add(this, ReuseTime[Level]);
+
+            User.IsSkilled = true;
+            WaitingTime = ReuseTime;
+
             yield return null;
         }
 
-        public virtual void Upgrade()
+        public virtual void OnUpgrade(int level)
         {
-            Level++;
+            Level = level;
+
+            // 레벨에 따른 업그레이드를 해줍시다.   
+            if (Level == 0)
+            {
+
+            }
+            else if (Level == 1)
+            {
+
+            }
+            else if (Level == 2)
+            {
+                // ... 레벨에 따라 값을 넣어줍니다.
+            }
         }
 
         public virtual string GetDescription()

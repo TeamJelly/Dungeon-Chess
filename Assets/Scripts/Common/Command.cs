@@ -121,7 +121,7 @@ namespace Common
             }
         }
 
-        
+
         /// <summary>
         /// 공용 가방에 아이템을 추가한다.
         /// </summary>
@@ -249,7 +249,7 @@ namespace Common
 
         public static void UnSummon(Unit unit)
         {
-            if(unit.Alliance == UnitAlliance.Party)
+            if (unit.Alliance == UnitAlliance.Party)
                 GameManager.RemovePartyUnit(unit); //죽으면 파티유닛에서 박탈.
             BattleView.DestroyUnitObject(unit);
             BattleManager.instance.AllUnits.Remove(unit);
@@ -263,7 +263,7 @@ namespace Common
             //적 전멸 -> (승리조건 검사 목적), 내가 죽음 -> (턴을 다음 유닛으로 넘길 목적)
             if (GameManager.InBattle)
             {
-                if(BattleManager.GetUnit(UnitAlliance.Enemy).Count == 0)
+                if (BattleManager.GetUnit(UnitAlliance.Enemy).Count == 0)
                     BattleController.instance.ThisTurnEnd();
 
                 else if (BattleManager.instance.thisTurnUnit == unit)
@@ -272,7 +272,7 @@ namespace Common
                     BattleController.instance.ThisTurnEnd();
                 }
             }
-                
+
 
             //비전투시 유닛 표시기 비활성화
             else if (BattleManager.instance.thisTurnUnit == unit)
