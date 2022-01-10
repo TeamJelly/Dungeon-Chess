@@ -171,6 +171,10 @@ namespace Model.Managers
             return FieldManager.GetTile(position)?.GetUnit();
         }
 
+        public static Obtainable GetObtainable(Vector2Int position)
+        {
+            return FieldManager.GetTile(position)?.GetObtainable();
+        }
         Queue<Unit> unitBuffer = new Queue<Unit>();
 
         int bufferSize = 5;
