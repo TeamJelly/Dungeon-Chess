@@ -9,7 +9,9 @@ namespace Model.Skills.Basic
         private float strToDam;
         private int fixedDam;
 
-        public Fireball() : base()
+        public Fireball() : this(0) { }
+
+        public Fireball(int level) : base()
         {
             Name = "Fire Ball";
             Priority = Common.AI.Priority.NULL;
@@ -24,6 +26,8 @@ namespace Model.Skills.Basic
             species.Add(UnitSpecies.SmallBeast);
             species.Add(UnitSpecies.MediumBeast);
             species.Add(UnitSpecies.Human);
+
+            OnUpgrade(level);
         }
 
         public override IEnumerator Use(Vector2Int target)

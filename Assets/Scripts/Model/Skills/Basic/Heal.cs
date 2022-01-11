@@ -6,7 +6,7 @@ namespace Model.Skills.Basic
 {
     public class Heal : Skill
     {
-        private int[] fixedHeal;
+        private int fixedHeal;
 
         public Heal() : base()
         {
