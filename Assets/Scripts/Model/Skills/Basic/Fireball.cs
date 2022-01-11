@@ -6,8 +6,8 @@ namespace Model.Skills.Basic
 {
     public class Fireball : Skill
     {
-        private float[] strToDam;
-        private int[] fixedDam;
+        private float strToDam;
+        private int fixedDam;
 
         public Fireball() : base()
         {
@@ -31,12 +31,12 @@ namespace Model.Skills.Basic
             // 필요 변수 계산
             int SLV = Level;
             bool isCri = Random.Range(0, 100) < User.CriRate;
-            int damage = (int)(fixedDam[SLV] + User.Strength * strToDam[SLV]);
+            int damage = (int)(fixedDam + User.Strength * strToDam);
             if (isCri) damage *= 2;
 
             // 스킬 소모 기록
             User.IsSkilled = true;
-            User.WaitingSkills.Add(this, ReuseTime[SLV]);
+            WaitingTime = ReuseTime;
 
             // 스킬 실행
             Unit targetUnit = Model.Managers.BattleManager.GetUnit(target);
@@ -54,31 +54,47 @@ namespace Model.Skills.Basic
         public override string GetDescription()
         {
             int SLV = Level;
-            int damage = (int)(fixedDam[SLV] + User.Strength * strToDam[SLV]);
+            int damage = (int)(fixedDam + User.Strength * strToDam);
 
             return $"지정한 타일 위의 모든 대상에게 {damage}만큼 데미지를 준다.";
         }
 
         public override void OnUpgrade(int level)
         {
-            
-            ReuseTime = new int[4] { 1, 1, 0, 0 };
-            APData = new string[4]
+            Level = level;
+
+            if (Level == 0)
             {
-                Common.Data.MakeRangeData(1, 2),
-                Common.Data.MakeRangeData(1, 2),
-                Common.Data.MakeRangeData(1, 2),
-                Common.Data.MakeRangeData(1, 2),
-            };
-            RPData = new string[4]
+                ReuseTime = 1;
+                APData = Common.Data.MakeRangeData(1, 2);
+                RPData = Common.Data.MakeRangeData(1, 1);
+                strToDam = 1.0f;
+                fixedDam = 10;
+            }
+            else if (Level == 1)
             {
-                Common.Data.MakeRangeData(2, 1),
-                Common.Data.MakeRangeData(2, 1),
-                Common.Data.MakeRangeData(2, 1),
-                Common.Data.MakeRangeData(2, 1),
-            };
-            strToDam = new float[4] { 1.0f, 1.5f, 1.5f, 2.0f };
-            fixedDam = new int[4] { 10, 10, 10, 20 };
+                ReuseTime = 1;
+                APData = Common.Data.MakeRangeData(1, 2);
+                RPData = Common.Data.MakeRangeData(2, 1);
+                strToDam = 1.5f;
+                fixedDam = 10;
+            }
+            else if (Level == 2)
+            {
+                ReuseTime = 0;
+                APData = Common.Data.MakeRangeData(1, 3);
+                RPData = Common.Data.MakeRangeData(2, 1);
+                strToDam = 1.5f;
+                fixedDam = 10;
+            }
+            else if (Level == 3)
+            {
+                ReuseTime = 0;
+                APData = Common.Data.MakeRangeData(1, 4);
+                RPData = Common.Data.MakeRangeData(2, 1);
+                strToDam = 2.0f;
+                fixedDam = 20;
+            }
         }
     }
 }
