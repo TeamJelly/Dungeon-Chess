@@ -6,9 +6,12 @@ namespace Model.Skills.Basic
 {
     public class Scratch : Skill
     {
-        private float[] strToDam;
-        private int[] fixedDam;
-        public Scratch() : base()
+        private float strToDam;
+        private int fixedDam;
+
+        public Scratch() : this(0) { }
+
+        public Scratch(int level) : base()
         {
             Name = "Scratch";
             Priority = Common.AI.Priority.NULL;
@@ -20,27 +23,11 @@ namespace Model.Skills.Basic
             InColor = Color.red;
             OutColor = Color.clear;
 
-            ReuseTime = new int[4] { 0, 0, 0, 0 };
-            APData = new string[4]
-            {
-                Common.Data.MakeRangeData(1, 1),
-                Common.Data.MakeRangeData(1, 1),
-                Common.Data.MakeRangeData(1, 1),
-                Common.Data.MakeRangeData(1, 1),
-            };
-            RPData = new string[4]
-            {
-                Common.Data.MakeRangeData(1, 0),
-                Common.Data.MakeRangeData(1, 0),
-                Common.Data.MakeRangeData(1, 0),
-                Common.Data.MakeRangeData(1, 0),
-            };
-            strToDam = new float[4] { 1.0f, 1.5f, 1.5f, 2.0f };
-            fixedDam = new int[4] { 0, 0, 0, 0 };
-
             species.Add(UnitSpecies.SmallBeast);
             species.Add(UnitSpecies.MediumBeast);
             species.Add(UnitSpecies.LargeBeast);
+
+            OnUpgrade(level);
         }
 
         public override IEnumerator Use(Unit user, Vector2Int target)
@@ -76,6 +63,62 @@ namespace Model.Skills.Basic
             int damage = (int)(fixedDam[SLV] + user.Strength * strToDam[SLV]);
 
             return $"지정한 대상에게 {damage}만큼 데미지를 준다.";
+        }
+
+        public override void OnUpgrade(int level)
+        {
+            Level = level;
+
+            if (Level == 0)
+            {
+                ReuseTime = 1;
+                APData = Common.Data.MakeRangeData(1, 1);
+                RPData = Common.Data.MakeRangeData(1, 0);
+                strToDam = 1.0f;
+                fixedDam = 0;
+            }
+            else if (Level == 1)
+            {
+                ReuseTime = 1;
+                APData = Common.Data.MakeRangeData(1, 1);
+                RPData = Common.Data.MakeRangeData(1, 0);
+                strToDam = 1.0f;
+                fixedDam = 0;                
+            }
+            else if (Level == 2)
+            {                
+                ReuseTime = 1;
+                APData = Common.Data.MakeRangeData(1, 1);
+                RPData = Common.Data.MakeRangeData(1, 0);
+                strToDam = 1.0f;
+                fixedDam = 0;
+            }
+            else if (Level == 3)
+            {
+                ReuseTime = 1;
+                APData = Common.Data.MakeRangeData(1, 1);
+                RPData = Common.Data.MakeRangeData(1, 0);
+                strToDam = 1.0f;
+                fixedDam = 0;
+            }
+            
+            ReuseTime = new int[4] { 0, 0, 0, 0 };
+            APData = new string[4]
+            {
+                Common.Data.MakeRangeData(1, 1),
+                Common.Data.MakeRangeData(1, 1),
+                Common.Data.MakeRangeData(1, 1),
+                Common.Data.MakeRangeData(1, 1),
+            };
+            RPData = new string[4]
+            {
+                Common.Data.MakeRangeData(1, 0),
+                Common.Data.MakeRangeData(1, 0),
+                Common.Data.MakeRangeData(1, 0),
+                Common.Data.MakeRangeData(1, 0),
+            };
+            strToDam = new float[4] { 1.0f, 1.5f, 1.5f, 2.0f };
+            fixedDam = new int[4] { 0, 0, 0, 0 };
         }
     }
 }
