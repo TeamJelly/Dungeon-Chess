@@ -21,8 +21,9 @@ namespace Model.Tiles
 
         public Floor()
         {
-            TileBase = TileBases[Random.Range(0, 5)];
-
+            int rand = Random.Range(0, 5);
+            Debug.Log("floor " + rand);
+            TileBase = TileBases[rand];
             category = TileCategory.Floor;
         }
     }

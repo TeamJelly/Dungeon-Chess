@@ -125,5 +125,7 @@ namespace Model
                 //Bag.instance.UpdateUI();
             }
         }
+
+        public Tile Clone() => (Tile) System.Activator.CreateInstance(GetType());
     }
 }
