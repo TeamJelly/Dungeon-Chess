@@ -223,13 +223,13 @@ namespace Common
                 Debug.LogError($"{target.Name}이 {effect.Name}를 소유하고 있지 않습니다.");
         }
 
-        public static void Summon(Unit unit, Vector2Int target)
+        public static void Summon(Unit unit, Vector2Int position)
         {
-            if (BattleManager.GetUnit(target) == null)
+            if (BattleManager.GetUnit(position) == null)
             {
                 unit.OnPosition.after.RemoveListener(BattleView.MoveObject);
-                unit.Position = target;
-                FieldManager.GetTile(target).SetUnit(unit);
+                unit.Position = position;
+                FieldManager.GetTile(position).SetUnit(unit);
                 BattleManager.instance.AllUnits.Add(unit);
 
                 if (unit.Alliance == UnitAlliance.Party)
@@ -237,7 +237,7 @@ namespace Common
 
                 BattleView.MakeUnitObject(unit);
 
-                FieldManager.GetTile(target).OnTile(unit);
+                FieldManager.GetTile(position).OnTile(unit);
 
                 // 유닛 소환시 DownStair Button 활성화 검사
                 Model.Tiles.DownStair.CheckPartyDownStair();
@@ -249,10 +249,24 @@ namespace Common
         // 최초 Obatainable 최초 소환
         public static void Summon(Obtainable obtainable, Vector2Int position)
         {
-            FieldManager.GetTile(position).SetObtainable(obtainable);
-            obtainable.Position = position;
-            BattleManager.instance.AllObtainables.Add(obtainable);
-            BattleView.MakeObtainableObject(obtainable, position);
+            if (BattleManager.GetObtainable(position) == null &&
+                BattleManager.GetUnit(position) == null)
+            {
+                FieldManager.GetTile(position).SetObtainable(obtainable);
+                obtainable.Position = position;
+                BattleManager.instance.AllObtainables.Add(obtainable);
+                BattleView.MakeObtainableObject(obtainable, position);
+            }
+            else
+                Debug.LogError("이미 위치에 뭔가 존재합니다.");
+        }
+        public static void UnSummon(Vector2Int position)
+        {
+            Tile tile = FieldManager.GetTile(position);
+            Obtainable obt = tile.GetObtainable();
+            Unit unit = tile.GetUnit();
+            if (obt != null) UnSummon(obt);
+            if (unit != null) UnSummon(unit);
         }
 
         public static void UnSummon(Unit unit)
@@ -285,6 +299,8 @@ namespace Common
             else if (BattleManager.instance.thisTurnUnit == unit)
                 BattleManager.instance.thisTurnUnit = null;
         }
+
+       
         public static void UnSummon(Obtainable obtainable)
         {
             FieldManager.GetTile(obtainable.Position).SetObtainable(null);

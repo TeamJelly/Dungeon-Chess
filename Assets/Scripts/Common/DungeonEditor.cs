@@ -25,9 +25,6 @@ public class DungeonEditor : MonoBehaviour
     public Button button_MOVUp;
     public Button button_MOVDown;
 
-    public Button button_summonUnit;
-    public Button button_unsummonUnit;
-
     public GameObject infoBox;
     public RectTransform Skills;
     public RectTransform Artifacts;
@@ -128,16 +125,19 @@ public class DungeonEditor : MonoBehaviour
             BattleManager.instance.InitializeUnitBuffer();
 
         });*/
-
-        //소환 해제 함수 정리 필요.
-        button_unsummonUnit.onClick.AddListener(() =>
+    }
+    private void Start()
+    {
+        InitTilesInData();
+    }
+    void InitTilesInData()
+    {
+        var Tiles = Common.Data.AllTiles;
+        for (int i = 0; i < Tiles.Count; i++)
         {
-            if (currentUnit == null) return;
-            Common.Command.UnSummon(currentUnit);
-
-            currentUnit = null;
-            InfoView.instance.unitInfo.SetNone();
-        });
+            Tiles[i].position = new Vector2Int(-10, i);
+            FieldManager.instance.tileMap.SetTile(new Vector3Int(-10, i, 0), Tiles[i].TileBase);
+        }
     }
 
     public void SetTile(Tile tile)
@@ -242,24 +242,16 @@ public class DungeonEditor : MonoBehaviour
 
     public void SaveUnit()
     {
-        Common.Data.Save_Unit_Serializable_Data(currentUnit);
-    }
-
-    public void ShowUnitList()
-    {
-        List<Common.ScrollData> list = Common.ScrollUI.MakeDataList(Application.dataPath + "/Resources/Data/Unit/", new[] { "*.json" }, (filePath) =>
+        if(currentUnit == null)
         {
-            Unit_Serializable u = Common.Data.Load_Unit_Serializable_Data(filePath);
-
-            Vector2Int position = currentTile.position;
-            if (currentUnit != null) Common.Command.UnSummon(currentUnit);
-            currentUnit = new Unit(u);
-            currentUnit.Position = position;
-            Common.Command.Summon(currentUnit, currentUnit.Position);
-
-            //이후에 ui 및 hp 바 업데이트, 등 해줘야 함.
-        });
-        Common.ScrollUI.instance.EnableUI(list);
+            Debug.LogError("저장할 유닛이 없습니다.");
+        }
+        else
+        {
+            Debug.LogError(currentUnit.Name + "저장");
+            Common.Data.Save_Unit_Serializable_Data(currentUnit);
+        }
+        
     }
 
     public void SetCursor(int num)
@@ -346,8 +338,9 @@ public class DungeonEditor : MonoBehaviour
             TMP.gameObject.SetActive(true);
             TMP.text = Tiles[i].Name;
 
-            // Image image = gameObject.transform.Find("Image").GetComponent<Image>();
-            // image.sprite = Tiles[i].Sprite;
+            Image image = gameObject.transform.Find("Image").GetComponent<Image>();
+            image.sprite = Tiles[i].Sprite;
+
 
             RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
             rectTransform.sizeDelta = new Vector2(150, 150);
