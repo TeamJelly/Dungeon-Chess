@@ -9,15 +9,15 @@ using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace Common
 {
     public class Data
     {
-
-
         public static FieldData LoadFieldData()
         {
+
             try
             {
                 TextAsset[] Starts = Resources.LoadAll<TextAsset>("/Data/Field/Start");
@@ -93,6 +93,69 @@ namespace Common
             bf.Serialize(file, unit);
             file.Close();*/
         }
+        [System.Serializable]
+        class SceneData
+        {
+            public FieldData fieldData;
+
+            public (Unit_Serializable unit, int x, int y)[] units;
+            public (string name, int x, int y)[] obtainables;
+        }
+        public static void SaveScene(string name)
+        {
+            DirectoryInfo directoryInfo = new DirectoryInfo(Application.dataPath + "/Resources/Data/Scene/");
+            if (!directoryInfo.Exists) directoryInfo.Create();
+
+            SceneData sceneData = new SceneData();
+            
+            List<Obtainable> obtainableList = Model.Managers.BattleManager.instance.AllObtainables;
+            List<Unit> unitList = Model.Managers.BattleManager.instance.AllUnits;
+
+            sceneData.fieldData = Model.Managers.FieldManager.instance.GetFieldData();
+
+            sceneData.obtainables = (from obt in obtainableList
+                                    select (obt.GetType().ToString(), ((Vector2Int)obt.Position).x, ((Vector2Int)obt.Position).y)).ToArray();
+
+            sceneData.units = (from unit in unitList
+                               select (unit.Get_Serializable(), unit.Position.x, unit.Position.y)).ToArray();
+
+
+            string jsonStr = JsonConvert.SerializeObject(sceneData, Formatting.Indented);
+            Debug.Log("Saved");
+            File.WriteAllText(Application.dataPath + "/Resources/Data/Scene/" + name + ".json", jsonStr);
+        }
+
+        public static void LoadScene(string dataPath)
+        {
+            string jsonStr = File.ReadAllText(dataPath);
+            jsonStr = jsonStr.Replace("\n", "");
+
+            SceneData sceneData = JsonConvert.DeserializeObject<SceneData>(jsonStr);
+
+            List<Unit> unitList = new List<Unit>();
+            List<Obtainable> obtList = new List<Obtainable>();
+
+
+            Common.Command.UnSummonAllUnit();
+            Common.Command.UnSummonAllObtainable();
+
+            Model.Managers.FieldManager.instance.InitField(sceneData.fieldData);
+
+            foreach ((Unit_Serializable unit, int x, int y) in sceneData.units)
+            {
+                Unit u = new Unit(unit);
+                Common.Command.Summon(u, new Vector2Int(x, y));
+                unitList.Add(u);
+            }
+
+            foreach ((string name, int x, int y) in sceneData.obtainables)
+            {
+                Obtainable obt = (Obtainable)Activator.CreateInstance(Type.GetType(name));
+                Common.Command.Summon(obt, new Vector2Int(x, y));
+                obtList.Add(obt);
+            }
+        }
+
         public static Unit_Serializable Load_Unit_Serializable_Data(string dataPath)
         {
 

@@ -192,6 +192,7 @@ namespace Model.Managers
             for (int i = 0; i < bufferSize; i++)
             {
                 Unit unit = CalculateNextUnit();
+                if (unit == null) continue;
                 Debug.Log(unit.Name);
                 unitBuffer.Enqueue(unit);
             }
@@ -219,7 +220,7 @@ namespace Model.Managers
             foreach (var unit in instance.AllUnits)
                 unit.ActionRate += (unit.Agility * 10 + 100) * minTime;
 
-            nextUnit.ActionRate = 0;
+            if(nextUnit != null) nextUnit.ActionRate = 0;
             return nextUnit;
         }
 

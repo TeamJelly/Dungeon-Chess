@@ -532,6 +532,7 @@ namespace Model
         }
     }
 
+    [System.Serializable]
     public class Unit_Serializable
     {
         public int Seed;

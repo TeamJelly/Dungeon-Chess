@@ -249,13 +249,17 @@ namespace Common
         // 최초 Obatainable 최초 소환
         public static void Summon(Obtainable obtainable, Vector2Int position)
         {
-            if (BattleManager.GetObtainable(position) == null &&
-                BattleManager.GetUnit(position) == null)
+            if(BattleManager.GetUnit(position) != null)
+            {
+                GetObtainable(BattleManager.GetUnit(position), obtainable);
+            }
+            else if (BattleManager.GetObtainable(position) == null)
             {
                 FieldManager.GetTile(position).SetObtainable(obtainable);
                 obtainable.Position = position;
                 BattleManager.instance.AllObtainables.Add(obtainable);
                 BattleView.MakeObtainableObject(obtainable, position);
+                Debug.Log(obtainable.ToString());
             }
             else
                 Debug.LogError("이미 위치에 뭔가 존재합니다.");
@@ -303,8 +307,10 @@ namespace Common
        
         public static void UnSummon(Obtainable obtainable)
         {
-            FieldManager.GetTile(obtainable.Position).SetObtainable(null);
+            if (obtainable.Position == null) return;
+            FieldManager.GetTile((Vector2Int)obtainable.Position).SetObtainable(null);
             BattleView.DestroyObtainableObject(obtainable);
+            BattleManager.instance.AllObtainables.Remove(obtainable);
         }
 
         public static void UnSummonAllUnit()
@@ -314,6 +320,16 @@ namespace Common
             {
                 UnSummon(units[i]);
             }
+            BattleManager.instance.AllUnits.Clear();
+        }
+        public static void UnSummonAllObtainable()
+        {
+            List<Obtainable> obtainables = BattleManager.instance.AllObtainables;
+            for (int i = obtainables.Count - 1; i >= 0; i--)
+            {
+                UnSummon(obtainables[i]);
+            }
+            BattleManager.instance.AllObtainables.Clear();
         }
 
         public static void AddSkill(Unit unit, Skill newSkill, int level = 0)

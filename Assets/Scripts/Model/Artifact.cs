@@ -9,7 +9,7 @@ namespace Model
     public class Artifact : Effect, Obtainable
     {
         public enum ArtifactGrade { Normal, Rare, Legend }
-        public Vector2Int Position { get; set; }
+        public Vector2Int? Position { get; set; }
         public ArtifactGrade Grade { get; set; }
         public int Price { get; set; }
         public override string Type => "Artifact";

@@ -8,7 +8,7 @@ namespace Model
     [System.Serializable]
     public class Item : Skill, Obtainable
     {
-        public Vector2Int Position { get; set; }
+        public Vector2Int? Position { get; set; }
         public int Price { get; set; }
 
         //public void BelongTo(Unit unit)

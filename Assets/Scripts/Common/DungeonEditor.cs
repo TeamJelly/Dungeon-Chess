@@ -8,12 +8,20 @@ using Model.Managers;
 using System;
 using UI.Battle;
 using System.Linq;
+using UnityEngine.Events;
+using TMPro;
+using System.IO;
 
 public class DungeonEditor : MonoBehaviour
 {
     public GameObject unitAttributeController;
     public GameObject battleFieldController;
 
+    [Header("Save Panel")]
+    public GameObject savePanel;
+    public TMP_InputField inputField;
+
+    [Space(5)]
     [Header("Unit Editor")]
     public Button button_saveUnit;
     public Button button_lvlUp;
@@ -254,6 +262,11 @@ public class DungeonEditor : MonoBehaviour
         
     }
 
+    public void SaveScene()
+    {
+        Common.Data.SaveScene(inputField.text);
+        savePanel.gameObject.SetActive(false);
+    }
     public void SetCursor(int num)
     {
         if (num < 0 || ListBar.childCount <= num)
@@ -269,6 +282,57 @@ public class DungeonEditor : MonoBehaviour
         }
     }
 
+    public void SetSceneList()
+    {
+        Transform[] childList = ListBar.transform.GetComponentsInChildren<Transform>();
+        for (int i = 1; i < childList.Length; i++)
+            Destroy(childList[i].gameObject);
+        ListBar.sizeDelta = Vector2.zero;
+
+        string[] filters = new[] { "*.json" };
+        string[] ScenePaths = filters.SelectMany(f => System.IO.Directory.GetFiles(Application.dataPath + "/Resources/Data/Scene/", f)).ToArray();
+
+
+        selectedIndex = -1;
+        ListSelectedCursor.gameObject.SetActive(false);
+
+        for (int i = 0; i < ScenePaths.Length; i++)
+        {
+            GameObject gameObject = Instantiate(infoBox, ListBar);
+
+            TMPro.TextMeshProUGUI TMP = gameObject.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>();
+            TMP.gameObject.SetActive(true);
+            TMP.text = Path.GetFileNameWithoutExtension(ScenePaths[i]);
+
+            // Image image = gameObject.transform.Find("Image").GetComponent<Image>();
+            // image.sprite = Units[i].Sprite;
+
+            RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
+            rectTransform.sizeDelta = new Vector2(150, 150);
+            ListBar.sizeDelta = ListBar.rect.size + new Vector2(150, 0);
+
+            Button button = gameObject.GetComponent<Button>();
+
+            Image Background = gameObject.GetComponent<Image>();
+            Color oldColor = Background.color;
+
+            int temp = i;
+
+            button.onClick.AddListener(() =>
+            {
+                if (selectedIndex == temp)
+                {
+                    SetCursor(-1);
+                }
+                else
+                {
+                    SetCursor(temp);
+                    Common.Data.LoadScene(ScenePaths[temp]);
+                    inputField.text = Path.GetFileNameWithoutExtension(ScenePaths[temp]);
+                }
+            });
+        }
+    }
     public void SetUnitList()
     {
         Transform[] childList = ListBar.transform.GetComponentsInChildren<Transform>();
@@ -289,7 +353,7 @@ public class DungeonEditor : MonoBehaviour
 
             TMPro.TextMeshProUGUI TMP = gameObject.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>();
             TMP.gameObject.SetActive(true);
-            TMP.text = UnitPaths[i];
+            TMP.text = Path.GetFileNameWithoutExtension(UnitPaths[i]);
 
             // Image image = gameObject.transform.Find("Image").GetComponent<Image>();
             // image.sprite = Units[i].Sprite;

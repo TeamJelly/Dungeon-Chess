@@ -41,6 +41,7 @@ namespace Model.Managers
         [Serializable]
         public class FieldData
         {
+            public FieldData() { }
             public FieldData(int width, int height, string str)
             {
                 this.width = width;
@@ -78,7 +79,32 @@ namespace Model.Managers
 
         FieldData fieldData;
         Chunk chunk;
+        public FieldData GetFieldData()
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int y = fieldData.height - 1; y >= 0; y--)
+            {
+                for (int x = 0; x < fieldData.width; x++)
+                {
+                    Type type = field[y, x].GetType();
 
+                    if (type == typeof(Floor))          sb.Append("FR");
+                    else if (type == typeof(Wall))      sb.Append("WL");
+                    else if (type == typeof(UpStair))   sb.Append("US");
+                    else if (type == typeof(DownStair)) sb.Append("DS");
+                    else if (type == typeof(Thorn))     sb.Append("TN");
+                    else if (type == typeof(Hole))      sb.Append("VO");
+                    else if (type == typeof(Sell))      sb.Append("SL");
+                    else if (type == typeof(Heal))      sb.Append("HL");
+                    else if (type == typeof(Power))     sb.Append("PW");
+                    else if (type == typeof(Locked))    sb.Append("LK");
+                    else if (type == typeof(UnLocked))  sb.Append("UL");
+                    else sb.Append("FR");
+                }
+            }
+            fieldData.fieldStrData = sb.ToString();
+            return fieldData;
+        }
         public FieldData Merge2FieldData(FieldData f1, FieldData f2, Vector2Int pivot)
         {
             f1.fieldStrData = f1.fieldStrData.Replace(" ", "");
@@ -394,5 +420,4 @@ namespace Model.Managers
             tileMap = GetComponentInChildren<Tilemap>();
         }
     }
-
 }
