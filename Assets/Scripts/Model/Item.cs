@@ -31,7 +31,7 @@ namespace Model
 
         public virtual void Use(Tile tile) { }
 
-        public Item Clone()
+        public new Item Clone()
         {
             return System.Activator.CreateInstance(GetType()) as Item;
         }

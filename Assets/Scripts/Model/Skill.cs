@@ -15,7 +15,7 @@ namespace Model
         Enemy
     }
 
-    [System.Serializable]
+    // [System.Serializable]
     public class Skill : Infoable
     {
         // 스킬 카테고리
@@ -216,5 +216,7 @@ namespace Model
         }
 
         public Skill Clone() => System.Activator.CreateInstance(GetType()) as Skill;
+
+        public Skill Clone(int level) => System.Activator.CreateInstance(GetType(), level) as Skill;
     }
 }

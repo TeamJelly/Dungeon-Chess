@@ -50,7 +50,7 @@ namespace View
         }
         public static void Show(Unit user, Skill skill)
         {
-            instance.simpleInfo.Set(skill.Name, skill.Type, skill.Sprite, skill.GetDescription(user));
+            instance.simpleInfo.Set(skill.Name, skill.Type, skill.Sprite, skill.GetDescription());
         }
         public static void Show(Effect effect)
         {

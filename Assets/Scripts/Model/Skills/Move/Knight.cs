@@ -7,7 +7,8 @@ namespace Model.Skills.Move
 {
     public class Knight : MoveSkill
     {
-        public Knight() : base()
+        public Knight() : this(0) { }
+        public Knight(int level) : base()
         {
             Name = "Knight's Move";
 
@@ -22,9 +23,11 @@ namespace Model.Skills.Move
             species.Add(UnitSpecies.MediumBeast);
             species.Add(UnitSpecies.LargeBeast);
             species.Add(UnitSpecies.Golem);
+
+            OnUpgrade(level);
         }
 
-        public override List<Vector2Int> GetRelatePositions(Unit user, Vector2Int target)
+        public override List<Vector2Int> GetRelatePositions(Vector2Int target)
         {
             List<Vector2Int> list = new List<Vector2Int>();
 
@@ -33,12 +36,12 @@ namespace Model.Skills.Move
             return list;
         }
 
-        public override List<Vector2Int> GetUseRange(Unit user, Vector2Int userPosition)
+        public override List<Vector2Int> GetUseRange(Vector2Int userPosition)
         {
             List<Vector2Int> positions = new List<Vector2Int>() { userPosition };
             Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
 
-            for (int i = 1; i <= user.Mobility; i++)
+            for (int i = 1; i <= User.Mobility; i++)
                 foreach (var direction1 in directions)
                     foreach (var direction2 in directions)
                     {
@@ -54,12 +57,12 @@ namespace Model.Skills.Move
 
             return positions;
         }
-        public override List<Vector2Int> GetAvlPositions(Unit user, Vector2Int userPosition)
+        public override List<Vector2Int> GetAvlPositions(Vector2Int userPosition)
         {
             List<Vector2Int> positions = new List<Vector2Int>() { userPosition };
             Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
 
-            for (int i = 1; i <= user.Mobility; i++)
+            for (int i = 1; i <= User.Mobility; i++)
                 foreach (var direction1 in directions)
                     foreach (var direction2 in directions)
                     {
@@ -68,28 +71,25 @@ namespace Model.Skills.Move
 
                         Vector2Int temp = userPosition + direction1 * (i+1) + direction2 * i;
                         if (FieldManager.IsInField(temp) 
-                            && FieldManager.GetTile(temp).IsPositionable(user))
+                            && FieldManager.GetTile(temp).IsPositionable(User))
                             positions.Add(temp);
                     }
 
             return positions;
         }
 
-        public override IEnumerator Use(Unit user, Vector2Int target)
+        public override IEnumerator Use(Vector2Int target)
         {
-            // 필요 변수 계산
-            int SLV = GetSLV(user);
-
             // 스킬 소모 기록
-            user.IsMoved = true;
-            user.WaitingSkills.Add(this, ReuseTime[SLV]);
+            User.IsMoved = true;
+            WaitingTime = ReuseTime;
 
-            Debug.Log($"{user.Name}가 {Name}스킬을 {target}에 사용!");
+            Debug.Log($"{User.Name}가 {Name}스킬을 {target}에 사용!");
 
-            Vector2Int startPosition = user.Position;
-            View.VisualEffectView.MakeVisualEffect(user.Position, "Dust");
-            Common.Command.Move(user,startPosition, target);
-            ScreenTouchManager.instance.Move(user.Position);
+            Vector2Int startPosition = User.Position;
+            View.VisualEffectView.MakeVisualEffect(User.Position, "Dust");
+            Common.Command.Move(User,startPosition, target);
+            ScreenTouchManager.instance.Move(User.Position);
 
             yield return null;
         }

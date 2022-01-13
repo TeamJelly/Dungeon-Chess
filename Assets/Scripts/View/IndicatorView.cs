@@ -63,7 +63,7 @@ namespace View
                                     {
                                         // currentUnit.OnUseSkill.before();
 
-                                        instance.StartCoroutine(currentSkill.Use(currentUnit, position));
+                                        instance.StartCoroutine(currentSkill.Use(position));
                                         BattleView.UnitControlView.RefreshButtons();
                                         HideTileIndicator();
 
@@ -138,7 +138,7 @@ namespace View
             currentUnit = user;
             currentSkill = skill;
             curPosition = null;
-            curAvlPositions = currentSkill.GetAvlUsePositions(currentUnit);
+            curAvlPositions = currentSkill.GetAvlUsePositions();
             tileAction = null;
             TileRelativeFunc = null;
             TileIndicatorParent.SetActive(true);
@@ -147,8 +147,8 @@ namespace View
 
         private static void UpdateSkillIndicator(Vector2Int? position = null)
         {
-            List<Vector2Int> RelatedPosition = position != null ? currentSkill.GetRelatePositions(currentUnit, (Vector2Int)position) : new List<Vector2Int>();
-            List<Vector2Int> sklUseRange = currentSkill.GetUseRange(currentUnit, currentUnit.Position);
+            List<Vector2Int> RelatedPosition = position != null ? currentSkill.GetRelatePositions((Vector2Int)position) : new List<Vector2Int>();
+            List<Vector2Int> sklUseRange = currentSkill.GetUseRange(currentUnit.Position);
 
             curPosition = position;
 

@@ -7,7 +7,8 @@ namespace Model.Skills.Move
 {
     public class Pawn : MoveSkill
     {
-        public Pawn() : base()
+        public Pawn() : this(0) { }
+        public Pawn(int level) : base()
         {
             Name = "Pawn's Move";
 
@@ -24,7 +25,7 @@ namespace Model.Skills.Move
             species.Add(UnitSpecies.Golem);
         }
 
-        public override List<Vector2Int> GetUseRange(Unit user, Vector2Int userPosition)
+        public override List<Vector2Int> GetUseRange(Vector2Int userPosition)
         {
             List<Vector2Int> positions = new List<Vector2Int>() { userPosition };        // 이동가능한 모든 위치를 저장
             List<Vector2Int> new_frontier = new List<Vector2Int>();     // 새로 추가한 외곽 위치를 저장
@@ -33,7 +34,7 @@ namespace Model.Skills.Move
 
             old_frontier.Add(userPosition);
 
-            for (int i = 0; i < user.Mobility; i++)
+            for (int i = 0; i < User.Mobility; i++)
             {
                 foreach (var position in old_frontier)
                 {
@@ -67,7 +68,7 @@ namespace Model.Skills.Move
             return positions;
         }
 
-        public override List<Vector2Int> GetAvlPositions(Unit user, Vector2Int userPosition)
+        public override List<Vector2Int> GetAvlPositions(Vector2Int userPosition)
         {
             List<Vector2Int> positions = new List<Vector2Int>() { userPosition };        // 이동가능한 모든 위치를 저장
             List<Vector2Int> new_frontier = new List<Vector2Int>();     // 새로 추가한 외곽 위치를 저장
@@ -76,7 +77,7 @@ namespace Model.Skills.Move
 
             old_frontier.Add(userPosition);
 
-            for (int i = 0; i < user.Mobility; i++)
+            for (int i = 0; i < User.Mobility; i++)
             {
                 foreach (var position in old_frontier)
                 {
@@ -87,7 +88,7 @@ namespace Model.Skills.Move
 
                         if (!positions.Contains(temp)
                             && FieldManager.IsInField(temp)
-                            && FieldManager.GetTile(temp).IsPositionable(user))
+                            && FieldManager.GetTile(temp).IsPositionable(User))
                         {
                             // 이동가능한 위치로 추가한다.
                             new_frontier.Add(temp);                

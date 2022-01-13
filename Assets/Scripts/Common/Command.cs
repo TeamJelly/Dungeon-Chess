@@ -121,7 +121,6 @@ namespace Common
             }
         }
 
-
         /// <summary>
         /// 공용 가방에 아이템을 추가한다.
         /// </summary>
@@ -301,10 +300,12 @@ namespace Common
             }
         }
 
-        public static void AddSkill(Unit unit, Skill newSkill)
+        public static void AddSkill(Unit unit, Skill newSkill, int level = 0)
         {
             if (Data.AllSkills.Contains(newSkill))
-                newSkill = newSkill.Clone();
+                newSkill = newSkill.Clone(level);
+
+            UpgradeSkill(newSkill, level);
 
             if (newSkill is Model.Skills.Move.MoveSkill)
             {
@@ -327,8 +328,8 @@ namespace Common
         /// <param name="skill"></param>
         public static void UpgradeSkill(Skill skill)
         {
-            skill.Level++;
-            skill.OnUpgrade(skill.Level);
+            // 레벨 적용은 안에서 호출해줌
+            skill.OnUpgrade(skill.Level + 1);
         }
 
         /// <summary>
@@ -338,8 +339,8 @@ namespace Common
         /// <param name="level"></param>
         public static void UpgradeSkill(Skill skill, int level)
         {
-            skill.Level = level;
-            skill.OnUpgrade(skill.Level);
+            // 레벨 적용은 안에서 호출해줌
+            skill.OnUpgrade(level);
         }
 
         public static void RemoveSkill(Unit unit, Skill skill)

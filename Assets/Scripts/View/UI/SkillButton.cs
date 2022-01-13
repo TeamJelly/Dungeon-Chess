@@ -48,12 +48,12 @@ namespace View.UI
 
         public override void SetInteractable(bool boolean)
         {
-            if (currentSkill != null && currentUnit.WaitingSkills.ContainsKey(currentSkill))
-                LeftCount.text = (currentUnit.WaitingSkills[currentSkill] + 1).ToString();
+            if (currentSkill != null && currentSkill.WaitingTime != 0)
+                LeftCount.text = (currentSkill.WaitingTime).ToString();
             else
                 LeftCount.text = "";
 
-            properties.interactable = boolean && CurrentSkill != null && CurrentSkill.IsUsable(currentUnit);
+            properties.interactable = boolean && CurrentSkill != null && CurrentSkill.IsUsable();
             FrameImage.color = properties.interactable ? Color.white : Color.grey;
         }
 

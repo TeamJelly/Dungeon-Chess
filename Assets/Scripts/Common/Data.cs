@@ -186,6 +186,7 @@ namespace Common
             foreach (Skill skill in AllSkills)
             {
                 categoryToSkillList[skill.Category].Add(skill);
+                
                 foreach (UnitSpecies s in skill.species)
                     speciesToSkillList[s].Add(skill);
             }
@@ -207,7 +208,6 @@ namespace Common
         {
             get
             {
-
                 if (categoryToSkillList == null)
                     InitSkillDictionary();
                 return categoryToSkillList;
@@ -225,7 +225,6 @@ namespace Common
             new Model.Artifacts.Normal.CopperRing(),
             new Model.Artifacts.Rare.BloodStone(),
         };
-
 
         public static Artifact GetRandomArtifact(int seed, Artifact.ArtifactGrade grade)
         {

@@ -46,7 +46,7 @@ namespace Model
         Rich,           // 상인 > 부유한
     };
 
-    [Serializable]
+    // [Serializable]
     public class Unit : Spriteable
     {
         public Unit() { }

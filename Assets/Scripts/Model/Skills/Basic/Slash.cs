@@ -6,9 +6,12 @@ namespace Model.Skills.Basic
 {
     public class Slash : Skill
     {
-        private float[] strToDam;
-        private int[] fixedDam;
-        public Slash() : base()
+        private float strToDam;
+        private int fixedDam;
+
+        public Slash() : this(0) { }
+
+        public Slash(int level) : base()
         {
             Name = "Slash";
             Priority = Common.AI.Priority.NULL;
@@ -20,60 +23,80 @@ namespace Model.Skills.Basic
             InColor = Color.red;
             OutColor = Color.clear;
 
-            ReuseTime = new int[4] { 0, 0, 0, 0};
-            APData = new string[4]
-            {
-                Common.Data.MakeRangeData(1, 1),
-                Common.Data.MakeRangeData(1, 1),
-                Common.Data.MakeRangeData(1, 1),
-                Common.Data.MakeRangeData(1, 1),
-            };
-            RPData = new string[4]
-            {
-                Common.Data.MakeRangeData(1, 0),
-                Common.Data.MakeRangeData(1, 0),
-                Common.Data.MakeRangeData(1, 0),
-                Common.Data.MakeRangeData(1, 0),
-            };
-            strToDam = new float[4] { 1.5f, 2.0f, 2.5f, 3.0f };
-            fixedDam = new int[4] { 0, 0, 0, 0 };
-
             species.Add(UnitSpecies.SmallBeast);
             species.Add(UnitSpecies.MediumBeast);
             species.Add(UnitSpecies.Human);
+
+            OnUpgrade(level);
         }
 
-        public override IEnumerator Use(Unit user, Vector2Int target)
+        public override IEnumerator Use(Vector2Int target)
         {
             // 필요 변수 계산
-            int SLV = GetSLV(user);
-            bool isCri = Random.Range(0, 100) < user.CriRate;
-            int damage = (int)(fixedDam[SLV] + user.Strength * strToDam[SLV]);
+            bool isCri = Random.Range(0, 100) < User.CriRate;
+            int damage = (int)(fixedDam + User.Strength * strToDam);
             if (isCri) damage *= 2;
             
             // 스킬 소모 기록
-            user.IsSkilled = true;
-            user.WaitingSkills.Add(this, ReuseTime[SLV]);
+            User.IsSkilled = true;
+            WaitingTime = ReuseTime;
 
             // 스킬 실행
             Unit targetUnit = Model.Managers.BattleManager.GetUnit(target);
             if (targetUnit != null)
             {
-                Debug.Log($"{user.Name}가 {Name}스킬을 {targetUnit.Name}에 사용!");
+                Debug.Log($"{User.Name}가 {Name}스킬을 {targetUnit.Name}에 사용!");
                 Common.Command.Damage(targetUnit, damage);
             }
             else
-                Debug.Log($"{user.Name}가 {Name}스킬을 {target}에 사용!");
+                Debug.Log($"{User.Name}가 {Name}스킬을 {target}에 사용!");
 
             yield return null;
         }
 
-        public override string GetDescription(Unit user)
+        public override string GetDescription()
         {
-            int SLV = GetSLV(user);
-            int damage = (int)(fixedDam[SLV] + user.Strength * strToDam[SLV]);
+            int damage = (int)(fixedDam + User.Strength * strToDam);
 
             return $"지정한 대상에게 {damage}만큼 데미지를 준다.";
+        }
+
+        public override void OnUpgrade(int level)
+        {
+            Level = level;
+
+            if (Level == 0)
+            {
+                ReuseTime = 0;
+                APData = Common.Data.MakeRangeData(1, 1);
+                RPData = Common.Data.MakeRangeData(1, 0);
+                strToDam = 1.5f;
+                fixedDam = 0;
+            }
+            else if (Level == 1)
+            {
+                ReuseTime = 0;
+                APData = Common.Data.MakeRangeData(1, 1);
+                RPData = Common.Data.MakeRangeData(1, 0);
+                strToDam = 2f;
+                fixedDam = 0;
+            }
+            else if (Level == 2)
+            {
+                ReuseTime = 0;
+                APData = Common.Data.MakeRangeData(1, 1);
+                RPData = Common.Data.MakeRangeData(1, 0);
+                strToDam = 2.5f;
+                fixedDam = 0;
+            }
+            else if (Level == 3)
+            {
+                ReuseTime = 0;
+                APData = Common.Data.MakeRangeData(1, 1);
+                RPData = Common.Data.MakeRangeData(1, 0);
+                strToDam = 3f;
+                fixedDam = 0;
+            }
         }
     }
 }
