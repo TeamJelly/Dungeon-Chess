@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Tilemaps;
+using Common;
 
 namespace Model
 {
@@ -120,8 +121,8 @@ namespace Model
         {
             if (obtainable != null)
             {
-                Common.Command.GetObtainable(unit, obtainable);
-                //obtainable.BelongTo(unit);
+                unit.AddObtainable(obtainable);
+                //obtainable.BelongTo(unit);Í
                 //Bag.instance.UpdateUI();
             }
         }
