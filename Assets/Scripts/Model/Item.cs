@@ -22,7 +22,7 @@ namespace Model
         //    UnitControlView.instance.UpdateItemButtons();                
         //}
 
-        public virtual List<Vector2Int> GetRelatePositions(Vector2Int position)
+        public override List<Vector2Int> GetRelatePositions(Vector2Int position)
         {
             List<Vector2Int> positions = new List<Vector2Int>();
 

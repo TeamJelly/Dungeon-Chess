@@ -130,7 +130,7 @@ namespace UnityEngine.UI.Extensions
                 enabled = false;
         }
 
-
+        [System.Obsolete]
         protected override void OnPopulateMesh(VertexHelper vh)
         {
 #if UNITY_EDITOR
@@ -407,4 +407,4 @@ namespace UnityEngine.UI.Extensions
         }
     }
 #endif
-                    }
+}

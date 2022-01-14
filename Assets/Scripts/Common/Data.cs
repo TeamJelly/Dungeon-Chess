@@ -107,14 +107,14 @@ namespace Common
             if (!directoryInfo.Exists) directoryInfo.Create();
 
             SceneData sceneData = new SceneData();
-            
+
             List<Obtainable> obtainableList = Model.Managers.BattleManager.instance.AllObtainables;
             List<Unit> unitList = Model.Managers.BattleManager.instance.AllUnits;
 
             sceneData.fieldData = Model.Managers.FieldManager.instance.GetFieldData();
 
             sceneData.obtainables = (from obt in obtainableList
-                                    select (obt.GetType().ToString(), ((Vector2Int)obt.Position).x, ((Vector2Int)obt.Position).y)).ToArray();
+                                     select (obt.GetType().ToString(), ((Vector2Int)obt.Position).x, ((Vector2Int)obt.Position).y)).ToArray();
 
             sceneData.units = (from unit in unitList
                                select (unit.Get_Serializable(), unit.Position.x, unit.Position.y)).ToArray();
@@ -249,7 +249,7 @@ namespace Common
             foreach (Skill skill in AllSkills)
             {
                 categoryToSkillList[skill.Category].Add(skill);
-                
+
                 foreach (UnitSpecies s in skill.species)
                     speciesToSkillList[s].Add(skill);
             }

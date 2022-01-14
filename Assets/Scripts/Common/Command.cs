@@ -8,9 +8,9 @@ using View;
 
 namespace Common
 {
-    public class Command
+    public static class Command
     {
-        public static void Die(Unit unit)
+        public static void Die(this Unit unit)
         {
             View.FadeOutTextView.MakeText(unit, unit.Name + " is dead", Color.red);
             View.VisualEffectView.MakeVisualEffect(unit.Position, "Explosion");
@@ -36,7 +36,7 @@ namespace Common
 
         // position 이동보다 좀더 확장된 이동
         // 타일에 유닛의 정보를 기록하고 유닛의 OnMove, 타일의 OnTile 이벤트를 실행시킨다.
-        public static void Move(Unit unit, Vector2Int start, Vector2Int target)
+        public static void Move(this Unit unit, Vector2Int start, Vector2Int target)
         {
             //OnMove는 이동 할때마다 항상 수행되는 이벤트
             target = unit.OnMove.before.Invoke(target);
@@ -52,7 +52,7 @@ namespace Common
             FieldManager.GetTile(target).OnTile(unit);
         }
 
-        public static int Damage(Unit unit, int value)
+        public static int Damage(this Unit unit, int value)
         {
             value = unit.OnDamage.before.Invoke(value);
 
@@ -62,12 +62,12 @@ namespace Common
             FadeOutTextView.MakeText(unit, $"HP -{value}", Color.red);
             Debug.Log($"{unit.Name}가(은) {value}만큼 데미지를 입었다! [HP : {unit.CurHP + value}>{unit.CurHP}]");
             if (unit.CurHP <= 0)
-                Die(unit);
+                unit.Die();
 
             return value; // 피해량을 리턴
         }
 
-        public static int Heal(Unit unit, int value)
+        public static int Heal(this Unit unit, int value)
         {
             // Debug.Log(unit.Name + ", " + value);
 
@@ -87,7 +87,7 @@ namespace Common
             return value;
         }
 
-        public static void LevelUp(Unit unit)
+        public static void LevelUp(this Unit unit)
         {
             View.FadeOutTextView.MakeText(unit, "Level Up!", Color.white);
 
@@ -102,7 +102,7 @@ namespace Common
         /// </summary>
         /// <param name="target"></param>
         /// <param name="obtainable"></param>
-        public static void GetObtainable(Unit target, Obtainable obtainable)
+        public static void AddObtainable(this Unit target, Obtainable obtainable)
         {
             if (obtainable.ToString().Contains("Artifacts"))
             {
@@ -125,7 +125,7 @@ namespace Common
         /// 공용 가방에 아이템을 추가한다.
         /// </summary>
         /// <param name="item"></param>
-        public static void AddItem(Item item)
+        public static void AddItem(this Item item)
         {
             if (Data.AllItems.Contains(item))
                 item = item.Clone();
@@ -140,7 +140,7 @@ namespace Common
         /// </summary>
         /// <param name="target"></param>
         /// <param name="artifact"></param>
-        public static void AddArtifact(Unit target, Artifact artifact)
+        public static void AddArtifact(this Unit target, Artifact artifact)
         {
             if (Data.AllArtifacts.Contains(artifact))
                 artifact = artifact.Clone();
@@ -158,7 +158,7 @@ namespace Common
             FadeOutTextView.MakeText(target, $"+{artifact.Name}", Color.yellow);
         }
 
-        public static void RemoveArtifact(Unit target, Artifact artifact)
+        public static void RemoveArtifact(this Unit target, Artifact artifact)
         {
             if (target.Belongings.Contains(artifact))
             {
@@ -181,7 +181,7 @@ namespace Common
         //     return effect;
         // }
 
-        public static void AddEffect(Unit target, Effect effect)
+        public static void AddEffect(this Unit target, Effect effect)
         {
             if (Data.AllEffects.Contains(effect))
                 effect = effect.Clone();
@@ -211,7 +211,7 @@ namespace Common
 
         }
 
-        public static void RemoveEffect(Unit target, Effect effect)
+        public static void RemoveEffect(this Unit target, Effect effect)
         {
             if (target.StateEffects.Contains(effect))
             {
@@ -223,7 +223,7 @@ namespace Common
                 Debug.LogError($"{target.Name}이 {effect.Name}를 소유하고 있지 않습니다.");
         }
 
-        public static void Summon(Unit unit, Vector2Int position)
+        public static void Summon(this Unit unit, Vector2Int position)
         {
             if (BattleManager.GetUnit(position) == null)
             {
@@ -247,11 +247,11 @@ namespace Common
         }
 
         // 최초 Obatainable 최초 소환
-        public static void Summon(Obtainable obtainable, Vector2Int position)
+        public static void Summon(this Obtainable obtainable, Vector2Int position)
         {
             if (BattleManager.GetUnit(position) != null)
             {
-                GetObtainable(BattleManager.GetUnit(position), obtainable);
+                AddObtainable(BattleManager.GetUnit(position), obtainable);
             }
             else if (BattleManager.GetObtainable(position) == null)
             {
@@ -273,7 +273,7 @@ namespace Common
             if (unit != null) UnSummon(unit);
         }
 
-        public static void UnSummon(Unit unit)
+        public static void UnSummon(this Unit unit)
         {
             if (unit.Alliance == UnitAlliance.Party)
                 GameManager.RemovePartyUnit(unit); //죽으면 파티유닛에서 박탈.
@@ -305,7 +305,7 @@ namespace Common
         }
 
 
-        public static void UnSummon(Obtainable obtainable)
+        public static void UnSummon(this Obtainable obtainable)
         {
             if (obtainable.Position == null) return;
             FieldManager.GetTile((Vector2Int)obtainable.Position).SetObtainable(null);
@@ -322,6 +322,7 @@ namespace Common
             }
             BattleManager.instance.AllUnits.Clear();
         }
+
         public static void UnSummonAllObtainable()
         {
             List<Obtainable> obtainables = BattleManager.instance.AllObtainables;
@@ -332,7 +333,7 @@ namespace Common
             BattleManager.instance.AllObtainables.Clear();
         }
 
-        public static void AddSkill(Unit unit, Skill newSkill, int level = 0)
+        public static void AddSkill(this Unit unit, Skill newSkill, int level = 0)
         {
             if (Data.AllSkills.Contains(newSkill))
                 newSkill = newSkill.Clone(level);
@@ -358,7 +359,7 @@ namespace Common
         /// 스킬의 레벨을 1 올린다.
         /// </summary>
         /// <param name="skill"></param>
-        public static void UpgradeSkill(Skill skill)
+        public static void UpgradeSkill(this Skill skill)
         {
             // 레벨 적용은 안에서 호출해줌
             skill.OnUpgrade(skill.Level + 1);
@@ -369,13 +370,13 @@ namespace Common
         /// </summary>
         /// <param name="skill"></param>
         /// <param name="level"></param>
-        public static void UpgradeSkill(Skill skill, int level)
+        public static void UpgradeSkill(this Skill skill, int level)
         {
             // 레벨 적용은 안에서 호출해줌
             skill.OnUpgrade(level);
         }
 
-        public static void RemoveSkill(Unit unit, Skill skill)
+        public static void RemoveSkill(this Unit unit, Skill skill)
         {
             // 대기중인 스킬에 존재한다면, 미리 삭제해준다.
             // if (unit.WaitingSkills.ContainsKey(skill))

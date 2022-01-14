@@ -25,7 +25,7 @@ namespace Model
         public string Name { get => category.ToString() + " tile"; }
 
         public TileBase TileBase { get; set; }
-        
+
         public TileCategory category;
 
         public Color Color { get; set; }
@@ -34,7 +34,7 @@ namespace Model
 
         public string Type => "Tile";
 
-        public Sprite Sprite { get => Model.Managers.FieldManager.instance.tileMap.GetSprite(new Vector3Int(position.x, position.y, 0));}
+        public Sprite Sprite { get => Model.Managers.FieldManager.instance.tileMap.GetSprite(new Vector3Int(position.x, position.y, 0)); }
 
         public int SpriteNumber => throw new System.NotImplementedException();
 
@@ -58,7 +58,7 @@ namespace Model
             else if (
                     unit.IsFlying == false && // 유닛이 날고있지 않다면, 벽 구멍 잠금타일은 갈수 없다.
                     (
-//                        category == TileCategory.Wall ||
+                        //                        category == TileCategory.Wall ||
                         category == TileCategory.Hole ||
                         category == TileCategory.Locked
                     )
@@ -95,7 +95,7 @@ namespace Model
         }
 
         public virtual void SetUnit(Unit newUnit)
-        {        
+        {
             unit = newUnit;
         }
 
@@ -126,6 +126,6 @@ namespace Model
             }
         }
 
-        public Tile Clone() => (Tile) System.Activator.CreateInstance(GetType());
+        public Tile Clone() => (Tile)System.Activator.CreateInstance(GetType());
     }
 }

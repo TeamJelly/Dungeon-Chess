@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Model;
+using System.Linq;
 
 namespace View
 {
@@ -20,7 +21,7 @@ namespace View
             public Color color;
         }
 
-        public Queue<FadeOutText> WaitingQueue = new Queue<FadeOutText>();
+        public Dictionary<Unit, Queue<FadeOutText>> WaitingQueue = new Dictionary<Unit, Queue<FadeOutText>>();
 
         private void Awake()
         {
@@ -30,7 +31,10 @@ namespace View
 
         public static void MakeText(FadeOutText fadeOutText)
         {
-            instance.WaitingQueue.Enqueue(fadeOutText);
+            if (!instance.WaitingQueue.ContainsKey(fadeOutText.unit))
+                instance.WaitingQueue.Add(fadeOutText.unit, new Queue<FadeOutText>());
+
+            instance.WaitingQueue[fadeOutText.unit].Enqueue(fadeOutText);
             PlayText();
         }
 
@@ -57,11 +61,18 @@ namespace View
 
             while (WaitingQueue.Count > 0)
             {
-                FadeOutText line = WaitingQueue.Dequeue();
-                GameObject gameObject = Instantiate(instance.prefab);
-                gameObject.GetComponentInChildren<TextMeshPro>().text = line.text;
-                gameObject.GetComponentInChildren<TextMeshPro>().color = line.color;
-                gameObject.transform.position = new Vector3(line.unit.Position.x, line.unit.Position.y + 1);
+                foreach (var item in WaitingQueue.Values.ToArray())
+                {
+                    FadeOutText line = item.Dequeue();
+                    GameObject gameObject = Instantiate(instance.prefab);
+                    gameObject.GetComponentInChildren<TextMeshPro>().text = line.text;
+                    gameObject.GetComponentInChildren<TextMeshPro>().color = line.color;
+                    gameObject.transform.position = new Vector3(line.unit.Position.x, line.unit.Position.y + 1);
+
+                    if (item.Count == 0)
+                        WaitingQueue.Remove(line.unit);
+                }
+
                 yield return new WaitForSeconds(1f);
             }
 

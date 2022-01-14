@@ -41,6 +41,12 @@ namespace View
                     {
                         Vector3Int tilePosition = new Vector3Int(tileIdx.x, tileIdx.y, 0);
                         Tile newtile = ((Tile)DungeonEditor.instance.selectedObject).Clone();
+                        Tile oldtile = Model.Managers.FieldManager.GetTile(tileIdx.x, tileIdx.y);
+
+                        // 이전 타일 연결 관계 유지.
+                        newtile.SetUnit(oldtile.GetUnit());
+                        newtile.SetObtainable(oldtile.GetObtainable());
+
                         Model.Managers.FieldManager.instance.field[tileIdx.y, tileIdx.x] = newtile;
                         Model.Managers.FieldManager.instance.field[tileIdx.y, tileIdx.x].position = tileIdx;
                         Model.Managers.FieldManager.instance.tileMap.SetTile(tilePosition, newtile.TileBase);

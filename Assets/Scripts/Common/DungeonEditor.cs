@@ -250,7 +250,7 @@ public class DungeonEditor : MonoBehaviour
 
     public void SaveUnit()
     {
-        if(currentUnit == null)
+        if (currentUnit == null)
         {
             Debug.LogError("저장할 유닛이 없습니다.");
         }
@@ -259,7 +259,7 @@ public class DungeonEditor : MonoBehaviour
             Debug.LogError(currentUnit.Name + "저장");
             Common.Data.Save_Unit_Serializable_Data(currentUnit);
         }
-        
+
     }
 
     public void SaveScene()
