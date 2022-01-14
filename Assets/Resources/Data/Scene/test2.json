@@ -970,11 +970,6 @@
     {
       "Item1": "Model.Artifacts.Rare.BloodStone",
       "Item2": 2,
-      "Item3": 10
-    },
-    {
-      "Item1": "Model.Artifacts.Rare.BloodStone",
-      "Item2": 2,
       "Item3": 11
     },
     {
@@ -986,26 +981,6 @@
       "Item1": "Model.Artifacts.Rare.BloodStone",
       "Item2": 4,
       "Item3": 11
-    },
-    {
-      "Item1": "Model.Artifacts.Rare.BloodStone",
-      "Item2": 4,
-      "Item3": 10
-    },
-    {
-      "Item1": "Model.Artifacts.Rare.BloodStone",
-      "Item2": 4,
-      "Item3": 9
-    },
-    {
-      "Item1": "Model.Artifacts.Rare.BloodStone",
-      "Item2": 2,
-      "Item3": 9
-    },
-    {
-      "Item1": "Model.Artifacts.Rare.BloodStone",
-      "Item2": 3,
-      "Item3": 9
     },
     {
       "Item1": "Model.Artifacts.Rare.BloodStone",
@@ -1143,24 +1118,29 @@
       "Item3": 7
     },
     {
-      "Item1": "Model.Items.Barrior",
+      "Item1": "Model.Items.Key",
       "Item2": 3,
-      "Item3": 10
+      "Item3": 9
     },
     {
-      "Item1": "Model.Items.Barrior",
+      "Item1": "Model.Items.Key",
       "Item2": 2,
       "Item3": 8
     },
     {
-      "Item1": "Model.Items.Barrior",
-      "Item2": 3,
+      "Item1": "Model.Items.Key",
+      "Item2": 4,
       "Item3": 8
     },
     {
-      "Item1": "Model.Items.Barrior",
+      "Item1": "Model.Items.Key",
+      "Item2": 2,
+      "Item3": 10
+    },
+    {
+      "Item1": "Model.Items.Key",
       "Item2": 4,
-      "Item3": 8
+      "Item3": 10
     }
   ]
 }

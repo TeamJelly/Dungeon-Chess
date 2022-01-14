@@ -243,13 +243,13 @@ namespace Common
                 Model.Tiles.DownStair.CheckPartyDownStair();
             }
             else
-                Debug.LogError("이미 위치에 유닛이 존재합니다.");
+                Debug.LogWarning("이미 위치에 유닛이 존재합니다.");
         }
 
         // 최초 Obatainable 최초 소환
         public static void Summon(Obtainable obtainable, Vector2Int position)
         {
-            if(BattleManager.GetUnit(position) != null)
+            if (BattleManager.GetUnit(position) != null)
             {
                 GetObtainable(BattleManager.GetUnit(position), obtainable);
             }
@@ -262,7 +262,7 @@ namespace Common
                 Debug.Log(obtainable.ToString());
             }
             else
-                Debug.LogError("이미 위치에 뭔가 존재합니다.");
+                Debug.LogWarning("이미 위치에 뭔가 존재합니다.");
         }
         public static void UnSummon(Vector2Int position)
         {
@@ -304,7 +304,7 @@ namespace Common
                 BattleManager.instance.thisTurnUnit = null;
         }
 
-       
+
         public static void UnSummon(Obtainable obtainable)
         {
             if (obtainable.Position == null) return;
