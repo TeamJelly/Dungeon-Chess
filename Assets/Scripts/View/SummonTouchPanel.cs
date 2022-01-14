@@ -10,16 +10,26 @@ namespace View
 {
     public class SummonTouchPanel : MonoBehaviour, IPointerClickHandler, IDragHandler
     {
-        public void OnPointerClick(PointerEventData eventData)
+        Vector2Int currentTileIndex = Vector2Int.one * -1;
+        Vector2Int currentTileIndex_bef = Vector2Int.one * -1;
+        bool flag_dragging = false;
+
+        Vector2Int GetTileIdx(Vector2 position)
         {
-            Vector3 pos = Camera.main.ScreenToWorldPoint(eventData.position) + Vector3.one * 0.5f;
-            Vector2Int tileIdx = new Vector2Int((int)pos.x, (int)pos.y);
-            if (eventData.button == PointerEventData.InputButton.Left)
+            Vector3 pos = Camera.main.ScreenToWorldPoint(position) + Vector3.one * 0.5f;
+            return new Vector2Int((int)pos.x, (int)pos.y);
+        }
+
+        void Perform_Summon(PointerEventData.InputButton input, Vector2Int tileIdx)
+        {
+            if (!Model.Managers.FieldManager.IsInField(tileIdx)) return;
+
+            if (input == PointerEventData.InputButton.Left)
             {
                 // Debug.Log("vec3" + pos);
                 // Debug.Log("vec2" + tileIdx);
 
-                if (Model.Managers.FieldManager.IsInField(tileIdx) && DungeonEditor.instance.selectedIndex >= 0)
+                if (DungeonEditor.instance.selectedIndex >= 0)
                 {
                     // Debug.Log(DungeonEditor.instance.selectedObject);
 
@@ -55,25 +65,38 @@ namespace View
                     //Common.Command.Summon((Unit) DungeonEditor.instance.selectedObject, tileIdx);
                 }
             }
-            else if (eventData.button == PointerEventData.InputButton.Right)
+            else if (input == PointerEventData.InputButton.Right)
             {
-                if (Model.Managers.FieldManager.IsInField(tileIdx) /*&& DungeonEditor.instance.selectedIndex >= 0*/)
-                {
-                    Common.Command.UnSummon(tileIdx);
-                }
+                Common.Command.UnSummon(tileIdx);
             }
         }
-
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            //드래그 후에 point click 호출 방지
+            if (flag_dragging)
+            {
+                flag_dragging = false;
+                currentTileIndex = Vector2Int.one * -1; // 다음 drag를 위해 초기화.
+                return;
+            }
+            Perform_Summon(eventData.button, GetTileIdx(eventData.position));
+        }
 
         public void OnDrag(PointerEventData eventData)
         {
+            flag_dragging = true;
             // Debug.Log(eventData.delta);
 
             if (eventData.button == PointerEventData.InputButton.Middle)
                 Camera.main.transform.position -= (new Vector3(eventData.delta.x, eventData.delta.y, 0)) * 0.01f;
             else
-                OnPointerClick(eventData);
-
+            {
+                //같은 타일 내에서 연속 호출 방지
+                currentTileIndex_bef = currentTileIndex;
+                currentTileIndex = GetTileIdx(eventData.position);
+                if (currentTileIndex != currentTileIndex_bef)
+                    Perform_Summon(eventData.button, currentTileIndex);
+            }
             // Camera.main.transform.DOLocalMove(position, 0.1f);
         }
 
