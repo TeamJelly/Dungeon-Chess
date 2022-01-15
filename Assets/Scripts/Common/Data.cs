@@ -249,10 +249,14 @@ namespace Common
                     (skill.Category == skillCategory || skillCategory == SkillCategory.NULL))
                     skills.Add(skill);
 
+            Debug.Log("Skills: " + skills.Count);
             if (skills.Count == 0)
                 return AllSkills[0].Clone();
 
+           
             int idx = seed % skills.Count;
+            
+            Debug.Log("Selected: " + skills[idx].Name);
             return skills[idx].Clone();
         }
 
