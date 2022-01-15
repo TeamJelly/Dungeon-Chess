@@ -198,7 +198,7 @@ namespace Model.Managers
             {
                 Unit unit = CalculateNextUnit();
                 if (unit == null) continue;
-                Debug.Log(unit.Name);
+                // Debug.Log(unit.Name);
                 unitBuffer.Enqueue(unit);
             }
         }
