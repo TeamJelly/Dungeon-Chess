@@ -7,8 +7,7 @@ namespace Model.Skills.Move
 {
     public class Rook : MoveSkill
     {
-        public Rook() : this(0) {}
-
+        public Rook() : this(0) { }
         public Rook(int level) : base()
         {
             Name = "Rook's Move";
@@ -24,8 +23,13 @@ namespace Model.Skills.Move
             species.Add(UnitSpecies.MediumBeast);
             species.Add(UnitSpecies.LargeBeast);
             species.Add(UnitSpecies.Golem);
-
             OnUpgrade(level);
+        }
+
+        public override string GetDescription()
+        {
+            
+            return Description + User.Name;
         }
 
         public override List<Vector2Int> GetUseRange(Vector2Int userPosition)

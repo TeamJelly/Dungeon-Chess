@@ -318,7 +318,12 @@ namespace Common
             List<Unit> units = BattleManager.instance.AllUnits;
             for (int i = units.Count - 1; i >= 0; i--)
             {
-                UnSummon(units[i]);
+                Unit unit = units[i];
+                if (unit.Alliance == UnitAlliance.Party)
+                    GameManager.RemovePartyUnit(unit); //죽으면 파티유닛에서 박탈.
+                BattleView.DestroyUnitObject(unit);
+                BattleManager.instance.AllUnits.Remove(unit);
+                FieldManager.GetTile(unit.Position).SetUnit(null);
             }
             BattleManager.instance.AllUnits.Clear();
         }

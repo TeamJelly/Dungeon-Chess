@@ -70,9 +70,9 @@ namespace Model
             OutColor = Color.clear;
 
             Common.Command.AddSkill(this, Data.GetRandomSkill(Seed, species, SkillCategory.Move));
-            Common.Command.AddSkill(this, Data.GetRandomSkill(Seed, species, SkillCategory.Player));
-            Common.Command.AddSkill(this, Data.GetRandomSkill(Seed, species, SkillCategory.Player));
-            Common.Command.AddSkill(this, Data.GetRandomSkill(Seed, species, SkillCategory.Player));
+            Common.Command.AddSkill(this, Data.GetRandomSkill(Seed + 1, species, SkillCategory.Player));
+            Common.Command.AddSkill(this, Data.GetRandomSkill(Seed + 2, species, SkillCategory.Player));
+            Common.Command.AddSkill(this, Data.GetRandomSkill(Seed + 3, species, SkillCategory.Player));
 
             // MoveSkill = Data.GetRandomSkill(Seed, species, SkillCategory.Move) as Model.Skills.Move.MoveSkill;
             // Skills.Add(Data.GetRandomSkill(Seed, species, SkillCategory.Attack));

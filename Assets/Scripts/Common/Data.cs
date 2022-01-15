@@ -149,7 +149,8 @@ namespace Common
             SceneData sceneData = JsonConvert.DeserializeObject<SceneData>(jsonStr);
 
             List<Unit> unitList = new List<Unit>();
-            List<Obtainable> obtList = new List<Obtainable>();
+
+            bool inBattle = Model.Managers.GameManager.InBattle;
 
             Common.Command.UnSummonAllUnit();
             Common.Command.UnSummonAllObtainable();
@@ -160,15 +161,20 @@ namespace Common
             {
                 Unit u = new Unit(unit);
                 Common.Command.Summon(u, new Vector2Int(x, y));
-                unitList.Add(u);
+                if (u.Alliance == UnitAlliance.Party) Model.Managers.GameManager.AddPartyUnit(u);
+                //unitList.Add(u);
             }
 
             foreach ((string name, int x, int y) in sceneData.obtainables)
             {
                 Obtainable obt = (Obtainable)Activator.CreateInstance(Type.GetType(name));
                 Common.Command.Summon(obt, new Vector2Int(x, y));
-                obtList.Add(obt);
             }
+
+            foreach (Unit unit in Model.Managers.GameManager.PartyUnits) unit.Alliance = UnitAlliance.Friendly;
+            Model.Managers.BattleManager.instance.InitializeUnitBuffer();
+            UI.Battle.BattleController.SetBattleMode(inBattle);
+            UI.Battle.BattleController.instance.NextTurnStart();
         }
 
         public static Unit_Serializable Load_Unit_Serializable_Data(string dataPath)

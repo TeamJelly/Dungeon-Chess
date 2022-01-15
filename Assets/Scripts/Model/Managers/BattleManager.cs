@@ -92,6 +92,11 @@ namespace Model.Managers
 
             unit = new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1);
             Common.Command.AddSkill(unit, new Skills.Move.Queen());
+
+            Common.Command.AddSkill(unit, Common.Data.AllSkills[6]);
+            Common.Command.AddSkill(unit, Common.Data.AllSkills[7]);
+            Common.Command.AddSkill(unit, Common.Data.AllSkills[8]);
+
             unit.Mobility = 1;
             Common.Command.Summon(unit, new Vector2Int(10, 12));
 
@@ -136,8 +141,8 @@ namespace Model.Managers
                 return State.Win;
 
             // 패배조건이 모든 아군이 죽는 것일 때
-            if (instance.DefeatCondition == Condition.KillAllParty && GetAliveUnitCount(UnitAlliance.Party) == 0)
-                return State.Defeat;
+            //if (instance.DefeatCondition == Condition.KillAllParty && GetAliveUnitCount(UnitAlliance.Party) == 0)
+            //    return State.Defeat;
 
             // 계속
             return State.Continue;
