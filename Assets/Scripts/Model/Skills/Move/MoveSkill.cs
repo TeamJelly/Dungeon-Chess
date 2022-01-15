@@ -40,8 +40,6 @@ namespace Model.Skills.Move
             User.IsMoved = true;
             WaitingTime = ReuseTime;
 
-            Debug.Log($"{User.Name}가 {Name}스킬을 {Priority}우선으로 {target}에 사용!");
-
             if (target == User.Position)
                 yield break;
 
@@ -62,6 +60,7 @@ namespace Model.Skills.Move
             }
             User.animationState = Unit.AnimationState.Idle;
 
+            Debug.Log($"{User.Name}가 {Name}스킬을 {AITarget}타겟을 {Priority}우선으로 {target}에 사용!");
             // 실제 타일에 상속되는건 한번이다.
             Common.Command.Move(User, startPosition, target);
         }

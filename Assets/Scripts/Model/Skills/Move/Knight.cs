@@ -84,7 +84,7 @@ namespace Model.Skills.Move
             User.IsMoved = true;
             WaitingTime = ReuseTime;
 
-            Debug.Log($"{User.Name}가 {Name}스킬을 {target}에 사용!");
+            Debug.Log($"{User.Name}가 {Name}스킬을 {AITarget}타겟을 {Priority}우선으로 {target}에 사용!");
 
             Vector2Int startPosition = User.Position;
             View.VisualEffectView.MakeVisualEffect(User.Position, "Dust");

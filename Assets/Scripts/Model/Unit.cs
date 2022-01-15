@@ -398,8 +398,7 @@ namespace Model
                 criRate = criRate,
                 actionRate = actionRate,
                 positionX = position.x,
-                positionY = position.y,
-                moveSkill = moveSkill.ToString(),
+                positionY = position.y,                
 
                 // animatorPath = animatorPath,
                 // animationState = (int)animationState,
@@ -423,6 +422,10 @@ namespace Model
                 OutColorB = OutColor.b,
                 OutColorA = OutColor.a,
             };
+            
+            u.skills.Add(moveSkill.ToString());
+            u.skill_levels.Add(moveSkill.Level);
+            u.skill_waitingTimes.Add(moveSkill.WaitingTime);
 
             foreach (Skill s in skills)
             {
@@ -474,8 +477,6 @@ namespace Model
             position.x = u.positionX;
             position.y = u.positionY;
 
-            moveSkill = Activator.CreateInstance(Type.GetType(u.moveSkill)) as MoveSkill;
-
             // animatorPath = u.animatorPath;
             // animationState = (AnimationState)u.animationState;
 
@@ -494,8 +495,6 @@ namespace Model
             OutColor = new Color(u.OutColorR, u.OutColorG, u.OutColorB, u.OutColorA);
 
             skills.Clear();
-            waitingSkills.Clear();
-            enhancedSkills.Clear();
             stateEffects.Clear();
             belongings.Clear();
 
@@ -514,10 +513,10 @@ namespace Model
 
             for (int i = 0; i < u.skills.Count; i++)
             {
-                Skill skl = (Skill)Activator.CreateInstance(Type.GetType(u.skills[i]));
-                Common.Command.UpgradeSkill(skl, u.skill_levels[i]);
+                Skill skl = (Skill)Activator.CreateInstance(Type.GetType(u.skills[i]), u.skill_levels[i]);
                 skl.WaitingTime = u.skill_waitingTimes[i];
-                Common.Command.AddSkill(this, skl);
+                // Common.Command.UpgradeSkill(skl, u.skill_levels[i]);
+                this.AddSkill(skl);
             }
 
             for (int i = 0; i < u.stateEffects.Count; i++)
@@ -550,7 +549,6 @@ namespace Model
         public float actionRate;                   // 행동가능 퍼센테이지
         public int positionX;                // 위치X
         public int positionY;                // 위치Y
-        public string moveSkill;
         public List<string> skills = new List<string>();
         public List<int> skill_levels = new List<int>();
         public List<int> skill_waitingTimes = new List<int>();

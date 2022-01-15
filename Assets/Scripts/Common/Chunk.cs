@@ -10,114 +10,146 @@ using System.Text;
 
 public class Chunk
 {
-    FieldData[] fieldDataSet = new FieldData[]
+    Dictionary<int, List<FieldData>> FieldDataDictionary {
+        get 
+        {
+            if (fieldDataDictionary == null)
+            {
+                fieldDataDictionary = new Dictionary<int, List<FieldData>>()
+                {
+
+                };
+            }
+
+            return fieldDataDictionary;
+        }
+    }
+    Dictionary<int, List<FieldData>> fieldDataDictionary;
+
+    FieldData[] fieldDataSet = new FieldData[16]
     {
-         new FieldData(
+        // b0000 : 다막힘
+        new FieldData(
                     4, 4,
                     "WL WL WL WL\n" +
                     "WL FR FR WL\n" +
                     "WL FR FR WL\n" +
                     "WL WL WL WL\n"
                 ),
-         new FieldData(
+        // b0001 : 위
+        new FieldData(
                     4, 4,
                     "WL FR FR WL\n" +
                     "WL FR FR WL\n" +
                     "WL FR FR WL\n" +
                     "WL WL WL WL\n"
                 ),
-         new FieldData(
+        // b0010 : 오른
+        new FieldData(
                     4, 4,
                     "WL WL WL WL\n" +
                     "WL FR FR FR\n" +
                     "WL FR FR FR\n" +
                     "WL WL WL WL\n"
                 ),
-         new FieldData(
+        // b0011 : 위, 오른
+        new FieldData(
                     4, 4,
                     "WL FR FR WL\n" +
                     "WL FR FR FR\n" +
                     "WL FR FR FR\n" +
                     "WL WL WL WL\n"
                 ),
-         new FieldData(
+        // b0100 : 아래
+        new FieldData(
                     4, 4,
                     "WL WL WL WL\n" +
                     "WL FR FR WL\n" +
                     "WL FR FR WL\n" +
                     "WL FR FR WL\n"
                 ),
-         new FieldData(
+        // b0101 : 위, 아래
+        new FieldData(
                     4, 4,
                     "WL FR FR WL\n" +
                     "WL FR FR WL\n" +
                     "WL FR FR WL\n" +
                     "WL FR FR WL\n"
                 ),
-         new FieldData(
+        // b0110 : 오른, 아래
+        new FieldData(
                     4, 4,
                     "WL WL WL WL\n" +
                     "WL FR FR FR\n" +
                     "WL FR FR FR\n" +
                     "WL FR FR WL\n"
                 ),
-         new FieldData(
+        // b0111 : 위, 오른, 아래
+        new FieldData(
                     4, 4,
                     "WL FR FR WL\n" +
                     "WL FR FR FR\n" +
                     "WL FR FR FR\n" +
                     "WL FR FR WL\n"
                 ),
-         new FieldData(
+        // b1000 : 왼
+        new FieldData(
                     4, 4,
                     "WL WL WL WL\n" +
                     "FR FR FR WL\n" +
                     "FR FR FR WL\n" +
                     "WL WL WL WL\n"
                 ),
-                  new FieldData(
+        // b1001 : 위, 왼
+        new FieldData(
                     4, 4,
                     "WL FR FR WL\n" +
                     "FR FR FR WL\n" +
                     "FR FR FR WL\n" +
                     "WL WL WL WL\n"
                 ),
-         new FieldData(
+        // b1010 : 오른, 왼
+        new FieldData(
                     4, 4,
                     "WL WL WL WL\n" +
                     "FR FR FR FR\n" +
                     "FR FR FR FR\n" +
                     "WL WL WL WL\n"
                 ),
-         new FieldData(
+        // b1011 : 위, 오른, 왼
+        new FieldData(
                     4, 4,
                     "WL FR FR WL\n" +
                     "FR FR FR FR\n" +
                     "FR FR FR FR\n" +
                     "WL WL WL WL\n"
                 ),
-         new FieldData(
+        // b1100 : 아래, 왼
+        new FieldData(
                     4, 4,
                     "WL WL WL WL\n" +
                     "FR FR FR WL\n" +
                     "FR FR FR WL\n" +
                     "WL FR FR WL\n"
                 ),
-         new FieldData(
+        // b1101 : 위, 아래, 왼
+        new FieldData(
                     4, 4,
                     "WL FR FR WL\n" +
                     "FR FR FR WL\n" +
                     "FR FR FR WL\n" +
                     "WL FR FR WL\n"
                 ),
-         new FieldData(
+        // b1110 : 오른, 아래, 왼
+        new FieldData(
                     4, 4,
                     "WL WL WL WL\n" +
                     "FR FR FR FR\n" +
                     "FR FR FR FR\n" +
                     "WL FR FR WL\n"
                 ),
-         new FieldData(
+        // b1111 : 위, 오른, 아래, 왼
+        new FieldData(
                     4, 4,
                     "WL FR FR WL\n" +
                     "FR FR FR FR\n" +
@@ -125,31 +157,42 @@ public class Chunk
                     "WL FR FR WL\n"
                 )
     };
+
     class Tile4x4
     {
         public Tile[,] field;
         public FieldData fieldData;
+        
         public Tile4x4(int x, int y)
         {
             pos = new Vector2Int(x, y);
         }
+        
         public void SetFieldData(FieldData fieldData)
         {
             field = new Tile[4, 4];
             this.fieldData = fieldData;
         }
+        
         public Tile GetField(Vector2Int p)
         {
             return field[p.y, p.x];
         }
+
         public bool visited = false;
         public List<Vector2Int> availableDirections = new List<Vector2Int>();
-
         public Vector2Int pos;
+
+        /// <summary>
+        /// b 0    0     0    0
+        /// b(왼)(아래)(오른)(위)
+        /// </summary>
         public int path_ID = 0;
+
+        /// <summary>
+        /// 실제 ID
+        /// </summary>
         public int wall_ID = 0;
-
-
     }
 
     List<Vector2Int> directions = new List<Vector2Int>()
@@ -191,11 +234,13 @@ public class Chunk
             }
         }
     }
+
     void GenerateMazeData(Tile4x4[,] tileBoxies)
     {
         Vector2Int nextPos;
         Tile4x4 currentTile = tileBoxies[size - 1, 0];
 
+        // 입구와 연결되도록 길을 뚫어준다.
         currentTile.path_ID += 4;
 
         Stack<Tile4x4> visited_Tiles = new Stack<Tile4x4>();
@@ -331,12 +376,14 @@ public class Chunk
             for (int j = 0; j < size; j++)
             {
                 Tile4x4 tile = tileBoxies1[i, j];
+
+                /// 여기서 파일 불러와서 아이디 적용.
+                
                 tile.SetFieldData(fieldDataSet[15 - tile.wall_ID]);
             }
         }
 
         return GetFieldData(tileBoxies1);
-
     }
 
     FieldData GetFieldData(Tile4x4[,] tileBoxies)
@@ -363,7 +410,7 @@ public class Chunk
         sb[7] = 'S';
 
         platform.fieldStrData = sb.ToString();
-        result = FieldManager.instance.Merge2FieldData(result, platform,new Vector2Int(0, result.height));
+        result = FieldManager.instance.Merge2FieldData(result, platform, new Vector2Int(0, result.height));
         return result;
     }
 }

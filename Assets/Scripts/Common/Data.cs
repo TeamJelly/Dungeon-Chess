@@ -15,66 +15,66 @@ namespace Common
 {
     public class Data
     {
-        public static FieldData LoadFieldData()
-        {
+        // public static FieldData LoadFieldData()
+        // {
+        //     try
+        //     {
+        //         TextAsset[] Starts = Resources.LoadAll<TextAsset>("/Data/Field/Start");
+        //         TextAsset[] Neutrals = Resources.LoadAll<TextAsset>("/Data/Field/Neutral");
+        //         TextAsset[] Ends = Resources.LoadAll<TextAsset>("/Data/Field/End");
 
-            try
-            {
-                TextAsset[] Starts = Resources.LoadAll<TextAsset>("/Data/Field/Start");
-                TextAsset[] Neutrals = Resources.LoadAll<TextAsset>("/Data/Field/Neutral");
-                TextAsset[] Ends = Resources.LoadAll<TextAsset>("/Data/Field/End");
+        //         string jsonStr = File.ReadAllText(Application.dataPath + "/Resources/Data/Field/Data.json");
 
-                string jsonStr = File.ReadAllText(Application.dataPath + "/Resources/Data/Field/Data.json");
+        //         jsonStr = jsonStr.Replace("\n", "");
 
-                jsonStr = jsonStr.Replace("\n", "");
+        //         Debug.Log("load" + jsonStr);
 
-                Debug.Log("load" + jsonStr);
+        //         return JsonUtility.FromJson<FieldData>(jsonStr);
+        //     }
+        //     catch
+        //     {
+        //         // Debug.Log("no save file in path");
+        //         // return null;
 
-                return JsonUtility.FromJson<FieldData>(jsonStr);
-            }
-            catch
-            {
-                // Debug.Log("no save file in path");
-                // return null;
+        //         FieldData temp = new FieldData(
+        //             16, 16,
+        //             "WL WL WL WL WL WL WL WL WL WL WL WL WL WL WL WL \n" +
+        //             "WL PW HL PW PW FR FR FR FR FR SL SL SL LK WL WL \n" +
+        //             "WL PW PW HL PW FR FR FR FR FR SL SL SL LK FR WL \n" +
+        //             "WL FR HL FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+        //             "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+        //             "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+        //             "WL TN TN TN TN TN TN TN TN TN TN TN TN TN TN WL \n" +
+        //             "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+        //             "WL FR FR FR FR FR WL WL FR FR FR FR FR FR FR WL \n" +
+        //             "WL FR FR FR FR FR WL WL FR FR FR FR FR FR FR WL \n" +
+        //             "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+        //             "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+        //             "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+        //             "WL US US FR FR DS DS FR FR FR FR FR FR FR FR WL \n" +
+        //             "WL US US FR FR DS DS FR FR FR FR FR FR FR FR WL \n" +
+        //             "WL WL WL WL WL WL WL WL WL WL WL WL WL WL WL WL \n"
+        //         );
 
-                FieldData temp = new FieldData(
-                    16, 16,
-                    "WL WL WL WL WL WL WL WL WL WL WL WL WL WL WL WL \n" +
-                    "WL PW HL PW PW FR FR FR FR FR SL SL SL LK WL WL \n" +
-                    "WL PW PW HL PW FR FR FR FR FR SL SL SL LK FR WL \n" +
-                    "WL FR HL FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
-                    "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
-                    "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
-                    "WL TN TN TN TN TN TN TN TN TN TN TN TN TN TN WL \n" +
-                    "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
-                    "WL FR FR FR FR FR WL WL FR FR FR FR FR FR FR WL \n" +
-                    "WL FR FR FR FR FR WL WL FR FR FR FR FR FR FR WL \n" +
-                    "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
-                    "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
-                    "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
-                    "WL US US FR FR DS DS FR FR FR FR FR FR FR FR WL \n" +
-                    "WL US US FR FR DS DS FR FR FR FR FR FR FR FR WL \n" +
-                    "WL WL WL WL WL WL WL WL WL WL WL WL WL WL WL WL \n"
-                );
+        //         SaveFieldData(temp);
 
-                SaveFieldData(temp);
+        //         return temp;
+        //     }
+        // }
 
-                return temp;
-            }
-        }
+        // public static void SaveFieldData(FieldData fieldData)
+        // {
+        //     DirectoryInfo directoryInfo = new DirectoryInfo(Application.dataPath + "/Resources/Data/Field/");
+        //     if (!directoryInfo.Exists) directoryInfo.Create();
 
-        public static void SaveFieldData(FieldData fieldData)
-        {
-            DirectoryInfo directoryInfo = new DirectoryInfo(Application.dataPath + "/Resources/Data/Field/");
-            if (!directoryInfo.Exists) directoryInfo.Create();
+        //     string jsonStr = JsonUtility.ToJson(fieldData);
 
-            string jsonStr = JsonUtility.ToJson(fieldData);
+        //     jsonStr = jsonStr.Replace("\\n", "\n");
+        //     Debug.Log("json Replace " + jsonStr);
 
-            jsonStr = jsonStr.Replace("\\n", "\n");
-            Debug.Log("json Replace " + jsonStr);
+        //     File.WriteAllText(Application.dataPath + "/Resources/Data/Field/Data.json", jsonStr);
+        // }
 
-            File.WriteAllText(Application.dataPath + "/Resources/Data/Field/Data.json", jsonStr);
-        }
 
         //유닛 저장 불러오기 실험중
         //현재 객체 자체를 바이너리 직렬화로 저장 시도
@@ -93,14 +93,30 @@ namespace Common
             bf.Serialize(file, unit);
             file.Close();*/
         }
+
+        public static void SaveChunks(string name)
+        {
+            DirectoryInfo directoryInfo = new DirectoryInfo(Application.dataPath + "/Resources/Data/Chunk");
+            if (!directoryInfo.Exists) directoryInfo.Create();
+
+            FieldData fieldData = new FieldData();
+
+
+        }
+
+        public static void LoadChunks()
+        {
+
+        }
+
         [System.Serializable]
         class SceneData
         {
             public FieldData fieldData;
-
             public (Unit_Serializable unit, int x, int y)[] units;
             public (string name, int x, int y)[] obtainables;
         }
+        
         public static void SaveScene(string name)
         {
             DirectoryInfo directoryInfo = new DirectoryInfo(Application.dataPath + "/Resources/Data/Scene/");
@@ -134,7 +150,6 @@ namespace Common
 
             List<Unit> unitList = new List<Unit>();
             List<Obtainable> obtList = new List<Obtainable>();
-
 
             Common.Command.UnSummonAllUnit();
             Common.Command.UnSummonAllObtainable();

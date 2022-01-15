@@ -259,7 +259,7 @@ namespace Common
                 obtainable.Position = position;
                 BattleManager.instance.AllObtainables.Add(obtainable);
                 BattleView.MakeObtainableObject(obtainable, position);
-                Debug.Log(obtainable.ToString());
+                // Debug.Log(obtainable.ToString());
             }
             else
                 Debug.LogWarning("이미 위치에 뭔가 존재합니다.");
@@ -345,6 +345,8 @@ namespace Common
                 RemoveSkill(unit, unit.MoveSkill);
                 unit.MoveSkill = newSkill as Model.Skills.Move.MoveSkill;
                 newSkill.User = unit;
+                
+                // Debug.Log($"{unit.Name} {newSkill.GetType()} {newSkill.User}");
             }
             else if (unit.Skills.Count < 3 && !unit.Skills.Contains(newSkill))
             {
