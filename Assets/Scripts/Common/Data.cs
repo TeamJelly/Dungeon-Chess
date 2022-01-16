@@ -171,10 +171,12 @@ namespace Common
                 Common.Command.Summon(obt, new Vector2Int(x, y));
             }
 
-            foreach (Unit unit in Model.Managers.GameManager.PartyUnits) unit.Alliance = UnitAlliance.Friendly;
             Model.Managers.BattleManager.instance.InitializeUnitBuffer();
-            UI.Battle.BattleController.SetBattleMode(inBattle);
-            UI.Battle.BattleController.instance.NextTurnStart();
+
+            // 일단 배틀모드 해제.
+            UI.Battle.BattleController.SetBattleMode(false);
+
+            // UI.Battle.BattleController.instance.NextTurnStart();
         }
 
         public static Unit_Serializable Load_Unit_Serializable_Data(string dataPath)
@@ -240,25 +242,25 @@ namespace Common
         /// <param name="species">종족</param>
         /// <param name="type">부모 클래스</param>
         /// <returns></returns>
-        public static Skill GetRandomSkill(int seed, UnitSpecies species = UnitSpecies.NULL, SkillCategory skillCategory = SkillCategory.NULL)
-        {
-            List<Skill> skills = new List<Skill>();
+        // public static Skill GetRandomSkill(int seed, UnitSpecies species = UnitSpecies.NULL, SkillCategory skillCategory = SkillCategory.NULL)
+        // {
+        //     List<Skill> skills = new List<Skill>();
 
-            foreach (Skill skill in AllSkills)
-                if ((skill.species.Contains(species) || species == UnitSpecies.NULL) &&
-                    (skill.Category == skillCategory || skillCategory == SkillCategory.NULL))
-                    skills.Add(skill);
+        //     foreach (Skill skill in AllSkills)
+        //         if ((skill.species.Contains(species)) &&
+        //             (skill.Category == skillCategory))
+        //             skills.Add(skill);
 
-            Debug.Log("Skills: " + skills.Count);
-            if (skills.Count == 0)
-                return AllSkills[0].Clone();
+        //     Debug.Log("Skills: " + skills.Count);
+        //     if (skills.Count == 0)
+        //         return AllSkills[0].Clone();
 
            
-            int idx = seed % skills.Count;
+        //     int idx = seed % skills.Count;
             
-            Debug.Log("Selected: " + skills[idx].Name);
-            return skills[idx].Clone();
-        }
+        //     Debug.Log("Selected: " + skills[idx].Name);
+        //     return skills[idx].Clone();
+        // }
 
         private static void InitSkillDictionary()
         {

@@ -112,7 +112,7 @@ namespace Model
 
             TargetType Target = this.Target;
 
-            if (User.Alliance != UnitAlliance.Party && AITarget != TargetType.NULL)
+            if ((User.Alliance != UnitAlliance.Party && AITarget != TargetType.NULL) || GameManager.InAuto)
                 Target = this.AITarget;
 
             foreach (var position in GetUseRange(userPosition))

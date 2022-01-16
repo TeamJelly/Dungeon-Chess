@@ -69,18 +69,10 @@ namespace Model
             InColor = new Color(0.9f, 0.9f, 0.9f);
             OutColor = Color.clear;
 
-            Common.Command.AddSkill(this, Data.GetRandomSkill(Seed, species, SkillCategory.Move));
-            Common.Command.AddSkill(this, Data.GetRandomSkill(Seed + 1, species, SkillCategory.Player));
-            Common.Command.AddSkill(this, Data.GetRandomSkill(Seed + 2, species, SkillCategory.Player));
-            Common.Command.AddSkill(this, Data.GetRandomSkill(Seed + 3, species, SkillCategory.Player));
-
-            // MoveSkill = Data.GetRandomSkill(Seed, species, SkillCategory.Move) as Model.Skills.Move.MoveSkill;
-            // Skills.Add(Data.GetRandomSkill(Seed, species, SkillCategory.Attack));
-            // Skills.Add(Data.GetRandomSkill(Seed, species, SkillCategory.Attack));
-            // Skills.Add(Data.GetRandomSkill(Seed, species, SkillCategory.Attack));
-
-            // Skills.Add(Data.GetRandomSkill(Seed, species, SkillCategory.Intermediate));
-            // Skills.Add(Data.GetRandomSkill(Seed, species, SkillCategory.Advanced));
+            Common.Command.AddSkill(this, new Skills.Move.Pawn());
+            Common.Command.AddSkill(this, new Skills.Basic.Fireball());
+            Common.Command.AddSkill(this, new Skills.Basic.Heal());
+            Common.Command.AddSkill(this, new Skills.Basic.Scratch());
 
             // 인간형 초기 스텟
             if (Species == UnitSpecies.Human)
@@ -513,9 +505,9 @@ namespace Model
 
             for (int i = 0; i < u.skills.Count; i++)
             {
-                Skill skl = (Skill)Activator.CreateInstance(Type.GetType(u.skills[i]), u.skill_levels[i]);
+                Skill skl = (Skill)Activator.CreateInstance(Type.GetType(u.skills[i]));
                 skl.WaitingTime = u.skill_waitingTimes[i];
-                // Common.Command.UpgradeSkill(skl, u.skill_levels[i]);
+                Common.Command.UpgradeSkill(skl, u.skill_levels[i]);
                 this.AddSkill(skl);
             }
 

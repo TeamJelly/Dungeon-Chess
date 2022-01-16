@@ -207,8 +207,10 @@ namespace Common
             else
                 return null; // 아무데도 사용할수 없다면 null를 리턴합니다.
 
+
             for (int i = 1; i < positions.Count; i++)
             {
+                Debug.Log(user.Name + ": " + priority + " , " + positions[i]);
                 // 타겟 우선순위가 나로부터 가장 가까운 위치이다.
                 if (priority == Priority.NearFromMe &&
                     (targetPosition - user.Position).magnitude > (positions[i] - user.Position).magnitude)

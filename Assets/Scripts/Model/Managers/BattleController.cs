@@ -28,6 +28,12 @@ namespace UI.Battle
         {
             // 다음 턴의 유닛을 받아 시작한다.
             Unit nextUnit = BattleManager.GetNextTurnUnit();
+            if (nextUnit == null)
+            {
+                Debug.LogError("다음턴을 진행할 유닛이 존재하지 않습니다.");
+                return;
+            }
+                
             BattleManager.SetNextTurnUnit(nextUnit);
             Debug.Log($"{nextUnit.Name}의 턴입니다.");
             ScreenTouchManager.instance.Move(nextUnit.Position);
@@ -54,7 +60,7 @@ namespace UI.Battle
             Model.Tiles.DownStair.CheckPartyDownStair();
 
             // 파티원이 아닌 AI라면 자동 행동 실행
-            if (nextUnit.Alliance != UnitAlliance.Party)
+            if (nextUnit.Alliance != UnitAlliance.Party || GameManager.InAuto == true)
             {
                 BattleView.TurnEndButton.gameObject.SetActive(false);
                 BattleView.DownStairButton.gameObject.SetActive(false);
@@ -76,8 +82,6 @@ namespace UI.Battle
         {
             IndicatorView.HideTileIndicator();
             //Viewer.battle.ThisTurnUnitInfo.CurrentPushedButton = null;
-
-
             Unit thisTurnUnit = BattleManager.instance.thisTurnUnit;
 
             if(thisTurnUnit != null)

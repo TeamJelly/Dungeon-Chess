@@ -35,7 +35,6 @@ namespace Model.Managers
         public int stage;
 
 
-        bool inBattle = false;
         public int Gold
         {
             get => gold;
@@ -49,7 +48,18 @@ namespace Model.Managers
         public static List<Unit> PartyUnits { get => Instance.partyUnits; }
 
 
+        bool inBattle = false;
+        /// <summary>
+        /// 배틀 중 인가?
+        /// </summary>
+        /// <value></value>
         public static bool InBattle { get => Instance.inBattle; set => Instance.inBattle = value; }
+
+        /// <summary>
+        /// 게임이 오토모드 인가?
+        /// </summary>
+        /// <value></value>
+        public static bool InAuto { get; set; }
 
         GameManager()
         {

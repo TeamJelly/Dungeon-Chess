@@ -58,6 +58,10 @@ public class DungeonEditor : MonoBehaviour
     Tile currentTile = null;
     Unit currentUnit = null;
 
+    public TextMeshProUGUI BattleButtonText;
+
+    public TextMeshProUGUI AutoButtonText;
+
     private void Awake()
     {
         instance = this;
@@ -525,6 +529,38 @@ public class DungeonEditor : MonoBehaviour
                     selectedObject = Items[temp];
                 }
             });
+        }
+    }
+
+    /// <summary>
+    /// 배틀 모드를 변환한다.
+    /// </summary>
+    public void BattleToggleButton()
+    {
+        BattleController.SetBattleMode(!GameManager.InBattle);
+
+        if (GameManager.InBattle)
+        {
+            BattleController.instance.NextTurnStart();
+            BattleButtonText.text = "Battle\nOff";
+        }
+        else
+            BattleButtonText.text = "Battle\nOn";
+    }
+
+    public void AutoToggleButtton()
+    {
+        if (GameManager.InBattle)
+        {
+            GameManager.InAuto = true;
+            AutoButtonText.text = "Auto\nOff";
+            BattleController.instance.ThisTurnEnd();
+        }
+        else
+        {
+            GameManager.InAuto = false;
+            AutoButtonText.text = "Auto\nOn";
+            BattleController.instance.ThisTurnEnd();
         }
     }
 
