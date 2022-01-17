@@ -47,6 +47,13 @@ namespace Model.Skills.Move
             // 1 단계 : 위치 이동
             List<Vector2Int> path = Common.PathFind.PathFindAlgorithm(User, User.Position, target);
 
+            // 갈수 있는 길이 없다면??
+            if (path == null)
+            {
+                Debug.LogError($"{User.Position}에서 {target}으로 길이 존재하지 않습니다.");
+                yield break;
+            }
+
             User.animationState = Unit.AnimationState.Move;
             float moveTime = 0.5f / path.Count;
 
