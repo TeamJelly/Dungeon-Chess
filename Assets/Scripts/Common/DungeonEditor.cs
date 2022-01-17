@@ -562,8 +562,8 @@ public class DungeonEditor : MonoBehaviour
             GameManager.InAuto = false;
             AutoButtonText.text = "Auto\nOff";
 
-            if (GameManager.InBattle)
-                BattleController.instance.NextTurnStart();
+            // if (GameManager.InBattle)
+            //     BattleController.instance.NextTurnStart();
         }
         else
         {
@@ -571,8 +571,8 @@ public class DungeonEditor : MonoBehaviour
             GameManager.InAuto = true;
             AutoButtonText.text = "Auto\nOn";
 
-            if (GameManager.InBattle)
-                BattleController.instance.ThisTurnEnd();
+            // if (GameManager.InBattle)
+            //     BattleController.instance.ThisTurnEnd();
         }
     }
 
