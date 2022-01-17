@@ -7,8 +7,8 @@
   "units": [
     {
       "Item1": {
-        "Seed": 2744,
-        "Name": "Jon",
+        "Seed": 8135,
+        "Name": "Davi",
         "level": 1,
         "curEXP": 0,
         "nextEXP": 60,
@@ -19,27 +19,36 @@
         "agility": 10,
         "mobility": 3,
         "criRate": 10,
-        "actionRate": 100.0,
-        "positionX": 0,
-        "positionY": 0,
+        "actionRate": 0.0,
+        "positionX": 2,
+        "positionY": 6,
         "skills": [
-          "Model.Skills.Move.MoveSkill"
+          "Model.Skills.Move.Pawn",
+          "Model.Skills.Basic.Fireball",
+          "Model.Skills.Basic.Heal",
+          "Model.Skills.Basic.Scratch"
         ],
         "skill_levels": [
+          0,
+          0,
+          0,
           0
         ],
         "skill_waitingTimes": [
+          0,
+          0,
+          0,
           0
         ],
         "stateEffects": [],
         "belongings": [],
         "Alliance": 0,
         "Species": 0,
-        "Modifier": 2,
+        "Modifier": 5,
         "IsSkilled": false,
         "IsMoved": false,
         "IsFlying": false,
-        "SpriteNumber": 221,
+        "SpriteNumber": 120,
         "InColorR": 0.9,
         "InColorG": 0.9,
         "InColorB": 0.9,
@@ -49,35 +58,41 @@
         "OutColorB": 0.0,
         "OutColorA": 0.0
       },
-      "Item2": 0,
-      "Item3": 0
+      "Item2": 2,
+      "Item3": 6
     },
     {
       "Item1": {
-        "Seed": 2766,
-        "Name": "Kathy",
+        "Seed": 4639,
+        "Name": "Debbi",
         "level": 1,
         "curEXP": 0,
         "nextEXP": 60,
-        "curHP": 35,
+        "curHP": 15,
         "maxHP": 35,
         "armor": 0,
         "strength": 10,
         "agility": 10,
-        "mobility": 1,
+        "mobility": 3,
         "criRate": 10,
         "actionRate": 100.0,
-        "positionX": 0,
-        "positionY": 13,
+        "positionX": 2,
+        "positionY": 8,
         "skills": [
-          "Model.Skills.Move.MoveSkill",
-          "Model.Skills.Basic.Heal"
+          "Model.Skills.Move.Queen",
+          "Model.Skills.Basic.Fireball",
+          "Model.Skills.Basic.Heal",
+          "Model.Skills.Basic.Scratch"
         ],
         "skill_levels": [
+          0,
+          0,
           0,
           0
         ],
         "skill_waitingTimes": [
+          0,
+          0,
           0,
           0
         ],
@@ -85,11 +100,11 @@
         "belongings": [],
         "Alliance": 1,
         "Species": 0,
-        "Modifier": 0,
+        "Modifier": 1,
         "IsSkilled": false,
         "IsMoved": false,
         "IsFlying": false,
-        "SpriteNumber": 122,
+        "SpriteNumber": 29,
         "InColorR": 0.9,
         "InColorG": 0.9,
         "InColorB": 0.9,
@@ -99,8 +114,8 @@
         "OutColorB": 0.0,
         "OutColorA": 0.0
       },
-      "Item2": 0,
-      "Item3": 13
+      "Item2": 2,
+      "Item3": 8
     }
   ],
   "obtainables": []
