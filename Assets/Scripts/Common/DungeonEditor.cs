@@ -556,22 +556,23 @@ public class DungeonEditor : MonoBehaviour
 
     public void AutoToggleButtton()
     {
-        if (!GameManager.InBattle)
-            return;
-
         if (GameManager.InAuto)
         {
             Debug.LogWarning("Auto mode OFF");
             GameManager.InAuto = false;
             AutoButtonText.text = "Auto\nOff";
-            BattleController.instance.NextTurnStart();
+
+            if (GameManager.InBattle)
+                BattleController.instance.NextTurnStart();
         }
         else
         {
             Debug.LogWarning("Auto mode ON");
             GameManager.InAuto = true;
             AutoButtonText.text = "Auto\nOn";
-            BattleController.instance.ThisTurnEnd();
+
+            if (GameManager.InBattle)
+                BattleController.instance.ThisTurnEnd();
         }
     }
 

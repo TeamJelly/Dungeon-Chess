@@ -323,7 +323,7 @@ namespace Common
                     Vector2Int dest = PathFind.GetClosestReachableDest(user, averagePosition).position;
                     path = PathFind.PathFindAlgorithm(user.MoveSkill, user.Position, dest);
 
-                    if (path != null)
+                    if (path != null && path.Count > 1)
                         return path[1];
                     else
                         return null;

@@ -27,7 +27,8 @@ namespace Model.Managers
         {
             Continue,
             Win,
-            Defeat
+            Defeat,
+            Stop
         }
 
         public enum Condition
@@ -118,16 +119,21 @@ namespace Model.Managers
 
         public static State CheckGameState()
         {
+            // 배틀중이 아니라면 멈춘다.
+            if (GameManager.InBattle == false)
+                return State.Stop;
+
             // 승리조건이 모든 적이 죽는 것일 때
-            if (instance.WinCondition == Condition.KillAllEnemy && GetAliveUnitCount(UnitAlliance.Enemy) == 0)
+            else if (instance.WinCondition == Condition.KillAllEnemy && GetAliveUnitCount(UnitAlliance.Enemy) == 0)
                 return State.Win;
 
             // 패배조건이 모든 아군이 죽는 것일 때
-            if (instance.DefeatCondition == Condition.KillAllParty && GetAliveUnitCount(UnitAlliance.Party) == 0)
+            else if (instance.DefeatCondition == Condition.KillAllParty && GetAliveUnitCount(UnitAlliance.Party) == 0)
                return State.Defeat;
 
             // 계속
-            return State.Continue;
+            else
+                return State.Continue;
         }
 
         private static int GetAliveUnitCount(UnitAlliance alliance)

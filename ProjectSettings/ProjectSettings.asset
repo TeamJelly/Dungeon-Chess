@@ -156,6 +156,7 @@ PlayerSettings:
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
     Standalone: com.TeamJelly.DungeonChess
+    iPhone: com.TeamJelly.DungeonChess
   buildNumber:
     Standalone: 0
     iPhone: 0
@@ -250,7 +251,7 @@ PlayerSettings:
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
   AndroidKeystoreName: 
-  AndroidKeyaliasName: unagi's key
+  AndroidKeyaliasName: 
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0
   AndroidIsGame: 1

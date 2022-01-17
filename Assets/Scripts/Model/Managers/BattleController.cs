@@ -101,6 +101,8 @@ namespace UI.Battle
                 case BattleManager.State.Defeat:
                     Defeat();
                     break;
+                case BattleManager.State.Stop:
+                    break;
             }
         }
 
