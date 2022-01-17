@@ -6,6 +6,7 @@ using UnityEngine.UI;
 namespace mikinel.easylogview
 {
     public class EasyLogView : MonoBehaviour {
+
         [SerializeField] private TextMeshProUGUI text;
         [SerializeField] private ScrollRect scrollRect;
         [SerializeField] private bool isShowMillisecond = true;
@@ -69,8 +70,10 @@ namespace mikinel.easylogview
             {
                 scrollRect.verticalNormalizedPosition = 0;
                 scrollRect.horizontalNormalizedPosition = 0;
-            }
+            }           
         }
+
+
 
         public void ClearLog(){
             var time = DateTime.Now;

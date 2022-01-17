@@ -539,26 +539,37 @@ public class DungeonEditor : MonoBehaviour
     {
         BattleController.SetBattleMode(!GameManager.InBattle);
 
+        // 배틀 모드가 On이 되었다.
         if (GameManager.InBattle)
         {
+            Debug.LogWarning("Battle mode ON");
             BattleController.instance.NextTurnStart();
+            BattleButtonText.text = "Battle\nON";
+        }
+        // 배틀 모드가 Off가 되었다.
+        else
+        {
+            Debug.LogWarning("Battle mode OFF");
             BattleButtonText.text = "Battle\nOff";
         }
-        else
-            BattleButtonText.text = "Battle\nOn";
     }
 
     public void AutoToggleButtton()
     {
-        if (GameManager.InBattle)
+        if (!GameManager.InBattle)
+            return;
+
+        if (GameManager.InAuto)
         {
-            GameManager.InAuto = true;
+            Debug.LogWarning("Auto mode OFF");
+            GameManager.InAuto = false;
             AutoButtonText.text = "Auto\nOff";
-            BattleController.instance.ThisTurnEnd();
+            BattleController.instance.NextTurnStart();
         }
         else
         {
-            GameManager.InAuto = false;
+            Debug.LogWarning("Auto mode ON");
+            GameManager.InAuto = true;
             AutoButtonText.text = "Auto\nOn";
             BattleController.instance.ThisTurnEnd();
         }
