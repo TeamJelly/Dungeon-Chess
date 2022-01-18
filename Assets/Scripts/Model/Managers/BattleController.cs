@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using View;
+using System.Collections;
 
 namespace UI.Battle
 {
@@ -26,6 +27,7 @@ namespace UI.Battle
         /// </summary>
         public void NextTurnStart()
         {
+
             // 다음 턴의 유닛을 받아 시작한다.
             Unit nextUnit = BattleManager.GetNextTurnUnit();
             if (nextUnit == null)
@@ -77,6 +79,8 @@ namespace UI.Battle
                 BattleView.UnitControlView.panel.SetActive(true);
             }
         }
+
+        public static Coroutine action_coroutine = null;
 
         public void ThisTurnEnd()
         {

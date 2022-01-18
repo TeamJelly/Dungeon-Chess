@@ -43,6 +43,7 @@ namespace Model.Skills.Basic
             // 스킬 소모 기록
             User.IsSkilled = true;
             WaitingTime = ReuseTime;
+            Debug.Log($"{Name} 사용, {WaitingTime}을 {ReuseTime}으로 초기화");
 
             // 스킬 실행
             Unit targetUnit = Model.Managers.BattleManager.GetUnit(target);

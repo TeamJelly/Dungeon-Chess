@@ -543,8 +543,11 @@ public class DungeonEditor : MonoBehaviour
         if (GameManager.InBattle)
         {
             Debug.LogWarning("Battle mode ON");
-            BattleController.instance.NextTurnStart();
             BattleButtonText.text = "Battle\nON";
+            
+            // Ai.Action 실행중에는 하면 안됨.
+            if (BattleController.action_coroutine == null)
+                BattleController.instance.NextTurnStart();
         }
         // 배틀 모드가 Off가 되었다.
         else

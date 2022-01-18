@@ -320,7 +320,15 @@ namespace Model
         public int Agility { get => agility; set => agility = value; }
         public int Mobility { get => mobility; set => mobility = value; } //이동 반경
         public float ActionRate { get => actionRate; set => actionRate = value; }
+        
+        /// <summary>
+        /// 해당 턴에 스킬을 사용했음.
+        /// </summary>
         public bool IsSkilled { get; set; }
+
+        /// <summary>
+        /// 해당 턴에 이동을 했음.
+        /// </summary>
         public bool IsMoved { get; set; }
 
         public MoveSkill MoveSkill { get => moveSkill; set => moveSkill = value; }

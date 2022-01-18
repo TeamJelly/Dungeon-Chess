@@ -15203,7 +15203,6 @@ GameObject:
   - component: {fileID: 984850858}
   - component: {fileID: 984850857}
   - component: {fileID: 984850861}
-  - component: {fileID: 984850863}
   - component: {fileID: 984850862}
   - component: {fileID: 984850864}
   m_Layer: 5
@@ -15333,26 +15332,6 @@ MonoBehaviour:
   downStairButton: {fileID: 413152007}
   unitControlView: {fileID: 0}
   animatorController: {fileID: 9100000, guid: 8f7a9171471414520bfcccf964c56d38, type: 2}
---- !u!114 &984850863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 984850856}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d905948ba14913459eebe13047d5fb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tileIndicatorPrefab: {fileID: 0}
-  possibleCursorColor: {r: 0, g: 0, b: 0, a: 0}
-  relatedColor: {r: 0, g: 0, b: 0, a: 0}
-  sklRangeColor: {r: 0, g: 0, b: 0, a: 0}
-  impossibleCursorColor: {r: 0, g: 0, b: 0, a: 0}
-  subImpossibleColor: {r: 0, g: 0, b: 0, a: 0}
-  sklAvlColor: {r: 0, g: 0, b: 0, a: 0}
-  sklNotAvlColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &984850864
 MonoBehaviour:
   m_ObjectHideFlags: 0

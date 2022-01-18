@@ -71,7 +71,7 @@ namespace View
             if (units.Count > positions.Count)
                 Debug.LogError("Upstair 부족!! 소환할 곳이 없음!");
             
-            for (int i = 0; i < units.Count; i++)
+            for (int i = 0; i < Mathf.Min(positions.Count, units.Count); i++)
             {
                 Common.Command.Summon(units[i], positions[i]);
             }

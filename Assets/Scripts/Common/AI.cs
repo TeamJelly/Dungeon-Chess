@@ -48,7 +48,13 @@ namespace Common
 
             public void Invoke()
             {
-                BattleController.instance.StartCoroutine(InvokeAIAction(this));
+                if (BattleController.action_coroutine != null)
+                {
+                    Debug.LogError("action 코루틴 이미 실행중!!");
+                    return;
+                }
+
+                BattleController.action_coroutine = BattleController.instance.StartCoroutine(InvokeAIAction(this));
             }
 
             public IEnumerator InvokeAIAction(Action action)
@@ -74,6 +80,7 @@ namespace Common
                 }
 
                 BattleView.TurnEndButton.interactable = true;
+                BattleController.action_coroutine = null;
 
                 if (BattleManager.CheckGameState() == BattleManager.State.Continue)
                     BattleController.instance.ThisTurnEnd();
