@@ -10,7 +10,7 @@ namespace Model.Items
         public Key()
         {
             Name = "Key";
-            Target = TargetType.Any;
+            UserTarget = TargetType.Any;
 
             SpriteNumber = 559;
             InColor = Color.white;

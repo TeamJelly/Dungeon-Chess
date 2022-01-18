@@ -7,7 +7,7 @@ namespace Model.Items
         public Regeneration()
         {
             Name = "Regeneration Potion";
-            Target = TargetType.Any;
+            UserTarget = TargetType.Any;
 
             SpriteNumber = 705;
             InColor = UnityEngine.Color.green;

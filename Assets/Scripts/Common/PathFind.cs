@@ -133,11 +133,16 @@ namespace Common
 
             Vector2Int [] directions = {Vector2Int.up, Vector2Int.down, Vector2Int.right, Vector2Int.left};
 
+            int loop_count = 0;
+
             while (true)
             {
-                if (frontier.Count == 0)
+                InfiniteLoopDebug.Run("Pathfind", "GetClosestReachableDest", 140);
+                // 무한루프 방지용
+                loop_count++;
+                if (frontier.Count == 0 || loop_count > 1000)
                 {
-                    // Debug.Log("빈 타일이 존재하지 않음");
+                    Debug.Log("갈수 없거나 계산이 너무 오래걸립니다!");
                     return null;
                 }
 
@@ -183,6 +188,7 @@ namespace Common
 
             while (true)
             {
+                InfiniteLoopDebug.Run("Pathfind", "GetClosestReachableDest", 190);
                 if (frontier.Count == 0)
                 {
                     // Debug.Log("목적지에 갈수 있는 길이 존재하지 않습니다.");
@@ -249,6 +255,8 @@ namespace Common
 
             while (true)
             {
+
+                InfiniteLoopDebug.Run("Pathfind", "GetClosestReachableDest", 258);
                 if (frontier.Count == 0)
                 {
                     Debug.Log("목적지에 갈수 있는 길이 존재하지 않습니다.");

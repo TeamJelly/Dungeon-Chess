@@ -7,7 +7,7 @@ namespace Model.Items
         public Barrior()
         {
             Name = "Barrior Scroll";
-            Target = TargetType.Any;
+            UserTarget = TargetType.Any;
 
             SpriteNumber = 705;
             InColor = UnityEngine.Color.yellow;

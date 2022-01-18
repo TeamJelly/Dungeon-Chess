@@ -7,7 +7,7 @@ namespace Model.Items
         public Poison()
         {
             Name = "Poison Potion";
-            Target = TargetType.Any;
+            UserTarget = TargetType.Any;
             
             SpriteNumber = 705;
             InColor = UnityEngine.Color.magenta;

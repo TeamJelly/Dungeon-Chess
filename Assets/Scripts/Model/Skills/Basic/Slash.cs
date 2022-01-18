@@ -15,7 +15,7 @@ namespace Model.Skills.Basic
         {
             Name = "Slash";
             Priority = Common.AI.Priority.NULL;
-            Target = TargetType.Any;
+            UserTarget = TargetType.Any;
             AITarget = TargetType.Hostile;
             Range = RangeType.Fixed;
 

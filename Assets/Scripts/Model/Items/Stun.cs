@@ -7,7 +7,7 @@ namespace Model.Items
         public Stun()
         {
             Name = "Stun Potion";
-            Target = TargetType.Any;
+            UserTarget = TargetType.Any;
 
             SpriteNumber = 705;
             InColor = UnityEngine.Color.yellow;

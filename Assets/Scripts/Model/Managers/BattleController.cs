@@ -30,6 +30,7 @@ namespace UI.Battle
 
             // 다음 턴의 유닛을 받아 시작한다.
             Unit nextUnit = BattleManager.GetNextTurnUnit();
+
             if (nextUnit == null)
             {
                 Debug.LogError("다음턴을 진행할 유닛이 존재하지 않습니다.");
@@ -38,6 +39,8 @@ namespace UI.Battle
                 
             BattleManager.SetNextTurnUnit(nextUnit);
             Debug.Log($"{nextUnit.Name}의 턴입니다.");
+
+            // 카메라를 다음 턴 유닛에게 포커스
             ScreenTouchManager.instance.Move(nextUnit.Position);
             
             // 턴시작시 유닛 값들 초기화
@@ -52,6 +55,7 @@ namespace UI.Battle
                     skill.WaitingTime--;
             }
             
+            // 턴시작시 발동할게 있으면 등록해둔 이벤트 호출
             nextUnit.OnTurnStart.before.Invoke(false);
             nextUnit.OnTurnStart.after.Invoke(true);
 
@@ -59,7 +63,7 @@ namespace UI.Battle
             BattleView.SetTurnUnitPanel(nextUnit);
 
             // 매턴 시작시 DownStair Button 활성화 검사
-            Model.Tiles.DownStair.CheckPartyDownStair();
+            // Model.Tiles.DownStair.CheckPartyDownStair();
 
             // 파티원이 아닌 AI라면 자동 행동 실행
             if (nextUnit.Alliance != UnitAlliance.Party || GameManager.InAuto == true)
@@ -72,6 +76,8 @@ namespace UI.Battle
 
                 if (action != null)
                     action.Invoke();
+                else if (BattleManager.CheckGameState() == BattleManager.State.Continue)
+                    BattleController.instance.ThisTurnEnd();
             }
             else
             {

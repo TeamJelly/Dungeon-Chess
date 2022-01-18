@@ -5,7 +5,7 @@ namespace Model.Items
         public Damage()
         {
             Name = "Damage Potion";
-            Target = TargetType.Any;
+            UserTarget = TargetType.Any;
 
             SpriteNumber = 705;
             InColor = UnityEngine.Color.red;

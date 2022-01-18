@@ -26,7 +26,7 @@ namespace Model
             Rotate,         // 나를 기준으로 범위가 회전하는 스킬.
         }
 
-        public enum TargetType // 스킬의 대상
+        public enum TargetType // 스킬로 지정할수 있는 대상
         {
             NULL = -1,
             Any,            // 모든 타일에 사용가능
@@ -47,7 +47,7 @@ namespace Model
 
         // 스킬의 속성, 타입
         public AI.Priority Priority { get; set; }
-        public TargetType Target { get; set; }
+        public TargetType UserTarget { get; set; }
         public TargetType AITarget { get; set; }
         public RangeType Range { get; set; }
 
@@ -110,7 +110,7 @@ namespace Model
         {
             List<Vector2Int> positions = new List<Vector2Int>();
 
-            TargetType Target = this.Target;
+            TargetType Target = this.UserTarget;
 
             if ((User.Alliance != UnitAlliance.Party && AITarget != TargetType.NULL) || GameManager.InAuto)
                 Target = this.AITarget;

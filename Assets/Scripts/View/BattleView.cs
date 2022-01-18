@@ -79,7 +79,6 @@ namespace View
             IndicatorView.HideTileIndicator();
             SystemMessageView.HideMessage();
             SystemMessageView.ReserveMessage("전투 시작!");
-            BattleController.instance.NextTurnStart();
         }
 
         // public static void SummonPartyUnits(int index = 0)

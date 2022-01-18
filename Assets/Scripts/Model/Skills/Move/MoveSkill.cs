@@ -10,7 +10,7 @@ namespace Model.Skills.Move
         public MoveSkill() : base()
         {
             Category = SkillCategory.Move;
-            Target = TargetType.Posable;
+            UserTarget = TargetType.Posable;
             AITarget = TargetType.Posable;
             Priority = Common.AI.Priority.NearFromPartys;
 
@@ -55,7 +55,7 @@ namespace Model.Skills.Move
             }
 
             User.animationState = Unit.AnimationState.Move;
-            float moveTime = 0.5f / path.Count;
+            float moveTime = 0.01f / path.Count;
 
             for (int i = 1; i < path.Count; i++)
             {

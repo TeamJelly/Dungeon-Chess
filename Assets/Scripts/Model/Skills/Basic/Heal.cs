@@ -14,7 +14,7 @@ namespace Model.Skills.Basic
         {
             Name = "Heal";
             Priority = Common.AI.Priority.SmallerCurHP;
-            Target = TargetType.Any;
+            UserTarget = TargetType.Any;
             AITarget = TargetType.Friendly;
             Range = RangeType.Fixed;
 

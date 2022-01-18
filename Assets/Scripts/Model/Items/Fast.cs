@@ -7,7 +7,7 @@ namespace Model.Items
         public Fast()
         {
             Name = "Fast Potion";
-            Target = TargetType.Any;
+            UserTarget = TargetType.Any;
 
             SpriteNumber = 705;
             InColor = UnityEngine.Color.cyan;

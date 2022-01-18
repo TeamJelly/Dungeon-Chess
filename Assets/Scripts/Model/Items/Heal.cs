@@ -7,7 +7,7 @@ namespace Model.Items
         public Heal()
         {
             Name = "Heal Potion";
-            Target = TargetType.Any;
+            UserTarget = TargetType.Any;
 
             SpriteNumber = 705;
             InColor = UnityEngine.Color.green;

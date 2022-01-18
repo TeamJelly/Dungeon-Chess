@@ -111,7 +111,8 @@ namespace Model.Managers
                     skill.WaitingTime = 0;
 
             BattleView.TurnEndButton.gameObject.SetActive(false);
-            BattleView.SummonPartyUnits();// 파티 유닛 최초 소환            
+            BattleView.SummonPartyUnits();// 파티 유닛 최초 소환
+            BattleController.instance.NextTurnStart();
 
             // 모든 처리가 끝난 뒤에 애니메이션 재생 가능
             FadeOutTextView.PlayText();

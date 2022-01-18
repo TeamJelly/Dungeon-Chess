@@ -61,21 +61,21 @@ namespace Common
             {
                 BattleView.TurnEndButton.interactable = false;
 
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.01f);
 
                 Debug.Log("MoveSkill");
                 // 이동할 위치가 있으면
                 if (action.movePosition != null)
                     yield return BattleController.instance.StartCoroutine(action.user.MoveSkill.Use((Vector2Int)action.movePosition));
 
-                yield return new WaitForSeconds(0.1f);//(0.5f);
+                yield return new WaitForSeconds(0.01f);//(0.5f);
 
                 Debug.Log("skillToUse");
                 // 사용할 스킬이 있고, 사용할 위치가 존재한다면 사용
                 if (action.skillToUse != null && action.targetPosition != null)
                 {
                     yield return BattleController.instance.StartCoroutine(action.skillToUse.Use((Vector2Int)action.targetPosition));
-                    yield return new WaitForSeconds(0.1f);
+                    yield return new WaitForSeconds(0.01f);
                     //yield return new WaitForSeconds(0.5f);
                 }
 
@@ -93,8 +93,8 @@ namespace Common
         /// <param name="user"></param>
         public static Action GetAction(Unit user)
         {
-            // 1. 사용할 스킬을 정한다. 
-            // 1.1. 사용할수 있는가? 
+            // 1. 사용할 스킬을 정한다.
+            // 1.1. 사용할수 있는가?
             // 1.2. 스킬을 사용할수 있어야함 : 재사용 대기시간이 0이어야하고, 스킬 행동력이 있어야함
             // 1.3. 이동 + 스킬범위 내에 사용할수 있는 유닛이 있어야함)
             // 2. 스킬을 사용할 위치를 정한다. (사용스킬 우선순위에 따름)
@@ -102,8 +102,8 @@ namespace Common
             // 4. 역계산한 스킬위치들 중에서 하나를 선택한다.
 
             Skill skillToUse = null;
-            int reuseTime = 0;
 
+            int reuseTime = 0;
             foreach (var skill in user.Skills)
             {
                 if (skill == null)
@@ -126,14 +126,11 @@ namespace Common
                 Vector2Int movePosiiton = (Vector2Int)GetMovePosition(user, skillToUse, targetPosition);
                 return new Action(user, skillToUse, targetPosition, movePosiiton);
             }
-
             // 사용할수 있는 스킬이 없는 경우
             else
             {
                 return new Action(user, null, null, GetMovePosition(user));
             }
-
-
         }
 
         /// <summary>
@@ -214,7 +211,6 @@ namespace Common
             else
                 return null; // 아무데도 사용할수 없다면 null를 리턴합니다.
 
-
             for (int i = 1; i < positions.Count; i++)
             {
                 Debug.Log(user.Name + ": " + priority + " , " + positions[i]);
@@ -280,8 +276,10 @@ namespace Common
         /// <returns></returns>
         private static Vector2Int? GetTargetPosition(Unit user, Skill skill)
         {
+            // 사용할수 있는 위치들
             List<Vector2Int> TargetPositions = GetMovedSkillablePositions(user, skill);
 
+            // 사용할수 있는 위치들에서 우선순위에 가장 적합한 스킬 사용 위치를 하나 받아온다.
             return GetPriorityPosition(user, TargetPositions, skill.Priority);
         }
 
@@ -317,6 +315,8 @@ namespace Common
                 MovePositions.Add(user.Position);
 
                 Priority priority = user.MoveSkill.Priority;
+
+                // 내가 원하는 대상에까지 가는 경로
                 List<Vector2Int> path;
 
                 if (priority == Priority.NearFromPartys)
@@ -327,8 +327,10 @@ namespace Common
                         averagePosition += unit.Position;
                     averagePosition /= partyUnits.Count == 0 ? 1 : partyUnits.Count;
 
-                    Vector2Int dest = PathFind.GetClosestReachableDest(user, averagePosition).position;
-                    path = PathFind.PathFindAlgorithm(user.MoveSkill, user.Position, dest);
+                    Vector2Int? dest = PathFind.GetClosestReachableDest(user, averagePosition)?.position;
+                    if (dest == null) return null;
+
+                    path = PathFind.PathFindAlgorithm(user.MoveSkill, user.Position, (Vector2Int)dest);
 
                     if (path != null && path.Count > 1)
                         return path[1];
@@ -345,8 +347,10 @@ namespace Common
                         if (distance > (user.Position - unit.Position).magnitude)
                             closestUnit = unit;
 
-                    Vector2Int dest = PathFind.GetClosestReachableDest(user, closestUnit.Position).position;
-                    path = PathFind.PathFindAlgorithm(user.MoveSkill, user.Position, dest);
+                    Vector2Int? dest = PathFind.GetClosestReachableDest(user, closestUnit.Position)?.position;
+                    if (dest == null) return null;
+
+                    path = PathFind.PathFindAlgorithm(user.MoveSkill, user.Position, (Vector2Int)dest);
 
                     if (path != null)
                         return path[1];
