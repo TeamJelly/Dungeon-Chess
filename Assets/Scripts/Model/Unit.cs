@@ -71,7 +71,7 @@ namespace Model
 
             Common.Command.AddSkill(this, new Skills.Move.Pawn());
             Common.Command.AddSkill(this, new Skills.Basic.Fireball());
-            Common.Command.AddSkill(this, new Skills.Basic.Heal());
+            // Common.Command.AddSkill(this, new Skills.Basic.Heal());
             Common.Command.AddSkill(this, new Skills.Basic.Scratch());
 
             // 인간형 초기 스텟
@@ -320,7 +320,7 @@ namespace Model
         public int Agility { get => agility; set => agility = value; }
         public int Mobility { get => mobility; set => mobility = value; } //이동 반경
         public float ActionRate { get => actionRate; set => actionRate = value; }
-        
+
         /// <summary>
         /// 해당 턴에 스킬을 사용했음.
         /// </summary>
