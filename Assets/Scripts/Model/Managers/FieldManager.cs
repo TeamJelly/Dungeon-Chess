@@ -78,7 +78,6 @@ namespace Model.Managers
         }
 
         FieldData fieldData;
-        Chunk chunk;
         public FieldData GetFieldData()
         {
             StringBuilder sb = new StringBuilder();

@@ -206,10 +206,6 @@ public class Chunk
     // Start is called before the first frame update
 
     int size = 3;
-    public void Start()
-    {
-        GenerateMap();
-    }
 
     void InitTileBoxies(Tile4x4[,] tileBoxies)
     {
