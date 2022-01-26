@@ -10,8 +10,9 @@ using System.Text;
 
 public class Chunk
 {
-    Dictionary<int, List<FieldData>> FieldDataDictionary {
-        get 
+    Dictionary<int, List<FieldData>> FieldDataDictionary
+    {
+        get
         {
             if (fieldDataDictionary == null)
             {
@@ -26,154 +27,185 @@ public class Chunk
     }
     Dictionary<int, List<FieldData>> fieldDataDictionary;
 
-    FieldData[] fieldDataSet = new FieldData[16]
+
+    /// <summary>
+    /// 0이면 막힌거. 1이면 뚫린거.
+    /// </summary>
+    /// <param name="value">b0000 ~ b1111</param>
+    /// <returns></returns>
+    public FieldData GetWallChunk(int value)
     {
-        // b0000 : 다막힘
-        new FieldData(
-                    4, 4,
-                    "WL WL WL WL\n" +
-                    "WL FR FR WL\n" +
-                    "WL FR FR WL\n" +
-                    "WL WL WL WL\n"
-                ),
-        // b0001 : 위
-        new FieldData(
-                    4, 4,
-                    "WL FR FR WL\n" +
-                    "WL FR FR WL\n" +
-                    "WL FR FR WL\n" +
-                    "WL WL WL WL\n"
-                ),
-        // b0010 : 오른
-        new FieldData(
-                    4, 4,
-                    "WL WL WL WL\n" +
-                    "WL FR FR FR\n" +
-                    "WL FR FR FR\n" +
-                    "WL WL WL WL\n"
-                ),
-        // b0011 : 위, 오른
-        new FieldData(
-                    4, 4,
-                    "WL FR FR WL\n" +
-                    "WL FR FR FR\n" +
-                    "WL FR FR FR\n" +
-                    "WL WL WL WL\n"
-                ),
-        // b0100 : 아래
-        new FieldData(
-                    4, 4,
-                    "WL WL WL WL\n" +
-                    "WL FR FR WL\n" +
-                    "WL FR FR WL\n" +
-                    "WL FR FR WL\n"
-                ),
-        // b0101 : 위, 아래
-        new FieldData(
-                    4, 4,
-                    "WL FR FR WL\n" +
-                    "WL FR FR WL\n" +
-                    "WL FR FR WL\n" +
-                    "WL FR FR WL\n"
-                ),
-        // b0110 : 오른, 아래
-        new FieldData(
-                    4, 4,
-                    "WL WL WL WL\n" +
-                    "WL FR FR FR\n" +
-                    "WL FR FR FR\n" +
-                    "WL FR FR WL\n"
-                ),
-        // b0111 : 위, 오른, 아래
-        new FieldData(
-                    4, 4,
-                    "WL FR FR WL\n" +
-                    "WL FR FR FR\n" +
-                    "WL FR FR FR\n" +
-                    "WL FR FR WL\n"
-                ),
-        // b1000 : 왼
-        new FieldData(
-                    4, 4,
-                    "WL WL WL WL\n" +
-                    "FR FR FR WL\n" +
-                    "FR FR FR WL\n" +
-                    "WL WL WL WL\n"
-                ),
-        // b1001 : 위, 왼
-        new FieldData(
-                    4, 4,
-                    "WL FR FR WL\n" +
-                    "FR FR FR WL\n" +
-                    "FR FR FR WL\n" +
-                    "WL WL WL WL\n"
-                ),
-        // b1010 : 오른, 왼
-        new FieldData(
-                    4, 4,
-                    "WL WL WL WL\n" +
-                    "FR FR FR FR\n" +
-                    "FR FR FR FR\n" +
-                    "WL WL WL WL\n"
-                ),
-        // b1011 : 위, 오른, 왼
-        new FieldData(
-                    4, 4,
-                    "WL FR FR WL\n" +
-                    "FR FR FR FR\n" +
-                    "FR FR FR FR\n" +
-                    "WL WL WL WL\n"
-                ),
-        // b1100 : 아래, 왼
-        new FieldData(
-                    4, 4,
-                    "WL WL WL WL\n" +
-                    "FR FR FR WL\n" +
-                    "FR FR FR WL\n" +
-                    "WL FR FR WL\n"
-                ),
-        // b1101 : 위, 아래, 왼
-        new FieldData(
-                    4, 4,
-                    "WL FR FR WL\n" +
-                    "FR FR FR WL\n" +
-                    "FR FR FR WL\n" +
-                    "WL FR FR WL\n"
-                ),
-        // b1110 : 오른, 아래, 왼
-        new FieldData(
-                    4, 4,
-                    "WL WL WL WL\n" +
-                    "FR FR FR FR\n" +
-                    "FR FR FR FR\n" +
-                    "WL FR FR WL\n"
-                ),
-        // b1111 : 위, 오른, 아래, 왼
-        new FieldData(
-                    4, 4,
-                    "WL FR FR WL\n" +
-                    "FR FR FR FR\n" +
-                    "FR FR FR FR\n" +
-                    "WL FR FR WL\n"
-                )
-    };
+        return new FieldData(4, 4,
+        (Random.Range(0, 2) == 0 ? "WL" : "FR") +
+        ((value & (int)Mathf.Pow(2, 0)) == 0 ? "WL" : "FR") +
+        ((value & (int)Mathf.Pow(2, 0)) == 0 ? "WL" : "FR") +
+        (Random.Range(0, 2) == 0 ? "WL" : "FR") +
+
+        ((value & (int)Mathf.Pow(2, 3)) == 0 ? "WL" : "FR") +
+        ("FR") +
+        ("FR") +
+        ((value & (int)Mathf.Pow(2, 1)) == 0 ? "WL" : "FR") +
+
+        ((value & (int)Mathf.Pow(2, 3)) == 0 ? "WL" : "FR") +
+        ("FR") +
+        ("FR") +
+        ((value & (int)Mathf.Pow(2, 1)) == 0 ? "WL" : "FR") +
+
+        (Random.Range(0, 2) == 0 ? "WL" : "FR") +
+        ((value & (int)Mathf.Pow(2, 2)) == 0 ? "WL" : "FR") +
+        ((value & (int)Mathf.Pow(2, 2)) == 0 ? "WL" : "FR") +
+        (Random.Range(0, 2) == 0 ? "WL" : "FR")
+        );
+    }
+
+    // FieldData[] fieldDataSet = new FieldData[16]
+    // {
+    //     // b0000 : 다막힘
+    //     new FieldData(
+    //                 4, 4,
+    //                 "WL WL WL WL\n" +
+    //                 "WL FR FR WL\n" +
+    //                 "WL FR FR WL\n" +
+    //                 "WL WL WL WL\n"
+    //             ),
+    //     // b0001 : 위
+    //     new FieldData(
+    //                 4, 4,
+    //                 "WL FR FR WL\n" +
+    //                 "WL FR FR WL\n" +
+    //                 "WL FR FR WL\n" +
+    //                 "WL WL WL WL\n"
+    //             ),
+    //     // b0010 : 오른
+    //     new FieldData(
+    //                 4, 4,
+    //                 "WL WL WL WL\n" +
+    //                 "WL FR FR FR\n" +
+    //                 "WL FR FR FR\n" +
+    //                 "WL WL WL WL\n"
+    //             ),
+    //     // b0011 : 위, 오른
+    //     new FieldData(
+    //                 4, 4,
+    //                 "WL FR FR WL\n" +
+    //                 "WL FR FR FR\n" +
+    //                 "WL FR FR FR\n" +
+    //                 "WL WL WL WL\n"
+    //             ),
+    //     // b0100 : 아래
+    //     new FieldData(
+    //                 4, 4,
+    //                 "WL WL WL WL\n" +
+    //                 "WL FR FR WL\n" +
+    //                 "WL FR FR WL\n" +
+    //                 "WL FR FR WL\n"
+    //             ),
+    //     // b0101 : 위, 아래
+    //     new FieldData(
+    //                 4, 4,
+    //                 "WL FR FR WL\n" +
+    //                 "WL FR FR WL\n" +
+    //                 "WL FR FR WL\n" +
+    //                 "WL FR FR WL\n"
+    //             ),
+    //     // b0110 : 오른, 아래
+    //     new FieldData(
+    //                 4, 4,
+    //                 "WL WL WL WL\n" +
+    //                 "WL FR FR FR\n" +
+    //                 "WL FR FR FR\n" +
+    //                 "WL FR FR WL\n"
+    //             ),
+    //     // b0111 : 위, 오른, 아래
+    //     new FieldData(
+    //                 4, 4,
+    //                 "WL FR FR WL\n" +
+    //                 "WL FR FR FR\n" +
+    //                 "WL FR FR FR\n" +
+    //                 "WL FR FR WL\n"
+    //             ),
+    //     // b1000 : 왼
+    //     new FieldData(
+    //                 4, 4,
+    //                 "WL WL WL WL\n" +
+    //                 "FR FR FR WL\n" +
+    //                 "FR FR FR WL\n" +
+    //                 "WL WL WL WL\n"
+    //             ),
+    //     // b1001 : 위, 왼
+    //     new FieldData(
+    //                 4, 4,
+    //                 "WL FR FR WL\n" +
+    //                 "FR FR FR WL\n" +
+    //                 "FR FR FR WL\n" +
+    //                 "WL WL WL WL\n"
+    //             ),
+    //     // b1010 : 오른, 왼
+    //     new FieldData(
+    //                 4, 4,
+    //                 "WL WL WL WL\n" +
+    //                 "FR FR FR FR\n" +
+    //                 "FR FR FR FR\n" +
+    //                 "WL WL WL WL\n"
+    //             ),
+    //     // b1011 : 위, 오른, 왼
+    //     new FieldData(
+    //                 4, 4,
+    //                 "WL FR FR WL\n" +
+    //                 "FR FR FR FR\n" +
+    //                 "FR FR FR FR\n" +
+    //                 "WL WL WL WL\n"
+    //             ),
+    //     // b1100 : 아래, 왼
+    //     new FieldData(
+    //                 4, 4,
+    //                 "WL WL WL WL\n" +
+    //                 "FR FR FR WL\n" +
+    //                 "FR FR FR WL\n" +
+    //                 "WL FR FR WL\n"
+    //             ),
+    //     // b1101 : 위, 아래, 왼
+    //     new FieldData(
+    //                 4, 4,
+    //                 "WL FR FR WL\n" +
+    //                 "FR FR FR WL\n" +
+    //                 "FR FR FR WL\n" +
+    //                 "WL FR FR WL\n"
+    //             ),
+    //     // b1110 : 오른, 아래, 왼
+    //     new FieldData(
+    //                 4, 4,
+    //                 "WL WL WL WL\n" +
+    //                 "FR FR FR FR\n" +
+    //                 "FR FR FR FR\n" +
+    //                 "WL FR FR WL\n"
+    //             ),
+    //     // b1111 : 위, 오른, 아래, 왼
+    //     new FieldData(
+    //                 4, 4,
+    //                 "WL FR FR WL\n" +
+    //                 "FR FR FR FR\n" +
+    //                 "FR FR FR FR\n" +
+    //                 "WL FR FR WL\n"
+    //             )
+    // };
 
     class Tile4x4
     {
         public Tile[,] field;
         public FieldData fieldData;
-        
+
         public Tile4x4(int x, int y)
         {
             pos = new Vector2Int(x, y);
         }
-        
+
         public void SetFieldData(FieldData fieldData)
         {
             field = new Tile[4, 4];
             this.fieldData = fieldData;
         }
-        
+
         public Tile GetField(Vector2Int p)
         {
             return field[p.y, p.x];
@@ -317,7 +349,7 @@ public class Chunk
                         //      그 방향에 타일이 없다.                      > 벽 있어도 되고 없어도 됨
                         if (v.x < 0 || v.x >= size || v.y < 0 || v.y >= size)
                         {
-                            tile.wall_ID += Random.Range(0, 2) * (int)Mathf.Pow(2, directions.IndexOf(direction));
+                            // tile.wall_ID += Random.Range(0, 2) * (int)Mathf.Pow(2, directions.IndexOf(direction));
                             continue;
                         }
 
@@ -325,7 +357,7 @@ public class Chunk
                         //      그 방향에 있는 타일이 벽을 세워놨다.        > 벽 있어도 되고 없어도 됨
                         if ((next.wall_ID & (int)Mathf.Pow(2, directions.IndexOf(-direction))) != 0)
                         {
-                            tile.wall_ID += Random.Range(0, 2) * (int)Mathf.Pow(2, directions.IndexOf(direction));
+                            // tile.wall_ID += Random.Range(0, 2) * (int)Mathf.Pow(2, directions.IndexOf(direction));
                         }
                         //      그 방향에 있는 타일이 아직 벽을 안세워놨다. > 벽을 세워야 함
                         else
@@ -342,26 +374,26 @@ public class Chunk
     {
 
         Tile4x4[,] tileBoxies1 = new Tile4x4[size, size];
-        Tile4x4[,] tileBoxies2 = new Tile4x4[size, size];
+        // Tile4x4[,] tileBoxies2 = new Tile4x4[size, size];
 
         //타일 생성
         InitTileBoxies(tileBoxies1);
-        InitTileBoxies(tileBoxies2);
+        // InitTileBoxies(tileBoxies2);
 
         //미로 데이터 생성
         GenerateMazeData(tileBoxies1);
-        GenerateMazeData(tileBoxies2);
+        // GenerateMazeData(tileBoxies2);
 
         //두개의 미로 데이터를 이용해서 길 두번 뚫기.
-        for (int y = 0; y < size; y++)
-        {
-            for (int x = 0; x < size; x++)
-            {
-                Tile4x4 tile1 = tileBoxies1[y, x];
-                Tile4x4 tile2 = tileBoxies2[y, x];
-                tile1.path_ID |= tile2.path_ID;
-            }
-        }
+        // for (int y = 0; y < size; y++)
+        // {
+        //     for (int x = 0; x < size; x++)
+        //     {
+        //         Tile4x4 tile1 = tileBoxies1[y, x];
+        //         Tile4x4 tile2 = tileBoxies2[y, x];
+        //         tile1.path_ID |= tile2.path_ID;
+        //     }
+        // }
 
         //생성된 미로 데이터를 기반으로 벽의 다양성을 부여.
         MakeRoughWall(tileBoxies1);
@@ -374,8 +406,8 @@ public class Chunk
                 Tile4x4 tile = tileBoxies1[i, j];
 
                 /// 여기서 파일 불러와서 아이디 적용.
-                
-                tile.SetFieldData(fieldDataSet[15 - tile.wall_ID]);
+
+                tile.SetFieldData(GetWallChunk(15 - tile.wall_ID));
             }
         }
 

@@ -57,7 +57,7 @@ namespace Model.Managers
             }
 
             /// <summary>
-            /// c1c2 문자를 넣은 맵을 생성합니다.
+            /// 'c1c2' 문자를 넣은 맵을 생성합니다.
             /// </summary>
             public FieldData(int width, int height, char c1, char c2)
             {
@@ -104,6 +104,14 @@ namespace Model.Managers
             fieldData.fieldStrData = sb.ToString();
             return fieldData;
         }
+
+        /// <summary>
+        /// 두개의 필드 데이터를 합칩니다.
+        /// </summary>
+        /// <param name="f1">필드 데이터 1 (pivot : 0,0)</param>
+        /// <param name="f2">필드 데이터 2 </param>
+        /// <param name="pivot">필드 데이터 2 의 피벗 위치</param>
+        /// <returns></returns>
         public FieldData Merge2FieldData(FieldData f1, FieldData f2, Vector2Int pivot)
         {
             f1.fieldStrData = f1.fieldStrData.Replace(" ", "");

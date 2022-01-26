@@ -66331,10 +66331,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3124d561d9911e34cbf7709f4576e178, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scale: 0.1
+  scale: 0.736
   pos: {x: 0, y: 0}
   intensity: 0.5
-  rawImage: {fileID: 0}
 --- !u!1 &1327732362
 GameObject:
   m_ObjectHideFlags: 0
