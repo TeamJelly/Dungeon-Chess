@@ -47,7 +47,6 @@ namespace Model.Managers
         }
         public static List<Unit> PartyUnits { get => Instance.partyUnits; }
 
-
         bool inBattle = false;
         /// <summary>
         /// 배틀 중 인가?
@@ -60,6 +59,8 @@ namespace Model.Managers
         /// </summary>
         /// <value></value>
         public static bool InAuto { get; set; }
+
+        public static float AnimationDelaySpeed = 0.5f;
 
         GameManager()
         {

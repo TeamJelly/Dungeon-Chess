@@ -54,7 +54,7 @@ namespace View
                         Tile oldtile = Model.Managers.FieldManager.GetTile(tileIdx.x, tileIdx.y);
 
                         // 이전 타일 연결 관계 유지.
-                        newtile.SetUnit(oldtile.GetUnit());
+                        newtile.OnTile(oldtile.GetUnit());
                         newtile.SetObtainable(oldtile.GetObtainable());
 
                         Model.Managers.FieldManager.instance.field[tileIdx.y, tileIdx.x] = newtile;

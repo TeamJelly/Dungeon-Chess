@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Tilemaps;
 using Common;
+using Model.Managers;
 
 namespace Model
 {
@@ -95,10 +96,10 @@ namespace Model
             return obtainable != null;
         }
 
-        public virtual void SetUnit(Unit newUnit)
-        {
-            unit = newUnit;
-        }
+        // public virtual void SetUnit(Unit newUnit)
+        // {
+        //     unit = newUnit;
+        // }
 
         public Unit GetUnit()
         {
@@ -119,12 +120,19 @@ namespace Model
 
         public virtual void OnTile(Unit unit)
         {
-            if (obtainable != null)
+            this.unit = unit;
+
+            if (obtainable != null && BattleManager.GetUnit(UnitAlliance.Party).Contains(unit))
             {
                 unit.AddObtainable(obtainable);
                 //obtainable.BelongTo(unit);Í
                 //Bag.instance.UpdateUI();
             }
+        }
+
+        public virtual void OffTile()
+        {
+            this.unit = null;
         }
 
         public Tile Clone() => (Tile)System.Activator.CreateInstance(GetType());

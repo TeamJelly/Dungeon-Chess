@@ -73,7 +73,7 @@ namespace View
                         WaitingQueue.Remove(line.unit);
                 }
 
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(Model.Managers.GameManager.AnimationDelaySpeed);
             }
 
             isCoroutineRunning = false;

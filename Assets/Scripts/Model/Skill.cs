@@ -117,7 +117,7 @@ namespace Model
 
             foreach (var position in GetUseRange(userPosition))
             {
-                Unit unit = BattleManager.GetUnit(position);
+                Unit targetUnit = BattleManager.GetUnit(position);
 
                 // 맵밖에 넘어간다면 사용불가
                 if (!FieldManager.IsInField(position))
@@ -129,16 +129,16 @@ namespace Model
                 else if (Target == TargetType.Posable && FieldManager.GetTile(position).IsPositionable(User))
                     positions.Add(position);
                 // 우호적인 유닛에 사용 가능
-                else if (Target == TargetType.Friendly && unit != null &&
+                else if (Target == TargetType.Friendly && targetUnit != null &&
                     ((User.Alliance == UnitAlliance.Party &&
-                    (User.Alliance == UnitAlliance.Party || unit.Alliance == UnitAlliance.Friendly)) ||
-                    (User.Alliance == UnitAlliance.Enemy && unit.Alliance == UnitAlliance.Enemy)))
+                    (targetUnit.Alliance == UnitAlliance.Party || targetUnit.Alliance == UnitAlliance.Friendly)) ||
+                    (User.Alliance == UnitAlliance.Enemy && targetUnit.Alliance == UnitAlliance.Enemy)))
                     positions.Add(position);
                 // 적대적인 유닛에 사용 가능
-                else if (Target == TargetType.Hostile && unit != null &&
+                else if (Target == TargetType.Hostile && targetUnit != null &&
                     ((User.Alliance == UnitAlliance.Enemy &&
-                    (User.Alliance == UnitAlliance.Party || unit.Alliance == UnitAlliance.Friendly)) ||
-                    (User.Alliance == UnitAlliance.Party && unit.Alliance == UnitAlliance.Enemy)))
+                    (targetUnit.Alliance == UnitAlliance.Party || targetUnit.Alliance == UnitAlliance.Friendly)) ||
+                    (User.Alliance == UnitAlliance.Party && targetUnit.Alliance == UnitAlliance.Enemy)))
                     positions.Add(position);
                 // 어디에도 속하지 않으면 false
                 else

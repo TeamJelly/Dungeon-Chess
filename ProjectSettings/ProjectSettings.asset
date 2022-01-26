@@ -137,7 +137,8 @@ PlayerSettings:
     16:9: 1
     Others: 1
   bundleVersion: 0.1
-  preloadedAssets: []
+  preloadedAssets:
+  - {fileID: -5746279595265052923, guid: 54c0605f657f24cc482e774b3571893d, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -155,6 +156,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 0
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
+    Android: com.TeamJelly.DungeonChess
     Standalone: com.TeamJelly.DungeonChess
     iPhone: com.TeamJelly.DungeonChess
   buildNumber:

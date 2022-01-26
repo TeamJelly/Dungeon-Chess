@@ -31,13 +31,15 @@ namespace UI.Battle
             // 다음 턴의 유닛을 받아 시작한다.
             Unit nextUnit = BattleManager.GetNextTurnUnit();
 
+
             if (nextUnit == null)
             {
                 Debug.LogError("다음턴을 진행할 유닛이 존재하지 않습니다.");
                 return;
             }
-                
+
             BattleManager.SetNextTurnUnit(nextUnit);
+            FadeOutTextView.MakeText(nextUnit, $"{nextUnit.Name} 턴 시작!", Color.cyan);
             Debug.Log($"{nextUnit.Name}의 턴입니다.");
 
             // 카메라를 다음 턴 유닛에게 포커스

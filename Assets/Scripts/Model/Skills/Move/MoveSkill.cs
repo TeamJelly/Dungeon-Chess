@@ -55,7 +55,7 @@ namespace Model.Skills.Move
             }
 
             User.animationState = Unit.AnimationState.Move;
-            float moveTime = 0.01f / path.Count;
+            float moveTime = GameManager.AnimationDelaySpeed / path.Count;
 
             for (int i = 1; i < path.Count; i++)
             {

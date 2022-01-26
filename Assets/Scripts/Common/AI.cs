@@ -61,22 +61,21 @@ namespace Common
             {
                 BattleView.TurnEndButton.interactable = false;
 
-                yield return new WaitForSeconds(0.01f);
+                yield return new WaitForSeconds(GameManager.AnimationDelaySpeed);
 
                 Debug.Log("MoveSkill");
                 // 이동할 위치가 있으면
                 if (action.movePosition != null)
                     yield return BattleController.instance.StartCoroutine(action.user.MoveSkill.Use((Vector2Int)action.movePosition));
 
-                yield return new WaitForSeconds(0.01f);//(0.5f);
+                yield return new WaitForSeconds(GameManager.AnimationDelaySpeed);
 
                 Debug.Log("skillToUse");
                 // 사용할 스킬이 있고, 사용할 위치가 존재한다면 사용
                 if (action.skillToUse != null && action.targetPosition != null)
                 {
                     yield return BattleController.instance.StartCoroutine(action.skillToUse.Use((Vector2Int)action.targetPosition));
-                    yield return new WaitForSeconds(0.01f);
-                    //yield return new WaitForSeconds(0.5f);
+                    yield return new WaitForSeconds(GameManager.AnimationDelaySpeed);
                 }
 
                 BattleView.TurnEndButton.interactable = true;

@@ -370,7 +370,115 @@ public class Chunk
         }
     }
 
+    public float GetPerlinNoiseIntensity(int fieldSize, Vector2Int pos, float scale, int wantCount)
+    {
+        float bestFit = 0;
+        int bestCount = 0;
+
+        for (float intensity = 0f; intensity < 1f; intensity += 0.024f)
+        {
+            int count = 0;
+            for (int y = 0; y < fieldSize; y++)
+            {
+                for (int x = 0; x < fieldSize; x++)
+                {
+                    if ((Mathf.PerlinNoise((x + pos.x) * scale, (y + pos.y) * scale)) < intensity)
+                        count++;
+                }
+            }
+
+            if (Mathf.Abs(wantCount - bestCount) > Mathf.Abs(wantCount - count))
+            {
+                bestFit = intensity;
+                bestCount = count;
+            }
+        }
+
+        return bestFit;
+    }
+
     public FieldData GenerateMap()
+    {
+        FieldData wallData = GenerateWall();        
+
+        int fieldSize = size * 4;
+
+        FieldData fieldData = new FieldData(fieldSize, fieldSize);
+
+        StringBuilder sb = new StringBuilder();
+
+        Vector2Int pos = new Vector2Int(Random.Range(0,100),Random.Range(0,100));
+        float scale = Random.Range(0.1f, 0.3f);
+        float intensity = GetPerlinNoiseIntensity(fieldSize, pos, scale, 20);
+
+        for (int y = 0; y < fieldSize; y++)
+        {
+            for (int x = 0; x < fieldSize; x++)
+            {
+                if ((Mathf.PerlinNoise((x + pos.x) * scale, (y + pos.y) * scale)) < intensity) sb.Append("TN");
+                else sb.Append("FR");
+            }
+        }
+        fieldData.fieldStrData = sb.ToString();
+
+        char[] temp = wallData.fieldStrData.ToCharArray();
+
+        for (int i = 0; i < fieldSize * fieldSize; i++)
+        {
+            char wc1 = wallData.fieldStrData[i*2];
+            char wc2 = wallData.fieldStrData[i*2+1];
+
+            char fc1 = fieldData.fieldStrData[i*2];
+            char fc2 = fieldData.fieldStrData[i*2+1];
+
+            if ($"{fc1}{fc2}" != "FR")
+            {
+                temp[i*2] = fc1;
+                temp[i*2+1] = fc2;
+            }
+        }
+
+        #region 파워 타일 생성
+        sb = new StringBuilder();
+
+        pos = new Vector2Int(Random.Range(0,100),Random.Range(0,100));
+        scale = Random.Range(0.1f, 0.3f);
+        intensity = GetPerlinNoiseIntensity(fieldSize, pos, scale, 20);
+
+        for (int y = 0; y < fieldSize; y++)
+        {
+            for (int x = 0; x < fieldSize; x++)
+            {
+                if ((Mathf.PerlinNoise((x + pos.x) * scale, (y + pos.y) * scale)) < intensity) sb.Append("PW");
+                else sb.Append("FR");
+            }
+        }
+        fieldData.fieldStrData = sb.ToString();
+
+        for (int i = 0; i < fieldSize * fieldSize; i++)
+        {
+            char wc1 = wallData.fieldStrData[i*2];
+            char wc2 = wallData.fieldStrData[i*2+1];
+
+            char fc1 = fieldData.fieldStrData[i*2];
+            char fc2 = fieldData.fieldStrData[i*2+1];
+
+            if ($"{fc1}{fc2}" != "FR")
+            {
+                temp[i*2] = fc1;
+                temp[i*2+1] = fc2;
+            }
+        }
+
+        #endregion
+
+
+        wallData.fieldStrData = new string(temp);
+
+        return wallData;
+    }
+
+    public FieldData GenerateWall()
     {
 
         Tile4x4[,] tileBoxies1 = new Tile4x4[size, size];
@@ -413,6 +521,7 @@ public class Chunk
 
         return GetFieldData(tileBoxies1);
     }
+    
 
     FieldData GetFieldData(Tile4x4[,] tileBoxies)
     {

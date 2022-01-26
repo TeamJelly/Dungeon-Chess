@@ -101,7 +101,7 @@ public class ScreenTouchManager : MonoBehaviour, IDragHandler, IBeginDragHandler
         {
             user.animationState = Unit.AnimationState.Move;
 
-            float moveTime = 0.5f / path.Count;
+            float moveTime = GameManager.AnimationDelaySpeed / path.Count;
 
             for (int i = 1; i < path.Count; i++)
             {

@@ -2,7 +2,7 @@
   "fieldData": {
     "width": 12,
     "height": 14,
-    "fieldStrData": "FRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFR"
+    "fieldStrData": "FRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRWLWLWLWLFRFRFRFRFRFRFRFRWLFRFRWLFRFRFRFRFRFRFRFRWLWLWLWLFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFRFR"
   },
   "units": [
     {
@@ -68,18 +68,18 @@
         "level": 1,
         "curEXP": 0,
         "nextEXP": 60,
-        "curHP": 15,
+        "curHP": 25,
         "maxHP": 35,
         "armor": 0,
         "strength": 10,
         "agility": 10,
         "mobility": 3,
         "criRate": 10,
-        "actionRate": 100.0,
-        "positionX": 2,
-        "positionY": 8,
+        "actionRate": 0.0,
+        "positionX": 3,
+        "positionY": 6,
         "skills": [
-          "Model.Skills.Move.Queen",
+          "Model.Skills.Move.Pawn",
           "Model.Skills.Basic.Fireball",
           "Model.Skills.Basic.Heal",
           "Model.Skills.Basic.Scratch"
@@ -93,7 +93,7 @@
         "skill_waitingTimes": [
           0,
           0,
-          0,
+          1,
           0
         ],
         "stateEffects": [],
@@ -114,8 +114,8 @@
         "OutColorB": 0.0,
         "OutColorA": 0.0
       },
-      "Item2": 2,
-      "Item3": 8
+      "Item2": 3,
+      "Item3": 6
     }
   ],
   "obtainables": []

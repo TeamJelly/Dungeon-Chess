@@ -5,6 +5,7 @@ using Common;
 using Model.Managers;
 using System.Text;
 using UnityEngine.UI;
+using static Model.Managers.FieldManager;
 
 public class NoiseMapGenerator : MonoBehaviour
 {
@@ -49,9 +50,8 @@ public class NoiseMapGenerator : MonoBehaviour
         texture.Apply();
         Graphics.Blit(texture, renderTexture);
     }*/
-    public void GenerateNoiseMap2()
+    public static FieldData GenerateNoiseMap(int size, Vector2 pos, float scale, float intensity)
     {
-        if (Model.Managers.FieldManager.instance == null) return;
         FieldManager.FieldData fieldData = new FieldManager.FieldData(size, size);
 
         StringBuilder sb = new StringBuilder();
@@ -75,8 +75,13 @@ public class NoiseMapGenerator : MonoBehaviour
         sb[6] = 'U';
         sb[7] = 'S';
         platform.fieldStrData = sb.ToString();
-        fieldData = Model.Managers.FieldManager.instance.Merge2FieldData(fieldData, platform, new Vector2Int(0, fieldData.height));
-        FieldManager.instance.InitField(fieldData);
+
+        return Model.Managers.FieldManager.instance.Merge2FieldData(fieldData, platform, new Vector2Int(0, fieldData.height));
+    }
+
+    public void GenerateNoiseMap2()
+    {
+        FieldManager.instance.InitField(GenerateNoiseMap(size, pos, scale, intensity));
     }
 
     IEnumerator loop()
@@ -86,6 +91,9 @@ public class NoiseMapGenerator : MonoBehaviour
             if(updated)
             {
                 updated = false;
+                
+                if (Model.Managers.FieldManager.instance == null)
+                    continue;
                 GenerateNoiseMap2();
             }
             yield return null;

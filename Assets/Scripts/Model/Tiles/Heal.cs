@@ -21,10 +21,22 @@ namespace Model.Tiles
             newUnit.OnTurnEnd.before.AddListener(HealFunctionCallback);
         }
 
+        public override void OffTile()
+        {
+            Debug.Log(unit);
+            Debug.Log(unit.Name);
+            Debug.Log(unit.OnTurnEnd);
+            Debug.Log(unit.OnTurnEnd.before);
+            unit.OnTurnEnd.before.RemoveListener(HealFunctionCallback);
+
+
+            // tile.unit = null;
+            base.OffTile();
+        }
+
         bool HealFunctionCallback(bool b)
         {
             Common.Command.Heal(unit, heal);
-            unit.OnTurnEnd.before.RemoveListener(HealFunctionCallback);
             return b;
         }
     }

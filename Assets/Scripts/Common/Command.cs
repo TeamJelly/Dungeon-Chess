@@ -31,22 +31,22 @@ namespace Common
                 Summon(unit.Belongings[Random.Range(0, unit.Belongings.Count)], unit.Position);
 
             //if (BattleManager.CheckGameState() != BattleManager.State.Continue)
-
         }
 
         // position 이동보다 좀더 확장된 이동
         // 타일에 유닛의 정보를 기록하고 유닛의 OnMove, 타일의 OnTile 이벤트를 실행시킨다.
+        // 이 안에서는 무조건 start Position 사용해야함!!
+        // unit.Position은 애니메이션에 사용함.
         public static void Move(this Unit unit, Vector2Int start, Vector2Int target)
         {
             //OnMove는 이동 할때마다 항상 수행되는 이벤트
             target = unit.OnMove.before.Invoke(target);
+            FieldManager.GetTile(start).OffTile();
 
-            FieldManager.GetTile(start).SetUnit(null);
-            FieldManager.GetTile(target).SetUnit(unit);
+            // 이동한다.
             unit.Position = target;
             unit.OnMove.after.Invoke(target);
-
-            Model.Tiles.DownStair.CheckPartyDownStair();
+            // Model.Tiles.DownStair.CheckPartyDownStair();
 
             //OnTile은 타일의 특성에 따라 이동이 끝난 후 발동되는 타일의 이벤트
             FieldManager.GetTile(target).OnTile(unit);
@@ -208,7 +208,6 @@ namespace Common
                 oldEffect.OnOverlap();
                 FadeOutTextView.MakeText(target, $"-+{effect.Name}", Color.yellow);
             }
-
         }
 
         public static void RemoveEffect(this Unit target, Effect effect)
@@ -229,15 +228,15 @@ namespace Common
             {
                 unit.OnPosition.after.RemoveListener(BattleView.MoveObject);
                 unit.Position = position;
-                FieldManager.GetTile(position).SetUnit(unit);
+                // FieldManager.GetTile(position).SetUnit(unit);
+
+                FieldManager.GetTile(position).OnTile(unit);
                 BattleManager.instance.AllUnits.Add(unit);
 
                 if (unit.Alliance == UnitAlliance.Party)
                     GameManager.AddPartyUnit(unit);
 
                 BattleView.MakeUnitObject(unit);
-
-                FieldManager.GetTile(position).OnTile(unit);
 
                 // 유닛 소환시 DownStair Button 활성화 검사
                 Model.Tiles.DownStair.CheckPartyDownStair();
@@ -277,11 +276,12 @@ namespace Common
         {
             if (unit.Alliance == UnitAlliance.Party)
                 GameManager.RemovePartyUnit(unit); //죽으면 파티유닛에서 박탈.
+
+            FieldManager.GetTile(unit.Position).OffTile();
+
             BattleView.DestroyUnitObject(unit);
             BattleManager.instance.AllUnits.Remove(unit);
             BattleManager.instance.InitializeUnitBuffer();
-
-            FieldManager.GetTile(unit.Position).SetUnit(null);
 
             // 유닛 소환해제시 DownStair Button 활성화 검사
             Model.Tiles.DownStair.CheckPartyDownStair();
@@ -323,7 +323,7 @@ namespace Common
                     GameManager.RemovePartyUnit(unit); //죽으면 파티유닛에서 박탈.
                 BattleView.DestroyUnitObject(unit);
                 BattleManager.instance.AllUnits.Remove(unit);
-                FieldManager.GetTile(unit.Position).SetUnit(null);
+                FieldManager.GetTile(unit.Position).OffTile();
             }
             BattleManager.instance.AllUnits.Clear();
         }

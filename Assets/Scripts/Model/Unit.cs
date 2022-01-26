@@ -71,7 +71,7 @@ namespace Model
 
             Common.Command.AddSkill(this, new Skills.Move.Pawn());
             Common.Command.AddSkill(this, new Skills.Basic.Fireball());
-            // Common.Command.AddSkill(this, new Skills.Basic.Heal());
+            Common.Command.AddSkill(this, new Skills.Basic.Heal());
             Common.Command.AddSkill(this, new Skills.Basic.Scratch());
 
             // 인간형 초기 스텟

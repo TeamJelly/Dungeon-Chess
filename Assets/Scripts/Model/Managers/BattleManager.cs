@@ -98,7 +98,6 @@ namespace Model.Managers
             {
                 GameManager.PartyUnits.Add(new Unit(UnitAlliance.Party, UnitSpecies.Human));
                 GameManager.PartyUnits.Add(new Unit(UnitAlliance.Party, UnitSpecies.Human));
-
                 unit = new Unit(UnitAlliance.Party, UnitSpecies.Human);
                 GameManager.PartyUnits.Add(unit);
             }

@@ -532,6 +532,22 @@ public class DungeonEditor : MonoBehaviour
         }
     }
 
+    public void SpeedToggleButton()
+    {
+        if (GameManager.AnimationDelaySpeed == 0.5f)
+        {
+            GameManager.AnimationDelaySpeed = 0.1f;
+        }
+        else if (GameManager.AnimationDelaySpeed == 0.1f)
+        {
+            GameManager.AnimationDelaySpeed = 0.01f;
+        }
+        else if (GameManager.AnimationDelaySpeed == 0.01f)
+        {
+            GameManager.AnimationDelaySpeed = 0.5f;
+        }
+    }
+
     /// <summary>
     /// 배틀 모드를 변환한다.
     /// </summary>
@@ -579,6 +595,23 @@ public class DungeonEditor : MonoBehaviour
         }
     }
 
+    private int count = 0;
+
+    public void SetMobileEditorMode()
+    {
+        if (count < 10)
+            count++;
+        else
+        {
+            enabledEditMode = !enabledEditMode;
+            unitAttributeController.gameObject.SetActive(enabledEditMode);
+            battleFieldController.gameObject.SetActive(enabledEditMode);
+
+            if (currentUnit != null)
+                InfoView.instance.unitInfo.SetUnit(currentUnit);
+        }
+    }
+
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.F1))
@@ -589,7 +622,6 @@ public class DungeonEditor : MonoBehaviour
 
             if (currentUnit != null)
                 InfoView.instance.unitInfo.SetUnit(currentUnit);
-
         }
     }
 }
