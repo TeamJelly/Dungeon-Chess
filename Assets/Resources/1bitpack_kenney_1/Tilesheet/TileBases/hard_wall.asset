@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: Strength
+  m_Name: hard_wall
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: -1836090852759290506, guid: c6fe220f22a272f4793de178a37e4718,
+  m_Sprite: {fileID: 1342792905094687701, guid: c6fe220f22a272f4793de178a37e4718,
     type: 3}
-  m_Color: {r: 1, g: 0.40866065, b: 0, a: 1}
+  m_Color: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 1}
   m_Transform:
     e00: 1
     e01: 0

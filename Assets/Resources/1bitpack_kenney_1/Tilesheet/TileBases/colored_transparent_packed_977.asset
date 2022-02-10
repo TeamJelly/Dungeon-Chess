@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: Strength
+  m_Name: colored_transparent_packed_977
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: -1836090852759290506, guid: c6fe220f22a272f4793de178a37e4718,
+  m_Sprite: {fileID: -3583026794161280655, guid: f19e0c71272325d469e347e810c85ac6,
     type: 3}
-  m_Color: {r: 1, g: 0.40866065, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
     e01: 0

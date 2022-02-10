@@ -42,15 +42,20 @@ namespace Model.Skills.Basic
             User.IsSkilled = true;
             WaitingTime = ReuseTime;
 
-            // 스킬 실행
-            Unit targetUnit = Model.Managers.BattleManager.GetUnit(target);
-            if (targetUnit != null)
+            GetRelatePositions(target).ForEach(target=>
             {
-                Debug.Log($"{User.Name}가 {Name}스킬을 {AITarget}타겟을 {Priority}우선으로 {targetUnit.Name}에 사용!");
-                Common.Command.Damage(targetUnit, damage);
-            }
-            else
-                Debug.Log($"{User.Name}가 {Name}스킬을 {AITarget}타겟을 {Priority}우선으로 {target}에 사용!");
+                // 스킬 실행
+                Unit targetUnit = Model.Managers.BattleManager.GetUnit(target);
+                if (targetUnit != null)
+                {
+                    Debug.Log($"{User.Name}가 {Name}스킬을 {AITarget}타겟을 {Priority}우선으로 {targetUnit.Name}에 사용!");
+                    Common.Command.Damage(targetUnit, damage);
+                }
+                else
+                    Debug.Log($"{User.Name}가 {Name}스킬을 {AITarget}타겟을 {Priority}우선으로 {target}에 사용!");
+
+                View.VisualEffectView.MakeVisualEffect(target, "Explosion");
+            });
 
             yield return null;
         }
