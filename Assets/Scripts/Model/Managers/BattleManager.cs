@@ -69,37 +69,36 @@ namespace Model.Managers
             //FieldManager.FieldData temp1 = Common.Data.LoadFieldData();
             // FieldManager.FieldData temp2 = Common.Data.LoadFieldData();
             //FieldManager.FieldData temp = FieldManager.instance.Merge2FieldData(temp1, temp2, new Vector2Int(temp1.width,temp1.height));
+
             Chunk chunk = new Chunk();
 
             FieldManager.instance.InitField(chunk.GenerateMap());
 
-
-            // 테스팅 적 유닛 소환
+            // // 테스팅 적 유닛 소환
             Unit unit = new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1);
             Common.Command.AddSkill(unit, new Skills.Move.Rook());
-            Common.Command.Summon(unit, new Vector2Int(9, 11));
+            Common.Command.Summon(unit, new Vector2Int(9, 10));
 
             unit = new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1);
             Common.Command.AddSkill(unit, new Skills.Move.Pawn());
-            Common.Command.Summon(unit, new Vector2Int(9, 12));
+            Common.Command.Summon(unit, new Vector2Int(9, 11));
 
             unit = new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1);
             Common.Command.AddSkill(unit, new Skills.Move.Knight());
-            Common.Command.Summon(unit, new Vector2Int(10, 11));
+            Common.Command.Summon(unit, new Vector2Int(10, 10));
 
             unit = new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1);
             Common.Command.AddSkill(unit, new Skills.Move.Queen());
-            Common.Command.Summon(unit, new Vector2Int(10, 12));
+            Common.Command.Summon(unit, new Vector2Int(10, 11));
 
-            Common.Command.Summon(new Items.Heal(), new Vector2Int(3, 3));
+            // Common.Command.Summon(new Items.Heal(), new Vector2Int(3, 3));
             Common.Command.Damage(unit, 20);
 
             if (GameManager.PartyUnits.Count == 0)
             {
                 GameManager.PartyUnits.Add(new Unit(UnitAlliance.Party, UnitSpecies.Human));
                 GameManager.PartyUnits.Add(new Unit(UnitAlliance.Party, UnitSpecies.Human));
-                unit = new Unit(UnitAlliance.Party, UnitSpecies.Human);
-                GameManager.PartyUnits.Add(unit);
+                GameManager.PartyUnits.Add(new Unit(UnitAlliance.Party, UnitSpecies.Human));
             }
 
             BattleController.SetBattleMode(true);
@@ -115,6 +114,12 @@ namespace Model.Managers
 
             // 모든 처리가 끝난 뒤에 애니메이션 재생 가능
             FadeOutTextView.PlayText();
+        }
+
+        public void MakeEnemies()
+        {
+
+
         }
 
         public static State CheckGameState()

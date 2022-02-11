@@ -23,11 +23,10 @@ public class ScreenTouchManager : MonoBehaviour, IDragHandler, IBeginDragHandler
 
     public bool isDraging = false;
 
-    public void Move(Vector2Int position)
+    public void CameraMove(Vector2Int position)
     {
         cameraTransform.DOMove(new Vector3(position.x, position.y, cameraTransform.position.z), 0.1f);
     }
-
 
     public void OnDrag(PointerEventData eventData)
     {

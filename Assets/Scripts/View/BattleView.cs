@@ -10,6 +10,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using View.UI;
+using DG.Tweening;
 
 namespace View
 {
@@ -203,12 +204,14 @@ namespace View
 
         public static Vector2Int MoveObject(Vector2Int v)
         {
+            // 모든 유닛들 
             foreach(Unit unit in BattleManager.instance.AllUnits)
             {
+                // unitPosition이 v와 같은애 찾음
                 if(unit.Position == v)
                 {
                     Vector3 w = new Vector3(v.x, v.y);
-                    UnitObjects[unit].transform.position = w;
+                    UnitObjects[unit].transform.DOMove(w, GameManager.AnimationDelaySpeed/5).SetEase(Ease.OutCubic);
                     HPBars[unit].SetPosition(w);
                     return v;
                 }

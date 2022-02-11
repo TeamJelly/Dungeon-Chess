@@ -58,138 +58,6 @@ public class Chunk
         );
     }
 
-    // FieldData[] fieldDataSet = new FieldData[16]
-    // {
-    //     // b0000 : 다막힘
-    //     new FieldData(
-    //                 4, 4,
-    //                 "WL WL WL WL\n" +
-    //                 "WL FR FR WL\n" +
-    //                 "WL FR FR WL\n" +
-    //                 "WL WL WL WL\n"
-    //             ),
-    //     // b0001 : 위
-    //     new FieldData(
-    //                 4, 4,
-    //                 "WL FR FR WL\n" +
-    //                 "WL FR FR WL\n" +
-    //                 "WL FR FR WL\n" +
-    //                 "WL WL WL WL\n"
-    //             ),
-    //     // b0010 : 오른
-    //     new FieldData(
-    //                 4, 4,
-    //                 "WL WL WL WL\n" +
-    //                 "WL FR FR FR\n" +
-    //                 "WL FR FR FR\n" +
-    //                 "WL WL WL WL\n"
-    //             ),
-    //     // b0011 : 위, 오른
-    //     new FieldData(
-    //                 4, 4,
-    //                 "WL FR FR WL\n" +
-    //                 "WL FR FR FR\n" +
-    //                 "WL FR FR FR\n" +
-    //                 "WL WL WL WL\n"
-    //             ),
-    //     // b0100 : 아래
-    //     new FieldData(
-    //                 4, 4,
-    //                 "WL WL WL WL\n" +
-    //                 "WL FR FR WL\n" +
-    //                 "WL FR FR WL\n" +
-    //                 "WL FR FR WL\n"
-    //             ),
-    //     // b0101 : 위, 아래
-    //     new FieldData(
-    //                 4, 4,
-    //                 "WL FR FR WL\n" +
-    //                 "WL FR FR WL\n" +
-    //                 "WL FR FR WL\n" +
-    //                 "WL FR FR WL\n"
-    //             ),
-    //     // b0110 : 오른, 아래
-    //     new FieldData(
-    //                 4, 4,
-    //                 "WL WL WL WL\n" +
-    //                 "WL FR FR FR\n" +
-    //                 "WL FR FR FR\n" +
-    //                 "WL FR FR WL\n"
-    //             ),
-    //     // b0111 : 위, 오른, 아래
-    //     new FieldData(
-    //                 4, 4,
-    //                 "WL FR FR WL\n" +
-    //                 "WL FR FR FR\n" +
-    //                 "WL FR FR FR\n" +
-    //                 "WL FR FR WL\n"
-    //             ),
-    //     // b1000 : 왼
-    //     new FieldData(
-    //                 4, 4,
-    //                 "WL WL WL WL\n" +
-    //                 "FR FR FR WL\n" +
-    //                 "FR FR FR WL\n" +
-    //                 "WL WL WL WL\n"
-    //             ),
-    //     // b1001 : 위, 왼
-    //     new FieldData(
-    //                 4, 4,
-    //                 "WL FR FR WL\n" +
-    //                 "FR FR FR WL\n" +
-    //                 "FR FR FR WL\n" +
-    //                 "WL WL WL WL\n"
-    //             ),
-    //     // b1010 : 오른, 왼
-    //     new FieldData(
-    //                 4, 4,
-    //                 "WL WL WL WL\n" +
-    //                 "FR FR FR FR\n" +
-    //                 "FR FR FR FR\n" +
-    //                 "WL WL WL WL\n"
-    //             ),
-    //     // b1011 : 위, 오른, 왼
-    //     new FieldData(
-    //                 4, 4,
-    //                 "WL FR FR WL\n" +
-    //                 "FR FR FR FR\n" +
-    //                 "FR FR FR FR\n" +
-    //                 "WL WL WL WL\n"
-    //             ),
-    //     // b1100 : 아래, 왼
-    //     new FieldData(
-    //                 4, 4,
-    //                 "WL WL WL WL\n" +
-    //                 "FR FR FR WL\n" +
-    //                 "FR FR FR WL\n" +
-    //                 "WL FR FR WL\n"
-    //             ),
-    //     // b1101 : 위, 아래, 왼
-    //     new FieldData(
-    //                 4, 4,
-    //                 "WL FR FR WL\n" +
-    //                 "FR FR FR WL\n" +
-    //                 "FR FR FR WL\n" +
-    //                 "WL FR FR WL\n"
-    //             ),
-    //     // b1110 : 오른, 아래, 왼
-    //     new FieldData(
-    //                 4, 4,
-    //                 "WL WL WL WL\n" +
-    //                 "FR FR FR FR\n" +
-    //                 "FR FR FR FR\n" +
-    //                 "WL FR FR WL\n"
-    //             ),
-    //     // b1111 : 위, 오른, 아래, 왼
-    //     new FieldData(
-    //                 4, 4,
-    //                 "WL FR FR WL\n" +
-    //                 "FR FR FR FR\n" +
-    //                 "FR FR FR FR\n" +
-    //                 "WL FR FR WL\n"
-    //             )
-    // };
-
     class Tile4x4
     {
         public Tile[,] field;
@@ -237,13 +105,13 @@ public class Chunk
 
     // Start is called before the first frame update
 
-    int size = 3;
+    int map_size = 3;
 
     void InitTileBoxies(Tile4x4[,] tileBoxies)
     {
-        for (int y = 0; y < size; y++)
+        for (int y = 0; y < map_size; y++)
         {
-            for (int x = 0; x < size; x++)
+            for (int x = 0; x < map_size; x++)
             {
                 Tile4x4 tile = new Tile4x4(x, y);
 
@@ -251,7 +119,7 @@ public class Chunk
                 foreach (var direction in directions)
                 {
                     Vector2Int v = tile.pos + direction;
-                    if (!(v.x < 0 || v.x >= size || v.y < 0 || v.y >= size))
+                    if (!(v.x < 0 || v.x >= map_size || v.y < 0 || v.y >= map_size))
                     {
                         tile.availableDirections.Add(direction);
 
@@ -266,7 +134,7 @@ public class Chunk
     void GenerateMazeData(Tile4x4[,] tileBoxies)
     {
         Vector2Int nextPos;
-        Tile4x4 currentTile = tileBoxies[size - 1, 0];
+        Tile4x4 currentTile = tileBoxies[map_size - 1, 0];
 
         // 입구와 연결되도록 길을 뚫어준다.
         currentTile.path_ID += 4;
@@ -274,7 +142,7 @@ public class Chunk
         Stack<Tile4x4> visited_Tiles = new Stack<Tile4x4>();
 
         int visited_count = 1;
-        int all_tile_count = size * size;
+        int all_tile_count = map_size * map_size;
 
         // 미로 생성 알고리즘. 완료될때까지 반복
         while (true)
@@ -324,9 +192,9 @@ public class Chunk
 
     void MakeRoughWall(Tile4x4[,] tileBoxies)
     {
-        for (int y = 0; y < size; y++)
+        for (int y = 0; y < map_size; y++)
         {
-            for (int x = 0; x < size; x++)
+            for (int x = 0; x < map_size; x++)
             {
                 Tile4x4 tile = tileBoxies[y, x];
 
@@ -347,7 +215,7 @@ public class Chunk
                         Vector2Int v = tile.pos + direction;
 
                         //      그 방향에 타일이 없다.                      > 벽 있어도 되고 없어도 됨
-                        if (v.x < 0 || v.x >= size || v.y < 0 || v.y >= size)
+                        if (v.x < 0 || v.x >= map_size || v.y < 0 || v.y >= map_size)
                         {
                             // tile.wall_ID += Random.Range(0, 2) * (int)Mathf.Pow(2, directions.IndexOf(direction));
                             continue;
@@ -401,7 +269,7 @@ public class Chunk
     {
         FieldData wallData = GenerateWall();        
 
-        int fieldSize = size * 4;
+        int fieldSize = map_size * 4;
 
         FieldData fieldData = new FieldData(fieldSize, fieldSize);
 
@@ -411,11 +279,22 @@ public class Chunk
         float scale = Random.Range(0.1f, 0.3f);
         float intensity = GetPerlinNoiseIntensity(fieldSize, pos, scale, 20);
 
+        List<string> tiles = new List<string>(){
+            "TN", "HL", "PW"
+        };
+
+        string tile1 = tiles[Random.Range(0,tiles.Count)];
+
+        tiles.Remove(tile1);
+
+        string tile2 = tiles[Random.Range(0,tiles.Count)];
+
+        // 가시 타일 생성
         for (int y = 0; y < fieldSize; y++)
         {
             for (int x = 0; x < fieldSize; x++)
             {
-                if ((Mathf.PerlinNoise((x + pos.x) * scale, (y + pos.y) * scale)) < intensity) sb.Append("TN");
+                if ((Mathf.PerlinNoise((x + pos.x) * scale, (y + pos.y) * scale)) < intensity) sb.Append(tile1);
                 else sb.Append("FR");
             }
         }
@@ -425,8 +304,8 @@ public class Chunk
 
         for (int i = 0; i < fieldSize * fieldSize; i++)
         {
-            char wc1 = wallData.fieldStrData[i*2];
-            char wc2 = wallData.fieldStrData[i*2+1];
+            // char wc1 = wallData.fieldStrData[i*2];
+            // char wc2 = wallData.fieldStrData[i*2+1];
 
             char fc1 = fieldData.fieldStrData[i*2];
             char fc2 = fieldData.fieldStrData[i*2+1];
@@ -449,7 +328,7 @@ public class Chunk
         {
             for (int x = 0; x < fieldSize; x++)
             {
-                if ((Mathf.PerlinNoise((x + pos.x) * scale, (y + pos.y) * scale)) < intensity) sb.Append("PW");
+                if ((Mathf.PerlinNoise((x + pos.x) * scale, (y + pos.y) * scale)) < intensity) sb.Append(tile2);
                 else sb.Append("FR");
             }
         }
@@ -457,8 +336,8 @@ public class Chunk
 
         for (int i = 0; i < fieldSize * fieldSize; i++)
         {
-            char wc1 = wallData.fieldStrData[i*2];
-            char wc2 = wallData.fieldStrData[i*2+1];
+            // char wc1 = wallData.fieldStrData[i*2];
+            // char wc2 = wallData.fieldStrData[i*2+1];
 
             char fc1 = fieldData.fieldStrData[i*2];
             char fc2 = fieldData.fieldStrData[i*2+1];
@@ -472,6 +351,49 @@ public class Chunk
 
         #endregion
 
+        
+        #region Void 타일 생성
+        sb = new StringBuilder();
+
+        pos = new Vector2Int(Random.Range(0,100),Random.Range(0,100));
+        scale = Random.Range(0.1f, 0.3f);
+        intensity = GetPerlinNoiseIntensity(fieldSize, pos, scale, 20);
+
+        for (int y = 0; y < fieldSize; y++)
+        {
+            for (int x = 0; x < fieldSize; x++)
+            {
+                if ((Mathf.PerlinNoise((x + pos.x) * scale, (y + pos.y) * scale)) < intensity) sb.Append("VO");
+                else sb.Append("FR");
+            }
+        }
+        fieldData.fieldStrData = sb.ToString();
+
+        for (int i = 0; i < fieldSize * fieldSize; i++)
+        {
+            char wc1 = wallData.fieldStrData[i*2];
+            char wc2 = wallData.fieldStrData[i*2+1];
+
+            char fc1 = fieldData.fieldStrData[i*2];
+            char fc2 = fieldData.fieldStrData[i*2+1];
+
+            if ($"{wc1}{wc2}" == "WL" && $"{fc1}{fc2}" == "VO")
+            {
+                temp[i*2] = fc1;
+                temp[i*2+1] = fc2;
+            }
+        }
+
+        #endregion
+
+        temp[fieldSize * (fieldSize - 1) * 2 + 0] = 'U';
+        temp[fieldSize * (fieldSize - 1) * 2 + 1] = 'S';
+        temp[fieldSize * (fieldSize - 1) * 2 + 2] = 'U';
+        temp[fieldSize * (fieldSize - 1) * 2 + 3] = 'S';
+        temp[fieldSize * (fieldSize - 1) * 2 + 4] = 'U';
+        temp[fieldSize * (fieldSize - 1) * 2 + 5] = 'S';
+        temp[fieldSize * (fieldSize - 1) * 2 + 6] = 'U';
+        temp[fieldSize * (fieldSize - 1) * 2 + 7] = 'S';
 
         wallData.fieldStrData = new string(temp);
 
@@ -481,7 +403,7 @@ public class Chunk
     public FieldData GenerateWall()
     {
 
-        Tile4x4[,] tileBoxies1 = new Tile4x4[size, size];
+        Tile4x4[,] tileBoxies1 = new Tile4x4[map_size, map_size];
         // Tile4x4[,] tileBoxies2 = new Tile4x4[size, size];
 
         //타일 생성
@@ -507,9 +429,9 @@ public class Chunk
         MakeRoughWall(tileBoxies1);
 
         //생성된 미로 데이터를 기반으로 필드 채우기
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < map_size; i++)
         {
-            for (int j = 0; j < size; j++)
+            for (int j = 0; j < map_size; j++)
             {
                 Tile4x4 tile = tileBoxies1[i, j];
 
@@ -525,29 +447,30 @@ public class Chunk
 
     FieldData GetFieldData(Tile4x4[,] tileBoxies)
     {
-        FieldData result = new FieldData(size * 4, size * 4);
+        FieldData result = new FieldData(map_size * 4, map_size * 4);
 
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < map_size; i++)
         {
-            for (int j = 0; j < size; j++)
+            for (int j = 0; j < map_size; j++)
             {
                 result = FieldManager.instance.Merge2FieldData(result, tileBoxies[i, j].fieldData, new Vector2Int(j * 4, i * 4));
             }
         }
-        FieldData platform = new FieldData(size * 4, 2, 'W', 'L');
 
-        StringBuilder sb = new StringBuilder(platform.fieldStrData);
-        sb[0] = 'U';
-        sb[1] = 'S';
-        sb[2] = 'U';
-        sb[3] = 'S';
-        sb[4] = 'U';
-        sb[5] = 'S';
-        sb[6] = 'U';
-        sb[7] = 'S';
+        // FieldData platform = new FieldData(map_size * 4, 1, 'W', 'L');
 
-        platform.fieldStrData = sb.ToString();
-        result = FieldManager.instance.Merge2FieldData(result, platform, new Vector2Int(0, result.height));
+        // StringBuilder sb = new StringBuilder(platform.fieldStrData);
+        // sb[0] = 'U';
+        // sb[1] = 'S';
+        // sb[2] = 'U';
+        // sb[3] = 'S';
+        // sb[4] = 'U';
+        // sb[5] = 'S';
+        // sb[6] = 'U';
+        // sb[7] = 'S';
+
+        // platform.fieldStrData = sb.ToString();
+        // result = FieldManager.instance.Merge2FieldData(result, platform, new Vector2Int(0, result.height));
         return result;
     }
 }

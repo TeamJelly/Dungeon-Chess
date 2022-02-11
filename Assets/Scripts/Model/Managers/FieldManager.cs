@@ -38,6 +38,18 @@ namespace Model.Managers
             }
         }
 
+        private TileBase[] outLineTileBases;
+
+        public TileBase[] OutLineTileBases
+        {
+            get
+            {
+                if (outLineTileBases == null)
+                    outLineTileBases = Resources.LoadAll<TileBase>("1bitpack_kenney_1/Tilesheet/TileBases/Outlines");
+                return outLineTileBases;
+            }
+        }
+
         [Serializable]
         public class FieldData
         {
@@ -254,7 +266,26 @@ namespace Model.Managers
                     index++;
                 }
             }
-            
+
+            // 세로 : field.GetLength(0)
+            // 가로 : field.GetLength(1)
+
+            tileMap.SetTile(new Vector3Int(-1,-1,0), OutLineTileBases[6]);
+            tileMap.SetTile(new Vector3Int(field.GetLength(1),-1,0), OutLineTileBases[8]);
+            tileMap.SetTile(new Vector3Int(-1,field.GetLength(0),0), OutLineTileBases[0]);
+            tileMap.SetTile(new Vector3Int(field.GetLength(1),field.GetLength(0),0), OutLineTileBases[2]);
+
+            for (int y = 0; y < field.GetLength(0); y++)
+            {
+                tileMap.SetTile(new Vector3Int(-1, y, 0), OutLineTileBases[3]);
+                tileMap.SetTile(new Vector3Int(field.GetLength(1), y, 0), OutLineTileBases[5]);
+            }
+
+            for (int x = 0; x < field.GetLength(1); x++)
+            {
+                tileMap.SetTile(new Vector3Int(x, field.GetLength(0), 0), OutLineTileBases[1]);
+                tileMap.SetTile(new Vector3Int(x, -1, 0), OutLineTileBases[7]);
+            }
 
             UpdateTileMap();
         }

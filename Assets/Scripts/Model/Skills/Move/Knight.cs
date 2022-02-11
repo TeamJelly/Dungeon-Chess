@@ -89,7 +89,7 @@ namespace Model.Skills.Move
             Vector2Int startPosition = User.Position;
             View.VisualEffectView.MakeVisualEffect(User.Position, "Dust");
             Common.Command.Move(User,startPosition, target);
-            ScreenTouchManager.instance.Move(User.Position);
+            ScreenTouchManager.instance.CameraMove(User.Position);
 
             yield return null;
         }

@@ -43,7 +43,7 @@ namespace UI.Battle
             Debug.Log($"{nextUnit.Name}의 턴입니다.");
 
             // 카메라를 다음 턴 유닛에게 포커스
-            ScreenTouchManager.instance.Move(nextUnit.Position);
+            ScreenTouchManager.instance.CameraMove(nextUnit.Position);
             
             // 턴시작시 유닛 값들 초기화
             nextUnit.ActionRate = 0;
