@@ -4,12 +4,13 @@ using UnityEngine.Tilemaps;
 
 namespace Model.Tiles
 {
-    public class UpStair : Tile
+    public class Stair : Tile
     {
-        public UpStair()
+        public Stair()
         {
             TileBase = Resources.Load<TileBase>("1bitpack_kenney_1/Tilesheet/TileBases/stair_up");
-            category = TileCategory.UpStair;
+            category = TileCategory.Stair;
+            Initials = "ST";
         }
     }
 }

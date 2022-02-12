@@ -239,7 +239,7 @@ namespace Common
                 BattleView.MakeUnitObject(unit);
 
                 // 유닛 소환시 DownStair Button 활성화 검사
-                Model.Tiles.DownStair.CheckPartyDownStair();
+                // Model.Tiles.DownStair.CheckPartyDownStair();
             }
             else
                 Debug.LogWarning("이미 위치에 유닛이 존재합니다.");
@@ -284,7 +284,7 @@ namespace Common
             BattleManager.instance.InitializeUnitBuffer();
 
             // 유닛 소환해제시 DownStair Button 활성화 검사
-            Model.Tiles.DownStair.CheckPartyDownStair();
+            // Model.Tiles.DownStair.CheckPartyDownStair();
 
             //적 전멸 -> (승리조건 검사 목적), 내가 죽음 -> (턴을 다음 유닛으로 넘길 목적)
             if (GameManager.InBattle)
@@ -350,7 +350,7 @@ namespace Common
                 RemoveSkill(unit, unit.MoveSkill);
                 unit.MoveSkill = newSkill as Model.Skills.Move.MoveSkill;
                 newSkill.User = unit;
-                
+
                 // Debug.Log($"{unit.Name} {newSkill.GetType()} {newSkill.User}");
             }
             else if (unit.Skills.Count < 3 && !unit.Skills.Contains(newSkill))

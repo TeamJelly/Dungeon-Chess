@@ -9,8 +9,7 @@ namespace Model
     {
         Floor,
         Wall,
-        UpStair,
-        DownStair,
+        Stair,
         Thorn,
         Hole,
         Sell,
@@ -18,6 +17,7 @@ namespace Model
         Power,
         Locked,
         UnLocked,
+        Water,
     };
 
 
@@ -29,6 +29,8 @@ namespace Model
         public TileBase TileBase { get; set; }
 
         public TileCategory category;
+
+        public string Initials { get; set; }
 
         public Color Color { get; set; }
 

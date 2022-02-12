@@ -51,7 +51,7 @@ namespace View
 
         public void Enable()
         {
-            blockPanel.SetActive(!Model.Tiles.DownStair.CheckPartyDownStair());
+            // blockPanel.SetActive(!Model.Tiles.DownStair.CheckPartyDownStair());
             UIEffect.FadeInPanel(panel);
         }
 
@@ -74,7 +74,7 @@ namespace View
             //이동 가능한 방 활성화
             Room roomChecker = room.left;
 
-            if(roomChecker != null)
+            if (roomChecker != null)
                 AllRoomButtons[roomChecker.position.x, roomChecker.position.y].SetInteractable(true);
 
             roomChecker = room.center;
@@ -96,7 +96,7 @@ namespace View
 
             // 방문한 방은 더욱 어둡게 보이게 함.
             Image image = roomButtonTransform.GetComponent<Image>();
-            Color color = image.color / 4; 
+            Color color = image.color / 4;
             color.a = 1;
             image.color = color;
 

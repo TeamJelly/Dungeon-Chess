@@ -13,6 +13,7 @@ namespace Model.Tiles
         {
             TileBase = Resources.Load<TileBase>("1bitpack_kenney_1/Tilesheet/TileBases/Strength");
             category = TileCategory.Power;
+            Initials = "PW";
         }
 
         public int strength = 3;
@@ -30,9 +31,9 @@ namespace Model.Tiles
                 unit.OnMove.after.RemoveListener(RemoveBuffCallback);
                 return v;
             }
-            
+
             unit.OnMove.after.AddListener(RemoveBuffCallback);
         }
-        
+
     }
 }

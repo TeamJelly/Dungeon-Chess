@@ -14,11 +14,12 @@ namespace Model.Tiles
         {
             TileBase = Resources.Load<TileBase>("1bitpack_kenney_1/Tilesheet/TileBases/Sell");
             category = TileCategory.Sell;
+            Initials = "SL";
         }
 
         public override void OnTile(Unit unit)
         {
-            if(obtainable != null && unit.Alliance == UnitAlliance.Party)
+            if (obtainable != null && unit.Alliance == UnitAlliance.Party)
             {
                 Confirm.Enable("Buy?", BuyFunction, CancelFunction);
             }

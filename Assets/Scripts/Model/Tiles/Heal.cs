@@ -10,8 +10,9 @@ namespace Model.Tiles
         {
             TileBase = Resources.Load<TileBase>("1bitpack_kenney_1/Tilesheet/TileBases/Heal");
             category = TileCategory.Heal;
+            Initials = "HL";
         }
-        
+
         public int heal = 3;
 
         public override void OnTile(Unit newUnit)

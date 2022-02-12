@@ -116,7 +116,7 @@ namespace Common
             public (Unit_Serializable unit, int x, int y)[] units;
             public (string name, int x, int y)[] obtainables;
         }
-        
+
         public static void SaveScene(string name)
         {
             DirectoryInfo directoryInfo = new DirectoryInfo(Application.dataPath + "/Resources/Data/Scene/");
@@ -255,9 +255,9 @@ namespace Common
         //     if (skills.Count == 0)
         //         return AllSkills[0].Clone();
 
-           
+
         //     int idx = seed % skills.Count;
-            
+
         //     Debug.Log("Selected: " + skills[idx].Name);
         //     return skills[idx].Clone();
         // }
@@ -360,7 +360,7 @@ namespace Common
 
         public static List<Tile> AllTiles = new List<Tile>()
         {
-            new Model.Tiles.DownStair(),
+            // new Model.Tiles.DownStair(),
             new Model.Tiles.Floor(),
             new Model.Tiles.Heal(),
             new Model.Tiles.Hole(),
@@ -369,8 +369,9 @@ namespace Common
             new Model.Tiles.Sell(),
             new Model.Tiles.Thorn(),
             new Model.Tiles.UnLocked(),
-            new Model.Tiles.UpStair(),
-            new Model.Tiles.Wall()
+            new Model.Tiles.Stair(),
+            new Model.Tiles.Wall(),
+            new Model.Tiles.Water(),
         };
 
         public static List<Artifact> NomalArtifacts = new List<Artifact>();

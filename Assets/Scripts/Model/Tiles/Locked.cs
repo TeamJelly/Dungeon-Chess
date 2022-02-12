@@ -10,6 +10,7 @@ namespace Model.Tiles
         {
             TileBase = Resources.Load<TileBase>("1bitpack_kenney_1/Tilesheet/TileBases/Locked");
             category = TileCategory.Locked;
+            Initials = "LK";
         }
 
         public void Unlock()

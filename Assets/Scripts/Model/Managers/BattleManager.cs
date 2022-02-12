@@ -70,9 +70,9 @@ namespace Model.Managers
             // FieldManager.FieldData temp2 = Common.Data.LoadFieldData();
             //FieldManager.FieldData temp = FieldManager.instance.Merge2FieldData(temp1, temp2, new Vector2Int(temp1.width,temp1.height));
 
-            Chunk chunk = new Chunk();
+            ChunkField chunk = new ChunkField();
 
-            FieldManager.instance.InitField(chunk.GenerateMap());
+            FieldManager.instance.InitField(chunk.GenerateChunkMap());
 
             // // 테스팅 적 유닛 소환
             Unit unit = new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1);

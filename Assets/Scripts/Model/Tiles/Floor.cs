@@ -22,9 +22,9 @@ namespace Model.Tiles
         public Floor()
         {
             int rand = Random.Range(0, 5);
-            // Debug.Log("floor " + rand);
             TileBase = TileBases[rand];
             category = TileCategory.Floor;
+            Initials = "FL";
         }
     }
 }

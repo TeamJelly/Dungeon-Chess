@@ -66,7 +66,7 @@ namespace View
 
         public static void SummonPartyUnits()
         {
-            List<Vector2Int> positions = FieldManager.instance.GetTileCategoryPositions(TileCategory.UpStair);     
+            List<Vector2Int> positions = FieldManager.instance.GetTileCategoryPositions(TileCategory.Stair);     
             List<Unit> units = GameManager.PartyUnits;
 
             if (units.Count > positions.Count)

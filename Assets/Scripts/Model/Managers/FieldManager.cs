@@ -23,7 +23,7 @@ namespace Model.Managers
         // 현재 전투의 모든 타일
         public Tile[,] field;
 
-        public List<Vector2Int> allTilesPosition 
+        public List<Vector2Int> allTilesPosition
         {
             get
             {
@@ -75,7 +75,7 @@ namespace Model.Managers
             {
                 this.width = width;
                 this.height = height;
-                this.fieldStrData = string.Concat(Enumerable.Repeat(c1+""+c2, width * height));
+                this.fieldStrData = string.Concat(Enumerable.Repeat(c1 + "" + c2, width * height));
             }
 
             // 행과 열의 개수
@@ -97,20 +97,22 @@ namespace Model.Managers
             {
                 for (int x = 0; x < fieldData.width; x++)
                 {
-                    Type type = field[y, x].GetType();
+                    sb.Append(field[y, x].Initials);
 
-                    if (type == typeof(Floor))          sb.Append("FR");
-                    else if (type == typeof(Wall))      sb.Append("WL");
-                    else if (type == typeof(UpStair))   sb.Append("US");
-                    else if (type == typeof(DownStair)) sb.Append("DS");
-                    else if (type == typeof(Thorn))     sb.Append("TN");
-                    else if (type == typeof(Hole))      sb.Append("VO");
-                    else if (type == typeof(Sell))      sb.Append("SL");
-                    else if (type == typeof(Heal))      sb.Append("HL");
-                    else if (type == typeof(Power))     sb.Append("PW");
-                    else if (type == typeof(Locked))    sb.Append("LK");
-                    else if (type == typeof(UnLocked))  sb.Append("UL");
-                    else sb.Append("FR");
+                    // Type type = field[y, x].GetType();
+
+                    // if (type == typeof(Floor)) sb.Append("FR");
+                    // else if (type == typeof(Wall)) sb.Append("WL");
+                    // else if (type == typeof(Stair)) sb.Append("US");
+                    // // else if (type == typeof(DownStair)) sb.Append("DS");
+                    // else if (type == typeof(Thorn)) sb.Append("TN");
+                    // else if (type == typeof(Hole)) sb.Append("VO");
+                    // else if (type == typeof(Sell)) sb.Append("SL");
+                    // else if (type == typeof(Heal)) sb.Append("HL");
+                    // else if (type == typeof(Power)) sb.Append("PW");
+                    // else if (type == typeof(Locked)) sb.Append("LK");
+                    // else if (type == typeof(UnLocked)) sb.Append("UL");
+                    // else sb.Append("FR");
                 }
             }
             fieldData.fieldStrData = sb.ToString();
@@ -237,30 +239,42 @@ namespace Model.Managers
                         index++;
                     char c2 = chars[index];
 
-                    if ($"{c1}{c2}" == "FR")        // Floor
-                        field[y,x] = new Floor();
-                    else if ($"{c1}{c2}" == "WL")   // Wall
-                        field[y,x] = new Wall();
-                    else if ($"{c1}{c2}" == "US")   // UpStair
-                        field[y,x] = new UpStair();
-                    else if ($"{c1}{c2}" == "DS")   // DownStair
-                        field[y,x] = new DownStair();
-                    else if ($"{c1}{c2}" == "TN")   // Thorn
-                        field[y,x] = new Thorn();
-                    else if ($"{c1}{c2}" == "VO")   // Void
-                        field[y,x] = new Model.Tiles.Hole();
-                    else if ($"{c1}{c2}" == "SL")   // Sell
-                        field[y,x] = new Sell();
-                    else if ($"{c1}{c2}" == "HL")   // Heal
-                        field[y,x] = new Heal();
-                    else if ($"{c1}{c2}" == "PW")   // Power
-                        field[y,x] = new Power();
-                    else if ($"{c1}{c2}" == "LK")   // Locked
-                        field[y,x] = new Locked();
-                    else if ($"{c1}{c2}" == "UL")   // UnLocked
-                        field[y,x] = new UnLocked();
-                    else
-                        field[y,x] = new Floor();
+                    foreach (var item in Common.Data.AllTiles)
+                    {
+                        Debug.Log(item.Initials + ", " + $"{c1}{c2}");
+
+                        if (item.Initials.Equals($"{c1}{c2}"))
+                        {
+                            Debug.Log("같다??");
+                            field[y, x] = Activator.CreateInstance(item.GetType()) as Tile;
+                            break;
+                        }
+                    }
+
+                    // if ($"{c1}{c2}" == "FR")        // Floor
+                    //     field[y, x] = new Floor();
+                    // else if ($"{c1}{c2}" == "WL")   // Wall
+                    //     field[y, x] = new Wall();
+                    // else if ($"{c1}{c2}" == "US")   // UpStair
+                    //     field[y, x] = new Stair();
+                    // else if ($"{c1}{c2}" == "DS")   // DownStair
+                    //     field[y, x] = new DownStair();
+                    // else if ($"{c1}{c2}" == "TN")   // Thorn
+                    //     field[y, x] = new Thorn();
+                    // else if ($"{c1}{c2}" == "VO")   // Void
+                    //     field[y, x] = new Model.Tiles.Hole();
+                    // else if ($"{c1}{c2}" == "SL")   // Sell
+                    //     field[y, x] = new Sell();
+                    // else if ($"{c1}{c2}" == "HL")   // Heal
+                    //     field[y, x] = new Heal();
+                    // else if ($"{c1}{c2}" == "PW")   // Power
+                    //     field[y, x] = new Power();
+                    // else if ($"{c1}{c2}" == "LK")   // Locked
+                    //     field[y, x] = new Locked();
+                    // else if ($"{c1}{c2}" == "UL")   // UnLocked
+                    //     field[y, x] = new UnLocked();
+                    // else
+                    //     field[y, x] = new Floor();
 
                     field[y, x].position = new Vector2Int(x, y);
                     index++;
@@ -270,10 +284,10 @@ namespace Model.Managers
             // 세로 : field.GetLength(0)
             // 가로 : field.GetLength(1)
 
-            tileMap.SetTile(new Vector3Int(-1,-1,0), OutLineTileBases[6]);
-            tileMap.SetTile(new Vector3Int(field.GetLength(1),-1,0), OutLineTileBases[8]);
-            tileMap.SetTile(new Vector3Int(-1,field.GetLength(0),0), OutLineTileBases[0]);
-            tileMap.SetTile(new Vector3Int(field.GetLength(1),field.GetLength(0),0), OutLineTileBases[2]);
+            tileMap.SetTile(new Vector3Int(-1, -1, 0), OutLineTileBases[6]);
+            tileMap.SetTile(new Vector3Int(field.GetLength(1), -1, 0), OutLineTileBases[8]);
+            tileMap.SetTile(new Vector3Int(-1, field.GetLength(0), 0), OutLineTileBases[0]);
+            tileMap.SetTile(new Vector3Int(field.GetLength(1), field.GetLength(0), 0), OutLineTileBases[2]);
 
             for (int y = 0; y < field.GetLength(0); y++)
             {
@@ -294,14 +308,14 @@ namespace Model.Managers
         {
             for (int y = 0; y < field.GetLength(0); y++)
                 for (int x = 0; x < field.GetLength(1); x++)
-                    tileMap.SetTile(new Vector3Int(x, y, 0), field[y,x].TileBase);
+                    tileMap.SetTile(new Vector3Int(x, y, 0), field[y, x].TileBase);
         }
 
         public void UpdateTile(Tile tile)
         {
             tileMap.SetTile(new Vector3Int(tile.position.x, tile.position.y, 0), tile.TileBase);
         }
-        
+
         public static bool IsInField(Vector2Int position)
         {
             if (position.x >= 0 &&
@@ -312,13 +326,13 @@ namespace Model.Managers
             else
                 return false;
         }
-        
+
         public List<Vector2Int> GetAllPositions()
         {
             List<Vector2Int> positions = new List<Vector2Int>();
             for (int y = 0; y < field.GetLength(0); y++)
                 for (int x = 0; x < field.GetLength(1); x++)
-                    positions.Add(new Vector2Int(x,y));
+                    positions.Add(new Vector2Int(x, y));
             return positions;
         }
 
@@ -447,7 +461,7 @@ namespace Model.Managers
             for (int y = 0; y < field.GetLength(0); y++)
                 for (int x = 0; x < field.GetLength(1); x++)
                     if (field[y, x].category == category)
-                        positions.Add(field[y,x].position);
+                        positions.Add(field[y, x].position);
 
             return positions;
         }

@@ -14,6 +14,7 @@ namespace Model.Tiles
         {
             TileBase = Resources.Load<TileBase>("1bitpack_kenney_1/Tilesheet/TileBases/thorn");
             category = TileCategory.Thorn;
+            Initials = "TN";
         }
 
         public int damage = 3;
