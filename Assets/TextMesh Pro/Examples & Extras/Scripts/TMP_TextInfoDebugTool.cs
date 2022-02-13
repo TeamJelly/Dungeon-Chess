@@ -110,7 +110,8 @@ namespace TMPro.Examples
                                           characterInfo.lineNumber >= m_TextComponent.maxVisibleLines ||
                                           (m_TextComponent.overflowMode == TextOverflowModes.Page && characterInfo.pageNumber + 1 != m_TextComponent.pageToDisplay) ? false : true;
 
-                if (!isCharacterVisible) continue;
+                if (!isCharacterVisible)
+                    continue;
 
                 float dottedLineSize = 6;
 

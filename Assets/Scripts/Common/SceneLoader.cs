@@ -1,9 +1,9 @@
 ﻿using Model;
+using Model.Managers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
 namespace Common
 {
     //추후 수정 예정
@@ -19,44 +19,43 @@ namespace Common
             SceneManager.LoadScene(sceneName);
         }
 
+        public static void GotoLobby()
+        {
+            LoadScene("#1_Field");
+        }
         public static void GotoMain()
         {
-            LoadScene("#001_MainMenu");
+            LoadScene("#0_Menu");
         }
 
         public static void GotoPrepareScene()
         {
-            LoadScene("#002_Preparation");
+           LoadScene("#1_Field");
         }
-
-        public static void GotoStage()
-        {
-            LoadScene("#003_Stage");
-        }
-
         public static void GotoBattleRoom()
         {
-            LoadScene("#004_Battle");
+            GameManager.InBattle = true;
+            LoadScene("#1_Field");
         }
 
         public static void GotoTreasureRoom()
         {
-            LoadScene("#005_Treasure");
+             LoadScene("#1_Field");
         }
 
         public static void GotoShopRoom()
         {
-            LoadScene("#006_Shop");
+            LoadScene("#1_Field");
         }
 
         public static void GotoTavernRoom()
         {
-            LoadScene("#007_Tavern");
+           LoadScene("#1_Field");
         }
 
         public static void GotoEventRoom()
         {
-            LoadScene("#008_Event");
+            LoadScene("#1_Field");
         }
 
 

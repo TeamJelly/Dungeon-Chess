@@ -95,6 +95,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -104,11 +106,11 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: -1
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -126,9 +128,12 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 0
   platformSettings:
   - serializedVersion: 3
@@ -696,6 +701,31 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      big2_100x100px_9: 7568995631712393887
+      big2_100x100px_21: 3390315943052704219
+      big2_100x100px_23: 2427367461218473713
+      big2_100x100px_22: 2537335126239861233
+      big2_100x100px_14: -2259777381986621318
+      big2_100x100px_2: 683062036858206764
+      big2_100x100px_11: -6103646573765274866
+      big2_100x100px_0: 6446513814375489673
+      big2_100x100px_6: -4200317217186945113
+      big2_100x100px_10: 5227298120535956849
+      big2_100x100px_15: 6419943534792085332
+      big2_100x100px_3: -8282888268130773499
+      big2_100x100px_4: -3728747134872321294
+      big2_100x100px_13: 4436985942035273352
+      big2_100x100px_8: 2711239199092407274
+      big2_100x100px_20: 5911023838303419728
+      big2_100x100px_1: 881429150325697704
+      big2_100x100px_16: -5994281226578090924
+      big2_100x100px_17: -6369724211300392701
+      big2_100x100px_5: 8357637287083842741
+      big2_100x100px_12: -4259479234533905271
+      big2_100x100px_18: -7551352557084753724
+      big2_100x100px_19: -2373919450162250442
+      big2_100x100px_7: 358401581344140458
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

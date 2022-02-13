@@ -209,6 +209,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -218,11 +220,11 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: -1
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -240,9 +242,12 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 0
   platformSettings:
   - serializedVersion: 3
@@ -1608,6 +1613,69 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      hit_claws_50x50px_3: 8527317481843186558
+      hit_claws_50x50px_50: -8001316027079307265
+      hit_claws_50x50px_20: 7250916258708130353
+      hit_claws_50x50px_48: -1812746823321409899
+      hit_claws_50x50px_60: 6461203425971632325
+      hit_claws_50x50px_28: -7543066024961801551
+      hit_claws_50x50px_59: 2868729366999829469
+      hit_claws_50x50px_19: 4049453102207689105
+      hit_claws_50x50px_49: 2363977462841433327
+      hit_claws_50x50px_30: -3348887422143235503
+      hit_claws_50x50px_5: 3349762209703585895
+      hit_claws_50x50px_55: 5605236622131910410
+      hit_claws_50x50px_9: -5754216479951985497
+      hit_claws_50x50px_46: 4184421455944688036
+      hit_claws_50x50px_42: -6435145012442759513
+      hit_claws_50x50px_47: 6792528340071571285
+      hit_claws_50x50px_14: 3552538478802788931
+      hit_claws_50x50px_22: -5803964701358332316
+      hit_claws_50x50px_25: -4632488021235831929
+      hit_claws_50x50px_38: -8287966872191640497
+      hit_claws_50x50px_44: -3645989282123269803
+      hit_claws_50x50px_52: -5971663312207507018
+      hit_claws_50x50px_8: 3511940351470522775
+      hit_claws_50x50px_29: 6845008913997704938
+      hit_claws_50x50px_7: 6525607276206278303
+      hit_claws_50x50px_39: -8261461528695611697
+      hit_claws_50x50px_41: -9097879562881059628
+      hit_claws_50x50px_18: 1852478342329139432
+      hit_claws_50x50px_33: -4045683639748938036
+      hit_claws_50x50px_51: 210948382486060556
+      hit_claws_50x50px_24: 2554022369522279917
+      hit_claws_50x50px_4: 1492019778210635885
+      hit_claws_50x50px_34: -6888448856080857600
+      hit_claws_50x50px_45: -922867973339060748
+      hit_claws_50x50px_26: -7161301947110499939
+      hit_claws_50x50px_1: 8075692842422196898
+      hit_claws_50x50px_54: 2417461590562919227
+      hit_claws_50x50px_13: -2170002488423725279
+      hit_claws_50x50px_31: 8362003904850671959
+      hit_claws_50x50px_36: -4093407122254988701
+      hit_claws_50x50px_0: 1191734583158117147
+      hit_claws_50x50px_56: -6006183712861139039
+      hit_claws_50x50px_53: 3568126919319544287
+      hit_claws_50x50px_57: 5741366256046311937
+      hit_claws_50x50px_15: 8755239510884994023
+      hit_claws_50x50px_11: 4111794749092110105
+      hit_claws_50x50px_12: -4311350087569406288
+      hit_claws_50x50px_43: -6313349016953703392
+      hit_claws_50x50px_21: 1557104375700346421
+      hit_claws_50x50px_16: 1096585765375740881
+      hit_claws_50x50px_2: -7948110851737595243
+      hit_claws_50x50px_23: 8212849825509547613
+      hit_claws_50x50px_58: 6113354495206424886
+      hit_claws_50x50px_61: -3132513075069921834
+      hit_claws_50x50px_10: -4196533022459057787
+      hit_claws_50x50px_27: 859373395436815506
+      hit_claws_50x50px_32: 6996019568097715358
+      hit_claws_50x50px_40: -4967377226113467976
+      hit_claws_50x50px_37: -6165602264497158687
+      hit_claws_50x50px_6: 6029249918565913252
+      hit_claws_50x50px_35: -9157927506895007540
+      hit_claws_50x50px_17: -6893205236429953007
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

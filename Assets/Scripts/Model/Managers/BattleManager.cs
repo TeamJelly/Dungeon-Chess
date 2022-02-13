@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using Model;
-using Model.Units;
+using View;
+using UI.Battle;
 
 namespace Model.Managers
 {
@@ -14,10 +14,11 @@ namespace Model.Managers
         // 현재 전투의 모든 유닛을 참조할 수 있습니다.
         public List<Unit> AllUnits = new List<Unit>();
 
-        // 현재 전투의 모든 타일을 참조할 수 있습니다.
-        private Tile[,] AllTiles; 
+        // 현재 전투의 모든 획득품들을 참조할 수 있습니다.
+        public List<Obtainable> AllObtainables = new List<Obtainable>();
 
         // 현재 턴의 유닛
+        [NonSerialized]
         public Unit thisTurnUnit;
 
         public int turnCount;
@@ -26,7 +27,8 @@ namespace Model.Managers
         {
             Continue,
             Win,
-            Defeat
+            Defeat,
+            Stop
         }
 
         public enum Condition
@@ -42,169 +44,163 @@ namespace Model.Managers
         private void Awake()
         {
             instance = this;
-            GenerateTiles(10, 10);
+        }
 
-            if (GameManager.Instance.currentRoom == null)
-            {
-                Unit unit = new Proto_Judgement();
-                Common.UnitAction.Summon(unit, new Vector2Int(4, 4));
-                Common.UnitAction.AddEffect(unit, new Model.Effects.Effect_004(unit));
-                Common.UnitAction.AddEffect(unit, new Model.Effects.Effect_005(unit, 99));
-            }
-            else if (GameManager.Instance.currentRoom.category == Room.Category.Monster)
-            {
-                int rand = UnityEngine.Random.Range(0, 2);
+        private void Start()
+        {
+            // FieldManager.FieldData temp = new FieldManager.FieldData(16, 16,
+            // "WL WL WL WL WL WL WL WL WL WL WL WL WL WL WL WL \n" +
+            // "WL PW HL PW PW FR FR FR FR FR SL SL SL LK WL WL \n" +
+            // "WL PW PW HL PW FR FR FR FR FR SL SL SL LK FR WL \n" +
+            // "WL FR HL FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+            // "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+            // "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+            // "WL TN TN TN TN TN TN TN TN TN TN TN TN TN TN WL \n" +
+            // "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+            // "WL FR FR FR FR FR WL WL FR FR FR FR FR FR FR WL \n" +
+            // "WL FR FR FR FR FR WL WL FR FR FR FR FR FR FR WL \n" +
+            // "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+            // "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+            // "WL FR FR FR FR FR FR FR FR FR FR FR FR FR FR WL \n" +
+            // "WL US US FR FR DS DS FR FR FR FR FR FR FR FR WL \n" +
+            // "WL US US FR FR DS DS FR FR FR FR FR FR FR FR WL \n" +
+            // "WL WL WL WL WL WL WL WL WL WL WL WL WL WL WL WL ");
 
-                if (rand == 0)
-                {
-                    Common.UnitAction.Summon(new Proto_Skeleton(), new Vector2Int(4, 4));
-                    Common.UnitAction.Summon(new Proto_Skeleton(), new Vector2Int(5, 4));
-                }
-                else
-                {
-                    Common.UnitAction.Summon(new Proto_RedSkeleton(), new Vector2Int(4, 4));
-                }
-            }
-            else if (GameManager.Instance.currentRoom.category == Room.Category.Elite)
-            {
-                Common.UnitAction.Summon(new Proto_RedSkeleton(), new Vector2Int(6, 7));
-                Common.UnitAction.Summon(new Proto_Skeleton(), new Vector2Int(4, 4));
-                Common.UnitAction.Summon(new Proto_Skeleton(), new Vector2Int(4, 6));
-            }
-            else if (GameManager.Instance.currentRoom.category == Room.Category.Boss)
-            {
-                Unit unit = new Proto_Judgement();
-                Common.UnitAction.Summon(unit, new Vector2Int(4, 4));
-                Common.UnitAction.AddEffect(unit, new Model.Effects.Effect_004(unit));
-                Common.UnitAction.AddEffect(unit, new Model.Effects.Effect_005(unit, 99));
-            }
+            //FieldManager.FieldData temp1 = Common.Data.LoadFieldData();
+            // FieldManager.FieldData temp2 = Common.Data.LoadFieldData();
+            //FieldManager.FieldData temp = FieldManager.instance.Merge2FieldData(temp1, temp2, new Vector2Int(temp1.width,temp1.height));
+
+            ChunkField chunk = new ChunkField();
+
+            FieldManager.instance.InitField(chunk.GenerateChunkMap());
+
+            // // 테스팅 적 유닛 소환
+            Unit unit = new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1);
+            Common.Command.AddSkill(unit, new Skills.Move.Rook());
+            Common.Command.Summon(unit, new Vector2Int(9, 10));
+
+            unit = new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1);
+            Common.Command.AddSkill(unit, new Skills.Move.Pawn());
+            Common.Command.Summon(unit, new Vector2Int(9, 11));
+
+            unit = new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1);
+            Common.Command.AddSkill(unit, new Skills.Move.Knight());
+            Common.Command.Summon(unit, new Vector2Int(10, 10));
+
+            unit = new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1);
+            Common.Command.AddSkill(unit, new Skills.Move.Queen());
+            Common.Command.Summon(unit, new Vector2Int(10, 11));
+
+            // Common.Command.Summon(new Items.Heal(), new Vector2Int(3, 3));
+            Common.Command.Damage(unit, 20);
 
             if (GameManager.PartyUnits.Count == 0)
             {
-                GameManager.PartyUnits.Add(UnitManager.Instance.AllUnits[0]);
-                GameManager.PartyUnits.Add(UnitManager.Instance.AllUnits[1]);
+                GameManager.PartyUnits.Add(new Unit(UnitAlliance.Party, UnitSpecies.Human));
+                GameManager.PartyUnits.Add(new Unit(UnitAlliance.Party, UnitSpecies.Human));
+                GameManager.PartyUnits.Add(new Unit(UnitAlliance.Party, UnitSpecies.Human));
             }
 
-            Vector2Int[] party_position = { new Vector2Int(4, 0), new Vector2Int(5, 0), new Vector2Int(3, 0), new Vector2Int(6, 0) };
+            BattleController.SetBattleMode(true);
 
-            for (int i = 0; i < GameManager.PartyUnits.Count; i++)
-            {
-                Common.UnitAction.Summon(GameManager.PartyUnits[i], party_position[i]);
-                GameManager.PartyUnits[i].ActionRate = 0;
-                foreach (var skill in GameManager.PartyUnits[i].Skills)
-                    if (skill != null)
-                        skill.CurrentReuseTime = 0;
-            }
+            // 게임 시작시 재사용대기시간 초기화
+            foreach (Unit _unit in GameManager.PartyUnits)
+                foreach (Skill skill in _unit.Skills)
+                    skill.WaitingTime = 0;
 
-            /***************************************************************************/
+            BattleView.TurnEndButton.gameObject.SetActive(false);
+            BattleView.SummonPartyUnits();// 파티 유닛 최초 소환
+            BattleController.instance.NextTurnStart();
+
+            // 모든 처리가 끝난 뒤에 애니메이션 재생 가능
+            FadeOutTextView.PlayText();
+        }
+
+        public void MakeEnemies()
+        {
+
+
         }
 
         public static State CheckGameState()
         {
-            // 승리조건이 모든 적을 죽이는 것일때
-            if (instance.WinCondition == Condition.KillAllEnemy && GetAliveUnitCount(Category.Enemy) == 0)
+            // 배틀중이 아니라면 멈춘다.
+            if (GameManager.InBattle == false)
+                return State.Stop;
+
+            // 승리조건이 모든 적이 죽는 것일 때
+            else if (instance.WinCondition == Condition.KillAllEnemy && GetAliveUnitCount(UnitAlliance.Enemy) == 0)
                 return State.Win;
-            
-            // 패배조건이 모든 아군이 죽이는 것일때
-            if (instance.DefeatCondition == Condition.KillAllParty && GetAliveUnitCount(Category.Party) == 0)
-                return State.Defeat;
+
+            // 패배조건이 모든 아군이 죽는 것일 때
+            else if (instance.DefeatCondition == Condition.KillAllParty && GetAliveUnitCount(UnitAlliance.Party) == 0)
+               return State.Defeat;
 
             // 계속
-            return State.Continue; 
+            else
+                return State.Continue;
         }
 
-        private static int GetAliveUnitCount(Category category)
+        private static int GetAliveUnitCount(UnitAlliance alliance)
         {
             int count = 0;
 
-            foreach (var unit in GetUnit(category))
-                if (Common.UnitAction.GetEffectByNumber(unit, 1) == null && (Common.UnitAction.GetEffectByNumber(unit, 2) == null))
-                    count++;
+            foreach (var unit in GetUnit(alliance))
+                count++;
 
             return count;
         }
 
-        public static bool IsAvilablePosition(Vector2Int position)
-        {
-            if (position.x >= 0 &&
-                position.y >= 0 &&
-                position.x < instance.AllTiles.GetLength(0) &&
-                position.y < instance.AllTiles.GetLength(1))
-                return true;
-            else
-                return false;
-        }
-
-        public static List<Unit> GetUnit(Category category)
+        public static List<Unit> GetUnit(UnitAlliance alliance)
         {
             List<Unit> units = new List<Unit>();
 
             foreach (var unit in instance.AllUnits)
-                if (unit.Category == category)
+                if (unit.Alliance == alliance)
                     units.Add(unit);
 
             return units;
         }
 
-        /// <summary>
-        /// 모든 유닛 리턴
-        /// </summary>
-        /// <returns></returns>
         public static List<Unit> GetUnit()
         {
             return instance.AllUnits;
         }
-
-        /// <summary>
-        /// 위치의 유닛 리턴
-        /// </summary>
-        /// <param name="position"></param>
-        /// <returns></returns>
+        
         public static Unit GetUnit(Vector2Int position)
         {
-            return GetTile(position)?.GetUnit();
+            return FieldManager.GetTile(position)?.GetUnit();
         }
 
-        public static Tile GetTile(Vector2Int position)
+        public static Obtainable GetObtainable(Vector2Int position)
         {
-            return GetTile(position.x, position.y);
+            return FieldManager.GetTile(position)?.GetObtainable();
+        }
+        Queue<Unit> unitBuffer = new Queue<Unit>();
+
+        int bufferSize = 5;
+
+        public int UnitBufferSize => bufferSize;
+
+        public Queue<Unit> UnitBuffer => unitBuffer;
+
+        public void InitializeUnitBuffer()
+        {
+            unitBuffer.Clear();
+            for (int i = 0; i < bufferSize; i++)
+            {
+                Unit unit = CalculateNextUnit();
+                if (unit == null) continue;
+                // Debug.Log(unit.Name);
+                unitBuffer.Enqueue(unit);
+            }
         }
 
-        public static Tile GetTile(int x, int y)
-        {
-            if (IsAvilablePosition(new Vector2Int(x, y)))
-                return instance.AllTiles[x, y];
-            else
-                return null;
-        }
-        public static Tile[,] GetTile()
-        {
-            return instance.AllTiles;
-        }
-
-        /// <summary>
-        /// 정보 저장용 타일 생성
-        /// </summary>
-        /// <param name="width">맵 너비</param>
-        /// <param name="height">맵 높이</param>
-        void GenerateTiles(int width, int height)
-        {
-            AllTiles = new Tile[width, height];
-            for (int i = 0; i < AllTiles.GetLength(0); i++)
-                for (int j = 0; j < AllTiles.GetLength(1); j++)
-                    AllTiles[i, j] = new Tile();
-        }
-
-        /// <summary>
-        /// 다음 턴 유닛 선택 알고리즘
-        /// </summary>
-        /// <returns>다음 턴 유닛</returns>
-        public static Unit GetNextTurnUnit()
+        Unit CalculateNextUnit()
         {
             float max = 100; // 주기의 최댓값
             float minTime = 100;
             Unit nextUnit = null; // 다음 턴에 행동할 유닛
-
             foreach (var unit in instance.AllUnits)
             {
                 if (unit.Agility <= -10)
@@ -219,20 +215,57 @@ namespace Model.Managers
                 }
             }
 
+            foreach (var unit in instance.AllUnits)
+                unit.ActionRate += (unit.Agility * 10 + 100) * minTime;
+
+            if(nextUnit != null) nextUnit.ActionRate = 0;
             return nextUnit;
+        }
+
+        public static Unit GetNextTurnUnit()
+        {
+            instance.unitBuffer.Enqueue(instance.CalculateNextUnit());
+            return instance.unitBuffer.Dequeue();
         }
 
         public static void SetNextTurnUnit(Unit nextUnit)
         {
-            float max = 100; // 주기의 최댓값
-            float velocity = nextUnit.Agility * 10 + 100;
-            float minTime = (max - nextUnit.ActionRate) / velocity; // 거리 = 시간 * 속력 > 시간 = 거리 / 속력
-
-            //나머지 유닛들도 해당 시간만큼 이동.
-            foreach (var unit in instance.AllUnits)
-                unit.ActionRate += velocity * minTime;
-
             instance.thisTurnUnit = nextUnit;
         }
+
+        /* public static Unit GetNextTurnUnit()
+            {
+                float max = 100; // 주기의 최댓값
+                float minTime = 100;
+                Unit nextUnit = null; // 다음 턴에 행동할 유닛
+
+                foreach (var unit in instance.AllUnits)
+                {
+                    if (unit.Agility <= -10)
+                        continue;
+
+                    float velocity = unit.Agility * 10 + 100;
+                    float time = (max - unit.ActionRate) / velocity; // 거리 = 시간 * 속력 > 시간 = 거리 / 속력
+                    if (minTime >= time) // 시간이 가장 적게 걸리는애가 먼저된다.
+                    {
+                        minTime = time;
+                        nextUnit = unit;
+                    }
+                }
+                return nextUnit;
+            }
+
+            public static void SetNextTurnUnit(Unit nextUnit)
+            {
+                float max = 100; // 주기의 최댓값
+                float velocity = nextUnit.Agility * 10 + 100;
+                float minTime = (max - nextUnit.ActionRate) / velocity; // 거리 = 시간 * 속력 > 시간 = 거리 / 속력
+
+                //나머지 유닛들도 해당 시간만큼 이동.
+                foreach (var unit in instance.AllUnits)
+                    unit.ActionRate += (unit.Agility * 10 + 100) * minTime;
+
+                instance.thisTurnUnit = nextUnit;
+            }*/
     }
 }

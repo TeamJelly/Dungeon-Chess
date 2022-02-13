@@ -7,178 +7,139 @@ using UnityEngine;
 
 namespace Model
 {
-    using Skills;
-
-    public enum Grade { NULL, Normal, Rare, Legend, Boss }
-
-    [System.Serializable]
-    public class Skill
+    public enum SkillCategory
     {
-        private SkillDescriptor descriptor;
+        NULL = -1,
+        Move,
+        Player,
+        Enemy
+    }
 
-        public string Name
+    // [System.Serializable]
+    public class Skill : Infoable
+    {
+        // 스킬 카테고리
+
+        public enum RangeType // 스킬 사용가능 범위의 종류
         {
-            get => descriptor.name;
-            set => descriptor.name = value;
+            Fixed,          // 나를 기준으로 범위가 회전하지 않는 스킬.
+            Rotate,         // 나를 기준으로 범위가 회전하는 스킬.
         }
 
-        public int number => descriptor.number;
-        public UnitClass unitClass
+        public enum TargetType // 스킬로 지정할수 있는 대상
         {
-            get => descriptor.unitClass;
-            set => descriptor.unitClass = value;
-        }
-        public Grade Grade
-        {
-            get => descriptor.grade;
-            set => descriptor.grade = value;
+            NULL = -1,
+            Any,            // 모든 타일에 사용가능
+            Posable,        // 위치 가능한 타일에만 사용가능, 이동 혹은 소환류 스킬에 사용
+            Friendly,       // 우호적인 유닛에 사용가능 (AI 용)
+            Hostile,        // 적대적인 유닛에 사용가능 (AI 용)
         }
 
-        public AI.Priority priority = AI.Priority.NULL;           // (AI 스킬용) 스킬 타겟 우선순위
+        // 스킬에 대한 변수
+        public Unit User { get; set; }
+        public SkillCategory Category { get; set; }
+        public string Name { get; set; }
+        public int Level { get; set; }
+        public int WaitingTime { get; set; } // 현재 스킬 쿨타임
+        public int ReuseTime { get; set; } // 재사용 대기시간
+        public string APData { get; set; }
+        public string RPData { get; set; }
 
+        // 스킬의 속성, 타입
+        public AI.Priority Priority { get; set; }
+        public TargetType UserTarget { get; set; }
+        public TargetType AITarget { get; set; }
+        public RangeType Range { get; set; }
+
+        public List<UnitSpecies> species = new List<UnitSpecies>();
+
+        public int SpriteNumber { get; set; }
+        public Color InColor { get; set; }
+        public Color OutColor { get; set; }
         private Sprite sprite;
         public Sprite Sprite
         {
             get
             {
-                if (descriptor.spritePath == "")
-                    sprite = Resources.Load<Sprite>("1bitpack_kenney_1/Tilesheet/X");
-                else if (sprite == null)
-                    sprite = Resources.Load<Sprite>(descriptor.spritePath);
+                if (sprite == null)
+                    sprite = Data.MakeSprite(SpriteNumber, InColor, OutColor);
                 return sprite;
             }
         }
 
-        public string Description => descriptor.description;            // 스킬 설명
-        private int level; // 강화도
-        public int Level
-        {
-            get => level;
-            set
-            {
-                level = value;
-            }
-        }
-        public int MaxLevel
-        {                     // 최대 강화도
-            get => descriptor.maxLevel;
-            set => descriptor.maxLevel = value;
-        }
-        public int reuseTime                                            // 재사용 대기시간
-        {
-            get => descriptor.reuseTime;
-            set => reuseTime = value;
-        }
-        private int currentReuseTime;                                   // 현재 재사용 대기시간
-        public int CurrentReuseTime
-        {
-            get => currentReuseTime;
-            set
-            {
-                currentReuseTime = value;
-            }
-        }
-        public float criticalRate
-        {
-            get => descriptor.criticalRate;
-            set => descriptor.criticalRate = value;
-        }
+        public string Description { get; set; }
+        public string Type => "Skill";
 
-        public enum Type                                              // 스킬 사용가능 범위의 종류
+        public virtual bool IsUsable()
         {
-            NULL,
-            Fixed,          // 나를 기준으로 범위가 회전하지 않는 스킬.
-            Rotate,         // 나를 기준으로 범위가 회전하는 스킬.
-        }
-
-        public enum Target                                              // 스킬의 대상
-        {
-            NULL,
-            Any,            // 모든 타일에 사용가능
-            NoUnit,         // 유닛이 없는 곳에만 사용가능, 이동 혹은 소환류 스킬에 사용
-            Party,
-            Friendly,
-            Enemy,
-        }
-
-        public Type type
-        {
-            get => descriptor.type;
-            set => descriptor.type = value;
-        }
-        public Target target
-        {
-            get => descriptor.target;
-            set => descriptor.target = value;
-        }
-
-        public string APSchema                  // Available Position
-        {
-            get => descriptor.APSchema;
-            set => descriptor.APSchema = value;
-        }
-        public string RPSchema
-        {
-            get => descriptor.RPSchema;
-            set => descriptor.RPSchema = value;
-        }
-        public string extension
-        {
-            get => descriptor.extension;
-            set => descriptor.extension = value;
-        }
-
-        public virtual bool IsUsable(Unit user)
-        {
-            if (user.SkillCount > 0 && CurrentReuseTime == 0)
+            // 이번턴에 스킬을 사용하지 않고,
+            // 이 스킬이 현재 대기중이지 않고,
+            // 스킬 레벨이 음수가 아니라면 사용가능하다.
+            if (!User.IsSkilled && WaitingTime == 0)
                 return true;
             else
                 return false;
         }
 
         /// <summary>
-        /// 스킬 사용가능한 절대위치들을 반환한다.
+        /// 해당 위치가 실제로 사용가능한지를 제외하고 스킬 사용 위치값만 계산한다.
         /// </summary>
-        /// <param name="user"></param>
         /// <param name="userPosition"></param>
         /// <returns></returns>
-        public virtual List<Vector2Int> GetAvailablePositions(Unit user, Vector2Int userPosition)
+        public virtual List<Vector2Int> GetUseRange(Vector2Int userPosition)
         {
             List<Vector2Int> positions = new List<Vector2Int>();
 
-            if (APSchema == null) return positions;
-
-            foreach (var position in Common.Range.ParseRangeSchema(APSchema))
+            if (APData != null)
             {
-                Vector2Int abs = userPosition + position;
+                foreach (var position in Common.Data.ParseRangeData(APData))
+                {
+                    Vector2Int abs = userPosition + position;
+                    positions.Add(abs);
+                }
+            }
+            return positions;
+        }
+
+        /// <summary>
+        /// user가 userPosition에 있을때 스킬 사용가능한 위치들을 반환한다.
+        /// </summary>
+        /// <param name="userPosition">스킬 사용자의 위치</param>
+        /// <returns>사용 가능한 스킬 위치들</returns>
+        public virtual List<Vector2Int> GetAvlPositions(Vector2Int userPosition)
+        {
+            List<Vector2Int> positions = new List<Vector2Int>();
+
+            TargetType Target = this.UserTarget;
+
+            if ((User.Alliance != UnitAlliance.Party && AITarget != TargetType.NULL) || GameManager.InAuto)
+                Target = this.AITarget;
+
+            foreach (var position in GetUseRange(userPosition))
+            {
+                Unit targetUnit = BattleManager.GetUnit(position);
 
                 // 맵밖에 넘어간다면 사용불가
-                if (!BattleManager.IsAvilablePosition(abs))
+                if (!FieldManager.IsInField(position))
                     continue;
-
                 // 모든 타일에 사용가능
-                if (target == Target.Any)
-                    positions.Add(abs);
+                if (Target == TargetType.Any)
+                    positions.Add(position);
                 // 유닛 없음타일에만 사용가능
-                else if (target == Target.NoUnit &&
-                    BattleManager.GetTile(abs).HasUnit())
-                    positions.Add(abs);
-                // 파티 유닛에만 사용 가능
-                else if (target == Target.Party &&
-                    BattleManager.GetTile(abs).HasUnit() &&
-                    BattleManager.GetUnit(abs).Category == Category.Party)
-                    positions.Add(abs);
+                else if (Target == TargetType.Posable && FieldManager.GetTile(position).IsPositionable(User))
+                    positions.Add(position);
                 // 우호적인 유닛에 사용 가능
-                else if (target == Target.Friendly &&
-                    BattleManager.GetTile(abs).HasUnit() && (
-                    BattleManager.GetUnit(abs).Category == Category.Friendly ||
-                    BattleManager.GetUnit(abs).Category == Category.Party))
-                    positions.Add(abs);
+                else if (Target == TargetType.Friendly && targetUnit != null &&
+                    ((User.Alliance == UnitAlliance.Party &&
+                    (targetUnit.Alliance == UnitAlliance.Party || targetUnit.Alliance == UnitAlliance.Friendly)) ||
+                    (User.Alliance == UnitAlliance.Enemy && targetUnit.Alliance == UnitAlliance.Enemy)))
+                    positions.Add(position);
                 // 적대적인 유닛에 사용 가능
-                else if (target == Target.Enemy &&
-                    BattleManager.GetTile(abs).HasUnit() &&
-                    BattleManager.GetUnit(abs).Category == Category.Enemy)
-                    positions.Add(abs);
+                else if (Target == TargetType.Hostile && targetUnit != null &&
+                    ((User.Alliance == UnitAlliance.Enemy &&
+                    (targetUnit.Alliance == UnitAlliance.Party || targetUnit.Alliance == UnitAlliance.Friendly)) ||
+                    (User.Alliance == UnitAlliance.Party && targetUnit.Alliance == UnitAlliance.Enemy)))
+                    positions.Add(position);
                 // 어디에도 속하지 않으면 false
                 else
                     continue;
@@ -187,74 +148,75 @@ namespace Model
             return positions;
         }
 
-        public virtual List<Vector2Int> GetAvailablePositions(Unit user)
+        /// <summary>
+        /// user가 스킬을 현재 위치에서 사용가능한 위치를 반환합니다.
+        /// </summary>
+        /// <param name="user">스킬 사용자 유닛</param>
+        /// <returns>사용가능한 스킬 위치들</returns>
+        public virtual List<Vector2Int> GetAvlUsePositions()
         {
-            return GetAvailablePositions(user, user.Position);
+            return GetAvlPositions(User.Position);
         }
 
-        // 메인 인디케이터의 위치가 position일때, 관련된 범위의 위치를 돌려줍니다.
-        public virtual List<Vector2Int> GetRelatePositions(Unit user, Vector2Int position)
+        /// <summary>
+        /// 스킬과 관련된 위치를 보여줍니다.
+        /// </summary>
+        /// <param name="user">스킬 사용자 유닛</param>
+        /// <param name="skillPosition">스킬을 사용하는 위치</param>
+        /// <returns>스킬이 영향을 미치는 위치</returns>
+        public virtual List<Vector2Int> GetRelatePositions(Vector2Int skillPosition)
         {
             List<Vector2Int> positions = new List<Vector2Int>();
 
-            if (RPSchema == null || !GetAvailablePositions(user).Contains(position)) return positions;
+            // 관련된 범위를 표현하는게 가능하지 않은 경우
+            if (RPData == null || !GetAvlUsePositions().Contains(skillPosition)) return positions;
 
-            foreach (var vector in Common.Range.ParseRangeSchema(RPSchema))
+            foreach (var vector in Common.Data.ParseRangeData(RPData))
             {
-                Vector2Int abs = position + vector;
-                if (BattleManager.IsAvilablePosition(abs))
-                positions.Add(abs);
+                Vector2Int abs = skillPosition + vector;
+                if (FieldManager.IsInField(abs))
+                    positions.Add(abs);
             }
 
             return positions;
         }
 
-        public virtual IEnumerator Use(Unit user, Vector2Int target)
+        public virtual IEnumerator Use(Vector2Int target)
         {
             Debug.LogError(Name + " 스킬을 " + target + "에 사용!");
-            CurrentReuseTime = reuseTime;
+
+            User.IsSkilled = true;
+            WaitingTime = ReuseTime;
+
             yield return null;
         }
 
-        /// <summary>
-        /// 스킬을 초기화 합니다.
-        /// </summary>
-        /// <param name="skill_no">스킬번호</param>
-        /// <returns></returns>
-        protected void InitializeSkillFromDB(int skill_no)
+        public virtual void OnUpgrade(int level)
         {
-            var _descriptor = SkillStorage.Instance[skill_no];
-            if (_descriptor != null)
+            Level = level;
+
+            // 레벨에 따른 업그레이드를 해줍시다.   
+            if (Level == 0)
             {
-                descriptor = _descriptor.Copy();
+
             }
-            else
+            else if (Level == 1)
             {
-                Debug.LogError($"number={skill_no}에 해당하는 스킬이 없습니다.");
+
             }
-        }
-        public virtual string GetDescription(Unit user)
-        {
-            return GetDescription(user, level);
-        }
-        public virtual string GetDescription(Unit user, int level)
-        {
-            return Description;
+            else if (Level == 2)
+            {
+                // ... 레벨에 따라 값을 넣어줍니다.
+            }
         }
 
-        public virtual void Upgrade()
+        public virtual string GetDescription()
         {
-            if (level < MaxLevel)
-                Level++;
+            return "스킬 설명";
         }
 
-        /// <summary>
-        /// 스킬을 초기화 할 때 DB에서 값을 불러옵니다.
-        /// </summary>
-        /// <param name="no">스킬 번호</param>
-        public Skill(int no)
-        {
-            InitializeSkillFromDB(no);
-        }
+        public Skill Clone() => System.Activator.CreateInstance(GetType()) as Skill;
+
+        public Skill Clone(int level) => System.Activator.CreateInstance(GetType(), level) as Skill;
     }
 }

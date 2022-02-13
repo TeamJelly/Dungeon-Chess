@@ -12,7 +12,7 @@ namespace Model.Managers
         {
             foreach(Unit unit in GameManager.PartyUnits)
             {
-                unit.CurrentHP = unit.MaximumHP;
+                unit.CurHP = unit.MaxHP;
             }
         }
     }

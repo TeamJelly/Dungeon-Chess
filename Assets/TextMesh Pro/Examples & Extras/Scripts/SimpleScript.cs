@@ -45,9 +45,6 @@ namespace TMPro.Examples
             m_textMeshPro.enableWordWrapping = false;
 
             //textMeshPro.fontColor = new Color32(255, 255, 255, 255);
-
-            //m_textMeshPro.SetText("{0:0.00}", 15.37567f);
-            //Debug.Log(string.Format("{0:0.0000}", 15.37567f));
         }
 
 

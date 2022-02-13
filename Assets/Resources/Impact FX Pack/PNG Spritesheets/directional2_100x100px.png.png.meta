@@ -104,6 +104,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -113,11 +115,11 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: -1
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -135,9 +137,12 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 0
   platformSettings:
   - serializedVersion: 3
@@ -768,6 +773,34 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      directional2_100x100px.png_1: -1581959801285921555
+      directional2_100x100px.png_0: -2887703145172094265
+      directional2_100x100px.png_17: 217720130712792133
+      directional2_100x100px.png_15: 3855385576816160027
+      directional2_100x100px.png_6: -3338800432136512367
+      directional2_100x100px.png_4: 4749761848270642347
+      directional2_100x100px.png_14: -374650817173383768
+      directional2_100x100px.png_21: -5328673608064514853
+      directional2_100x100px.png_13: -4288332630281607915
+      directional2_100x100px.png_22: 8206676796332731999
+      directional2_100x100px.png_26: -2416092920968723142
+      directional2_100x100px.png_25: -8950722375886308137
+      directional2_100x100px.png_18: 8055533575850815300
+      directional2_100x100px.png_16: 6696226957639992549
+      directional2_100x100px.png_8: 4066303175976382728
+      directional2_100x100px.png_24: 2154384385258860537
+      directional2_100x100px.png_7: 8050177281246524218
+      directional2_100x100px.png_3: 5638396678994995141
+      directional2_100x100px.png_2: -5949179302981561413
+      directional2_100x100px.png_10: 1202170206846662289
+      directional2_100x100px.png_5: 2021493119646947884
+      directional2_100x100px.png_11: 1305599040743637143
+      directional2_100x100px.png_12: 7989859062912297548
+      directional2_100x100px.png_20: 8657073229084859822
+      directional2_100x100px.png_19: 1114202725348165674
+      directional2_100x100px.png_23: 943089585209227927
+      directional2_100x100px.png_9: -6211547822398076251
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

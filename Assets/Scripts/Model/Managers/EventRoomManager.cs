@@ -11,24 +11,24 @@ namespace Model.Managers
         {
             foreach (Unit unit in GameManager.PartyUnits)
             {
-                if (unit.CurrentHP + value > unit.MaximumHP)
-                    value = unit.MaximumHP - unit.CurrentHP;
+                if (unit.CurHP + value > unit.MaxHP)
+                    value = unit.MaxHP - unit.CurHP;
 
-                unit.CurrentHP += value;
+                unit.CurHP += value;
             }
 
-            MenuManager.instance.GotoStage();
+            //MenuManager.instance.GotoStage();
 
         }
 
-        public void UpgradeSkill()
-        {
-            foreach (Unit unit in GameManager.PartyUnits)
-            {
-                UnitAction.EnhanceSkill(unit, 0);
-            }
+        // public void UpgradeSkill()
+        // {
+        //     foreach (Unit unit in GameManager.PartyUnits)
+        //     {
+        //         Command.UpgradeSkill(unit, 0);
+        //     }
 
-            MenuManager.instance.GotoStage();
-        }
+        //   //  MenuManager.instance.GotoStage();
+        // }
     }
 }

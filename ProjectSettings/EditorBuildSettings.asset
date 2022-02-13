@@ -6,27 +6,13 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/#001_MainMenu.unity
+    path: Assets/Scenes/#0_Menu.unity
     guid: 4a1cd2a23fa589443aae7d7f1486a6ae
   - enabled: 1
-    path: Assets/Scenes/#002_Preparation.unity
-    guid: d47188b68923f8c41891857c84654c58
-  - enabled: 1
-    path: Assets/Scenes/#003_Stage.unity
-    guid: 57cc2367937b9e746a332295766e75a7
-  - enabled: 1
-    path: Assets/Scenes/#004_Battle.unity
-    guid: 3373bae98b872e94a95be3be07f93825
-  - enabled: 1
-    path: Assets/Scenes/#005_Treasure.unity
-    guid: 8a6ae9de73d31ec4784efa668bd968ba
-  - enabled: 1
-    path: Assets/Scenes/#006_Shop.unity
-    guid: af9e3d4e26e4aa044a0a2a4515c492d1
-  - enabled: 1
-    path: Assets/Scenes/#007_Tavern.unity
-    guid: 07ef8ac5432f0434db806d8b993b6822
-  - enabled: 1
-    path: Assets/Scenes/#008_Event.unity
-    guid: 959148d2a3b4990468d8ab235d7d3f58
-  m_configObjects: {}
+    path: Assets/Scenes/#1_Field.unity
+    guid: cc1eb2834ea763747aa1a0e3d4a54279
+  m_configObjects:
+    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 54c0605f657f24cc482e774b3571893d,
+      type: 2}
+    com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000,
+      guid: fe4f988198919488b8f73c4d7c4c0eb2, type: 2}
