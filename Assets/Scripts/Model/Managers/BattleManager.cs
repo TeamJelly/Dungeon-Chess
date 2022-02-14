@@ -70,46 +70,50 @@ namespace Model.Managers
             // FieldManager.FieldData temp2 = Common.Data.LoadFieldData();
             //FieldManager.FieldData temp = FieldManager.instance.Merge2FieldData(temp1, temp2, new Vector2Int(temp1.width,temp1.height));
 
+            // 청크필드 매니저 선언
             ChunkField chunk = new ChunkField();
 
-            FieldManager.instance.InitField(chunk.GenerateChunkMap());
+            // 청크 맵 생성
+            FieldManager.instance.InitField(chunk.GenerateChunkMap(map_size: 2, isAttacked: true));
 
-            // // 테스팅 적 유닛 소환
-            Unit unit = new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1);
-            Common.Command.AddSkill(unit, new Skills.Move.Rook());
-            Common.Command.Summon(unit, new Vector2Int(9, 10));
-
-            unit = new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1);
-            Common.Command.AddSkill(unit, new Skills.Move.Pawn());
-            Common.Command.Summon(unit, new Vector2Int(9, 11));
-
-            unit = new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1);
-            Common.Command.AddSkill(unit, new Skills.Move.Knight());
-            Common.Command.Summon(unit, new Vector2Int(10, 10));
-
-            unit = new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1);
-            Common.Command.AddSkill(unit, new Skills.Move.Queen());
-            Common.Command.Summon(unit, new Vector2Int(10, 11));
-
-            // Common.Command.Summon(new Items.Heal(), new Vector2Int(3, 3));
-            Common.Command.Damage(unit, 20);
-
+            // 테스트 파티 생성 (없을시)
             if (GameManager.PartyUnits.Count == 0)
             {
                 GameManager.PartyUnits.Add(new Unit(UnitAlliance.Party, UnitSpecies.Human));
                 GameManager.PartyUnits.Add(new Unit(UnitAlliance.Party, UnitSpecies.Human));
                 GameManager.PartyUnits.Add(new Unit(UnitAlliance.Party, UnitSpecies.Human));
+                GameManager.PartyUnits.Add(new Unit(UnitAlliance.Party, UnitSpecies.Human));
             }
 
-            BattleController.SetBattleMode(true);
-
             // 게임 시작시 재사용대기시간 초기화
-            foreach (Unit _unit in GameManager.PartyUnits)
-                foreach (Skill skill in _unit.Skills)
-                    skill.WaitingTime = 0;
+            GameManager.PartyUnits.ForEach(u => u.Skills.ForEach(s => s.WaitingTime = 0));
 
+            // 파티 유닛 최초 소환
+            BattleView.SummonPartyUnits();
+
+            // 적 생성
+            List<Unit> enemies = new List<Unit>();
+            enemies.Add(new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1));
+            enemies.Add(new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1));
+            enemies.Add(new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1));
+            enemies.Add(new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1));
+            enemies.Add(new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1));
+            enemies.Add(new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1));
+            enemies.Add(new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1));
+            enemies.Add(new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1));
+            enemies.Add(new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1));
+            enemies.Add(new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1));
+
+            // 적 소환 타일 계산
+            List<Tile> enemyTiles = FieldManager.GetBlankFloorTiles(enemies.Count);
+
+            // 적 소환
+            for (int i = 0; i < enemies.Count; i++)
+                Common.Command.Summon(enemies[i], enemyTiles[i].position);
+
+            // 배틀 설정
+            BattleController.SetBattleMode(true);
             BattleView.TurnEndButton.gameObject.SetActive(false);
-            BattleView.SummonPartyUnits();// 파티 유닛 최초 소환
             BattleController.instance.NextTurnStart();
 
             // 모든 처리가 끝난 뒤에 애니메이션 재생 가능
@@ -134,7 +138,7 @@ namespace Model.Managers
 
             // 패배조건이 모든 아군이 죽는 것일 때
             else if (instance.DefeatCondition == Condition.KillAllParty && GetAliveUnitCount(UnitAlliance.Party) == 0)
-               return State.Defeat;
+                return State.Defeat;
 
             // 계속
             else
@@ -166,7 +170,7 @@ namespace Model.Managers
         {
             return instance.AllUnits;
         }
-        
+
         public static Unit GetUnit(Vector2Int position)
         {
             return FieldManager.GetTile(position)?.GetUnit();
@@ -218,7 +222,7 @@ namespace Model.Managers
             foreach (var unit in instance.AllUnits)
                 unit.ActionRate += (unit.Agility * 10 + 100) * minTime;
 
-            if(nextUnit != null) nextUnit.ActionRate = 0;
+            if (nextUnit != null) nextUnit.ActionRate = 0;
             return nextUnit;
         }
 

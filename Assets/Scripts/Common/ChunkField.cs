@@ -106,7 +106,7 @@ public class ChunkField
     /// </summary>
     /// <param name="map_size"></param>
     /// <returns></returns>
-    public FieldData GenerateChunkMap(int map_size = 3)
+    public FieldData GenerateChunkMap(int map_size = 3, bool isAttacked = false)
     {
         TileChunkData[,] chunkMap = new TileChunkData[map_size, map_size];
 
@@ -245,15 +245,35 @@ public class ChunkField
 
         #endregion
 
-        // 계단생성.
-        temp[fieldSize * (fieldSize - 2) * 2 + 0] = 'S';
-        temp[fieldSize * (fieldSize - 2) * 2 + 1] = 'T';
-        temp[fieldSize * (fieldSize - 2) * 2 + 2] = 'S';
-        temp[fieldSize * (fieldSize - 2) * 2 + 3] = 'T';
-        temp[fieldSize * (fieldSize - 1) * 2 + 0] = 'S';
-        temp[fieldSize * (fieldSize - 1) * 2 + 1] = 'T';
-        temp[fieldSize * (fieldSize - 1) * 2 + 2] = 'S';
-        temp[fieldSize * (fieldSize - 1) * 2 + 3] = 'T';
+        // 기습당하면 랜덤 위치에서 시작
+        if (isAttacked)
+        {
+            List<Vector2Int> randomPositions = new List<Vector2Int>();
+
+            while (randomPositions.Count < 4)
+            {
+                Vector2Int tempPosition = new Vector2Int(Random.Range(0, fieldSize), Random.Range(0, fieldSize));
+                if (!randomPositions.Contains(tempPosition))
+                {
+                    randomPositions.Add(tempPosition);
+                    temp[(tempPosition.x + tempPosition.y * fieldSize) * 2 + 0] = 'S';
+                    temp[(tempPosition.x + tempPosition.y * fieldSize) * 2 + 1] = 'T';
+                }
+            }
+        }
+        // 기습 안당하면 왼쪽 아래에서 시작
+        else
+        {
+            // 계단생성.
+            temp[fieldSize * (fieldSize - 2) * 2 + 0] = 'S';
+            temp[fieldSize * (fieldSize - 2) * 2 + 1] = 'T';
+            temp[fieldSize * (fieldSize - 2) * 2 + 2] = 'S';
+            temp[fieldSize * (fieldSize - 2) * 2 + 3] = 'T';
+            temp[fieldSize * (fieldSize - 1) * 2 + 0] = 'S';
+            temp[fieldSize * (fieldSize - 1) * 2 + 1] = 'T';
+            temp[fieldSize * (fieldSize - 1) * 2 + 2] = 'S';
+            temp[fieldSize * (fieldSize - 1) * 2 + 3] = 'T';
+        }
 
         wallData.fieldStrData = new string(temp);
 

@@ -72718,6 +72718,11 @@ PrefabInstance:
       propertyPath: m_ClearFlags
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 38423511361271650, guid: 8208c2e5111fca042aea1da79e503f0f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 38423511361271651, guid: 8208c2e5111fca042aea1da79e503f0f,
         type: 3}
       propertyPath: m_RootOrder
