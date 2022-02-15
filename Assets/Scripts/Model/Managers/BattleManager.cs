@@ -74,7 +74,7 @@ namespace Model.Managers
             ChunkField chunk = new ChunkField();
 
             // 청크 맵 생성
-            FieldManager.instance.InitField(chunk.GenerateChunkMap(map_size: 2, isAttacked: true));
+            FieldManager.instance.InitField(chunk.GenerateChunkMap(map_size: 3, isAttacked: false));
 
             // 테스트 파티 생성 (없을시)
             if (GameManager.PartyUnits.Count == 0)
@@ -97,11 +97,11 @@ namespace Model.Managers
             enemies.Add(new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1));
             enemies.Add(new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1));
             enemies.Add(new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1));
-            enemies.Add(new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1));
-            enemies.Add(new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1));
-            enemies.Add(new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1));
-            enemies.Add(new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1));
-            enemies.Add(new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1));
+            // enemies.Add(new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1));
+            // enemies.Add(new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1));
+            // enemies.Add(new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1));
+            // enemies.Add(new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1));
+            // enemies.Add(new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1));
             enemies.Add(new Unit(UnitAlliance.Enemy, UnitSpecies.Human, 1));
 
             // 적 소환 타일 계산

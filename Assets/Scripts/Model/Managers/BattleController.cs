@@ -44,7 +44,7 @@ namespace UI.Battle
 
             // 카메라를 다음 턴 유닛에게 포커스
             ScreenTouchManager.instance.CameraMove(nextUnit.Position);
-            
+
             // 턴시작시 유닛 값들 초기화
             nextUnit.ActionRate = 0;
             nextUnit.IsMoved = false;
@@ -56,7 +56,7 @@ namespace UI.Battle
                 if (skill.WaitingTime > 0)
                     skill.WaitingTime--;
             }
-            
+
             // 턴시작시 발동할게 있으면 등록해둔 이벤트 호출
             nextUnit.OnTurnStart.before.Invoke(false);
             nextUnit.OnTurnStart.after.Invoke(true);
@@ -96,7 +96,7 @@ namespace UI.Battle
             //Viewer.battle.ThisTurnUnitInfo.CurrentPushedButton = null;
             Unit thisTurnUnit = BattleManager.instance.thisTurnUnit;
 
-            if(thisTurnUnit != null)
+            if (thisTurnUnit != null)
             {
                 thisTurnUnit.OnTurnEnd.before.Invoke(true);
                 thisTurnUnit.OnTurnEnd.after.Invoke(false);

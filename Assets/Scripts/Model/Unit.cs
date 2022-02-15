@@ -398,7 +398,7 @@ namespace Model
                 criRate = criRate,
                 actionRate = actionRate,
                 positionX = position.x,
-                positionY = position.y,                
+                positionY = position.y,
 
                 // animatorPath = animatorPath,
                 // animationState = (int)animationState,
@@ -422,7 +422,7 @@ namespace Model
                 OutColorB = OutColor.b,
                 OutColorA = OutColor.a,
             };
-            
+
             u.skills.Add(moveSkill.ToString());
             u.skill_levels.Add(moveSkill.Level);
             u.skill_waitingTimes.Add(moveSkill.WaitingTime);

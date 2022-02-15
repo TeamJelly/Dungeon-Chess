@@ -62,7 +62,8 @@ namespace Model.Skills.Move
                 View.VisualEffectView.MakeVisualEffect(User.Position, "Dust");
                 // 유닛 포지션의 변경은 여러번 일어난다.
                 User.Position = path[i];
-                ScreenTouchManager.instance.CameraMove(path[i]);
+                if (User.Alliance != UnitAlliance.Party)
+                    ScreenTouchManager.instance.CameraMove(path[i]);
                 yield return new WaitForSeconds(moveTime);
             }
             User.animationState = Unit.AnimationState.Idle;

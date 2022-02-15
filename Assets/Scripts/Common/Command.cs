@@ -232,6 +232,7 @@ namespace Common
 
                 FieldManager.GetTile(position).OnTile(unit);
                 BattleManager.instance.AllUnits.Add(unit);
+                unit.ActionRate = 0;
 
                 if (unit.Alliance == UnitAlliance.Party)
                     GameManager.AddPartyUnit(unit);
