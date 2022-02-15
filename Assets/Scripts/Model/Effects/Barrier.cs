@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using View;
+using System.Threading.Tasks;
 
 namespace Model.Effects
 {
@@ -45,13 +46,13 @@ namespace Model.Effects
             Owner.OnDamage.before.RemoveListener(BeforeGetDam);
         }
 
-        public override int BeforeGetDam(int value)
+        public async Task<int> BeforeGetDam(int value)
         {
             FadeOutTextView.MakeText(Owner, $"+Barrier ({--barrierCount})", Color.yellow);
             // 데미지 무효화
             value = 0;
 
-            if (BarrierCount == 0) 
+            if (BarrierCount == 0)
                 Common.Command.RemoveEffect(Owner, this);
 
             return value;

@@ -10,9 +10,9 @@ namespace Model.Managers
         // Start is called before the first frame update
         void Start()
         {
-            foreach(Unit unit in GameManager.PartyUnits)
+            foreach (Unit unit in GameManager.PartyUnits)
             {
-                unit.CurHP = unit.MaxHP;
+                unit.SetCurHP(unit.MaxHP);
             }
         }
     }

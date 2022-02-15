@@ -14,7 +14,7 @@ namespace Model.Managers
                 if (unit.CurHP + value > unit.MaxHP)
                     value = unit.MaxHP - unit.CurHP;
 
-                unit.CurHP += value;
+                unit.SetCurHP(unit.CurHP + value);
             }
 
             //MenuManager.instance.GotoStage();

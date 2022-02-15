@@ -1,4 +1,5 @@
-﻿using Common;
+﻿using System.Threading.Tasks;
+using Common;
 using UnityEngine;
 namespace Model.Artifacts.Rare
 {
@@ -25,9 +26,9 @@ namespace Model.Artifacts.Rare
             Owner.OnTurnEnd.after.RemoveListener(ArtifactFunction);
         }
 
-        bool ArtifactFunction(bool b)
+        private async Task<bool> ArtifactFunction(bool b)
         {
-            Command.Heal(Owner, 1);
+            await Command.Heal(Owner, 1);
             return b;
         }
     }

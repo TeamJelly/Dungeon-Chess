@@ -48,8 +48,8 @@ namespace Model.Skills.Move
                         if (direction1 == direction2 || direction1 == -direction2)
                             continue;
 
-                        Vector2Int temp = userPosition + direction1 * (i+1) + direction2 * i;
-                        if (FieldManager.IsInField(temp) 
+                        Vector2Int temp = userPosition + direction1 * (i + 1) + direction2 * i;
+                        if (FieldManager.IsInField(temp)
                             //&& FieldManager.GetTile(temp).IsPositionable(user)
                             )
                             positions.Add(temp);
@@ -69,8 +69,8 @@ namespace Model.Skills.Move
                         if (direction1 == direction2 || direction1 == -direction2)
                             continue;
 
-                        Vector2Int temp = userPosition + direction1 * (i+1) + direction2 * i;
-                        if (FieldManager.IsInField(temp) 
+                        Vector2Int temp = userPosition + direction1 * (i + 1) + direction2 * i;
+                        if (FieldManager.IsInField(temp)
                             && FieldManager.GetTile(temp).IsPositionable(User))
                             positions.Add(temp);
                     }
@@ -88,8 +88,10 @@ namespace Model.Skills.Move
 
             Vector2Int startPosition = User.Position;
             View.VisualEffectView.MakeVisualEffect(User.Position, "Dust");
-            Common.Command.Move(User,startPosition, target);
-            ScreenTouchManager.instance.CameraMove(User.Position);
+            Common.Command.Move(User, startPosition, target);
+
+            if (User.Alliance != UnitAlliance.Party)
+                ScreenTouchManager.instance.CameraMove(User.Position);
 
             yield return null;
         }

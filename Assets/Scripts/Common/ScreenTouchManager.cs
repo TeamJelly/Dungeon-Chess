@@ -25,7 +25,7 @@ public class ScreenTouchManager : MonoBehaviour, IDragHandler, IBeginDragHandler
 
     public void CameraMove(Vector2Int position)
     {
-        cameraTransform.DOMove(new Vector3(position.x, position.y, cameraTransform.position.z), 0.1f);
+        cameraTransform.DOMove(new Vector3(position.x, position.y, cameraTransform.position.z), 0.5f);
     }
 
     public void OnDrag(PointerEventData eventData)

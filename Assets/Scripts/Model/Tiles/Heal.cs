@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -30,14 +31,13 @@ namespace Model.Tiles
             Debug.Log(unit.OnTurnEnd.before);
             unit.OnTurnEnd.before.RemoveListener(HealFunctionCallback);
 
-
             // tile.unit = null;
             base.OffTile();
         }
 
-        bool HealFunctionCallback(bool b)
+        private async Task<bool> HealFunctionCallback(bool b)
         {
-            Common.Command.Heal(unit, heal);
+            await Common.Command.Heal(unit, heal);
             return b;
         }
     }

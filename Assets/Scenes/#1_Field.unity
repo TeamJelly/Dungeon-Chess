@@ -72718,10 +72718,45 @@ PrefabInstance:
       propertyPath: m_ClearFlags
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 38423511361271648, guid: 8208c2e5111fca042aea1da79e503f0f,
+        type: 3}
+      propertyPath: m_ForceIntoRT
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 38423511361271648, guid: 8208c2e5111fca042aea1da79e503f0f,
+        type: 3}
+      propertyPath: orthographic size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 38423511361271648, guid: 8208c2e5111fca042aea1da79e503f0f,
+        type: 3}
+      propertyPath: m_NormalizedViewPortRect.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 38423511361271648, guid: 8208c2e5111fca042aea1da79e503f0f,
+        type: 3}
+      propertyPath: m_NormalizedViewPortRect.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 38423511361271648, guid: 8208c2e5111fca042aea1da79e503f0f,
+        type: 3}
+      propertyPath: m_NormalizedViewPortRect.width
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 38423511361271650, guid: 8208c2e5111fca042aea1da79e503f0f,
         type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 38423511361271650, guid: 8208c2e5111fca042aea1da79e503f0f,
+        type: 3}
+      propertyPath: m_RefResolutionX
+      value: 320
+      objectReference: {fileID: 0}
+    - target: {fileID: 38423511361271650, guid: 8208c2e5111fca042aea1da79e503f0f,
+        type: 3}
+      propertyPath: m_RefResolutionY
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 38423511361271651, guid: 8208c2e5111fca042aea1da79e503f0f,
         type: 3}

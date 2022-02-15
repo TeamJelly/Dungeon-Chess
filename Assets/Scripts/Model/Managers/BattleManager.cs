@@ -74,7 +74,7 @@ namespace Model.Managers
             ChunkField chunk = new ChunkField();
 
             // 청크 맵 생성
-            FieldManager.instance.InitField(chunk.GenerateChunkMap(map_size: 2, isAttacked: true));
+            FieldManager.instance.InitField(chunk.GenerateChunkMap(map_size: 2, isAttacked: false));
 
             // 테스트 파티 생성 (없을시)
             if (GameManager.PartyUnits.Count == 0)

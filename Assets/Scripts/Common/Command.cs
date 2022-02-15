@@ -5,6 +5,7 @@ using Model.Managers;
 using System.Collections.Generic;
 using UI.Battle;
 using View;
+using System.Threading.Tasks;
 
 namespace Common
 {
@@ -37,27 +38,27 @@ namespace Common
         // 타일에 유닛의 정보를 기록하고 유닛의 OnMove, 타일의 OnTile 이벤트를 실행시킨다.
         // 이 안에서는 무조건 start Position 사용해야함!!
         // unit.Position은 애니메이션에 사용함.
-        public static void Move(this Unit unit, Vector2Int start, Vector2Int target)
+        public async static void Move(this Unit unit, Vector2Int start, Vector2Int target)
         {
             //OnMove는 이동 할때마다 항상 수행되는 이벤트
-            target = unit.OnMove.before.Invoke(target);
+            target = await unit.OnMove.before.Invoke(target);
             FieldManager.GetTile(start).OffTile();
 
             // 이동한다.
             unit.Position = target;
-            unit.OnMove.after.Invoke(target);
+            await unit.OnMove.after.Invoke(target);
             // Model.Tiles.DownStair.CheckPartyDownStair();
 
             //OnTile은 타일의 특성에 따라 이동이 끝난 후 발동되는 타일의 이벤트
             FieldManager.GetTile(target).OnTile(unit);
         }
 
-        public static int Damage(this Unit unit, int value)
+        public async static Task<int> Damage(this Unit unit, int value)
         {
-            value = unit.OnDamage.before.Invoke(value);
+            value = await unit.OnDamage.before.Invoke(value);
 
             unit.CurHP -= value;
-            unit.OnDamage.after.Invoke(value);
+            await unit.OnDamage.after.Invoke(value);
 
             FadeOutTextView.MakeText(unit, $"HP -{value}", Color.red);
             Debug.Log($"{unit.Name}가(은) {value}만큼 데미지를 입었다! [HP : {unit.CurHP + value}>{unit.CurHP}]");
@@ -67,18 +68,18 @@ namespace Common
             return value; // 피해량을 리턴
         }
 
-        public static int Heal(this Unit unit, int value)
+        public async static Task<int> Heal(this Unit unit, int value)
         {
             // Debug.Log(unit.Name + ", " + value);
 
-            value = unit.OnHeal.before.Invoke(value);
+            value = await unit.OnHeal.before.Invoke(value);
 
             // 최대체력 이상으로 회복하지 않습니다.
             if (unit.CurHP + value > unit.MaxHP)
                 value = unit.MaxHP - unit.CurHP;
 
             unit.CurHP += value;
-            unit.OnHeal.after.Invoke(value);
+            await unit.OnHeal.after.Invoke(value);
 
             FadeOutTextView.MakeText(unit, $"HP +{value}", Color.green);
 
@@ -210,13 +211,13 @@ namespace Common
             }
         }
 
-        public static void RemoveEffect(this Unit target, Effect effect)
+        public static async Task RemoveEffect(this Unit target, Effect effect)
         {
             if (target.StateEffects.Contains(effect))
             {
-                effect.OnRemove();
+                await effect.OnRemove();
                 target.StateEffects.Remove(effect);
-                FadeOutTextView.MakeText(target, $"-{effect.Name}", Color.yellow);
+                await FadeOutTextView.MakeText(target, $"-{effect.Name}", Color.yellow);
             }
             else
                 Debug.LogError($"{target.Name}이 {effect.Name}를 소유하고 있지 않습니다.");
@@ -226,7 +227,7 @@ namespace Common
         {
             if (BattleManager.GetUnit(position) == null)
             {
-                unit.OnPosition.after.RemoveListener(BattleView.MoveObject);
+                unit.OnPosition.after.RemoveListener(arg => BattleView.MoveObject(arg));
                 unit.Position = position;
                 // FieldManager.GetTile(position).SetUnit(unit);
 
