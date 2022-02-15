@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Model
@@ -48,7 +47,7 @@ namespace Model
         //    TurnCount = turnCount;
         //}
 
-        public async virtual Task OnAdd()
+        public virtual void OnAdd()
         {
             Debug.Log($"{Owner.Name}에게 {Name} 효과 추가됨");
         }
@@ -56,22 +55,32 @@ namespace Model
         /// <summary>
         /// 효과의 중복 검사와 중복 처리를 해준다.
         /// </summary>
-        public async virtual Task OnOverlap()
+        public virtual void OnOverlap()
         {
             Debug.Log($"{Owner.Name}에게 {Name} 효과 중복됨");
         }
 
-        public async virtual Task OnRemove()
+        public virtual void OnRemove()
         {
 
         }
 
-        public async virtual Task<bool> OnTurnStart(bool value)
+        public virtual bool OnTurnStart(bool value)
         {
             return value;
         }
 
-        public async virtual Task<bool> OnTurnEnd(bool value)
+        public virtual bool OnTurnEnd(bool value)
+        {
+            return value;
+        }
+
+        public virtual int BeforeGetDam(int value)
+        {
+            return value;
+        }
+
+        public virtual int AfterGetDam(int value)
         {
             return value;
         }

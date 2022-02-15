@@ -4,7 +4,6 @@ using UnityEngine;
 using TMPro;
 using Model;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace View
 {
@@ -30,24 +29,24 @@ namespace View
             prefab = Resources.Load<GameObject>("Prefabs/UI/FadeOutText");
         }
 
-        public async static Task MakeText(FadeOutText fadeOutText)
+        public static void MakeText(FadeOutText fadeOutText)
         {
             if (!instance.WaitingQueue.ContainsKey(fadeOutText.unit))
                 instance.WaitingQueue.Add(fadeOutText.unit, new Queue<FadeOutText>());
 
             instance.WaitingQueue[fadeOutText.unit].Enqueue(fadeOutText);
-            await PlayText();
+            PlayText();
         }
 
-        public async static Task MakeText(Unit unit, string text, Color color)
+        public static void MakeText(Unit unit, string text, Color color)
         {
-            await MakeText(new FadeOutText() { unit = unit, text = text, color = color });
+            MakeText(new FadeOutText() { unit = unit, text = text, color = color });
         }
 
-        public async static Task PlayText()
+        public static void PlayText()
         {
             if (instance.isCoroutineRunning == false)
-                await instance.TextCoroutine();
+                instance.StartCoroutine(instance.TextCoroutine());
         }
 
         public static void StopText()

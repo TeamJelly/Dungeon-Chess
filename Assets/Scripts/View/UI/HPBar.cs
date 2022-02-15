@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
-using System.Threading.Tasks;
 
 namespace View.UI
 {
@@ -36,12 +34,13 @@ namespace View.UI
 
         public void SetPosition(Vector3 unitPosition)
         {
-            transform.DOMove(Camera.main.WorldToScreenPoint(unitPosition + Vector3.up * 0.5f), 0.1f);
+            transform.position =
+                Camera.main.WorldToScreenPoint(unitPosition + Vector3.up * 0.5f);
         }
 
-        public async Task<int> SetValue(int value)
+        public int SetValue(int value)
         {
-            await slider.DOValue(value, 0.2f).AsyncWaitForCompletion();
+            slider.value = value;
 
             return value;
         }

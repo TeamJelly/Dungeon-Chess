@@ -4,7 +4,6 @@ using Model;
 using Model.Managers;
 using View;
 using UnityEngine.Tilemaps;
-using System.Threading.Tasks;
 
 namespace Model.Tiles
 {
@@ -19,16 +18,15 @@ namespace Model.Tiles
 
         public int strength = 3;
 
-        public async override void OnTile(Unit unit)
+        public override void OnTile(Unit unit)
         {
             base.OnTile(unit);
-
-            await FadeOutTextView.MakeText(unit, $"STR +{strength}", Color.green);
+            FadeOutTextView.MakeText(unit, $"STR +{strength}", Color.green);
             unit.Strength += strength;
 
-            async Task<Vector2Int> RemoveBuffCallback(Vector2Int v)
+            Vector2Int RemoveBuffCallback(Vector2Int v)
             {
-                await FadeOutTextView.MakeText(unit, $"STR -{strength}", Color.green);
+                FadeOutTextView.MakeText(unit, $"STR -{strength}", Color.green);
                 unit.Strength -= strength;
                 unit.OnMove.after.RemoveListener(RemoveBuffCallback);
                 return v;

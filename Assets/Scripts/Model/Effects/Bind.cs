@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using View;
-using System.Threading.Tasks;
 
 namespace Model.Effects
 {
@@ -22,7 +21,7 @@ namespace Model.Effects
         // 이미 기절 효과가 발동 됨을 기록한다.
         bool isActivated = false;
 
-        public override async Task OnAdd()
+        public override void OnAdd()
         {
             Owner.IsMoved = true;
 
@@ -30,15 +29,15 @@ namespace Model.Effects
             Owner.OnTurnEnd.after.AddListener(OnTurnEnd);
         }
 
-        public override async Task OnRemove()
+        public override void OnRemove()
         {
             Owner.OnTurnStart.before.RemoveListener(OnTurnStart);
             Owner.OnTurnEnd.after.RemoveListener(OnTurnEnd);
         }
 
-        public override async Task<bool> OnTurnStart(bool value)
+        public override bool OnTurnStart(bool value)
         {
-            await FadeOutTextView.MakeText(Owner, $"+Bind", Color.red);
+            FadeOutTextView.MakeText(Owner, $"+Bind", Color.red);
 
             Owner.IsMoved = true;
             isActivated = true;
@@ -46,10 +45,10 @@ namespace Model.Effects
             return value;
         }
 
-        public override async Task<bool> OnTurnEnd(bool value)
+        public override bool OnTurnEnd(bool value)
         {
             if (isActivated)
-                await Common.Command.RemoveEffect(Owner, this);
+                Common.Command.RemoveEffect(Owner, this);
 
             return value;
         }
@@ -60,12 +59,12 @@ public class Restraint : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 }

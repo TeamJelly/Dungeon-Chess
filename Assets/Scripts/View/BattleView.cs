@@ -11,7 +11,6 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using View.UI;
 using DG.Tweening;
-using System.Threading.Tasks;
 
 namespace View
 {
@@ -26,7 +25,7 @@ namespace View
         [SerializeField]
         private Button turnEndButton;
         [SerializeField]
-        private Button downStairButton;
+        private Button downStairButton; 
 
         [SerializeField]
         private UnitControlView unitControlView;
@@ -34,9 +33,9 @@ namespace View
         // public UnitInfoView ThisTurnUnitInfo;
         // public UnitInfoView OtherUnitInfo { get; set; }
 
-        private Dictionary<Unit, GameObject> unitObjects = new Dictionary<Unit, GameObject>();
-        private Dictionary<Unit, HPBar> hpBars = new Dictionary<Unit, HPBar>();
-        private Dictionary<Obtainable, GameObject> obtainableObjects = new Dictionary<Obtainable, GameObject>();
+        private Dictionary<Unit, GameObject> unitObjects =   new Dictionary<Unit, GameObject>();
+        private Dictionary<Unit, HPBar> hpBars =   new Dictionary<Unit, HPBar>();
+        private Dictionary<Obtainable, GameObject> obtainableObjects =  new Dictionary<Obtainable, GameObject>();
         public static Button TurnEndButton => instance.turnEndButton;
         public static Image CurrentUnitPortrait => instance.currentUnitPortrait;
         public static GameObject MainPanel => instance.mainPanel;
@@ -61,23 +60,23 @@ namespace View
 
             TurnEndButton.gameObject.SetActive(false);
             DownStairButton.gameObject.SetActive(false);
-
+            
             UnitControlView.panel.SetActive(false);
         }
 
         public static void SummonPartyUnits()
         {
-            List<Vector2Int> positions = FieldManager.instance.GetTileCategoryPositions(TileCategory.Stair);
+            List<Vector2Int> positions = FieldManager.instance.GetTileCategoryPositions(TileCategory.Stair);     
             List<Unit> units = GameManager.PartyUnits;
 
             if (units.Count > positions.Count)
                 Debug.LogError("Upstair 부족!! 소환할 곳이 없음!");
-
+            
             for (int i = 0; i < Mathf.Min(positions.Count, units.Count); i++)
             {
                 Common.Command.Summon(units[i], positions[i]);
             }
-
+            
             IndicatorView.HideTileIndicator();
             SystemMessageView.HideMessage();
             SystemMessageView.ReserveMessage("전투 시작!");
@@ -113,7 +112,7 @@ namespace View
 
         private void Update()
         {
-            foreach (Unit unit in HPBars.Keys)
+            foreach(Unit unit in HPBars.Keys)
             {
                 Vector3 unitPos = new Vector3(unit.Position.x, unit.Position.y);
                 HPBars[unit].SetPosition(unitPos);
@@ -148,7 +147,7 @@ namespace View
         /// 생성하면서 이벤트 콜벡을 할당해줘야 한다.
         /// </summary>
         /// <param name="unit"></param>
-        public async static void MakeUnitObject(Unit unit)
+        public static void MakeUnitObject(Unit unit)
         {
             // 미리 존재 여부 확인
             if (UnitObjects.ContainsKey(unit) == true)
@@ -199,22 +198,20 @@ namespace View
             int tempHP = unit.CurHP;
             Vector2Int tempPosition = unit.Position;
 
-            await unit.OnPosition.after.Invoke(tempPosition);
-            await unit.OnCurHP.after.Invoke(tempHP);
+            unit.OnPosition.after.Invoke(tempPosition);
+            unit.OnCurHP.after.Invoke(tempHP);
         }
 
-        public static async Task<Vector2Int> MoveObject(Vector2Int v)
+        public static Vector2Int MoveObject(Vector2Int v)
         {
             // 모든 유닛들 
-            foreach (Unit unit in BattleManager.instance.AllUnits)
+            foreach(Unit unit in BattleManager.instance.AllUnits)
             {
                 // unitPosition이 v와 같은애 찾음
-                if (unit.Position == v)
+                if(unit.Position == v)
                 {
                     Vector3 w = new Vector3(v.x, v.y);
-
-                    await UnitObjects[unit].transform.DOMove(w, GameManager.AnimationDelaySpeed / 5).SetEase(Ease.OutCubic).AsyncWaitForCompletion();
-
+                    UnitObjects[unit].transform.DOMove(w, GameManager.AnimationDelaySpeed/5).SetEase(Ease.OutCubic);
                     HPBars[unit].SetPosition(w);
                     return v;
                 }
@@ -231,10 +228,10 @@ namespace View
 
             // 스프라이터 랜더러 추가
             SpriteRenderer spriteRenderer = obObj.AddComponent<SpriteRenderer>();
-
+            
             if (ob.GetType().BaseType == typeof(Artifact))
                 spriteRenderer.sprite = ob.Sprite;
-            else
+            else 
             {
                 spriteRenderer.sprite = ob.Sprite;
                 // if (ob.Color != new Color(0,0,0,0))

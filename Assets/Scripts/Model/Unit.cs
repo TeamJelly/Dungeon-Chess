@@ -4,7 +4,6 @@ using Common;
 using System;
 using Model;
 using Model.Skills.Move;
-using System.Threading.Tasks;
 
 namespace Model
 {
@@ -109,9 +108,9 @@ namespace Model
                 CriRate = 11;
             }
 
-            SetLevel(lv);
-            SetCurEXP(0);
+            Level = lv;
 
+            CurEXP = 0;
             NextEXP = 10 * Level * (Level + 5);
         }
 
@@ -189,95 +188,107 @@ namespace Model
 
 
         // HP가 변했을때 효과 추가 필요
-        public int CurHP { get => curHP; }
-
-        public async void SetCurHP(int value)
+        public int CurHP
         {
-            value = await OnCurHP.before.Invoke(value);
-            curHP = value;
-            await OnCurHP.after.Invoke(value);
-        }
-
-        public int Level { get => level; }
-
-        public async void SetLevel(int value)
-        {
-            while (level < value)
+            get => curHP;
+            set
             {
-                value = await OnLevel.before.Invoke(value);
-
-                level++;
-
-                if (Modifier == UnitModifier.NULL)
+                if (curHP != value)
                 {
-                    MaxHP += 5;
-                    Strength += 1;
+                    value = OnCurHP.before.Invoke(value);
+                    curHP = value;
+                    OnCurHP.after.Invoke(value);
                 }
-                else if (Modifier == UnitModifier.Tough)
-                {
-                    MaxHP += 9;
-                    Strength += 1;
-                }
-                else if (Modifier == UnitModifier.Deadly)
-                {
-                    MaxHP += 1;
-                    Strength += 2;
-                    CriRate += 2;
-                }
-                else if (Modifier == UnitModifier.Meticulous)
-                {
-                    MaxHP += 4;
-                    Strength += 2;
-                }
-                else if (Modifier == UnitModifier.Righteous)
-                {
-                    MaxHP += 5;
-                    Strength += 1;
-                    Agility = (level % 2) == 0 ? Agility + 1 : Agility;
-                }
-                else if (Modifier == UnitModifier.Quick)
-                {
-                    Strength += 1;
-                    Agility += 1;
-                    CriRate += 2;
-                }
-                else if (Modifier == UnitModifier.Rich)
-                {
-                    MaxHP += 5;
-                    Strength += 1;
-                    Managers.GameManager.Instance.Gold += 40;
-                }
-
-                await OnLevel.after.Invoke(value);
             }
         }
 
-        public int CurEXP { get => curEXP; }
-        public async void SetCurEXP(int value)
+        public int Level
         {
-            if (curEXP != value)
+            get => level;
+            set
             {
-                value = await OnCurEXP.before.Invoke(value);
-                curEXP = value;
-                await OnCurEXP.after.Invoke(value);
+                while (level < value)
+                {
+                    value = OnLevel.before.Invoke(value);
+
+                    level++;
+
+                    if (Modifier == UnitModifier.NULL)
+                    {
+                        MaxHP += 5;
+                        Strength += 1;
+                    }
+                    else if (Modifier == UnitModifier.Tough)
+                    {
+                        MaxHP += 9;
+                        Strength += 1;
+                    }
+                    else if (Modifier == UnitModifier.Deadly)
+                    {
+                        MaxHP += 1;
+                        Strength += 2;
+                        CriRate += 2;
+                    }
+                    else if (Modifier == UnitModifier.Meticulous)
+                    {
+                        MaxHP += 4;
+                        Strength += 2;
+                    }
+                    else if (Modifier == UnitModifier.Righteous)
+                    {
+                        MaxHP += 5;
+                        Strength += 1;
+                        Agility = (level % 2) == 0 ? Agility + 1 : Agility;
+                    }
+                    else if (Modifier == UnitModifier.Quick)
+                    {
+                        Strength += 1;
+                        Agility += 1;
+                        CriRate += 2;
+                    }
+                    else if (Modifier == UnitModifier.Rich)
+                    {
+                        MaxHP += 5;
+                        Strength += 1;
+                        Managers.GameManager.Instance.Gold += 40;
+                    }
+
+                    OnLevel.after.Invoke(value);
+                }
             }
         }
 
-        public Vector2Int Position { get => position; }
-
-        public async void SetPosition(Vector2Int value)
+        public int CurEXP
         {
-            if (Managers.BattleManager.instance != null && Managers.FieldManager.IsInField(Position))
+            get => curEXP;
+            set
             {
-                if (position != value)
+                if (curEXP != value)
                 {
-                    value = await OnPosition.before.Invoke(value);
-                    position = value;
-                    await OnPosition.after.Invoke(value);
+                    value = OnCurEXP.before.Invoke(value);
+                    curEXP = value;
+                    OnCurEXP.after.Invoke(value);
                 }
             }
-            else
-                Debug.LogError("유닛을 이곳으로 이동할 수 없습니다.");
+        }
+
+        public Vector2Int Position
+        {
+            get => position;
+            set
+            {
+                if (Managers.BattleManager.instance != null && Managers.FieldManager.IsInField(Position))
+                {
+                    if (position != value)
+                    {
+                        value = OnPosition.before.Invoke(value);
+                        position = value;
+                        OnPosition.after.Invoke(value);
+                    }
+                }
+                else
+                    Debug.LogError("유닛을 이곳으로 이동할 수 없습니다.");
+            }
         }
 
         public int NextEXP { get => nextEXP; set => nextEXP = value; }
@@ -387,7 +398,7 @@ namespace Model
                 criRate = criRate,
                 actionRate = actionRate,
                 positionX = position.x,
-                positionY = position.y,
+                positionY = position.y,                
 
                 // animatorPath = animatorPath,
                 // animationState = (int)animationState,
@@ -411,7 +422,7 @@ namespace Model
                 OutColorB = OutColor.b,
                 OutColorA = OutColor.a,
             };
-
+            
             u.skills.Add(moveSkill.ToString());
             u.skill_levels.Add(moveSkill.Level);
             u.skill_waitingTimes.Add(moveSkill.WaitingTime);
