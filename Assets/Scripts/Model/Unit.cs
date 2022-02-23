@@ -465,18 +465,9 @@ namespace Model
             level = u.level;
             curEXP = u.curEXP;
             nextEXP = u.nextEXP;
-            curHP = u.curHP;
-            maxHP = u.maxHP;
-            armor = u.armor;
-            strength = u.strength;
-            agility = u.agility;
-            mobility = u.mobility;
-            criRate = u.criRate;
-            actionRate = u.actionRate;
 
             position.x = u.positionX;
             position.y = u.positionY;
-
             // animatorPath = u.animatorPath;
             // animationState = (AnimationState)u.animationState;
 
@@ -528,6 +519,16 @@ namespace Model
             {
                 Common.Command.AddArtifact(this, (Artifact)Activator.CreateInstance(Type.GetType(o)));
             }
+
+            //유물 영향 받는 스텟 마지막에 갱신.
+            curHP = u.curHP;
+            maxHP = u.maxHP;
+            armor = u.armor;
+            strength = u.strength;
+            agility = u.agility;
+            mobility = u.mobility;
+            criRate = u.criRate;
+            actionRate = u.actionRate;
         }
     }
 

@@ -15,6 +15,7 @@ namespace Model.Tiles
 
         public int heal = 3;
 
+        //힐 타일에 올라와 있으면 매 턴마다 힐을 받음.
         public override void OnTile(Unit newUnit)
         {
             base.OnTile(newUnit);

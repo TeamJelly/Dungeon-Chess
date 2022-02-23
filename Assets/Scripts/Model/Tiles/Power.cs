@@ -21,12 +21,17 @@ namespace Model.Tiles
         public override void OnTile(Unit unit)
         {
             base.OnTile(unit);
+            if (unit == null) return;
             FadeOutTextView.MakeText(unit, $"STR +{strength}", Color.green);
             unit.Strength += strength;
 
+
+            //자리를 벗어나는 즉시 호출되는 OffTile 대신
+            //이동이 전부 끝난 후에 호출되는 일회용 콜백 등록.
             Vector2Int RemoveBuffCallback(Vector2Int v)
             {
                 FadeOutTextView.MakeText(unit, $"STR -{strength}", Color.green);
+                Debug.Log("힘 제거");
                 unit.Strength -= strength;
                 unit.OnMove.after.RemoveListener(RemoveBuffCallback);
                 return v;
@@ -34,6 +39,5 @@ namespace Model.Tiles
 
             unit.OnMove.after.AddListener(RemoveBuffCallback);
         }
-
     }
 }

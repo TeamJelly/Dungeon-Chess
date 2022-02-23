@@ -75,10 +75,6 @@ namespace Common
         //     File.WriteAllText(Application.dataPath + "/Resources/Data/Field/Data.json", jsonStr);
         // }
 
-
-        //유닛 저장 불러오기 실험중
-        //현재 객체 자체를 바이너리 직렬화로 저장 시도
-        //Vector2Int 등 유니티 기본 타입들 serializable이 아니라서 불가능.
         public static void Save_Unit_Serializable_Data(Unit unit)
         {
             DirectoryInfo directoryInfo = new DirectoryInfo(Application.dataPath + "/Resources/Data/Unit/");
@@ -86,12 +82,14 @@ namespace Common
 
             string jsonStr = JsonUtility.ToJson(unit.Get_Serializable());
             File.WriteAllText(Application.dataPath + "/Resources/Data/Unit/" + unit.Name + ".json", jsonStr);
+        }
+        public static Unit_Serializable Load_Unit_Serializable_Data(string dataPath)
+        {
 
-
-            /*BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Create(Application.dataPath + "/Resources/Data/Unit/" + unit.Name + ".unit");
-            bf.Serialize(file, unit);
-            file.Close();*/
+            string jsonStr = File.ReadAllText(dataPath);
+            jsonStr = jsonStr.Replace("\n", "");
+            Unit_Serializable u = JsonUtility.FromJson<Unit_Serializable>(jsonStr);
+            return u;
         }
 
         public static void SaveChunks(string name)
@@ -101,11 +99,6 @@ namespace Common
 
             FieldData fieldData = new FieldData();
 
-
-        }
-
-        public static void LoadChunks()
-        {
 
         }
 
@@ -152,15 +145,15 @@ namespace Common
 
             bool inBattle = Model.Managers.GameManager.InBattle;
 
-            Common.Command.UnSummonAllUnit();
-            Common.Command.UnSummonAllObtainable();
+            Command.UnSummonAllUnit();
+            Command.UnSummonAllObtainable();
 
             Model.Managers.FieldManager.instance.InitField(sceneData.fieldData);
 
             foreach ((Unit_Serializable unit, int x, int y) in sceneData.units)
             {
                 Unit u = new Unit(unit);
-                Common.Command.Summon(u, new Vector2Int(x, y));
+                Command.Summon(u, new Vector2Int(x, y));
                 if (u.Alliance == UnitAlliance.Party) Model.Managers.GameManager.AddPartyUnit(u);
                 //unitList.Add(u);
             }
@@ -168,45 +161,17 @@ namespace Common
             foreach ((string name, int x, int y) in sceneData.obtainables)
             {
                 Obtainable obt = (Obtainable)Activator.CreateInstance(Type.GetType(name));
-                Common.Command.Summon(obt, new Vector2Int(x, y));
+                Command.Summon(obt, new Vector2Int(x, y));
             }
 
             Model.Managers.BattleManager.instance.InitializeUnitBuffer();
 
             // 일단 배틀모드 해제.
             UI.Battle.BattleController.SetBattleMode(false);
-
             // UI.Battle.BattleController.instance.NextTurnStart();
         }
 
-        public static Unit_Serializable Load_Unit_Serializable_Data(string dataPath)
-        {
 
-            string jsonStr = File.ReadAllText(dataPath);
-
-            jsonStr = jsonStr.Replace("\n", "");
-            Unit_Serializable u = JsonUtility.FromJson<Unit_Serializable>(jsonStr);
-            return u;
-            //Unit unit = new Unit();
-            //unit.Set_From_Serializable(u);
-            /*
-            DirectoryInfo directoryInfo = new DirectoryInfo(Application.dataPath + "/Resources/Data/Unit/");
-            if (!directoryInfo.Exists) directoryInfo.Create();
-
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.dataPath + "/Resources/Data/Unit/" + name, FileMode.Open);*/
-
-            /*BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(dataPath, FileMode.Open);
-
-            if (file != null && file.Length > 0)
-            {
-                unit = (Unit)bf.Deserialize(file);
-            }
-            file.Close();*/
-
-            //return unit;
-        }
         private static string[] nameData;
 
         public static string[] NameData
