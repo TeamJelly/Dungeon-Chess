@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using View;
 using System.Collections;
+using UnityEngine.Events;
 
 namespace UI.Battle
 {
@@ -19,7 +20,7 @@ namespace UI.Battle
 
         private void Start()
         {
-            BattleView.SetTurnEndButton(ThisTurnEnd);
+            BattleView.SetTurnEndButton(() => AnimationManager.OnAnimationComplete(() => BattleController.instance.ThisTurnEnd()));
         }
 
         /// <summary>
@@ -39,7 +40,9 @@ namespace UI.Battle
             }
 
             BattleManager.SetNextTurnUnit(nextUnit);
-            FadeOutTextView.MakeText(nextUnit, $"{nextUnit.Name} 턴 시작!", Color.cyan);
+
+
+            AnimationManager.MakeFadeTextClips(nextUnit, $"{nextUnit.Name} 턴 시작!", Color.cyan);
             Debug.Log($"{nextUnit.Name}의 턴입니다.");
 
             // 카메라를 다음 턴 유닛에게 포커스
@@ -79,10 +82,11 @@ namespace UI.Battle
                 if (action != null)
                     action.Invoke();
                 else if (BattleManager.CheckGameState() == BattleManager.State.Continue)
-                    BattleController.instance.ThisTurnEnd();
+                    AnimationManager.OnAnimationComplete(() => BattleController.instance.ThisTurnEnd());
             }
             else
             {
+
                 BattleView.TurnEndButton.gameObject.SetActive(true);
                 BattleView.UnitControlView.panel.SetActive(true);
             }

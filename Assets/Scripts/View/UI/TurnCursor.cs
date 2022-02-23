@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using View;
 using DG.Tweening;
-
+using Model.Managers;
 
 namespace View.UI
 {
@@ -18,14 +18,7 @@ namespace View.UI
         void FixedUpdate()
         {
             if (Model.Managers.BattleManager.instance.thisTurnUnit != null)
-            {
-                // GetComponentInChildren<SpriteRenderer>().color = Color.green;
-                transform.position = (Vector3Int)(Model.Managers.BattleManager.instance.thisTurnUnit.Position) + new Vector3(0, 1, -2);
-            }
-            // else
-            // {
-            //     GetComponentInChildren<SpriteRenderer>().color = new Color(0, 0, 0, 0);
-            // }
+                transform.position = BattleView.UnitObjects[BattleManager.instance.thisTurnUnit].transform.position + new Vector3(0, 1, -2);
         }
     }
 }

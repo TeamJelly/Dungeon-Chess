@@ -23,9 +23,12 @@ public class ScreenTouchManager : MonoBehaviour, IDragHandler, IBeginDragHandler
 
     public bool isDraging = false;
 
-    public void CameraMove(Vector2Int position)
+    public Sequence CameraMove(Vector2Int position)
     {
-        cameraTransform.DOMove(new Vector3(position.x, position.y, cameraTransform.position.z), 0.1f);
+        Sequence sequence = DOTween.Sequence();
+        sequence.Append(cameraTransform.DOMove(new Vector3(position.x, position.y, cameraTransform.position.z), 0.1f));
+
+        return sequence;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -104,7 +107,7 @@ public class ScreenTouchManager : MonoBehaviour, IDragHandler, IBeginDragHandler
 
             for (int i = 1; i < path.Count; i++)
             {
-                View.VisualEffectView.MakeVisualEffect(user.Position, "Dust");
+                AnimationManager.MakeAnimationClips("Dust", user.Position);
                 user.Position = path[i];
                 yield return new WaitForSeconds(moveTime);
             }

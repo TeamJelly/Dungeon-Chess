@@ -1,4 +1,5 @@
-﻿using Model;
+﻿using DG.Tweening;
+using Model;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -40,7 +41,9 @@ namespace View.UI
 
         public int SetValue(int value)
         {
-            slider.value = value;
+            AnimationManager.Reserve(DOTween.Sequence().Append(
+                slider.DOValue(value, 0.1f)
+            ));
 
             return value;
         }

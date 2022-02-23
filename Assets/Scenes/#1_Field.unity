@@ -43157,7 +43157,6 @@ GameObject:
   - component: {fileID: 1321821659}
   - component: {fileID: 1321821658}
   - component: {fileID: 1321821657}
-  - component: {fileID: 1321821661}
   - component: {fileID: 1321821655}
   - component: {fileID: 1321821660}
   - component: {fileID: 1321821656}
@@ -43271,19 +43270,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 813cc3292bc84414ba10dedea0db8048, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1321821661
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1321821654}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76fa8d62bc11e14468fec6ff685b5dfd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefab: {fileID: 2312228078828827027, guid: 9aa9782f772c46e4bb52bcced90da0a3, type: 3}
 --- !u!114 &1321821662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43311,7 +43297,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ae6fc8bf8f6d3a439d73047bbf26373, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isNowPlaying: 0
+  animationClips:
+  - {fileID: 357679703780428536, guid: 9aa9782f772c46e4bb52bcced90da0a3, type: 3}
+  - {fileID: 8597567690839973184, guid: 1924bc2e646131d4b81010f52af8f929, type: 3}
+  - {fileID: 236918136640887035, guid: ef896008550f9a24c95541b33b0a2d50, type: 3}
+  - {fileID: 236918136640887035, guid: 060791266e10cc84fa404afdbb4ad664, type: 3}
+  animationNames:
+  - FadeOutText
+  - Dust
+  - Explosion
+  - Scratch
 --- !u!1 &1327732362
 GameObject:
   m_ObjectHideFlags: 0

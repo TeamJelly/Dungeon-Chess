@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Model.Managers;
+using DG.Tweening;
 
 namespace Model.Skills.Move
 {
@@ -87,11 +88,15 @@ namespace Model.Skills.Move
             Debug.Log($"{User.Name}가 {Name}스킬을 {AITarget}타겟을 {Priority}우선으로 {target}에 사용!");
 
             Vector2Int startPosition = User.Position;
-            View.VisualEffectView.MakeVisualEffect(User.Position, "Dust");
-            Common.Command.Move(User, startPosition, target);
 
             if (User.Alliance != UnitAlliance.Party)
-                ScreenTouchManager.instance.CameraMove(User.Position);
+            {
+                Sequence sequence = ScreenTouchManager.instance.CameraMove(User.Position);
+                
+            }
+
+            Common.Command.Move(User, startPosition, target);
+            AnimationManager.MakeAnimationClips("Dust", startPosition);
 
             yield return null;
         }

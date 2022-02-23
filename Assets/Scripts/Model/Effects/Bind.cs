@@ -37,7 +37,7 @@ namespace Model.Effects
 
         public override bool OnTurnStart(bool value)
         {
-            FadeOutTextView.MakeText(Owner, $"+Bind", Color.red);
+            AnimationManager.MakeFadeTextClips(Owner, $"+Bind", Color.red);
 
             Owner.IsMoved = true;
             isActivated = true;
@@ -59,12 +59,12 @@ public class Restraint : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

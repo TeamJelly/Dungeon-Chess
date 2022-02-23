@@ -47,11 +47,11 @@ namespace Model.Effects
 
         public override int BeforeGetDam(int value)
         {
-            FadeOutTextView.MakeText(Owner, $"+Barrier ({--barrierCount})", Color.yellow);
+            AnimationManager.MakeFadeTextClips(Owner, $"+Barrier ({--barrierCount})", Color.yellow);
             // 데미지 무효화
             value = 0;
 
-            if (BarrierCount == 0) 
+            if (BarrierCount == 0)
                 Common.Command.RemoveEffect(Owner, this);
 
             return value;

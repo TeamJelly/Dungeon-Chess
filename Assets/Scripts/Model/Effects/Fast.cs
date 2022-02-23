@@ -7,7 +7,7 @@ namespace Model.Effects
     public class Fast : Effect
     {
         public Fast()
-        {   
+        {
             Name = "Fast";
             Description = $"이동거리가 늘어납니다. 남은 턴 : {TurnCount}";
 
@@ -15,7 +15,7 @@ namespace Model.Effects
             InColor = Color.blue;
             OutColor = Color.clear;
         }
-       
+
         public override void OnAdd()
         {
             TurnCount = 3;
@@ -39,7 +39,7 @@ namespace Model.Effects
         }
         public override bool OnTurnStart(bool value)
         {
-            FadeOutTextView.MakeText(Owner, $"+Fast ({TurnCount})", Color.green);
+            AnimationManager.MakeFadeTextClips(Owner, $"+Fast ({TurnCount})", Color.green);
             return value;
         }
         public override bool OnTurnEnd(bool value)

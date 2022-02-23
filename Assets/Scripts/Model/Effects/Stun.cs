@@ -36,7 +36,7 @@ namespace Model.Effects
 
         public override bool OnTurnStart(bool value)
         {
-            FadeOutTextView.MakeText(Owner, $"+Stun", Color.red);
+            AnimationManager.MakeFadeTextClips(Owner, $"+Stun", Color.red);
 
             Owner.IsMoved = true;
             Owner.IsSkilled = true;

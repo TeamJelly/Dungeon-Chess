@@ -82,7 +82,7 @@ namespace Common
                 BattleController.action_coroutine = null;
 
                 if (BattleManager.CheckGameState() == BattleManager.State.Continue)
-                    BattleController.instance.ThisTurnEnd();
+                    AnimationManager.OnAnimationComplete(() => BattleController.instance.ThisTurnEnd());
             }
         }
 

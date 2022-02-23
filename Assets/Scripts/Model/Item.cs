@@ -18,7 +18,7 @@ namespace Model
 
         //    GameManager.Instance.itemBag.Add(this);
         //    Common.Command.UnSummon(this);
-        //    View.FadeOutTextView.MakeText(unit, $"+{Name}", Color.yellow);
+        //    View.AnimationManager.MakeFadeTextClips(unit, $"+{Name}", Color.yellow);
         //    UnitControlView.instance.UpdateItemButtons();                
         //}
 

@@ -30,7 +30,7 @@ namespace Model.Tiles
             int price = obtainable.Price;
             if (GameManager.Instance.Gold < price)
             {
-                View.FadeOutTextView.MakeText(unit, "Not Enough Money", Color.red);
+                AnimationManager.MakeFadeTextClips(unit, "Not Enough Money", Color.red);
             }
             else
             {

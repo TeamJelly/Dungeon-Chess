@@ -59,9 +59,9 @@ namespace Model.Skills.Move
 
             for (int i = 1; i < path.Count; i++)
             {
-                View.VisualEffectView.MakeVisualEffect(User.Position, "Dust");
                 // 유닛 포지션의 변경은 여러번 일어난다.
                 User.Position = path[i];
+                AnimationManager.MakeAnimationClips("Dust", path[i - 1]);
                 if (User.Alliance != UnitAlliance.Party)
                     ScreenTouchManager.instance.CameraMove(path[i]);
                 yield return new WaitForSeconds(moveTime);

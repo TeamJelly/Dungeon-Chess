@@ -12,8 +12,11 @@ namespace Common
     {
         public static void Die(this Unit unit)
         {
-            View.FadeOutTextView.MakeText(unit, unit.Name + " is dead", Color.red);
-            View.VisualEffectView.MakeVisualEffect(unit.Position, "Explosion");
+            AnimationManager.MakeFadeTextClips(unit, unit.Name + " is dead", Color.red);
+
+            AnimationManager.MakeAnimationClips("Explosion", unit.Position);
+            // View.VisualEffectView.MakeVisualEffect(unit.Position, "Explosion");
+
             UnSummon(unit);
             // // 소지 유물 뿌리기
             // List<Tile> tiles = FieldManager.GetBlankFloorTiles(unit.Belongings.Count);
@@ -59,7 +62,8 @@ namespace Common
             unit.CurHP -= value;
             unit.OnDamage.after.Invoke(value);
 
-            FadeOutTextView.MakeText(unit, $"HP -{value}", Color.red);
+            AnimationManager.MakeFadeTextClips(unit, $"HP -{value}", Color.red);
+
             Debug.Log($"{unit.Name}가(은) {value}만큼 데미지를 입었다! [HP : {unit.CurHP + value}>{unit.CurHP}]");
             if (unit.CurHP <= 0)
                 unit.Die();
@@ -80,7 +84,8 @@ namespace Common
             unit.CurHP += value;
             unit.OnHeal.after.Invoke(value);
 
-            FadeOutTextView.MakeText(unit, $"HP +{value}", Color.green);
+
+            AnimationManager.MakeFadeTextClips(unit, $"HP +{value}", Color.green);
 
             Debug.Log($"{unit.Name}가(은) {value}만큼 회복했다! [HP : {unit.CurHP}>{unit.CurHP + value}]");
 
@@ -89,7 +94,7 @@ namespace Common
 
         public static void LevelUp(this Unit unit)
         {
-            View.FadeOutTextView.MakeText(unit, "Level Up!", Color.white);
+            AnimationManager.MakeFadeTextClips(unit, "Level Up!", Color.white);
 
             unit.Level++;
 
@@ -155,7 +160,7 @@ namespace Common
             target.Belongings.Add(artifact);
 
             // 로그 출력
-            FadeOutTextView.MakeText(target, $"+{artifact.Name}", Color.yellow);
+            AnimationManager.MakeFadeTextClips(target, $"+{artifact.Name}", Color.yellow);
         }
 
         public static void RemoveArtifact(this Unit target, Artifact artifact)
@@ -164,7 +169,7 @@ namespace Common
             {
                 artifact.OnRemove();
                 target.Belongings.Remove(artifact);
-                FadeOutTextView.MakeText(target, $"-{artifact.Name}", Color.yellow);
+                AnimationManager.MakeFadeTextClips(target, $"-{artifact.Name}", Color.yellow);
             }
             else
                 Debug.LogError($"{target.Name}이 {artifact.Name}를 소유하고 있지 않습니다.");
@@ -200,13 +205,13 @@ namespace Common
                 effect.Owner = target;
                 effect.OnAdd();
                 target.StateEffects.Add(effect);
-                FadeOutTextView.MakeText(target, $"+{effect.Name}", Color.yellow);
+                AnimationManager.MakeFadeTextClips(target, $"+{effect.Name}", Color.yellow);
             }
             // oldEffect가 이미 존재한다면 새로 들어온 new effect는 배제하고 oldEffect.OnOverlap 함수로 처리해준다.
             else
             {
                 oldEffect.OnOverlap();
-                FadeOutTextView.MakeText(target, $"-+{effect.Name}", Color.yellow);
+                AnimationManager.MakeFadeTextClips(target, $"-+{effect.Name}", Color.yellow);
             }
         }
 
@@ -216,7 +221,7 @@ namespace Common
             {
                 effect.OnRemove();
                 target.StateEffects.Remove(effect);
-                FadeOutTextView.MakeText(target, $"-{effect.Name}", Color.yellow);
+                AnimationManager.MakeFadeTextClips(target, $"-{effect.Name}", Color.yellow);
             }
             else
                 Debug.LogError($"{target.Name}이 {effect.Name}를 소유하고 있지 않습니다.");
