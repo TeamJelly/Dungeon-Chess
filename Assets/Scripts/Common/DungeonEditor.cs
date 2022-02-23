@@ -147,8 +147,8 @@ public class DungeonEditor : MonoBehaviour
         var Tiles = Common.Data.AllTiles;
         for (int i = 0; i < Tiles.Count; i++)
         {
-            Tiles[i].position = new Vector2Int(-10, i);
-            FieldManager.instance.tileMap.SetTile(new Vector3Int(-10, i, 0), Tiles[i].TileBase);
+            Tiles[i].position = new Vector2Int(-20, i);
+            FieldManager.instance.tileMap.SetTile(new Vector3Int(-20, i, 0), Tiles[i].TileBase);
         }
     }
 

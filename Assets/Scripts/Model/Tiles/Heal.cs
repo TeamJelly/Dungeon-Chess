@@ -19,7 +19,7 @@ namespace Model.Tiles
         {
             base.OnTile(newUnit);
 
-            newUnit.OnTurnEnd.before.AddListener(HealFunctionCallback);
+            newUnit?.OnTurnEnd.before.AddListener(HealFunctionCallback);
         }
 
         public override void OffTile()
