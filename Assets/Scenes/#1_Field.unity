@@ -44161,6 +44161,7 @@ GameObject:
   - component: {fileID: 1321821660}
   - component: {fileID: 1321821656}
   - component: {fileID: 1321821662}
+  - component: {fileID: 1321821663}
   m_Layer: 0
   m_Name: Scripts
   m_TagString: Untagged
@@ -44282,7 +44283,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 2312228078828827027, guid: 9aa9782f772c46e4bb52bcced90da0a3, type: 3}
-  isCoroutineRunning: 0
 --- !u!114 &1321821662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44298,6 +44298,19 @@ MonoBehaviour:
   scale: 0.736
   pos: {x: 0, y: 0}
   intensity: 0.5
+--- !u!114 &1321821663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1321821654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ae6fc8bf8f6d3a439d73047bbf26373, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isNowPlaying: 0
 --- !u!1 &1327732362
 GameObject:
   m_ObjectHideFlags: 0

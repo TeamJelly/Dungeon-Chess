@@ -40,7 +40,7 @@ namespace View
             GameObject obj = BattleView.ObtainableObjects[obtainable];
             obj.transform.position = startPos;
 
-            GameObject trailRenderObj = Instantiate(Resources.Load<GameObject>("TrailRenderObj"),obj.transform);
+            GameObject trailRenderObj = Instantiate(Resources.Load<GameObject>("TrailRenderObj"), obj.transform);
             trailRenderObj.transform.localPosition = Vector3.zero;
             IEnumerator Coroutine()
             {
@@ -51,7 +51,7 @@ namespace View
 
                 //Vector2 direction = new Vector2(target.x - startPos.x, target.y - startPos.y).normalized;
                 //Vector2 curvedDiretion = new Vector2(direction.y, -direction.x);
-                while(t < duration)
+                while (t < duration)
                 {
                     t += Time.deltaTime;
                     straightPosition = Vector3.Lerp(startPos, target, t / duration);

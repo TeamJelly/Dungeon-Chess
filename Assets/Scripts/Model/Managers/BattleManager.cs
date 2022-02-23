@@ -79,10 +79,10 @@ namespace Model.Managers
             // 테스트 파티 생성 (없을시)
             if (GameManager.PartyUnits.Count == 0)
             {
-                GameManager.PartyUnits.Add(new Unit(UnitAlliance.Party, UnitSpecies.Human));
-                GameManager.PartyUnits.Add(new Unit(UnitAlliance.Party, UnitSpecies.Human));
-                GameManager.PartyUnits.Add(new Unit(UnitAlliance.Party, UnitSpecies.Human));
-                GameManager.PartyUnits.Add(new Unit(UnitAlliance.Party, UnitSpecies.Human));
+                GameManager.PartyUnits.Add(new Unit(UnitAlliance.Party, UnitSpecies.Human, 2));
+                GameManager.PartyUnits.Add(new Unit(UnitAlliance.Party, UnitSpecies.Human, 2));
+                GameManager.PartyUnits.Add(new Unit(UnitAlliance.Party, UnitSpecies.Human, 2));
+                GameManager.PartyUnits.Add(new Unit(UnitAlliance.Party, UnitSpecies.Human, 2));
             }
 
             // 게임 시작시 재사용대기시간 초기화
@@ -117,7 +117,7 @@ namespace Model.Managers
             BattleController.instance.NextTurnStart();
 
             // 모든 처리가 끝난 뒤에 애니메이션 재생 가능
-            FadeOutTextView.PlayText();
+            // FadeOutTextView.PlayText();
         }
 
         public void MakeEnemies()

@@ -12,7 +12,7 @@ namespace View
         public static FadeOutTextView instance;
         public GameObject prefab;
 
-        public bool isCoroutineRunning = false;
+        // public bool isCoroutineRunning = false;
 
         public class FadeOutText
         {
@@ -35,7 +35,7 @@ namespace View
                 instance.WaitingQueue.Add(fadeOutText.unit, new Queue<FadeOutText>());
 
             instance.WaitingQueue[fadeOutText.unit].Enqueue(fadeOutText);
-            PlayText();
+            // PlayText();
         }
 
         public static void MakeText(Unit unit, string text, Color color)
@@ -43,40 +43,45 @@ namespace View
             MakeText(new FadeOutText() { unit = unit, text = text, color = color });
         }
 
-        public static void PlayText()
-        {
-            if (instance.isCoroutineRunning == false)
-                instance.StartCoroutine(instance.TextCoroutine());
-        }
+        // public static Sequence MakeTextAnimation(FadeOutText fadeOutText)
+        // {
 
-        public static void StopText()
-        {
-            if (instance.isCoroutineRunning == true)
-                instance.StopCoroutine(instance.TextCoroutine());
-        }
+        // }
 
-        IEnumerator TextCoroutine()
-        {
-            isCoroutineRunning = true;
+        // public static void PlayText()
+        // {
+        //     if (instance.isCoroutineRunning == false)
+        //         instance.StartCoroutine(instance.TextCoroutine());
+        // }
 
-            while (WaitingQueue.Count > 0)
-            {
-                foreach (var item in WaitingQueue.Values.ToArray())
-                {
-                    FadeOutText line = item.Dequeue();
-                    GameObject gameObject = Instantiate(instance.prefab);
-                    gameObject.GetComponentInChildren<TextMeshPro>().text = line.text;
-                    gameObject.GetComponentInChildren<TextMeshPro>().color = line.color;
-                    gameObject.transform.position = new Vector3(line.unit.Position.x, line.unit.Position.y + 1);
+        // public static void StopText()
+        // {
+        //     if (instance.isCoroutineRunning == true)
+        //         instance.StopCoroutine(instance.TextCoroutine());
+        // }
 
-                    if (item.Count == 0)
-                        WaitingQueue.Remove(line.unit);
-                }
+        // IEnumerator TextCoroutine()
+        // {
+        //     isCoroutineRunning = true;
 
-                yield return new WaitForSeconds(Model.Managers.GameManager.AnimationDelaySpeed);
-            }
+        //     while (WaitingQueue.Count > 0)
+        //     {
+        //         foreach (var item in WaitingQueue.Values.ToArray())
+        //         {
+        //             FadeOutText line = item.Dequeue();
+        //             GameObject gameObject = Instantiate(instance.prefab);
+        //             gameObject.GetComponentInChildren<TextMeshPro>().text = line.text;
+        //             gameObject.GetComponentInChildren<TextMeshPro>().color = line.color;
+        //             gameObject.transform.position = new Vector3(line.unit.Position.x, line.unit.Position.y + 1);
 
-            isCoroutineRunning = false;
-        }
+        //             if (item.Count == 0)
+        //                 WaitingQueue.Remove(line.unit);
+        //         }
+
+        //         yield return new WaitForSeconds(Model.Managers.GameManager.AnimationDelaySpeed);
+        //     }
+
+        //     isCoroutineRunning = false;
+        // }
     }
 }
