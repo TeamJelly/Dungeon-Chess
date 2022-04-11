@@ -53,20 +53,18 @@ namespace Model.Skills.Move
                 Debug.LogError($"{User.Position}에서 {target}으로 길이 존재하지 않습니다.");
                 yield break;
             }
-
-            User.animationState = Unit.AnimationState.Move;
             float moveTime = GameManager.AnimationDelaySpeed / 5;
 
             for (int i = 1; i < path.Count; i++)
             {
                 // 유닛 포지션의 변경은 여러번 일어난다.
-                User.Position = path[i];
-                AnimationManager.MakeAnimationClips("Dust", path[i - 1]);
                 if (User.Alliance != UnitAlliance.Party)
                     ScreenTouchManager.instance.CameraMove(path[i]);
+                User.Position = path[i];
+
+                AnimationManager.ReserveAnimationClips("Dust", path[i - 1]);
                 yield return new WaitForSeconds(moveTime);
             }
-            User.animationState = Unit.AnimationState.Idle;
 
             Debug.Log($"{User.Name}가 {Name}스킬을 {AITarget}타겟을 {Priority}우선으로 {target}에 사용!");
             // 실제 타일에 상속되는건 한번이다.

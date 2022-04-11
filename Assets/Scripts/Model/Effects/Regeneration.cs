@@ -36,7 +36,7 @@ namespace Model.Effects
 
         public override bool OnTurnStart(bool value)
         {
-            AnimationManager.MakeFadeTextClips(Owner, $"+Regen ({TurnCount})", Color.green);
+            AnimationManager.ReserveFadeTextClips(Owner, $"+Regen ({TurnCount})", Color.green);
             Common.Command.Heal(Owner, Regen);
 
             return value;

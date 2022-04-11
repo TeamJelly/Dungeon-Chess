@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Model.Skills.Basic
@@ -42,9 +43,11 @@ namespace Model.Skills.Basic
             User.IsSkilled = true;
             WaitingTime = ReuseTime;
 
+            Sequence sequence = DOTween.Sequence();
+
             GetRelatePositions(target).ForEach(target =>
             {
-                AnimationManager.MakeAnimationClips("Explosion", target);
+                sequence.Join(AnimationManager.MakeAnimationClips("Explosion", target));
 
                 // 스킬 실행
                 Unit targetUnit = Model.Managers.BattleManager.GetUnit(target);
@@ -56,6 +59,8 @@ namespace Model.Skills.Basic
                 else
                     Debug.Log($"{User.Name}가 {Name}스킬을 {AITarget}타겟을 {Priority}우선으로 {target}에 사용!");
             });
+
+            AnimationManager.Reserve(sequence);
 
             yield return null;
         }

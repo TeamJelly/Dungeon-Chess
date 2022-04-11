@@ -51,7 +51,7 @@ namespace Model.Skills.Basic
             else
                 Debug.Log($"{User.Name}가 {Name}스킬을 {AITarget}타겟을 {Priority}우선으로 {target}에 사용!");
 
-            AnimationManager.MakeAnimationClips("Scratch", target);
+            AnimationManager.ReserveAnimationClips("Scratch", target);
 
             yield return null;
         }

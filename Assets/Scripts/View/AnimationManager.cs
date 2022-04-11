@@ -19,6 +19,10 @@ public class AnimationManager : MonoBehaviour
     public List<string> animationNames;
 
 
+    public static void ReserveFadeTextClips(Unit unit, string text, Color color) => Reserve(MakeFadeTextClips(unit, text, color));
+
+    public static void ReserveAnimationClips(string name, Vector2Int position) => Reserve(MakeAnimationClips(name, position));
+
     public static Sequence MakeFadeTextClips(Unit unit, string text, Color color)
     {
         GameObject gameObject = Instantiate(instance.animationClips[instance.animationNames.IndexOf("FadeOutText")], new Vector3(unit.Position.x, unit.Position.y + 1, -2), Quaternion.identity);
@@ -36,8 +40,6 @@ public class AnimationManager : MonoBehaviour
         .Join(gameObject.transform.DOLocalMoveY(0.5f, GameManager.AnimationDelaySpeed + 0.5f).SetRelative())
         .OnStart(() => gameObject.SetActive(true)).OnComplete(() => GameObject.Destroy(gameObject))
         .Pause();
-
-        Reserve(sequence);
 
         return sequence;
     }
@@ -66,10 +68,7 @@ public class AnimationManager : MonoBehaviour
             .OnStart(() => gameObject.SetActive(true))
             .OnComplete(() => GameObject.Destroy(gameObject));
         }
-
         sequence.Pause();
-
-        Reserve(sequence);
 
         return sequence;
     }
@@ -120,5 +119,4 @@ public class AnimationManager : MonoBehaviour
         yield return new WaitWhile(() => AnimationManager.isNowPlaying);
         unityAction.Invoke();
     }
-
 }

@@ -26,8 +26,8 @@ public class ScreenTouchManager : MonoBehaviour, IDragHandler, IBeginDragHandler
     public Sequence CameraMove(Vector2Int position)
     {
         Sequence sequence = DOTween.Sequence();
-        sequence.Append(cameraTransform.DOMove(new Vector3(position.x, position.y, cameraTransform.position.z), 0.1f));
-
+        sequence.Append(cameraTransform.DOMove(new Vector3(position.x, position.y, cameraTransform.position.z), 0f));
+        AnimationManager.Reserve(sequence);
         return sequence;
     }
 
@@ -101,18 +101,14 @@ public class ScreenTouchManager : MonoBehaviour, IDragHandler, IBeginDragHandler
 
         if (path != null)
         {
-            user.animationState = Unit.AnimationState.Move;
-
             float moveTime = GameManager.AnimationDelaySpeed / path.Count;
 
             for (int i = 1; i < path.Count; i++)
             {
-                AnimationManager.MakeAnimationClips("Dust", user.Position);
+                AnimationManager.ReserveAnimationClips("Dust", user.Position);
                 user.Position = path[i];
                 yield return new WaitForSeconds(moveTime);
             }
-            user.animationState = Unit.AnimationState.Idle;
-
             // 실제 타일에 상속되는건 한번이다.
             Common.Command.Move(user, startPosition, target);
         }

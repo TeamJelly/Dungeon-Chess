@@ -37,7 +37,7 @@ namespace Model.Effects
 
         public override bool OnTurnStart(bool value)
         {
-            AnimationManager.MakeFadeTextClips(Owner, $"+Bind", Color.red);
+            AnimationManager.ReserveFadeTextClips(Owner, $"+Bind", Color.red);
 
             Owner.IsMoved = true;
             isActivated = true;

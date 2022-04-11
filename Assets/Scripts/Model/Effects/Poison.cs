@@ -38,7 +38,7 @@ namespace Model.Effects
         }
         public override bool OnTurnStart(bool value)
         {
-            AnimationManager.MakeFadeTextClips(Owner, $"독! ({TurnCount})", Color.green);
+            AnimationManager.ReserveFadeTextClips(Owner, $"독! ({TurnCount})", Color.green);
             Common.Command.Damage(Owner, Damage);
 
             return value;

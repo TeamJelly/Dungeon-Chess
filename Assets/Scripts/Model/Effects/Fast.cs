@@ -39,7 +39,7 @@ namespace Model.Effects
         }
         public override bool OnTurnStart(bool value)
         {
-            AnimationManager.MakeFadeTextClips(Owner, $"+Fast ({TurnCount})", Color.green);
+            AnimationManager.ReserveFadeTextClips(Owner, $"+Fast ({TurnCount})", Color.green);
             return value;
         }
         public override bool OnTurnEnd(bool value)

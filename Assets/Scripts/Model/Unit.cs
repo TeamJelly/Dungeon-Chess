@@ -130,16 +130,6 @@ namespace Model
         private int criRate;                 // 치명타 율
         private float actionRate;                   // 행동가능 퍼센테이지
         private Vector2Int position;                // 위치
-
-        // 레거시 코드
-        // private Dictionary<SkillCategory, Skill> skills = new Dictionary<SkillCategory, Skill>()
-        // {
-        //     {SkillCategory.Move, null},
-        //     {SkillCategory.Basic, null},
-        //     {SkillCategory.Intermediate, null},
-        //     {SkillCategory.Advanced, null}
-        // };
-
         private MoveSkill moveSkill = new MoveSkill();
         private List<Skill> skills = new List<Skill>();
         private Dictionary<Skill, int> waitingSkills = new Dictionary<Skill, int>();
@@ -147,9 +137,6 @@ namespace Model
         private List<Obtainable> belongings = new List<Obtainable>();    // 보유한 유물 및 아이템
         private List<Effect> stateEffects = new List<Effect>();  // 보유한 상태효과
         private List<Obtainable> droptems = new List<Obtainable>();
-        private RuntimeAnimatorController animator; // 애니메이터
-        protected string animatorPath = "";
-        public AnimationState animationState = AnimationState.Idle; // 현재 애니메이션 상태
         public UnitAlliance Alliance { get; set; }  // 진영
         public UnitSpecies Species { get; set; }       // 종족
         public UnitModifier Modifier { get; set; }      // 수식어
@@ -366,17 +353,6 @@ namespace Model
             }
         }
 
-        public RuntimeAnimatorController Animator
-        {
-            get
-            {
-                if (animator == null)
-                    animator = Resources.Load<RuntimeAnimatorController>(animatorPath);
-
-                return animator;
-            }
-            set => animator = value;
-        }
 
         private bool isFlying = false;
         public bool IsFlying { get => isFlying; set => isFlying = value; }

@@ -47,7 +47,7 @@ namespace Model.Effects
 
         public override int BeforeGetDam(int value)
         {
-            AnimationManager.MakeFadeTextClips(Owner, $"+Barrier ({--barrierCount})", Color.yellow);
+            AnimationManager.ReserveFadeTextClips(Owner, $"+Barrier ({--barrierCount})", Color.yellow);
             // 데미지 무효화
             value = 0;
 

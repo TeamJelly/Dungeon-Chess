@@ -92,11 +92,10 @@ namespace Model.Skills.Move
             if (User.Alliance != UnitAlliance.Party)
             {
                 Sequence sequence = ScreenTouchManager.instance.CameraMove(User.Position);
-                
             }
 
             Common.Command.Move(User, startPosition, target);
-            AnimationManager.MakeAnimationClips("Dust", startPosition);
+            AnimationManager.ReserveAnimationClips("Dust", startPosition);
 
             yield return null;
         }

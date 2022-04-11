@@ -41,12 +41,12 @@ namespace UI.Battle
 
             BattleManager.SetNextTurnUnit(nextUnit);
 
-
-            AnimationManager.MakeFadeTextClips(nextUnit, $"{nextUnit.Name} 턴 시작!", Color.cyan);
-            Debug.Log($"{nextUnit.Name}의 턴입니다.");
-
             // 카메라를 다음 턴 유닛에게 포커스
             ScreenTouchManager.instance.CameraMove(nextUnit.Position);
+
+            AnimationManager.ReserveFadeTextClips(nextUnit, $"{nextUnit.Name} 턴 시작!", Color.cyan);
+            Debug.Log($"{nextUnit.Name}의 턴입니다.");
+
 
             // 턴시작시 유닛 값들 초기화
             nextUnit.ActionRate = 0;

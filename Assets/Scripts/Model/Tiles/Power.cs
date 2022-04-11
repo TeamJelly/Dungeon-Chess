@@ -22,7 +22,7 @@ namespace Model.Tiles
         {
             base.OnTile(unit);
             if (unit == null) return;
-            AnimationManager.MakeFadeTextClips(unit, $"STR +{strength}", Color.green);
+            AnimationManager.ReserveFadeTextClips(unit, $"STR +{strength}", Color.green);
             unit.Strength += strength;
 
 
@@ -30,7 +30,7 @@ namespace Model.Tiles
             //이동이 전부 끝난 후에 호출되는 일회용 콜백 등록.
             Vector2Int RemoveBuffCallback(Vector2Int v)
             {
-                AnimationManager.MakeFadeTextClips(unit, $"STR -{strength}", Color.green);
+                AnimationManager.ReserveFadeTextClips(unit, $"STR -{strength}", Color.green);
                 unit.Strength -= strength;
                 unit.OnMove.after.RemoveListener(RemoveBuffCallback);
                 return v;
