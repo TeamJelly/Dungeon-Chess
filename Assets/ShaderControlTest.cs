@@ -7,7 +7,7 @@ public class ShaderControlTest : MonoBehaviour
 {
     [ColorUsage(true, true)]
     public Color Color1, Color2;
-    public float Speed = 1, Offset;
+    public float Speed = 0.3f, Offset;
 
     private Renderer _renderer;
     private MaterialPropertyBlock _propBlock;
@@ -16,21 +16,30 @@ public class ShaderControlTest : MonoBehaviour
     {
         _propBlock = new MaterialPropertyBlock();
         _renderer = GetComponent<Renderer>();
-        //_renderer.material.DOColor(Color1, 0.9f).SetLoops(-1);
-
-        SetBlink(Color1, 1);
-        //_renderer.material.DOColor(Color1, 1f).SetEase(Ease.InQuad).SetLoops(-1, LoopType.Yoyo);
+        _renderer.GetPropertyBlock(_propBlock);
+        _renderer.material.color = Color1;
+        //EnableColor();
+        //SetBlink(Color1, 1);
     }
 
     public void OnValidate()
     {
-        if (!Application.isPlaying) return;
-        SetBorderColor(1f);
+        if (!Application.isPlaying || _renderer == null) return;
+        SetBorderColor(Color1, 1f);
     }
-    public void SetBorderColor(float duration)
+
+    public void EnableColor()
+    {
+        _renderer.material.DOFloat(0, "_grayScale", Speed);
+    }
+    public void DisableColor()
+    {
+        _renderer.material.DOFloat(1, "_grayScale", Speed);
+    }
+    public void SetBorderColor(Color color, float duration)
     {
         _renderer.material.DOPause();
-        //Color1 = color;
+        Color1 = color;
         _renderer.material.DOColor(Color1, duration);
     }
 
@@ -40,6 +49,8 @@ public class ShaderControlTest : MonoBehaviour
         _renderer.material.color = Color.black;
         _renderer.material.DOColor(color, duration).SetEase(Ease.InQuad).SetLoops(-1, LoopType.Yoyo);
     }
+
+
     // void Update()
     // {
     //     // Get the current value of the material properties in the renderer.
