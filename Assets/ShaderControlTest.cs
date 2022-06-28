@@ -16,9 +16,30 @@ public class ShaderControlTest : MonoBehaviour
     {
         _propBlock = new MaterialPropertyBlock();
         _renderer = GetComponent<Renderer>();
-        _renderer.material.DOColor(Color1, 0.5f).SetLoops(-1);
+        //_renderer.material.DOColor(Color1, 0.9f).SetLoops(-1);
+
+        SetBlink(Color1, 1);
+        //_renderer.material.DOColor(Color1, 1f).SetEase(Ease.InQuad).SetLoops(-1, LoopType.Yoyo);
     }
 
+    public void OnValidate()
+    {
+        if (!Application.isPlaying) return;
+        SetBorderColor(1f);
+    }
+    public void SetBorderColor(float duration)
+    {
+        _renderer.material.DOPause();
+        //Color1 = color;
+        _renderer.material.DOColor(Color1, duration);
+    }
+
+    public void SetBlink(Color color, float duration)
+    {
+        _renderer.material.DOPause();
+        _renderer.material.color = Color.black;
+        _renderer.material.DOColor(color, duration).SetEase(Ease.InQuad).SetLoops(-1, LoopType.Yoyo);
+    }
     // void Update()
     // {
     //     // Get the current value of the material properties in the renderer.
