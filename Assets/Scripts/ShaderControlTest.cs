@@ -6,7 +6,8 @@ using DG.Tweening;
 public class ShaderControlTest : MonoBehaviour
 {
     [ColorUsage(true, true)]
-    public Color Color1, Color2;
+    public Color BorderColor;
+    public Color Color2;
     public float Speed = 0.3f, Offset;
 
     private Renderer _renderer;
@@ -17,7 +18,7 @@ public class ShaderControlTest : MonoBehaviour
         _propBlock = new MaterialPropertyBlock();
         _renderer = GetComponent<Renderer>();
         _renderer.GetPropertyBlock(_propBlock);
-        _renderer.material.color = Color1;
+        _renderer.material.color = BorderColor;
         //EnableColor();
         //SetBlink(Color1, 1);
     }
@@ -25,29 +26,36 @@ public class ShaderControlTest : MonoBehaviour
     public void OnValidate()
     {
         if (!Application.isPlaying || _renderer == null) return;
-        SetBorderColor(Color1, 1f);
+        SetBorderColor(BorderColor);
+        SetColor2(Color2);
     }
 
-    public void EnableColor()
+    public void DisableGray()
     {
         _renderer.material.DOFloat(0, "_grayScale", Speed);
     }
-    public void DisableColor()
+    public void EnableGray()
     {
         _renderer.material.DOFloat(1, "_grayScale", Speed);
     }
-    public void SetBorderColor(Color color, float duration)
+
+    public void SetColor2(Color color)
+    {
+        Color2 = color;
+        _renderer.material.DOColor(Color2, "_Color2", Speed);
+    }
+    public void SetBorderColor(Color color)
     {
         _renderer.material.DOPause();
-        Color1 = color;
-        _renderer.material.DOColor(Color1, duration);
+        BorderColor = color;
+        _renderer.material.DOColor(BorderColor, Speed);
     }
 
-    public void SetBlink(Color color, float duration)
+    public void SetBlink(Color color)
     {
         _renderer.material.DOPause();
         _renderer.material.color = Color.black;
-        _renderer.material.DOColor(color, duration).SetEase(Ease.InQuad).SetLoops(-1, LoopType.Yoyo);
+        _renderer.material.DOColor(color, Speed).SetEase(Ease.InQuad).SetLoops(-1, LoopType.Yoyo);
     }
 
 

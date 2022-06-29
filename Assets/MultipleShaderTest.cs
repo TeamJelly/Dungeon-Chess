@@ -14,18 +14,18 @@ public class MultipleShaderTest : MonoBehaviour
     {
         foreach(ShaderControlTest s in list)
         {
-            s.DisableColor();
+            s.EnableGray();
         }
         currentShader = list[currentIndex];
-        currentShader.EnableColor();
+        currentShader.DisableGray();
     }
 
     public void Btn_ShowNext()
     {
         currentIndex = (currentIndex + 1) % list.Count;
 
-        currentShader.DisableColor();
+        currentShader.EnableGray();
         currentShader = list[currentIndex];
-        currentShader.EnableColor();
+        currentShader.DisableGray();
     }
 }
