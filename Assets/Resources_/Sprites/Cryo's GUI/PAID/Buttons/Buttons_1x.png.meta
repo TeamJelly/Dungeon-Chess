@@ -1,0 +1,183 @@
+fileFormatVersion: 2
+guid: 1c33d17028f2332488b12a8c8c48f81a
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Buttons_1x_27
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 4, y: 4, z: 4, w: 4}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2d12e825f746b34d8e0d30a1c33a4e5
+      internalID: 1923709494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Buttons_1x_3: 2068752302
+      Buttons_1x_19: -1818721658
+      Buttons_1x_14: -1743629478
+      Buttons_1x_7: 2003046227
+      Buttons_1x_28: -1588396666
+      Buttons_1x_15: 2039197734
+      Buttons_1x_21: -2131912396
+      Buttons_1x_37: 311955890
+      Buttons_1x_25: -408751875
+      Buttons_1x_8: -732712702
+      Buttons_1x_29: 133688268
+      Buttons_1x_4: -1838444617
+      Buttons_1x_30: 762612436
+      Buttons_1x_20: -1028376432
+      Buttons_1x_17: 201875866
+      Buttons_1x_18: -1341286301
+      Buttons_1x_13: 860223143
+      Buttons_1x_10: 1935402991
+      Buttons_1x_9: 884406910
+      Buttons_1x_12: -687720560
+      Buttons_1x_38: -601173369
+      Buttons_1x_6: 1246783321
+      Buttons_1x_32: -483429300
+      Buttons_1x_27: 1923709494
+      Buttons_1x_31: -1054192178
+      Buttons_1x_33: -477021622
+      Buttons_1x_22: -72668738
+      Buttons_1x_35: -1660266081
+      Buttons_1x_5: -2037864637
+      Buttons_1x_24: -1647246539
+      Buttons_1x_36: 113317429
+      Buttons_1x_1: 1158476890
+      Buttons_1x_2: 1101737037
+      Buttons_1x_0: 741332978
+      Buttons_1x_11: 484215891
+      Buttons_1x_16: 1178683763
+      Buttons_1x_26: -167774645
+      Buttons_1x_23: 2140437810
+      Buttons_1x_39: -1318957105
+      Buttons_1x_34: 1256663050
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
