@@ -50,10 +50,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DistortionStrength: 0.99
+    - _DistortionStrength: 1.49
     - _EnableExternalAlpha: 0
-    - _FireButtomOffset: 0.7
-    - _YStretch: 1.26
+    - _FireButtomOffset: 0.22
+    - _YStretch: 1.48
     m_Colors:
     - _Color: {r: 1.509434, g: 0.5061871, b: 0.26343894, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
