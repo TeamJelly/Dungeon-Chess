@@ -2,18 +2,35 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using Model;
+
 
 [Serializable]
-public class StringStringDictionary : SerializableDictionary<string, string> {}
+public class StringIntDictionary : SerializableDictionary<string, int> { }
 
 [Serializable]
-public class ObjectColorDictionary : SerializableDictionary<UnityEngine.Object, Color> {}
+public class StringStateEffectDictionary : SerializableDictionary<string, StateEffect> { }
 
 [Serializable]
-public class ColorArrayStorage : SerializableDictionary.Storage<Color[]> {}
+public class StringArtifactDictionary : SerializableDictionary<string, Artifact> { }
 
 [Serializable]
-public class StringColorArrayDictionary : SerializableDictionary<string, Color[], ColorArrayStorage> {}
+public class StringSkillDictionary : SerializableDictionary<string, Skill> { }
+
+[Serializable]
+public class StringSpriteDictionary : SerializableDictionary<string, Sprite> { }
+
+[Serializable]
+public class StringStringDictionary : SerializableDictionary<string, string> { }
+
+[Serializable]
+public class ObjectColorDictionary : SerializableDictionary<UnityEngine.Object, Color> { }
+
+[Serializable]
+public class ColorArrayStorage : SerializableDictionary.Storage<Color[]> { }
+
+[Serializable]
+public class StringColorArrayDictionary : SerializableDictionary<string, Color[], ColorArrayStorage> { }
 
 [Serializable]
 public class MyClass
@@ -23,4 +40,4 @@ public class MyClass
 }
 
 [Serializable]
-public class QuaternionMyClassDictionary : SerializableDictionary<Quaternion, MyClass> {}
+public class QuaternionMyClassDictionary : SerializableDictionary<Quaternion, MyClass> { }

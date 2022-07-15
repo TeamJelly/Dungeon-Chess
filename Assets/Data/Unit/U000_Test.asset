@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1da5ce08ccf4f642afd7b3360f0840d, type: 3}
+  m_Name: U000_Test
+  m_EditorClassIdentifier: Assembly-CSharp:Model:Unit_ScriptableObject
+  Name: 
+  SpriteName: 
+  level: 1
+  curEXP: 0
+  nextEXP: 0
+  curHP: 0
+  maxHP: 0
+  AP: 0
+  strength: 0
+  mobility: 0
+  action: 0
+  positionX: 0
+  positionY: 0
+  skills:
+  - 
+  - 
+  - 
+  skill_levels: 000000000000000000000000
+  skill_waitingTimes: 000000000000000000000000
+  states: []
+  state_counts: 
+  artifacts: []
+  artifact_counts: 
+  Alliance: 0
+  IsSkilled: 0
+  IsMoved: 0
+  IsFlying: 0

@@ -1,53 +1,53 @@
-﻿using UnityEngine;
-using System.Collections;
-using View;
+﻿// using UnityEngine;
+// using System.Collections;
+// using View;
 
-namespace Model.Effects
-{
+// namespace Model.Effects
+// {
 
-    public class Poison : Effect
-    {
-        private readonly int damage = 10;
+//     public class Poison : StateEffect
+//     {
+//         private readonly int damage = 10;
 
-        public int Damage { get => damage; }
+//         public int Damage { get => damage; }
 
-        public Poison()
-        {
-            Name = "Poison";
-            Description = $"턴을 시작할때 체력 10을 차감합니다. 남은 턴 : {TurnCount}";
+//         public Poison()
+//         {
+//             Name = "Poison";
+//             Description = $"턴을 시작할때 체력 10을 차감합니다. 남은 턴 : {TurnCount}";
 
-            SpriteNumber = 562;
-            InColor = Color.magenta;
-            OutColor = Color.clear;
-        }
+//             SpriteNumber = 562;
+//             InColor = Color.magenta;
+//             OutColor = Color.clear;
+//         }
 
-        public override void OnAdd()
-        {
-            TurnCount = 3;
+//         public override void OnAdd()
+//         {
+//             TurnCount = 3;
 
-            Debug.Log($"{Owner.Name}에게 {Name}효과 {TurnCount}턴 동안 추가됨");
-            Owner.OnTurnStart.before.AddListener(OnTurnStart);
-            Owner.OnTurnEnd.before.AddListener(OnTurnEnd);
-        }
-        public override void OnRemove()
-        {
-            base.OnRemove();
-            Owner.OnTurnStart.before.RemoveListener(OnTurnStart);
-            Owner.OnTurnEnd.before.RemoveListener(OnTurnEnd);
+//             Debug.Log($"{Owner.Name}에게 {Name}효과 {TurnCount}턴 동안 추가됨");
+//             Owner.OnTurnStart.before.AddListener(OnTurnStart);
+//             Owner.OnTurnEnd.before.AddListener(OnTurnEnd);
+//         }
+//         public override void OnRemove()
+//         {
+//             base.OnRemove();
+//             Owner.OnTurnStart.before.RemoveListener(OnTurnStart);
+//             Owner.OnTurnEnd.before.RemoveListener(OnTurnEnd);
 
-        }
-        public override bool OnTurnStart(bool value)
-        {
-            AnimationManager.ReserveFadeTextClips(Owner, $"독! ({TurnCount})", Color.green);
-            Common.Command.Damage(Owner, Damage);
+//         }
+//         public override bool OnTurnStart(bool value)
+//         {
+//             AnimationManager.ReserveFadeTextClips(Owner, $"독! ({TurnCount})", Color.green);
+//             Common.Command.Damage(Owner, Damage);
 
-            return value;
-        }
-        public override bool OnTurnEnd(bool value)
-        {
-            if (--TurnCount == 0)
-                Common.Command.RemoveEffect(Owner, this);
-            return value;
-        }
-    }
-}
+//             return value;
+//         }
+//         public override bool OnTurnEnd(bool value)
+//         {
+//             if (--TurnCount == 0)
+//                 Common.Command.RemoveEffect(Owner, this);
+//             return value;
+//         }
+//     }
+// }
