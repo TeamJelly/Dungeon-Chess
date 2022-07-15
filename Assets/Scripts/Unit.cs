@@ -17,11 +17,10 @@ public enum UnitAlliance
 };
 
 [Serializable]
-public class Unit : ISpriteable
+public class Unit : MonoBehaviour, ISpriteable
 {
     #region 인적정보
     [SerializeField] private int id;                             // 유닛 고유 ID
-    [SerializeField] private string name;
     [SerializeField] private string sprite_name;
     [SerializeField] private UnitAlliance alliance;
     #endregion
@@ -69,7 +68,6 @@ public class Unit : ISpriteable
     [SerializeField] private bool is_movable;
 
     public int ID { get => id; set => id = value; }
-    public string Name { get => name; set => name = value; }
     public string SpriteName { get => sprite_name; set => sprite_name = value; }
 
     public int Level { get => level; set => level = value; }

@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEditor;
 
 [CustomPropertyDrawer(typeof(StringIntDictionary))]
+[CustomPropertyDrawer(typeof(StringArtifactDictionary))]
+[CustomPropertyDrawer(typeof(StringUnitDictionary))]
+[CustomPropertyDrawer(typeof(StringStateEffectDictionary))]
 [CustomPropertyDrawer(typeof(StringSkillDictionary))]
 [CustomPropertyDrawer(typeof(StringSpriteDictionary))]
 [CustomPropertyDrawer(typeof(StringStringDictionary))]

@@ -11,6 +11,9 @@ public class DataManager : MonoBehaviour
     {
         instance = this;
 
+        foreach (Unit unit in UnitList)
+            UnitDictionary.Add(unit.name, unit);
+
         foreach (Skill skill in SkillList)
             SkillDictionary.Add(skill.name, skill);
 
@@ -20,6 +23,10 @@ public class DataManager : MonoBehaviour
         foreach (StateEffect stateEffect in StateEffectList)
             StateEffectDictionary.Add(stateEffect.name, stateEffect);
     }
+
+    [Header("이름 : 유닛")]
+    public List<Unit> UnitList;
+    public StringUnitDictionary UnitDictionary;
 
     [Header("이름 : 스킬")]
     public List<Skill> SkillList;

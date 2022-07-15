@@ -12,6 +12,9 @@ public class StringIntDictionary : SerializableDictionary<string, int> { }
 public class StringStateEffectDictionary : SerializableDictionary<string, StateEffect> { }
 
 [Serializable]
+public class StringUnitDictionary : SerializableDictionary<string, Unit> { }
+
+[Serializable]
 public class StringArtifactDictionary : SerializableDictionary<string, Artifact> { }
 
 [Serializable]

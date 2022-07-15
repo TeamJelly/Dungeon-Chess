@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1412562061186011777
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1412562061186011776}
+  - component: {fileID: 9204993156625395207}
+  m_Layer: 0
+  m_Name: U001_Test
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1412562061186011776
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1412562061186011777}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1167.5337, y: 606.7535, z: 0.6990232}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9204993156625395207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1412562061186011777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f1ebbb0e34186a49963d03a214bb594, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 0
+  sprite_name: 
+  alliance: 0
+  level: 1
+  ability_point: 0
+  cur_exp: 0
+  next_exp: 0
+  cur_hp: 0
+  max_hp: 0
+  vitality: 0
+  mobility: 0
+  strength: 0
+  action: 0
+  position_x: 0
+  position_y: 0
+  skills:
+  - K000_Fireball
+  skill_waiting_time:
+    m_keys:
+    - K000_Fireball
+    m_values: 03000000
+  skill_level:
+    m_keys:
+    - K000_Fireball
+    m_values: 01000000
+  artifacts:
+  - A000_Knife
+  artifact_count:
+    m_keys:
+    - A000_Knife
+    m_values: 0a000000
+  state_effects:
+  - S000_Fire
+  state_effect_count:
+    m_keys:
+    - S000_Fire
+    m_values: 0a000000
+  skill_count_this_turn: 3
+  move_count_this_turn: 3
+  is_skillable: 0
+  is_movable: 0
