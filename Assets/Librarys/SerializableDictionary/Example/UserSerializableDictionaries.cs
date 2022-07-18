@@ -6,6 +6,9 @@ using Model;
 
 
 [Serializable]
+public class StringTileDictionary : SerializableDictionary<string, Tile> { }
+
+[Serializable]
 public class StringIntDictionary : SerializableDictionary<string, int> { }
 
 [Serializable]

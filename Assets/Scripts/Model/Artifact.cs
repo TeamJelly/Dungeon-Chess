@@ -12,4 +12,5 @@ public class Artifact : MonoBehaviour, ISpriteable
     [SerializeField] private int price;
 
     public Sprite Sprite { get => sprite; set => sprite = value; }
+
 }

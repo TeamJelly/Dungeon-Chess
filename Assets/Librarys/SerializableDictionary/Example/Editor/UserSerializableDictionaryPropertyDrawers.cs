@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+[CustomPropertyDrawer(typeof(StringTileDictionary))]
 [CustomPropertyDrawer(typeof(StringIntDictionary))]
 [CustomPropertyDrawer(typeof(StringArtifactDictionary))]
 [CustomPropertyDrawer(typeof(StringUnitDictionary))]

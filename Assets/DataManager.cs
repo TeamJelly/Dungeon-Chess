@@ -22,24 +22,32 @@ public class DataManager : MonoBehaviour
 
         foreach (StateEffect stateEffect in StateEffectList)
             StateEffectDictionary.Add(stateEffect.name, stateEffect);
+
+        foreach (Tile tile in TileList)
+            TileDictionary.Add(tile.name, tile);
     }
 
-    [Header("이름 : 유닛")]
+    [Header("유닛")]
     public List<Unit> UnitList;
     public StringUnitDictionary UnitDictionary;
 
-    [Header("이름 : 스킬")]
+    [Header("스킬")]
     public List<Skill> SkillList;
     public StringSkillDictionary SkillDictionary;
 
-    [Header("이름 : 아티펙트")]
+    [Header("아티펙트")]
     public List<Artifact> ArtifactList;
     public StringArtifactDictionary ArtifactDictionary;
 
-    [Header("이름 : 상태효과")]
+    [Header("상태효과")]
     public List<StateEffect> StateEffectList;
     public StringStateEffectDictionary StateEffectDictionary;
 
-    [Header("이름 : 이미지")]
+    [Header("이미지")]
     public StringSpriteDictionary SpriteDictionary;
+
+
+    [Header("타일")]
+    public List<Tile> TileList;
+    public StringTileDictionary TileDictionary;
 }
