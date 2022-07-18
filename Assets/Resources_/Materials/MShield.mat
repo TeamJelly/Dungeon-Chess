@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MFire
-  m_Shader: {fileID: -6465566751694194690, guid: c7e0ab16aca94b74b8ab2537fe8c4a5e, type: 3}
+  m_Name: MShield
+  m_Shader: {fileID: -6465566751694194690, guid: 03a576f41abedff45a9b480f51232501, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -50,14 +50,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DistortionStrength: 1.49
     - _EnableExternalAlpha: 0
-    - _FireButtomOffset: 0.94
-    - _TimeOffset: 0.1
-    - _YStretch: 1.48
     m_Colors:
-    - _Color: {r: 1.509434, g: 0.5061871, b: 0.26343894, a: 1}
+    - _Color: {r: 2.0306158, g: 13.886793, b: 12.645309, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
-    - _NoiseScale: {r: 1.4, g: 1.4, b: 0, a: 0}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
