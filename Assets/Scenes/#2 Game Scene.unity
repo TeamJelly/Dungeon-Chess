@@ -4053,14 +4053,14 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.0021786492
-    width: 1
-    height: 0.99346405
+    y: 0
+    width: 0.99859744
+    height: 0.99750626
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 7.125
+  orthographic size: 6.25
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -9489,8 +9489,6 @@ MonoBehaviour:
   UnitList:
   - {fileID: 9204993156625395207, guid: fd582f99e690b7e489eb16e9ae649528, type: 3}
   - {fileID: 9204993156625395207, guid: f733b3a761373ec428a7a68bd189879f, type: 3}
-  - {fileID: 9204993156625395207, guid: 159b7d7b33743684fbabccafe15e2c31, type: 3}
-  - {fileID: 9204993156625395207, guid: 35c8830936c59584db2d3cbb51e8b7cf, type: 3}
   UnitDictionary:
     m_keys: []
     m_values: []
@@ -9525,6 +9523,12 @@ MonoBehaviour:
     m_values:
     - {fileID: 21300000, guid: 90e7b201ddf121c448a5643837d05e08, type: 3}
     - {fileID: 21300000, guid: dc88e53eeef97a844b746e8d3a471d29, type: 3}
+  TileList:
+  - {fileID: 6569182465322340504, guid: af3144468bd72fa49a1871ba38953ed7, type: 3}
+  - {fileID: 4838395378883049535, guid: abab73a525739c4488b425767c88c95f, type: 3}
+  TileDictionary:
+    m_keys: []
+    m_values: []
 --- !u!4 &1092593570
 Transform:
   m_ObjectHideFlags: 0
