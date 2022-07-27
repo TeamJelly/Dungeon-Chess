@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using Model;
 using UnityEngine;
 
-public class DataManager : MonoBehaviour
+public class DataManager : Singleton<DataManager>
 {
     public static DataManager instance;
 
-    private void Awake()
+    private new void Awake()
     {
-        instance = this;
+        base.Awake();
 
         foreach (Unit unit in UnitList)
             UnitDictionary.Add(unit.name, unit);
@@ -46,8 +46,12 @@ public class DataManager : MonoBehaviour
     [Header("이미지")]
     public StringSpriteDictionary SpriteDictionary;
 
-
     [Header("타일")]
     public List<Tile> TileList;
     public StringTileDictionary TileDictionary;
+
+    [Header("맵 데이터")]
+    public TextAsset Lobby;
+
+    public List<TextAsset> Battle;
 }
